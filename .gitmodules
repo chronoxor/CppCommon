@@ -1,0 +1,6 @@
+[submodule "cmake"]
+	path = cmake
+	url = git@github.com:chronoxor/CppCMakeScripts.git
+[submodule "scripts"]
+	path = scripts
+	url = git@github.com:chronoxor/CppBuildScripts.git
