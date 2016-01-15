@@ -1,38 +1,32 @@
 /*!
-    \file ring_queue.h
-    \brief Wait-free ring queue class definition
+    \file ring_queue.inl
+    \brief Wait-free ring queue class implementation
     \author Ivan Shynkarenka
     \date 15.01.2016
     \copyright MIT License
 */
 
-#include "threads/ring_queue.h"
+namespace {
+    constexpr bool IsPowerOfTwo(size_t x) { return x && ((x & (x - 1)) == 0); }
+}
 
 namespace CppCommon {
 
-//! @cond
-namespace Internals {
-
-constexpr bool IsPowerOfTwo(size_t x)
+template<typename T, size_t N>
+inline RingQueue<T, N>::RingQueue() : _size(N - 1), _mask(N - 1), _buffer(new T[N]), _head(0), _tail(0)
 {
-    return x && ((x & (x-1)) == 0);
+	static_assert(N > 1, "Ring queue size must be greater than one!");
+    static_assert(IsPowerOfTwo(N), "Ring queue size must be a power of two!");
 }
 
-} // namespace Internals
-//! @endcond
-
-RingQueue(size_t size) : _size(size), _mask(size - 1), _buffer(new T[size]), _head(0), _tail(0)
-{
-    static_assert(IsPowerOfTwo(size), "Ring queue size must be a power of two!");
-}
-
-bool RingQueue::push(const T& item)
+template<typename T, size_t N>
+inline bool RingQueue<T, N>::Push(const T& item)
 {
     const size_t head = _head.load(std::memory_order_relaxed);
     const size_t tail = _tail.load(std::memory_order_acquire);
 
     // Check if the ring queue is full
-    if (((tail - head + 1) & _mask) == 0)
+    if (((tail - (head + 1)) & _mask) == 0)
         return false;
 
     // Store item value
@@ -43,7 +37,8 @@ bool RingQueue::push(const T& item)
     return true;
 }
 
-bool RingQueue::pop(T& item)
+template<typename T, size_t N>
+inline bool RingQueue<T, N>::Pop(T& item)
 {
     const size_t tail = _tail.load(std::memory_order_relaxed);
     const size_t head = _head.load(std::memory_order_acquire);

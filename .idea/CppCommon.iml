@@ -2,13 +2,93 @@
 <module type="CPP_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark.cmake" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/cpp-optparse/OptionParser.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/cpp-optparse/OptionParser.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/cpp-optparse.cmake" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/catch/single_include/catch.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/modules/catch.cmake" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/modules/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/modules/cpp-optparse.cmake" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/source/benchmark_threads.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/source/launcher_console.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/source/environment.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/source/settings.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/source/context.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/source/benchmark_pc.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/source/console.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/source/phase_core.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/source/executor.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/source/context_thread.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/source/reporter_csv.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/source/launcher.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/source/reporter_json.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/source/benchmark.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/source/context_pc.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/source/system.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/source/phase_scope.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/source/reporter_console.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/source/phase_metrics.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/tests/test_system.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/tests/test.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/tests/test_reporter.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/tests/test_launcher.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/tests/test_environment.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/fpu.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/mpsc.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/executor.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/threads.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/spsc.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/mpmc.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/random.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/containers.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/iterators.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/atomic.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/timers.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/sort.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/fwrite.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/cmake/SetCrtSecureWarningsOff.cmake" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/cmake/SetCompilerFeatures.cmake" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/cmake/SetCompilerWarningAll.cmake" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/catch.cmake" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/source/threads/ring_queue.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/test_ring_queue.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/test.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cmake/SetCrtSecureWarningsOff.cmake" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cmake/SetCompilerFeatures.cmake" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cmake/SetCompilerWarningAll.cmake" isTestSource="false" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
       <library name="Header Search Paths">
-        <CLASSES />
-        <SOURCES />
+        <CLASSES>
+          <root url="file://Z:/Soft/Development/MinGW-W64/mingw64/lib/gcc/x86_64-w64-mingw32/5.3.0/include-fixed" />
+          <root url="file://Z:/Soft/Development/MinGW-W64/mingw64/lib/gcc/x86_64-w64-mingw32/5.3.0/include" />
+          <root url="file://Z:/Soft/Development/MinGW-W64/mingw64/x86_64-w64-mingw32/include" />
+          <root url="file://$MODULE_DIR$/modules/cpp-optparse" />
+          <root url="file://$MODULE_DIR$/modules/catch/single_include" />
+          <root url="file://$MODULE_DIR$/modules/CppBenchmark/modules/cpp-optparse" />
+          <root url="file://$MODULE_DIR$/modules/CppBenchmark/include" />
+          <root url="file://$MODULE_DIR$/include" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file://Z:/Soft/Development/MinGW-W64/mingw64/lib/gcc/x86_64-w64-mingw32/5.3.0/include-fixed" />
+          <root url="file://Z:/Soft/Development/MinGW-W64/mingw64/lib/gcc/x86_64-w64-mingw32/5.3.0/include" />
+          <root url="file://Z:/Soft/Development/MinGW-W64/mingw64/x86_64-w64-mingw32/include" />
+          <root url="file://$MODULE_DIR$/modules/cpp-optparse" />
+          <root url="file://$MODULE_DIR$/modules/catch/single_include" />
+          <root url="file://$MODULE_DIR$/modules/CppBenchmark/modules/cpp-optparse" />
+          <root url="file://$MODULE_DIR$/modules/CppBenchmark/include" />
+          <root url="file://$MODULE_DIR$/include" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$MODULE_DIR$/modules/cpp-optparse/OptionParser.cpp" />
+          <root url="file://$MODULE_DIR$/modules/cpp-optparse/OptionParser.h" />
+          <root url="file://$MODULE_DIR$/modules/catch/single_include/catch.hpp" />
+        </excluded>
       </library>
     </orderEntry>
   </component>

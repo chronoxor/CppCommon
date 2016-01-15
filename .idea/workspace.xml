@@ -1,7 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="CMakeRunConfigurationManager" shouldGenerate="true" assignedExecutableTargets="true" buildAllGenerated="false">
-    <generated />
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" assignedExecutableTargets="true" buildAllGenerated="true">
+    <generated>
+      <config projectName="cppcommon" targetName="cppbenchmark-example-spsc" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-fpu" />
+      <config projectName="cppcommon" targetName="cppbenchmark-tests" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-containers" />
+      <config projectName="cppcommon" targetName="cppcommon" />
+      <config projectName="cppcommon" targetName="cpp-optparse" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-timers" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-sort" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-fwrite" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-atomic" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-threads" />
+      <config projectName="cppcommon" targetName="cppcommon-tests" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-iterators" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-executor" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-random" />
+      <config projectName="cppcommon" targetName="cppbenchmark" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-mpsc" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-mpmc" />
+    </generated>
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="false" GENERATION_PASS_SYSTEM_ENVIRONMENT="true">
     <ADDITIONAL_GENERATION_ENVIRONMENT>
@@ -10,8 +29,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="559410a7-8ec3-4eef-81f5-f9dd5eddd0fc" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/CppCommon.iml" afterPath="$PROJECT_DIR$/.idea/CppCommon.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="CppCommon.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -205,24 +224,6 @@
               <option name="myItemId" value="include" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="threads" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CppCommon" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CppCommon" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="include" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -246,8 +247,12 @@
     <property name="settings.editor.selected.configurable" value="fileTemplates" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Build All">
     <configuration default="true" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" PASS_PARENT_ENVS="FALSE" TEST_MODE="SUITE_TEST">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon" CONFIG_NAME="Debug">
       <envs />
       <method />
     </configuration>
@@ -263,6 +268,103 @@
       <envs />
       <method />
     </configuration>
+    <configuration default="false" name="Build All" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" CONFIG_NAME="Debug" EXPLICIT_BUILD_TARGET_NAME="all">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon" CONFIG_NAME="Debug">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-tests" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-tests" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-tests">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cpp-optparse" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cpp-optparse" CONFIG_NAME="Debug">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppbenchmark" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark" CONFIG_NAME="Debug">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppbenchmark-example-atomic" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-atomic" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-atomic">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppbenchmark-example-containers" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-containers" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-containers">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppbenchmark-example-executor" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-executor" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-executor">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppbenchmark-example-fpu" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-fpu" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-fpu">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppbenchmark-example-fwrite" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-fwrite" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-fwrite">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppbenchmark-example-iterators" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-iterators" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-iterators">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppbenchmark-example-mpmc" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-mpmc" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-mpmc">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppbenchmark-example-mpsc" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-mpsc" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-mpsc">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppbenchmark-example-random" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-random" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-random">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppbenchmark-example-sort" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-sort" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-sort">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppbenchmark-example-spsc" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-spsc" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-spsc">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppbenchmark-example-threads" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-threads" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-threads">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppbenchmark-example-timers" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-timers" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-timers">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppbenchmark-tests" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-tests" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-tests">
+      <envs />
+      <method />
+    </configuration>
+    <list size="19">
+      <item index="0" class="java.lang.String" itemvalue="Application.Build All" />
+      <item index="1" class="java.lang.String" itemvalue="Application.cppcommon" />
+      <item index="2" class="java.lang.String" itemvalue="Application.cppcommon-tests" />
+      <item index="3" class="java.lang.String" itemvalue="Application.cpp-optparse" />
+      <item index="4" class="java.lang.String" itemvalue="Application.cppbenchmark" />
+      <item index="5" class="java.lang.String" itemvalue="Application.cppbenchmark-example-atomic" />
+      <item index="6" class="java.lang.String" itemvalue="Application.cppbenchmark-example-containers" />
+      <item index="7" class="java.lang.String" itemvalue="Application.cppbenchmark-example-executor" />
+      <item index="8" class="java.lang.String" itemvalue="Application.cppbenchmark-example-fpu" />
+      <item index="9" class="java.lang.String" itemvalue="Application.cppbenchmark-example-fwrite" />
+      <item index="10" class="java.lang.String" itemvalue="Application.cppbenchmark-example-iterators" />
+      <item index="11" class="java.lang.String" itemvalue="Application.cppbenchmark-example-mpmc" />
+      <item index="12" class="java.lang.String" itemvalue="Application.cppbenchmark-example-mpsc" />
+      <item index="13" class="java.lang.String" itemvalue="Application.cppbenchmark-example-random" />
+      <item index="14" class="java.lang.String" itemvalue="Application.cppbenchmark-example-sort" />
+      <item index="15" class="java.lang.String" itemvalue="Application.cppbenchmark-example-spsc" />
+      <item index="16" class="java.lang.String" itemvalue="Application.cppbenchmark-example-threads" />
+      <item index="17" class="java.lang.String" itemvalue="Application.cppbenchmark-example-timers" />
+      <item index="18" class="java.lang.String" itemvalue="Application.cppbenchmark-tests" />
+    </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="TaskManager">
@@ -278,9 +380,9 @@
     <frame x="-8" y="-8" width="2576" height="1554" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="CMake" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32963988" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32963988" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />

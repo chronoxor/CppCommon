@@ -30,7 +30,9 @@ include_directories("modules/CppBenchmark/include")
 
 # Library
 file(GLOB_RECURSE HEADER_FILES "source/*.h")
+file(GLOB_RECURSE HEADER_FILES "source/threads/*.h")
 file(GLOB_RECURSE SOURCE_FILES "source/*.cpp")
+file(GLOB_RECURSE SOURCE_FILES "source/threads/*.cpp")
 add_library(cppcommon ${HEADER_FILES} ${SOURCE_FILES})
 target_link_libraries(cppcommon)
 list(APPEND INSTALL_TARGETS cppcommon)
