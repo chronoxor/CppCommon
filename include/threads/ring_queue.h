@@ -42,13 +42,13 @@ public:
         \param item - item to enqueue
         \return 'true' if the item was successfully enqueue, 'false' if the ring queue is full
     */
-    bool Push(const T& item);
+    bool Enqueue(const T& item);
     //! Dequeue item from the ring queue (consumer thread method)
     /*!
         \param item - item to dequeue
         \return 'true' if the item was successfully dequeue, 'false' if the ring queue is empty
     */
-    bool Pop(T& item);
+    bool Dequeue(T& item);
 
 private:
     const size_t _size;

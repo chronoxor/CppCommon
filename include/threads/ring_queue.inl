@@ -20,7 +20,7 @@ inline RingQueue<T, N>::RingQueue() : _size(N - 1), _mask(N - 1), _buffer(new T[
 }
 
 template<typename T, size_t N>
-inline bool RingQueue<T, N>::Push(const T& item)
+inline bool RingQueue<T, N>::Enqueue(const T& item)
 {
     const size_t head = _head.load(std::memory_order_relaxed);
     const size_t tail = _tail.load(std::memory_order_acquire);
@@ -38,7 +38,7 @@ inline bool RingQueue<T, N>::Push(const T& item)
 }
 
 template<typename T, size_t N>
-inline bool RingQueue<T, N>::Pop(T& item)
+inline bool RingQueue<T, N>::Dequeue(T& item)
 {
     const size_t tail = _tail.load(std::memory_order_relaxed);
     const size_t head = _head.load(std::memory_order_acquire);

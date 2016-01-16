@@ -12,27 +12,27 @@ TEST_CASE("Wait-free ring queue", "[CppCommon][Threads]")
 {
     RingQueue<int, 4> queue;
 
-    REQUIRE(queue.Push(0));
-    REQUIRE(queue.Push(1));
-    REQUIRE(queue.Push(2));
-    REQUIRE(!queue.Push(3));
+    REQUIRE(queue.Enqueue(0));
+    REQUIRE(queue.Enqueue(1));
+    REQUIRE(queue.Enqueue(2));
+    REQUIRE(!queue.Enqueue(3));
 
     int v = -1;
 
-    REQUIRE((queue.Pop(v) && (v == 0)));
-    REQUIRE((queue.Pop(v) && (v == 1)));
+    REQUIRE((queue.Dequeue(v) && (v == 0)));
+    REQUIRE((queue.Dequeue(v) && (v == 1)));
 
-    REQUIRE(queue.Push(3));
-    REQUIRE(queue.Push(4));
-    REQUIRE(!queue.Push(5));
+    REQUIRE(queue.Enqueue(3));
+    REQUIRE(queue.Enqueue(4));
+    REQUIRE(!queue.Enqueue(5));
 
-    REQUIRE((queue.Pop(v) && (v == 2)));
-    REQUIRE((queue.Pop(v) && (v == 3)));
-    REQUIRE((queue.Pop(v) && (v == 4)));
-    REQUIRE(!queue.Pop(v));
+    REQUIRE((queue.Dequeue(v) && (v == 2)));
+    REQUIRE((queue.Dequeue(v) && (v == 3)));
+    REQUIRE((queue.Dequeue(v) && (v == 4)));
+    REQUIRE(!queue.Dequeue(v));
 
-    REQUIRE(queue.Push(5));
+    REQUIRE(queue.Enqueue(5));
 
-    REQUIRE((queue.Pop(v) && (v == 5)));
-    REQUIRE(!queue.Pop(v));
+    REQUIRE((queue.Dequeue(v) && (v == 5)));
+    REQUIRE(!queue.Dequeue(v));
 }

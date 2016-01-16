@@ -39,13 +39,13 @@
       <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/mpsc.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/executor.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/threads.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/spsc.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/timers.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/mpmc.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/random.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/containers.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/iterators.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/atomic.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/timers.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/spsc.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/sort.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/fwrite.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/cmake/SetCrtSecureWarningsOff.cmake" isTestSource="false" />
@@ -53,10 +53,11 @@
       <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/cmake/SetCompilerWarningAll.cmake" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/modules/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/modules/catch.cmake" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/source/threads/ring_queue.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/source/threads/test.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/tests/test_ring_queue.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/tests/test.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/examples/benchmark-ring_queue.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cmake/SetCrtSecureWarningsOff.cmake" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cmake/SetCompilerFeatures.cmake" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cmake/SetCompilerWarningAll.cmake" isTestSource="false" />
@@ -71,6 +72,7 @@
           <root url="file://$MODULE_DIR$/modules/cpp-optparse" />
           <root url="file://$MODULE_DIR$/modules/catch/single_include" />
           <root url="file://$MODULE_DIR$/modules/CppBenchmark/modules/cpp-optparse" />
+          <root url="file://$MODULE_DIR$/modules/CppBenchmark/modules/catch/single_include" />
           <root url="file://$MODULE_DIR$/modules/CppBenchmark/include" />
           <root url="file://$MODULE_DIR$/include" />
         </CLASSES>
@@ -81,6 +83,7 @@
           <root url="file://$MODULE_DIR$/modules/cpp-optparse" />
           <root url="file://$MODULE_DIR$/modules/catch/single_include" />
           <root url="file://$MODULE_DIR$/modules/CppBenchmark/modules/cpp-optparse" />
+          <root url="file://$MODULE_DIR$/modules/CppBenchmark/modules/catch/single_include" />
           <root url="file://$MODULE_DIR$/modules/CppBenchmark/include" />
           <root url="file://$MODULE_DIR$/include" />
         </SOURCES>

@@ -29,11 +29,8 @@ include_directories("modules/cpp-optparse")
 include_directories("modules/CppBenchmark/include")
 
 # Library
-file(GLOB_RECURSE HEADER_FILES "source/*.h")
-file(GLOB_RECURSE HEADER_FILES "source/threads/*.h")
 file(GLOB_RECURSE SOURCE_FILES "source/*.cpp")
-file(GLOB_RECURSE SOURCE_FILES "source/threads/*.cpp")
-add_library(cppcommon ${HEADER_FILES} ${SOURCE_FILES})
+add_library(cppcommon ${SOURCE_FILES})
 target_link_libraries(cppcommon)
 list(APPEND INSTALL_TARGETS cppcommon)
 
@@ -43,14 +40,23 @@ foreach(EXAMPLE_FILE ${EXAMPLE_FILES})
   string(REGEX REPLACE "(.*)\\.cpp" "\\1" EXAMPLE_NAME ${EXAMPLE_FILE})
   set(EXAMPLE_TARGET "cppcommon-example-${EXAMPLE_NAME}")
   add_executable(${EXAMPLE_TARGET} examples/${EXAMPLE_FILE})
-  target_link_libraries(${EXAMPLE_TARGET} cppcommon cppbenchmarks Threads::Threads)
+  target_link_libraries(${EXAMPLE_TARGET} cppcommon Threads::Threads)
   list(APPEND INSTALL_TARGETS ${EXAMPLE_TARGET})
 endforeach()
 
+# Benchmarks
+file(GLOB BENCHMARK_FILES RELATIVE "${PROJECT_SOURCE_DIR}/tests/benchmarks" "tests/benchmarks/*.cpp")
+foreach(BENCHMARK_FILE ${BENCHMARK_FILES})
+  string(REGEX REPLACE "(.*)\\.cpp" "\\1" BENCHMARK_NAME ${BENCHMARK_FILE})
+  set(BENCHMARK_TARGET "cppcommon-benchmark-${BENCHMARK_NAME}")
+  add_executable(${BENCHMARK_TARGET} tests/benchmarks/${BENCHMARK_FILE})
+  target_link_libraries(${BENCHMARK_TARGET} cppcommon cppbenchmark Threads::Threads)
+  list(APPEND INSTALL_TARGETS ${BENCHMARK_TARGET})
+endforeach()
+
 # Tests
-file(GLOB_RECURSE TESTS_HEADER_FILES "tests/*.h")
-file(GLOB_RECURSE TESTS_SOURCE_FILES "tests/*.cpp")
-add_executable(cppcommon-tests ${CATCH_HEADER} ${TESTS_HEADER_FILES} ${TESTS_SOURCE_FILES})
+file(GLOB TESTS_SOURCE_FILES "tests/*.cpp")
+add_executable(cppcommon-tests ${CATCH_HEADER} ${TESTS_SOURCE_FILES})
 target_link_libraries(cppcommon-tests cppcommon Threads::Threads)
 list(APPEND INSTALL_TARGETS cppcommon-tests)
 
