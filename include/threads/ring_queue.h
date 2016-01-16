@@ -16,13 +16,13 @@ namespace CppCommon {
 //! Wait-free ring queue
 /*!
     Single producer / single consumer wait-free ring queue use only atomic operations to provide thread safe enqueue
-    and dequeue operations. Ring queue is bounded to the fixed size provided through the template parameter.
+    and dequeue operations. Ring queue is bounded to the fixed capacity size provided through the template parameter.
 
     A combination of the algorithms described by the circular buffers documentation found in the Linux kernel, and the
     bounded MPMC queue by Dmitry Vyukov. Implemented in pure C++11. Should work across most CPU architectures.
     http://www.1024cores.net/home/lock-free-algorithms/queues/bounded-mpmc-queue
 */
-template<typename T, size_t N>
+template<typename T, int64_t N>
 class RingQueue
 {
 public:
@@ -34,8 +34,10 @@ public:
     RingQueue& operator=(const RingQueue&) = delete;
     RingQueue& operator=(RingQueue&&) = delete;
 
+    //! Get ring queue capacity
+    int64_t capacity() const { return _capacity; }
     //! Get ring queue size
-    size_t size() const { return _size; }
+    int64_t size() const;
 
     //! Enqueue item into the ring queue (producer thread method)
     /*!
@@ -43,6 +45,7 @@ public:
         \return 'true' if the item was successfully enqueue, 'false' if the ring queue is full
     */
     bool Enqueue(const T& item);
+
     //! Dequeue item from the ring queue (consumer thread method)
     /*!
         \param item - item to dequeue
@@ -54,15 +57,15 @@ private:
     typedef char cache_line_pad[64];
 
     cache_line_pad _pad0;
-    const size_t _size;
-    const size_t _mask;
+    const int64_t _capacity;
+    const int64_t _mask;
     T* const _buffer;
 
     cache_line_pad _pad1;
-    std::atomic<size_t> _head;
+    std::atomic<int64_t> _head;
 
     cache_line_pad _pad2;
-    std::atomic<size_t> _tail;
+    std::atomic<int64_t> _tail;
 };
 
 } // namespace CppCommon

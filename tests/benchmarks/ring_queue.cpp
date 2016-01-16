@@ -9,33 +9,37 @@
 
 #include "threads/ring_queue.h"
 
-const int items_to_produce = 100000000;
+const int64_t items_to_produce = 100000000;
 
-template<typename T, size_t N>
+template<typename T, int64_t N>
 void produce_consume(CppBenchmark::Context& context, const std::function<void()>& wait_strategy)
 {
+    int64_t crc = 0;
+
     CppCommon::RingQueue<T, N> queue;
 
     // Start consumer thread
-    auto consumer = std::thread([&queue, &wait_strategy]()
+    auto consumer = std::thread([&queue, &wait_strategy, &crc]()
     {
-        for (int i = 0; i < items_to_produce; ++i)
+        for (int64_t i = 0; i < items_to_produce; ++i)
         {
-            // Dequeue with the given wait strategy
+            // Dequeue using the given waiting strategy
             T item;
-			while (!queue.Dequeue(item))
+            while (!queue.Dequeue(item))
                 wait_strategy();
+
+            // Consume the item
+            crc += item;
         }
     });
 
     // Start producer thread
     auto producer = std::thread([&queue, &wait_strategy, &consumer]()
     {
-        for (int i = 0; i < items_to_produce; ++i)
+        for (int64_t i = 0; i < items_to_produce; ++i)
         {
-            // Enqueue with the given wait strategy
-            T item = (T)i;
-			while (!queue.Enqueue(item))
+            // Enqueue using the given waiting strategy
+            while (!queue.Enqueue((T)i))
                 wait_strategy();
         }
 
@@ -49,6 +53,8 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     // Update benchmark metrics
     context.metrics().AddItems(items_to_produce);
     context.metrics().AddBytes(items_to_produce * sizeof(T));
+    context.metrics().SetCustom("CRC", crc);
+    context.metrics().SetCustom("RingQueue.capacity", N);
 }
 
 BENCHMARK("RingQueue-SpinWait")
