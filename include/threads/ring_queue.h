@@ -39,15 +39,19 @@ public:
     //! Get ring queue size
     int64_t size() const;
 
-    //! Enqueue item into the ring queue (producer thread method)
+    //! Enqueue an item into the ring queue (producer thread method)
     /*!
+        The item will be copied into the ring queue.
+
         \param item - item to enqueue
         \return 'true' if the item was successfully enqueue, 'false' if the ring queue is full
     */
     bool Enqueue(const T& item);
 
-    //! Dequeue item from the ring queue (consumer thread method)
+    //! Dequeue an item from the ring queue (consumer thread method)
     /*!
+        The item will be copied from the ring queue.
+
         \param item - item to dequeue
         \return 'true' if the item was successfully dequeue, 'false' if the ring queue is empty
     */

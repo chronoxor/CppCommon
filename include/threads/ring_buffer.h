@@ -40,16 +40,20 @@ public:
     //! Get ring buffer size in bytes
     int64_t size() const;
 
-    //! Enqueue chunk of bytes into the ring buffer (producer thread method)
+    //! Enqueue a chunk of bytes into the ring buffer (producer thread method)
     /*!
+        The chunk of bytes will be copied into the ring buffer using 'memcpy()' function.
+
         \param chunk - chunk buffer to enqueue
         \param size - chunk buffer size
         \return 'true' if the chunk of bytes was successfully enqueue, 'false' if the ring buffer is full
     */
     bool Enqueue(const void* chunk, int64_t size);
 
-    //! Dequeue chunk of bytes from the ring buffer (consumer thread method)
+    //! Dequeue a chunk of bytes from the ring buffer (consumer thread method)
     /*!
+        The chunk of bytes will be copied from the ring buffer using 'memcpy()' function.
+
         \param chunk - chunk buffer to dequeue
         \param size - chunk buffer size
         \return 'true' if the chunk of bytes was successfully dequeue, 'false' if the ring buffer is empty
