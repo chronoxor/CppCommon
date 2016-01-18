@@ -4,18 +4,22 @@
 
 #include "catch.hpp"
 
-#include "threads/ring_buffer.h"
+#include "threads/wf_ring_buffer.h"
 
 using namespace CppCommon;
 
 TEST_CASE("Wait-free ring buffer", "[CppCommon][Threads]")
 {
-    RingBuffer<4> buffer;
+    WFRingBuffer<4> buffer;
 
     REQUIRE(buffer.capacity() == 3);
     REQUIRE(buffer.size() == 0);
 
     char data[4];
+    int64_t size;
+
+    REQUIRE(!buffer.Dequeue(data, size = 0));
+    REQUIRE(!buffer.Dequeue(data, size = 1));
 
     REQUIRE(!buffer.Enqueue(data, 4));
 
@@ -34,8 +38,6 @@ TEST_CASE("Wait-free ring buffer", "[CppCommon][Threads]")
 
     REQUIRE(!buffer.Enqueue(data, 1));
     REQUIRE(!buffer.Enqueue(data, 0));
-
-    int64_t size;
 
     REQUIRE((buffer.Dequeue(data, size = 3) && (size == 3)));
     REQUIRE(buffer.size() == 0);

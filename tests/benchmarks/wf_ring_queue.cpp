@@ -7,7 +7,7 @@
 #include <functional>
 #include <thread>
 
-#include "threads/ring_queue.h"
+#include "threads/wf_ring_queue.h"
 
 const int64_t items_to_produce = 100000000;
 
@@ -16,7 +16,8 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
 {
     int64_t crc = 0;
 
-    CppCommon::RingQueue<T, N> queue;
+    // Create wait-free ring queue
+    CppCommon::WFRingQueue<T, N> queue;
 
     // Start consumer thread
     auto consumer = std::thread([&queue, &wait_strategy, &crc]()
@@ -51,6 +52,7 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     producer.join();
 
     // Update benchmark metrics
+    context.metrics().AddIterations(items_to_produce - 1);
     context.metrics().AddItems(items_to_produce);
     context.metrics().AddBytes(items_to_produce * sizeof(T));
     context.metrics().SetCustom("CRC", crc);

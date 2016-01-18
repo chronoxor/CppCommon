@@ -1,13 +1,13 @@
 /*!
-    \file ring_queue.h
+    \file wf_ring_queue.h
     \brief Wait-free ring queue class definition
     \author Ivan Shynkarenka
     \date 15.01.2016
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_RING_QUEUE_H
-#define CPPCOMMON_RING_QUEUE_H
+#ifndef CPPCOMMON_WF_RING_QUEUE_H
+#define CPPCOMMON_WF_RING_QUEUE_H
 
 #include <atomic>
 
@@ -23,16 +23,16 @@ namespace CppCommon {
     http://www.1024cores.net/home/lock-free-algorithms/queues/bounded-mpmc-queue
 */
 template<typename T, int64_t N>
-class RingQueue
+class WFRingQueue
 {
 public:
-    RingQueue();
-    RingQueue(const RingQueue&) = delete;
-    RingQueue(RingQueue&&) = delete;
-    ~RingQueue() { delete[] _buffer; }
+    WFRingQueue();
+    WFRingQueue(const WFRingQueue&) = delete;
+    WFRingQueue(WFRingQueue&&) = delete;
+    ~WFRingQueue() { delete[] _buffer; }
 
-    RingQueue& operator=(const RingQueue&) = delete;
-    RingQueue& operator=(RingQueue&&) = delete;
+    WFRingQueue& operator=(const WFRingQueue&) = delete;
+    WFRingQueue& operator=(WFRingQueue&&) = delete;
 
     //! Get ring queue capacity
     int64_t capacity() const { return _capacity; }
@@ -74,6 +74,6 @@ private:
 
 } // namespace CppCommon
 
-#include "ring_queue.inl"
+#include "wf_ring_queue.inl"
 
-#endif //CPPCOMMON_RING_QUEUE_H
+#endif //CPPCOMMON_WF_RING_QUEUE_H

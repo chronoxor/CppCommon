@@ -1,5 +1,5 @@
 /*!
-    \file ring_buffer.cpp
+    \file wf_ring_buffer.cpp
     \brief Wait-free ring buffer example
     \author Ivan Shynkarenka
     \date 16.01.2016
@@ -10,14 +10,14 @@
 #include <string>
 #include <thread>
 
-#include "threads/ring_buffer.h"
+#include "threads/wf_ring_buffer.h"
 
 int main(int argc, char** argv)
 {
     std::cout << "Please write some text. Enter '#' to exit..." << std::endl;
 
-    // Create ring buffer
-    CppCommon::RingBuffer<1024> buffer;
+    // Create wait-free ring buffer
+    CppCommon::WFRingBuffer<1024> buffer;
 
     // Start consumer thread
     auto consumer = std::thread([&buffer]()

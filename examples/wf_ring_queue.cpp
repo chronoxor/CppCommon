@@ -1,5 +1,5 @@
 /*!
-    \file ring_queue.cpp
+    \file wf_ring_queue.cpp
     \brief Wait-free ring queue example
     \author Ivan Shynkarenka
     \date 16.01.2016
@@ -10,14 +10,14 @@
 #include <string>
 #include <thread>
 
-#include "threads/ring_queue.h"
+#include "threads/wf_ring_queue.h"
 
 int main(int argc, char** argv)
 {
     std::cout << "Please write some integer numbers. Enter '0' to exit..." << std::endl;
 
-    // Create ring queue
-    CppCommon::RingQueue<int, 1024> queue;
+    // Create wait-free ring queue
+    CppCommon::WFRingQueue<int, 1024> queue;
 
     // Start consumer thread
     auto consumer = std::thread([&queue]()

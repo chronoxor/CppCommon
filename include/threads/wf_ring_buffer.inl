@@ -1,5 +1,5 @@
 /*!
-    \file ring_buffer.inl
+    \file wf_ring_buffer.inl
     \brief Wait-free ring buffer class implementation
     \author Ivan Shynkarenka
     \date 16.01.2016
@@ -13,14 +13,14 @@ namespace {
 namespace CppCommon {
 
 template<int64_t N>
-inline RingBuffer<N>::RingBuffer() : _capacity(N - 1), _mask(N - 1), _buffer(new char[N]), _head(0), _tail(0)
+inline WFRingBuffer<N>::WFRingBuffer() : _capacity(N - 1), _mask(N - 1), _buffer(new char[N]), _head(0), _tail(0)
 {
     static_assert(N > 1, "Ring buffer size must be greater than one!");
     static_assert(IsPowerOfTwo(N), "Ring buffer size must be a power of two!");
 }
 
 template<int64_t N>
-inline int64_t RingBuffer<N>::size() const
+inline int64_t WFRingBuffer<N>::size() const
 {
     const int64_t head = _head.load(std::memory_order_relaxed);
     const int64_t tail = _tail.load(std::memory_order_acquire);
@@ -29,7 +29,7 @@ inline int64_t RingBuffer<N>::size() const
 }
 
 template<int64_t N>
-inline bool RingBuffer<N>::Enqueue(const void* chunk, int64_t size)
+inline bool WFRingBuffer<N>::Enqueue(const void* chunk, int64_t size)
 {
     if ((chunk == nullptr) || (size == 0) || (size > _capacity))
         return false;
@@ -50,11 +50,12 @@ inline bool RingBuffer<N>::Enqueue(const void* chunk, int64_t size)
 
     // Increase the head cursor
     _head.store(head + size, std::memory_order_release);
+
     return true;
 }
 
 template<int64_t N>
-inline bool RingBuffer<N>::Dequeue(void* chunk, int64_t& size)
+inline bool WFRingBuffer<N>::Dequeue(void* chunk, int64_t& size)
 {
     const int64_t tail = _tail.load(std::memory_order_relaxed);
     const int64_t head = _head.load(std::memory_order_acquire);
@@ -77,6 +78,7 @@ inline bool RingBuffer<N>::Dequeue(void* chunk, int64_t& size)
 
     // Increase the tail cursor
     _tail.store(tail + size, std::memory_order_release);
+
     return true;
 }
 

@@ -4,23 +4,25 @@
 
 #include "catch.hpp"
 
-#include "threads/ring_queue.h"
+#include "threads/wf_ring_queue.h"
 
 using namespace CppCommon;
 
 TEST_CASE("Wait-free ring queue", "[CppCommon][Threads]")
 {
-    RingQueue<int, 4> queue;
+    WFRingQueue<int, 4> queue;
 
     REQUIRE(queue.capacity() == 3);
     REQUIRE(queue.size() == 0);
+
+    int v = -1;
+
+    REQUIRE(!queue.Dequeue(v));
 
     REQUIRE((queue.Enqueue(0) && (queue.size() == 1)));
     REQUIRE((queue.Enqueue(1) && (queue.size() == 2)));
     REQUIRE((queue.Enqueue(2) && (queue.size() == 3)));
     REQUIRE(!queue.Enqueue(3));
-
-    int v = -1;
 
     REQUIRE(((queue.Dequeue(v) && (v == 0)) && (queue.size() == 2)));
     REQUIRE(((queue.Dequeue(v) && (v == 1)) && (queue.size() == 1)));

@@ -54,10 +54,14 @@
       <sourceFolder url="file://$MODULE_DIR$/modules/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/modules/catch.cmake" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/source/threads/test.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/tests/test_ring_queue.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/benchmarks/wf_ring_buffer.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/benchmarks/wf_ring_queue.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/test_wf_ring_buffer.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/tests/test.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/test_wf_ring_queue.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/examples/benchmark-ring_queue.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/examples/wf_ring_buffer.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/examples/wf_ring_queue.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cmake/SetCrtSecureWarningsOff.cmake" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cmake/SetCompilerFeatures.cmake" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cmake/SetCompilerWarningAll.cmake" isTestSource="false" />

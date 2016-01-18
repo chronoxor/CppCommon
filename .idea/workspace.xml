@@ -2,7 +2,7 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" assignedExecutableTargets="true" buildAllGenerated="true">
     <generated>
-      <config projectName="cppcommon" targetName="cppbenchmark-example-spsc" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-fwrite" />
       <config projectName="cppcommon" targetName="cppbenchmark-example-threads" />
       <config projectName="cppcommon" targetName="cppbenchmark-example-random" />
       <config projectName="cppcommon" targetName="cppbenchmark-example-fpu" />
@@ -11,16 +11,20 @@
       <config projectName="cppcommon" targetName="cppbenchmark-example-executor" />
       <config projectName="cppcommon" targetName="cppbenchmark-tests" />
       <config projectName="cppcommon" targetName="cpp-optparse" />
+      <config projectName="cppcommon" targetName="cppcommon-benchmark-wf_ring_queue" />
       <config projectName="cppcommon" targetName="cppbenchmark-example-containers" />
       <config projectName="cppcommon" targetName="cppcommon-example-benchmark-ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-example-wf_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-timers" />
       <config projectName="cppcommon" targetName="cppbenchmark-example-atomic" />
       <config projectName="cppcommon" targetName="cppcommon-tests" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-fwrite" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-mpmc" />
+      <config projectName="cppcommon" targetName="cppcommon-benchmark-wf_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-spsc" />
       <config projectName="cppcommon" targetName="cppbenchmark" />
       <config projectName="cppcommon" targetName="cppbenchmark-example-iterators" />
+      <config projectName="cppcommon" targetName="cppcommon-example-wf_ring_queue" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-mpmc" />
       <config projectName="cppcommon" targetName="cppbenchmark-example-mpsc" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-timers" />
     </generated>
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="false" GENERATION_PASS_SYSTEM_ENVIRONMENT="true">
@@ -30,9 +34,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="559410a7-8ec3-4eef-81f5-f9dd5eddd0fc" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/ring_buffer.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/ring_queue.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/include/threads/ring_buffer.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/include/threads/ring_buffer.inl" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/include/threads/ring_queue.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/include/threads/ring_queue.inl" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tests/benchmarks/ring_buffer.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tests/benchmarks/ring_queue.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tests/test_ring_buffer.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tests/test_ring_queue.cpp" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/CppCommon.iml" afterPath="$PROJECT_DIR$/.idea/CppCommon.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" afterPath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="CppCommon.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -53,19 +65,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ring_queue.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/include/threads/ring_queue.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="57" column="4" selection-start-line="57" selection-start-column="4" selection-end-line="57" selection-end-column="4" />
-              <folding>
-                <element signature="e#824#836#0" expanded="true" />
-                <marker date="1452823689992" expanded="true" signature="259:485" placeholder="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/CppBenchmark/CMakeLists.txt">
           <provider selected="true" editor-type-id="text-editor">
@@ -76,21 +75,35 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SetCompilerFeatures.cmake" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmake/SetCompilerFeatures.cmake">
+      <file leaf-file-name="wf_link_queue.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/include/threads/wf_link_queue.h">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+              <caret line="39" column="56" selection-start-line="39" selection-start-column="56" selection-end-line="39" selection-end-column="56" />
+              <folding>
+                <marker date="1453131385268" expanded="true" signature="296:531" placeholder="/.../" />
+                <marker date="1453131385268" expanded="true" signature="571:1773" placeholder="{...}" />
+                <marker date="1453131385268" expanded="true" signature="635:737" placeholder="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="wf_link_queue.inl" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/include/threads/wf_link_queue.inl">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.7407407">
+              <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="benchmark-ring_queue.cpp" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/examples/benchmark-ring_queue.cpp">
+      <file leaf-file-name="SetCompilerFeatures.cmake" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cmake/SetCompilerFeatures.cmake">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.24011299">
-              <caret line="22" column="32" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="32" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -109,6 +122,8 @@
         <option value="$PROJECT_DIR$/include/threads/ring_queue.h" />
         <option value="$PROJECT_DIR$/source/threads/ring_queue.cpp" />
         <option value="$PROJECT_DIR$/examples/benchmark-ring_queue.cpp" />
+        <option value="$PROJECT_DIR$/include/threads/wf_link_queue.h" />
+        <option value="$PROJECT_DIR$/include/threads/wf_link_queue.inl" />
       </list>
     </option>
   </component>
@@ -118,9 +133,10 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-7" />
-    <option name="width" value="2574" />
-    <option name="height" value="1554" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -209,7 +225,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
+              <option name="myItemId" value="include" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -224,6 +240,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="include" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="threads" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -262,6 +282,7 @@
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.C/C++" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
+    <property name="js-jscs-nodeInterpreter" value="C:\Program Files (x86)\nodejs\node.exe" />
   </component>
   <component name="RunManager" selected="Application.Build All">
     <configuration default="true" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" PASS_PARENT_ENVS="FALSE" TEST_MODE="SUITE_TEST">
@@ -369,7 +390,23 @@
       <envs />
       <method />
     </configuration>
-    <list size="20">
+    <configuration default="false" name="cppcommon-benchmark-wf_ring_buffer" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-benchmark-wf_ring_buffer" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-benchmark-wf_ring_buffer">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-benchmark-wf_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-benchmark-wf_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-benchmark-wf_ring_queue">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-wf_ring_buffer" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-wf_ring_buffer" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-wf_ring_buffer">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-wf_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-wf_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-wf_ring_queue">
+      <envs />
+      <method />
+    </configuration>
+    <list size="24">
       <item index="0" class="java.lang.String" itemvalue="Application.Build All" />
       <item index="1" class="java.lang.String" itemvalue="Application.cppcommon" />
       <item index="2" class="java.lang.String" itemvalue="Application.cppcommon-tests" />
@@ -390,6 +427,10 @@
       <item index="17" class="java.lang.String" itemvalue="Application.cppbenchmark-example-timers" />
       <item index="18" class="java.lang.String" itemvalue="Application.cppbenchmark-tests" />
       <item index="19" class="java.lang.String" itemvalue="Application.cppcommon-example-benchmark-ring_queue" />
+      <item index="20" class="java.lang.String" itemvalue="Application.cppcommon-benchmark-wf_ring_buffer" />
+      <item index="21" class="java.lang.String" itemvalue="Application.cppcommon-benchmark-wf_ring_queue" />
+      <item index="22" class="java.lang.String" itemvalue="Application.cppcommon-example-wf_ring_buffer" />
+      <item index="23" class="java.lang.String" itemvalue="Application.cppcommon-example-wf_ring_queue" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
@@ -406,26 +447,26 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="0" width="2574" height="1554" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25019547" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33333334" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32963988" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -444,14 +485,19 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/include/threads/ring_queue.h">
+    <entry file="file://$PROJECT_DIR$/modules/CppBenchmark/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="46" column="4" selection-start-line="46" selection-start-column="4" selection-end-line="46" selection-end-column="4" />
-          <folding>
-            <element signature="e#824#836#0" expanded="true" />
-            <marker date="1452823689992" expanded="true" signature="259:485" placeholder="{...}" />
-          </folding>
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake/SetCompilerFeatures.cmake">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -471,17 +517,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/include/threads/ring_queue.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="57" column="4" selection-start-line="57" selection-start-column="4" selection-end-line="57" selection-end-column="4" />
-          <folding>
-            <element signature="e#824#836#0" expanded="true" />
-            <marker date="1452823689992" expanded="true" signature="259:485" placeholder="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/CppBenchmark/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -498,10 +533,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/benchmark-ring_queue.cpp">
+    <entry file="file://$PROJECT_DIR$/include/threads/wf_link_queue.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.24011299">
-          <caret line="22" column="32" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="39" column="56" selection-start-line="39" selection-start-column="56" selection-end-line="39" selection-end-column="56" />
+          <folding>
+            <marker date="1453131385268" expanded="true" signature="296:531" placeholder="/.../" />
+            <marker date="1453131385268" expanded="true" signature="571:1773" placeholder="{...}" />
+            <marker date="1453131385268" expanded="true" signature="635:737" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/threads/wf_link_queue.inl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7407407">
+          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
           <folding />
         </state>
       </provider>
