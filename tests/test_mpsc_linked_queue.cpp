@@ -4,13 +4,13 @@
 
 #include "catch.hpp"
 
-#include "threads/wf_linked_queue.h"
+#include "threads/mpsc_linked_queue.h"
 
 using namespace CppCommon;
 
-TEST_CASE("Wait-free linked queue", "[CppCommon][Threads]")
+TEST_CASE("Multiple producers / single consumer wait-free linked queue", "[CppCommon][Threads]")
 {
-    WFLinkedQueue<int> queue;
+    MPSCLinkedQueue<int> queue;
 
     int v = -1;
 

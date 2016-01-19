@@ -1,6 +1,6 @@
 /*!
-    \file wf_bounded_queue.cpp
-    \brief Wait-free bounded queue example
+    \file mpsc_linked_queue.cpp
+    \brief Multiple producers / single consumer wait-free linked queue example
     \author Ivan Shynkarenka
     \date 19.01.2016
     \copyright MIT License
@@ -10,14 +10,14 @@
 #include <string>
 #include <thread>
 
-#include "threads/wf_bounded_queue.h"
+#include "threads/mpsc_linked_queue.h"
 
 int main(int argc, char** argv)
 {
     std::cout << "Please write some integer numbers. Enter '0' to exit..." << std::endl;
 
-    // Create wait-free bounded queue
-    CppCommon::WFBoundedQueue<int> queue(1024);
+    // Create multiple producers / single consumer wait-free linked queue
+    CppCommon::MPSCLinkedQueue<int> queue;
 
     // Start consumer thread
     auto consumer = std::thread([&queue]()

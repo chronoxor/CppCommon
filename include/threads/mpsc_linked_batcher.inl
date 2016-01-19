@@ -1,6 +1,6 @@
 /*!
-    \file wf_linked_batcher.inl
-    \brief Wait-free linked batcher class implementation
+    \file mpsc_linked_batcher.inl
+    \brief Multiple producers / single consumer wait-free linked batcher class implementation
     \author Ivan Shynkarenka
     \date 19.01.2016
     \copyright MIT License
@@ -9,19 +9,19 @@
 namespace CppCommon {
 
 template<typename T>
-inline WFLinkedBatcher<T>::WFLinkedBatcher() : _head(nullptr)
+inline MPSCLinkedBatcher<T>::MPSCLinkedBatcher() : _head(nullptr)
 {
 }
 
 template<typename T>
-inline WFLinkedBatcher<T>::~WFLinkedBatcher()
+inline MPSCLinkedBatcher<T>::~MPSCLinkedBatcher()
 {
     // Remove all nodes from the linked batcher
     Dequeue([](const T&){});
 }
 
 template<typename T>
-inline bool WFLinkedBatcher<T>::Enqueue(const T& item)
+inline bool MPSCLinkedBatcher<T>::Enqueue(const T& item)
 {
     // Create new head node
     Node* node = new Node;
@@ -42,7 +42,7 @@ inline bool WFLinkedBatcher<T>::Enqueue(const T& item)
 }
 
 template<typename T>
-inline bool WFLinkedBatcher<T>::Dequeue(const std::function<void(const T&)>& handler)
+inline bool MPSCLinkedBatcher<T>::Dequeue(const std::function<void(const T&)>& handler)
 {
     Node* last = _head.exchange(nullptr, std::memory_order_consume);
     Node* first = nullptr;

@@ -4,13 +4,13 @@
 
 #include "catch.hpp"
 
-#include "threads/wf_ring_buffer.h"
+#include "threads/spsc_ring_buffer.h"
 
 using namespace CppCommon;
 
-TEST_CASE("Wait-free ring buffer", "[CppCommon][Threads]")
+TEST_CASE("Single producer / single consumer wait-free ring buffer", "[CppCommon][Threads]")
 {
-    WFRingBuffer buffer(4);
+    SPSCRingBuffer buffer(4);
 
     REQUIRE(buffer.capacity() == 3);
     REQUIRE(buffer.size() == 0);

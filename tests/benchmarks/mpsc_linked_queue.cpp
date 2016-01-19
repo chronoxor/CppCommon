@@ -1,5 +1,5 @@
 //
-// Created by Ivan Shynkarenka on 19.01.2016.
+// Created by Ivan Shynkarenka on 18.01.2016.
 //
 
 #include "cppbenchmark.h"
@@ -8,7 +8,7 @@
 #include <thread>
 #include <vector>
 
-#include "threads/wf_linked_batcher.h"
+#include "threads/mpsc_linked_queue.h"
 
 const int64_t items_to_produce = 10000000;
 const int producers_from = 1;
@@ -21,27 +21,21 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     const int64_t producers_count = context.x();
     int64_t crc = 0;
 
-    // Create wait-free linked batcher
-    CppCommon::WFLinkedBatcher<T> batcher;
+    // Create multiple producers / single consumer wait-free linked queue
+    CppCommon::MPSCLinkedQueue<T> queue;
 
     // Start consumer thread
-    auto consumer = std::thread([&batcher, &wait_strategy, &crc]()
+    auto consumer = std::thread([&queue, &wait_strategy, &crc]()
     {
-        for (int64_t i = 0; i < items_to_produce;)
+        for (int64_t i = 0; i < items_to_produce; ++i)
         {
-            // Define the batcher handler
-            auto handler = [&crc, &i](const int& item)
-            {
-                // Consume the item
-                crc += item;
-
-                // Increase the items counter
-                ++i;
-            };
-
-            // Dequeue all available items using the given waiting strategy
-            while (!batcher.Dequeue(handler))
+            // Dequeue using the given waiting strategy
+            T item;
+            while (!queue.Dequeue(item))
                 wait_strategy();
+
+            // Consume the item
+            crc += item;
         }
     });
 
@@ -49,13 +43,13 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     std::vector<std::thread> producers;
     for (int64_t producer = 0; producer < producers_count; ++producer)
     {
-        producers.push_back(std::thread([&batcher, &wait_strategy, producer, producers_count]()
+        producers.push_back(std::thread([&queue, &wait_strategy, producer, producers_count]()
         {
             int64_t items = (items_to_produce / producers_count);
             for (int64_t i = 0; i < items; ++i)
             {
                 // Enqueue using the given waiting strategy
-                while (!batcher.Enqueue((T)(items * producer + i)))
+                while (!queue.Enqueue((T)(items * producer + i)))
                     wait_strategy();
             }
         }));
@@ -75,12 +69,12 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK("LinkedBatcher-SpinWait-producers", settings)
+BENCHMARK("MPSCLinkedQueue-SpinWait-producers", settings)
 {
     produce_consume<int>(context, []{});
 }
 
-BENCHMARK("LinkedBatcher-YieldWait-producers", settings)
+BENCHMARK("MPSCLinkedQueue-YieldWait-producers", settings)
 {
     produce_consume<int>(context, []{ std::this_thread::yield(); });
 }

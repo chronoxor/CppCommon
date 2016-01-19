@@ -8,7 +8,7 @@
 #include <thread>
 #include <vector>
 
-#include "threads/wf_bounded_queue.h"
+#include "threads/mpmc_ring_queue.h"
 
 const int64_t items_to_produce = 10000000;
 const int producers_from = 1;
@@ -21,8 +21,8 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     const int64_t producers_count = context.x();
     int64_t crc = 0;
 
-    // Create wait-free bounded queue
-    CppCommon::WFBoundedQueue<T> queue(N);
+    // Create multiple producers / multiple consumers wait-free ring queue
+    CppCommon::MPMCRingQueue<T> queue(N);
 
     // Start consumer thread
     auto consumer = std::thread([&queue, &wait_strategy, &crc]()
@@ -66,16 +66,16 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     context.metrics().AddIterations(items_to_produce - 1);
     context.metrics().AddItems(items_to_produce);
     context.metrics().AddBytes(items_to_produce * sizeof(T));
-    context.metrics().SetCustom("BoundedQueue.capacity", N);
+    context.metrics().SetCustom("MPMCRingQueue.capacity", N);
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK("BoundedQueue-SpinWait-producers", settings)
+BENCHMARK("MPMCRingQueue-SpinWait-producers", settings)
 {
     produce_consume<int, 1048576>(context, []{});
 }
 
-BENCHMARK("BoundedQueue-YieldWait-producers", settings)
+BENCHMARK("MPMCRingQueue-YieldWait-producers", settings)
 {
     produce_consume<int, 1048576>(context, []{ std::this_thread::yield(); });
 }

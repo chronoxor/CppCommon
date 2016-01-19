@@ -4,13 +4,13 @@
 
 #include "catch.hpp"
 
-#include "threads/wf_bounded_queue.h"
+#include "threads/mpmc_ring_queue.h"
 
 using namespace CppCommon;
 
-TEST_CASE("Wait-free bounded queue", "[CppCommon][Threads]")
+TEST_CASE("Multiple producers / multiple consumers wait-free ring queue", "[CppCommon][Threads]")
 {
-    WFBoundedQueue<int> queue(4);
+    MPMCRingQueue<int> queue(4);
 
     REQUIRE(queue.capacity() == 4);
     REQUIRE(queue.size() == 0);

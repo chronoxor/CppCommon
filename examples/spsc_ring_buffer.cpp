@@ -1,6 +1,6 @@
 /*!
-    \file wf_ring_buffer.cpp
-    \brief Wait-free ring buffer example
+    \file spsc_ring_buffer.cpp
+    \brief Single producer / single consumer wait-free ring buffer example
     \author Ivan Shynkarenka
     \date 16.01.2016
     \copyright MIT License
@@ -10,14 +10,14 @@
 #include <string>
 #include <thread>
 
-#include "threads/wf_ring_buffer.h"
+#include "threads/spsc_ring_buffer.h"
 
 int main(int argc, char** argv)
 {
     std::cout << "Please write some text. Enter '#' to exit..." << std::endl;
 
-    // Create wait-free ring buffer
-    CppCommon::WFRingBuffer buffer(1024);
+    // Create single producer / single consumer wait-free ring buffer
+    CppCommon::SPSCRingBuffer buffer(1024);
 
     // Start consumer thread
     auto consumer = std::thread([&buffer]()

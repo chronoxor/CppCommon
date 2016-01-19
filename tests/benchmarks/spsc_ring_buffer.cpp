@@ -7,7 +7,7 @@
 #include <functional>
 #include <thread>
 
-#include "threads/wf_ring_buffer.h"
+#include "threads/spsc_ring_buffer.h"
 
 const int64_t bytes_to_produce = 100000000;
 const int item_size_from = 4;
@@ -21,8 +21,8 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     const int items_to_produce = bytes_to_produce / item_size;
     int64_t crc = 0;
 
-    // Create wait-free ring buffer
-    CppCommon::WFRingBuffer buffer(N);
+    // Create single producer / single consumer wait-free ring buffer
+    CppCommon::SPSCRingBuffer buffer(N);
 
     // Start consumer thread
     auto consumer = std::thread([&buffer, &wait_strategy, item_size, items_to_produce, &crc]()
@@ -76,16 +76,16 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     context.metrics().AddIterations(items_to_produce - 1);
     context.metrics().AddItems(items_to_produce);
     context.metrics().AddBytes(items_to_produce * item_size);
-    context.metrics().SetCustom("RingBuffer.capacity", N);
+    context.metrics().SetCustom("SPSCRingBuffer.capacity", N);
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK("RingBuffer-SpinWait-chunk", settings)
+BENCHMARK("SPSCRingBuffer-SpinWait-chunk", settings)
 {
     produce_consume<1048576>(context, []{});
 }
 
-BENCHMARK("RingBuffer-YieldWait-chunk", settings)
+BENCHMARK("SPSCRingBuffer-YieldWait-chunk", settings)
 {
     produce_consume<1048576>(context, []{ std::this_thread::yield(); });
 }

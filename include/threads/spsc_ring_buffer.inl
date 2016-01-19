@@ -1,6 +1,6 @@
 /*!
-    \file wf_ring_buffer.inl
-    \brief Wait-free ring buffer class implementation
+    \file spsc_ring_buffer.inl
+    \brief Single producer / single consumer wait-free ring buffer class implementation
     \author Ivan Shynkarenka
     \date 16.01.2016
     \copyright MIT License
@@ -12,13 +12,13 @@ namespace {
 
 namespace CppCommon {
 
-inline WFRingBuffer::WFRingBuffer(int64_t capacity) : _capacity(capacity - 1), _mask(capacity - 1), _buffer(new char[capacity]), _head(0), _tail(0)
+inline SPSCRingBuffer::SPSCRingBuffer(int64_t capacity) : _capacity(capacity - 1), _mask(capacity - 1), _buffer(new char[capacity]), _head(0), _tail(0)
 {
     assert((capacity > 1) && "Ring buffer capacity must be greater than one!");
     assert(IsPowerOfTwo(capacity) && "Ring buffer capacity must be a power of two!");
 }
 
-inline int64_t WFRingBuffer::size() const
+inline int64_t SPSCRingBuffer::size() const
 {
     const int64_t head = _head.load(std::memory_order_relaxed);
     const int64_t tail = _tail.load(std::memory_order_relaxed);
@@ -26,7 +26,7 @@ inline int64_t WFRingBuffer::size() const
     return (head >= tail) ? (head - tail) : (_capacity + 1 + head - tail);
 }
 
-inline bool WFRingBuffer::Enqueue(const void* chunk, int64_t size)
+inline bool SPSCRingBuffer::Enqueue(const void* chunk, int64_t size)
 {
     assert((chunk != nullptr) && "Pointer to the chunk should not be equal to 'nullptr'!");
     assert((size > 0) && "Chunk size should be greater than zero!");
@@ -55,7 +55,7 @@ inline bool WFRingBuffer::Enqueue(const void* chunk, int64_t size)
     return true;
 }
 
-inline bool WFRingBuffer::Dequeue(void* chunk, int64_t& size)
+inline bool SPSCRingBuffer::Dequeue(void* chunk, int64_t& size)
 {
     assert((chunk != nullptr) && "Pointer to the chunk should not be equal to 'nullptr'!");
     assert((size > 0) && "Chunk size should be greater than zero!");

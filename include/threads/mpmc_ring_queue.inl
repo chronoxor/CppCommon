@@ -1,6 +1,6 @@
 /*!
-    \file wf_bounded_queue.inl
-    \brief Wait-free bounded queue class implementation
+    \file mpmc_ring_queue.inl
+    \brief Multiple producers / multiple consumers wait-free ring queue class implementation
     \author Ivan Shynkarenka
     \date 19.01.2016
     \copyright MIT License
@@ -13,10 +13,10 @@ namespace {
 namespace CppCommon {
 
 template<typename T>
-inline WFBoundedQueue<T>::WFBoundedQueue(int64_t capacity) : _capacity(capacity), _mask(capacity - 1), _buffer(new Node[capacity]), _head(0), _tail(0)
+inline MPMCRingQueue<T>::MPMCRingQueue(int64_t capacity) : _capacity(capacity), _mask(capacity - 1), _buffer(new Node[capacity]), _head(0), _tail(0)
 {
-    assert((capacity > 1) && "Bounded queue capacity must be greater than one!");
-    assert(IsPowerOfTwo(capacity) && "Bounded queue capacity must be a power of two!");
+    assert((capacity > 1) && "Ring queue capacity must be greater than one!");
+    assert(IsPowerOfTwo(capacity) && "Ring queue capacity must be a power of two!");
 
     // Populate the sequence initial values
     for (int64_t i = 0; i < capacity; ++i)
@@ -24,7 +24,7 @@ inline WFBoundedQueue<T>::WFBoundedQueue(int64_t capacity) : _capacity(capacity)
 }
 
 template<typename T>
-inline int64_t WFBoundedQueue<T>::size() const
+inline int64_t MPMCRingQueue<T>::size() const
 {
     const int64_t head = _head.load(std::memory_order_relaxed);
     const int64_t tail = _tail.load(std::memory_order_relaxed);
@@ -33,7 +33,7 @@ inline int64_t WFBoundedQueue<T>::size() const
 }
 
 template<typename T>
-inline bool WFBoundedQueue<T>::Enqueue(const T& item)
+inline bool MPMCRingQueue<T>::Enqueue(const T& item)
 {
     int64_t head_sequence = _head.load(std::memory_order_relaxed);
 
@@ -78,7 +78,7 @@ inline bool WFBoundedQueue<T>::Enqueue(const T& item)
 }
 
 template<typename T>
-inline bool WFBoundedQueue<T>::Dequeue(T& item)
+inline bool MPMCRingQueue<T>::Dequeue(T& item)
 {
     int64_t tail_sequence = _tail.load(std::memory_order_relaxed);
 

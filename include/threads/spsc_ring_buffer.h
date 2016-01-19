@@ -1,20 +1,20 @@
 /*!
-    \file wf_ring_buffer.h
-    \brief Wait-free ring buffer class definition
+    \file spsc_ring_buffer.h
+    \brief Single producer / single consumer wait-free ring buffer class definition
     \author Ivan Shynkarenka
     \date 16.01.2016
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_WF_RING_BUFFER_H
-#define CPPCOMMON_WF_RING_BUFFER_H
+#ifndef CPPCOMMON_SPSC_RING_BUFFER_H
+#define CPPCOMMON_SPSC_RING_BUFFER_H
 
 #include <atomic>
 #include <cassert>
 
 namespace CppCommon {
 
-//! Wait-free ring buffer
+//! Single producer / single consumer wait-free ring buffer
 /*!
     Single producer / single consumer wait-free ring buffer use only atomic operations to provide thread-safe
     enqueue and dequeue operations. Ring buffer is bounded to the fixed capacity provided in the constructor.
@@ -23,20 +23,20 @@ namespace CppCommon {
     bounded MPMC queue by Dmitry Vyukov. Implemented in pure C++11. Should work across most CPU architectures.
     http://www.1024cores.net/home/lock-free-algorithms/queues/bounded-mpmc-queue
 */
-class WFRingBuffer
+class SPSCRingBuffer
 {
 public:
     //! Default class constructor
     /*!
         \param capacity - ring buffer capacity (must be a power of two)
     */
-    WFRingBuffer(int64_t capacity);
-    WFRingBuffer(const WFRingBuffer&) = delete;
-    WFRingBuffer(WFRingBuffer&&) = delete;
-    ~WFRingBuffer() { delete[] _buffer; }
+    SPSCRingBuffer(int64_t capacity);
+    SPSCRingBuffer(const SPSCRingBuffer&) = delete;
+    SPSCRingBuffer(SPSCRingBuffer&&) = delete;
+    ~SPSCRingBuffer() { delete[] _buffer; }
 
-    WFRingBuffer& operator=(const WFRingBuffer&) = delete;
-    WFRingBuffer& operator=(WFRingBuffer&&) = delete;
+    SPSCRingBuffer& operator=(const SPSCRingBuffer&) = delete;
+    SPSCRingBuffer& operator=(SPSCRingBuffer&&) = delete;
 
     //! Get ring buffer capacity in bytes
     int64_t capacity() const { return _capacity; }
@@ -80,6 +80,6 @@ private:
 
 } // namespace CppCommon
 
-#include "wf_ring_buffer.inl"
+#include "spsc_ring_buffer.inl"
 
-#endif //CPPCOMMON_WF_RING_BUFFER_H
+#endif //CPPCOMMON_SPSC_RING_BUFFER_H

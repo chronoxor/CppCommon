@@ -1,19 +1,19 @@
 /*!
-    \file wf_linked_queue.h
-    \brief Wait-free linked queue class definition
+    \file mpsc_linked_queue.h
+    \brief Multiple producers / single consumer wait-free linked queue class definition
     \author Ivan Shynkarenka
     \date 18.01.2016
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_WF_LINKED_QUEUE_H
-#define CPPCOMMON_WF_LINKED_QUEUE_H
+#ifndef CPPCOMMON_MPSC_LINKED_QUEUE_H
+#define CPPCOMMON_MPSC_LINKED_QUEUE_H
 
 #include <atomic>
 
 namespace CppCommon {
 
-//! Wait-free linked queue
+//! Multiple producers / single consumer wait-free linked queue
 /*!
     Multiple producers / single consumer wait-free linked queue use only atomic operations to provide thread-safe
     enqueue and dequeue operations. Linked queue is a dynamically grows queue which allocates memory for each
@@ -23,16 +23,16 @@ namespace CppCommon {
     http://www.1024cores.net/home/lock-free-algorithms/queues/non-intrusive-mpsc-node-based-queue
 */
 template<typename T>
-class WFLinkedQueue
+class MPSCLinkedQueue
 {
 public:
-    WFLinkedQueue();
-    WFLinkedQueue(const WFLinkedQueue&) = delete;
-    WFLinkedQueue(WFLinkedQueue&&) = delete;
-    ~WFLinkedQueue();
+    MPSCLinkedQueue();
+    MPSCLinkedQueue(const MPSCLinkedQueue&) = delete;
+    MPSCLinkedQueue(MPSCLinkedQueue&&) = delete;
+    ~MPSCLinkedQueue();
 
-    WFLinkedQueue& operator=(const WFLinkedQueue&) = delete;
-    WFLinkedQueue& operator=(WFLinkedQueue&&) = delete;
+    MPSCLinkedQueue& operator=(const MPSCLinkedQueue&) = delete;
+    MPSCLinkedQueue& operator=(MPSCLinkedQueue&&) = delete;
 
     //! Enqueue an item into the linked queue (multiple producers threads method)
     /*!
@@ -70,6 +70,6 @@ private:
 
 } // namespace CppCommon
 
-#include "wf_linked_queue.inl"
+#include "mpsc_linked_queue.inl"
 
-#endif //CPPCOMMON_WF_LINKED_QUEUE_H
+#endif //CPPCOMMON_MPSC_LINKED_QUEUE_H

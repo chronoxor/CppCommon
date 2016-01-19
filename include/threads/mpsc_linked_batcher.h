@@ -1,20 +1,20 @@
 /*!
-    \file wf_linked_batcher.h
-    \brief Wait-free linked batcher class definition
+    \file mpsc_linked_batcher.h
+    \brief Multiple producers / single consumer wait-free linked batcher class definition
     \author Ivan Shynkarenka
     \date 19.01.2016
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_WF_LINKED_BATCHER_H
-#define CPPCOMMON_WF_LINKED_BATCHER_H
+#ifndef CPPCOMMON_MPSC_LINKED_BATCHER_H
+#define CPPCOMMON_MPSC_LINKED_BATCHER_H
 
 #include <atomic>
 #include <functional>
 
 namespace CppCommon {
 
-//! Wait-free linked batcher
+//! Multiple producers / single consumer wait-free linked batcher
 /*!
     Multiple producers / single consumer wait-free linked batcher use only atomic operations to provide thread-safe
     enqueue and batch dequeue operations. Linked batcher is a dynamically grows queue which allocates memory for each
@@ -24,16 +24,16 @@ namespace CppCommon {
     http://www.boost.org/doc/libs/1_60_0/doc/html/atomic/usage_examples.html#boost_atomic.usage_examples.mp_queue
 */
 template<typename T>
-class WFLinkedBatcher
+class MPSCLinkedBatcher
 {
 public:
-    WFLinkedBatcher();
-    WFLinkedBatcher(const WFLinkedBatcher&) = delete;
-    WFLinkedBatcher(WFLinkedBatcher&&) = delete;
-    ~WFLinkedBatcher();
+    MPSCLinkedBatcher();
+    MPSCLinkedBatcher(const MPSCLinkedBatcher&) = delete;
+    MPSCLinkedBatcher(MPSCLinkedBatcher&&) = delete;
+    ~MPSCLinkedBatcher();
 
-    WFLinkedBatcher& operator=(const WFLinkedBatcher&) = delete;
-    WFLinkedBatcher& operator=(WFLinkedBatcher&&) = delete;
+    MPSCLinkedBatcher& operator=(const MPSCLinkedBatcher&) = delete;
+    MPSCLinkedBatcher& operator=(MPSCLinkedBatcher&&) = delete;
 
     //! Enqueue an item into the linked batcher (multiple producers threads method)
     /*!
@@ -65,6 +65,6 @@ private:
 
 } // namespace CppCommon
 
-#include "wf_linked_batcher.inl"
+#include "mpsc_linked_batcher.inl"
 
-#endif //CPPCOMMON_WF_LINKED_BATCHER_H
+#endif //CPPCOMMON_MPSC_LINKED_BATCHER_H

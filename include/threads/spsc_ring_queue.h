@@ -1,20 +1,20 @@
 /*!
-    \file wf_ring_queue.h
-    \brief Wait-free ring queue class definition
+    \file spsc_ring_queue.h
+    \brief Single producer / single consumer wait-free ring queue class definition
     \author Ivan Shynkarenka
     \date 15.01.2016
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_WF_RING_QUEUE_H
-#define CPPCOMMON_WF_RING_QUEUE_H
+#ifndef CPPCOMMON_SPSC_RING_QUEUE_H
+#define CPPCOMMON_SPSC_RING_QUEUE_H
 
 #include <atomic>
 #include <cassert>
 
 namespace CppCommon {
 
-//! Wait-free ring queue
+//! Single producer / single consumer wait-free ring queue
 /*!
     Single producer / single consumer wait-free ring queue use only atomic operations to provide thread-safe enqueue
     and dequeue operations. Ring queue is bounded to the fixed capacity provided in the constructor.
@@ -24,20 +24,20 @@ namespace CppCommon {
     http://www.1024cores.net/home/lock-free-algorithms/queues/bounded-mpmc-queue
 */
 template<typename T>
-class WFRingQueue
+class SPSCRingQueue
 {
 public:
     //! Default class constructor
     /*!
         \param capacity - ring queue capacity (must be a power of two)
     */
-    WFRingQueue(int64_t capacity);
-    WFRingQueue(const WFRingQueue&) = delete;
-    WFRingQueue(WFRingQueue&&) = delete;
-    ~WFRingQueue() { delete[] _buffer; }
+    SPSCRingQueue(int64_t capacity);
+    SPSCRingQueue(const SPSCRingQueue&) = delete;
+    SPSCRingQueue(SPSCRingQueue&&) = delete;
+    ~SPSCRingQueue() { delete[] _buffer; }
 
-    WFRingQueue& operator=(const WFRingQueue&) = delete;
-    WFRingQueue& operator=(WFRingQueue&&) = delete;
+    SPSCRingQueue& operator=(const SPSCRingQueue&) = delete;
+    SPSCRingQueue& operator=(SPSCRingQueue&&) = delete;
 
     //! Get ring queue capacity
     int64_t capacity() const { return _capacity; }
@@ -79,6 +79,6 @@ private:
 
 } // namespace CppCommon
 
-#include "wf_ring_queue.inl"
+#include "spsc_ring_queue.inl"
 
-#endif //CPPCOMMON_WF_RING_QUEUE_H
+#endif //CPPCOMMON_SPSC_RING_QUEUE_H

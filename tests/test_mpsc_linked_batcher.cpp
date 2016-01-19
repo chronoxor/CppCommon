@@ -4,13 +4,13 @@
 
 #include "catch.hpp"
 
-#include "threads/wf_linked_batcher.h"
+#include "threads/mpsc_linked_batcher.h"
 
 using namespace CppCommon;
 
-TEST_CASE("Wait-free linked batcher", "[CppCommon][Threads]")
+TEST_CASE("Multiple producers / single consumer wait-free linked batcher", "[CppCommon][Threads]")
 {
-    WFLinkedBatcher<int> batcher;
+    MPSCLinkedBatcher<int> batcher;
 
     REQUIRE(!batcher.Dequeue([](const int&){}));
 

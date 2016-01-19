@@ -1,6 +1,6 @@
 /*!
-    \file wf_linked_queue.inl
-    \brief Wait-free linked queue class implementation
+    \file mpsc_linked_queue.inl
+    \brief Multiple producers / single consumer wait-free linked queue class implementation
     \author Ivan Shynkarenka
     \date 18.01.2016
     \copyright MIT License
@@ -9,7 +9,7 @@
 namespace CppCommon {
 
 template<typename T>
-inline WFLinkedQueue<T>::WFLinkedQueue() : _head(new Node), _tail(_head.load(std::memory_order_relaxed))
+inline MPSCLinkedQueue<T>::MPSCLinkedQueue() : _head(new Node), _tail(_head.load(std::memory_order_relaxed))
 {
     // Linked queue is initialized with a fake node as a head node
     Node* front = _head.load(std::memory_order_relaxed);
@@ -17,7 +17,7 @@ inline WFLinkedQueue<T>::WFLinkedQueue() : _head(new Node), _tail(_head.load(std
 }
 
 template<typename T>
-inline WFLinkedQueue<T>::~WFLinkedQueue()
+inline MPSCLinkedQueue<T>::~MPSCLinkedQueue()
 {
     // Remove all nodes from the linked queue
     T item;
@@ -29,7 +29,7 @@ inline WFLinkedQueue<T>::~WFLinkedQueue()
 }
 
 template<typename T>
-inline bool WFLinkedQueue<T>::Enqueue(const T& item)
+inline bool MPSCLinkedQueue<T>::Enqueue(const T& item)
 {
     // Create new head node
     Node* node = new Node;
@@ -48,7 +48,7 @@ inline bool WFLinkedQueue<T>::Enqueue(const T& item)
 }
 
 template<typename T>
-inline bool WFLinkedQueue<T>::Dequeue(T& item)
+inline bool MPSCLinkedQueue<T>::Dequeue(T& item)
 {
     Node* tail = _tail.load(std::memory_order_relaxed);
     Node* next = tail->next.load(std::memory_order_acquire);

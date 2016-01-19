@@ -4,13 +4,13 @@
 
 #include "catch.hpp"
 
-#include "threads/wf_ring_queue.h"
+#include "threads/spsc_ring_queue.h"
 
 using namespace CppCommon;
 
-TEST_CASE("Wait-free ring queue", "[CppCommon][Threads]")
+TEST_CASE("Single producer / single consumer wait-free ring queue", "[CppCommon][Threads]")
 {
-    WFRingQueue<int> queue(4);
+    SPSCRingQueue<int> queue(4);
 
     REQUIRE(queue.capacity() == 3);
     REQUIRE(queue.size() == 0);
