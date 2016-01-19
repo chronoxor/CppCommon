@@ -10,7 +10,7 @@ using namespace CppCommon;
 
 TEST_CASE("Wait-free ring queue", "[CppCommon][Threads]")
 {
-    WFRingQueue<int, 4> queue;
+    WFRingQueue<int> queue(4);
 
     REQUIRE(queue.capacity() == 3);
     REQUIRE(queue.size() == 0);

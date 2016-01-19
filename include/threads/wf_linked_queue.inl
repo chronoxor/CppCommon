@@ -1,6 +1,6 @@
 /*!
-    \file wf_link_queue.inl
-    \brief Wait-free link queue class implementation
+    \file wf_linked_queue.inl
+    \brief Wait-free linked queue class implementation
     \author Ivan Shynkarenka
     \date 18.01.2016
     \copyright MIT License
@@ -9,17 +9,17 @@
 namespace CppCommon {
 
 template<typename T>
-inline WFLinkQueue<T>::WFLinkQueue() : _head(new Node), _tail(_head.load(std::memory_order_relaxed))
+inline WFLinkedQueue<T>::WFLinkedQueue() : _head(new Node), _tail(_head.load(std::memory_order_relaxed))
 {
-    // Link queue is initialized with a fake node as a head node
+    // Linked queue is initialized with a fake node as a head node
     Node* front = _head.load(std::memory_order_relaxed);
     front->next.store(nullptr, std::memory_order_relaxed);
 }
 
 template<typename T>
-inline WFLinkQueue<T>::~WFLinkQueue()
+inline WFLinkedQueue<T>::~WFLinkedQueue()
 {
-    // Remove all nodes from the link queue
+    // Remove all nodes from the linked queue
     T item;
     while (Dequeue(item)) {}
 
@@ -29,7 +29,7 @@ inline WFLinkQueue<T>::~WFLinkQueue()
 }
 
 template<typename T>
-inline bool WFLinkQueue<T>::Enqueue(const T& item)
+inline bool WFLinkedQueue<T>::Enqueue(const T& item)
 {
     // Create new head node
     Node* node = new Node;
@@ -40,7 +40,7 @@ inline bool WFLinkQueue<T>::Enqueue(const T& item)
     node->value = item;
     node->next.store(nullptr, std::memory_order_relaxed);
 
-    // Insert new head node and link it with the previous one
+    // Insert new head node into the queue and linked it with the previous one
     Node* prev_head = _head.exchange(node, std::memory_order_acq_rel);
     prev_head->next.store(node, std::memory_order_release);
 
@@ -48,12 +48,12 @@ inline bool WFLinkQueue<T>::Enqueue(const T& item)
 }
 
 template<typename T>
-inline bool WFLinkQueue<T>::Dequeue(T& item)
+inline bool WFLinkedQueue<T>::Dequeue(T& item)
 {
     Node* tail = _tail.load(std::memory_order_relaxed);
     Node* next = tail->next.load(std::memory_order_acquire);
 
-    // Check if the link queue is empty
+    // Check if the linked queue is empty
     if (next == nullptr)
         return false;
 

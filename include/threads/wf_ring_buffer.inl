@@ -12,24 +12,21 @@ namespace {
 
 namespace CppCommon {
 
-template<int64_t N>
-inline WFRingBuffer<N>::WFRingBuffer() : _capacity(N - 1), _mask(N - 1), _buffer(new char[N]), _head(0), _tail(0)
+inline WFRingBuffer::WFRingBuffer(int64_t capacity) : _capacity(capacity - 1), _mask(capacity - 1), _buffer(new char[capacity]), _head(0), _tail(0)
 {
-    static_assert(N > 1, "Ring buffer size must be greater than one!");
-    static_assert(IsPowerOfTwo(N), "Ring buffer size must be a power of two!");
+    assert((capacity > 1) && "Ring buffer capacity must be greater than one!");
+    assert(IsPowerOfTwo(capacity) && "Ring buffer capacity must be a power of two!");
 }
 
-template<int64_t N>
-inline int64_t WFRingBuffer<N>::size() const
+inline int64_t WFRingBuffer::size() const
 {
     const int64_t head = _head.load(std::memory_order_relaxed);
-    const int64_t tail = _tail.load(std::memory_order_acquire);
+    const int64_t tail = _tail.load(std::memory_order_relaxed);
 
-    return ((head - tail) & _mask);
+    return head - tail;
 }
 
-template<int64_t N>
-inline bool WFRingBuffer<N>::Enqueue(const void* chunk, int64_t size)
+inline bool WFRingBuffer::Enqueue(const void* chunk, int64_t size)
 {
     if ((chunk == nullptr) || (size == 0) || (size > _capacity))
         return false;
@@ -54,8 +51,7 @@ inline bool WFRingBuffer<N>::Enqueue(const void* chunk, int64_t size)
     return true;
 }
 
-template<int64_t N>
-inline bool WFRingBuffer<N>::Dequeue(void* chunk, int64_t& size)
+inline bool WFRingBuffer::Dequeue(void* chunk, int64_t& size)
 {
     const int64_t tail = _tail.load(std::memory_order_relaxed);
     const int64_t head = _head.load(std::memory_order_acquire);

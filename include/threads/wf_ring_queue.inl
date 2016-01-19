@@ -12,24 +12,24 @@ namespace {
 
 namespace CppCommon {
 
-template<typename T, int64_t N>
-inline WFRingQueue<T, N>::WFRingQueue() : _capacity(N - 1), _mask(N - 1), _buffer(new T[N]), _head(0), _tail(0)
+template<typename T>
+inline WFRingQueue<T>::WFRingQueue(int64_t capacity) : _capacity(capacity - 1), _mask(capacity - 1), _buffer(new T[capacity]), _head(0), _tail(0)
 {
-    static_assert(N > 1, "Ring queue size must be greater than one!");
-    static_assert(IsPowerOfTwo(N), "Ring queue size must be a power of two!");
+    assert((capacity > 1) && "Ring queue capacity must be greater than one!");
+    assert(IsPowerOfTwo(capacity) && "Ring queue capacity must be a power of two!");
 }
 
-template<typename T, int64_t N>
-inline int64_t WFRingQueue<T, N>::size() const
+template<typename T>
+inline int64_t WFRingQueue<T>::size() const
 {
     const int64_t head = _head.load(std::memory_order_relaxed);
-    const int64_t tail = _tail.load(std::memory_order_acquire);
+    const int64_t tail = _tail.load(std::memory_order_relaxed);
 
-    return ((head - tail) & _mask);
+    return head - tail;
 }
 
-template<typename T, int64_t N>
-inline bool WFRingQueue<T, N>::Enqueue(const T& item)
+template<typename T>
+inline bool WFRingQueue<T>::Enqueue(const T& item)
 {
     const int64_t head = _head.load(std::memory_order_relaxed);
     const int64_t tail = _tail.load(std::memory_order_acquire);
@@ -47,8 +47,8 @@ inline bool WFRingQueue<T, N>::Enqueue(const T& item)
     return true;
 }
 
-template<typename T, int64_t N>
-inline bool WFRingQueue<T, N>::Dequeue(T& item)
+template<typename T>
+inline bool WFRingQueue<T>::Dequeue(T& item)
 {
     const int64_t tail = _tail.load(std::memory_order_relaxed);
     const int64_t head = _head.load(std::memory_order_acquire);

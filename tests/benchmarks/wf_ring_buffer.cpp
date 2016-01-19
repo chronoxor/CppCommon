@@ -22,7 +22,7 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     int64_t crc = 0;
 
     // Create wait-free ring buffer
-    CppCommon::WFRingBuffer<N> buffer;
+    CppCommon::WFRingBuffer buffer(N);
 
     // Start consumer thread
     auto consumer = std::thread([&buffer, &wait_strategy, item_size, items_to_produce, &crc]()
@@ -76,16 +76,16 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     context.metrics().AddIterations(items_to_produce - 1);
     context.metrics().AddItems(items_to_produce);
     context.metrics().AddBytes(items_to_produce * item_size);
-    context.metrics().SetCustom("CRC", crc);
     context.metrics().SetCustom("RingBuffer.capacity", N);
+    context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK("RingBuffer-SpinWait", settings)
+BENCHMARK("RingBuffer-SpinWait-chunk", settings)
 {
     produce_consume<1048576>(context, []{});
 }
 
-BENCHMARK("RingBuffer-YieldWait", settings)
+BENCHMARK("RingBuffer-YieldWait-chunk", settings)
 {
     produce_consume<1048576>(context, []{ std::this_thread::yield(); });
 }

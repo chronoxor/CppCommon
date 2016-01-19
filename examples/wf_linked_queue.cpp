@@ -1,8 +1,8 @@
 /*!
-    \file wf_ring_queue.cpp
-    \brief Wait-free ring queue example
+    \file wf_linked_queue.cpp
+    \brief Wait-free linked queue example
     \author Ivan Shynkarenka
-    \date 16.01.2016
+    \date 19.01.2016
     \copyright MIT License
 */
 
@@ -10,14 +10,14 @@
 #include <string>
 #include <thread>
 
-#include "threads/wf_ring_queue.h"
+#include "threads/wf_linked_queue.h"
 
 int main(int argc, char** argv)
 {
     std::cout << "Please write some integer numbers. Enter '0' to exit..." << std::endl;
 
-    // Create wait-free ring queue
-    CppCommon::WFRingQueue<int> queue(1024);
+    // Create wait-free linked queue
+    CppCommon::WFLinkedQueue<int> queue;
 
     // Start consumer thread
     auto consumer = std::thread([&queue]()

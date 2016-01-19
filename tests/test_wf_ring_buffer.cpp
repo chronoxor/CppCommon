@@ -10,7 +10,7 @@ using namespace CppCommon;
 
 TEST_CASE("Wait-free ring buffer", "[CppCommon][Threads]")
 {
-    WFRingBuffer<4> buffer;
+    WFRingBuffer buffer(4);
 
     REQUIRE(buffer.capacity() == 3);
     REQUIRE(buffer.size() == 0);

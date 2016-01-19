@@ -17,7 +17,7 @@ int main(int argc, char** argv)
     std::cout << "Please write some text. Enter '#' to exit..." << std::endl;
 
     // Create wait-free ring buffer
-    CppCommon::WFRingBuffer<1024> buffer;
+    CppCommon::WFRingBuffer buffer(1024);
 
     // Start consumer thread
     auto consumer = std::thread([&buffer]()

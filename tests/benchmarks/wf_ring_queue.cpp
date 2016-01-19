@@ -17,7 +17,7 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     int64_t crc = 0;
 
     // Create wait-free ring queue
-    CppCommon::WFRingQueue<T, N> queue;
+    CppCommon::WFRingQueue<T> queue(N);
 
     // Start consumer thread
     auto consumer = std::thread([&queue, &wait_strategy, &crc]()
@@ -55,8 +55,8 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     context.metrics().AddIterations(items_to_produce - 1);
     context.metrics().AddItems(items_to_produce);
     context.metrics().AddBytes(items_to_produce * sizeof(T));
-    context.metrics().SetCustom("CRC", crc);
     context.metrics().SetCustom("RingQueue.capacity", N);
+    context.metrics().SetCustom("CRC", crc);
 }
 
 BENCHMARK("RingQueue-SpinWait")

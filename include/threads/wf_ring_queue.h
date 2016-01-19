@@ -10,23 +10,28 @@
 #define CPPCOMMON_WF_RING_QUEUE_H
 
 #include <atomic>
+#include <cassert>
 
 namespace CppCommon {
 
 //! Wait-free ring queue
 /*!
-    Single producer / single consumer wait-free ring queue use only atomic operations to provide thread safe enqueue
-    and dequeue operations. Ring queue is bounded to the fixed capacity size provided through the template parameter.
+    Single producer / single consumer wait-free ring queue use only atomic operations to provide thread-safe enqueue
+    and dequeue operations. Ring queue is bounded to the fixed capacity provided in the constructor.
 
     A combination of the algorithms described by the circular buffers documentation found in the Linux kernel, and the
     bounded MPMC queue by Dmitry Vyukov. Implemented in pure C++11. Should work across most CPU architectures.
     http://www.1024cores.net/home/lock-free-algorithms/queues/bounded-mpmc-queue
 */
-template<typename T, int64_t N>
+template<typename T>
 class WFRingQueue
 {
 public:
-    WFRingQueue();
+    //! Default class constructor
+    /*!
+        \param capacity - ring queue capacity (must be a power of two)
+    */
+    WFRingQueue(int64_t capacity);
     WFRingQueue(const WFRingQueue&) = delete;
     WFRingQueue(WFRingQueue&&) = delete;
     ~WFRingQueue() { delete[] _buffer; }
@@ -39,7 +44,7 @@ public:
     //! Get ring queue size
     int64_t size() const;
 
-    //! Enqueue an item into the ring queue (producer thread method)
+    //! Enqueue an item into the ring queue (single producer thread method)
     /*!
         The item will be copied into the ring queue.
 
@@ -48,7 +53,7 @@ public:
     */
     bool Enqueue(const T& item);
 
-    //! Dequeue an item from the ring queue (consumer thread method)
+    //! Dequeue an item from the ring queue (single consumer thread method)
     /*!
         The item will be copied from the ring queue.
 
