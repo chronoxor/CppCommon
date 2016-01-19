@@ -23,7 +23,7 @@ inline int64_t WFRingBuffer::size() const
     const int64_t head = _head.load(std::memory_order_relaxed);
     const int64_t tail = _tail.load(std::memory_order_relaxed);
 
-    return head - tail;
+    return (head >= tail) ? (head - tail) : (_capacity + 1 + head - tail);
 }
 
 inline bool WFRingBuffer::Enqueue(const void* chunk, int64_t size)

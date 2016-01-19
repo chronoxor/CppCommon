@@ -25,7 +25,7 @@ inline int64_t WFRingQueue<T>::size() const
     const int64_t head = _head.load(std::memory_order_relaxed);
     const int64_t tail = _tail.load(std::memory_order_relaxed);
 
-    return head - tail;
+    return (head >= tail) ? (head - tail) : (_capacity + 1 + head - tail);
 }
 
 template<typename T>
