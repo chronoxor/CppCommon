@@ -6,17 +6,13 @@
     \copyright MIT License
 */
 
-namespace {
-    constexpr bool IsPowerOfTwo(int64_t x) { return x && ((x & (x - 1)) == 0); }
-}
-
 namespace CppCommon {
 
 template<typename T>
 inline MPMCRingQueueEx<T>::MPMCRingQueueEx(int64_t capacity) : _capacity(capacity - 1), _mask(capacity - 1), _buffer(new T[capacity]), _head(0), _middle(0), _tail(0)
 {
     assert((capacity > 1) && "Ring queue capacity must be greater than one!");
-    assert(IsPowerOfTwo(capacity) && "Ring queue capacity must be a power of two!");
+    assert(((capacity & (capacity - 1)) == 0) && "Ring queue capacity must be a power of two!");
 }
 
 template<typename T>

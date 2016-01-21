@@ -16,8 +16,8 @@ namespace CppCommon {
 
 //! Single producer / single consumer wait-free ring buffer
 /*!
-    Single producer / single consumer wait-free ring buffer use only atomic operations to provide thread-safe
-    enqueue and dequeue operations. Ring buffer is bounded to the fixed capacity provided in the constructor.
+    Single producer / single consumer wait-free ring buffer use only atomic operations to provide thread-safe enqueue
+    and dequeue operations. Ring buffer is bounded to the fixed capacity provided in the constructor.
 
     A combination of the algorithms described by the circular buffers documentation found in the Linux kernel, and the
     bounded MPMC queue by Dmitry Vyukov. Implemented in pure C++11. Should work across most CPU architectures.
@@ -30,13 +30,13 @@ public:
     /*!
         \param capacity - ring buffer capacity (must be a power of two)
     */
-    SPSCRingBuffer(int64_t capacity);
+    explicit SPSCRingBuffer(int64_t capacity);
     SPSCRingBuffer(const SPSCRingBuffer&) = delete;
-    SPSCRingBuffer(SPSCRingBuffer&&) = delete;
+    SPSCRingBuffer(SPSCRingBuffer&&) = default;
     ~SPSCRingBuffer() { delete[] _buffer; }
 
     SPSCRingBuffer& operator=(const SPSCRingBuffer&) = delete;
-    SPSCRingBuffer& operator=(SPSCRingBuffer&&) = delete;
+    SPSCRingBuffer& operator=(SPSCRingBuffer&&) = default;
 
     //! Get ring buffer capacity in bytes
     int64_t capacity() const { return _capacity; }

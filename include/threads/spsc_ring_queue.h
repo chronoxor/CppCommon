@@ -31,13 +31,13 @@ public:
     /*!
         \param capacity - ring queue capacity (must be a power of two)
     */
-    SPSCRingQueue(int64_t capacity);
-    SPSCRingQueue(const SPSCRingQueue&) = delete;
-    SPSCRingQueue(SPSCRingQueue&&) = delete;
+    explicit SPSCRingQueue(int64_t capacity);
+    SPSCRingQueue(const SPSCRingQueue& instance);
+    SPSCRingQueue(SPSCRingQueue&&) = default;
     ~SPSCRingQueue() { delete[] _buffer; }
 
     SPSCRingQueue& operator=(const SPSCRingQueue&) = delete;
-    SPSCRingQueue& operator=(SPSCRingQueue&&) = delete;
+    SPSCRingQueue& operator=(SPSCRingQueue&&) = default;
 
     //! Get ring queue capacity
     int64_t capacity() const { return _capacity; }

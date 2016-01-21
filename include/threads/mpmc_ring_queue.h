@@ -30,13 +30,13 @@ public:
     /*!
         \param capacity - ring queue capacity (must be a power of two)
     */
-    MPMCRingQueue(int64_t capacity);
+    explicit MPMCRingQueue(int64_t capacity);
     MPMCRingQueue(const MPMCRingQueue&) = delete;
-    MPMCRingQueue(MPMCRingQueue&&) = delete;
+    MPMCRingQueue(MPMCRingQueue&&) = default;
     ~MPMCRingQueue() { delete[] _buffer; }
 
     MPMCRingQueue& operator=(const MPMCRingQueue&) = delete;
-    MPMCRingQueue& operator=(MPMCRingQueue&&) = delete;
+    MPMCRingQueue& operator=(MPMCRingQueue&&) = default;
 
     //! Get ring queue capacity
     int64_t capacity() const { return _capacity; }
