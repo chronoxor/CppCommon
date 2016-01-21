@@ -44,12 +44,12 @@ foreach(EXAMPLE_FILE ${EXAMPLE_FILES})
   list(APPEND INSTALL_TARGETS ${EXAMPLE_TARGET})
 endforeach()
 
-# Benchmarks
-file(GLOB BENCHMARK_FILES RELATIVE "${PROJECT_SOURCE_DIR}/tests/benchmarks" "tests/benchmarks/*.cpp")
+# Performance
+file(GLOB BENCHMARK_FILES RELATIVE "${PROJECT_SOURCE_DIR}/perf" "perf/*.cpp")
 foreach(BENCHMARK_FILE ${BENCHMARK_FILES})
   string(REGEX REPLACE "(.*)\\.cpp" "\\1" BENCHMARK_NAME ${BENCHMARK_FILE})
-  set(BENCHMARK_TARGET "cppcommon-benchmark-${BENCHMARK_NAME}")
-  add_executable(${BENCHMARK_TARGET} tests/benchmarks/${BENCHMARK_FILE})
+  set(BENCHMARK_TARGET "cppcommon-perf-${BENCHMARK_NAME}")
+  add_executable(${BENCHMARK_TARGET} perf/${BENCHMARK_FILE})
   target_link_libraries(${BENCHMARK_TARGET} cppcommon cppbenchmark Threads::Threads)
   list(APPEND INSTALL_TARGETS ${BENCHMARK_TARGET})
 endforeach()
