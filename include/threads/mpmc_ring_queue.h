@@ -1,6 +1,6 @@
 /*!
     \file mpmc_ring_queue.h
-    \brief Multiple producers / multiple consumers wait-free ring queue class definition
+    \brief Multiple producers / multiple consumers wait-free ring queue definition
     \author Ivan Shynkarenka
     \date 19.01.2016
     \copyright MIT License
@@ -18,6 +18,8 @@ namespace CppCommon {
 /*!
     Multiple producers / multiple consumers wait-free ring queue use only atomic operations to provide thread-safe
     enqueue and dequeue operations. Ring queue size is limited to the capacity provided in the constructor.
+
+    FIFO order is guaranteed!
 
     C++ implementation of Dmitry Vyukov's non-intrusive lock free unbound MPSC queue
     http://www.1024cores.net/home/lock-free-algorithms/queues/non-intrusive-mpsc-node-based-queue

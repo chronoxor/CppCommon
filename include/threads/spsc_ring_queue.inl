@@ -1,6 +1,6 @@
 /*!
     \file spsc_ring_queue.inl
-    \brief Single producer / single consumer wait-free ring queue class implementation
+    \brief Single producer / single consumer wait-free ring queue implementation
     \author Ivan Shynkarenka
     \date 15.01.2016
     \copyright MIT License
@@ -16,15 +16,10 @@ inline SPSCRingQueue<T>::SPSCRingQueue(int64_t capacity) : _capacity(capacity - 
 }
 
 template<typename T>
-inline SPSCRingQueue<T>::SPSCRingQueue(const SPSCRingQueue& instance) : SPSCRingQueue<T>(instance.capacity())
-{
-}
-
-template<typename T>
 inline int64_t SPSCRingQueue<T>::size() const
 {
-    const int64_t head = _head.load(std::memory_order_relaxed);
-    const int64_t tail = _tail.load(std::memory_order_relaxed);
+    const int64_t head = _head.load(std::memory_order_acquire);
+    const int64_t tail = _tail.load(std::memory_order_acquire);
 
     return (head >= tail) ? (head - tail) : (_capacity + 1 + head - tail);
 }

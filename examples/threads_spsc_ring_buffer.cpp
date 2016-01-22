@@ -1,5 +1,5 @@
 /*!
-    \file spsc_ring_buffer.cpp
+    \file threads_spsc_ring_buffer.cpp
     \brief Single producer / single consumer wait-free ring buffer example
     \author Ivan Shynkarenka
     \date 16.01.2016

@@ -1,6 +1,6 @@
 /*!
     \file spsc_ring_buffer.inl
-    \brief Single producer / single consumer wait-free ring buffer class implementation
+    \brief Single producer / single consumer wait-free ring buffer implementation
     \author Ivan Shynkarenka
     \date 16.01.2016
     \copyright MIT License
@@ -16,8 +16,8 @@ inline SPSCRingBuffer::SPSCRingBuffer(int64_t capacity) : _capacity(capacity - 1
 
 inline int64_t SPSCRingBuffer::size() const
 {
-    const int64_t head = _head.load(std::memory_order_relaxed);
-    const int64_t tail = _tail.load(std::memory_order_relaxed);
+    const int64_t head = _head.load(std::memory_order_acquire);
+    const int64_t tail = _tail.load(std::memory_order_acquire);
 
     return (head >= tail) ? (head - tail) : (_capacity + 1 + head - tail);
 }

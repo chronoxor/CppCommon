@@ -27,7 +27,7 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     // Start consumer thread
     auto consumer = std::thread([&queue, &wait_strategy, &crc]()
     {
-        for (int64_t i = 0; i < items_to_produce; ++i)
+        for (int64_t i = 0; i < items_to_produce;)
         {
             // Define the batcher handler
             auto handler = [&crc, &i](const int& item)

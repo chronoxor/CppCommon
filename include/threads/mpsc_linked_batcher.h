@@ -1,6 +1,6 @@
 /*!
     \file mpsc_linked_batcher.h
-    \brief Multiple producers / single consumer wait-free linked batcher class definition
+    \brief Multiple producers / single consumer wait-free linked batcher definition
     \author Ivan Shynkarenka
     \date 19.01.2016
     \copyright MIT License
@@ -19,6 +19,8 @@ namespace CppCommon {
     Multiple producers / single consumer wait-free linked batcher use only atomic operations to provide thread-safe
     enqueue and batch dequeue operations. Linked batcher is a dynamically grows queue which allocates memory for each
     new node. It allows a consumer thread to process all items in queue in a batch mode.
+
+    FIFO order is guaranteed!
 
     Based on Boost Wait-free multi-producer queue
     http://www.boost.org/doc/libs/1_60_0/doc/html/atomic/usage_examples.html#boost_atomic.usage_examples.mp_queue

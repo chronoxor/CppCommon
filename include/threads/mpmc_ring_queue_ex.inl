@@ -1,6 +1,6 @@
 /*!
     \file mpmc_ring_queue_ex.inl
-    \brief Multiple producers / multiple consumers wait-free ring queue class implementation
+    \brief Multiple producers / multiple consumers wait-free ring queue implementation
     \author Ivan Shynkarenka
     \date 21.01.2016
     \copyright MIT License
@@ -18,8 +18,8 @@ inline MPMCRingQueueEx<T>::MPMCRingQueueEx(int64_t capacity) : _capacity(capacit
 template<typename T>
 inline int64_t MPMCRingQueueEx<T>::size() const
 {
-    const int64_t head = _head.load(std::memory_order_relaxed);
-    const int64_t tail = _tail.load(std::memory_order_relaxed);
+    const int64_t head = _head.load(std::memory_order_acquire);
+    const int64_t tail = _tail.load(std::memory_order_acquire);
 
     return (head >= tail) ? (head - tail) : (_capacity + head - tail);
 }

@@ -1,6 +1,6 @@
 /*!
     \file mpmc_ring_queue_ex.h
-    \brief Multiple producers / multiple consumers wait-free ring queue class definition
+    \brief Multiple producers / multiple consumers wait-free ring queue definition
     \author Ivan Shynkarenka
     \date 21.01.2016
     \copyright MIT License
@@ -18,6 +18,8 @@ namespace CppCommon {
 /*!
     Multiple producers / multiple consumers wait-free ring queue use only atomic operations to provide thread-safe
     enqueue and dequeue operations. Ring queue size is limited to the capacity provided in the constructor.
+
+    FIFO order is guaranteed!
 
     Based on CodeProject article - Yet another implementation of a lock-free circular array queue
     http://www.codeproject.com/Articles/153898/Yet-another-implementation-of-a-lock-free-circular

@@ -1,6 +1,6 @@
 /*!
-    \file mpsc_linked_queue.cpp
-    \brief Multiple producers / single consumer wait-free linked queue example
+    \file threads_mpmc_bounded_queue.cpp
+    \brief Multiple producers / multiple consumers wait-free ring queue example
     \author Ivan Shynkarenka
     \date 19.01.2016
     \copyright MIT License
@@ -10,14 +10,14 @@
 #include <string>
 #include <thread>
 
-#include "threads/mpsc_linked_queue.h"
+#include "threads/mpmc_ring_queue.h"
 
 int main(int argc, char** argv)
 {
     std::cout << "Please write some integer numbers. Enter '0' to exit..." << std::endl;
 
-    // Create multiple producers / single consumer wait-free linked queue
-    CppCommon::MPSCLinkedQueue<int> queue;
+    // Create multiple producers / multiple consumers wait-free ring queue
+    CppCommon::MPMCRingQueue<int> queue(1024);
 
     // Start consumer thread
     auto consumer = std::thread([&queue]()

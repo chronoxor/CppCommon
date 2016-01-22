@@ -1,6 +1,6 @@
 /*!
     \file spsc_ring_buffer.h
-    \brief Single producer / single consumer wait-free ring buffer class definition
+    \brief Single producer / single consumer wait-free ring buffer definition
     \author Ivan Shynkarenka
     \date 16.01.2016
     \copyright MIT License
@@ -18,6 +18,8 @@ namespace CppCommon {
 /*!
     Single producer / single consumer wait-free ring buffer use only atomic operations to provide thread-safe enqueue
     and dequeue operations. Ring buffer is bounded to the fixed capacity provided in the constructor.
+
+    FIFO order is guaranteed!
 
     A combination of the algorithms described by the circular buffers documentation found in the Linux kernel, and the
     bounded MPMC queue by Dmitry Vyukov. Implemented in pure C++11. Should work across most CPU architectures.

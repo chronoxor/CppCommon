@@ -1,6 +1,6 @@
 /*!
     \file mpsc_linked_queue.inl
-    \brief Multiple producers / single consumer wait-free linked queue class implementation
+    \brief Multiple producers / single consumer wait-free linked queue implementation
     \author Ivan Shynkarenka
     \date 18.01.2016
     \copyright MIT License

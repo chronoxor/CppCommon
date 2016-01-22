@@ -1,6 +1,6 @@
 /*!
     \file mpsc_linked_queue.h
-    \brief Multiple producers / single consumer wait-free linked queue class definition
+    \brief Multiple producers / single consumer wait-free linked queue definition
     \author Ivan Shynkarenka
     \date 18.01.2016
     \copyright MIT License
@@ -18,6 +18,8 @@ namespace CppCommon {
     Multiple producers / single consumer wait-free linked queue use only atomic operations to provide thread-safe
     enqueue and dequeue operations. Linked queue is a dynamically grows queue which allocates memory for each
     new node.
+
+    FIFO order is guaranteed!
 
     C++ implementation of Dmitry Vyukov's non-intrusive lock free unbound MPSC queue
     http://www.1024cores.net/home/lock-free-algorithms/queues/non-intrusive-mpsc-node-based-queue

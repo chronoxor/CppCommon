@@ -1,6 +1,6 @@
 /*!
     \file mpsc_ring_queue.h
-    \brief Multiple producers / single consumer wait-free ring queue class definition
+    \brief Multiple producers / single consumer wait-free ring queue definition
     \author Ivan Shynkarenka
     \date 21.01.2016
     \copyright MIT License
@@ -11,21 +11,29 @@
 
 #include <atomic>
 #include <cassert>
+#include <memory>
+#include <mutex>
+#include <queue>
 #include <thread>
+#include <tuple>
 #include <vector>
 
-#include "spsc_ring_queue.h"
+#include "system/rdts.h"
+#include "threads/spinlock.h"
+#include "threads/spsc_ring_queue.h"
 
 namespace CppCommon {
 
 //! Multiple producers / single consumer wait-free ring queue
 /*!
     Multiple producers / single consumer wait-free ring queue use only atomic operations to provide thread-safe
-    enqueue and dequeue operations. This data structure consist of several SPSC ring buffers which count is
+    enqueue and dequeue operations. This data structure consist of several SPSC ring queues which count is
     provided as a hardware concurrency in the constructor. All of them are randomly accessed with a RDTS
-    distribution index. Consumer thread sequentially copy all the items from producer's ring buffers to the
-    single consumer's ring buffer. All the items available in sesequential or batch mode. Ring queue size is
-    limited to the capacity provided in the constructor.
+    distribution index. Consumer thread sequentially copy all the items from producer's ring queues to the
+    single consumer's priority queue. All the items available in sesequential or batch mode. Ring queue size
+    is limited to the capacity provided in the constructor.
+
+    FIFO order is guaranteed!
 */
 template<typename T>
 class MPSCRingQueue
@@ -36,7 +44,7 @@ public:
         \param capacity - ring queue capacity (must be a power of two)
         \param concurrency - hardware concurrency (default is std::thread::hardware_concurrency)
     */
-    explicit MPSCRingQueue(int64_t capacity, int64_t concurrency = std::thread::hardware_concurrency);
+    explicit MPSCRingQueue(int64_t capacity, int64_t concurrency = std::thread::hardware_concurrency());
     MPSCRingQueue(const MPSCRingQueue&) = delete;
     MPSCRingQueue(MPSCRingQueue&&) = default;
     ~MPSCRingQueue();
@@ -48,8 +56,10 @@ public:
     int64_t capacity() const { return _capacity; }
     //! Get ring queue concurrency
     int64_t concurrency() const { return _concurrency; }
+    //! Get ring queue size
+    int64_t size() const { return producer_size() + consumer_size(); }
     //! Get the current producer ring queue size
-    int64_t producer_size() const { return _producers[GetProducerId() % _concurrency].size(); }
+    int64_t producer_size() const { return _producers[RDTS::current() % _concurrency]->queue.size(); }
     //! Get consumer ring queue size
     int64_t consumer_size() const { return _consumer.size(); }
 
@@ -81,13 +91,33 @@ public:
     bool Dequeue(const std::function<void(const T&)>& handler);
 
 private:
+    struct Item
+    {
+        uint64_t timestamp;
+        T value;
+
+        Item() = default;
+        Item(uint64_t ts, const T& v) : timestamp(ts), value(v) {}
+        friend bool operator < (const Item& item1, const Item& item2) { return item1.timestamp < item2.timestamp; }
+    };
+
+    struct Producer
+    {
+        SpinLock lock;
+        SPSCRingQueue<Item> queue;
+
+        Producer(int64_t capacity) : queue(capacity) {}
+    };
+
     int64_t _capacity;
     int64_t _concurrency;
-    std::vector<SPSCRingQueue<T>> _producers;
-    SPSCRingQueue<T> _consumer;
+    std::vector<std::shared_ptr<Producer>> _producers;
+    std::priority_queue<Item> _consumer;
 
-    //! Get the current producer Id
-    int64_t GetProducerId() const;
+    // Consume an item from the consumer's priority queue
+    bool Consume(T& item);
+    // Flush all available items from producers' queues into the consumer's priority queue
+    void Flush();
 };
 
 } // namespace CppCommon

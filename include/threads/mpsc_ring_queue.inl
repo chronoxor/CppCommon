@@ -9,49 +9,46 @@
 namespace CppCommon {
 
 template<typename T>
-inline MPSCRingQueue<T>::MPSCRingQueue(int64_t capacity, int64_t concurrency) : _capacity(capacity), _concurrency(concurrency), _consumer(concurrency * capacity)
+inline MPSCRingQueue<T>::MPSCRingQueue(int64_t capacity, int64_t concurrency) : _capacity(capacity), _concurrency(concurrency)
 {
-    // Initialize producers ring buffers
+    // Initialize producers' ring buffers
     for (int64_t i = 0; i < concurrency; ++i)
-        _producers.emplace_back(capacity);
+        _producers.push_back(std::make_shared<Producer>(capacity));
 }
 
 template<typename T>
 inline MPSCRingQueue<T>::~MPSCRingQueue()
 {
-    // Remove all nodes from the consumer ring buffer
+    // Remove all nodes from the consumer's ring buffer
     Dequeue([](const T&){});
-}
-
-template<typename T>
-inline int64_t MPSCRingQueue<T>::GetProducerId() const
-{
-#ifdef _MSC_VER
-    return __rdtsc();
-#endif
 }
 
 template<typename T>
 inline bool MPSCRingQueue<T>::Enqueue(const T& item)
 {
-    return _producers[GetProducerId() % _concurrency].Enqueue(item);
+    // Get producer index for the current thread based on RDTS value
+    uint64_t timestamp = RDTS::current();
+    uint64_t index = RDTS::current() % _concurrency;
+
+    // Lock the chosen producer using its spin-lock
+    std::lock_guard<SpinLock> lock(_producers[index]->lock);
+
+    // Enqueue the item into the producer's ring buffer
+    return _producers[index]->queue.Enqueue(Item(timestamp, item));
 }
 
 template<typename T>
 inline bool MPSCRingQueue<T>::Dequeue(T& item)
 {
-    // Try to dequeue one item from the consumer ring buffer
-    if (_consumer.Dequeue(item))
+    // Try to dequeue one item from the consumer's priority queue
+    if (Consume(item))
         return true;
 
-    // Copy all available items from producers ring buffers to the consumer one
-    T temp;
-    for (int64_t i = 0; i < _concurrency; ++i)
-        while (_producers[i].Dequeue(temp))
-            _consumer.Enqueue(temp);
+    // Flush all available items from producers' ring buffers to the consumer priority queue
+    Flush();
 
-    // Force to dequeue one item from the consumer ring buffer
-    return _consumer.Dequeue(item);
+    // Force to dequeue one item from the consumer's priority queue
+    return Consume(item);
 }
 
 template<typename T>
@@ -59,25 +56,38 @@ inline bool MPSCRingQueue<T>::Dequeue(const std::function<void(const T&)>& handl
 {
     bool result = false;
 
-    // Try to dequeue all items from the consumer ring buffer
+    // Flush all available items from producers' ring buffers to the consumer priority queue
+    Flush();
+
+    // Try to dequeue all items from the consumer's priority queue
     T temp;
-    while (_consumer.Dequeue(temp))
+    while (Consume(temp))
     {
         handler(temp);
         result = true;
     }
 
-    // Dequeue all available items from producers ring buffers
-    for (int64_t i = 0; i < _concurrency; ++i)
-    {
-        while (_producers[i].Dequeue(temp))
-        {
-            handler(temp);
-            result = true;
-        }
-    }
-
     return result;
+}
+
+template<typename T>
+inline bool MPSCRingQueue<T>::Consume(T& item)
+{
+    if (_consumer.empty())
+        return false;
+
+    item = _consumer.top().value;
+    _consumer.pop();
+    return true;
+}
+
+template<typename T>
+inline void MPSCRingQueue<T>::Flush()
+{
+    Item temp;
+    for (int64_t i = 0; i < _concurrency; ++i)
+        while (_producers[i]->queue.Dequeue(temp))
+            _consumer.push(temp);
 }
 
 } // namespace CppCommon
