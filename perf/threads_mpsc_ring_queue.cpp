@@ -15,7 +15,7 @@ const int producers_from = 1;
 const int producers_to = 8;
 const auto settings = CppBenchmark::Settings().ParamRange(producers_from, producers_to, [](int from, int to, int& result) { int r = result; result *= 2; return r; });
 
-template<typename T, int64_t N>
+template<typename T, int64_t N, bool BatchMode>
 void produce_consume(CppBenchmark::Context& context, const std::function<void()>& wait_strategy)
 {
     const int64_t producers_count = context.x();
@@ -29,19 +29,35 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     {
         for (int64_t i = 0; i < items_to_produce;)
         {
-            // Define the batcher handler
-            auto handler = [&crc, &i](const int& item)
+            if (BatchMode)
             {
+                // Define the batcher handler
+                auto handler = [&crc, &i](const int& item)
+                {
+                    // Consume the item
+                    crc += item;
+                
+                    // Increase the items counter
+                    ++i;
+                };
+                
+                // Dequeue all available items using the given waiting strategy
+                while (!queue.Dequeue(handler))
+                    wait_strategy();
+            }
+            else
+            {
+                // Dequeue using the given waiting strategy
+                T item;
+                while (!queue.Dequeue(item))
+                    wait_strategy();
+                
                 // Consume the item
                 crc += item;
 
                 // Increase the items counter
                 ++i;
-            };
-
-            // Dequeue all available items using the given waiting strategy
-            while (!queue.Dequeue(handler))
-                wait_strategy();
+            }
         }
     });
 
@@ -75,14 +91,24 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     context.metrics().SetCustom("CRC", crc);
 }
 
+BENCHMARK("MPSCRingBatcher-SpinWait-producers", settings)
+{
+    produce_consume<int, 1048576, true>(context, []{});
+}
+
+BENCHMARK("MPSCRingBatcher-YieldWait-producers", settings)
+{
+    produce_consume<int, 1048576, true>(context, []{ std::this_thread::yield(); });
+}
+
 BENCHMARK("MPSCRingQueue-SpinWait-producers", settings)
 {
-    produce_consume<int, 1048576>(context, []{});
+    produce_consume<int, 1048576, false>(context, []{});
 }
 
 BENCHMARK("MPSCRingQueue-YieldWait-producers", settings)
 {
-    produce_consume<int, 1048576>(context, []{ std::this_thread::yield(); });
+    produce_consume<int, 1048576, false>(context, []{ std::this_thread::yield(); });
 }
 
 BENCHMARK_MAIN()

@@ -30,10 +30,10 @@ namespace CppCommon {
     enqueue and dequeue operations. This data structure consist of several SPSC ring queues which count is
     provided as a hardware concurrency in the constructor. All of them are randomly accessed with a RDTS
     distribution index. Consumer thread sequentially copy all the items from producer's ring queues to the
-    single consumer's priority queue. All the items available in sesequential or batch mode. Ring queue size
+    single consumer's ring queue. All the items available in sesequential or batch mode. Ring queue size
     is limited to the capacity provided in the constructor.
 
-    FIFO order is guaranteed!
+    FIFO order is not guaranteed!
 */
 template<typename T>
 class MPSCRingQueue
@@ -91,20 +91,10 @@ public:
     bool Dequeue(const std::function<void(const T&)>& handler);
 
 private:
-    struct Item
-    {
-        uint64_t timestamp;
-        T value;
-
-        Item() = default;
-        Item(uint64_t ts, const T& v) : timestamp(ts), value(v) {}
-        friend bool operator < (const Item& item1, const Item& item2) { return item1.timestamp < item2.timestamp; }
-    };
-
     struct Producer
     {
         SpinLock lock;
-        SPSCRingQueue<Item> queue;
+        SPSCRingQueue<T> queue;
 
         Producer(int64_t capacity) : queue(capacity) {}
     };
@@ -112,12 +102,7 @@ private:
     int64_t _capacity;
     int64_t _concurrency;
     std::vector<std::shared_ptr<Producer>> _producers;
-    std::priority_queue<Item> _consumer;
-
-    // Consume an item from the consumer's priority queue
-    bool Consume(T& item);
-    // Flush all available items from producers' queues into the consumer's priority queue
-    void Flush();
+    SPSCRingQueue<T> _consumer;
 };
 
 } // namespace CppCommon
