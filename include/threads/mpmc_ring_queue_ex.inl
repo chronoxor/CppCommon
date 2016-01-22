@@ -27,12 +27,11 @@ inline int64_t MPMCRingQueueEx<T>::size() const
 template<typename T>
 inline bool MPMCRingQueueEx<T>::Enqueue(const T& item)
 {
-    int64_t head, tail;
+    int64_t head = _head.load(std::memory_order_relaxed);
 
     do
     {
-        head = _head.load(std::memory_order_relaxed);
-        tail = _tail.load(std::memory_order_acquire);
+        int64_t tail = _tail.load(std::memory_order_acquire);
 
         // Check if the ring queue is full
         if (((head - tail + 1) & _mask) == 0)
@@ -45,7 +44,12 @@ inline bool MPMCRingQueueEx<T>::Enqueue(const T& item)
     _buffer[head & _mask] = item;
 
     // Increase the middle cursor
-    while (!_middle.compare_exchange_weak(head, head + 1, std::memory_order_release));
+    int64_t temp;
+    do
+    {
+        // We need to save the head cursor in a temporary variable because CAS operation will update it!
+        temp = head;
+    } while (!_middle.compare_exchange_weak(temp, head + 1, std::memory_order_release));
 
     return true;
 }
@@ -53,9 +57,10 @@ inline bool MPMCRingQueueEx<T>::Enqueue(const T& item)
 template<typename T>
 inline bool MPMCRingQueueEx<T>::Dequeue(T& item)
 {
+    int64_t tail = _tail.load(std::memory_order_relaxed);
+
     for (;;)
     {
-        int64_t tail = _tail.load(std::memory_order_relaxed);
         int64_t middle = _middle.load(std::memory_order_acquire);
 
         // Check if the ring queue is empty
