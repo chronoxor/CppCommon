@@ -45,34 +45,16 @@ inline bool MPSCRingQueue<T>::Dequeue(T& item)
         return true;
 
     // Flush all available items from producers' ring queues to the consumer ring queue
-    bool consumed = false;
-    for (int64_t i = 0;; ++i)
+    for (int64_t i = 0; i < _concurrency; ++i)
     {
-        // Check if we need to stop or continue consuming
-        if (i == _concurrency)
-        {
-            // Stop if nothing is consumed or reset the consumed flag
-            if (!consumed)
-                break;
-            else
-                consumed = false;
-
-            // If at least one item was produced and all of them were consumed 
-            // then reset the current producer's counter
-            i = 0;  
-        }
-
         // Try to dequeue one item from the current producer's ring queue
         T temp;
         if (_producers[i]->queue.Dequeue(temp))
         {
-            // Set the consumed flag
-            consumed = true;
-
             // Try to enqueue the item into the consumer ring queue
             if (!_consumer.Enqueue(temp))
             {
-                // If the consumer ring queue is full then dequeue result item 
+                // If the consumer ring queue is full then dequeue result item
                 // and enqueue the current item into it
                 _consumer.Dequeue(item);
                 _consumer.Enqueue(temp);
@@ -94,34 +76,17 @@ inline bool MPSCRingQueue<T>::Dequeue(const std::function<void(const T&)>& handl
     T temp;
     while (_consumer.Dequeue(temp))
     {
+        // Consume the item
         handler(temp);
         result = true;
     }
 
     // Consume all available items from producers' ring queues
-    bool consumed = false;
-    for (int64_t i = 0;; ++i)
+    for (int64_t i = 0; i < _concurrency; ++i)
     {
-        // Check if we need to stop or continue consuming
-        if (i == _concurrency)
-        {
-            // Stop if nothing is consumed or reset the consumed flag
-            if (!consumed)
-                break;
-            else
-                consumed = false;
-
-            // If at least one item was produced and all of them were consumed 
-            // then reset the current producer's counter
-            i = 0;  
-        }
-
         // Try to dequeue one item from the current producer's ring queue
         if (_producers[i]->queue.Dequeue(temp))
         {
-            // Set the consumed flag
-            consumed = true;
-
             // Consume the item
             handler(temp);
             result = true;
