@@ -57,11 +57,7 @@ public:
     //! Get ring queue concurrency
     int64_t concurrency() const { return _concurrency; }
     //! Get ring queue size
-    int64_t size() const { return producer_size() + consumer_size(); }
-    //! Get the current producer ring queue size
-    int64_t producer_size() const { return _producers[RDTS::current() % _concurrency]->queue.size(); }
-    //! Get consumer ring queue size
-    int64_t consumer_size() const { return _consumer.size(); }
+    int64_t size() const;
 
     //! Enqueue an item into the ring queue (multiple producers threads method)
     /*!
@@ -85,7 +81,7 @@ public:
     /*!
         All items in the batcher will be processed by the given handler.
 
-        \param hanlder - batch handler
+        \param handler - batch handler
         \return 'true' if all items were successfully handled, 'false' if the linked batcher is empty
     */
     bool Dequeue(const std::function<void(const T&)>& handler);
@@ -102,7 +98,7 @@ private:
     int64_t _capacity;
     int64_t _concurrency;
     std::vector<std::shared_ptr<Producer>> _producers;
-    SPSCRingQueue<T> _consumer;
+    int64_t _consumer;
 };
 
 } // namespace CppCommon

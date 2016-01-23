@@ -50,7 +50,7 @@ public:
     /*!
         All items in the batcher will be processed by the given handler.
 
-        \param hanlder - batch handler
+        \param handler - batch handler
         \return 'true' if all items were successfully handled, 'false' if the linked batcher is empty
     */
     bool Dequeue(const std::function<void(const T&)>& handler);
