@@ -36,11 +36,11 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
                 {
                     // Consume the item
                     crc += item;
-                
+
                     // Increase the items counter
                     ++i;
                 };
-                
+
                 // Dequeue all available items using the given waiting strategy
                 while (!queue.Dequeue(handler))
                     wait_strategy();
@@ -51,7 +51,7 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
                 T item;
                 while (!queue.Dequeue(item))
                     wait_strategy();
-                
+
                 // Consume the item
                 crc += item;
 
