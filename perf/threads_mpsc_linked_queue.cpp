@@ -10,7 +10,7 @@
 
 #include "threads/mpsc_linked_queue.h"
 
-const int64_t items_to_produce = 10000000;
+const uint64_t items_to_produce = 10000000;
 const int producers_from = 1;
 const int producers_to = 8;
 const auto settings = CppBenchmark::Settings().ParamRange(producers_from, producers_to, [](int from, int to, int& result) { int r = result; result *= 2; return r; });
@@ -18,8 +18,8 @@ const auto settings = CppBenchmark::Settings().ParamRange(producers_from, produc
 template<typename T>
 void produce_consume(CppBenchmark::Context& context, const std::function<void()>& wait_strategy)
 {
-    const int64_t producers_count = context.x();
-    int64_t crc = 0;
+    const uint64_t producers_count = context.x();
+    uint64_t crc = 0;
 
     // Create multiple producers / single consumer wait-free linked queue
     CppCommon::MPSCLinkedQueue<T> queue;
@@ -27,7 +27,7 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     // Start consumer thread
     auto consumer = std::thread([&queue, &wait_strategy, &crc]()
     {
-        for (int64_t i = 0; i < items_to_produce; ++i)
+        for (uint64_t i = 0; i < items_to_produce; ++i)
         {
             // Dequeue using the given waiting strategy
             T item;
@@ -41,12 +41,12 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
 
     // Start producer threads
     std::vector<std::thread> producers;
-    for (int64_t producer = 0; producer < producers_count; ++producer)
+    for (uint64_t producer = 0; producer < producers_count; ++producer)
     {
         producers.push_back(std::thread([&queue, &wait_strategy, producer, producers_count]()
         {
-            int64_t items = (items_to_produce / producers_count);
-            for (int64_t i = 0; i < items; ++i)
+            uint64_t items = (items_to_produce / producers_count);
+            for (uint64_t i = 0; i < items; ++i)
             {
                 // Enqueue using the given waiting strategy
                 while (!queue.Enqueue((T)(items * producer + i)))

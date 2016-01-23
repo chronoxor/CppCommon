@@ -33,7 +33,7 @@ public:
     /*!
         \param capacity - ring queue capacity (must be a power of two)
     */
-    explicit SPSCRingQueue(int64_t capacity);
+    explicit SPSCRingQueue(uint64_t capacity);
     SPSCRingQueue(const SPSCRingQueue&) = delete;
     SPSCRingQueue(SPSCRingQueue&&) = default;
     ~SPSCRingQueue() { delete[] _buffer; }
@@ -42,9 +42,9 @@ public:
     SPSCRingQueue& operator=(SPSCRingQueue&&) = default;
 
     //! Get ring queue capacity
-    int64_t capacity() const { return _capacity; }
+    uint64_t capacity() const { return _capacity; }
     //! Get ring queue size
-    int64_t size() const;
+    uint64_t size() const;
 
     //! Enqueue an item into the ring queue (single producer thread method)
     /*!
@@ -68,15 +68,15 @@ private:
     typedef char cache_line_pad[64];
 
     cache_line_pad _pad0;
-    const int64_t _capacity;
-    const int64_t _mask;
+    const uint64_t _capacity;
+    const uint64_t _mask;
     T* const _buffer;
 
     cache_line_pad _pad1;
-    std::atomic<int64_t> _head;
+    std::atomic<uint64_t> _head;
 
     cache_line_pad _pad2;
-    std::atomic<int64_t> _tail;
+    std::atomic<uint64_t> _tail;
 };
 
 } // namespace CppCommon

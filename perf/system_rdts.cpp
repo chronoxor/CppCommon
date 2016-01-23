@@ -6,13 +6,13 @@
 
 #include "system/rdts.h"
 
-const int64_t iterations = 100000000;
+const uint64_t iterations = 100000000;
 
 BENCHMARK("RDTS")
 {
-    int64_t crc = 0;
+    uint64_t crc = 0;
 
-    for (int64_t i = 0; i < iterations; ++i)
+    for (uint64_t i = 0; i < iterations; ++i)
         crc += CppCommon::RDTS::current();
 
     // Update benchmark metrics

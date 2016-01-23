@@ -9,17 +9,17 @@
 
 #include "threads/spsc_ring_buffer.h"
 
-const int64_t bytes_to_produce = 100000000;
+const uint64_t bytes_to_produce = 100000000;
 const int item_size_from = 4;
 const int item_size_to = 4096;
 const auto settings = CppBenchmark::Settings().ParamRange(item_size_from, item_size_to, [](int from, int to, int& result) { int r = result; result *= 2; return r; });
 
-template<int64_t N>
+template<uint64_t N>
 void produce_consume(CppBenchmark::Context& context, const std::function<void()>& wait_strategy)
 {
     const int item_size = context.x();
     const int items_to_produce = bytes_to_produce / item_size;
-    int64_t crc = 0;
+    uint64_t crc = 0;
 
     // Create single producer / single consumer wait-free ring buffer
     CppCommon::SPSCRingBuffer buffer(N);
@@ -30,15 +30,15 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
         // Use big items buffer to enable items batching
         char* items = new char[N];
 
-        for (int64_t i = 0; i < items_to_produce;)
+        for (uint64_t i = 0; i < items_to_produce;)
         {
             // Dequeue using the given waiting strategy
-            int64_t size;
+            uint64_t size;
             while (!buffer.Dequeue(items, size = N))
                 wait_strategy();
 
             // Emulate consuming
-            for (int64_t j = 0; j < size; ++j)
+            for (uint64_t j = 0; j < size; ++j)
                 crc += items[j];
 
             // Increase the items counter
@@ -54,10 +54,10 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     {
         char item[item_size_to];
 
-        for (int64_t i = 0; i < items_to_produce; ++i)
+        for (uint64_t i = 0; i < items_to_produce; ++i)
         {
             // Emulate producing
-            for (int64_t j = 0; j < item_size; ++j)
+            for (uint64_t j = 0; j < item_size; ++j)
                 item[j] = (char)j;
 
             // Enqueue using the given waiting strategy

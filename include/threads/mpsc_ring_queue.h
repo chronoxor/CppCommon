@@ -44,7 +44,7 @@ public:
         \param capacity - ring queue capacity (must be a power of two)
         \param concurrency - hardware concurrency (default is std::thread::hardware_concurrency)
     */
-    explicit MPSCRingQueue(int64_t capacity, int64_t concurrency = std::thread::hardware_concurrency());
+    explicit MPSCRingQueue(uint64_t capacity, uint64_t concurrency = std::thread::hardware_concurrency());
     MPSCRingQueue(const MPSCRingQueue&) = delete;
     MPSCRingQueue(MPSCRingQueue&&) = default;
     ~MPSCRingQueue();
@@ -53,11 +53,11 @@ public:
     MPSCRingQueue& operator=(MPSCRingQueue&&) = default;
 
     //! Get ring queue capacity
-    int64_t capacity() const { return _capacity; }
+    uint64_t capacity() const { return _capacity; }
     //! Get ring queue concurrency
-    int64_t concurrency() const { return _concurrency; }
+    uint64_t concurrency() const { return _concurrency; }
     //! Get ring queue size
-    int64_t size() const;
+    uint64_t size() const;
 
     //! Enqueue an item into the ring queue (multiple producers threads method)
     /*!
@@ -92,13 +92,13 @@ private:
         SpinLock lock;
         SPSCRingQueue<T> queue;
 
-        Producer(int64_t capacity) : queue(capacity) {}
+        Producer(uint64_t capacity) : queue(capacity) {}
     };
 
-    int64_t _capacity;
-    int64_t _concurrency;
+    uint64_t _capacity;
+    uint64_t _concurrency;
     std::vector<std::shared_ptr<Producer>> _producers;
-    int64_t _consumer;
+    uint64_t _consumer;
 };
 
 } // namespace CppCommon

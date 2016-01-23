@@ -9,12 +9,12 @@
 
 #include "threads/spsc_ring_queue.h"
 
-const int64_t items_to_produce = 100000000;
+const uint64_t items_to_produce = 100000000;
 
-template<typename T, int64_t N>
+template<typename T, uint64_t N>
 void produce_consume(CppBenchmark::Context& context, const std::function<void()>& wait_strategy)
 {
-    int64_t crc = 0;
+    uint64_t crc = 0;
 
     // Create single producer / single consumer wait-free ring queue
     CppCommon::SPSCRingQueue<T> queue(N);
@@ -22,7 +22,7 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     // Start consumer thread
     auto consumer = std::thread([&queue, &wait_strategy, &crc]()
     {
-        for (int64_t i = 0; i < items_to_produce; ++i)
+        for (uint64_t i = 0; i < items_to_produce; ++i)
         {
             // Dequeue using the given waiting strategy
             T item;
@@ -37,7 +37,7 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     // Start producer thread
     auto producer = std::thread([&queue, &wait_strategy, &consumer]()
     {
-        for (int64_t i = 0; i < items_to_produce; ++i)
+        for (uint64_t i = 0; i < items_to_produce; ++i)
         {
             // Enqueue using the given waiting strategy
             while (!queue.Enqueue((T)i))

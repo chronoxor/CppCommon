@@ -9,21 +9,21 @@
 namespace CppCommon {
 
 template<typename T>
-inline MPMCRingQueue<T>::MPMCRingQueue(int64_t capacity) : _capacity(capacity), _mask(capacity - 1), _buffer(new Node[capacity]), _head(0), _tail(0)
+inline MPMCRingQueue<T>::MPMCRingQueue(uint64_t capacity) : _capacity(capacity), _mask(capacity - 1), _buffer(new Node[capacity]), _head(0), _tail(0)
 {
     assert((capacity > 1) && "Ring queue capacity must be greater than one!");
     assert(((capacity & (capacity - 1)) == 0) && "Ring queue capacity must be a power of two!");
 
     // Populate the sequence initial values
-    for (int64_t i = 0; i < capacity; ++i)
+    for (uint64_t i = 0; i < capacity; ++i)
         _buffer[i].sequence.store(i, std::memory_order_relaxed);
 }
 
 template<typename T>
-inline int64_t MPMCRingQueue<T>::size() const
+inline uint64_t MPMCRingQueue<T>::size() const
 {
-    const int64_t head = _head.load(std::memory_order_acquire);
-    const int64_t tail = _tail.load(std::memory_order_acquire);
+    const uint64_t head = _head.load(std::memory_order_acquire);
+    const uint64_t tail = _tail.load(std::memory_order_acquire);
 
     return (head >= tail) ? (head - tail) : (_capacity + head - tail);
 }
@@ -31,15 +31,15 @@ inline int64_t MPMCRingQueue<T>::size() const
 template<typename T>
 inline bool MPMCRingQueue<T>::Enqueue(const T& item)
 {
-    int64_t head_sequence = _head.load(std::memory_order_relaxed);
+    uint64_t head_sequence = _head.load(std::memory_order_relaxed);
 
     for (;;)
     {
         Node* node = &_buffer[head_sequence & _mask];
-        int64_t node_sequence = node->sequence.load(std::memory_order_acquire);
+        uint64_t node_sequence = node->sequence.load(std::memory_order_acquire);
 
         // If node sequence and head sequence are the same then it means this slot is empty
-        int64_t diff = node_sequence - head_sequence;
+        int64_t diff = (int64_t)node_sequence - (int64_t)head_sequence;
         if (diff == 0)
         {
             // Claim our spot by moving head. If head isn't the same
@@ -76,15 +76,15 @@ inline bool MPMCRingQueue<T>::Enqueue(const T& item)
 template<typename T>
 inline bool MPMCRingQueue<T>::Dequeue(T& item)
 {
-    int64_t tail_sequence = _tail.load(std::memory_order_relaxed);
+    uint64_t tail_sequence = _tail.load(std::memory_order_relaxed);
 
     for (;;)
     {
         Node* node = &_buffer[tail_sequence & _mask];
-        int64_t node_sequence = node->sequence.load(std::memory_order_acquire);
+        uint64_t node_sequence = node->sequence.load(std::memory_order_acquire);
 
         // If node sequence and head sequence are the same then it means this slot is empty
-        int64_t diff = node_sequence - (tail_sequence + 1);
+        int64_t diff = (int64_t)node_sequence - (int64_t)(tail_sequence + 1);
         if (diff == 0)
         {
             // Claim our spot by moving head. If head isn't the same

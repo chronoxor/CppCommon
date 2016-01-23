@@ -18,7 +18,7 @@ inline bool SpinLock::try_lock()
     return !_lock.exchange(true, std::memory_order_acquire);
 }
 
-inline bool SpinLock::try_lock_for(int64_t spin)
+inline bool SpinLock::try_lock_for(uint64_t spin)
 {
     // Try to acquire spin-lock at least one time
     do

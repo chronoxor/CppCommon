@@ -55,7 +55,7 @@ public:
         \param spin - spin count
         \return 'true' if the spin-lock was successfully acquired, 'false' if the spin-lock is busy
     */
-    bool try_lock_for(int64_t spin);
+    bool try_lock_for(uint64_t spin);
 
     //! Acquire spin-lock with block
     /*!

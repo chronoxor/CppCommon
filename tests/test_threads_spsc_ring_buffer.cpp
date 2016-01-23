@@ -16,7 +16,7 @@ TEST_CASE("Single producer / single consumer wait-free ring buffer", "[CppCommon
     REQUIRE(buffer.size() == 0);
 
     char data[4];
-    int64_t size;
+    uint64_t size;
 
     REQUIRE(!buffer.Dequeue(data, size = 0));
     REQUIRE(!buffer.Dequeue(data, size = 1));
