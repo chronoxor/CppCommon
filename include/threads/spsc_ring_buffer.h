@@ -48,6 +48,7 @@ public:
     //! Enqueue a chunk of bytes into the ring buffer (single producer thread method)
     /*!
         The chunk of bytes will be copied into the ring buffer using 'memcpy()' function.
+        Chunk size should not be greater than ring buffer capacity!
 
         \param chunk - chunk buffer to enqueue
         \param size - chunk buffer size
@@ -58,6 +59,8 @@ public:
     //! Dequeue a chunk of bytes from the ring buffer (single consumer thread method)
     /*!
         The chunk of bytes will be copied from the ring buffer using 'memcpy()' function.
+        Chunk size should be enough to dequeue the whole data from the ring buffer so it
+        should be greater than ring buffer capacity!
 
         \param chunk - chunk buffer to dequeue
         \param size - chunk buffer size

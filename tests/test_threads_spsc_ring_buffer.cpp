@@ -20,6 +20,9 @@ TEST_CASE("Single producer / single consumer wait-free ring buffer", "[CppCommon
 
     REQUIRE(!buffer.Dequeue(data, size = 0));
     REQUIRE(!buffer.Dequeue(data, size = 1));
+    REQUIRE(!buffer.Dequeue(data, size = 2));
+    REQUIRE(!buffer.Dequeue(data, size = 3));
+    REQUIRE(!buffer.Dequeue(data, size = 4));
 
     REQUIRE(!buffer.Enqueue(data, 4));
 
@@ -39,38 +42,26 @@ TEST_CASE("Single producer / single consumer wait-free ring buffer", "[CppCommon
     REQUIRE(!buffer.Enqueue(data, 1));
     REQUIRE(!buffer.Enqueue(data, 0));
 
-    REQUIRE((buffer.Dequeue(data, size = 3) && (size == 3)));
+    REQUIRE((buffer.Dequeue(data, size = 4) && (size == 3)));
     REQUIRE(buffer.size() == 0);
 
-    REQUIRE(!buffer.Dequeue(data, size = 3));
+    REQUIRE(!buffer.Dequeue(data, size = 4));
 
     REQUIRE(buffer.Enqueue(data, 2));
     REQUIRE(buffer.size() == 2);
 
-    REQUIRE((buffer.Dequeue(data, size = 2) && (size == 2)));
+    REQUIRE((buffer.Dequeue(data, size = 4) && (size == 2)));
     REQUIRE(buffer.size() == 0);
 
-    REQUIRE(!buffer.Dequeue(data, size = 2));
+    REQUIRE(!buffer.Dequeue(data, size = 4));
 
     REQUIRE(buffer.Enqueue(data, 3));
     REQUIRE(buffer.size() == 3);
 
-    REQUIRE((buffer.Dequeue(data, size = 3) && (size == 3)));
+    REQUIRE((buffer.Dequeue(data, size = 4) && (size == 3)));
     REQUIRE(buffer.size() == 0);
 
-    REQUIRE(!buffer.Dequeue(data, size = 1));
-
-    REQUIRE(buffer.Enqueue(data, 3));
-    REQUIRE(buffer.size() == 3);
-
-    REQUIRE((buffer.Dequeue(data, size = 1) && (size == 1)));
-    REQUIRE(buffer.size() == 2);
-
-    REQUIRE((buffer.Dequeue(data, size = 2) && (size == 2)));
-    REQUIRE(buffer.size() == 0);
-
-    REQUIRE(!buffer.Dequeue(data, size = 1));
-    REQUIRE(!buffer.Dequeue(data, size = 0));
+    REQUIRE(!buffer.Dequeue(data, size = 4));
 
     REQUIRE(buffer.capacity() == 3);
 }
