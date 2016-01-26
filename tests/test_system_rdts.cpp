@@ -10,12 +10,12 @@ using namespace CppCommon;
 
 TEST_CASE("Read Time Stamp Counter", "[CppCommon][System]")
 {
-    REQUIRE(CppCommon::RDTS::current() > 0);
+    REQUIRE(CppCommon::rdts() > 0);
 
     uint64_t prev = 0;
     for (int i = 0; i < 1000; ++i)
     {
-        uint64_t next = CppCommon::RDTS::current();
+        uint64_t next = CppCommon::rdts();
         REQUIRE(prev <= next);
         prev = next;
     }

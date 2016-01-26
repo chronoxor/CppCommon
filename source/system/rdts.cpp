@@ -1,5 +1,5 @@
 /*!
-    \file spsc_ring_queue.inl
+    \file rdts.cpp
     \brief Read Time Stamp Counter implementation
     \author Ivan Shynkarenka
     \date 22.01.2016
@@ -14,7 +14,7 @@
 
 namespace CppCommon {
 
-uint64_t RDTS::current()
+uint64_t rdts()
 {
 #if defined(_MSC_VER)
     return __rdtsc();

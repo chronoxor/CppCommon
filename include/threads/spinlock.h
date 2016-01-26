@@ -10,6 +10,9 @@
 #define CPPCOMMON_SPINLOCK_H
 
 #include <atomic>
+#include <chrono>
+
+#include "system/timestamp.h"
 
 namespace CppCommon {
 
@@ -48,14 +51,34 @@ public:
     */
     bool try_lock();
 
-    //! Try to acquire spin-lock for the given spin count without block
+    //! Try to acquire spin-lock for the given spin count
     /*!
         Thread-safe. Will block for the given spin count in the worst case.
 
         \param spin - spin count
         \return 'true' if the spin-lock was successfully acquired, 'false' if the spin-lock is busy
     */
-    bool try_lock_spin(uint64_t spin);
+    bool try_lock_spin(int64_t spin);
+
+    //! Try to acquire spin-lock for the given time duration
+    /*!
+        Thread-safe. Will block for the given time duration in the worst case.
+
+        \param duration - time duration for spin-lock
+        \return 'true' if the spin-lock was successfully acquired, 'false' if the spin-lock is busy
+    */
+    template <class Rep, class Period>
+    bool try_lock_for(const std::chrono::duration<Rep, Period>& duration);
+
+    //! Try to acquire spin-lock until the given timestamp
+    /*!
+        Thread-safe. Will block until the given timestamp in the worst case.
+
+        \param timestamp - timestamp to stop spin-lock
+        \return 'true' if the spin-lock was successfully acquired, 'false' if the spin-lock is busy
+    */
+    template <class Clock, class Duration>
+    bool try_lock_until(const std::chrono::time_point<Clock, Duration>& timestamp);
 
     //! Acquire spin-lock with block
     /*!

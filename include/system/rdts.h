@@ -19,21 +19,10 @@ namespace CppCommon {
     processors since the Pentium.
 
     https://en.wikipedia.org/wiki/Time_Stamp_Counter
+
+    \return Number of CPU cycles since the last system reset
 */
-class RDTS
-{
-public:
-    RDTS() = delete;
-    RDTS(const RDTS&) = delete;
-    RDTS(RDTS&&) = delete;
-    ~RDTS() = delete;
-
-    RDTS& operator=(const RDTS&) = delete;
-    RDTS& operator=(RDTS&&) = delete;
-
-    //! Get the current number of CPU cycles since reset.
-    static uint64_t current();
-};
+uint64_t rdts();
 
 } // namespace CppCommon
 

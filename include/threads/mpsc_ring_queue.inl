@@ -29,8 +29,7 @@ template<typename T>
 inline bool MPSCRingQueue<T>::Enqueue(const T& item)
 {
     // Get producer index for the current thread based on RDTS value
-    uint64_t timestamp = RDTS::current();
-    uint64_t index = timestamp % _concurrency;
+    uint64_t index = rdts() % _concurrency;
 
     // Lock the chosen producer using its spin-lock
     std::lock_guard<SpinLock> lock(_producers[index]->lock);
