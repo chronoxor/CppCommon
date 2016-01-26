@@ -50,12 +50,12 @@ public:
 
     //! Try to acquire spin-lock for the given spin count without block
     /*!
-        Thread-safe. Will not block.
+        Thread-safe. Will block for the given spin count in the worst case.
 
         \param spin - spin count
         \return 'true' if the spin-lock was successfully acquired, 'false' if the spin-lock is busy
     */
-    bool try_lock_for(uint64_t spin);
+    bool try_lock_spin(uint64_t spin);
 
     //! Acquire spin-lock with block
     /*!

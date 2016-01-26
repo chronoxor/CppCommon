@@ -22,10 +22,10 @@ TEST_CASE("Spin-lock", "[CppCommon][Threads]")
     lock.unlock();
     REQUIRE(!lock.is_locked());
 
-    // Test try_lock_for() method
+    // Test try_lock_spin() method
     for (int i = -10; i < 10; ++i)
     {
-        lock.try_lock_for(i);
+        lock.try_lock_spin(i);
         REQUIRE(lock.is_locked());
         lock.unlock();
         REQUIRE(!lock.is_locked());
