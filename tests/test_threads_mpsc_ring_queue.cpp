@@ -12,7 +12,7 @@ TEST_CASE("Multiple producers / single consumer wait-free ring queue", "[CppComm
 {
     MPSCRingQueue<int> queue(4, 4);
 
-    REQUIRE(queue.capacity() == 4);
+    REQUIRE(queue.capacity() == 3);
     REQUIRE(queue.size() == 0);
 
     int v = -1;
@@ -37,13 +37,16 @@ TEST_CASE("Multiple producers / single consumer wait-free ring queue", "[CppComm
 
     REQUIRE(queue.Dequeue(v));
 
-    REQUIRE(queue.capacity() == 4);
+    REQUIRE(queue.capacity() == 3);
     REQUIRE(queue.size() == 0);
 }
 
 TEST_CASE("Multiple producers / single consumer wait-free ring queue (batch mode)", "[CppCommon][Threads]")
 {
     MPSCRingQueue<int> batcher(4, 4);
+
+    REQUIRE(batcher.capacity() == 3);
+    REQUIRE(batcher.size() == 0);
 
     REQUIRE(!batcher.Dequeue([](const int&){}));
 
@@ -64,4 +67,7 @@ TEST_CASE("Multiple producers / single consumer wait-free ring queue (batch mode
 
     REQUIRE(batcher.Dequeue([](const int&){}));
     REQUIRE(!batcher.Dequeue([](const int&){}));
+
+    REQUIRE(batcher.capacity() == 3);
+    REQUIRE(batcher.size() == 0);
 }

@@ -9,18 +9,11 @@
 namespace CppCommon {
 
 template<typename T>
-inline MPSCRingQueue<T>::MPSCRingQueue(uint64_t capacity, uint64_t concurrency) : _capacity(capacity), _concurrency(concurrency), _consumer(0)
+inline MPSCRingQueue<T>::MPSCRingQueue(uint64_t capacity, uint64_t concurrency) : _capacity(capacity - 1), _concurrency(concurrency), _consumer(0)
 {
     // Initialize producers' ring queue
     for (uint64_t i = 0; i < concurrency; ++i)
         _producers.push_back(std::make_shared<Producer>(capacity));
-}
-
-template<typename T>
-inline MPSCRingQueue<T>::~MPSCRingQueue()
-{
-    // Remove all nodes from the consumer's ring queue
-    Dequeue([](const T&){});
 }
 
 template<typename T>

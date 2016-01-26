@@ -9,13 +9,9 @@
 #ifndef CPPCOMMON_MPSC_RING_QUEUE_H
 #define CPPCOMMON_MPSC_RING_QUEUE_H
 
-#include <atomic>
-#include <cassert>
 #include <memory>
 #include <mutex>
-#include <queue>
 #include <thread>
-#include <tuple>
 #include <vector>
 
 #include "system/rdts.h"
@@ -29,9 +25,8 @@ namespace CppCommon {
     Multiple producers / single consumer wait-free ring queue use only atomic operations to provide thread-safe
     enqueue and dequeue operations. This data structure consist of several SPSC ring queues which count is
     provided as a hardware concurrency in the constructor. All of them are randomly accessed with a RDTS
-    distribution index. Consumer thread sequentially copy all the items from producer's ring queues to the
-    single consumer's ring queue. All the items available in sesequential or batch mode. Ring queue size
-    is limited to the capacity provided in the constructor.
+    distribution index. All the items available in sesequential or batch mode. All ring queue sizes are
+    limited to the capacity provided in the constructor.
 
     FIFO order is not guaranteed!
 */
@@ -47,7 +42,7 @@ public:
     explicit MPSCRingQueue(uint64_t capacity, uint64_t concurrency = std::thread::hardware_concurrency());
     MPSCRingQueue(const MPSCRingQueue&) = delete;
     MPSCRingQueue(MPSCRingQueue&&) = default;
-    ~MPSCRingQueue();
+    ~MPSCRingQueue() = default;
 
     MPSCRingQueue& operator=(const MPSCRingQueue&) = delete;
     MPSCRingQueue& operator=(MPSCRingQueue&&) = default;

@@ -80,12 +80,12 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK("SPSCRingBuffer-SpinWait-chunk", settings)
+BENCHMARK("SPSCRingBuffer-SpinWait", settings)
 {
     produce_consume<1048576>(context, []{});
 }
 
-BENCHMARK("SPSCRingBuffer-YieldWait-chunk", settings)
+BENCHMARK("SPSCRingBuffer-YieldWait", settings)
 {
     produce_consume<1048576>(context, []{ std::this_thread::yield(); });
 }
