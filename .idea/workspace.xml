@@ -2,39 +2,57 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" assignedExecutableTargets="true" buildAllGenerated="true">
     <generated>
-      <config projectName="cppcommon" targetName="cppbenchmark-example-sort" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_mpsc_linked_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-example-spsc_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppcommon-example-wf_ring_queue" />
       <config projectName="cppcommon" targetName="cppcommon-perf-mpsc_linked_batcher" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-timers" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-threads" />
-      <config projectName="cppcommon" targetName="cppcommon-example-spsc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-spsc_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_spinlock" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_spsc_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-sort" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-iterators" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-containers" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpsc_linked_batcher" />
       <config projectName="cppcommon" targetName="cppbenchmark-example-mpmc" />
       <config projectName="cppcommon" targetName="cppcommon-benchmark-wf_ring_buffer" />
       <config projectName="cppcommon" targetName="cppcommon-perf-mpmc_ring_queue_ex" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-fwrite" />
-      <config projectName="cppcommon" targetName="cppbenchmark-tests" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-random" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-system_timestamp" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_mpmc_ring_queue" />
       <config projectName="cppcommon" targetName="cppbenchmark-example-executor" />
-      <config projectName="cppcommon" targetName="cppcommon-example-spsc_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-random" />
+      <config projectName="cppcommon" targetName="cppcommon-example-spsc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpsc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-fwrite" />
       <config projectName="cppcommon" targetName="cppcommon-example-benchmark-ring_queue" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-timers" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_mpsc_ring_queue" />
       <config projectName="cppcommon" targetName="cppbenchmark-example-mpsc" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-containers" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-threads" />
       <config projectName="cppcommon" targetName="cppcommon-perf-mpmc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-mpsc_linked_queue" />
       <config projectName="cppcommon" targetName="cppcommon-example-mpmc_ring_queue" />
       <config projectName="cppcommon" targetName="cppbenchmark-example-spsc" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-mpsc_linked_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpsc_linked_queue" />
       <config projectName="cppcommon" targetName="cppcommon-perf-spsc_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-example-wf_ring_queue" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-iterators" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-system_rdts" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_timestamp" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-atomic" />
       <config projectName="cppcommon" targetName="cpp-optparse" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpsc_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_spsc_ring_queue" />
       <config projectName="cppcommon" targetName="cppbenchmark-example-fpu" />
-      <config projectName="cppcommon" targetName="cppbenchmark" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_spsc_ring_buffer" />
       <config projectName="cppcommon" targetName="cppcommon-example-wf_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_spsc_ring_queue" />
       <config projectName="cppcommon" targetName="cppcommon" />
       <config projectName="cppcommon" targetName="cppcommon-benchmark-wf_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-spsc_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppbenchmark" />
       <config projectName="cppcommon" targetName="cppcommon-perf-mpsc_ring_queue" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-atomic" />
+      <config projectName="cppcommon" targetName="cppbenchmark-tests" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpmc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_rdts" />
       <config projectName="cppcommon" targetName="cppcommon-tests" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_mpsc_ring_buffer" />
       <config projectName="cppcommon" targetName="cppcommon-example-mpsc_linked_queue" />
     </generated>
   </component>
@@ -46,9 +64,8 @@
   <component name="ChangeListManager">
     <list default="true" id="559410a7-8ec3-4eef-81f5-f9dd5eddd0fc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/CppCommon.iml" afterPath="$PROJECT_DIR$/.idea/CppCommon.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/include/threads/mpsc_ring_queue.inl" afterPath="$PROJECT_DIR$/include/threads/mpsc_ring_queue.inl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/include/threads/spsc_ring_queue.inl" afterPath="$PROJECT_DIR$/include/threads/spsc_ring_queue.inl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/perf/mpsc_ring_queue.cpp" afterPath="$PROJECT_DIR$/perf/mpsc_ring_queue.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/include/threads/spinlock.inl" afterPath="$PROJECT_DIR$/include/threads/spinlock.inl" />
     </list>
     <ignored path="CppCommon.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -79,11 +96,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="rdts.h" pinned="false" current-in-tab="true">
+      <file leaf-file-name="rdts.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/include/system/rdts.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.472879">
-              <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="timestamp.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/include/system/timestamp.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="thread.h" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/include/threads/thread.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.5674548">
+              <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -116,6 +153,8 @@
         <option value="$PROJECT_DIR$/include/threads/wf_link_queue.inl" />
         <option value="$PROJECT_DIR$/modules/CppBenchmark/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/include/system/rdts.h" />
+        <option value="$PROJECT_DIR$/include/system/timestamp.h" />
+        <option value="$PROJECT_DIR$/include/threads/thread.h" />
       </list>
     </option>
   </component>
@@ -186,24 +225,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="CppCommon" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CppCommon" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CppCommon" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="threads" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -474,7 +495,79 @@
       <envs />
       <method />
     </configuration>
-    <list size="35">
+    <configuration default="false" name="cppcommon-example-system_rdts" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-system_rdts" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-system_rdts">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-system_timestamp" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-system_timestamp" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-system_timestamp">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-threads_mpmc_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_mpmc_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_mpmc_ring_queue">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-threads_mpsc_linked_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_mpsc_linked_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_mpsc_linked_queue">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-threads_mpsc_ring_buffer" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_mpsc_ring_buffer" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_mpsc_ring_buffer">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-threads_mpsc_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_mpsc_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_mpsc_ring_queue">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-threads_spinlock" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_spinlock" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_spinlock">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-threads_spsc_ring_buffer" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_spsc_ring_buffer" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_spsc_ring_buffer">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-threads_spsc_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_spsc_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_spsc_ring_queue">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-perf-system_rdts" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-system_rdts" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-system_rdts">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-perf-system_timestamp" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-system_timestamp" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-system_timestamp">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-perf-threads_mpmc_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-threads_mpmc_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-threads_mpmc_ring_queue">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-perf-threads_mpsc_linked_batcher" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-threads_mpsc_linked_batcher" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-threads_mpsc_linked_batcher">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-perf-threads_mpsc_linked_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-threads_mpsc_linked_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-threads_mpsc_linked_queue">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-perf-threads_mpsc_ring_buffer" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-threads_mpsc_ring_buffer" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-threads_mpsc_ring_buffer">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-perf-threads_mpsc_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-threads_mpsc_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-threads_mpsc_ring_queue">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-perf-threads_spsc_ring_buffer" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-threads_spsc_ring_buffer" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-threads_spsc_ring_buffer">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-perf-threads_spsc_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-threads_spsc_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-threads_spsc_ring_queue">
+      <envs />
+      <method />
+    </configuration>
+    <list size="53">
       <item index="0" class="java.lang.String" itemvalue="Application.Build All" />
       <item index="1" class="java.lang.String" itemvalue="Application.cppcommon" />
       <item index="2" class="java.lang.String" itemvalue="Application.cppcommon-tests" />
@@ -510,6 +603,24 @@
       <item index="32" class="java.lang.String" itemvalue="Application.cppcommon-perf-mpsc_ring_queue" />
       <item index="33" class="java.lang.String" itemvalue="Application.cppcommon-perf-spsc_ring_buffer" />
       <item index="34" class="java.lang.String" itemvalue="Application.cppcommon-perf-spsc_ring_queue" />
+      <item index="35" class="java.lang.String" itemvalue="Application.cppcommon-example-system_rdts" />
+      <item index="36" class="java.lang.String" itemvalue="Application.cppcommon-example-system_timestamp" />
+      <item index="37" class="java.lang.String" itemvalue="Application.cppcommon-example-threads_mpmc_ring_queue" />
+      <item index="38" class="java.lang.String" itemvalue="Application.cppcommon-example-threads_mpsc_linked_queue" />
+      <item index="39" class="java.lang.String" itemvalue="Application.cppcommon-example-threads_mpsc_ring_buffer" />
+      <item index="40" class="java.lang.String" itemvalue="Application.cppcommon-example-threads_mpsc_ring_queue" />
+      <item index="41" class="java.lang.String" itemvalue="Application.cppcommon-example-threads_spinlock" />
+      <item index="42" class="java.lang.String" itemvalue="Application.cppcommon-example-threads_spsc_ring_buffer" />
+      <item index="43" class="java.lang.String" itemvalue="Application.cppcommon-example-threads_spsc_ring_queue" />
+      <item index="44" class="java.lang.String" itemvalue="Application.cppcommon-perf-system_rdts" />
+      <item index="45" class="java.lang.String" itemvalue="Application.cppcommon-perf-system_timestamp" />
+      <item index="46" class="java.lang.String" itemvalue="Application.cppcommon-perf-threads_mpmc_ring_queue" />
+      <item index="47" class="java.lang.String" itemvalue="Application.cppcommon-perf-threads_mpsc_linked_batcher" />
+      <item index="48" class="java.lang.String" itemvalue="Application.cppcommon-perf-threads_mpsc_linked_queue" />
+      <item index="49" class="java.lang.String" itemvalue="Application.cppcommon-perf-threads_mpsc_ring_buffer" />
+      <item index="50" class="java.lang.String" itemvalue="Application.cppcommon-perf-threads_mpsc_ring_queue" />
+      <item index="51" class="java.lang.String" itemvalue="Application.cppcommon-perf-threads_spsc_ring_buffer" />
+      <item index="52" class="java.lang.String" itemvalue="Application.cppcommon-perf-threads_spsc_ring_queue" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
@@ -527,7 +638,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1576" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -564,6 +675,62 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/modules/CppBenchmark/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/system/rdts.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/system/timestamp.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake/SetCompilerFeatures.cmake">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/CppBenchmark/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/system/rdts.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake/SetCompilerFeatures.cmake">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/modules/CppBenchmark/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -630,8 +797,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/include/system/rdts.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.472879">
-          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/system/timestamp.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/threads/thread.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5674548">
+          <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
           <folding />
         </state>
       </provider>

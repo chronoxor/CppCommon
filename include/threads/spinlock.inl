@@ -1,6 +1,6 @@
 /*!
     \file spinlock.inl
-    \brief Spin-lock synchronization primitive implementation
+    \brief Spin-lock synchronization primitive inline implementation
     \author Ivan Shynkarenka
     \date 22.01.2016
     \copyright MIT License
@@ -8,17 +8,17 @@
 
 namespace CppCommon {
 
-inline bool SpinLock::is_locked()
+inline bool SpinLock::IsLocked()
 {
     return _lock.load(std::memory_order_acquire);
 }
 
-inline bool SpinLock::try_lock()
+inline bool SpinLock::TryLock()
 {
     return !_lock.exchange(true, std::memory_order_acquire);
 }
 
-inline bool SpinLock::try_lock_spin(int64_t spin)
+inline bool SpinLock::TryLockSpin(int64_t spin)
 {
     // Try to acquire spin-lock at least one time
     do
@@ -32,26 +32,25 @@ inline bool SpinLock::try_lock_spin(int64_t spin)
 }
 
 template <class Rep, class Period>
-inline bool SpinLock::try_lock_for(const std::chrono::duration<Rep, Period>& duration)
+inline bool SpinLock::TryLockFor(const std::chrono::duration<Rep, Period>& duration)
 {
-    int64_t nanoduration = std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count();
-    uint64_t start = timestamp();
+    uint64_t finish = timestamp() + std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count();
 
     // Try to acquire spin-lock at least one time
-    do 
+    do
     {
         if (!_lock.exchange(true, std::memory_order_acquire))
             return true;
-    } while ((int64_t)(timestamp() - start) < nanoduration);
+    } while (timestamp() < finish);
 
     // Failed to acquire spin-lock
     return false;
 }
 
 template <class Clock, class Duration>
-inline bool SpinLock::try_lock_until(const std::chrono::time_point<Clock, Duration>& timestamp)
+inline bool SpinLock::TryLockUntil(const std::chrono::time_point<Clock, Duration>& timestamp)
 {
-    return try_lock_for(timestamp - std::chrono::high_resolution_clock::now());
+    return TryLockFor(timestamp - std::chrono::high_resolution_clock::now());
 }
 
 inline void SpinLock::lock()

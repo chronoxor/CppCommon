@@ -1,6 +1,6 @@
 /*!
     \file mpsc_linked_batcher.inl
-    \brief Multiple producers / single consumer wait-free linked batcher implementation
+    \brief Multiple producers / single consumer wait-free linked batcher inline implementation
     \author Ivan Shynkarenka
     \date 19.01.2016
     \copyright MIT License

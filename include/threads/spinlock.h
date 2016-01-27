@@ -41,7 +41,7 @@ public:
 
         \return 'true' if the spin-lock is already locked, 'false' if the spin-lock is released
     */
-    bool is_locked();
+    bool IsLocked();
 
     //! Try to acquire spin-lock without block
     /*!
@@ -49,7 +49,7 @@ public:
 
         \return 'true' if the spin-lock was successfully acquired, 'false' if the spin-lock is busy
     */
-    bool try_lock();
+    bool TryLock();
 
     //! Try to acquire spin-lock for the given spin count
     /*!
@@ -58,7 +58,7 @@ public:
         \param spin - spin count
         \return 'true' if the spin-lock was successfully acquired, 'false' if the spin-lock is busy
     */
-    bool try_lock_spin(int64_t spin);
+    bool TryLockSpin(int64_t spin);
 
     //! Try to acquire spin-lock for the given time duration
     /*!
@@ -68,7 +68,7 @@ public:
         \return 'true' if the spin-lock was successfully acquired, 'false' if the spin-lock is busy
     */
     template <class Rep, class Period>
-    bool try_lock_for(const std::chrono::duration<Rep, Period>& duration);
+    bool TryLockFor(const std::chrono::duration<Rep, Period>& duration);
 
     //! Try to acquire spin-lock until the given timestamp
     /*!
@@ -78,7 +78,7 @@ public:
         \return 'true' if the spin-lock was successfully acquired, 'false' if the spin-lock is busy
     */
     template <class Clock, class Duration>
-    bool try_lock_until(const std::chrono::time_point<Clock, Duration>& timestamp);
+    bool TryLockUntil(const std::chrono::time_point<Clock, Duration>& timestamp);
 
     //! Acquire spin-lock with block
     /*!

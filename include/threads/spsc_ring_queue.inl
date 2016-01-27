@@ -1,6 +1,6 @@
 /*!
     \file spsc_ring_queue.inl
-    \brief Single producer / single consumer wait-free ring queue implementation
+    \brief Single producer / single consumer wait-free ring queue inline implementation
     \author Ivan Shynkarenka
     \date 15.01.2016
     \copyright MIT License

@@ -1,6 +1,6 @@
 /*!
     \file mpsc_ring_queue.inl
-    \brief Multiple producers / single consumer wait-free ring queue class implementation
+    \brief Multiple producers / single consumer wait-free ring queue class inline implementation
     \author Ivan Shynkarenka
     \date 21.01.2016
     \copyright MIT License

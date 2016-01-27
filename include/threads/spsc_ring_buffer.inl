@@ -1,6 +1,6 @@
 /*!
     \file spsc_ring_buffer.inl
-    \brief Single producer / single consumer wait-free ring buffer implementation
+    \brief Single producer / single consumer wait-free ring buffer inline implementation
     \author Ivan Shynkarenka
     \date 16.01.2016
     \copyright MIT License

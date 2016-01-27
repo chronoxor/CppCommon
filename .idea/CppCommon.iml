@@ -38,40 +38,53 @@
       <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/threads.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/mpsc.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/executor.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/fwrite.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/timers.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/mpmc.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/fpu.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/random.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/atomic.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/containers.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/iterators.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/timers.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/atomic.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/spsc.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/sort.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/containers.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/examples/fwrite.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/cmake/SetCrtSecureWarningsOff.cmake" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/cmake/SetCompilerFeatures.cmake" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/modules/CppBenchmark/cmake/SetCompilerWarningAll.cmake" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/modules/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/modules/catch.cmake" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/perf/spsc_ring_buffer.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/perf/mpsc_ring_queue.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/perf/mpsc_linked_batcher.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/perf/spsc_ring_queue.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/perf/mpmc_ring_queue.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/perf/mpsc_linked_queue.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/perf/mpmc_ring_queue_ex.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/source/threads/test.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/tests/test_mpmc_ring_queue.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/tests/test_mpsc_linked_queue.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/tests/test_spsc_ring_queue.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/perf/threads_mpmc_ring_queue.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/perf/system_timestamp.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/perf/threads_mpsc_ring_buffer.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/perf/threads_mpsc_ring_queue.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/perf/threads_spsc_ring_queue.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/perf/system_rdts.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/perf/threads_spsc_ring_buffer.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/perf/threads_mpsc_linked_batcher.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/perf/threads_mpsc_linked_queue.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/source/system/rdts.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/source/system/timestamp.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/test_threads_mpmc_ring_queue.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/test_threads_spsc_ring_queue.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/tests/test.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/tests/test_mpsc_linked_batcher.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/tests/test_spsc_ring_buffer.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/test_system_rdts.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/test_system_timestamp.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/test_threads_mpsc_ring_buffer.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/test_threads_mpsc_ring_queue.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/test_threads_spinlock.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/test_threads_mpsc_linked_batcher.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/test_threads_mpsc_linked_queue.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/test_threads_spsc_ring_buffer.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/examples/mpsc_linked_queue.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/examples/spsc_ring_buffer.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/examples/spsc_ring_queue.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/examples/mpmc_ring_queue.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/examples/threads_mpmc_ring_queue.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/examples/system_timestamp.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/examples/threads_mpsc_ring_queue.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/examples/threads_mpsc_ring_buffer.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/examples/threads_spinlock.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/examples/threads_spsc_ring_queue.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/examples/system_rdts.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/examples/threads_spsc_ring_buffer.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/examples/threads_mpsc_linked_queue.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cmake/SetCrtSecureWarningsOff.cmake" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cmake/SetCompilerFeatures.cmake" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cmake/SetCompilerWarningAll.cmake" isTestSource="false" />

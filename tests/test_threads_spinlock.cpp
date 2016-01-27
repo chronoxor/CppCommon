@@ -14,57 +14,57 @@ TEST_CASE("Spin-lock", "[CppCommon][Threads]")
 {
     SpinLock lock;
 
-    REQUIRE(!lock.is_locked());
+    REQUIRE(!lock.IsLocked());
 
-    // Test try_lock() method
-    REQUIRE(lock.try_lock());
-    REQUIRE(lock.is_locked());
+    // Test TryLock() method
+    REQUIRE(lock.TryLock());
+    REQUIRE(lock.IsLocked());
     lock.unlock();
-    REQUIRE(!lock.is_locked());
+    REQUIRE(!lock.IsLocked());
 
-    // Test try_lock_spin() method
+    // Test TryLockSpin() method
     for (int i = -10; i < 10; ++i)
     {
-        REQUIRE(lock.try_lock_spin(i));
-        REQUIRE(lock.is_locked());
-        REQUIRE(!lock.try_lock_spin(i));
+        REQUIRE(lock.TryLockSpin(i));
+        REQUIRE(lock.IsLocked());
+        REQUIRE(!lock.TryLockSpin(i));
         lock.unlock();
-        REQUIRE(!lock.is_locked());
+        REQUIRE(!lock.IsLocked());
     }
 
-    // Test try_lock_for() method
-    REQUIRE(lock.try_lock());
-    REQUIRE(lock.is_locked());
+    // Test TryLockFor() method
+    REQUIRE(lock.TryLock());
+    REQUIRE(lock.IsLocked());
     int64_t start = timestamp();
-    REQUIRE(!lock.try_lock_for(std::chrono::nanoseconds(100)));
+    REQUIRE(!lock.TryLockFor(std::chrono::nanoseconds(100)));
     int64_t stop = timestamp();
     REQUIRE(((stop - start) >= 100));
     lock.unlock();
-    REQUIRE(!lock.is_locked());
+    REQUIRE(!lock.IsLocked());
 
-    // Test try_lock_until() method
-    REQUIRE(lock.try_lock());
-    REQUIRE(lock.is_locked());
+    // Test TryLockUntil() method
+    REQUIRE(lock.TryLock());
+    REQUIRE(lock.IsLocked());
     start = timestamp();
-    REQUIRE(!lock.try_lock_until(std::chrono::high_resolution_clock::now() + std::chrono::nanoseconds(100)));
+    REQUIRE(!lock.TryLockUntil(std::chrono::high_resolution_clock::now() + std::chrono::nanoseconds(100)));
     stop = timestamp();
     REQUIRE(((stop - start) >= 100));
     lock.unlock();
-    REQUIRE(!lock.is_locked());
+    REQUIRE(!lock.IsLocked());
 
     // Test lock()/unlock() methods
-    REQUIRE(!lock.is_locked());
+    REQUIRE(!lock.IsLocked());
     lock.lock();
-    REQUIRE(lock.is_locked());
+    REQUIRE(lock.IsLocked());
     lock.unlock();
-    REQUIRE(!lock.is_locked());
+    REQUIRE(!lock.IsLocked());
 
     // Test with std::lock_guard
     for (int i = 0; i < 10; ++i)
     {
         std::lock_guard<SpinLock> guard(lock);
-        REQUIRE(lock.is_locked());
+        REQUIRE(lock.IsLocked());
     }
 
-    REQUIRE(!lock.is_locked());
+    REQUIRE(!lock.IsLocked());
 }

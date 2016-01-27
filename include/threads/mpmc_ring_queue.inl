@@ -1,6 +1,6 @@
 /*!
     \file mpmc_ring_queue.inl
-    \brief Multiple producers / multiple consumers wait-free ring queue implementation
+    \brief Multiple producers / multiple consumers wait-free ring queue inline implementation
     \author Ivan Shynkarenka
     \date 19.01.2016
     \copyright MIT License

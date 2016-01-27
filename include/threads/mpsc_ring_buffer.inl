@@ -1,6 +1,6 @@
 /*!
     \file mpsc_ring_buffer.inl
-    \brief Multiple producers / single consumer wait-free ring buffer class implementation
+    \brief Multiple producers / single consumer wait-free ring buffer class inline implementation
     \author Ivan Shynkarenka
     \date 26.01.2016
     \copyright MIT License
