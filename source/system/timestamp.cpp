@@ -6,7 +6,7 @@
     \copyright MIT License
 */
 
-#if defined(_MSC_VER)
+#if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 #include <time.h>

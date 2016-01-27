@@ -6,17 +6,47 @@
     \copyright MIT License
 */
 
-#if defined(_MSC_VER)
+#if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
 #undef Yield
+#define STATUS_SUCCESS 0x00000000
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 #include <pthread.h>
 #include <time.h>
 #endif
 
+#include "system/timestamp.h"
 #include "threads/thread.h"
 
 namespace CppCommon {
+
+//! @cond
+namespace Internals {
+
+#if defined(_WIN32) || defined(_WIN64)
+// Helper function to set minimum resolution of the Windows Timer
+uint64_t SetMinimumTimerResolution()
+{
+    static NTSTATUS(__stdcall *NtQueryTimerResolution)(OUT PULONG MinimumResolution, OUT PULONG MaximumResolution, OUT PULONG ActualResolution) = (NTSTATUS(__stdcall*)(PULONG, PULONG, PULONG))GetProcAddress(GetModuleHandle("ntdll.dll"), "NtQueryTimerResolution");
+    static NTSTATUS(__stdcall *NtSetTimerResolution)(IN ULONG RequestedResolution, IN BOOLEAN Set, OUT PULONG ActualResolution) = (NTSTATUS(__stdcall*)(ULONG, BOOLEAN, PULONG))GetProcAddress(GetModuleHandle("ntdll.dll"), "NtSetTimerResolution");
+
+    if ((NtQueryTimerResolution == NULL) || (NtSetTimerResolution == NULL))
+        return 0;
+
+    ULONG MinimumResolution, MaximumResolution, ActualResolution;
+    NTSTATUS ns = NtQueryTimerResolution(&MinimumResolution, &MaximumResolution, &ActualResolution);
+    if (ns == STATUS_SUCCESS)
+    {
+        ns = NtSetTimerResolution(min(MinimumResolution, MaximumResolution), TRUE, &ActualResolution);
+        if (ns == STATUS_SUCCESS)
+            return (ActualResolution * 100);
+    }
+    return 1000000;
+}
+#endif
+
+} // namespace Internals
+//! @endcond
 
 uint64_t Thread::CurrentThreadId()
 {
@@ -31,8 +61,46 @@ void Thread::Sleep(int64_t nanoseconds)
 {
     if (nanoseconds < 0)
         return;
+    if (nanoseconds == 0)
+        return Yield();
 #if defined(_WIN32) || defined(_WIN64)
+    static NTSTATUS(__stdcall *NtDelayExecution)(IN BOOLEAN Alertable, IN PLARGE_INTEGER DelayInterval) = (NTSTATUS(__stdcall*)(BOOLEAN, PLARGE_INTEGER)) GetProcAddress(GetModuleHandle("ntdll.dll"), "NtDelayExecution");
 
+    // Update once and get Windows Timer resolution 
+    static int64_t resolution = Internals::SetMinimumTimerResolution();
+
+    int64_t sleep = nanoseconds;
+    int64_t yield = nanoseconds % resolution;
+
+    // Yield to other thread for a short time
+    if (yield > 0)
+    {
+        int64_t current = timestamp();
+        do
+        {
+          SwitchToThread();
+          int64_t temp = timestamp() - current;
+          sleep -= temp;
+          yield -= temp;
+        } while (yield > 0);
+    }
+
+    // Sleep if we have enough time
+    if (sleep > 0)
+    {
+        if (NtDelayExecution != NULL)
+        {
+            // Sleep with microsecond precision
+            LARGE_INTEGER interval;
+            interval.QuadPart = -sleep / 100;
+            NtDelayExecution(FALSE, &interval);
+        }
+        else
+        {
+            // Sleep with millisecond precision
+            Sleep(sleep / 1000000);
+        }
+    }
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     struct timespec req, rem;
     req.tv_sec = nanoseconds / 1000000000;

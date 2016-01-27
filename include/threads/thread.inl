@@ -17,7 +17,7 @@ inline void Thread::SleepFor(const std::chrono::duration<Rep, Period>& duration)
 template <class Clock, class Duration>
 inline void Thread::SleepUntil(const std::chrono::time_point<Clock, Duration>& timestamp)
 {
-    Sleep(timestamp - std::chrono::high_resolution_clock::now());
+    SleepFor(timestamp - std::chrono::high_resolution_clock::now());
 }
 
 } // namespace CppCommon
