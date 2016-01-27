@@ -23,7 +23,7 @@ inline bool SpinLock::TryLockSpin(int64_t spin)
     // Try to acquire spin-lock at least one time
     do
     {
-        if (!_lock.exchange(true, std::memory_order_acquire))
+        if (TryLock())
             return true;
     } while (spin-- > 0);
 
@@ -39,7 +39,7 @@ inline bool SpinLock::TryLockFor(const std::chrono::duration<Rep, Period>& durat
     // Try to acquire spin-lock at least one time
     do
     {
-        if (!_lock.exchange(true, std::memory_order_acquire))
+        if (TryLock())
             return true;
     } while (timestamp() < finish);
 
