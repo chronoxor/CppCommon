@@ -15,7 +15,7 @@
 #include <vector>
 
 #include "system/rdts.h"
-#include "threads/spinlock.h"
+#include "threads/spin_lock.h"
 #include "threads/spsc_ring_queue.h"
 
 namespace CppCommon {
@@ -95,6 +95,8 @@ private:
     std::vector<std::shared_ptr<Producer>> _producers;
     uint64_t _consumer;
 };
+
+/*! \example threads_mpsc_ring_queue.cpp Multiple producers / single consumer wait-free ring queue example */
 
 } // namespace CppCommon
 

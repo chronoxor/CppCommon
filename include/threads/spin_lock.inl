@@ -1,5 +1,5 @@
 /*!
-    \file spinlock.inl
+    \file spin_lock.inl
     \brief Spin-lock synchronization primitive inline implementation
     \author Ivan Shynkarenka
     \date 22.01.2016

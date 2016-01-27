@@ -79,6 +79,8 @@ private:
     std::atomic<uint64_t> _tail;
 };
 
+/*! \example threads_spsc_ring_queue.cpp Single producer / single consumer wait-free ring queue example */
+
 } // namespace CppCommon
 
 #include "spsc_ring_queue.inl"

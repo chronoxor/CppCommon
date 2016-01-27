@@ -83,6 +83,8 @@ private:
     std::atomic<uint64_t> _tail;
 };
 
+/*! \example threads_spsc_ring_buffer.cpp Single producer / single consumer wait-free ring buffer example */
+
 } // namespace CppCommon
 
 #include "spsc_ring_buffer.inl"

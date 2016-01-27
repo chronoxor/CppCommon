@@ -70,6 +70,8 @@ private:
     std::atomic<Node*> _tail;
 };
 
+/*! \example threads_mpsc_linked_queue.cpp Multiple producers / single consumer wait-free linked queue example */
+
 } // namespace CppCommon
 
 #include "mpsc_linked_queue.inl"

@@ -84,6 +84,8 @@ private:
     std::atomic<uint64_t> _tail;
 };
 
+/*! \example threads_mpmc_ring_queue.cpp Multiple producers / multiple consumers wait-free ring queue example */
+
 } // namespace CppCommon
 
 #include "mpmc_ring_queue.inl"

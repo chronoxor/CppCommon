@@ -19,6 +19,8 @@ namespace CppCommon {
 */
 uint64_t timestamp();
 
+/*! \example system_timestamp.cpp Nanoseconds timestamp accessor example */
+
 } // namespace CppCommon
 
 #endif //CPPCOMMON_TIMESTAMP_H

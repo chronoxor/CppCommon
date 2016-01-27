@@ -45,7 +45,7 @@ TEST_CASE("Thread", "[CppCommon][Threads]")
     {
         int64_t start = timestamp();
         Thread::Yield();
-        int64_t stop = timestamp();    
+        int64_t stop = timestamp();
         REQUIRE(((stop - start) >= 0));
     }
 }

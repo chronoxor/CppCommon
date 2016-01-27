@@ -1,13 +1,13 @@
 /*!
-    \file spinlock.h
+    \file spin_lock.h
     \brief Spin-lock synchronization primitive definition
     \author Ivan Shynkarenka
     \date 22.01.2016
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_SPINLOCK_H
-#define CPPCOMMON_SPINLOCK_H
+#ifndef CPPCOMMON_SPIN_LOCK_H
+#define CPPCOMMON_SPIN_LOCK_H
 
 #include <atomic>
 #include <chrono>
@@ -96,8 +96,10 @@ private:
     std::atomic<bool> _lock;
 };
 
+/*! \example threads_spin_lock.cpp Spin-lock synchronization primitive example */
+
 } // namespace CppCommon
 
-#include "spinlock.inl"
+#include "spin_lock.inl"
 
-#endif //CPPCOMMON_SPINLOCK_H
+#endif //CPPCOMMON_SPIN_LOCK_H

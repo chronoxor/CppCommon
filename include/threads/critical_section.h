@@ -9,9 +9,7 @@
 #ifndef CPPCOMMON_CRITICAL_SECTION_H
 #define CPPCOMMON_CRITICAL_SECTION_H
 
-#include <chrono>
-
-#include "system/timestamp.h"
+#include <memory>
 
 namespace CppCommon {
 
@@ -64,8 +62,11 @@ public:
     void unlock();
 
 private:
-    std::atomic<bool> _lock;
+    class Impl;
+    std::unique_ptr<Impl> _pimpl;
 };
+
+/*! \example threads_critical_section.cpp Critical section synchronization primitive example */
 
 } // namespace CppCommon
 

@@ -12,12 +12,12 @@ using namespace CppCommon;
 
 TEST_CASE("Nanoseconds timestamp accessor", "[CppCommon][System]")
 {
-    REQUIRE(CppCommon::timestamp() > 0);
+    REQUIRE(timestamp() > 0);
 
     uint64_t prev = 0;
     for (int i = 0; i < 1000; ++i)
     {
-        uint64_t next = CppCommon::timestamp();
+        uint64_t next = timestamp();
         REQUIRE(prev <= next);
         prev = next;
     }

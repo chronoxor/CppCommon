@@ -24,6 +24,8 @@ namespace CppCommon {
 */
 uint64_t rdts();
 
+/*! \example system_rdts.cpp Read Time Stamp Counter example */
+
 } // namespace CppCommon
 
 #endif //CPPCOMMON_RDTS_H

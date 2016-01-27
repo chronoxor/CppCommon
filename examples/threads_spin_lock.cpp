@@ -1,5 +1,5 @@
 /*!
-    \file threads_spinlock.cpp
+    \file threads_spin_lock.cpp
     \brief Spin-lock synchronization primitive example
     \author Ivan Shynkarenka
     \date 22.01.2016
@@ -12,11 +12,11 @@
 #include <thread>
 #include <vector>
 
-#include "threads/spinlock.h"
+#include "threads/spin_lock.h"
 
 int main(int argc, char** argv)
 {
-    CppCommon::SpinLock spinlock;
+    CppCommon::SpinLock locker;
 
     std::cout << "Press Enter to stop..." << std::endl;
 
@@ -25,12 +25,12 @@ int main(int argc, char** argv)
     std::vector<std::thread> threads;
     for (int thread = 0; thread < 4; ++thread)
     {
-        threads.push_back(std::thread([thread, &spinlock, &stop]()
+        threads.push_back(std::thread([thread, &locker, &stop]()
         {
             while (!stop)
             {
                 // Use lock guard with spin-lock to protect the output
-                std::lock_guard<CppCommon::SpinLock> lock(spinlock);
+                std::lock_guard<CppCommon::SpinLock> lock(locker);
 
                 std::cout << "Random value from thread " << thread << ": " << rand() << std::endl;
             }
