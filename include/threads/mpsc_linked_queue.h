@@ -6,8 +6,8 @@
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_MPSC_LINKED_QUEUE_H
-#define CPPCOMMON_MPSC_LINKED_QUEUE_H
+#ifndef CPPCOMMON_THREADS_MPSC_LINKED_QUEUE_H
+#define CPPCOMMON_THREADS_MPSC_LINKED_QUEUE_H
 
 #include <atomic>
 
@@ -76,4 +76,4 @@ private:
 
 #include "mpsc_linked_queue.inl"
 
-#endif //CPPCOMMON_MPSC_LINKED_QUEUE_H
+#endif // CPPCOMMON_THREADS_MPSC_LINKED_QUEUE_H

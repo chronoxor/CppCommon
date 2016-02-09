@@ -6,8 +6,8 @@
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_RDTS_H
-#define CPPCOMMON_RDTS_H
+#ifndef CPPCOMMON_SYSTEM_RDTS_H
+#define CPPCOMMON_SYSTEM_RDTS_H
 
 #include <cstdint>
 
@@ -17,6 +17,8 @@ namespace CppCommon {
 /*!
     Counts the number of CPU cycles since reset. The Time Stamp Counter (TSC) is a 64-bit register present on all x86
     processors since the Pentium.
+
+    Thread-safe.
 
     https://en.wikipedia.org/wiki/Time_Stamp_Counter
 
@@ -28,4 +30,4 @@ uint64_t rdts();
 
 } // namespace CppCommon
 
-#endif //CPPCOMMON_RDTS_H
+#endif // CPPCOMMON_SYSTEM_RDTS_H

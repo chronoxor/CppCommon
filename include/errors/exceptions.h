@@ -6,19 +6,22 @@
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_EXCEPTIONS_H
-#define CPPCOMMON_EXCEPTIONS_H
+#ifndef CPPCOMMON_ERRORS_EXCEPTIONS_H
+#define CPPCOMMON_ERRORS_EXCEPTIONS_H
 
 #include "debug/call_stack.h"
 #include "debug/source_location.h"
+#include "errors/system_error.h"
 
-#include <exception> 
+#include <exception>
+#include <string>
+#include <tuple>
 
 //! Throw extended exception macro
 /*!
     Macro with throw extended exception with the current location and call stack.
 */
-#define throwex throw __LOCATION__ + __CALL_STACK__ +
+#define throwex throw std::make_tuple(__LOCATION__, __CALL_STACK__) +
 
 namespace CppCommon {
 
@@ -68,10 +71,6 @@ protected:
 //! Runtime exception
 class RuntimeException : public Exception {};
 
-//! System exception
-/*!
-    System exception provides some additional information such as system error code and error description.
-*/
 class SystemException : public Exception
 {
 public:
@@ -79,7 +78,7 @@ public:
     /*!
         \param message - Exception message (default is "")
     */
-    SystemException(const std::string& message = "");
+    SystemException(const std::string& message = "") : SystemException(SystemError::GetLast(), message) {}
     //! Create system exception based on the given system error code
     /*!
         \param error - System error code
@@ -99,4 +98,4 @@ private:
 
 } // namespace CppCommon
 
-#endif //CPPCOMMON_EXCEPTIONS_H
+#endif // CPPCOMMON_ERRORS_EXCEPTIONS_H

@@ -6,8 +6,8 @@
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_SPIN_LOCK_H
-#define CPPCOMMON_SPIN_LOCK_H
+#ifndef CPPCOMMON_THREADS_SPIN_LOCK_H
+#define CPPCOMMON_THREADS_SPIN_LOCK_H
 
 #include "system/timestamp.h"
 
@@ -21,6 +21,8 @@ namespace CppCommon {
     The purpose of a spin lock is to prevent multiple threads from concurrently accessing a shared data structure.
     In contrast to a mutex, threads will busy-wait and waste CPU cycles instead of yielding the CPU to another thread.
     Do not use spinlocks unless you are certain that you understand the consequences!
+
+    Thread-safe.
 
     https://en.wikipedia.org/wiki/Spinlock
 */
@@ -37,7 +39,7 @@ public:
 
     //! Is already locked?
     /*!
-        Thread-safe. Will not block.
+        Will not block.
 
         \return 'true' if the spin-lock is already locked, 'false' if the spin-lock is released
     */
@@ -45,7 +47,7 @@ public:
 
     //! Try to acquire spin-lock without block
     /*!
-        Thread-safe. Will not block.
+        Will not block.
 
         \return 'true' if the spin-lock was successfully acquired, 'false' if the spin-lock is busy
     */
@@ -53,7 +55,7 @@ public:
 
     //! Try to acquire spin-lock for the given spin count
     /*!
-        Thread-safe. Will block for the given spin count in the worst case.
+        Will block for the given spin count in the worst case.
 
         \param spin - Spin count
         \return 'true' if the spin-lock was successfully acquired, 'false' if the spin-lock is busy
@@ -62,7 +64,7 @@ public:
 
     //! Try to acquire spin-lock for the given time duration
     /*!
-        Thread-safe. Will block for the given time duration in the worst case.
+        Will block for the given time duration in the worst case.
 
         \param duration - Time duration for spin-lock
         \return 'true' if the spin-lock was successfully acquired, 'false' if the spin-lock is busy
@@ -72,7 +74,7 @@ public:
 
     //! Try to acquire spin-lock until the given timestamp
     /*!
-        Thread-safe. Will block until the given timestamp in the worst case.
+        Will block until the given timestamp in the worst case.
 
         \param timestamp - Timestamp to stop spin-lock
         \return 'true' if the spin-lock was successfully acquired, 'false' if the spin-lock is busy
@@ -82,13 +84,13 @@ public:
 
     //! Acquire spin-lock with block
     /*!
-        Thread-safe. Will block.
+        Will block.
     */
     void lock();
 
     //! Release spin-lock
     /*!
-        Thread-safe. Will not block.
+        Will not block.
     */
     void unlock();
 
@@ -102,4 +104,4 @@ private:
 
 #include "spin_lock.inl"
 
-#endif //CPPCOMMON_SPIN_LOCK_H
+#endif // CPPCOMMON_THREADS_SPIN_LOCK_H

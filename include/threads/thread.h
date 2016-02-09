@@ -6,8 +6,8 @@
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_THREAD_H
-#define CPPCOMMON_THREAD_H
+#ifndef CPPCOMMON_THREADS_THREAD_H
+#define CPPCOMMON_THREADS_THREAD_H
 
 #include <chrono>
 
@@ -17,6 +17,8 @@ namespace CppCommon {
 /*!
     Thread abstraction contains different kinds of thread manipulation functionality such as retrive the current thread
     Id, sleep for the given time period in nanoseconds, etc.
+
+    Thread-safe.
 */
 class Thread
 {
@@ -61,4 +63,4 @@ public:
 
 #include "thread.inl"
 
-#endif //CPPCOMMON_THREAD_H
+#endif // CPPCOMMON_THREADS_THREAD_H

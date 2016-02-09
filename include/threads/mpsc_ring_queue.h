@@ -6,8 +6,8 @@
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_MPSC_RING_QUEUE_H
-#define CPPCOMMON_MPSC_RING_QUEUE_H
+#ifndef CPPCOMMON_THREADS_MPSC_RING_QUEUE_H
+#define CPPCOMMON_THREADS_MPSC_RING_QUEUE_H
 
 #include "system/rdts.h"
 #include "threads/spin_lock.h"
@@ -102,4 +102,4 @@ private:
 
 #include "mpsc_ring_queue.inl"
 
-#endif //CPPCOMMON_MPSC_RING_QUEUE_H
+#endif // CPPCOMMON_THREADS_MPSC_RING_QUEUE_H

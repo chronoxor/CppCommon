@@ -6,8 +6,8 @@
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_MPSC_LINKED_BATCHER_H
-#define CPPCOMMON_MPSC_LINKED_BATCHER_H
+#ifndef CPPCOMMON_THREADS_MPSC_LINKED_BATCHER_H
+#define CPPCOMMON_THREADS_MPSC_LINKED_BATCHER_H
 
 #include <atomic>
 #include <functional>
@@ -69,4 +69,4 @@ private:
 
 #include "mpsc_linked_batcher.inl"
 
-#endif //CPPCOMMON_MPSC_LINKED_BATCHER_H
+#endif // CPPCOMMON_THREADS_MPSC_LINKED_BATCHER_H

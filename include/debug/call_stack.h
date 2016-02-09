@@ -6,8 +6,8 @@
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_CALL_STACK_H
-#define CPPCOMMON_CALL_STACK_H
+#ifndef CPPCOMMON_DEBUG_CALL_STACK_H
+#define CPPCOMMON_DEBUG_CALL_STACK_H
 
 #include <string>
 #include <vector>
@@ -23,6 +23,8 @@ namespace CppCommon {
 //! Call stack snapshot provider
 /*!
     Create a call stack snapshot with easy-to-use interface.
+
+    Thread-safe.
 */
 class CallStack
 {
@@ -75,4 +77,4 @@ private:
 
 /*! \example debug_call_stack.cpp Call stack snapshot provider example */
 
-#endif //CPPCOMMON_SOURCE_LOCATION_H
+#endif // CPPCOMMON_DEBUG_SOURCE_LOCATION_H

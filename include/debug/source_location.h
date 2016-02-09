@@ -6,8 +6,8 @@
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_SOURCE_LOCATION_H
-#define CPPCOMMON_SOURCE_LOCATION_H
+#ifndef CPPCOMMON_DEBUG_SOURCE_LOCATION_H
+#define CPPCOMMON_DEBUG_SOURCE_LOCATION_H
 
 #include <string>
 
@@ -22,6 +22,8 @@ namespace CppCommon {
 //! Source location wrapper
 /*!
     Source location wraps file name and line number into single object with easy-to-use interface.
+
+    Thread-safe.
 */
 class SourceLocation
 {
@@ -60,4 +62,4 @@ private:
 
 /*! \example debug_source_location.cpp Source location wrapper example */
 
-#endif //CPPCOMMON_SOURCE_LOCATION_H
+#endif // CPPCOMMON_DEBUG_SOURCE_LOCATION_H

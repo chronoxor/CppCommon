@@ -6,8 +6,8 @@
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_MPMC_RING_QUEUE_H
-#define CPPCOMMON_MPMC_RING_QUEUE_H
+#ifndef CPPCOMMON_THREADS_MPMC_RING_QUEUE_H
+#define CPPCOMMON_THREADS_MPMC_RING_QUEUE_H
 
 #include <atomic>
 #include <cassert>
@@ -90,4 +90,4 @@ private:
 
 #include "mpmc_ring_queue.inl"
 
-#endif //CPPCOMMON_MPMC_RING_QUEUE_H
+#endif // CPPCOMMON_THREADS_MPMC_RING_QUEUE_H

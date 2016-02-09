@@ -6,8 +6,8 @@
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_SPSC_RING_BUFFER_H
-#define CPPCOMMON_SPSC_RING_BUFFER_H
+#ifndef CPPCOMMON_THREADS_SPSC_RING_BUFFER_H
+#define CPPCOMMON_THREADS_SPSC_RING_BUFFER_H
 
 #include <atomic>
 #include <cassert>
@@ -89,4 +89,4 @@ private:
 
 #include "spsc_ring_buffer.inl"
 
-#endif //CPPCOMMON_SPSC_RING_BUFFER_H
+#endif // CPPCOMMON_THREADS_SPSC_RING_BUFFER_H

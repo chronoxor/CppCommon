@@ -6,8 +6,8 @@
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_CRITICAL_SECTION_H
-#define CPPCOMMON_CRITICAL_SECTION_H
+#ifndef CPPCOMMON_THREADS_THREADS_CRITICAL_SECTION_H
+#define CPPCOMMON_THREADS_THREADS_CRITICAL_SECTION_H
 
 #include <memory>
 
@@ -18,6 +18,8 @@ namespace CppCommon {
     Critical sections prevents code fragments from access by multiple threads simultaneously. Only one thread can
     access the code inside the critical section. Other threads must wait for the lock! Critical sections are usually
     more lightweight than mutexes and don't enter kernel mode.
+
+    Thread-safe.
 
     https://en.wikipedia.org/wiki/Critical_section
 */
@@ -34,7 +36,7 @@ public:
 
     //! Try to acquire critical section without block
     /*!
-        Thread-safe. Will not block.
+        Will not block.
 
         \return 'true' if the critical section was successfully acquired, 'false' if the critical section is busy
     */
@@ -42,7 +44,7 @@ public:
 
     //! Try to acquire critical section for the given spin count
     /*!
-        Thread-safe. Will block for the given spin count in the worst case.
+        Will block for the given spin count in the worst case.
 
         \param spin - Spin count
         \return 'true' if the critical section was successfully acquired, 'false' if the critical section is busy
@@ -51,13 +53,13 @@ public:
 
     //! Acquire critical section with block
     /*!
-        Thread-safe. Will block.
+        Will block.
     */
     void lock();
 
     //! Release critical section
     /*!
-        Thread-safe. Will not block.
+        Will not block.
     */
     void unlock();
 
@@ -72,4 +74,4 @@ private:
 
 #include "critical_section.inl"
 
-#endif //CPPCOMMON_CRITICAL_SECTION_H
+#endif // CPPCOMMON_THREADS_THREADS_CRITICAL_SECTION_H
