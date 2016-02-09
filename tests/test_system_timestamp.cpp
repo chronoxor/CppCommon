@@ -4,9 +4,9 @@
 
 #include "catch.hpp"
 
-#include <chrono>
-
 #include "system/timestamp.h"
+
+#include <chrono>
 
 using namespace CppCommon;
 

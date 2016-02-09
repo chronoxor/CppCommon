@@ -6,10 +6,10 @@
     \copyright MIT License
 */
 
+#include "system/rdts.h"
+
 #include <iostream>
 #include <thread>
-
-#include "system/rdts.h"
 
 int main(int argc, char** argv)
 {

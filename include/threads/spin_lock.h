@@ -9,10 +9,10 @@
 #ifndef CPPCOMMON_SPIN_LOCK_H
 #define CPPCOMMON_SPIN_LOCK_H
 
+#include "system/timestamp.h"
+
 #include <atomic>
 #include <chrono>
-
-#include "system/timestamp.h"
 
 namespace CppCommon {
 
@@ -55,7 +55,7 @@ public:
     /*!
         Thread-safe. Will block for the given spin count in the worst case.
 
-        \param spin - spin count
+        \param spin - Spin count
         \return 'true' if the spin-lock was successfully acquired, 'false' if the spin-lock is busy
     */
     bool TryLockSpin(int64_t spin);
@@ -64,7 +64,7 @@ public:
     /*!
         Thread-safe. Will block for the given time duration in the worst case.
 
-        \param duration - time duration for spin-lock
+        \param duration - Time duration for spin-lock
         \return 'true' if the spin-lock was successfully acquired, 'false' if the spin-lock is busy
     */
     template <class Rep, class Period>
@@ -74,7 +74,7 @@ public:
     /*!
         Thread-safe. Will block until the given timestamp in the worst case.
 
-        \param timestamp - timestamp to stop spin-lock
+        \param timestamp - Timestamp to stop spin-lock
         \return 'true' if the spin-lock was successfully acquired, 'false' if the spin-lock is busy
     */
     template <class Clock, class Duration>

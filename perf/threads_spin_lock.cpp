@@ -4,11 +4,11 @@
 
 #include "cppbenchmark.h"
 
+#include "threads/spin_lock.h"
+
 #include <functional>
 #include <thread>
 #include <vector>
-
-#include "threads/spin_lock.h"
 
 const uint64_t items_to_produce = 10000000;
 const int producers_from = 1;

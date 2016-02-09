@@ -40,7 +40,7 @@ public:
     /*!
         The item will be copied into the linked queue.
 
-        \param item - item to enqueue
+        \param item - Item to enqueue
         \return 'true' if the item was successfully enqueue, 'false' if there is no enough memory for the queue node
     */
     bool Enqueue(const T& item);
@@ -49,7 +49,7 @@ public:
     /*!
         The item will be copied from the linked queue.
 
-        \param item - item to dequeue
+        \param item - Item to dequeue
         \return 'true' if the item was successfully dequeue, 'false' if the linked queue is empty
     */
     bool Dequeue(T& item);

@@ -37,18 +37,18 @@ public:
 
     //! Sleep the current thread for the given nanoseconds
     /*!
-        \param nanoseconds - nanoseconds to sleep
+        \param nanoseconds - Nanoseconds to sleep
     */
     static void Sleep(int64_t nanoseconds);
     //! Sleep the current thread for the given time duration
     /*!
-        \param duration - time duration to sleep
+        \param duration - Time duration to sleep
     */
     template <class Rep, class Period>
     static void SleepFor(const std::chrono::duration<Rep, Period>& duration);
     //! Sleep the current thread until the given timestamp
     /*!
-        \param timestamp - timestamp to stop sleeping
+        \param timestamp - Timestamp to stop sleeping
     */
     template <class Clock, class Duration>
     static void SleepUntil(const std::chrono::time_point<Clock, Duration>& timestamp);

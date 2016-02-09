@@ -6,11 +6,11 @@
     \copyright MIT License
 */
 
+#include "threads/spsc_ring_buffer.h"
+
 #include <iostream>
 #include <string>
 #include <thread>
-
-#include "threads/spsc_ring_buffer.h"
 
 int main(int argc, char** argv)
 {

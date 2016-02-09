@@ -31,7 +31,7 @@ class SPSCRingQueue
 public:
     //! Default class constructor
     /*!
-        \param capacity - ring queue capacity (must be a power of two)
+        \param capacity - Ring queue capacity (must be a power of two)
     */
     explicit SPSCRingQueue(uint64_t capacity);
     SPSCRingQueue(const SPSCRingQueue&) = delete;
@@ -50,7 +50,7 @@ public:
     /*!
         The item will be copied into the ring queue.
 
-        \param item - item to enqueue
+        \param item - Item to enqueue
         \return 'true' if the item was successfully enqueue, 'false' if the ring queue is full
     */
     bool Enqueue(const T& item);
@@ -59,7 +59,7 @@ public:
     /*!
         The item will be copied from the ring queue.
 
-        \param item - item to dequeue
+        \param item - Item to dequeue
         \return 'true' if the item was successfully dequeue, 'false' if the ring queue is empty
     */
     bool Dequeue(T& item);

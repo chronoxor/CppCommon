@@ -4,10 +4,10 @@
 
 #include "cppbenchmark.h"
 
+#include "threads/spsc_ring_buffer.h"
+
 #include <functional>
 #include <thread>
-
-#include "threads/spsc_ring_buffer.h"
 
 const uint64_t bytes_to_produce = 100000000;
 const int item_size_from = 4;

@@ -30,7 +30,7 @@ class SPSCRingBuffer
 public:
     //! Default class constructor
     /*!
-        \param capacity - ring buffer capacity (must be a power of two)
+        \param capacity - Ring buffer capacity (must be a power of two)
     */
     explicit SPSCRingBuffer(uint64_t capacity);
     SPSCRingBuffer(const SPSCRingBuffer&) = delete;
@@ -50,8 +50,8 @@ public:
         The chunk of bytes will be copied into the ring buffer using 'memcpy()' function.
         Chunk size should not be greater than ring buffer capacity!
 
-        \param chunk - chunk buffer to enqueue
-        \param size - chunk buffer size
+        \param chunk - Chunk buffer to enqueue
+        \param size - Chunk buffer size
         \return 'true' if the chunk of bytes was successfully enqueue, 'false' if the ring buffer is full
     */
     bool Enqueue(const void* chunk, uint64_t size);
@@ -62,8 +62,8 @@ public:
         Chunk size should be enough to dequeue the whole data from the ring buffer so it
         should be greater than ring buffer capacity!
 
-        \param chunk - chunk buffer to dequeue
-        \param size - chunk buffer size
+        \param chunk - Chunk buffer to dequeue
+        \param size - Chunk buffer size
         \return 'true' if the chunk of bytes was successfully dequeue, 'false' if the ring buffer is empty
     */
     bool Dequeue(void* chunk, uint64_t& size);

@@ -6,13 +6,13 @@
     \copyright MIT License
 */
 
+#include "threads/critical_section.h"
+
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 #include <pthread.h>
 #endif
-
-#include "threads/critical_section.h"
 
 namespace CppCommon {
 

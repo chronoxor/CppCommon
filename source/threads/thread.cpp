@@ -6,6 +6,10 @@
     \copyright MIT License
 */
 
+#include "threads/thread.h"
+
+#include "system/timestamp.h"
+
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
 #undef Yield
@@ -14,9 +18,6 @@
 #include <pthread.h>
 #include <time.h>
 #endif
-
-#include "system/timestamp.h"
-#include "threads/thread.h"
 
 namespace CppCommon {
 
@@ -30,7 +31,7 @@ uint64_t SetMinimumTimerResolution()
     static NTSTATUS(__stdcall *NtQueryTimerResolution)(OUT PULONG MinimumResolution, OUT PULONG MaximumResolution, OUT PULONG ActualResolution) = (NTSTATUS(__stdcall*)(PULONG, PULONG, PULONG))GetProcAddress(GetModuleHandle("ntdll.dll"), "NtQueryTimerResolution");
     static NTSTATUS(__stdcall *NtSetTimerResolution)(IN ULONG RequestedResolution, IN BOOLEAN Set, OUT PULONG ActualResolution) = (NTSTATUS(__stdcall*)(ULONG, BOOLEAN, PULONG))GetProcAddress(GetModuleHandle("ntdll.dll"), "NtSetTimerResolution");
 
-    if ((NtQueryTimerResolution == NULL) || (NtSetTimerResolution == NULL))
+    if ((NtQueryTimerResolution == nullptr) || (NtSetTimerResolution == nullptr))
         return 0;
 
     ULONG MinimumResolution, MaximumResolution, ActualResolution;
@@ -88,7 +89,7 @@ void Thread::Sleep(int64_t nanoseconds)
     // Sleep if we have enough time
     if (sleep > 0)
     {
-        if (NtDelayExecution != NULL)
+        if (NtDelayExecution != nullptr)
         {
             // Sleep with microsecond precision
             LARGE_INTEGER interval;

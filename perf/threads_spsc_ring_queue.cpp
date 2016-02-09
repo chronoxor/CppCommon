@@ -4,10 +4,10 @@
 
 #include "cppbenchmark.h"
 
+#include "threads/spsc_ring_queue.h"
+
 #include <functional>
 #include <thread>
-
-#include "threads/spsc_ring_queue.h"
 
 const uint64_t items_to_produce = 100000000;
 

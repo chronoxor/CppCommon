@@ -4,9 +4,9 @@
 
 #include "catch.hpp"
 
-#include <mutex>
-
 #include "threads/critical_section.h"
+
+#include <mutex>
 
 using namespace CppCommon;
 

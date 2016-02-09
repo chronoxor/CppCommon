@@ -4,11 +4,11 @@
 
 #include "cppbenchmark.h"
 
+#include "threads/critical_section.h"
+
 #include <functional>
 #include <thread>
 #include <vector>
-
-#include "threads/critical_section.h"
 
 const uint64_t items_to_produce = 10000000;
 const int producers_from = 1;

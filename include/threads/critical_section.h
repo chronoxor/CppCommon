@@ -44,7 +44,7 @@ public:
     /*!
         Thread-safe. Will block for the given spin count in the worst case.
 
-        \param spin - spin count
+        \param spin - Spin count
         \return 'true' if the critical section was successfully acquired, 'false' if the critical section is busy
     */
     bool TryLockSpin(int64_t spin);

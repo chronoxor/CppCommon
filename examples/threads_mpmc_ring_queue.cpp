@@ -6,11 +6,11 @@
     \copyright MIT License
 */
 
+#include "threads/mpmc_ring_queue.h"
+
 #include <iostream>
 #include <string>
 #include <thread>
-
-#include "threads/mpmc_ring_queue.h"
 
 int main(int argc, char** argv)
 {

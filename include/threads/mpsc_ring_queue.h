@@ -9,14 +9,14 @@
 #ifndef CPPCOMMON_MPSC_RING_QUEUE_H
 #define CPPCOMMON_MPSC_RING_QUEUE_H
 
+#include "system/rdts.h"
+#include "threads/spin_lock.h"
+#include "threads/spsc_ring_queue.h"
+
 #include <memory>
 #include <mutex>
 #include <thread>
 #include <vector>
-
-#include "system/rdts.h"
-#include "threads/spin_lock.h"
-#include "threads/spsc_ring_queue.h"
 
 namespace CppCommon {
 
@@ -36,8 +36,8 @@ class MPSCRingQueue
 public:
     //! Default class constructor
     /*!
-        \param capacity - ring queue capacity (must be a power of two)
-        \param concurrency - hardware concurrency (default is std::thread::hardware_concurrency)
+        \param capacity - Ring queue capacity (must be a power of two)
+        \param concurrency - Hardware concurrency (default is std::thread::hardware_concurrency)
     */
     explicit MPSCRingQueue(uint64_t capacity, uint64_t concurrency = std::thread::hardware_concurrency());
     MPSCRingQueue(const MPSCRingQueue&) = delete;
@@ -58,7 +58,7 @@ public:
     /*!
         The item will be copied into the ring queue.
 
-        \param item - item to enqueue
+        \param item - Item to enqueue
         \return 'true' if the item was successfully enqueue, 'false' if the ring queue is full
     */
     bool Enqueue(const T& item);
@@ -67,7 +67,7 @@ public:
     /*!
         The item will be copied from the ring queue.
 
-        \param item - item to dequeue
+        \param item - Item to dequeue
         \return 'true' if the item was successfully dequeue, 'false' if the ring queue is empty
     */
     bool Dequeue(T& item);
@@ -76,7 +76,7 @@ public:
     /*!
         All items in the batcher will be processed by the given handler.
 
-        \param handler - batch handler
+        \param handler - Batch handler
         \return 'true' if all items were successfully handled, 'false' if the linked batcher is empty
     */
     bool Dequeue(const std::function<void(const T&)>& handler);

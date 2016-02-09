@@ -13,6 +13,12 @@
 
 namespace CppCommon {
 
+//! Current source location macro
+/*!
+    Create a new source location wrapper with a current file name and line number.
+*/
+#define __LOCATION__ CppCommon::SourceLocation(__FILE__, __LINE__)
+
 //! Source location wrapper
 /*!
     Source location wraps file name and line number into single object with easy-to-use interface.
@@ -22,8 +28,8 @@ class SourceLocation
 public:
     //! Default class constructor
     /*!
-        \param filename - file name
-        \param line - line number
+        \param filename - File name
+        \param line - Line number
     */
     explicit SourceLocation(const char* filename, int line) noexcept : _filename(filename), _line(line) {}
     SourceLocation(const SourceLocation&) noexcept = default;
@@ -38,7 +44,7 @@ public:
     //! Get line number
     int line() const noexcept { return _line; }
 
-    //! Get source location string
+    //! Get string from the current source location
     std::string to_string() const { return std::string(_filename) + ':' + std::to_string(_line); }
 
     //! Output source location into the given output stream
@@ -52,12 +58,6 @@ private:
 
 } // namespace CppCommon
 
-//! Current source location macro
-/*!
-    Create a new source location wrapper with a current file name and line number.
-*/
-#define __LOCATION__ CppCommon::SourceLocation(__FILE__, __LINE__)
-
-/*! \example errors_source_location.cpp Source location wrapper example */
+/*! \example debug_source_location.cpp Source location wrapper example */
 
 #endif //CPPCOMMON_SOURCE_LOCATION_H

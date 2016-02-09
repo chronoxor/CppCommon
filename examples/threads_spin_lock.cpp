@@ -6,13 +6,13 @@
     \copyright MIT License
 */
 
+#include "threads/spin_lock.h"
+
 #include <atomic>
 #include <iostream>
 #include <mutex>
 #include <thread>
 #include <vector>
-
-#include "threads/spin_lock.h"
 
 int main(int argc, char** argv)
 {

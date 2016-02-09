@@ -6,10 +6,10 @@
     \copyright MIT License
 */
 
+#include "system/timestamp.h"
+
 #include <iostream>
 #include <thread>
-
-#include "system/timestamp.h"
 
 int main(int argc, char** argv)
 {

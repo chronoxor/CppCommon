@@ -6,13 +6,13 @@
     \copyright MIT License
 */
 
+#include "system/timestamp.h"
+
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 #include <time.h>
 #endif
-
-#include "system/timestamp.h"
 
 namespace CppCommon {
 

@@ -6,11 +6,11 @@
     \copyright MIT License
 */
 
+#include "threads/mpsc_linked_queue.h"
+
 #include <iostream>
 #include <string>
 #include <thread>
-
-#include "threads/mpsc_linked_queue.h"
 
 int main(int argc, char** argv)
 {

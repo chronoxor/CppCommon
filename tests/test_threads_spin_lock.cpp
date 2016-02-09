@@ -4,9 +4,9 @@
 
 #include "catch.hpp"
 
-#include <mutex>
-
 #include "threads/spin_lock.h"
+
+#include <mutex>
 
 using namespace CppCommon;
 

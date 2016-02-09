@@ -6,13 +6,13 @@
     \copyright MIT License
 */
 
+#include "threads/critical_section.h"
+
 #include <atomic>
 #include <iostream>
 #include <mutex>
 #include <thread>
 #include <vector>
-
-#include "threads/critical_section.h"
 
 int main(int argc, char** argv)
 {

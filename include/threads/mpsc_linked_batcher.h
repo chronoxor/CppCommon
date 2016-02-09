@@ -41,7 +41,7 @@ public:
     /*!
         The item will be copied into the linked batcher.
 
-        \param item - item to enqueue
+        \param item - Item to enqueue
         \return 'true' if the item was successfully enqueue, 'false' if there is no enough memory for the batcher node
     */
     bool Enqueue(const T& item);
@@ -50,7 +50,7 @@ public:
     /*!
         All items in the batcher will be processed by the given handler.
 
-        \param handler - batch handler
+        \param handler - Batch handler
         \return 'true' if all items were successfully handled, 'false' if the linked batcher is empty
     */
     bool Dequeue(const std::function<void(const T&)>& handler);
