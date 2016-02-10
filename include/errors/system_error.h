@@ -55,4 +55,6 @@ public:
 
 } // namespace CppCommon
 
+/*! \example errors_system_error.cpp System error wrapper example */
+
 #endif // CPPCOMMON_ERRORS_SYSTEM_ERROR_H

@@ -1,5 +1,5 @@
 /*!
-    \file errors_source_location.cpp
+    \file debug_source_location.cpp
     \brief Source location wrapper example
     \author Ivan Shynkarenka
     \date 09.02.2016
