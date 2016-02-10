@@ -27,8 +27,10 @@ namespace CppCommon {
 */
 class SourceLocation
 {
+    friend class Exception;
+
 public:
-    //! Default class constructor
+    //! Create a new source location with the given file name and line number
     /*!
         \param filename - File name
         \param line - Line number
@@ -47,7 +49,7 @@ public:
     int line() const noexcept { return _line; }
 
     //! Get string from the current source location
-    std::string to_string() const { return std::string(_filename) + ':' + std::to_string(_line); }
+    std::string to_string() const;
 
     //! Output source location into the given output stream
     friend std::ostream& operator<<(std::ostream& os, const SourceLocation& instance)
@@ -56,6 +58,8 @@ public:
 private:
     const char* _filename;
     int _line;
+
+    SourceLocation() noexcept : SourceLocation(nullptr, 0) {}
 };
 
 } // namespace CppCommon

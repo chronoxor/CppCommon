@@ -9,8 +9,8 @@
 #ifndef CPPCOMMON_ERRORS_EXCEPTIONS_H
 #define CPPCOMMON_ERRORS_EXCEPTIONS_H
 
-#include "debug/call_stack.h"
 #include "debug/source_location.h"
+#include "debug/stack_trace.h"
 #include "errors/system_error.h"
 
 #include <exception>
@@ -19,9 +19,9 @@
 
 //! Throw extended exception macro
 /*!
-    Macro with throw extended exception with the current location and call stack.
+    Throw extended exception with the current location and stack trace.
 */
-#define throwex throw std::make_tuple(__LOCATION__, __CALL_STACK__) +
+#define throwex throw std::make_tuple(__LOCATION__, __STACK__) +
 
 namespace CppCommon {
 
@@ -46,26 +46,30 @@ public:
 
     //! Get exception message
     const std::string& message() const noexcept { return _message; }
+    //! Get exception location
+    const SourceLocation& location() const noexcept { return _location; }
+    //! Get exception stack trace
+    const StackTrace& trace() const noexcept { return _trace; }
+
+    //! Get string identifying exception
+    const char* what() const throw() override;
+
+    //! Get string from the current exception
+    virtual std::string to_string() const;
 
     //! Output exception into the given output stream
     friend std::ostream& operator<< (std::ostream& os, const Exception& instance)
-    { os << instance.message(); return os; }
+    { os << instance.to_string(); return os; }
 
-    //! Insert source location into the given exception
+    //! Link exception with source location and call stack
     template<class T>
-    friend T& operator+(const SourceLocation& location, T& instance)
-    { instance._message.append("\nLocation: " + location.to_string()); return instance; }
-
-    //! Insert call stack into the given exception
-    template<class T>
-    friend T& operator+(const CallStack& trace, T& instance)
-    { instance._message.append("\nCall stack:\n" + trace.to_string()); return instance; }
-
-    //! Get string identifying exception
-    virtual const char* what() const throw() { return _message.c_str(); }
+    friend T&& operator+(const std::tuple<SourceLocation, StackTrace>& context, T&& instance);
 
 protected:
+    mutable std::string _cache;
     std::string _message;
+    SourceLocation _location;
+    StackTrace _trace;
 };
 
 //! Runtime exception
@@ -91,11 +95,16 @@ public:
     //! Get system error message
     const std::string& system_message() const noexcept { return _system_message; }
 
+    //! Get string from the current system exception
+    std::string to_string() const override;
+
 private:
     int _system_error;
     std::string _system_message;
 };
 
 } // namespace CppCommon
+
+#include "exceptions.inl"
 
 #endif // CPPCOMMON_ERRORS_EXCEPTIONS_H
