@@ -16,19 +16,16 @@ namespace CppCommon {
 //! Stack trace manager
 /*!
     Provides interface to initialize and cleanup stack trace snapshots capturing.
-    There are two possible use cases of the manager:
-      1. Static initialization/cleanup for the current proccess in global scope;
-      2. Constructor/destrictor in local scope for testing purposes;
 
     Not thread-safe.
 */
 class StackTraceManager
 {
 public:
-    StackTraceManager() { Initialize(); }
+    StackTraceManager() = delete;
     StackTraceManager(const StackTraceManager&) = delete;
     StackTraceManager(StackTraceManager&&) = delete;
-    ~StackTraceManager() { Cleanup(); }
+    ~StackTraceManager() = delete;
 
     StackTraceManager& operator=(const StackTraceManager&) = delete;
     StackTraceManager& operator=(StackTraceManager&&) = delete;
@@ -36,7 +33,7 @@ public:
     //! Initialize stack trace manager
     /*!
         This method should be called before you start capture any stack trace snapshots.
-        It is recomended to call the method just after the current process start!
+        It is recommended to call the method just after the current process start!
     */
     static void Initialize();
     //! Cleanup stack trace manager

@@ -16,6 +16,7 @@
 #include <exception>
 #include <string>
 #include <tuple>
+#include <utility>
 
 //! Throw extended exception macro
 /*!
@@ -52,7 +53,7 @@ public:
     const StackTrace& trace() const noexcept { return _trace; }
 
     //! Get string identifying exception
-    const char* what() const throw() override;
+    const char* what() const override;
 
     //! Get string from the current exception
     virtual std::string to_string() const;
@@ -82,13 +83,19 @@ public:
     /*!
         \param message - Exception message (default is "")
     */
-    SystemException(const std::string& message = "") : SystemException(SystemError::GetLast(), message) {}
+    SystemException(const std::string& message = "")
+        : SystemException(SystemError::GetLast(), message)
+    {}
     //! Create system exception based on the given system error code
     /*!
         \param error - System error code
         \param message - Exception message (default is "")
     */
-    SystemException(int error, const std::string& message = "");
+    SystemException(int error, const std::string& message = "")
+        : Exception(message),
+          _system_error(error),
+          _system_message(SystemError::Convert(error))
+    {}
 
     //! Get system error code
     int system_error() const noexcept { return _system_error; }

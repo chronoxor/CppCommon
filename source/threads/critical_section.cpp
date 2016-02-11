@@ -24,7 +24,19 @@ public:
 #if defined(_WIN32) || defined(_WIN64)
         InitializeCriticalSection(&_lock);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-
+        pthread_mutexattr_t attribute;
+        int result = pthread_mutexattr_init(&attribute);
+        if (result != 0)
+            throwex SystemException(result, "Failed to initialize the mutex attribute!");
+        result = pthread_mutexattr_settype(&attribute, PTHREAD_MUTEX_RECURSIVE);
+        if (result != 0)
+            throwex SystemException(result, "Failed to set the mutex recursive attribute!");
+        result = pthread_mutex_init(&_lock, &attribute);
+        if (result != 0)
+            throwex SystemException(result, "Failed to initialize the mutex!");
+        result = pthread_mutexattr_destroy(&attribute);
+        if (result != 0)
+            throwex SystemException(result, "Failed to destroy the mutex attribute!");
 #endif
     }
 
@@ -33,7 +45,9 @@ public:
 #if defined(_WIN32) || defined(_WIN64)
         DeleteCriticalSection(&_lock);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-
+        int result = pthread_mutex_destroy(&_lock);
+        if (result != 0)
+            throwex SystemException(result, "Failed to destroy the mutex!");
 #endif
     }
 
@@ -42,7 +56,10 @@ public:
 #if defined(_WIN32) || defined(_WIN64)
         return (TryEnterCriticalSection(&_lock) != 0);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-
+        int result = pthread_mutex_trylock(&_lock);
+        if ((result != 0) && (result != EBUSY))
+            throwex SystemException(result, "Failed to try lock the mutex!");
+        return (result == 0);
 #endif
     }
 
@@ -51,7 +68,9 @@ public:
 #if defined(_WIN32) || defined(_WIN64)
         EnterCriticalSection(&_lock);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-
+        int result = pthread_mutex_lock(&_lock);
+        if (result != 0)
+            throwex SystemException(result, "Failed to lock the mutex!");
 #endif
     }
 
@@ -60,7 +79,9 @@ public:
 #if defined(_WIN32) || defined(_WIN64)
         LeaveCriticalSection(&_lock);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-
+        int result = pthread_mutex_unlock(&_lock);
+        if (result != 0)
+            throwex SystemException(result, "Failed to unlock the mutex!");
 #endif
     }
 

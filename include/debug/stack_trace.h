@@ -16,7 +16,7 @@
 /*!
     Capture the current stack trace snapshot.
 */
-#define __STACK__ CppCommon::StackTrace()
+#define __STACK__ CppCommon::StackTrace(0)
 
 namespace CppCommon {
 

@@ -8,7 +8,7 @@
 
 namespace CppCommon {
 
-inline const char* Exception::what() const throw()
+inline const char* Exception::what() const
 {
     if (_cache.empty())
         to_string();
@@ -18,9 +18,9 @@ inline const char* Exception::what() const throw()
 template<class T>
 inline T&& operator+(const std::tuple<SourceLocation, StackTrace>& context, T&& instance)
 {
-    instance._location = context.get<0>();
-    instance._trace = context.get<1>();
-    return instance;
+    instance._location = std::get<0>(context);
+    instance._trace = std::get<1>(context);
+    return std::forward<T>(instance);
 }
 
 } // namespace CppCommon

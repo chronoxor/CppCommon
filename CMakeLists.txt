@@ -11,13 +11,25 @@ if(DOXYGEN_FOUND)
   endif()
 endif()
 
+# CMake module path
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+
 # Compiler features
-include("cmake/SetCompilerFeatures.cmake")
-include("cmake/SetCompilerWarningAll.cmake")
-include("cmake/SetCrtSecureWarningsOff.cmake")
+include(SetCompilerFeatures)
+include(SetCompilerWarningAll)
+include(SetCrtSecureWarningsOff)
 
 # External packages
 find_package(Threads REQUIRED)
+if(WIN32)
+  find_package(DbgHelp REQUIRED)
+endif()
+
+# System link libraries
+list(APPEND SYSTEM Threads::Threads)
+if(WIN32)
+  list(APPEND SYSTEM ${DBGHELP_LIBRARIES})
+endif()
 
 # Modules
 add_subdirectory("modules")
@@ -40,7 +52,7 @@ foreach(EXAMPLE_FILE ${EXAMPLE_FILES})
   string(REGEX REPLACE "(.*)\\.cpp" "\\1" EXAMPLE_NAME ${EXAMPLE_FILE})
   set(EXAMPLE_TARGET "cppcommon-example-${EXAMPLE_NAME}")
   add_executable(${EXAMPLE_TARGET} examples/${EXAMPLE_FILE})
-  target_link_libraries(${EXAMPLE_TARGET} cppcommon Threads::Threads)
+  target_link_libraries(${EXAMPLE_TARGET} cppcommon ${SYSTEM})
   list(APPEND INSTALL_TARGETS ${EXAMPLE_TARGET})
 endforeach()
 
@@ -50,14 +62,14 @@ foreach(BENCHMARK_FILE ${BENCHMARK_FILES})
   string(REGEX REPLACE "(.*)\\.cpp" "\\1" BENCHMARK_NAME ${BENCHMARK_FILE})
   set(BENCHMARK_TARGET "cppcommon-perf-${BENCHMARK_NAME}")
   add_executable(${BENCHMARK_TARGET} perf/${BENCHMARK_FILE})
-  target_link_libraries(${BENCHMARK_TARGET} cppcommon cppbenchmark Threads::Threads)
+  target_link_libraries(${BENCHMARK_TARGET} cppcommon cppbenchmark ${SYSTEM})
   list(APPEND INSTALL_TARGETS ${BENCHMARK_TARGET})
 endforeach()
 
 # Tests
 file(GLOB TESTS_SOURCE_FILES "tests/*.cpp")
 add_executable(cppcommon-tests ${CATCH_HEADER} ${TESTS_SOURCE_FILES})
-target_link_libraries(cppcommon-tests cppcommon Threads::Threads)
+target_link_libraries(cppcommon-tests cppcommon ${SYSTEM})
 list(APPEND INSTALL_TARGETS cppcommon-tests)
 
 # CTest

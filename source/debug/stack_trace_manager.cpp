@@ -36,7 +36,7 @@ public:
 
         // Initializes symbol handler for the current process
         if (!SymInitialize(hProcess, nullptr, TRUE))
-            throw SystemException("Cannot initialize symbol handler for the current process!");
+            throwex SystemException("Cannot initialize symbol handler for the current process!");
 #endif
 
         _initialized = true;
@@ -54,7 +54,7 @@ public:
 
         // Cleanup symbol handler for the current process
         if (!SymCleanup(hProcess))
-            throw SystemException("Cannot cleanup symbol handler for the current process!");
+            throwex SystemException("Cannot cleanup symbol handler for the current process!");
 #endif
 
         _initialized = false;
