@@ -37,7 +37,7 @@ public:
     /*!
         \param message - Exception message (default is "")
     */
-    Exception(const std::string& message = "") : _message(message) {}
+    Exception(const std::string& message = "") : _message(message), _location(true), _trace(true) {}
     Exception(const Exception&) = default;
     Exception(Exception&&) = default;
     virtual ~Exception() = default;

@@ -16,7 +16,7 @@
 /*!
     Capture the current stack trace snapshot.
 */
-#define __STACK__ CppCommon::StackTrace(0)
+#define __STACK__ CppCommon::StackTrace()
 
 namespace CppCommon {
 
@@ -34,11 +34,11 @@ public:
     //! Stack trace frame
     struct Frame
     {
-        void* address;
-        std::string module;
-        std::string function;
-        std::string filename;
-        int line;
+        void* address;          //!< Frame address
+        std::string module;     //!< Frame module
+        std::string function;   //!< Frame function
+        std::string filename;   //!< Frame file name
+        int line;               //!< Frame line number
 
         //! Get string from the current stack trace frame
         std::string to_string() const;
@@ -51,9 +51,9 @@ public:
 public:
     //! Capture the current stack trace snapshot
     /*!
-        \param skip - Skip frames count
+        \param skip - Skip frames count (default is 0)
     */
-    explicit StackTrace(int skip);
+    explicit StackTrace(int skip = 0);
     StackTrace(const StackTrace&) = default;
     StackTrace(StackTrace&&) = default;
     ~StackTrace() = default;
@@ -74,7 +74,7 @@ public:
 private:
     std::vector<Frame> _frames;
 
-    StackTrace() {}
+    StackTrace(bool) {}
 };
 
 } // namespace CppCommon

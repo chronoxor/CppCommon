@@ -11,6 +11,12 @@
 
 #include <chrono>
 
+//! Current thread Id macro
+/*!
+    Get the current thread Id.
+*/
+#define __THREAD__ CppCommon::Thread::CurrentThreadId()
+
 namespace CppCommon {
 
 //! Thread abstraction

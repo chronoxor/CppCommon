@@ -59,7 +59,7 @@ private:
     const char* _filename;
     int _line;
 
-    SourceLocation() noexcept : SourceLocation(nullptr, 0) {}
+    SourceLocation(bool) noexcept : SourceLocation(nullptr, 0) {}
 };
 
 } // namespace CppCommon
