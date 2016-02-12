@@ -9,7 +9,7 @@
 #include "debug/stack_trace_manager.h"
 #include "errors/exceptions.h"
 
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(_MSC_VER)
 #include <windows.h>
 #include <DbgHelp.h>
 #endif
@@ -27,7 +27,7 @@ public:
         if (_initialized)
             return;
 
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(_MSC_VER)
         // Provide required symbol options
         SymSetOptions(SYMOPT_PUBLICS_ONLY);
 
@@ -48,7 +48,7 @@ public:
         if (!_initialized)
             return;
 
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(_MSC_VER)
         // Get the current process handle
         HANDLE hProcess = GetCurrentProcess();
 

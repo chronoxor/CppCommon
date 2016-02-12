@@ -13,7 +13,7 @@
 #include <mutex>
 #include <sstream>
 
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(_MSC_VER)
 #include <windows.h>
 #include <DbgHelp.h>
 #endif
@@ -35,7 +35,7 @@ std::string StackTrace::Frame::to_string() const
 
 StackTrace::StackTrace(int skip)
 {
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(_MSC_VER)
     const int capacity = 1024;
     void* frames[capacity];
 
