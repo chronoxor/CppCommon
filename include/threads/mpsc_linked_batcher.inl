@@ -44,7 +44,7 @@ inline bool MPSCLinkedBatcher<T>::Enqueue(const T& item)
 template<typename T>
 inline bool MPSCLinkedBatcher<T>::Dequeue(const std::function<void(const T&)>& handler)
 {
-    Node* last = _head.exchange(nullptr, std::memory_order_consume);
+    Node* last = _head.exchange(nullptr, std::memory_order_acq_rel);
     Node* first = nullptr;
 
     // Check if the linked batcher is empty

@@ -7,6 +7,7 @@
 #include "threads/critical_section.h"
 
 #include <mutex>
+#include <thread>
 
 using namespace CppCommon;
 

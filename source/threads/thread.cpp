@@ -15,6 +15,7 @@
 #undef Yield
 #define STATUS_SUCCESS 0x00000000
 #elif defined(unix) || defined(__unix) || defined(__unix__)
+#include <errno.h>
 #include <pthread.h>
 #include <time.h>
 #endif
@@ -67,7 +68,7 @@ void Thread::Sleep(int64_t nanoseconds)
 #if defined(_WIN32) || defined(_WIN64)
     static NTSTATUS(__stdcall *NtDelayExecution)(IN BOOLEAN Alertable, IN PLARGE_INTEGER DelayInterval) = (NTSTATUS(__stdcall*)(BOOLEAN, PLARGE_INTEGER)) GetProcAddress(GetModuleHandle("ntdll.dll"), "NtDelayExecution");
 
-    // Update once and get Windows Timer resolution 
+    // Update once and get Windows Timer resolution
     static int64_t resolution = Internals::SetMinimumTimerResolution();
 
     int64_t sleep = nanoseconds;

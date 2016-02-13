@@ -47,13 +47,11 @@ std::string SystemError::Convert(int error)
     DWORD size = FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, nullptr, error, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), buffer, capacity, nullptr);
     return std::string(buffer, size);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-    int result = strerror_r(error, buffer, capacity);
-    if (result == EINVAL)
-        return std::string("System error is not a valid error number!");
-    else if (result == ERANGE)
-        return std::string("Insufficient storage was supplied to contain the error description string!");
+    char* result = strerror_r(error, buffer, capacity);
+    if (result == nullptr)
+        return std::string("Cannot convert the given system error code to the system message - " + std::to_string(error));
     else
-        return std::string(buffer);
+        return std::string(result);
 #endif
 }
 
