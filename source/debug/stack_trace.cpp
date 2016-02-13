@@ -10,12 +10,17 @@
 #include "threads/critical_section.h"
 
 #include <cstring>
+#include <iomanip>
 #include <mutex>
 #include <sstream>
 
-#if defined(_MSC_VER)
+#if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
 #include <DbgHelp.h>
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+#include <cxxabi.h>
+#include <dlfcn.h>
+#include <execinfo.h>
 #endif
 
 namespace CppCommon {
@@ -23,10 +28,13 @@ namespace CppCommon {
 std::string StackTrace::Frame::to_string() const
 {
     std::stringstream stream;
-    if (address != nullptr)
-        stream << "0x" << address << ": ";
+    // Format stack trace frame address
+    std::ios_base::fmtflags flags = stream.flags();
+    stream << "0x" << std::hex << std::uppercase << std::setfill('0') << std::setw(2 * sizeof(uintptr_t)) << (uintptr_t)address << ": ";
+    stream.flags(flags);
+    // Format stack trace frame other fields
     stream << (module.empty() ? "<unknown>" : module) << '!';
-    stream << (function.empty() ? "<unknown>" : function) << ' ';
+    stream << (function.empty() ? "??" : function) << ' ';
     stream << filename;
     if (line > 0)
         stream << '(' << line << ')';
@@ -35,7 +43,7 @@ std::string StackTrace::Frame::to_string() const
 
 StackTrace::StackTrace(int skip)
 {
-#if defined(_MSC_VER)
+#if defined(_WIN32) || defined(_WIN64)
     const int capacity = 1024;
     void* frames[capacity];
 
@@ -66,7 +74,7 @@ StackTrace::StackTrace(int skip)
         module.SizeOfStruct = sizeof(module);
         if (SymGetModuleInfo64(hProcess, (DWORD64)frame.address, &module))
         {
-            char* image = std::strrchr(module.ImageName, '\\');
+            const char* image = std::strrchr(module.ImageName, '\\');
             if (image != nullptr)
                 frame.module = image + 1;
         }
@@ -94,6 +102,61 @@ StackTrace::StackTrace(int skip)
             if (line.FileName != nullptr)
                 frame.filename = line.FileName;
             frame.line = line.LineNumber;
+        }
+    }
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    const int capacity = 1024;
+    void* frames[capacity];
+
+    // Capture the current stack trace
+    int captured = backtrace(frames, capacity);
+    int index = skip + 1;
+    int size = captured - index;
+
+    // Check the current stack trace size
+    if (size <= 0)
+        return;
+
+    // Resize stack trace frames vector
+    _frames.resize(size);
+
+    // Fill all captured frames with symbol information
+    for (int i = 0; i < size; ++i)
+    {
+        auto& frame = _frames[i];
+
+        // Get the frame address
+        frame.address = frames[index + i];
+
+        // Get the frame information
+        Dl_info info;
+        if (dladdr(frames[index + i], &info) == 0)
+            continue;
+
+        // Update the frame address
+        frame.address = info.dli_saddr;
+
+        // Get the frame module
+        if (info.dli_fname != nullptr)
+        {
+            const char* module = std::strrchr(info.dli_fname, '/');
+            if (module != nullptr)
+                frame.module = module + 1;
+        }
+
+        // Get the frame function
+        if (info.dli_sname != nullptr)
+        {
+            // Demangle symbol name if need
+            int status;
+            char* demangled = abi::__cxa_demangle(info.dli_sname, nullptr, 0, &status);
+            if ((status == 0) && (demangled != nullptr))
+            {
+                frame.function = demangled;
+                free(demangled);
+            }
+            else
+                frame.function = info.dli_sname;
         }
     }
 #endif

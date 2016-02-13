@@ -21,12 +21,18 @@ include(SetCrtSecureWarningsOff)
 
 # External packages
 find_package(Threads REQUIRED)
+if(UNIX)
+  find_package(LibDL REQUIRED)
+endif()
 if(WIN32)
   find_package(DbgHelp REQUIRED)
 endif()
 
 # System link libraries
 list(APPEND SYSTEM Threads::Threads)
+if(UNIX)
+  list(APPEND SYSTEM ${LIBDL_LIBRARIES})
+endif()
 if(WIN32)
   list(APPEND SYSTEM ${DBGHELP_LIBRARIES})
 endif()

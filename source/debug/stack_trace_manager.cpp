@@ -27,7 +27,7 @@ public:
         if (_initialized)
             return;
 
-#if defined(_MSC_VER)
+#if defined(_WIN32) || defined(_WIN64)
         // Provide required symbol options
         SymSetOptions(SYMOPT_PUBLICS_ONLY);
 
@@ -48,7 +48,7 @@ public:
         if (!_initialized)
             return;
 
-#if defined(_MSC_VER)
+#if defined(_WIN32) || defined(_WIN64)
         // Get the current process handle
         HANDLE hProcess = GetCurrentProcess();
 

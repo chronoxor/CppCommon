@@ -17,19 +17,16 @@ void function1()
 {
     std::cout << "Thread Id: " << __THREAD__ << std::endl;
     std::cout << "Stack trace: " << std::endl << __STACK__ << std::endl;
-    CppCommon::Thread::Yield();
 }
 
 void function2()
 {
     function1();
-    CppCommon::Thread::Yield();
 }
 
 void function3()
 {
     function2();
-    CppCommon::Thread::Yield();
 }
 
 int main(int argc, char** argv)
