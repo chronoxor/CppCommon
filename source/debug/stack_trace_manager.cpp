@@ -9,9 +9,11 @@
 #include "debug/stack_trace_manager.h"
 #include "errors/exceptions.h"
 
-#if defined(_MSC_VER)
+#if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
+#if defined(DBGHELP_SUPPORT)
 #include <DbgHelp.h>
+#endif
 #endif
 
 namespace CppCommon {
@@ -28,6 +30,7 @@ public:
             return;
 
 #if defined(_WIN32) || defined(_WIN64)
+#if defined(DBGHELP_SUPPORT)
         // Provide required symbol options
         SymSetOptions(SYMOPT_PUBLICS_ONLY);
 
@@ -37,6 +40,7 @@ public:
         // Initializes symbol handler for the current process
         if (!SymInitialize(hProcess, nullptr, TRUE))
             throwex SystemException("Cannot initialize symbol handler for the current process!");
+#endif
 #endif
 
         _initialized = true;
@@ -49,12 +53,14 @@ public:
             return;
 
 #if defined(_WIN32) || defined(_WIN64)
+#if defined(DBGHELP_SUPPORT)
         // Get the current process handle
         HANDLE hProcess = GetCurrentProcess();
 
         // Cleanup symbol handler for the current process
         if (!SymCleanup(hProcess))
             throwex SystemException("Cannot cleanup symbol handler for the current process!");
+#endif
 #endif
 
         _initialized = false;

@@ -16,11 +16,15 @@
 
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
+#if defined(DBGHELP_SUPPORT)
 #include <DbgHelp.h>
+#endif
 #elif defined(unix) || defined(__unix) || defined(__unix__)
+#include <execinfo.h>
+#if defined(LIBDL_SUPPORT)
 #include <cxxabi.h>
 #include <dlfcn.h>
-#include <execinfo.h>
+#endif
 #endif
 
 namespace CppCommon {
@@ -68,6 +72,7 @@ StackTrace::StackTrace(int skip)
         // Get the frame address
         frame.address = frames[i];
 
+#if defined(DBGHELP_SUPPORT)
         // Get the frame module
         IMAGEHLP_MODULE64 module;
         ZeroMemory(&module, sizeof(module));
@@ -103,8 +108,9 @@ StackTrace::StackTrace(int skip)
                 frame.filename = line.FileName;
             frame.line = line.LineNumber;
         }
+#endif
     }
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#elif defined(LIBDL_SUPPORT) && defined(unix) || defined(__unix) || defined(__unix__)
     const int capacity = 1024;
     void* frames[capacity];
 
@@ -128,6 +134,7 @@ StackTrace::StackTrace(int skip)
         // Get the frame address
         frame.address = frames[index + i];
 
+#if defined(LIBDL_SUPPORT)
         // Get the frame information
         Dl_info info;
         if (dladdr(frames[index + i], &info) == 0)
@@ -155,6 +162,67 @@ StackTrace::StackTrace(int skip)
             else
                 frame.function = info.dli_sname;
         }
+#endif
+#if defined(LIBBFD_SUPPORT)
+        if ((frame.address == nullptr) || (info.dli_fname == nullptr))
+            continue;
+
+        bfd *abfd = bfd_openr(info.dli_fname, nullptr);
+        if (abfd == nullptr)
+            continue;
+
+        if (bfd_check_format (abfd, bfd_archive))
+            goto cleanup;
+
+        char **matching;
+        if (!bfd_check_format_matches(abfd, bfd_object, &matching))
+            goto cleanup;
+
+        if ((bfd_get_file_flags(abfd) & HAS_SYMS) == 0)
+            goto cleanup;
+
+        unsigned int size;
+        long symcount = bfd_read_minisymbols(abfd, FALSE, (void*)&syms, &size);
+        if (symcount == 0)
+            symcount = bfd_read_minisymbols(abfd, TRUE, (void*)&syms, &size);
+        if (symcount < 0)
+            goto cleanup;
+
+        const char* filename;
+        const char* functionname;
+        unsigned int line;
+
+        bfd_boolean found = false;
+        bfd_vma pc = bfd_scan_vma(frame.address, NULL, 16);
+        bfd_map_over_sections(abfd, [&fount, &pc, &filename, &functionname, &line](bfd* abfd, asection* section, void* data)
+        {
+            if ((bfd_get_section_flags(abfd, section) & SEC_ALLOC) == 0)
+                return;
+
+            bfd_vma vma = bfd_get_section_vma(abfd, section);
+            if (pc < vma)
+                return;
+
+            bfd_size_type size = bfd_get_section_size(section);
+            if (pc >= vma + size)
+                return;
+
+            found = bfd_find_nearest_line(abfd, section, syms, pc - vma, &filename, &functionname, &line);
+        }, NULL);
+
+        if (!found)
+            goto cleanup;
+
+        if (filename != nullptr)
+            frame.filename = filename;
+        frame.line = line;
+
+cleanup:
+        if (syms != nullptr)
+            free (syms);
+
+        bfd_close(abfd);
+#endif
     }
 #endif
 }
