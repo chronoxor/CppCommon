@@ -133,9 +133,6 @@ StackTrace::StackTrace(int skip)
         if (dladdr(frames[index + i], &info) == 0)
             continue;
 
-        // Update the frame address
-        frame.address = info.dli_saddr;
-
         // Get the frame module
         if (info.dli_fname != nullptr)
         {
