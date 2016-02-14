@@ -21,6 +21,9 @@
 #endif
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 #include <execinfo.h>
+#if defined(LIBBFD_SUPPORT)
+#include <bfd.h>
+#endif
 #if defined(LIBDL_SUPPORT)
 #include <cxxabi.h>
 #include <dlfcn.h>
@@ -126,6 +129,10 @@ StackTrace::StackTrace(int skip)
     // Resize stack trace frames vector
     _frames.resize(size);
 
+    // Capture stack trace snapshot under the critical section
+    static CriticalSection cs;
+    std::lock_guard<CriticalSection> locker(cs);
+
     // Fill all captured frames with symbol information
     for (int i = 0; i < size; ++i)
     {
@@ -164,51 +171,63 @@ StackTrace::StackTrace(int skip)
         }
 #endif
 #if defined(LIBBFD_SUPPORT)
-        if ((frame.address == nullptr) || (info.dli_fname == nullptr))
-            continue;
+        bfd* abfd = nullptr;
+        char** matching;
 
-        bfd *abfd = bfd_openr(info.dli_fname, nullptr);
-        if (abfd == nullptr)
-            continue;
-
-        if (bfd_check_format (abfd, bfd_archive))
-            goto cleanup;
-
-        char **matching;
-        if (!bfd_check_format_matches(abfd, bfd_object, &matching))
-            goto cleanup;
-
-        if ((bfd_get_file_flags(abfd) & HAS_SYMS) == 0)
-            goto cleanup;
-
+        void* symsptr;
+        asymbol** syms;
         unsigned int size;
-        long symcount = bfd_read_minisymbols(abfd, FALSE, (void*)&syms, &size);
-        if (symcount == 0)
-            symcount = bfd_read_minisymbols(abfd, TRUE, (void*)&syms, &size);
-        if (symcount < 0)
-            goto cleanup;
+        long symcount;
 
         const char* filename;
         const char* functionname;
         unsigned int line;
 
         bfd_boolean found = false;
-        bfd_vma pc = bfd_scan_vma(frame.address, NULL, 16);
-        bfd_map_over_sections(abfd, [&fount, &pc, &filename, &functionname, &line](bfd* abfd, asection* section, void* data)
+        bfd_vma pc;
+
+        if ((frame.address == nullptr) || (info.dli_fname == nullptr))
+            continue;
+
+        abfd = bfd_openr(info.dli_fname, nullptr);
+        if (abfd == nullptr)
+            continue;
+
+        if (bfd_check_format(abfd, bfd_archive))
+            goto cleanup;
+
+        if (!bfd_check_format_matches(abfd, bfd_object, &matching))
+            goto cleanup;
+
+        if ((bfd_get_file_flags(abfd) & HAS_SYMS) == 0)
+            goto cleanup;
+
+        symcount = bfd_read_minisymbols(abfd, FALSE, &symsptr, &size);
+        if (symcount == 0)
+            symcount = bfd_read_minisymbols(abfd, TRUE, &symsptr, &size);
+        if (symcount < 0)
+            goto cleanup;
+        syms = (asymbol**)symsptr;
+
+        pc = (bfd_vma)frame.address;
+        for (asection* section = abfd->sections; section != nullptr; section = section->next)
         {
+            if (found)
+                break;
+
             if ((bfd_get_section_flags(abfd, section) & SEC_ALLOC) == 0)
-                return;
+                continue;
 
             bfd_vma vma = bfd_get_section_vma(abfd, section);
             if (pc < vma)
-                return;
+                continue;
 
             bfd_size_type size = bfd_get_section_size(section);
             if (pc >= vma + size)
-                return;
+                continue;
 
             found = bfd_find_nearest_line(abfd, section, syms, pc - vma, &filename, &functionname, &line);
-        }, NULL);
+        }
 
         if (!found)
             goto cleanup;
@@ -218,10 +237,11 @@ StackTrace::StackTrace(int skip)
         frame.line = line;
 
 cleanup:
-        if (syms != nullptr)
-            free (syms);
+        if (symsptr != nullptr)
+            free(symsptr);
 
-        bfd_close(abfd);
+        if (abfd != nullptr)
+            bfd_close(abfd);
 #endif
     }
 #endif
