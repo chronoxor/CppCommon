@@ -1,13 +1,13 @@
 /*!
-    \file debug_stack_trace.cpp
+    \file system_stack_trace.cpp
     \brief Stack trace snapshot provider example
     \author Ivan Shynkarenka
     \date 11.02.2016
     \copyright MIT License
 */
 
-#include "debug/stack_trace.h"
-#include "debug/stack_trace_manager.h"
+#include "system/stack_trace.h"
+#include "system/stack_trace_manager.h"
 #include "threads/thread.h"
 
 #include <iostream>

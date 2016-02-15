@@ -6,8 +6,8 @@
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_DEBUG_STACK_TRACE_H
-#define CPPCOMMON_DEBUG_STACK_TRACE_H
+#ifndef CPPCOMMON_SYSTEM_STACK_TRACE_H
+#define CPPCOMMON_SYSTEM_STACK_TRACE_H
 
 #include <string>
 #include <vector>
@@ -79,6 +79,6 @@ private:
 
 } // namespace CppCommon
 
-/*! \example debug_stack_trace.cpp Stack trace snapshot provider example */
+/*! \example system_stack_trace.cpp Stack trace snapshot provider example */
 
-#endif // CPPCOMMON_DEBUG_STACK_TRACE_H
+#endif // CPPCOMMON_SYSTEM_STACK_TRACE_H

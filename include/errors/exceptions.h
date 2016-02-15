@@ -9,9 +9,9 @@
 #ifndef CPPCOMMON_ERRORS_EXCEPTIONS_H
 #define CPPCOMMON_ERRORS_EXCEPTIONS_H
 
-#include "debug/source_location.h"
-#include "debug/stack_trace.h"
 #include "errors/system_error.h"
+#include "system/source_location.h"
+#include "system/stack_trace.h"
 
 #include <exception>
 #include <string>

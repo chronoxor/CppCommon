@@ -1,12 +1,12 @@
 /*!
-    \file debug_source_location.cpp
+    \file system_source_location.cpp
     \brief Source location wrapper example
     \author Ivan Shynkarenka
     \date 09.02.2016
     \copyright MIT License
 */
 
-#include "debug/source_location.h"
+#include "system/source_location.h"
 
 #include <iostream>
 

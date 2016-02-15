@@ -4,11 +4,11 @@
 
 #include "catch.hpp"
 
-#include "debug/source_location.h"
+#include "system/source_location.h"
 
 using namespace CppCommon;
 
-TEST_CASE("Source location wrapper", "[CppCommon][Debug]")
+TEST_CASE("Source location wrapper", "[CppCommon][System]")
 {
     auto location = __LOCATION__;
 

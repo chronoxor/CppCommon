@@ -6,7 +6,8 @@
     \copyright MIT License
 */
 
-#include "debug/stack_trace_manager.h"
+#include "system/stack_trace_manager.h"
+
 #include "errors/exceptions.h"
 
 #if defined(_WIN32) || defined(_WIN64)

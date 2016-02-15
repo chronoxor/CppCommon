@@ -4,7 +4,7 @@
 
 #include "cppbenchmark.h"
 
-#include "debug/stack_trace.h"
+#include "system/stack_trace.h"
 
 const uint64_t iterations = 1000000;
 

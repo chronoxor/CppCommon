@@ -6,7 +6,8 @@
     \copyright MIT License
 */
 
-#include "debug/stack_trace.h"
+#include "system/stack_trace.h"
+
 #include "threads/critical_section.h"
 
 #include <cstring>

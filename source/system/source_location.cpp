@@ -1,12 +1,12 @@
 /*!
-    \file source_location.h
+    \file system_location.h
     \brief Source location wrapper implementation
     \author Ivan Shynkarenka
     \date 09.02.2016
     \copyright MIT License
 */
 
-#include "debug/source_location.h"
+#include "system/source_location.h"
 
 namespace CppCommon {
 

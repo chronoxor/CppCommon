@@ -6,8 +6,8 @@
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_DEBUG_SOURCE_LOCATION_H
-#define CPPCOMMON_DEBUG_SOURCE_LOCATION_H
+#ifndef CPPCOMMON_SYSTEM_SOURCE_LOCATION_H
+#define CPPCOMMON_SYSTEM_SOURCE_LOCATION_H
 
 #include <string>
 
@@ -64,6 +64,6 @@ private:
 
 } // namespace CppCommon
 
-/*! \example debug_source_location.cpp Source location wrapper example */
+/*! \example system_source_location.cpp Source location wrapper example */
 
-#endif // CPPCOMMON_DEBUG_SOURCE_LOCATION_H
+#endif // CPPCOMMON_SYSTEM_SOURCE_LOCATION_H
