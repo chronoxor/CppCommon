@@ -113,7 +113,7 @@ StackTrace::StackTrace(int skip)
         }
 #endif
     }
-#elif defined(LIBDL_SUPPORT) && defined(unix) || defined(__unix) || defined(__unix__)
+#elif defined(unix) || defined(__unix) || defined(__unix__)
     const int capacity = 1024;
     void* frames[capacity];
 
