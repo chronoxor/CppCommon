@@ -53,8 +53,8 @@ public:
     static std::string Convert(int error);
 };
 
-} // namespace CppCommon
-
 /*! \example errors_system_error.cpp System error wrapper example */
+
+} // namespace CppCommon
 
 #endif // CPPCOMMON_ERRORS_SYSTEM_ERROR_H
