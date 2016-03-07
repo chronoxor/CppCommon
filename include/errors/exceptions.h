@@ -76,6 +76,7 @@ protected:
 //! Runtime exception
 class RuntimeException : public Exception {};
 
+//! System exception
 class SystemException : public Exception
 {
 public:
