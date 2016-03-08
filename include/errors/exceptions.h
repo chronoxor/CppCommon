@@ -11,18 +11,16 @@
 
 #include "errors/system_error.h"
 #include "system/source_location.h"
-#include "system/stack_trace.h"
 
 #include <exception>
 #include <string>
-#include <tuple>
 #include <utility>
 
 //! Throw extended exception macro
 /*!
-    Throw extended exception with the current location and stack trace.
+    Throw extended exception with the current location.
 */
-#define throwex throw std::make_tuple(__LOCATION__, __STACK__) +
+#define throwex throw __LOCATION__ +
 
 namespace CppCommon {
 
@@ -37,7 +35,7 @@ public:
     /*!
         \param message - Exception message (default is "")
     */
-    Exception(const std::string& message = "") : _message(message), _location(true), _trace(true) {}
+    Exception(const std::string& message = "") : _message(message), _location(true) {}
     Exception(const Exception&) = default;
     Exception(Exception&&) = default;
     virtual ~Exception() = default;
@@ -49,8 +47,6 @@ public:
     const std::string& message() const noexcept { return _message; }
     //! Get exception location
     const SourceLocation& location() const noexcept { return _location; }
-    //! Get exception stack trace
-    const StackTrace& trace() const noexcept { return _trace; }
 
     //! Get string identifying exception
     const char* what() const override;
@@ -62,15 +58,14 @@ public:
     friend std::ostream& operator<< (std::ostream& os, const Exception& instance)
     { os << instance.to_string(); return os; }
 
-    //! Link exception with source location and call stack
+    //! Link exception with source location
     template<class T>
-    friend T&& operator+(const std::tuple<SourceLocation, StackTrace>& context, T&& instance);
+    friend T&& operator+(const SourceLocation& location, T&& instance);
 
 protected:
     mutable std::string _cache;
     std::string _message;
     SourceLocation _location;
-    StackTrace _trace;
 };
 
 //! Runtime exception

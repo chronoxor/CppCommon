@@ -16,10 +16,9 @@ inline const char* Exception::what() const
 }
 
 template<class T>
-inline T&& operator+(const std::tuple<SourceLocation, StackTrace>& context, T&& instance)
+inline T&& operator+(const SourceLocation& location, T&& instance)
 {
-    instance._location = std::get<0>(context);
-    instance._trace = std::get<1>(context);
+    instance._location = location;
     return std::forward<T>(instance);
 }
 

@@ -62,8 +62,8 @@ private:
     SourceLocation(bool) noexcept : SourceLocation(nullptr, 0) {}
 };
 
-} // namespace CppCommon
-
 /*! \example system_source_location.cpp Source location wrapper example */
+
+} // namespace CppCommon
 
 #endif // CPPCOMMON_SYSTEM_SOURCE_LOCATION_H

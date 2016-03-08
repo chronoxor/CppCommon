@@ -21,9 +21,6 @@ std::string Exception::to_string() const
         std::string location = _location.to_string();
         if (!location.empty())
             stream << "Location: " << location << std::endl;
-        std::string trace = _trace.to_string();
-        if (!trace.empty())
-            stream << "Stack trace: " << std::endl << trace << std::endl;
         _cache = stream.str();
     }
     return _cache;
@@ -40,9 +37,6 @@ std::string SystemException::to_string() const
         std::string location = _location.to_string();
         if (!location.empty())
             stream << "Location: " << location << std::endl;
-        std::string trace = _trace.to_string();
-        if (!trace.empty())
-            stream << "Stack trace: " << std::endl << trace << std::endl;
         _cache = stream.str();
     }
     return _cache;

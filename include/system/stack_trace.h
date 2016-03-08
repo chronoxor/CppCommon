@@ -28,8 +28,6 @@ namespace CppCommon {
 */
 class StackTrace
 {
-    friend class Exception;
-
 public:
     //! Stack trace frame
     struct Frame
@@ -73,12 +71,10 @@ public:
 
 private:
     std::vector<Frame> _frames;
-
-    StackTrace(bool) {}
 };
 
-} // namespace CppCommon
-
 /*! \example system_stack_trace.cpp Stack trace snapshot provider example */
+
+} // namespace CppCommon
 
 #endif // CPPCOMMON_SYSTEM_STACK_TRACE_H
