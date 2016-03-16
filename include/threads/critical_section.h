@@ -29,7 +29,7 @@ public:
     CriticalSection();
     CriticalSection(const CriticalSection&) = delete;
     CriticalSection(CriticalSection&&) = default;
-    ~CriticalSection();
+    ~CriticalSection() noexcept(false);
 
     CriticalSection& operator=(const CriticalSection&) = delete;
     CriticalSection& operator=(CriticalSection&&) = default;

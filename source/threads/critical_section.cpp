@@ -29,27 +29,27 @@ public:
         pthread_mutexattr_t attribute;
         int result = pthread_mutexattr_init(&attribute);
         if (result != 0)
-            throwex SystemException(result, "Failed to initialize the mutex attribute!");
+            throwex SystemException(result, "Failed to initialize a mutex attribute!");
         result = pthread_mutexattr_settype(&attribute, PTHREAD_MUTEX_RECURSIVE);
         if (result != 0)
-            throwex SystemException(result, "Failed to set the mutex recursive attribute!");
+            throwex SystemException(result, "Failed to set a mutex recursive attribute!");
         result = pthread_mutex_init(&_lock, &attribute);
         if (result != 0)
-            throwex SystemException(result, "Failed to initialize the mutex!");
+            throwex SystemException(result, "Failed to initialize a mutex!");
         result = pthread_mutexattr_destroy(&attribute);
         if (result != 0)
-            throwex SystemException(result, "Failed to destroy the mutex attribute!");
+            throwex SystemException(result, "Failed to destroy a mutex attribute!");
 #endif
     }
 
-    ~Impl()
+    ~Impl() noexcept(false)
     {
 #if defined(_WIN32) || defined(_WIN64)
         DeleteCriticalSection(&_lock);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = pthread_mutex_destroy(&_lock);
         if (result != 0)
-            throwex SystemException(result, "Failed to destroy the mutex!");
+            throwex SystemException(result, "Failed to destroy a mutex!");
 #endif
     }
 
@@ -60,7 +60,7 @@ public:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = pthread_mutex_trylock(&_lock);
         if ((result != 0) && (result != EBUSY))
-            throwex SystemException(result, "Failed to try lock the mutex!");
+            throwex SystemException(result, "Failed to try lock a mutex!");
         return (result == 0);
 #endif
     }
@@ -72,7 +72,7 @@ public:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = pthread_mutex_lock(&_lock);
         if (result != 0)
-            throwex SystemException(result, "Failed to lock the mutex!");
+            throwex SystemException(result, "Failed to lock a mutex!");
 #endif
     }
 
@@ -83,7 +83,7 @@ public:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = pthread_mutex_unlock(&_lock);
         if (result != 0)
-            throwex SystemException(result, "Failed to unlock the mutex!");
+            throwex SystemException(result, "Failed to unlock a mutex!");
 #endif
     }
 
@@ -99,7 +99,7 @@ CriticalSection::CriticalSection() : _pimpl(new Impl())
 {
 }
 
-CriticalSection::~CriticalSection()
+CriticalSection::~CriticalSection() noexcept(false)
 {
 }
 
