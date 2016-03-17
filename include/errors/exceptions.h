@@ -90,7 +90,7 @@ public:
     SystemException(int error, const std::string& message = "")
         : Exception(message),
           _system_error(error),
-          _system_message(SystemError::Convert(error))
+          _system_message(SystemError::to_string(error))
     {}
 
     //! Get system error code

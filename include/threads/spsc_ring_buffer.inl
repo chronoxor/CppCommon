@@ -14,7 +14,7 @@ inline SPSCRingBuffer::SPSCRingBuffer(uint64_t capacity) : _capacity(capacity - 
     assert(((capacity & (capacity - 1)) == 0) && "Ring buffer capacity must be a power of two!");
 }
 
-inline uint64_t SPSCRingBuffer::size() const
+inline uint64_t SPSCRingBuffer::size() const noexcept
 {
     const uint64_t head = _head.load(std::memory_order_acquire);
     const uint64_t tail = _tail.load(std::memory_order_acquire);

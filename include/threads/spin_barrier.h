@@ -34,7 +34,7 @@ public:
     /*!
         \param threads - Count of threads to wait at the barrier
     */
-    explicit SpinBarrier(int threads);
+    explicit SpinBarrier(int threads) noexcept;
     SpinBarrier(const SpinBarrier&) = delete;
     SpinBarrier(SpinBarrier&&) = default;
     ~SpinBarrier() = default;
@@ -45,8 +45,10 @@ public:
     //! Wait at the barrier until all other threads reach this barrier
     /*!
         Will block.
+
+        \return 'true' for the last thread that reach barrier, 'false' for each of the remaining threads
     */
-    void wait();
+    bool wait() noexcept;
 
 private:
     // Count of synchronizing threads

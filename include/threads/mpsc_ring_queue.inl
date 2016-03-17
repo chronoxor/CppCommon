@@ -17,7 +17,7 @@ inline MPSCRingQueue<T>::MPSCRingQueue(uint64_t capacity, uint64_t concurrency) 
 }
 
 template<typename T>
-inline uint64_t MPSCRingQueue<T>::size() const
+inline uint64_t MPSCRingQueue<T>::size() const noexcept
 {
     uint64_t size = 0;
     for (auto producer : _producers)

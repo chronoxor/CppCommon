@@ -20,7 +20,7 @@ inline MPMCRingQueue<T>::MPMCRingQueue(uint64_t capacity) : _capacity(capacity),
 }
 
 template<typename T>
-inline uint64_t MPMCRingQueue<T>::size() const
+inline uint64_t MPMCRingQueue<T>::size() const noexcept
 {
     const uint64_t head = _head.load(std::memory_order_acquire);
     const uint64_t tail = _tail.load(std::memory_order_acquire);

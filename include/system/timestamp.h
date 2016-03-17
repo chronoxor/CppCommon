@@ -19,7 +19,7 @@ namespace CppCommon {
 
     \return Timestamp in nanoseconds resolution
 */
-uint64_t timestamp();
+uint64_t timestamp() noexcept;
 
 /*! \example system_timestamp.cpp Nanoseconds timestamp accessor example */
 

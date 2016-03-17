@@ -16,7 +16,7 @@
 
 namespace CppCommon {
 
-uint64_t timestamp()
+uint64_t timestamp() noexcept
 {
 #if defined(_WIN32) || defined(_WIN64)
     static LARGE_INTEGER frequency{0};

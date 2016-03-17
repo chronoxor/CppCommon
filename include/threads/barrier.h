@@ -32,7 +32,7 @@ public:
     explicit Barrier(int threads);
     Barrier(const Barrier&) = delete;
     Barrier(Barrier&&) = default;
-    ~Barrier() noexcept(false);
+    ~Barrier();
 
     Barrier& operator=(const Barrier&) = delete;
     Barrier& operator=(Barrier&&) = default;
@@ -40,8 +40,10 @@ public:
     //! Wait at the barrier until all other threads reach this barrier
     /*!
         Will block.
+
+        \return 'true' for the last thread that reach barrier, 'false' for each of the remaining threads
     */
-    void wait();
+    bool wait();
 
 private:
     class Impl;

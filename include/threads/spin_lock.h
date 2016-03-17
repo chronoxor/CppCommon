@@ -29,7 +29,7 @@ namespace CppCommon {
 class SpinLock
 {
 public:
-    SpinLock() : _lock(false) {}
+    SpinLock() noexcept : _lock(false) {}
     SpinLock(const SpinLock&) = delete;
     SpinLock(SpinLock&&) = default;
     ~SpinLock() = default;
@@ -43,7 +43,7 @@ public:
 
         \return 'true' if the spin-lock is already locked, 'false' if the spin-lock is released
     */
-    bool IsLocked();
+    bool IsLocked() noexcept;
 
     //! Try to acquire spin-lock without block
     /*!
@@ -51,7 +51,7 @@ public:
 
         \return 'true' if the spin-lock was successfully acquired, 'false' if the spin-lock is busy
     */
-    bool TryLock();
+    bool TryLock() noexcept;
 
     //! Try to acquire spin-lock for the given spin count
     /*!
@@ -60,7 +60,7 @@ public:
         \param spin - Spin count
         \return 'true' if the spin-lock was successfully acquired, 'false' if the spin-lock is busy
     */
-    bool TryLockSpin(int64_t spin);
+    bool TryLockSpin(int64_t spin) noexcept;
 
     //! Try to acquire spin-lock for the given time duration
     /*!
@@ -70,7 +70,7 @@ public:
         \return 'true' if the spin-lock was successfully acquired, 'false' if the spin-lock is busy
     */
     template <class Rep, class Period>
-    bool TryLockFor(const std::chrono::duration<Rep, Period>& duration);
+    bool TryLockFor(const std::chrono::duration<Rep, Period>& duration) noexcept;
 
     //! Try to acquire spin-lock until the given timestamp
     /*!
@@ -80,19 +80,19 @@ public:
         \return 'true' if the spin-lock was successfully acquired, 'false' if the spin-lock is busy
     */
     template <class Clock, class Duration>
-    bool TryLockUntil(const std::chrono::time_point<Clock, Duration>& timestamp);
+    bool TryLockUntil(const std::chrono::time_point<Clock, Duration>& timestamp) noexcept;
 
     //! Acquire spin-lock with block
     /*!
         Will block.
     */
-    void lock();
+    void lock() noexcept;
 
     //! Release spin-lock
     /*!
         Will not block.
     */
-    void unlock();
+    void unlock() noexcept;
 
 private:
     std::atomic<bool> _lock;

@@ -15,7 +15,7 @@ inline MPSCRingBuffer::MPSCRingBuffer(uint64_t capacity, uint64_t concurrency) :
         _producers.push_back(std::make_shared<Producer>(capacity));
 }
 
-inline uint64_t MPSCRingBuffer::size() const
+inline uint64_t MPSCRingBuffer::size() const noexcept
 {
     uint64_t size = 0;
     for (auto producer : _producers)

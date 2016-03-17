@@ -14,7 +14,7 @@
 
 namespace CppCommon {
 
-uint64_t rdts()
+uint64_t rdts() noexcept
 {
 #if defined(_MSC_VER)
     return __rdtsc();

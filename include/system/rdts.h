@@ -24,7 +24,7 @@ namespace CppCommon {
 
     \return Number of CPU cycles since the last system reset
 */
-uint64_t rdts();
+uint64_t rdts() noexcept;
 
 /*! \example system_rdts.cpp Read Time Stamp Counter example */
 

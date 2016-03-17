@@ -42,9 +42,9 @@ public:
     SPSCRingQueue& operator=(SPSCRingQueue&&) = default;
 
     //! Get ring queue capacity
-    uint64_t capacity() const { return _capacity; }
+    uint64_t capacity() const noexcept { return _capacity; }
     //! Get ring queue size
-    uint64_t size() const;
+    uint64_t size() const noexcept;
 
     //! Enqueue an item into the ring queue (single producer thread method)
     /*!

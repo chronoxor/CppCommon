@@ -42,7 +42,7 @@ public:
 #endif
     }
 
-    ~Impl() noexcept(false)
+    ~Impl()
     {
 #if defined(_WIN32) || defined(_WIN64)
         DeleteCriticalSection(&_lock);
@@ -99,7 +99,7 @@ CriticalSection::CriticalSection() : _pimpl(new Impl())
 {
 }
 
-CriticalSection::~CriticalSection() noexcept(false)
+CriticalSection::~CriticalSection()
 {
 }
 

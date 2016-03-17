@@ -41,28 +41,28 @@ public:
     /*!
         \return Current thread Id
     */
-    static uint64_t CurrentThreadId();
+    static uint64_t CurrentThreadId() noexcept;
 
     //! Sleep the current thread for the given nanoseconds
     /*!
         \param nanoseconds - Nanoseconds to sleep
     */
-    static void Sleep(int64_t nanoseconds);
+    static void Sleep(int64_t nanoseconds) noexcept;
     //! Sleep the current thread for the given time duration
     /*!
         \param duration - Time duration to sleep
     */
     template <class Rep, class Period>
-    static void SleepFor(const std::chrono::duration<Rep, Period>& duration);
+    static void SleepFor(const std::chrono::duration<Rep, Period>& duration) noexcept;
     //! Sleep the current thread until the given timestamp
     /*!
         \param timestamp - Timestamp to stop sleeping
     */
     template <class Clock, class Duration>
-    static void SleepUntil(const std::chrono::time_point<Clock, Duration>& timestamp);
+    static void SleepUntil(const std::chrono::time_point<Clock, Duration>& timestamp) noexcept;
 
     //! Yield to other threads
-    static void Yield();
+    static void Yield() noexcept;
 };
 
 } // namespace CppCommon

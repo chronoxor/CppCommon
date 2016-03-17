@@ -34,27 +34,34 @@ public:
     /*!
         \return Last system error code
     */
-    static int GetLast();
+    static int GetLast() noexcept;
 
     //! Set the last system error code
     /*!
         \param error - Last system error code to set
     */
-    static void SetLast(int error);
+    static void SetLast(int error) noexcept;
 
     //! Clear the last system error code
-    static void ClearLast();
+    static void ClearLast() noexcept;
 
+    //! Convert the last system error code to the system error message
+    /*!
+        \return Last system error message
+    */
+    static std::string to_string();
     //! Convert the given system error code to the system error message
     /*!
         \param error - System error code
         \return System error message
     */
-    static std::string Convert(int error);
+    static std::string to_string(int error);
 };
 
 /*! \example errors_system_error.cpp System error wrapper example */
 
 } // namespace CppCommon
+
+#include "system_error.inl"
 
 #endif // CPPCOMMON_ERRORS_SYSTEM_ERROR_H

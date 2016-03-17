@@ -48,11 +48,11 @@ public:
     MPSCRingBuffer& operator=(MPSCRingBuffer&&) = default;
 
     //! Get ring buffer capacity
-    uint64_t capacity() const { return _capacity; }
+    uint64_t capacity() const noexcept { return _capacity; }
     //! Get ring buffer concurrency
-    uint64_t concurrency() const { return _concurrency; }
+    uint64_t concurrency() const noexcept { return _concurrency; }
     //! Get ring buffer size
-    uint64_t size() const;
+    uint64_t size() const noexcept;
 
     //! Enqueue a chunk of bytes into the ring buffer (single producer thread method)
     /*!

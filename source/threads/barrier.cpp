@@ -33,11 +33,12 @@ public:
 #endif
     }
 
-    ~Impl() noexcept(false)
+    ~Impl()
     {
 #if defined(_WIN32) || defined(_WIN64)
-        if (!DeleteSynchronizationBarrier(&_barrier))
-            throwex SystemException("Failed to delete a synchronization barrier!");
+        DeleteSynchronizationBarrier(&_barrier);
+//        if (!DeleteSynchronizationBarrier(&_barrier))
+//            throwex SystemException("Failed to delete a synchronization barrier!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = pthread_barrier_destroy(&_barrier);
         if (result != 0)
@@ -45,15 +46,15 @@ public:
 #endif
     }
 
-    void wait()
+    bool wait()
     {
 #if defined(_WIN32) || defined(_WIN64)
-        if (!EnterSynchronizationBarrier(&_barrier, 0))
-            throwex SystemException("Failed to enter a synchronization barrier!");
+        return (EnterSynchronizationBarrier(&_barrier, 0) == TRUE);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = pthread_barrier_wait(&_barrier);
-        if (result != 0)
+        if ((result != PTHREAD_BARRIER_SERIAL_THREAD) && (result != 0))
             throwex SystemException(result, "Failed to wait at a synchronization barrier!");
+        return (result == PTHREAD_BARRIER_SERIAL_THREAD);
 #endif
     }
 
@@ -69,13 +70,13 @@ Barrier::Barrier(int threads) : _pimpl(new Impl(threads))
 {
 }
 
-Barrier::~Barrier() noexcept(false)
+Barrier::~Barrier()
 {
 }
 
-void Barrier::wait()
+bool Barrier::wait()
 {
-    _pimpl->wait();
+    return _pimpl->wait();
 }
 
 } // namespace CppCommon

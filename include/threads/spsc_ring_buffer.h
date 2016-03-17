@@ -42,9 +42,9 @@ public:
     SPSCRingBuffer& operator=(SPSCRingBuffer&&) = default;
 
     //! Get ring buffer capacity in bytes
-    uint64_t capacity() const { return _capacity; }
+    uint64_t capacity() const noexcept { return _capacity; }
     //! Get ring buffer size in bytes
-    uint64_t size() const;
+    uint64_t size() const noexcept;
 
     //! Enqueue a chunk of bytes into the ring buffer (single producer thread method)
     /*!

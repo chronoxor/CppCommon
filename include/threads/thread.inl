@@ -9,13 +9,13 @@
 namespace CppCommon {
 
 template <class Rep, class Period>
-inline void Thread::SleepFor(const std::chrono::duration<Rep, Period>& duration)
+inline void Thread::SleepFor(const std::chrono::duration<Rep, Period>& duration) noexcept
 {
     Sleep(std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count());
 }
 
 template <class Clock, class Duration>
-inline void Thread::SleepUntil(const std::chrono::time_point<Clock, Duration>& timestamp)
+inline void Thread::SleepUntil(const std::chrono::time_point<Clock, Duration>& timestamp) noexcept
 {
     SleepFor(timestamp - std::chrono::high_resolution_clock::now());
 }

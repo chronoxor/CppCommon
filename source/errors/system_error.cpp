@@ -16,7 +16,7 @@
 
 namespace CppCommon {
 
-int SystemError::GetLast()
+int SystemError::GetLast() noexcept
 {
 #if defined(_WIN32) || defined(_WIN64)
     return GetLastError();
@@ -25,7 +25,7 @@ int SystemError::GetLast()
 #endif
 }
 
-void SystemError::SetLast(int error)
+void SystemError::SetLast(int error) noexcept
 {
 #if defined(_WIN32) || defined(_WIN64)
     return SetLastError(error);
@@ -34,12 +34,12 @@ void SystemError::SetLast(int error)
 #endif
 }
 
-void SystemError::ClearLast()
+void SystemError::ClearLast() noexcept
 {
     SetLast(0);
 }
 
-std::string SystemError::Convert(int error)
+std::string SystemError::to_string(int error)
 {
     const int capacity = 1024;
     char buffer[capacity];

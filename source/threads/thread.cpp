@@ -50,7 +50,7 @@ uint64_t SetMinimumTimerResolution()
 } // namespace Internals
 //! @endcond
 
-uint64_t Thread::CurrentThreadId()
+uint64_t Thread::CurrentThreadId() noexcept
 {
 #if defined(_WIN32) || defined(_WIN64)
     return GetCurrentThreadId();
@@ -59,7 +59,7 @@ uint64_t Thread::CurrentThreadId()
 #endif
 }
 
-void Thread::Sleep(int64_t nanoseconds)
+void Thread::Sleep(int64_t nanoseconds) noexcept
 {
     if (nanoseconds < 0)
         return;
@@ -119,7 +119,7 @@ void Thread::Sleep(int64_t nanoseconds)
 #endif
 }
 
-void Thread::Yield()
+void Thread::Yield() noexcept
 {
 #if defined(_WIN32) || defined(_WIN64)
     SwitchToThread();

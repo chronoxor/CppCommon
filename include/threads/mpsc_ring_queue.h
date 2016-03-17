@@ -48,11 +48,11 @@ public:
     MPSCRingQueue& operator=(MPSCRingQueue&&) = default;
 
     //! Get ring queue capacity
-    uint64_t capacity() const { return _capacity; }
+    uint64_t capacity() const noexcept { return _capacity; }
     //! Get ring queue concurrency
-    uint64_t concurrency() const { return _concurrency; }
+    uint64_t concurrency() const noexcept { return _concurrency; }
     //! Get ring queue size
-    uint64_t size() const;
+    uint64_t size() const noexcept;
 
     //! Enqueue an item into the ring queue (multiple producers threads method)
     /*!

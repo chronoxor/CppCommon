@@ -8,12 +8,12 @@
 
 namespace CppCommon {
 
-inline SpinBarrier::SpinBarrier(int threads) : _threads(threads), _waiting(threads), _generation(0)
+inline SpinBarrier::SpinBarrier(int threads) noexcept : _threads(threads), _waiting(threads), _generation(0)
 {
     assert((threads > 0) && "Count of barrier threads must be greater than zero!");
 }
 
-inline void SpinBarrier::wait()
+inline bool SpinBarrier::wait() noexcept
 {
     // Remember the current barrier generation
     int generation = _generation;
@@ -25,12 +25,17 @@ inline void SpinBarrier::wait()
         _waiting = _threads;
         // Increase the current barrier generation
         ++_generation;
-        return;
+
+        // Notify last thread that reach barrier
+        return true;
     }
     else
     {
         // Spin-wait for the next barrier generation
         while (generation == _generation);
+
+        // Notify each of the remaining threads
+        return false;
     }
 }
 
