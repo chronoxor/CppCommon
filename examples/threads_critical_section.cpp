@@ -25,7 +25,7 @@ int main(int argc, char** argv)
     std::vector<std::thread> threads;
     for (int thread = 0; thread < 4; ++thread)
     {
-        threads.push_back(std::thread([thread, &locker, &stop]()
+        threads.push_back(std::thread([&locker, &stop, thread]()
         {
             while (!stop)
             {
