@@ -66,7 +66,7 @@ public:
     /*!
         Will block for the given time duration in the worst case.
 
-        \param duration - Time duration for spin-lock
+        \param duration - Time duration to wait for the spin-lock
         \return 'true' if the spin-lock was successfully acquired, 'false' if the spin-lock is busy
     */
     template <class Rep, class Period>
@@ -76,7 +76,7 @@ public:
     /*!
         Will block until the given timestamp in the worst case.
 
-        \param timestamp - Timestamp to stop spin-lock
+        \param timestamp - Timestamp to stop wait for the spin-lock
         \return 'true' if the spin-lock was successfully acquired, 'false' if the spin-lock is busy
     */
     template <class Clock, class Duration>

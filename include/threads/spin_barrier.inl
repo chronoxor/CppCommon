@@ -13,7 +13,7 @@ inline SpinBarrier::SpinBarrier(int threads) noexcept : _threads(threads), _wait
     assert((threads > 0) && "Count of barrier threads must be greater than zero!");
 }
 
-inline bool SpinBarrier::wait() noexcept
+inline bool SpinBarrier::Wait() noexcept
 {
     // Remember the current barrier generation
     int generation = _generation;

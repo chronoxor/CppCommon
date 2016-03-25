@@ -43,7 +43,7 @@ public:
 
         \return 'true' for the last thread that reach barrier, 'false' for each of the remaining threads
     */
-    bool wait();
+    bool Wait();
 
 private:
     class Impl;

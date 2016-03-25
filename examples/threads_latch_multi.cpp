@@ -1,13 +1,13 @@
 /*!
-    \file threads_spin_barrier.cpp
-    \brief Spin barrier synchronization primitive example
+    \file threads_latch_multi.cpp
+    \brief Latch synchronization primitive example for multiple threads waiting
     \author Ivan Shynkarenka
-    \date 17.03.2016
+    \date 25.03.2016
     \copyright MIT License
 */
 
 #include "threads/critical_section.h"
-#include "threads/spin_barrier.h"
+#include "threads/latch.h"
 #include "threads/thread.h"
 
 #include <atomic>
@@ -19,14 +19,14 @@
 int main(int argc, char** argv)
 {
     int concurrency = 8;
-    CppCommon::SpinBarrier barrier(concurrency);
+    CppCommon::Latch latch(concurrency);
     CppCommon::CriticalSection locker;
 
     // Start some threads
     std::vector<std::thread> threads;
     for (int thread = 0; thread < concurrency; ++thread)
     {
-        threads.push_back(std::thread([&barrier, &locker, thread]()
+        threads.push_back(std::thread([&latch, &locker, thread]()
         {
             locker.lock();
             std::cout << "Thread " << thread << " initialized!" << std::endl;
@@ -35,18 +35,25 @@ int main(int argc, char** argv)
             // Sleep for a while...
             CppCommon::Thread::Sleep(thread * 100);
 
-            locker.lock();
-            std::cout << "Thread " << thread << " before barrier!" << std::endl;
-            locker.unlock();
-
-            // Wait for all other threads at the barrier
-            bool last = barrier.Wait();
+            // Count down the latch
+            latch.CountDown();
 
             locker.lock();
-            std::cout << "Thread " << thread << " after barrier!" << (last ? " Last one!" : "") << std::endl;
+            std::cout << "Thread " << thread << " latch count down!" << std::endl;
             locker.unlock();
         }));
     }
+
+    locker.lock();
+    std::cout << "Main thread is waiting for the latch..." << std::endl;
+    locker.unlock();
+
+    // Wait until work is done
+    latch.Wait();
+
+    locker.lock();
+    std::cout << "Main thread continue!" << std::endl;
+    locker.unlock();
 
     // Wait for all threads
     for (auto& thread : threads)

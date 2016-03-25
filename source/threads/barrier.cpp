@@ -46,7 +46,7 @@ public:
 #endif
     }
 
-    bool wait()
+    bool Wait()
     {
 #if defined(_WIN32) || defined(_WIN64)
         return (EnterSynchronizationBarrier(&_barrier, 0) == TRUE);
@@ -74,9 +74,9 @@ Barrier::~Barrier()
 {
 }
 
-bool Barrier::wait()
+bool Barrier::Wait()
 {
-    return _pimpl->wait();
+    return _pimpl->Wait();
 }
 
 } // namespace CppCommon

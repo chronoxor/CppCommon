@@ -40,7 +40,7 @@ int main(int argc, char** argv)
             locker.unlock();
 
             // Wait for all other threads at the barrier
-            bool last = barrier.wait();
+            bool last = barrier.Wait();
 
             locker.lock();
             std::cout << "Thread " << thread << " after barrier!" << (last ? " Last one!" : "") << std::endl;

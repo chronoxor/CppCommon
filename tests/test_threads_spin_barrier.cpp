@@ -15,7 +15,7 @@ using namespace CppCommon;
 TEST_CASE("Spin barrier single thread", "[CppCommon][Threads]")
 {
     SpinBarrier barrier(1);
-    REQUIRE(barrier.wait());
+    REQUIRE(barrier.Wait());
 }
 
 TEST_CASE("Spin barrier multiple threads", "[CppCommon][Threads]")
@@ -39,7 +39,7 @@ TEST_CASE("Spin barrier multiple threads", "[CppCommon][Threads]")
             Thread::Sleep(thread * 100);
 
             // Wait for all other threads at the barrier
-            if (barrier.wait())
+            if (barrier.Wait())
                 ++last;
 
             // Check result in each thread
@@ -48,7 +48,7 @@ TEST_CASE("Spin barrier multiple threads", "[CppCommon][Threads]")
         }));
     }
 
-    // Wait for all threads
+    // Wait for all threads to complete
     for (auto& thread : threads)
         thread.join();
 
