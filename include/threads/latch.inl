@@ -8,7 +8,7 @@
 
 namespace CppCommon {
 
-inline Latch::Latch(int counter) noexcept : _counter(counter), _generation(0), _threads(counter)
+inline Latch::Latch(int counter) noexcept : _counter(counter), _generation(0)
 {
     assert((counter > 0) && "Latch counter must be greater than zero!");
 }

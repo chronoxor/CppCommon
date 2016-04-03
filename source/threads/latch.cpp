@@ -26,9 +26,6 @@ bool Latch::CountDown(std::unique_lock<std::mutex>& lock) noexcept
         // Increase the current latch generation
         ++_generation;
 
-        // Reset the current latch counter
-        _counter = _threads;
-
         // Notify all waiting threads
         _cond.notify_all();
 
