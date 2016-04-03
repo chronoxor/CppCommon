@@ -10,11 +10,6 @@
 
 namespace CppCommon {
 
-Latch::Latch(int counter) noexcept : _counter(counter), _generation(0)
-{
-    assert((counter > 0) && "Latch counter must be greater than zero!");
-}
-
 void Latch::Reset(int counter) noexcept
 {
     assert((counter > 0) && "Latch counter must be greater than zero!");
@@ -28,14 +23,21 @@ bool Latch::CountDown(std::unique_lock<std::mutex>& lock) noexcept
     // Count down the latch counter and check its value
     if (--_counter == 0)
     {
-        // Increase the latch generation
+        // Increase the current latch generation
         ++_generation;
+
+        // Reset the current latch counter
+        _counter = _threads;
+
         // Notify all waiting threads
         _cond.notify_all();
+
+        // Wait for the next latch generation
         return true;
     }
-    else
-        return false;
+
+    // Notify each of remaining threads
+    return false;
 }
 
 void Latch::CountDown() noexcept
@@ -50,14 +52,14 @@ void Latch::CountDownAndWait() noexcept
 {
     std::unique_lock<std::mutex> lock(_mutex);
 
-    // Save the current generation value
+    // Remember the current latch generation
     int generation = _generation;
 
     // Count down the latch counter
     if (CountDown(lock))
         return;
 
-    // Wait for the next generation
+    // Wait for the next latch generation
     _cond.wait(lock, [=, this]() { return generation != _generation; });
 }
 
@@ -69,10 +71,10 @@ void Latch::Wait() noexcept
     if (_counter == 0)
         return;
 
-    // Save the current generation value
+    // Remember the current latch generation
     int generation = _generation;
 
-    // Wait for the next generation
+    // Wait for the next latch generation
     _cond.wait(lock, [=, this]() { return generation != _generation; });
 }
 

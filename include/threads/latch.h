@@ -109,6 +109,7 @@ private:
     std::condition_variable _cond;
     int _counter;
     int _generation;
+    int _threads;
 
     bool CountDown(std::unique_lock<std::mutex>& lock) noexcept;
 };

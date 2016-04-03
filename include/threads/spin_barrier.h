@@ -51,12 +51,9 @@ public:
     bool Wait() noexcept;
 
 private:
-    // Count of synchronizing threads
-    int _threads;
-    // Count of waiting threads
-    std::atomic<int> _waiting;
-    // Count of barrier synchronizations completed generations
+    std::atomic<int> _counter;
     std::atomic<int> _generation;
+    int _threads;
 };
 
 /*! \example threads_spin_barrier.cpp Spin barrier synchronization primitive example */

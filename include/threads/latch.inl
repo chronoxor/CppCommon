@@ -8,18 +8,24 @@
 
 namespace CppCommon {
 
+inline Latch::Latch(int counter) noexcept : _counter(counter), _generation(0), _threads(counter)
+{
+    assert((counter > 0) && "Latch counter must be greater than zero!");
+}
+
 template <class Rep, class Period>
 inline bool Latch::TryWaitFor(const std::chrono::duration<Rep, Period>& duration) noexcept
 {
     std::unique_lock<std::mutex> lock(_mutex);
 
+    // Check the latch counter value
     if (_counter == 0)
         return true;
 
-    // Save the current generation value
+    // Remember the current latch generation
     int generation = _generation;
 
-    // Wait for the next generation
+    // Wait for the next latch generation
     return _cond.wait_for(lock, duration, [=, this]() { return generation != _generation; });
 }
 
@@ -28,13 +34,14 @@ inline bool Latch::TryWaitUntil(const std::chrono::time_point<Clock, Duration>& 
 {
     std::unique_lock<std::mutex> lock(_mutex);
 
+    // Check the latch counter value
     if (_counter == 0)
         return true;
 
-    // Save the current generation value
+    // Remember the current latch generation
     int generation = _generation;
 
-    // Wait for the next generation
+    // Wait for the next latch generation
     return _cond.wait_until(lock, timestamp, [=, this]() { return generation != _generation; });
 }
 
