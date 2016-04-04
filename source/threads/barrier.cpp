@@ -37,7 +37,7 @@ public:
     {
 #if defined(_WIN32) || defined(_WIN64)
         DeleteSynchronizationBarrier(&_barrier);
-        // TODO: warning C4297: 'CppCommon::Barrier::Impl::~Impl': function assumed not to throw an exception but does
+        // TODO: warning C4297: function assumed not to throw an exception but does
         //if (!DeleteSynchronizationBarrier(&_barrier))
         //    throwex SystemException("Failed to delete a synchronization barrier!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
