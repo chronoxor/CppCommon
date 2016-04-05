@@ -9,6 +9,7 @@
 #include "threads/critical_section.h"
 
 #include "errors/exceptions.h"
+#include "errors/fatal.h"
 
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
@@ -49,7 +50,7 @@ public:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = pthread_mutex_destroy(&_lock);
         if (result != 0)
-            throwex SystemException(result, "Failed to destroy a mutex!");
+            fatality("Failed to destroy a mutex!", result);
 #endif
     }
 

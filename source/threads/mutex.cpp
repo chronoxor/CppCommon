@@ -9,9 +9,14 @@
 #include "threads/mutex.h"
 
 #include "errors/exceptions.h"
+#include "errors/fatal.h"
+
+#include <algorithm>
 
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
+#undef max
+#undef min
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 #include <pthread.h>
 #endif
@@ -37,14 +42,12 @@ public:
     ~Impl()
     {
 #if defined(_WIN32) || defined(_WIN64)
-        CloseHandle(_mutex);
-        // TODO: warning C4297: function assumed not to throw an exception but does
-        //if (!CloseHandle(_mutex))
-        //    throwex SystemException("Failed to close a mutex!");
+        if (!CloseHandle(_mutex))
+            fatality("Failed to close a mutex!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = pthread_mutex_destroy(&_lock);
         if (result != 0)
-            throwex SystemException(result, "Failed to destroy a mutex!");
+            fatality("Failed to destroy a mutex!", result);
 #endif
     }
 
@@ -59,6 +62,24 @@ public:
         int result = pthread_mutex_trylock(&_lock);
         if ((result != 0) && (result != EBUSY))
             throwex SystemException(result, "Failed to try lock a mutex!");
+        return (result == 0);
+#endif
+    }
+
+    bool TryLockFor(int64_t nanoseconds)
+    {
+#if defined(_WIN32) || defined(_WIN64)
+        DWORD result = WaitForSingleObject(_mutex, (DWORD)std::max(1ll, nanoseconds / 1000000000));
+        if ((result != WAIT_OBJECT_0) && (result != WAIT_TIMEOUT))
+            throwex SystemException("Failed to try lock a mutex for the given timeout!");
+        return (result == WAIT_OBJECT_0);
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+        struct timespec timeout;
+        timeout.tv_sec = nanoseconds / 1000000000;
+        timeout.tv_nsec = nanoseconds % 1000000000;
+        int result = pthread_mutex_timedlock(&_lock, &timeout);
+        if ((result != 0) && (result != ETIMEDOUT))
+            throwex SystemException(result, "Failed to try lock a mutex for the given timeout!");
         return (result == 0);
 #endif
     }
@@ -107,6 +128,11 @@ Mutex::~Mutex()
 bool Mutex::TryLock()
 {
     return _pimpl->TryLock();
+}
+
+bool Mutex::TryLockFor(int64_t nanoseconds)
+{
+    return _pimpl->TryLockFor(nanoseconds);
 }
 
 void Mutex::lock()

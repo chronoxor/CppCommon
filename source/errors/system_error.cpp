@@ -45,7 +45,7 @@ std::string SystemError::to_string(int error)
     char buffer[capacity];
 #if defined(_WIN32) || defined(_WIN64)
     DWORD size = FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, nullptr, error, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), buffer, capacity, nullptr);
-    return std::string(buffer, size);
+    return std::string(buffer, (size - 2));
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     char* result = strerror_r(error, buffer, capacity);
     if (result == nullptr)

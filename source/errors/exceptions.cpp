@@ -20,7 +20,7 @@ std::string Exception::to_string() const
         stream << "Exception: " << _message << std::endl;
         std::string location = _location.to_string();
         if (!location.empty())
-            stream << "Location: " << location << std::endl;
+            stream << "Source location: " << location << std::endl;
         _cache = stream.str();
     }
     return _cache;
@@ -36,7 +36,7 @@ std::string SystemException::to_string() const
         stream << "System message: " << _system_message << std::endl;
         std::string location = _location.to_string();
         if (!location.empty())
-            stream << "Location: " << location << std::endl;
+            stream << "Source location: " << location << std::endl;
         _cache = stream.str();
     }
     return _cache;

@@ -9,6 +9,7 @@
 #ifndef CPPCOMMON_THREADS_MUTEX_H
 #define CPPCOMMON_THREADS_MUTEX_H
 
+#include <chrono>
 #include <memory>
 
 namespace CppCommon {
@@ -51,6 +52,26 @@ public:
     */
     bool TryLockSpin(int64_t spin);
 
+    //! Try to acquire mutex for the given time duration
+    /*!
+        Will block for the given time duration in the worst case.
+
+        \param duration - Time duration to wait for the mutex
+        \return 'true' if the mutex was successfully acquired, 'false' if the mutex is busy
+    */
+    template <class Rep, class Period>
+    bool TryLockFor(const std::chrono::duration<Rep, Period>& duration);
+
+    //! Try to acquire mutex until the given timestamp
+    /*!
+        Will block until the given timestamp in the worst case.
+
+        \param timestamp - Timestamp to stop wait for the mutex
+        \return 'true' if the mutex was successfully acquired, 'false' if the mutex is busy
+    */
+    template <class Clock, class Duration>
+    bool TryLockUntil(const std::chrono::time_point<Clock, Duration>& timestamp);
+
     //! Acquire mutex with block
     /*!
         Will block.
@@ -66,6 +87,8 @@ public:
 private:
     class Impl;
     std::unique_ptr<Impl> _pimpl;
+
+    bool TryLockFor(int64_t nanoseconds);
 };
 
 /*! \example threads_mutex.cpp Mutex synchronization primitive example */
