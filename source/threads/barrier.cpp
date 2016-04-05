@@ -37,8 +37,7 @@ public:
     ~Impl()
     {
 #if defined(_WIN32) || defined(_WIN64)
-        if (!DeleteSynchronizationBarrier(&_barrier))
-            fatality("Failed to delete a synchronization barrier!");
+        DeleteSynchronizationBarrier(&_barrier);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = pthread_barrier_destroy(&_barrier);
         if (result != 0)

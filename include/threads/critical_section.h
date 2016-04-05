@@ -42,15 +42,6 @@ public:
     */
     bool TryLock();
 
-    //! Try to acquire critical section for the given spin count
-    /*!
-        Will block for the given spin count in the worst case.
-
-        \param spin - Spin count
-        \return 'true' if the critical section was successfully acquired, 'false' if the critical section is busy
-    */
-    bool TryLockSpin(int64_t spin);
-
     //! Acquire critical section with block
     /*!
         Will block.
@@ -71,7 +62,5 @@ private:
 /*! \example threads_critical_section.cpp Critical section synchronization primitive example */
 
 } // namespace CppCommon
-
-#include "critical_section.inl"
 
 #endif // CPPCOMMON_THREADS_CRITICAL_SECTION_H

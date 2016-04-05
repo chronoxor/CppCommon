@@ -31,10 +31,9 @@ inline bool SpinLock::TryLockSpin(int64_t spin) noexcept
     return false;
 }
 
-template <class Rep, class Period>
-inline bool SpinLock::TryLockFor(const std::chrono::duration<Rep, Period>& duration) noexcept
+inline bool SpinLock::TryLockFor(int64_t nanoseconds) noexcept
 {
-    uint64_t finish = timestamp() + std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count();
+    uint64_t finish = timestamp() + nanoseconds;
 
     // Try to acquire spin-lock at least one time
     do
@@ -45,6 +44,12 @@ inline bool SpinLock::TryLockFor(const std::chrono::duration<Rep, Period>& durat
 
     // Failed to acquire spin-lock
     return false;
+}
+
+template <class Rep, class Period>
+inline bool SpinLock::TryLockFor(const std::chrono::duration<Rep, Period>& duration) noexcept
+{
+    return TryLockFor(std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count());
 }
 
 template <class Clock, class Duration>

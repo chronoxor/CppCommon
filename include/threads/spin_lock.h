@@ -62,6 +62,14 @@ public:
     */
     bool TryLockSpin(int64_t spin) noexcept;
 
+    //! Try to acquire spin-lock for the given nanoseconds
+    /*!
+        Will block for the given nanoseconds in the worst case.
+
+        \param nanoseconds - Nanoseconds to wait for the spin-lock
+        \return 'true' if the spin-lock was successfully acquired, 'false' if the spin-lock is busy
+    */
+    bool TryLockFor(int64_t nanoseconds) noexcept;
     //! Try to acquire spin-lock for the given time duration
     /*!
         Will block for the given time duration in the worst case.
@@ -71,7 +79,6 @@ public:
     */
     template <class Rep, class Period>
     bool TryLockFor(const std::chrono::duration<Rep, Period>& duration) noexcept;
-
     //! Try to acquire spin-lock until the given timestamp
     /*!
         Will block until the given timestamp in the worst case.

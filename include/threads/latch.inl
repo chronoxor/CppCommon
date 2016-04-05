@@ -13,6 +13,11 @@ inline Latch::Latch(int counter) noexcept : _counter(counter), _generation(0)
     assert((counter > 0) && "Latch counter must be greater than zero!");
 }
 
+inline bool Latch::TryWaitFor(int64_t nanoseconds) noexcept
+{
+    return TryWaitFor(std::chrono::nanoseconds(nanoseconds));
+}
+
 template <class Rep, class Period>
 inline bool Latch::TryWaitFor(const std::chrono::duration<Rep, Period>& duration) noexcept
 {

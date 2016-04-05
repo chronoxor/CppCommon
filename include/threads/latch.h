@@ -84,6 +84,14 @@ public:
     */
     bool TryWait() noexcept;
 
+    //! Try to wait for the latch for the given nanoseconds
+    /*!
+        Will block for the given nanoseconds in the worst case.
+
+        \param nanoseconds - Nanoseconds to wait for the latch
+        \return 'true' if the latch counter is zero, 'false' if the latch counter is not zero
+    */
+    bool TryWaitFor(int64_t nanoseconds) noexcept;
     //! Try to wait for the latch for the given time duration
     /*!
         Will block for the given time duration in the worst case.
@@ -93,7 +101,6 @@ public:
     */
     template <class Rep, class Period>
     bool TryWaitFor(const std::chrono::duration<Rep, Period>& duration) noexcept;
-
     //! Try to wait for the latch until the given timestamp
     /*!
         Will block until the given timestamp in the worst case.

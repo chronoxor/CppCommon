@@ -19,13 +19,6 @@ TEST_CASE("Mutex", "[CppCommon][Threads]")
     REQUIRE(lock.TryLock());
     lock.unlock();
 
-    // Test TryLockSpin() method
-    for (int i = -10; i < 10; ++i)
-    {
-        REQUIRE(lock.TryLockSpin(i));
-        lock.unlock();
-    }
-
     // Test lock()/unlock() methods
     lock.lock();
     lock.unlock();
