@@ -14,7 +14,6 @@
 #include "threads/spsc_ring_queue.h"
 
 #include <memory>
-#include <mutex>
 #include <thread>
 #include <vector>
 

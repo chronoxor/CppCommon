@@ -10,6 +10,7 @@
 #define CPPCOMMON_THREADS_SPIN_LOCK_H
 
 #include "system/timestamp.h"
+#include "threads/locker.h"
 
 #include <atomic>
 #include <chrono>
@@ -93,13 +94,13 @@ public:
     /*!
         Will block.
     */
-    void lock() noexcept;
+    void Lock() noexcept;
 
     //! Release spin-lock
     /*!
         Will not block.
     */
-    void unlock() noexcept;
+    void Unlock() noexcept;
 
 private:
     std::atomic<bool> _lock;

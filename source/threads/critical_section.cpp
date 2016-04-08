@@ -66,7 +66,7 @@ public:
 #endif
     }
 
-    void lock()
+    void Lock()
     {
 #if defined(_WIN32) || defined(_WIN64)
         EnterCriticalSection(&_lock);
@@ -77,7 +77,7 @@ public:
 #endif
     }
 
-    void unlock()
+    void Unlock()
     {
 #if defined(_WIN32) || defined(_WIN64)
         LeaveCriticalSection(&_lock);
@@ -109,14 +109,14 @@ bool CriticalSection::TryLock()
     return _pimpl->TryLock();
 }
 
-void CriticalSection::lock()
+void CriticalSection::Lock()
 {
-    _pimpl->lock();
+    _pimpl->Lock();
 }
 
-void CriticalSection::unlock()
+void CriticalSection::Unlock()
 {
-    _pimpl->unlock();
+    _pimpl->Unlock();
 }
 
 } // namespace CppCommon

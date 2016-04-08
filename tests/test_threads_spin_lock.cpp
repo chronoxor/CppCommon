@@ -6,7 +6,6 @@
 
 #include "threads/spin_lock.h"
 
-#include <mutex>
 #include <thread>
 
 using namespace CppCommon;
@@ -20,7 +19,7 @@ TEST_CASE("Spin-lock", "[CppCommon][Threads]")
     // Test TryLock() method
     REQUIRE(lock.TryLock());
     REQUIRE(lock.IsLocked());
-    lock.unlock();
+    lock.Unlock();
     REQUIRE(!lock.IsLocked());
 
     // Test TryLockSpin() method
@@ -29,7 +28,7 @@ TEST_CASE("Spin-lock", "[CppCommon][Threads]")
         REQUIRE(lock.TryLockSpin(i));
         REQUIRE(lock.IsLocked());
         REQUIRE(!lock.TryLockSpin(i));
-        lock.unlock();
+        lock.Unlock();
         REQUIRE(!lock.IsLocked());
     }
 
@@ -40,7 +39,7 @@ TEST_CASE("Spin-lock", "[CppCommon][Threads]")
     REQUIRE(!lock.TryLockFor(std::chrono::nanoseconds(100)));
     int64_t stop = timestamp();
     REQUIRE(((stop - start) >= 100));
-    lock.unlock();
+    lock.Unlock();
     REQUIRE(!lock.IsLocked());
 
     // Test TryLockUntil() method
@@ -50,18 +49,18 @@ TEST_CASE("Spin-lock", "[CppCommon][Threads]")
     REQUIRE(!lock.TryLockUntil(std::chrono::high_resolution_clock::now() + std::chrono::nanoseconds(100)));
     stop = timestamp();
     REQUIRE(((stop - start) >= 100));
-    lock.unlock();
+    lock.Unlock();
     REQUIRE(!lock.IsLocked());
 
-    // Test lock()/unlock() methods
+    // Test Lock()/Unlock() methods
     REQUIRE(!lock.IsLocked());
-    lock.lock();
+    lock.Lock();
     REQUIRE(lock.IsLocked());
-    lock.unlock();
+    lock.Unlock();
     REQUIRE(!lock.IsLocked());
 }
 
-TEST_CASE("Spin-lock guard", "[CppCommon][Threads]")
+TEST_CASE("Spin-lock locker", "[CppCommon][Threads]")
 {
     SpinLock lock;
 
@@ -85,7 +84,7 @@ TEST_CASE("Spin-lock guard", "[CppCommon][Threads]")
             int items = (items_to_produce / producers_count);
             for (int i = 0; i < items; ++i)
             {
-                std::lock_guard<SpinLock> guard(lock);
+                Locker<SpinLock> locker(lock);
                 crc += (producer * items) + i;
             }
         }));

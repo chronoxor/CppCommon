@@ -12,7 +12,6 @@
 
 #include <cstring>
 #include <iomanip>
-#include <mutex>
 #include <sstream>
 
 #if defined(_WIN32) || defined(_WIN64)
@@ -63,7 +62,7 @@ StackTrace::StackTrace(int skip)
 
     // Capture stack trace snapshot under the critical section
     static CriticalSection cs;
-    std::lock_guard<CriticalSection> locker(cs);
+    Locker<CriticalSection> locker(cs);
 
     // Get the current process handle
     HANDLE hProcess = GetCurrentProcess();
@@ -132,7 +131,7 @@ StackTrace::StackTrace(int skip)
 
     // Capture stack trace snapshot under the critical section
     static CriticalSection cs;
-    std::lock_guard<CriticalSection> locker(cs);
+    Locker<CriticalSection> locker(cs);
 
     // Fill all captured frames with symbol information
     for (int i = 0; i < size; ++i)

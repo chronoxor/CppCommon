@@ -32,7 +32,7 @@ void produce(CppBenchmark::Context& context)
             uint64_t items = (items_to_produce / producers_count);
             for (uint64_t i = 0; i < items; ++i)
             {
-                std::lock_guard<CppCommon::SpinLock> guard(lock);
+                CppCommon::Locker<CppCommon::SpinLock> locker(lock);
                 crc += (producer * items) + i;
             }
         }));

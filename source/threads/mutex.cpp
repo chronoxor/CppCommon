@@ -84,7 +84,7 @@ public:
 #endif
     }
 
-    void lock()
+    void Lock()
     {
 #if defined(_WIN32) || defined(_WIN64)
         DWORD result = WaitForSingleObject(_mutex, INFINITE);
@@ -97,7 +97,7 @@ public:
 #endif
     }
 
-    void unlock()
+    void Unlock()
     {
 #if defined(_WIN32) || defined(_WIN64)
         if (!ReleaseMutex(_mutex))
@@ -135,14 +135,14 @@ bool Mutex::TryLockFor(int64_t nanoseconds)
     return _pimpl->TryLockFor(nanoseconds);
 }
 
-void Mutex::lock()
+void Mutex::Lock()
 {
-    _pimpl->lock();
+    _pimpl->Lock();
 }
 
-void Mutex::unlock()
+void Mutex::Unlock()
 {
-    _pimpl->unlock();
+    _pimpl->Unlock();
 }
 
 } // namespace CppCommon

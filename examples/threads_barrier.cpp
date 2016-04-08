@@ -12,7 +12,6 @@
 
 #include <atomic>
 #include <iostream>
-#include <mutex>
 #include <thread>
 #include <vector>
 
@@ -20,31 +19,31 @@ int main(int argc, char** argv)
 {
     int concurrency = 8;
     CppCommon::Barrier barrier(concurrency);
-    CppCommon::CriticalSection locker;
+    CppCommon::CriticalSection lock;
 
     // Start some threads
     std::vector<std::thread> threads;
     for (int thread = 0; thread < concurrency; ++thread)
     {
-        threads.push_back(std::thread([&barrier, &locker, thread]()
+        threads.push_back(std::thread([&barrier, &lock, thread]()
         {
-            locker.lock();
+            lock.Lock();
             std::cout << "Thread " << thread << " initialized!" << std::endl;
-            locker.unlock();
+            lock.Unlock();
 
             // Sleep for a while...
             CppCommon::Thread::Sleep(thread * 100);
 
-            locker.lock();
+            lock.Lock();
             std::cout << "Thread " << thread << " before barrier!" << std::endl;
-            locker.unlock();
+            lock.Unlock();
 
             // Wait for all other threads at the barrier
             bool last = barrier.Wait();
 
-            locker.lock();
+            lock.Lock();
             std::cout << "Thread " << thread << " after barrier!" << (last ? " Last one!" : "") << std::endl;
-            locker.unlock();
+            lock.Unlock();
         }));
     }
 

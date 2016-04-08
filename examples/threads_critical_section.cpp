@@ -10,13 +10,12 @@
 
 #include <atomic>
 #include <iostream>
-#include <mutex>
 #include <thread>
 #include <vector>
 
 int main(int argc, char** argv)
 {
-    CppCommon::CriticalSection locker;
+    CppCommon::CriticalSection lock;
 
     std::cout << "Press Enter to stop..." << std::endl;
 
@@ -25,12 +24,12 @@ int main(int argc, char** argv)
     std::vector<std::thread> threads;
     for (int thread = 0; thread < 4; ++thread)
     {
-        threads.push_back(std::thread([&locker, &stop, thread]()
+        threads.push_back(std::thread([&lock, &stop, thread]()
         {
             while (!stop)
             {
-                // Use lock guard with critical section to protect the output
-                std::lock_guard<CppCommon::CriticalSection> lock(locker);
+                // Use locker with critical section to protect the output
+                CppCommon::Locker<CppCommon::CriticalSection> locker(lock);
 
                 std::cout << "Random value from thread " << thread << ": " << rand() << std::endl;
             }

@@ -58,12 +58,12 @@ inline bool SpinLock::TryLockUntil(const std::chrono::time_point<Clock, Duration
     return TryLockFor(timestamp - std::chrono::high_resolution_clock::now());
 }
 
-inline void SpinLock::lock() noexcept
+inline void SpinLock::Lock() noexcept
 {
     while (_lock.exchange(true, std::memory_order_acquire));
 }
 
-inline void SpinLock::unlock() noexcept
+inline void SpinLock::Unlock() noexcept
 {
     _lock.store(false, std::memory_order_release);
 }

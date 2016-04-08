@@ -9,6 +9,8 @@
 #ifndef CPPCOMMON_THREADS_MUTEX_H
 #define CPPCOMMON_THREADS_MUTEX_H
 
+#include "threads/locker.h"
+
 #include <chrono>
 #include <memory>
 
@@ -74,13 +76,13 @@ public:
     /*!
         Will block.
     */
-    void lock();
+    void Lock();
 
     //! Release mutex
     /*!
         Will not block.
     */
-    void unlock();
+    void Unlock();
 
 private:
     class Impl;

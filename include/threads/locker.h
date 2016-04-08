@@ -1,0 +1,97 @@
+/*!
+    \file locker.h
+    \brief Locker synchronization primitive definition
+    \author Ivan Shynkarenka
+    \date 08.04.2016
+    \copyright MIT License
+*/
+
+#ifndef CPPCOMMON_THREADS_LOCKER_H
+#define CPPCOMMON_THREADS_LOCKER_H
+
+namespace CppCommon {
+
+//! Locker synchronization primitive
+/*!
+    A locker is an object that manages a given synchronization primitive by keeping it
+    always locked (lock in constructor and unlock in destructor).
+
+    Thread-safe.
+*/
+template <class T>
+class Locker
+{
+public:
+    //! Default class constructor
+    /*!
+        \param primitive - Synchronization primitive to manage
+    */
+    explicit Locker(T& primitive) : _primitive(primitive) { _primitive.Lock(); }
+    Locker(const Locker&) = delete;
+    Locker(Locker&&) = default;
+    ~Locker() { _primitive.Unlock(); }
+
+    Locker& operator=(const Locker&) = delete;
+    Locker& operator=(Locker&&) = default;
+
+private:
+    T& _primitive;
+};
+
+//! Read locker synchronization primitive
+/*!
+    A read locker is an object that manages a given read/write synchronization primitive by keeping it
+    always locked for read (read-lock in constructor and read-unlock in destructor).
+
+    Thread-safe.
+*/
+template <class T>
+class ReadLocker
+{
+public:
+    //! Default class constructor
+    /*!
+        \param primitive - Synchronization primitive to manage
+    */
+    explicit ReadLocker(T& primitive) : _primitive(primitive) { _primitive.ReadLock(); }
+    ReadLocker(const ReadLocker&) = delete;
+    ReadLocker(ReadLocker&&) = default;
+    ~ReadLocker() { _primitive.ReadUnlock(); }
+
+    ReadLocker& operator=(const ReadLocker&) = delete;
+    ReadLocker& operator=(ReadLocker&&) = default;
+
+private:
+    T& _primitive;
+};
+
+//! Write locker synchronization primitive
+/*!
+    A write locker is an object that manages a given read/write synchronization primitive by keeping it
+    always locked for write (write-lock in constructor and write-unlock in destructor).
+
+    Thread-safe.
+*/
+template <class T>
+class WriteLocker
+{
+public:
+    //! Default class constructor
+    /*!
+        \param primitive - Synchronization primitive to manage
+    */
+    explicit WriteLocker(T& primitive) : _primitive(primitive) { _primitive.WriteLock(); }
+    WriteLocker(const WriteLocker&) = delete;
+    WriteLocker(WriteLocker&&) = default;
+    ~WriteLocker() { _primitive.WriteLocker(); }
+
+    WriteLocker& operator=(const WriteLocker&) = delete;
+    WriteLocker& operator=(WriteLocker&&) = default;
+
+private:
+    T& _primitive;
+};
+
+} // namespace CppCommon
+
+#endif // CPPCOMMON_THREADS_LOCKER_H

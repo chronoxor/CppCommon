@@ -12,7 +12,6 @@
 
 #include <atomic>
 #include <iostream>
-#include <mutex>
 #include <thread>
 #include <vector>
 
@@ -20,17 +19,17 @@ int main(int argc, char** argv)
 {
     int concurrency = 8;
     CppCommon::Latch latch(concurrency);
-    CppCommon::CriticalSection locker;
+    CppCommon::CriticalSection lock;
 
     // Start some threads
     std::vector<std::thread> threads;
     for (int thread = 0; thread < concurrency; ++thread)
     {
-        threads.push_back(std::thread([&latch, &locker, thread]()
+        threads.push_back(std::thread([&latch, &lock, thread]()
         {
-            locker.lock();
+            lock.Lock();
             std::cout << "Thread " << thread << " initialized!" << std::endl;
-            locker.unlock();
+            lock.Unlock();
 
             // Sleep for a while...
             CppCommon::Thread::Sleep(thread * 100);
@@ -38,22 +37,22 @@ int main(int argc, char** argv)
             // Count down the latch
             latch.CountDown();
 
-            locker.lock();
+            lock.Lock();
             std::cout << "Thread " << thread << " latch count down!" << std::endl;
-            locker.unlock();
+            lock.Unlock();
         }));
     }
 
-    locker.lock();
+    lock.Lock();
     std::cout << "Main thread is waiting for the latch..." << std::endl;
-    locker.unlock();
+    lock.Unlock();
 
     // Wait until work is done
     latch.Wait();
 
-    locker.lock();
+    lock.Lock();
     std::cout << "Main thread continue!" << std::endl;
-    locker.unlock();
+    lock.Unlock();
 
     // Wait for all threads
     for (auto& thread : threads)

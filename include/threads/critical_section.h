@@ -9,6 +9,8 @@
 #ifndef CPPCOMMON_THREADS_CRITICAL_SECTION_H
 #define CPPCOMMON_THREADS_CRITICAL_SECTION_H
 
+#include "threads/locker.h"
+
 #include <memory>
 
 namespace CppCommon {
@@ -46,13 +48,13 @@ public:
     /*!
         Will block.
     */
-    void lock();
+    void Lock();
 
     //! Release critical section
     /*!
         Will not block.
     */
-    void unlock();
+    void Unlock();
 
 private:
     class Impl;

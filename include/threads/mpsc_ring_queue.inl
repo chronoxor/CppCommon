@@ -32,7 +32,7 @@ inline bool MPSCRingQueue<T>::Enqueue(const T& item)
     uint64_t index = rdts() % _concurrency;
 
     // Lock the chosen producer using its spin-lock
-    std::lock_guard<SpinLock> lock(_producers[index]->lock);
+    Locker<SpinLock> lock(_producers[index]->lock);
 
     // Enqueue the item into the producer's ring queue
     return _producers[index]->queue.Enqueue(item);

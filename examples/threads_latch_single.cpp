@@ -12,7 +12,6 @@
 
 #include <atomic>
 #include <iostream>
-#include <mutex>
 #include <thread>
 #include <vector>
 
@@ -20,24 +19,24 @@ int main(int argc, char** argv)
 {
     int concurrency = 8;
     CppCommon::Latch latch(1);
-    CppCommon::CriticalSection locker;
+    CppCommon::CriticalSection lock;
 
     // Start some threads
     std::vector<std::thread> threads;
     for (int thread = 0; thread < concurrency; ++thread)
     {
-        threads.push_back(std::thread([&latch, &locker, thread]()
+        threads.push_back(std::thread([&latch, &lock, thread]()
         {
-            locker.lock();
+            lock.Lock();
             std::cout << "Thread " << thread << " waiting for the latch..." << std::endl;
-            locker.unlock();
+            lock.Unlock();
 
             // Wait for the latch
             latch.Wait();
 
-            locker.lock();
+            lock.Lock();
             std::cout << "Thread " << thread << " continue!" << std::endl;
-            locker.unlock();
+            lock.Unlock();
 
             // Sleep for a while...
             CppCommon::Thread::Sleep(thread * 100);
@@ -47,9 +46,9 @@ int main(int argc, char** argv)
     // Perform some initialization
     CppCommon::Thread::Sleep(100);
 
-    locker.lock();
+    lock.Lock();
     std::cout << "Main thread initialized!" << std::endl;
-    locker.unlock();
+    lock.Unlock();
 
     // Threads can now start processing
     latch.CountDown();

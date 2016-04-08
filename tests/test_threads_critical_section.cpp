@@ -6,7 +6,6 @@
 
 #include "threads/critical_section.h"
 
-#include <mutex>
 #include <thread>
 
 using namespace CppCommon;
@@ -17,14 +16,14 @@ TEST_CASE("Critical section", "[CppCommon][Threads]")
 
     // Test TryLock() method
     REQUIRE(lock.TryLock());
-    lock.unlock();
+    lock.Unlock();
 
-    // Test lock()/unlock() methods
-    lock.lock();
-    lock.unlock();
+    // Test Lock()/Unlock() methods
+    lock.Lock();
+    lock.Unlock();
 }
 
-TEST_CASE("Critical section lock guard", "[CppCommon][Threads]")
+TEST_CASE("Critical section locker", "[CppCommon][Threads]")
 {
     CriticalSection lock;
 
@@ -46,7 +45,7 @@ TEST_CASE("Critical section lock guard", "[CppCommon][Threads]")
             int items = (items_to_produce / producers_count);
             for (int i = 0; i < items; ++i)
             {
-                std::lock_guard<CriticalSection> guard(lock);
+                Locker<CriticalSection> locker(lock);
                 crc += (producer * items) + i;
             }
         }));

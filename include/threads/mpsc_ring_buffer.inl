@@ -29,7 +29,7 @@ bool MPSCRingBuffer::Enqueue(const void* chunk, uint64_t size)
     uint64_t index = rdts() % _concurrency;
 
     // Lock the chosen producer using its spin-lock
-    std::lock_guard<SpinLock> lock(_producers[index]->lock);
+    Locker<SpinLock> lock(_producers[index]->lock);
 
     // Enqueue the item into the producer's ring buffer
     return _producers[index]->buffer.Enqueue(chunk, size);
