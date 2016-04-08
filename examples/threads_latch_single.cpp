@@ -39,12 +39,12 @@ int main(int argc, char** argv)
             lock.Unlock();
 
             // Sleep for a while...
-            CppCommon::Thread::Sleep(thread * 100);
+            CppCommon::Thread::SleepFor(std::chrono::milliseconds(thread * 100));
         }));
     }
 
     // Perform some initialization
-    CppCommon::Thread::Sleep(100);
+    CppCommon::Thread::SleepFor(std::chrono::milliseconds(100));
 
     lock.Lock();
     std::cout << "Main thread initialized!" << std::endl;

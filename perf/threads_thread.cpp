@@ -22,7 +22,7 @@ BENCHMARK("Thread-Sleep")
 
     for (uint64_t i = 0; i < iterations; ++i)
     {
-        CppCommon::Thread::Sleep(100);
+        CppCommon::Thread::SleepFor(std::chrono::milliseconds(100));
 
         int64_t current = CppCommon::timestamp();
         int64_t duration = current - previous;

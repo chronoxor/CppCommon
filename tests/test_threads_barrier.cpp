@@ -36,7 +36,7 @@ TEST_CASE("Barrier multiple threads", "[CppCommon][Threads]")
             ++count;
 
             // Sleep for a while...
-            Thread::Sleep(thread * 100);
+            CppCommon::Thread::SleepFor(std::chrono::milliseconds(thread * 100));
 
             // Wait for all other threads at the barrier
             if (barrier.Wait())

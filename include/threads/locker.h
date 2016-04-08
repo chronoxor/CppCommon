@@ -53,10 +53,10 @@ public:
     /*!
         \param primitive - Synchronization primitive to manage
     */
-    explicit ReadLocker(T& primitive) : _primitive(primitive) { _primitive.ReadLock(); }
+    explicit ReadLocker(T& primitive) : _primitive(primitive) { _primitive.LockRead(); }
     ReadLocker(const ReadLocker&) = delete;
     ReadLocker(ReadLocker&&) = default;
-    ~ReadLocker() { _primitive.ReadUnlock(); }
+    ~ReadLocker() { _primitive.UnlockRead(); }
 
     ReadLocker& operator=(const ReadLocker&) = delete;
     ReadLocker& operator=(ReadLocker&&) = default;
@@ -80,10 +80,10 @@ public:
     /*!
         \param primitive - Synchronization primitive to manage
     */
-    explicit WriteLocker(T& primitive) : _primitive(primitive) { _primitive.WriteLock(); }
+    explicit WriteLocker(T& primitive) : _primitive(primitive) { _primitive.LockWrite(); }
     WriteLocker(const WriteLocker&) = delete;
     WriteLocker(WriteLocker&&) = default;
-    ~WriteLocker() { _primitive.WriteLocker(); }
+    ~WriteLocker() { _primitive.UnlockWrite(); }
 
     WriteLocker& operator=(const WriteLocker&) = delete;
     WriteLocker& operator=(WriteLocker&&) = default;

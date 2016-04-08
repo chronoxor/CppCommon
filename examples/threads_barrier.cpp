@@ -32,7 +32,7 @@ int main(int argc, char** argv)
             lock.Unlock();
 
             // Sleep for a while...
-            CppCommon::Thread::Sleep(thread * 100);
+            CppCommon::Thread::SleepFor(std::chrono::milliseconds(thread * 100));
 
             lock.Lock();
             std::cout << "Thread " << thread << " before barrier!" << std::endl;

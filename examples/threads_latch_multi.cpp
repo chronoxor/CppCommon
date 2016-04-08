@@ -32,7 +32,7 @@ int main(int argc, char** argv)
             lock.Unlock();
 
             // Sleep for a while...
-            CppCommon::Thread::Sleep(thread * 100);
+            CppCommon::Thread::SleepFor(std::chrono::milliseconds(thread * 100));
 
             // Count down the latch
             latch.CountDown();
