@@ -14,7 +14,7 @@
 
 int main(int argc, char** argv)
 {
-    std::cout << "Please write some text. Enter '#' to exit..." << std::endl;
+    std::cout << "Please enter some text. Enter '#' to exit..." << std::endl;
 
     // Create single producer / single consumer wait-free ring buffer
     CppCommon::SPSCRingBuffer buffer(1024);

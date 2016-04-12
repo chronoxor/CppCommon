@@ -14,7 +14,7 @@
 
 int main(int argc, char** argv)
 {
-    std::cout << "Please write some integer numbers. Enter '0' to exit..." << std::endl;
+    std::cout << "Please enter some integer numbers. Enter '0' to exit..." << std::endl;
 
     // Create multiple producers / multiple consumers wait-free ring queue
     CppCommon::MPMCRingQueue<int> queue(1024);

@@ -33,7 +33,7 @@ public:
         if (_mutex == nullptr)
             throwex SystemException("Failed to create a mutex!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        int result = pthread_mutex_init(&_lock, nullptr);
+        int result = pthread_mutex_init(&_mutex, nullptr);
         if (result != 0)
             throwex SystemException(result, "Failed to initialize a mutex!");
 #endif
@@ -45,7 +45,7 @@ public:
         if (!CloseHandle(_mutex))
             fatality("Failed to close a mutex!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        int result = pthread_mutex_destroy(&_lock);
+        int result = pthread_mutex_destroy(&_mutex);
         if (result != 0)
             fatality("Failed to destroy a mutex!", result);
 #endif
@@ -59,7 +59,7 @@ public:
             throwex SystemException("Failed to try lock a mutex!");
         return (result == WAIT_OBJECT_0);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        int result = pthread_mutex_trylock(&_lock);
+        int result = pthread_mutex_trylock(&_mutex);
         if ((result != 0) && (result != EBUSY))
             throwex SystemException(result, "Failed to try lock a mutex!");
         return (result == 0);
@@ -77,7 +77,7 @@ public:
         struct timespec timeout;
         timeout.tv_sec = nanoseconds / 1000000000;
         timeout.tv_nsec = nanoseconds % 1000000000;
-        int result = pthread_mutex_timedlock(&_lock, &timeout);
+        int result = pthread_mutex_timedlock(&_mutex, &timeout);
         if ((result != 0) && (result != ETIMEDOUT))
             throwex SystemException(result, "Failed to try lock a mutex for the given timeout!");
         return (result == 0);
@@ -91,7 +91,7 @@ public:
         if (result != WAIT_OBJECT_0)
             throwex SystemException("Failed to lock a mutex!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        int result = pthread_mutex_lock(&_lock);
+        int result = pthread_mutex_lock(&_mutex);
         if (result != 0)
             throwex SystemException(result, "Failed to lock a mutex!");
 #endif
@@ -103,7 +103,7 @@ public:
         if (!ReleaseMutex(_mutex))
             throwex SystemException("Failed to unlock a mutex!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        int result = pthread_mutex_unlock(&_lock);
+        int result = pthread_mutex_unlock(&_mutex);
         if (result != 0)
             throwex SystemException(result, "Failed to unlock a mutex!");
 #endif

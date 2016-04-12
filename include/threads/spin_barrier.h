@@ -42,6 +42,9 @@ public:
     SpinBarrier& operator=(const SpinBarrier&) = delete;
     SpinBarrier& operator=(SpinBarrier&&) = default;
 
+    //! Get the count of threads to wait at the barrier
+    int threads() const noexcept { return _threads; }
+
     //! Wait at the barrier until all other threads reach this barrier
     /*!
         Will block.

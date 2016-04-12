@@ -37,6 +37,9 @@ public:
     Barrier& operator=(const Barrier&) = delete;
     Barrier& operator=(Barrier&&) = default;
 
+    //! Get the count of threads to wait at the barrier
+    int threads() const noexcept { return _threads; }
+
     //! Wait at the barrier until all other threads reach this barrier
     /*!
         Will block.
@@ -48,6 +51,7 @@ public:
 private:
     class Impl;
     std::unique_ptr<Impl> _pimpl;
+    int _threads;
 };
 
 /*! \example threads_barrier.cpp Barrier synchronization primitive example */

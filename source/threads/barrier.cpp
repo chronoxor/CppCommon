@@ -11,6 +11,8 @@
 #include "errors/exceptions.h"
 #include "errors/fatal.h"
 
+#include <cassert>
+
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__)
@@ -24,6 +26,8 @@ class Barrier::Impl
 public:
     Impl(int threads)
     {
+        assert((threads > 0) && "Barrier threads counter must be greater than zero!");
+
 #if defined(_WIN32) || defined(_WIN64)
         if (!InitializeSynchronizationBarrier(&_barrier, threads, -1))
             throwex SystemException("Failed to initialize a synchronization barrier!");
@@ -65,7 +69,7 @@ private:
 #endif
 };
 
-Barrier::Barrier(int threads) : _pimpl(new Impl(threads))
+Barrier::Barrier(int threads) : _pimpl(new Impl(threads)), _threads(threads)
 {
 }
 

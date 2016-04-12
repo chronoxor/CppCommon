@@ -14,7 +14,7 @@
 
 int main(int argc, char** argv)
 {
-    std::cout << "Please write some integer numbers. Enter '0' to exit..." << std::endl;
+    std::cout << "Please enter some integer numbers. Enter '0' to exit..." << std::endl;
 
     // Create multiple producers / single consumer wait-free linked queue
     CppCommon::MPSCLinkedQueue<int> queue;
