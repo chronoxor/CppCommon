@@ -16,13 +16,16 @@ int main(int argc, char** argv)
 {
     std::string help = "Please enter '+' to lock and '-' to unlock the semaphore. Enter '0' to exit...";
 
+    // Show help message
     std::cout << help << std::endl;
 
-    // Create semaphore for 4 resources
+    // Assume we have four resources
     int resources = 4;
+
+    // Create semaphore for our resources
     CppCommon::Semaphore semaphore(resources);
 
-    // Perform text input.
+    // Perform text input
     std::string line;
     while (getline(std::cin, line))
     {

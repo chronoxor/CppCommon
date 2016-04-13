@@ -42,11 +42,11 @@ TEST_CASE("Semaphore", "[CppCommon][Threads]")
 
 TEST_CASE("Semaphore locker", "[CppCommon][Threads]")
 {
-    Semaphore lock(4);
-
-    int items_to_produce = 1000000;
+    int items_to_produce = 10000;
     int producers_count = 8;
     std::atomic<int> crc = 0;
+
+    Semaphore lock(4);
 
     // Caclulate result value
     int result = 0;

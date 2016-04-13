@@ -40,13 +40,13 @@ TEST_CASE("Read/Write lock", "[CppCommon][Threads]")
 
 TEST_CASE("Read/Write locker", "[CppCommon][Threads]")
 {
-    RWLock lock;
-
     int items_to_produce = 10;
     int consumers_count = 4;
     int crc = 0;
     std::vector<int> crcs;
     int current = 0;
+
+    RWLock lock;
 
     // Reset consumers' results
     for (int i = 0; i < consumers_count; ++i)
@@ -72,7 +72,7 @@ TEST_CASE("Read/Write locker", "[CppCommon][Threads]")
             }
 
             // Sleep for a while...
-            CppCommon::Thread::SleepFor(std::chrono::milliseconds(100));
+            CppCommon::Thread::SleepFor(std::chrono::milliseconds(10));
         }
     });
 

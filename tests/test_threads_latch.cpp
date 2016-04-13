@@ -16,6 +16,7 @@ TEST_CASE("Latch single thread", "[CppCommon][Threads]")
 {
     Latch latch(3);
 
+    // Test CountDown()/TryWait()/Wait() methods
     REQUIRE(!latch.TryWait());
     latch.CountDown();
     REQUIRE(!latch.TryWait());
@@ -25,6 +26,7 @@ TEST_CASE("Latch single thread", "[CppCommon][Threads]")
     latch.Wait();
     REQUIRE(latch.TryWait());
 
+    // Test Rest() method
     latch.Reset(1);
 
     REQUIRE(!latch.TryWait());
@@ -71,6 +73,7 @@ TEST_CASE("Latch multiple threads to wait for the one initialization thread", "[
 {
     int concurrency = 8;
     std::atomic<int> count = 0;
+
     Latch latch(1);
 
     // Start some threads

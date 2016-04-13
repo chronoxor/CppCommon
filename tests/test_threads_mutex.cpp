@@ -25,11 +25,11 @@ TEST_CASE("Mutex", "[CppCommon][Threads]")
 
 TEST_CASE("Mutex locker", "[CppCommon][Threads]")
 {
-    Mutex lock;
-
-    int items_to_produce = 1000000;
+    int items_to_produce = 10000;
     int producers_count = 4;
     int crc = 0;
+
+    Mutex lock;
 
     // Caclulate result value
     int result = 0;

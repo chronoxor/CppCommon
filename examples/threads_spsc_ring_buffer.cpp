@@ -40,7 +40,7 @@ int main(int argc, char** argv)
         } while (memchr(local_buffer, '#', local_size) == nullptr);
     });
 
-    // Perform text input.
+    // Perform text input
     std::string line;
     while (getline(std::cin, line))
     {

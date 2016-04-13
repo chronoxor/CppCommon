@@ -14,6 +14,7 @@ TEST_CASE("Spin-lock", "[CppCommon][Threads]")
 {
     SpinLock lock;
 
+    // Test IsLocked() method
     REQUIRE(!lock.IsLocked());
 
     // Test TryLock() method
@@ -62,13 +63,13 @@ TEST_CASE("Spin-lock", "[CppCommon][Threads]")
 
 TEST_CASE("Spin-lock locker", "[CppCommon][Threads]")
 {
-    SpinLock lock;
-
-    REQUIRE(!lock.IsLocked());
-
     int items_to_produce = 1000000;
     int producers_count = 4;
     int crc = 0;
+
+    SpinLock lock;
+
+    REQUIRE(!lock.IsLocked());
 
     // Caclulate result value
     int result = 0;

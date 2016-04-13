@@ -15,6 +15,8 @@ using namespace CppCommon;
 TEST_CASE("Barrier single thread", "[CppCommon][Threads]")
 {
     Barrier barrier(1);
+
+    // Test Wait() method
     REQUIRE(barrier.Wait());
 }
 
@@ -24,6 +26,7 @@ TEST_CASE("Barrier multiple threads", "[CppCommon][Threads]")
     std::atomic<bool> failed = false;
     std::atomic<int> count = 0;
     std::atomic<int> last = 0;
+
     Barrier barrier(concurrency);
 
     // Start some threads

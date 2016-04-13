@@ -8,9 +8,9 @@
 
 namespace CppCommon {
 
-inline Latch::Latch(int counter) noexcept : _counter(counter), _generation(0)
+inline Latch::Latch(int threads) noexcept : _generation(0), _threads(threads)
 {
-    assert((counter > 0) && "Latch counter must be greater than zero!");
+    assert((threads > 0) && "Latch threads counter must be greater than zero!");
 }
 
 inline bool Latch::TryWaitFor(int64_t nanoseconds) noexcept
@@ -23,8 +23,8 @@ inline bool Latch::TryWaitFor(const std::chrono::duration<Rep, Period>& duration
 {
     std::unique_lock<std::mutex> lock(_mutex);
 
-    // Check the latch counter value
-    if (_counter == 0)
+    // Check the latch threads counter value
+    if (_threads == 0)
         return true;
 
     // Remember the current latch generation
@@ -39,8 +39,8 @@ inline bool Latch::TryWaitUntil(const std::chrono::time_point<Clock, Duration>& 
 {
     std::unique_lock<std::mutex> lock(_mutex);
 
-    // Check the latch counter value
-    if (_counter == 0)
+    // Check the latch threads counter value
+    if (_threads == 0)
         return true;
 
     // Remember the current latch generation

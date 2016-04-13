@@ -35,7 +35,7 @@ int main(int argc, char** argv)
         } while (item != 0);
     });
 
-    // Perform text input.
+    // Perform text input
     std::string line;
     while (getline(std::cin, line))
     {

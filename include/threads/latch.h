@@ -28,9 +28,9 @@ class Latch
 public:
     //! Default class constructor
     /*!
-        \param counter - Latch counter initial value
+        \param counter - Latch threads counter initial value
     */
-    explicit Latch(int counter) noexcept;
+    explicit Latch(int threads) noexcept;
     Latch(const Latch&) = delete;
     Latch(Latch&&) = default;
     ~Latch() = default;
@@ -38,20 +38,23 @@ public:
     Latch& operator=(const Latch&) = delete;
     Latch& operator=(Latch&&) = default;
 
-    //! Reset the latch with a new counter value
+    //! Get the count of threads to wait for the latch
+    int threads() const noexcept { return _threads; }
+
+    //! Reset the latch with a new threads counter value
     /*!
         This method may only be invoked when there are no other threads currently
         inside the waiting for the latch.
 
         Will not block.
 
-        \param counter - Latch counter value
+        \param threads - Latch threads counter value
     */
-    void Reset(int counter) noexcept;
+    void Reset(int threads) noexcept;
 
     //! Countdown the latch
     /*!
-        Decrements the latch counter by 1, and returns. If the latch count reaches 0,
+        Decrements the latch counter by 1, and returns. If the latch counter reaches 0,
         any threads blocked in Wait() will be released.
 
         Will not block.
@@ -114,8 +117,8 @@ public:
 private:
     std::mutex _mutex;
     std::condition_variable _cond;
-    int _counter;
     int _generation;
+    int _threads;
 
     bool CountDown(std::unique_lock<std::mutex>& lock) noexcept;
 };

@@ -25,11 +25,11 @@ TEST_CASE("Critical section", "[CppCommon][Threads]")
 
 TEST_CASE("Critical section locker", "[CppCommon][Threads]")
 {
-    CriticalSection lock;
-
-    int items_to_produce = 1000000;
+    int items_to_produce = 10000;
     int producers_count = 4;
     int crc = 0;
+
+    CriticalSection lock;
 
     // Caclulate result value
     int result = 0;

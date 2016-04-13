@@ -10,18 +10,20 @@
 
 namespace CppCommon {
 
-void Latch::Reset(int counter) noexcept
+void Latch::Reset(int threads) noexcept
 {
-    assert((counter > 0) && "Latch counter must be greater than zero!");
+    assert((threads > 0) && "Latch threads counter must be greater than zero!");
 
     std::lock_guard<std::mutex> lock(_mutex);
-    _counter = counter;
+
+    // Reset the latch threads counter with a new value
+    _threads = threads;
 }
 
 bool Latch::CountDown(std::unique_lock<std::mutex>& lock) noexcept
 {
-    // Count down the latch counter and check its value
-    if (--_counter == 0)
+    // Count down the latch threads counter and check its value
+    if (--_threads == 0)
     {
         // Increase the current latch generation
         ++_generation;
@@ -41,7 +43,7 @@ void Latch::CountDown() noexcept
 {
     std::unique_lock<std::mutex> lock(_mutex);
 
-    // Count down the latch counter
+    // Count down the latch threads counter
     CountDown(lock);
 }
 
@@ -52,7 +54,7 @@ void Latch::CountDownAndWait() noexcept
     // Remember the current latch generation
     int generation = _generation;
 
-    // Count down the latch counter
+    // Count down the latch threads counter
     if (CountDown(lock))
         return;
 
@@ -64,8 +66,8 @@ void Latch::Wait() noexcept
 {
     std::unique_lock<std::mutex> lock(_mutex);
 
-    // Check the latch counter value
-    if (_counter == 0)
+    // Check the latch threads counter value
+    if (_threads == 0)
         return;
 
     // Remember the current latch generation
@@ -79,8 +81,8 @@ bool Latch::TryWait() noexcept
 {
     std::unique_lock<std::mutex> lock(_mutex);
 
-    // Check the latch counter value
-    return (_counter == 0);
+    // Check the latch threads counter value
+    return (_threads == 0);
 }
 
 } // namespace CppCommon

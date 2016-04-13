@@ -33,7 +33,7 @@ inline bool SpinBarrier::Wait() noexcept
     else
     {
         // Spin-wait for the next barrier generation
-        while ((generation == _generation) && (_counter != 0));
+        while ((generation == _generation) || (_counter == 0));
 
         // Notify each of remaining threads
         return false;
