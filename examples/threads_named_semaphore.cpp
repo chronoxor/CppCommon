@@ -1,13 +1,13 @@
 /*!
-    \file threads_semaphore.cpp
-    \brief Semaphore synchronization primitive example
+    \file threads_named_semaphore.cpp
+    \brief Named semaphore synchronization primitive example
     \author Ivan Shynkarenka
-    \date 12.04.2016
+    \date 15.04.2016
     \copyright MIT License
 */
 
 #include "errors/exceptions.h"
-#include "threads/semaphore.h"
+#include "threads/named_semaphore.h"
 
 #include <iostream>
 #include <string>
@@ -15,7 +15,7 @@
 
 int main(int argc, char** argv)
 {
-    std::string help = "Please enter '+' to lock and '-' to unlock the semaphore. Enter '0' to exit...";
+    std::string help = "Please enter '+' to lock and '-' to unlock the semaphore (several processes support). Enter '0' to exit...";
 
     // Show help message
     std::cout << help << std::endl;
@@ -23,8 +23,8 @@ int main(int argc, char** argv)
     // Assume we have four resources
     int resources = 4;
 
-    // Create semaphore for our resources
-    CppCommon::Semaphore semaphore(resources);
+    // Create named semaphore for our resources
+    CppCommon::NamedSemaphore semaphore("test", resources);
 
     // Perform text input
     std::string line;
