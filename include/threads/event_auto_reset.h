@@ -1,13 +1,13 @@
 /*!
-    \file event_auto.h
+    \file event_auto_reset.h
     \brief Auto-reset event synchronization primitive definition
     \author Ivan Shynkarenka
     \date 13.04.2016
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_THREADS_EVENT_AUTO_H
-#define CPPCOMMON_THREADS_EVENT_AUTO_H
+#ifndef CPPCOMMON_THREADS_EVENT_AUTO_RESET_H
+#define CPPCOMMON_THREADS_EVENT_AUTO_RESET_H
 
 #include <chrono>
 #include <memory>
@@ -24,20 +24,20 @@ namespace CppCommon {
 
     https://en.wikipedia.org/wiki/Event_(synchronization_primitive)
 */
-class EventAuto
+class EventAutoReset
 {
 public:
     //! Default class constructor
     /*!
-        \param signaled - Signaled event initial state
+        \param signaled - Signaled event initial state (default is false)
     */
-    explicit EventAuto(bool signaled);
-    EventAuto(const EventAuto&) = delete;
-    EventAuto(EventAuto&&) = default;
-    ~EventAuto();
+    explicit EventAutoReset(bool signaled = false);
+    EventAutoReset(const EventAutoReset&) = delete;
+    EventAutoReset(EventAutoReset&&) = default;
+    ~EventAutoReset();
 
-    EventAuto& operator=(const EventAuto&) = delete;
-    EventAuto& operator=(EventAuto&&) = default;
+    EventAutoReset& operator=(const EventAutoReset&) = delete;
+    EventAutoReset& operator=(EventAutoReset&&) = default;
 
     //! Signal one of waiting thread about event occurred
     /*!
@@ -94,10 +94,10 @@ private:
     std::unique_ptr<Impl> _pimpl;
 };
 
-/*! \example threads_event_auto.cpp Auto-reset event synchronization primitive example */
+/*! \example threads_event_auto_reset.cpp Auto-reset event synchronization primitive example */
 
 } // namespace CppCommon
 
-#include "event_auto.inl"
+#include "event_auto_reset.inl"
 
-#endif // CPPCOMMON_THREADS_EVENT_AUTO_H
+#endif // CPPCOMMON_THREADS_EVENT_AUTO_RESET_H

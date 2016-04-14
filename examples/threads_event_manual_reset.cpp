@@ -1,12 +1,12 @@
 /*!
-    \file threads_barrier.cpp
-    \brief Barrier synchronization primitive example
+    \file threads_event_manual_reset.cpp
+    \brief Manual-reset event synchronization primitive example
     \author Ivan Shynkarenka
-    \date 17.03.2016
+    \date 14.04.2016
     \copyright MIT License
 */
 
-#include "threads/barrier.h"
+#include "threads/event_manual_reset.h"
 #include "threads/thread.h"
 
 #include <atomic>
@@ -18,27 +18,34 @@ int main(int argc, char** argv)
 {
     int concurrency = 8;
 
-    CppCommon::Barrier barrier(concurrency);
+    CppCommon::EventManualReset event;
 
     // Start some threads
     std::vector<std::thread> threads;
     for (int thread = 0; thread < concurrency; ++thread)
     {
-        threads.push_back(std::thread([&barrier, thread]()
+        threads.push_back(std::thread([&event, thread]()
         {
             std::cout << "Thread " << thread << " initialized!" << std::endl;
 
             // Sleep for a while...
             CppCommon::Thread::SleepFor(std::chrono::milliseconds(thread * 10));
 
-            std::cout << "Thread " << thread << " before barrier!" << std::endl;
+            std::cout << "Thread " << thread << " waiting for the event!" << std::endl;
 
-            // Wait for all other threads at the barrier
-            bool last = barrier.Wait();
+            // Wait for the event
+            event.Wait();
 
-            std::cout << "Thread " << thread << " after barrier!" << (last ? " Last one!" : "") << std::endl;
+            std::cout << "Thread " << thread << " signaled!" << std::endl;
         }));
     }
+
+    // Allow threads to start
+    CppCommon::Thread::SleepFor(std::chrono::milliseconds(100));
+
+    // Signal the event
+    std::cout << "Signal event!" << std::endl;
+    event.Signal();
 
     // Wait for all threads
     for (auto& thread : threads)

@@ -72,7 +72,7 @@ TEST_CASE("Read/Write locker", "[CppCommon][Threads]")
             }
 
             // Sleep for a while...
-            CppCommon::Thread::SleepFor(std::chrono::milliseconds(10));
+            Thread::SleepFor(std::chrono::milliseconds(10));
         }
     });
 

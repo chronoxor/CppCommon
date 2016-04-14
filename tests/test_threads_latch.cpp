@@ -51,7 +51,7 @@ TEST_CASE("Latch one thread to wait for multiple threads", "[CppCommon][Threads]
             ++count;
 
             // Sleep for a while...
-            CppCommon::Thread::SleepFor(std::chrono::milliseconds(thread * 100));
+            Thread::SleepFor(std::chrono::milliseconds(thread * 10));
 
             // Count down the latch
             latch.CountDown();
@@ -89,12 +89,12 @@ TEST_CASE("Latch multiple threads to wait for the one initialization thread", "[
             ++count;
 
             // Sleep for a while...
-            CppCommon::Thread::SleepFor(std::chrono::milliseconds(thread * 100));
+            Thread::SleepFor(std::chrono::milliseconds(thread * 100));
         }));
     }
 
     // Perform some initialization
-    CppCommon::Thread::SleepFor(std::chrono::milliseconds(100));
+    Thread::SleepFor(std::chrono::milliseconds(100));
 
     // Threads can now start processing
     latch.CountDown();

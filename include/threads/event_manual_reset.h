@@ -1,13 +1,13 @@
 /*!
-    \file event_manual.h
+    \file event_manual_reset.h
     \brief Manual-reset event synchronization primitive definition
     \author Ivan Shynkarenka
     \date 13.04.2016
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_THREADS_EVENT_MANUAL_H
-#define CPPCOMMON_THREADS_EVENT_MANUAL_H
+#ifndef CPPCOMMON_THREADS_EVENT_MANUAL_RESET_H
+#define CPPCOMMON_THREADS_EVENT_MANUAL_RESET_H
 
 #include <chrono>
 #include <memory>
@@ -24,20 +24,20 @@ namespace CppCommon {
 
     https://en.wikipedia.org/wiki/Event_(synchronization_primitive)
 */
-class EventManual
+class EventManualReset
 {
 public:
     //! Default class constructor
     /*!
-        \param signaled - Signaled event initial state
+        \param signaled - Signaled event initial state (default is false)
     */
-    explicit EventManual(bool signaled);
-    EventManual(const EventManual&) = delete;
-    EventManual(EventManual&&) = default;
-    ~EventManual();
+    explicit EventManualReset(bool signaled = false);
+    EventManualReset(const EventManualReset&) = delete;
+    EventManualReset(EventManualReset&&) = default;
+    ~EventManualReset();
 
-    EventManual& operator=(const EventManual&) = delete;
-    EventManual& operator=(EventManual&&) = default;
+    EventManualReset& operator=(const EventManualReset&) = delete;
+    EventManualReset& operator=(EventManualReset&&) = default;
 
     //! Reset the event
     /*!
@@ -102,10 +102,10 @@ private:
     std::unique_ptr<Impl> _pimpl;
 };
 
-/*! \example threads_event_manual.cpp Manual-reset event synchronization primitive example */
+/*! \example threads_event_manual_reset.cpp Manual-reset event synchronization primitive example */
 
 } // namespace CppCommon
 
-#include "event_manual.inl"
+#include "event_manual_reset.inl"
 
-#endif // CPPCOMMON_THREADS_EVENT_MANUAL_H
+#endif // CPPCOMMON_THREADS_EVENT_MANUAL_RESET_H

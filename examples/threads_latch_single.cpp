@@ -6,7 +6,6 @@
     \copyright MIT License
 */
 
-#include "threads/critical_section.h"
 #include "threads/latch.h"
 #include "threads/thread.h"
 
@@ -18,37 +17,31 @@
 int main(int argc, char** argv)
 {
     int concurrency = 8;
+
     CppCommon::Latch latch(1);
-    CppCommon::CriticalSection lock;
 
     // Start some threads
     std::vector<std::thread> threads;
     for (int thread = 0; thread < concurrency; ++thread)
     {
-        threads.push_back(std::thread([&latch, &lock, thread]()
+        threads.push_back(std::thread([&latch, thread]()
         {
-            lock.Lock();
             std::cout << "Thread " << thread << " waiting for the latch..." << std::endl;
-            lock.Unlock();
 
             // Wait for the latch
             latch.Wait();
 
-            lock.Lock();
             std::cout << "Thread " << thread << " continue!" << std::endl;
-            lock.Unlock();
 
             // Sleep for a while...
-            CppCommon::Thread::SleepFor(std::chrono::milliseconds(thread * 100));
+            CppCommon::Thread::SleepFor(std::chrono::milliseconds(thread * 10));
         }));
     }
 
     // Perform some initialization
     CppCommon::Thread::SleepFor(std::chrono::milliseconds(100));
 
-    lock.Lock();
     std::cout << "Main thread initialized!" << std::endl;
-    lock.Unlock();
 
     // Threads can now start processing
     latch.CountDown();
