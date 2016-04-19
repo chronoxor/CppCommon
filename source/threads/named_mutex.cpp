@@ -29,7 +29,7 @@ public:
     Impl(const std::string& name)
     {
 #if defined(_WIN32) || defined(_WIN64)
-        _mutex = CreateMutex(nullptr, FALSE, name.c_str());
+        _mutex = CreateMutexA(nullptr, FALSE, name.c_str());
         if (_mutex == nullptr)
             throwex SystemException("Failed to create a named mutex!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)

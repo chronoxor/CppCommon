@@ -32,7 +32,7 @@ public:
         assert((resources > 0) && "Named semaphore resources counter must be greater than zero!");
 
 #if defined(_WIN32) || defined(_WIN64)
-        _semaphore = CreateSemaphore(nullptr, resources, resources, name.c_str());
+        _semaphore = CreateSemaphoreA(nullptr, resources, resources, name.c_str());
         if (_semaphore == nullptr)
             throwex SystemException("Failed to create a named semaphore!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
