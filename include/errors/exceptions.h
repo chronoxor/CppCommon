@@ -106,8 +106,6 @@ private:
     std::string _system_message;
 };
 
-/*! \example errors_exceptions.cpp Exceptions handling example */
-
 } // namespace CppCommon
 
 #include "exceptions.inl"

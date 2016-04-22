@@ -1,16 +1,17 @@
 /*!
-    \file errors_exceptions.cpp
-    \brief Exceptions handling example
+    \file errors_exceptions_handler.cpp
+    \brief Exceptions handler example
     \author Ivan Shynkarenka
-    \date 07.03.2016
+    \date 22.04.2016
     \copyright MIT License
 */
 
-#include "errors/exceptions.h"
+#include "errors/exceptions_handler.h"
 
 #include <cfloat>
 #include <csignal>
 #include <iostream>
+#include <string>
 #include <thread>
 
 #if defined(_WIN32) || defined(_WIN64)
@@ -215,7 +216,15 @@ void GenerateCustomException(int type)
 
 void GenerateCustomException(int type, bool thread)
 {
-    auto function = [=]() { GenerateCustomException(type); };
+    auto function = [=]()
+    {
+        // Setup exceptions handler for the created thread
+        if (thread)
+            CppCommon::ExceptionsHandler::SetupThread();
+
+        GenerateCustomException(type);
+    };
+
     if (thread)
         std::thread(function).join();
     else
@@ -224,6 +233,9 @@ void GenerateCustomException(int type, bool thread)
 
 int main(int argc, char** argv)
 {
+    // Setup exceptions handler for the current process
+    CppCommon::ExceptionsHandler::SetupProcess();
+
     std::cout << "1 - SIGABRT" << std::endl;
     std::cout << "2 - SIGFPE" << std::endl;
     std::cout << "3 - SIGILL" << std::endl;
@@ -247,7 +259,7 @@ int main(int argc, char** argv)
     if (getline(std::cin, line))
     {
         int type = std::stoi(line);
-        GenerateCustomException(type, false);
+        GenerateCustomException(type, true);
     }
 
     return 0;
