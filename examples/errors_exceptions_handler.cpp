@@ -7,6 +7,7 @@
 */
 
 #include "errors/exceptions_handler.h"
+#include "system/stack_trace_manager.h"
 
 #include <cfloat>
 #include <csignal>
@@ -233,6 +234,8 @@ void GenerateCustomException(int type, bool thread)
 
 int main(int argc, char** argv)
 {
+    // Initialize stack trace manager of the current process
+    CppCommon::StackTraceManager::Initialize();
     // Setup exceptions handler for the current process
     CppCommon::ExceptionsHandler::SetupProcess();
 
@@ -261,6 +264,9 @@ int main(int argc, char** argv)
         int type = std::stoi(line);
         GenerateCustomException(type, true);
     }
+
+    // Cleanup stack trace manager of the current process
+    CppCommon::StackTraceManager::Cleanup();
 
     return 0;
 }

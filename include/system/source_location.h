@@ -9,6 +9,7 @@
 #ifndef CPPCOMMON_SYSTEM_SOURCE_LOCATION_H
 #define CPPCOMMON_SYSTEM_SOURCE_LOCATION_H
 
+#include <sstream>
 #include <string>
 
 namespace CppCommon {
@@ -52,18 +53,19 @@ public:
     std::string to_string() const;
 
     //! Output source location into the given output stream
-    friend std::ostream& operator<<(std::ostream& os, const SourceLocation& instance)
-    { os << instance.to_string(); return os; }
+    friend std::ostream& operator<<(std::ostream& os, const SourceLocation& instance);
 
 private:
     const char* _filename;
     int _line;
 
-    SourceLocation(bool) noexcept : SourceLocation(nullptr, 0) {}
+    SourceLocation() noexcept : SourceLocation(nullptr, 0) {}
 };
 
 /*! \example system_source_location.cpp Source location wrapper example */
 
 } // namespace CppCommon
+
+#include "source_location.inl"
 
 #endif // CPPCOMMON_SYSTEM_SOURCE_LOCATION_H

@@ -35,7 +35,7 @@ public:
     /*!
         \param message - Exception message (default is "")
     */
-    Exception(const std::string& message = "") : _message(message), _location(true) {}
+    Exception(const std::string& message = "") : _message(message), _location() {}
     Exception(const Exception&) = default;
     Exception(Exception&&) = default;
     virtual ~Exception() = default;
@@ -55,7 +55,7 @@ public:
     virtual std::string to_string() const;
 
     //! Output exception into the given output stream
-    friend std::ostream& operator<< (std::ostream& os, const Exception& instance)
+    friend std::ostream& operator<<(std::ostream& os, const Exception& instance)
     { os << instance.to_string(); return os; }
 
     //! Link exception with source location

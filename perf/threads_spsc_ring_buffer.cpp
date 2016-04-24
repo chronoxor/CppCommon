@@ -18,7 +18,7 @@ template<uint64_t N>
 void produce_consume(CppBenchmark::Context& context, const std::function<void()>& wait_strategy)
 {
     const int item_size = context.x();
-    const int items_to_produce = bytes_to_produce / item_size;
+    const uint64_t items_to_produce = bytes_to_produce / item_size;
     uint64_t crc = 0;
 
     // Create single producer / single consumer wait-free ring buffer
@@ -33,7 +33,7 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
         for (uint64_t i = 0; i < items_to_produce;)
         {
             // Dequeue using the given waiting strategy
-            uint64_t size;
+            size_t size;
             while (!buffer.Dequeue(items, size = N))
                 wait_strategy();
 

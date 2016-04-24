@@ -23,9 +23,9 @@ int main(int argc, char** argv)
     auto consumer = std::thread([&buffer]()
     {
         // Use local buffer for batch processing
-        const uint64_t local_capacity = 1024;
+        const size_t local_capacity = 1024;
         char local_buffer[local_capacity];
-        uint64_t local_size;
+        size_t local_size;
 
         do
         {

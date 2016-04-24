@@ -9,6 +9,7 @@
 #ifndef CPPCOMMON_SYSTEM_STACK_TRACE_H
 #define CPPCOMMON_SYSTEM_STACK_TRACE_H
 
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -42,8 +43,7 @@ public:
         std::string to_string() const;
 
         //! Output stack trace frame into the given output stream
-        friend std::ostream& operator<<(std::ostream& os, const Frame& instance)
-        { os << instance.to_string(); return os; }
+        friend std::ostream& operator<<(std::ostream& os, const Frame& instance);
     };
 
 public:
@@ -66,8 +66,7 @@ public:
     std::string to_string() const;
 
     //! Output stack trace into the given output stream
-    friend std::ostream& operator<<(std::ostream& os, const StackTrace& instance)
-    { os << instance.to_string(); return os; }
+    friend std::ostream& operator<<(std::ostream& os, const StackTrace& instance);
 
 private:
     std::vector<Frame> _frames;
@@ -76,5 +75,7 @@ private:
 /*! \example system_stack_trace.cpp Stack trace snapshot provider example */
 
 } // namespace CppCommon
+
+#include "stack_trace.inl"
 
 #endif // CPPCOMMON_SYSTEM_STACK_TRACE_H

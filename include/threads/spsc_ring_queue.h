@@ -33,7 +33,7 @@ public:
     /*!
         \param capacity - Ring queue capacity (must be a power of two)
     */
-    explicit SPSCRingQueue(uint64_t capacity);
+    explicit SPSCRingQueue(size_t capacity);
     SPSCRingQueue(const SPSCRingQueue&) = delete;
     SPSCRingQueue(SPSCRingQueue&&) = default;
     ~SPSCRingQueue() { delete[] _buffer; }
@@ -42,9 +42,9 @@ public:
     SPSCRingQueue& operator=(SPSCRingQueue&&) = default;
 
     //! Get ring queue capacity
-    uint64_t capacity() const noexcept { return _capacity; }
+    size_t capacity() const noexcept { return _capacity; }
     //! Get ring queue size
-    uint64_t size() const noexcept;
+    size_t size() const noexcept;
 
     //! Enqueue an item into the ring queue (single producer thread method)
     /*!
@@ -68,15 +68,15 @@ private:
     typedef char cache_line_pad[64];
 
     cache_line_pad _pad0;
-    const uint64_t _capacity;
-    const uint64_t _mask;
+    const size_t _capacity;
+    const size_t _mask;
     T* const _buffer;
 
     cache_line_pad _pad1;
-    std::atomic<uint64_t> _head;
+    std::atomic<size_t> _head;
 
     cache_line_pad _pad2;
-    std::atomic<uint64_t> _tail;
+    std::atomic<size_t> _tail;
 };
 
 /*! \example threads_spsc_ring_queue.cpp Single producer / single consumer wait-free ring queue example */

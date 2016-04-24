@@ -9,17 +9,17 @@
 namespace CppCommon {
 
 template<typename T>
-inline MPSCRingQueue<T>::MPSCRingQueue(uint64_t capacity, uint64_t concurrency) : _capacity(capacity - 1), _concurrency(concurrency), _consumer(0)
+inline MPSCRingQueue<T>::MPSCRingQueue(size_t capacity, size_t concurrency) : _capacity(capacity - 1), _concurrency(concurrency), _consumer(0)
 {
     // Initialize producers' ring queue
-    for (uint64_t i = 0; i < concurrency; ++i)
+    for (size_t i = 0; i < concurrency; ++i)
         _producers.push_back(std::make_shared<Producer>(capacity));
 }
 
 template<typename T>
-inline uint64_t MPSCRingQueue<T>::size() const noexcept
+inline size_t MPSCRingQueue<T>::size() const noexcept
 {
-    uint64_t size = 0;
+    size_t size = 0;
     for (auto producer : _producers)
         size += producer->queue.size();
     return size;
@@ -29,7 +29,7 @@ template<typename T>
 inline bool MPSCRingQueue<T>::Enqueue(const T& item)
 {
     // Get producer index for the current thread based on RDTS value
-    uint64_t index = rdts() % _concurrency;
+    size_t index = rdts() % _concurrency;
 
     // Lock the chosen producer using its spin-lock
     Locker<SpinLock> lock(_producers[index]->lock);
@@ -42,7 +42,7 @@ template<typename T>
 inline bool MPSCRingQueue<T>::Dequeue(T& item)
 {
     // Try to dequeue one item from the one of producer's ring queue
-    for (uint64_t i = 0; i < _concurrency; ++i)
+    for (size_t i = 0; i < _concurrency; ++i)
     {
         if (_producers[_consumer++ % _concurrency]->queue.Dequeue(item))
             return true;

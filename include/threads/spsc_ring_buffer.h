@@ -33,7 +33,7 @@ public:
     /*!
         \param capacity - Ring buffer capacity (must be a power of two)
     */
-    explicit SPSCRingBuffer(uint64_t capacity);
+    explicit SPSCRingBuffer(size_t capacity);
     SPSCRingBuffer(const SPSCRingBuffer&) = delete;
     SPSCRingBuffer(SPSCRingBuffer&&) = default;
     ~SPSCRingBuffer() { delete[] _buffer; }
@@ -42,9 +42,9 @@ public:
     SPSCRingBuffer& operator=(SPSCRingBuffer&&) = default;
 
     //! Get ring buffer capacity in bytes
-    uint64_t capacity() const noexcept { return _capacity; }
+    size_t capacity() const noexcept { return _capacity; }
     //! Get ring buffer size in bytes
-    uint64_t size() const noexcept;
+    size_t size() const noexcept;
 
     //! Enqueue a chunk of bytes into the ring buffer (single producer thread method)
     /*!
@@ -55,7 +55,7 @@ public:
         \param size - Chunk buffer size
         \return 'true' if the chunk of bytes was successfully enqueue, 'false' if the ring buffer is full
     */
-    bool Enqueue(const void* chunk, uint64_t size);
+    bool Enqueue(const void* chunk, size_t size);
 
     //! Dequeue a chunk of bytes from the ring buffer (single consumer thread method)
     /*!
@@ -67,21 +67,21 @@ public:
         \param size - Chunk buffer size
         \return 'true' if the chunk of bytes was successfully dequeue, 'false' if the ring buffer is empty
     */
-    bool Dequeue(void* chunk, uint64_t& size);
+    bool Dequeue(void* chunk, size_t& size);
 
 private:
     typedef char cache_line_pad[64];
 
     cache_line_pad _pad0;
-    const uint64_t _capacity;
-    const uint64_t _mask;
+    const size_t _capacity;
+    const size_t _mask;
     char* const _buffer;
 
     cache_line_pad _pad1;
-    std::atomic<uint64_t> _head;
+    std::atomic<size_t> _head;
 
     cache_line_pad _pad2;
-    std::atomic<uint64_t> _tail;
+    std::atomic<size_t> _tail;
 };
 
 /*! \example threads_spsc_ring_buffer.cpp Single producer / single consumer wait-free ring buffer example */

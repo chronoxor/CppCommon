@@ -32,7 +32,7 @@ public:
     /*!
         \param capacity - Ring queue capacity (must be a power of two)
     */
-    explicit MPMCRingQueue(uint64_t capacity);
+    explicit MPMCRingQueue(size_t capacity);
     MPMCRingQueue(const MPMCRingQueue&) = delete;
     MPMCRingQueue(MPMCRingQueue&&) = default;
     ~MPMCRingQueue() { delete[] _buffer; }
@@ -41,9 +41,9 @@ public:
     MPMCRingQueue& operator=(MPMCRingQueue&&) = default;
 
     //! Get ring queue capacity
-    uint64_t capacity() const noexcept { return _capacity; }
+    size_t capacity() const noexcept { return _capacity; }
     //! Get ring queue size
-    uint64_t size() const noexcept;
+    size_t size() const noexcept;
 
     //! Enqueue an item into the ring queue (multiple producers threads method)
     /*!
@@ -67,21 +67,21 @@ private:
     struct Node
     {
         T value;
-        std::atomic<uint64_t> sequence;
+        std::atomic<size_t> sequence;
     };
 
     typedef char cache_line_pad[64];
 
     cache_line_pad _pad0;
-    const uint64_t _capacity;
-    const uint64_t _mask;
+    const size_t _capacity;
+    const size_t _mask;
     Node* const _buffer;
 
     cache_line_pad _pad1;
-    std::atomic<uint64_t> _head;
+    std::atomic<size_t> _head;
 
     cache_line_pad _pad2;
-    std::atomic<uint64_t> _tail;
+    std::atomic<size_t> _tail;
 };
 
 /*! \example threads_mpmc_ring_queue.cpp Multiple producers / multiple consumers wait-free ring queue example */

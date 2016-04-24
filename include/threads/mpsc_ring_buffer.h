@@ -37,7 +37,7 @@ public:
         \param capacity - Ring buffer capacity (must be a power of two)
         \param concurrency - Hardware concurrency (default is std::thread::hardware_concurrency)
     */
-    explicit MPSCRingBuffer(uint64_t capacity, uint64_t concurrency = std::thread::hardware_concurrency());
+    explicit MPSCRingBuffer(size_t capacity, size_t concurrency = std::thread::hardware_concurrency());
     MPSCRingBuffer(const MPSCRingBuffer&) = delete;
     MPSCRingBuffer(MPSCRingBuffer&&) = default;
     ~MPSCRingBuffer() = default;
@@ -46,11 +46,11 @@ public:
     MPSCRingBuffer& operator=(MPSCRingBuffer&&) = default;
 
     //! Get ring buffer capacity
-    uint64_t capacity() const noexcept { return _capacity; }
+    size_t capacity() const noexcept { return _capacity; }
     //! Get ring buffer concurrency
-    uint64_t concurrency() const noexcept { return _concurrency; }
+    size_t concurrency() const noexcept { return _concurrency; }
     //! Get ring buffer size
-    uint64_t size() const noexcept;
+    size_t size() const noexcept;
 
     //! Enqueue a chunk of bytes into the ring buffer (single producer thread method)
     /*!
@@ -61,7 +61,7 @@ public:
         \param size - Chunk buffer size
         \return 'true' if the chunk of bytes was successfully enqueue, 'false' if the ring buffer is full
     */
-    bool Enqueue(const void* chunk, uint64_t size);
+    bool Enqueue(const void* chunk, size_t size);
 
     //! Dequeue a chunk of bytes from the ring buffer (single consumer thread method)
     /*!
@@ -73,7 +73,7 @@ public:
         \param size - Chunk buffer size
         \return 'true' if the chunk of bytes was successfully dequeue, 'false' if the ring buffer is empty
     */
-    bool Dequeue(void* chunk, uint64_t& size);
+    bool Dequeue(void* chunk, size_t& size);
 
 private:
     struct Producer
@@ -81,13 +81,13 @@ private:
         SpinLock lock;
         SPSCRingBuffer buffer;
 
-        Producer(uint64_t capacity) : buffer(capacity) {}
+        Producer(size_t capacity) : buffer(capacity) {}
     };
 
-    uint64_t _capacity;
-    uint64_t _concurrency;
+    size_t _capacity;
+    size_t _concurrency;
     std::vector<std::shared_ptr<Producer>> _producers;
-    uint64_t _consumer;
+    size_t _consumer;
 };
 
 /*! \example threads_mpsc_ring_buffer.cpp Multiple producers / single consumer wait-free ring buffer example */

@@ -17,7 +17,7 @@ const auto settings = CppBenchmark::Settings().ParamRange(producers_from, produc
 
 void produce(CppBenchmark::Context& context)
 {
-    const uint64_t producers_count = context.x();
+    const int producers_count = context.x();
     uint64_t crc = 0;
 
     // Create mutex synchronization primitive
@@ -25,7 +25,7 @@ void produce(CppBenchmark::Context& context)
 
     // Start producer threads
     std::vector<std::thread> producers;
-    for (uint64_t producer = 0; producer < producers_count; ++producer)
+    for (int producer = 0; producer < producers_count; ++producer)
     {
         producers.push_back(std::thread([&lock, &crc, producer, producers_count]()
         {

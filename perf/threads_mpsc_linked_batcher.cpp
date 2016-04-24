@@ -18,7 +18,7 @@ const auto settings = CppBenchmark::Settings().ParamRange(producers_from, produc
 template<typename T>
 void produce_consume(CppBenchmark::Context& context, const std::function<void()>& wait_strategy)
 {
-    const uint64_t producers_count = context.x();
+    const int producers_count = context.x();
     uint64_t crc = 0;
 
     // Create multiple producers / single consumer wait-free linked batcher
@@ -47,7 +47,7 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
 
     // Start producer threads
     std::vector<std::thread> producers;
-    for (uint64_t producer = 0; producer < producers_count; ++producer)
+    for (int producer = 0; producer < producers_count; ++producer)
     {
         producers.push_back(std::thread([&batcher, &wait_strategy, producer, producers_count]()
         {

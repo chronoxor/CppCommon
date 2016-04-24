@@ -32,20 +32,19 @@
 
 namespace CppCommon {
 
-std::string StackTrace::Frame::to_string() const
+std::ostream& operator<<(std::ostream& os, const StackTrace::Frame& instance)
 {
-    std::stringstream stream;
     // Format stack trace frame address
-    std::ios_base::fmtflags flags = stream.flags();
-    stream << "0x" << std::hex << std::uppercase << std::setfill('0') << std::setw(2 * sizeof(uintptr_t)) << (uintptr_t)address << ": ";
-    stream.flags(flags);
+    std::ios_base::fmtflags flags = os.flags();
+    os << "0x" << std::hex << std::uppercase << std::setfill('0') << std::setw(2 * sizeof(uintptr_t)) << (uintptr_t)instance.address << ": ";
+    os.flags(flags);
     // Format stack trace frame other fields
-    stream << (module.empty() ? "<unknown>" : module) << '!';
-    stream << (function.empty() ? "??" : function) << ' ';
-    stream << filename;
-    if (line > 0)
-        stream << '(' << line << ')';
-    return stream.str();
+    os << (instance.module.empty() ? "<unknown>" : instance.module) << '!';
+    os << (instance.function.empty() ? "??" : instance.function) << ' ';
+    os << instance.filename;
+    if (instance.line > 0)
+        os << '(' << instance.line << ')';
+    return os;
 }
 
 StackTrace::StackTrace(int skip)
@@ -89,14 +88,14 @@ StackTrace::StackTrace(int skip)
 
         // Get the frame function
         char symbol[sizeof(SYMBOL_INFO) + MAX_SYM_NAME];
-        ZeroMemory(&symbol, sizeof(symbol));
+        ZeroMemory(&symbol, sizeof(symbol) / sizeof(symbol[0]));
         PSYMBOL_INFO pSymbol = (PSYMBOL_INFO)symbol;
         pSymbol->SizeOfStruct = sizeof(SYMBOL_INFO);
         pSymbol->MaxNameLen = MAX_SYM_NAME;
         if (SymFromAddr(hProcess, (DWORD64)frame.address, nullptr, pSymbol))
         {
             char buffer[4096];
-            if (UnDecorateSymbolName(pSymbol->Name, buffer, sizeof(buffer), UNDNAME_NAME_ONLY) > 0)
+            if (UnDecorateSymbolName(pSymbol->Name, buffer, sizeof(buffer) / sizeof(buffer[0]), UNDNAME_NAME_ONLY) > 0)
                 frame.function = buffer;
         }
 
@@ -247,12 +246,11 @@ cleanup:
 #endif
 }
 
-std::string StackTrace::to_string() const
+std::ostream& operator<<(std::ostream& os, const StackTrace& instance)
 {
-    std::stringstream stream;
-    for (auto& frame : _frames)
-        stream << frame.to_string() << std::endl;
-    return stream.str();
+    for (auto& frame : instance.frames())
+        os << frame << std::endl;
+    return os;
 }
 
 } // namespace CppCommon
