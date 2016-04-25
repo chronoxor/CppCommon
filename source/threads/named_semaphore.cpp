@@ -39,7 +39,7 @@ public:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         _semaphore = sem_open(name.c_str(), O_CREAT, 0666, resources);
         if (_semaphore == SEM_FAILED)
-            throwex SystemException(result, "Failed to initialize a named semaphore!");
+            throwex SystemException("Failed to initialize a named semaphore!");
 #endif
     }
 
@@ -49,7 +49,7 @@ public:
         if (!CloseHandle(_semaphore))
             fatality("Failed to close a named semaphore!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        int result = sem_close(&_semaphore);
+        int result = sem_close(_semaphore);
         if (result != 0)
             fatality("Failed to close a named semaphore!", result);
 #endif
@@ -63,7 +63,7 @@ public:
             throwex SystemException("Failed to try lock a named semaphore!");
         return (result == WAIT_OBJECT_0);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        int result = sem_trywait(&_semaphore);
+        int result = sem_trywait(_semaphore);
         if ((result != 0) && (result != EAGAIN))
             throwex SystemException(result, "Failed to try lock a named semaphore!");
         return (result == 0);
@@ -81,7 +81,7 @@ public:
         struct timespec timeout;
         timeout.tv_sec = nanoseconds / 1000000000;
         timeout.tv_nsec = nanoseconds % 1000000000;
-        int result = sem_timedwait(&_semaphore, &timeout);
+        int result = sem_timedwait(_semaphore, &timeout);
         if ((result != 0) && (result != ETIMEDOUT))
             throwex SystemException(result, "Failed to try lock a named semaphore for the given timeout!");
         return (result == 0);
@@ -95,7 +95,7 @@ public:
         if (result != WAIT_OBJECT_0)
             throwex SystemException("Failed to lock a named semaphore!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        int result = sem_wait(&_semaphore);
+        int result = sem_wait(_semaphore);
         if (result != 0)
             throwex SystemException(result, "Failed to lock a named semaphore!");
 #endif
@@ -107,7 +107,7 @@ public:
         if (!ReleaseSemaphore(_semaphore, 1, nullptr))
             throwex SystemException("Failed to unlock a named semaphore!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        int result = sem_post(&_semaphore);
+        int result = sem_post(_semaphore);
         if (result != 0)
             throwex SystemException(result, "Failed to unlock a named semaphore!");
 #endif
@@ -117,7 +117,7 @@ private:
 #if defined(_WIN32) || defined(_WIN64)
     HANDLE _semaphore;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-    sem_t _semaphore;
+    sem_t* _semaphore;
 #endif
 };
 

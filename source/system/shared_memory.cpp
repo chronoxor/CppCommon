@@ -19,6 +19,7 @@
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 #include <sys/mman.h>
 #include <fcntl.h>
+#include <unistd.h>
 #endif
 
 namespace CppCommon {
