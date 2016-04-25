@@ -12,6 +12,7 @@
 #include <windows.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 #include <errno.h>
+#include <string.h>
 #endif
 
 namespace CppCommon {

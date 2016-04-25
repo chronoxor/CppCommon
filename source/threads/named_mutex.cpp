@@ -18,7 +18,7 @@
 #undef max
 #undef min
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-#include <pthread.h>
+#include <semaphore.h>
 #endif
 
 namespace CppCommon {
