@@ -116,7 +116,7 @@ private:
 #if defined(_WIN32) || defined(_WIN64)
     SRWLOCK _rwlock;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-    pthread_mutex_t _rwlock;
+    pthread_rwlock_t _rwlock;
 #endif
 };
 

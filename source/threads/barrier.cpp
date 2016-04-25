@@ -32,7 +32,7 @@ public:
         if (!InitializeSynchronizationBarrier(&_barrier, threads, -1))
             throwex SystemException("Failed to initialize a synchronization barrier!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        int result = pthread_barrier_init(&_barrier, nullptr);
+        int result = pthread_barrier_init(&_barrier, nullptr, threads);
         if (result != 0)
             throwex SystemException(result, "Failed to initialize a synchronization barrier!");
 #endif
