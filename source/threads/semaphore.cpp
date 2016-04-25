@@ -36,7 +36,7 @@ public:
         if (_semaphore == nullptr)
             throwex SystemException("Failed to create a semaphore!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        int result = sem_init(&_semaphore, 0, counter);
+        int result = sem_init(&_semaphore, 0, resources);
         if (result != 0)
             throwex SystemException(result, "Failed to initialize a semaphore!");
 #endif

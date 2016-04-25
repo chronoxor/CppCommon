@@ -20,6 +20,7 @@
 #undef min
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 #include <semaphore.h>
+#include <sys/types.h>
 #endif
 
 namespace CppCommon {
@@ -36,7 +37,7 @@ public:
         if (_semaphore == nullptr)
             throwex SystemException("Failed to create a named semaphore!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        _semaphore = sem_open(name.c_str(), O_CREAT, 0666, counter);
+        _semaphore = sem_open(name.c_str(), O_CREAT, 0666, resources);
         if (_semaphore == SEM_FAILED)
             throwex SystemException(result, "Failed to initialize a named semaphore!");
 #endif
