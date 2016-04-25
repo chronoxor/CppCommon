@@ -19,8 +19,8 @@
 #undef max
 #undef min
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-#include <semaphore.h>
 #include <sys/types.h>
+#include <semaphore.h>
 #endif
 
 namespace CppCommon {

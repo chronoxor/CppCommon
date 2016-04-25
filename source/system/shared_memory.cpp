@@ -17,6 +17,8 @@
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__)
+#include <sys/mman.h>
+#include <sys/types.h>
 #include <pthread.h>
 #endif
 
@@ -63,7 +65,7 @@ public:
         }
         int result = ftruncate(_shared, total);
         if (result != 0)
-            throwex SystemException(result, "Failed to truncate a shared memory handler!", result);
+            throwex SystemException(result, "Failed to truncate a shared memory handler!");
         _ptr = mmap(nullptr, total, (PROT_READ | PROT_WRITE), MAP_SHARED, _shared, 0);
         if (_ptr == MAP_FAILED)
         {
