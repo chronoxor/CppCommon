@@ -32,20 +32,20 @@ management, networking, threading and others.
 
 ## Clone repository with submodules
 ```
-git clone https://github.com/chronoxor/CppCommon.git
+git clone git@github.com:chronoxor/CppCommon.git
 git submodule update --init --recursive
 ```
 
 ## Windows (Visaul Studio 2015)
 ```
 cd CppCommon\scripts
-01-generate-vs2015-x64.bat
-02-build-vs2015.bat
+01-generate-VisualStudio-x64.bat
+02-build-VisualStudio.bat
 03-tests.bat
-04-install-vs2015.bat
-05-doxygen-vs2015.bat
+04-install-VisualStudio.bat
+05-doxygen-VisualStudio.bat
 ```
-If you want 32-bit version use '01-generate-vs2015-x32.bat' to generate project files.
+If you want 32-bit version use '01-generate-VisualStudio-x32.bat' to generate project files.
 
 ## Windows (MinGW with MSYS)
 ```
@@ -60,9 +60,9 @@ cd CppCommon\scripts
 ## Linux
 ```
 cd CppCommon\scripts
-01-generate-unix.sh
-02-build-unix.sh
-03-tests.bat
-04-install-unix.sh
-05-doxygen-unix.sh
+01-generate-Unix.sh
+02-build-Unix.sh
+03-tests.sh
+04-install-Unix.sh
+05-doxygen-Unix.sh
 ```
