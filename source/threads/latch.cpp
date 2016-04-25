@@ -59,7 +59,7 @@ void Latch::CountDownAndWait() noexcept
         return;
 
     // Wait for the next latch generation
-    _cond.wait(lock, [=, this]() { return generation != _generation; });
+    _cond.wait(lock, [&, this]() { return generation != _generation; });
 }
 
 void Latch::Wait() noexcept
@@ -74,7 +74,7 @@ void Latch::Wait() noexcept
     int generation = _generation;
 
     // Wait for the next latch generation
-    _cond.wait(lock, [=, this]() { return generation != _generation; });
+    _cond.wait(lock, [&, this]() { return generation != _generation; });
 }
 
 bool Latch::TryWait() noexcept
