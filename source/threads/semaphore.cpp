@@ -19,7 +19,7 @@
 #undef max
 #undef min
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-#include <sys/types.h>
+#include <fcntl.h>
 #include <semaphore.h>
 #endif
 

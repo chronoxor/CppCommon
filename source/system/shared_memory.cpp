@@ -18,8 +18,7 @@
 #include <windows.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 #include <sys/mman.h>
-#include <sys/types.h>
-#include <pthread.h>
+#include <fcntl.h>
 #endif
 
 namespace CppCommon {
