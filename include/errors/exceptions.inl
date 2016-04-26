@@ -8,7 +8,7 @@
 
 namespace CppCommon {
 
-inline const char* Exception::what() const
+inline const char* Exception::what() const noexcept
 {
     if (_cache.empty())
         to_string();
