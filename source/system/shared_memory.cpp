@@ -36,15 +36,18 @@ public:
 #if defined(_WIN32) || defined(_WIN64)
         _name = "Global\\" + name;
         _owner = false;
+        // Try to open a shared memory handler
         _shared = OpenFileMappingA(FILE_MAP_ALL_ACCESS, FALSE, _name.c_str());
         if (_shared == nullptr)
         {
+            // Try to create a shared memory handler
             _shared = CreateFileMappingA(INVALID_HANDLE_VALUE, nullptr, PAGE_READWRITE, 0, (DWORD)total, _name.c_str());
             if (_shared == nullptr)
                 throwex SystemException("Failed to create or open a shared memory handler!");
             else
                 _owner = true;
         }
+        // Map a shared memory buffer
         _ptr = MapViewOfFile(_shared, FILE_MAP_ALL_ACCESS, 0, 0, total);
         if (_ptr == nullptr)
         {
@@ -54,18 +57,22 @@ public:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         _name = "/" + name;
         _owner = true;
+        // Try to create a shared memory handler
         _shared = shm_open(_name.c_str(), (O_CREAT | O_EXCL | O_RDWR), (S_IRUSR | S_IWUSR));
         if (_shared == -1)
         {
+            // Try to open a shared memory handler
             _shared = shm_open(_name.c_str(), (O_CREAT | O_RDWR), (S_IRUSR | S_IWUSR));
             if (_shared == -1)
                 throwex SystemException("Failed to create or open a shared memory handler!");
             else
                 _owner = false;
         }
+        // Truncate a shared memory handler
         int result = ftruncate(_shared, total);
         if (result != 0)
             throwex SystemException("Failed to truncate a shared memory handler!");
+        // Map a shared memory buffer
         _ptr = mmap(nullptr, total, (PROT_READ | PROT_WRITE), MAP_SHARED, _shared, 0);
         if (_ptr == MAP_FAILED)
         {
@@ -76,14 +83,16 @@ public:
 #endif
         static const char* SHARED_MEMORY_HEADER_PREFIX = "SHMM";
 
-        // Fill or check shared memory header
+        // Owner must fill the shared memory header and user must check the shared memory header
         if (_owner)
         {
+            // Fill shared memory header
             std::strncpy(((SharedMemoryHeader*)_ptr)->prefix, SHARED_MEMORY_HEADER_PREFIX, 4 );
             ((SharedMemoryHeader*)_ptr)->size = size;
         }
         else
         {
+            // Check shared memory header
             bool is_valid_prefix = (std::strncmp(((SharedMemoryHeader*)_ptr)->prefix, SHARED_MEMORY_HEADER_PREFIX, 4) == 0);
             bool is_valid_size = (((SharedMemoryHeader*)_ptr)->size == size);
             if (!is_valid_prefix || !is_valid_size)
@@ -94,7 +103,6 @@ public:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
                 munmap(_ptr, total);
                 close(_shared);
-                shm_unlink(_name.c_str());
 #endif
                 if (!is_valid_prefix)
                     throwex SystemException("Invalid shared memory buffer prefix!");
@@ -107,21 +115,29 @@ public:
     ~Impl()
     {
 #if defined(_WIN32) || defined(_WIN64)
+        // Unmap the shared memory buffer
         if (!UnmapViewOfFile(_ptr))
             fatality("Failed to unmap a shared memory buffer!");
+        // Close the shared memory handler
         if (!CloseHandle(_shared))
             fatality("Failed to close a shared memory handler!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
+        // Unmap the shared memory buffer
         size_t total = ((SharedMemoryHeader*)_ptr)->size + SHARED_MEMORY_HEADER_SIZE;
         int result = munmap(_ptr, total);
         if (result != 0)
             fatality("Failed to unmap a shared memory buffer!");
+        // Close the shared memory handler
         result = close(_shared);
         if (result != 0)
             fatality("Failed to close a shared memory handler!");
-        result = shm_unlink(_name.c_str());
-        if (result != 0)
-            fatality("Failed to unlink a shared memory handler!");
+        // Unlink the shared memory handler (owner only)
+        if (_owner)
+        {
+            result = shm_unlink(_name.c_str());
+            if (result != 0)
+                fatality("Failed to unlink a shared memory handler!");
+        }
 #endif
     }
 
