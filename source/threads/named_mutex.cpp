@@ -34,9 +34,19 @@ public:
         if (_mutex == nullptr)
             throwex SystemException("Failed to create a named mutex!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        _semaphore = sem_open(name.c_str(), O_CREAT, 0666, 1);
+        _name = name;
+        _owner = true;
+        // Try to create a named binary semaphore
+        _semaphore = sem_open(name.c_str(), (O_CREAT | O_EXCL), 0666, 1);
         if (_semaphore == SEM_FAILED)
-            throwex SystemException("Failed to initialize a named binary semaphore!");
+        {
+            // Try to open a named binary semaphore
+            _semaphore = sem_open(name.c_str(), O_CREAT, 0666, 1);
+            if (_semaphore == SEM_FAILED)
+                throwex SystemException("Failed to initialize a named binary semaphore!");
+            else
+                _owner = false;
+        }
 #endif
     }
 
@@ -49,6 +59,13 @@ public:
         int result = sem_close(_semaphore);
         if (result != 0)
             fatality("Failed to close a named binary semaphore!");
+        // Unlink the named semaphore (owner only)
+        if (_owner)
+        {
+            result = sem_unlink(_name.c_str());
+            if (result != 0)
+                fatality("Failed to unlink a named binary semaphore!");
+        }
 #endif
     }
 
@@ -114,7 +131,9 @@ private:
 #if defined(_WIN32) || defined(_WIN64)
     HANDLE _mutex;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
+    std::string _name;
     sem_t* _semaphore;
+    bool _owner;
 #endif
 };
 

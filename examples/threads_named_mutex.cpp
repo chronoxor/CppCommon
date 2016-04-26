@@ -21,7 +21,7 @@ int main(int argc, char** argv)
     std::cout << help << std::endl;
 
     // Create named mutex
-    CppCommon::NamedMutex mutex("test");
+    CppCommon::NamedMutex mutex("named_mutex_example");
 
     // Perform text input
     std::string line;

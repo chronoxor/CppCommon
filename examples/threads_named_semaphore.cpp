@@ -24,7 +24,7 @@ int main(int argc, char** argv)
     int resources = 4;
 
     // Create named semaphore for our resources
-    CppCommon::NamedSemaphore semaphore("test", resources);
+    CppCommon::NamedSemaphore semaphore("named_semaphore_example", resources);
 
     // Perform text input
     std::string line;

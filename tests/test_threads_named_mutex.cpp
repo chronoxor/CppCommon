@@ -27,7 +27,7 @@ TEST_CASE("Named mutex locker", "[CppCommon][Threads]")
     {
         producers.push_back(std::thread([&crc, producer, items_to_produce, producers_count]()
         {
-            NamedMutex lock("test");
+            NamedMutex lock("named_mutex_test");
 
             int items = (items_to_produce / producers_count);
             for (int i = 0; i < items; ++i)

@@ -28,7 +28,7 @@ TEST_CASE("Named semaphore locker", "[CppCommon][Threads]")
     {
         producers.push_back(std::thread([&crc, producer, items_to_produce, producers_count]()
         {
-            NamedSemaphore lock("test", 4);
+            NamedSemaphore lock("named_semaphore_test", 4);
 
             int items = (items_to_produce / producers_count);
             for (int i = 0; i < items; ++i)

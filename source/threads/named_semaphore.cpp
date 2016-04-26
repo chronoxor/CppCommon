@@ -37,9 +37,19 @@ public:
         if (_semaphore == nullptr)
             throwex SystemException("Failed to create a named semaphore!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        _semaphore = sem_open(name.c_str(), O_CREAT, 0666, resources);
+        _name = name;
+        _owner = true;
+        // Try to create a named binary semaphore
+        _semaphore = sem_open(name.c_str(), (O_CREAT | O_EXCL), 0666, resources);
         if (_semaphore == SEM_FAILED)
-            throwex SystemException("Failed to initialize a named semaphore!");
+        {
+            // Try to open a named binary semaphore
+            _semaphore = sem_open(name.c_str(), O_CREAT, 0666, resources);
+            if (_semaphore == SEM_FAILED)
+                throwex SystemException("Failed to initialize a named semaphore!");
+            else
+                _owner = false;
+        }
 #endif
     }
 
@@ -52,6 +62,13 @@ public:
         int result = sem_close(_semaphore);
         if (result != 0)
             fatality("Failed to close a named semaphore!");
+        // Unlink the named semaphore (owner only)
+        if (_owner)
+        {
+            result = sem_unlink(_name.c_str());
+            if (result != 0)
+                fatality("Failed to unlink a named semaphore!");
+        }
 #endif
     }
 
@@ -117,7 +134,9 @@ private:
 #if defined(_WIN32) || defined(_WIN64)
     HANDLE _semaphore;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
+    std::string _name;
     sem_t* _semaphore;
+    bool _owner;
 #endif
 };
 
