@@ -79,63 +79,63 @@ public:
         if (result != 0)
             throwex SystemException("Failed to setup SIGABRT handler!");
         // Catch an alarm clock
-        int result = sigaction(SIGALRM, &sa, NULL);
+        result = sigaction(SIGALRM, &sa, NULL);
         if (result != 0)
             throwex SystemException("Failed to setup SIGALRM handler!");
         // Catch a memory access error
-        int result = sigaction(SIGBUS, &sa, NULL);
+        result = sigaction(SIGBUS, &sa, NULL);
         if (result != 0)
             throwex SystemException("Failed to setup SIGBUS handler!");
-        // Catch a floating point error
-        int result = sigaction(SIGFPE, &sa, NULL);
+        // Catch a floating point exception
+        result = sigaction(SIGFPE, &sa, NULL);
         if (result != 0)
             throwex SystemException("Failed to setup SIGFPE handler!");
         // Catch a hangup instruction
-        int result = sigaction(SIGHUP, &sa, NULL);
+        result = sigaction(SIGHUP, &sa, NULL);
         if (result != 0)
             throwex SystemException("Failed to setup SIGHUP handler!");
         // Catch an illegal instruction
-        int result = sigaction(SIGILL, &sa, NULL);
+        result = sigaction(SIGILL, &sa, NULL);
         if (result != 0)
             throwex SystemException("Failed to setup SIGILL handler!");
         // Catch a terminal interrupt signal
-        int result = sigaction(SIGINT, &sa, NULL);
+        result = sigaction(SIGINT, &sa, NULL);
         if (result != 0)
             throwex SystemException("Failed to setup SIGINT handler!");
         // Catch a pipe write error
-        int result = sigaction(SIGPIPE, &sa, NULL);
+        result = sigaction(SIGPIPE, &sa, NULL);
         if (result != 0)
             throwex SystemException("Failed to setup SIGPIPE handler!");
         // Catch a pollable event
-        int result = sigaction(SIGPOLL, &sa, NULL);
+        result = sigaction(SIGPOLL, &sa, NULL);
         if (result != 0)
             throwex SystemException("Failed to setup SIGPOLL handler!");
         // Catch a profiling timer expired error
-        int result = sigaction(SIGPROF, &sa, NULL);
+        result = sigaction(SIGPROF, &sa, NULL);
         if (result != 0)
             throwex SystemException("Failed to setup SIGPROF handler!");
         // Catch a terminal quit signal
-        int result = sigaction(SIGQUIT, &sa, NULL);
+        result = sigaction(SIGQUIT, &sa, NULL);
         if (result != 0)
             throwex SystemException("Failed to setup SIGQUIT handler!");
         // Catch an illegal storage access error
-        int result = sigaction(SIGSEGV, &sa, NULL);
+        result = sigaction(SIGSEGV, &sa, NULL);
         if (result != 0)
             throwex SystemException("Failed to setup SIGSEGV handler!");
         // Catch a bad system call error
-        int result = sigaction(SIGSYS, &sa, NULL);
+        result = sigaction(SIGSYS, &sa, NULL);
         if (result != 0)
             throwex SystemException("Failed to setup SIGSYS handler!");
         // Catch a termination request
-        int result = sigaction(SIGTERM, &sa, NULL);
+        result = sigaction(SIGTERM, &sa, NULL);
         if (result != 0)
             throwex SystemException("Failed to setup SIGTERM handler!");
         // Catch a CPU time limit exceeded error
-        int result = sigaction(SIGXCPU, &sa, NULL);
+        result = sigaction(SIGXCPU, &sa, NULL);
         if (result != 0)
             throwex SystemException("Failed to setup SIGXCPU handler!");
-        // Catch a file size limit exceeded
-        int result = sigaction(SIGXFSZ, &sa, NULL);
+        // Catch a file size limit exceeded error
+        result = sigaction(SIGXFSZ, &sa, NULL);
         if (result != 0)
             throwex SystemException("Failed to setup SIGXFSZ handler!");
 #endif
@@ -160,7 +160,7 @@ public:
         // http://msdn.microsoft.com/en-us/library/h46t5b69.aspx
         set_unexpected(UnexpectedHandler);
 
-        // Catch a floating point error
+        // Catch a floating point exception
         typedef void (*sigh)(int);
         signal(SIGFPE, (sigh)SigfpeHandler);
 
@@ -410,13 +410,6 @@ private:
         TerminateProcess(GetCurrentProcess(), 1);
     }
 
-    static void OutputError(const SystemException& exception, const StackTrace& trace)
-    {
-        std::cerr << exception;
-        std::cerr << "Stack trace:" << std::endl;
-        std::cerr << trace;
-    }
-
     static void GetExceptionPointers(DWORD dwExceptionCode, EXCEPTION_POINTERS** ppExceptionPointers)
     {
         CONTEXT ContextRecord;
@@ -552,12 +545,73 @@ private:
 
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 
-    static int SignalHanlder(int signum, const struct sigaction* act, struct sigaction* oldact)
+    static void SignalHanlder(int signo, siginfo_t* info, void* context)
     {
-
+        // Output error
+        switch (signo)
+        {
+            case SIGABRT:
+                OutputError(__LOCATION__ + SystemException("Caught abnormal program termination (SIGABRT) signal"), StackTrace(1));
+                break;
+            case SIGALRM:
+                OutputError(__LOCATION__ + SystemException("Caught alarm clock (SIGALRM) signal"), StackTrace(1));
+                break;
+            case SIGBUS:
+                OutputError(__LOCATION__ + SystemException("Caught memory access error (SIGBUS) signal"), StackTrace(1));
+                break;
+            case SIGFPE:
+                OutputError(__LOCATION__ + SystemException("Caught floating point exception (SIGFPE) signal"), StackTrace(1));
+                break;
+            case SIGHUP:
+                OutputError(__LOCATION__ + SystemException("Caught hangup instruction (SIGHUP) signal"), StackTrace(1));
+                break;
+            case SIGILL:
+                OutputError(__LOCATION__ + SystemException("Caught illegal instruction (SIGILL) signal"), StackTrace(1));
+                break;
+            case SIGINT:
+                OutputError(__LOCATION__ + SystemException("Caught terminal interrupt (SIGINT) signal"), StackTrace(1));
+                break;
+            case SIGPIPE:
+                OutputError(__LOCATION__ + SystemException("Caught pipe write error (SIGPIPE) signal"), StackTrace(1));
+                break;
+            case SIGPOLL:
+                OutputError(__LOCATION__ + SystemException("Caught pollable event (SIGPOLL) signal"), StackTrace(1));
+                break;
+            case SIGPROF:
+                OutputError(__LOCATION__ + SystemException("Caught profiling timer expired error (SIGPROF) signal"), StackTrace(1));
+                break;
+            case SIGQUIT:
+                OutputError(__LOCATION__ + SystemException("Caught terminal quit (SIGQUIT) signal"), StackTrace(1));
+                break;
+            case SIGSEGV:
+                OutputError(__LOCATION__ + SystemException("Caught illegal storage access error (SIGSEGV) signal"), StackTrace(1));
+                break;
+            case SIGSYS:
+                OutputError(__LOCATION__ + SystemException("Caught bad system call (SIGSYS) signal"), StackTrace(1));
+                break;
+            case SIGTERM:
+                OutputError(__LOCATION__ + SystemException("Caught termination request (SIGTERM) signal"), StackTrace(1));
+                break;
+            case SIGXCPU:
+                OutputError(__LOCATION__ + SystemException("Caught CPU time limit exceeded (SIGXCPU) signal"), StackTrace(1));
+                break;
+            case SIGXFSZ:
+                OutputError(__LOCATION__ + SystemException("Caught file size limit exceeded (SIGXFSZ) signal"), StackTrace(1));
+                break;
+            default:
+                OutputError(__LOCATION__ + SystemException("Caught unknown signal - " + std::to_string(signo)), StackTrace(1));
+                break;
+        }
     }
 
 #endif
+
+    static void OutputError(const SystemException& exception, const StackTrace& trace)
+    {
+        std::cerr << exception;
+        std::cerr << "Stack trace:" << std::endl;
+        std::cerr << trace;
+    }
 };
 
 std::unique_ptr<ExceptionsHandler::Impl> ExceptionsHandler::_pimpl(new Impl());
