@@ -23,7 +23,7 @@
 #include <DbgHelp.h>
 #endif
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-
+#include <signal.h>
 #endif
 
 namespace CppCommon {
@@ -40,7 +40,6 @@ public:
             return;
 
 #if defined(_WIN32) || defined(_WIN64)
-
         // Install top-level SEH handler
         SetUnhandledExceptionFilter(SehHandler);
 
@@ -63,14 +62,82 @@ public:
         // Catch an abnormal program termination
         signal(SIGABRT, SigabrtHandler);
 
-        // Catch illegal instruction handler
+        // Catch an illegal instruction error
         signal(SIGINT, SigintHandler);
 
         // Catch a termination request
         signal(SIGTERM, SigtermHandler);
-
 #elif defined(unix) || defined(__unix) || defined(__unix__)
+        // Prepare signal action structure
+        struct sigaction sa;
+        memset(&sa, 0, sizeof(sa));
+        sa.sa_sigaction = SignalHanlder;
+        sa.sa_flags = SA_SIGINFO;
 
+        // Catch an abnormal program termination
+        int result = sigaction(SIGABRT, &sa, NULL);
+        if (result != 0)
+            throwex SystemException("Failed to setup SIGABRT handler!");
+        // Catch an alarm clock
+        int result = sigaction(SIGALRM, &sa, NULL);
+        if (result != 0)
+            throwex SystemException("Failed to setup SIGALRM handler!");
+        // Catch a memory access error
+        int result = sigaction(SIGBUS, &sa, NULL);
+        if (result != 0)
+            throwex SystemException("Failed to setup SIGBUS handler!");
+        // Catch a floating point error
+        int result = sigaction(SIGFPE, &sa, NULL);
+        if (result != 0)
+            throwex SystemException("Failed to setup SIGFPE handler!");
+        // Catch a hangup instruction
+        int result = sigaction(SIGHUP, &sa, NULL);
+        if (result != 0)
+            throwex SystemException("Failed to setup SIGHUP handler!");
+        // Catch an illegal instruction
+        int result = sigaction(SIGILL, &sa, NULL);
+        if (result != 0)
+            throwex SystemException("Failed to setup SIGILL handler!");
+        // Catch a terminal interrupt signal
+        int result = sigaction(SIGINT, &sa, NULL);
+        if (result != 0)
+            throwex SystemException("Failed to setup SIGINT handler!");
+        // Catch a pipe write error
+        int result = sigaction(SIGPIPE, &sa, NULL);
+        if (result != 0)
+            throwex SystemException("Failed to setup SIGPIPE handler!");
+        // Catch a pollable event
+        int result = sigaction(SIGPOLL, &sa, NULL);
+        if (result != 0)
+            throwex SystemException("Failed to setup SIGPOLL handler!");
+        // Catch a profiling timer expired error
+        int result = sigaction(SIGPROF, &sa, NULL);
+        if (result != 0)
+            throwex SystemException("Failed to setup SIGPROF handler!");
+        // Catch a terminal quit signal
+        int result = sigaction(SIGQUIT, &sa, NULL);
+        if (result != 0)
+            throwex SystemException("Failed to setup SIGQUIT handler!");
+        // Catch an illegal storage access error
+        int result = sigaction(SIGSEGV, &sa, NULL);
+        if (result != 0)
+            throwex SystemException("Failed to setup SIGSEGV handler!");
+        // Catch a bad system call error
+        int result = sigaction(SIGSYS, &sa, NULL);
+        if (result != 0)
+            throwex SystemException("Failed to setup SIGSYS handler!");
+        // Catch a termination request
+        int result = sigaction(SIGTERM, &sa, NULL);
+        if (result != 0)
+            throwex SystemException("Failed to setup SIGTERM handler!");
+        // Catch a CPU time limit exceeded error
+        int result = sigaction(SIGXCPU, &sa, NULL);
+        if (result != 0)
+            throwex SystemException("Failed to setup SIGXCPU handler!");
+        // Catch a file size limit exceeded
+        int result = sigaction(SIGXFSZ, &sa, NULL);
+        if (result != 0)
+            throwex SystemException("Failed to setup SIGXFSZ handler!");
 #endif
 
         _initialized = true;
@@ -79,7 +146,6 @@ public:
     void SetupThread()
     {
 #if defined(_WIN32) || defined(_WIN64)
-
         // Catch terminate() calls
         // In a multithreaded environment, terminate functions are maintained
         // separately for each thread. Each new thread needs to install its own
@@ -101,11 +167,8 @@ public:
         // Catch an illegal instruction
         signal(SIGILL, SigillHandler);
 
-        // Catch illegal storage access errors
+        // Catch an illegal storage access error
         signal(SIGSEGV, SigsegvHandler);
-
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-
 #endif
     }
 
@@ -114,6 +177,7 @@ private:
     bool _initialized;
 
 #if defined(_WIN32) || defined(_WIN64)
+
     // Structured exception handler
     static LONG WINAPI SehHandler(PEXCEPTION_POINTERS pExceptionPtrs)
     {
@@ -362,7 +426,6 @@ private:
         memset(&ExceptionRecord, 0, sizeof(EXCEPTION_RECORD));
 
 #if defined(_M_IX86)
-
         // On x86, we reserve some extra stack which won't be used.  That is to
         // preserve as much of the call frame as possible when the function with
         // the buffer overrun entered __security_check_cookie with a JMP instead
@@ -405,9 +468,7 @@ private:
 
         ContextRecord.ContextFlags       = CONTEXT_CONTROL;
         ExceptionRecord.ExceptionAddress = (PVOID)(ULONG_PTR)ContextRecord.Eip;
-
 #elif defined(_M_X64)
-
         ULONG64           ControlPc;
         ULONG64           EstablisherFrame;
         ULONG64           ImageBase;
@@ -425,13 +486,9 @@ private:
         ContextRecord.Rip = (ULONGLONG)_ReturnAddress();
         ContextRecord.Rsp = (ULONGLONG)_AddressOfReturnAddress() + 8;
         ExceptionRecord.ExceptionAddress = (PVOID)ContextRecord.Rip;
-
 #else
-
         #error Unsupported architecture
-
 #endif
-
         ExceptionRecord.ExceptionCode = dwExceptionCode;
         ExceptionRecord.ExceptionAddress = _ReturnAddress();
 
@@ -492,6 +549,14 @@ private:
             throwex SystemException("Cannot close a dump file - " + filename);
 #endif
     }
+
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+
+    static int SignalHanlder(int signum, const struct sigaction* act, struct sigaction* oldact)
+    {
+
+    }
+
 #endif
 };
 
