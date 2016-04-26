@@ -53,20 +53,20 @@ public:
         \param duration - Time duration to sleep
     */
     template <class Rep, class Period>
-    static void SleepFor(const std::chrono::duration<Rep, Period>& duration) noexcept;
+    static void SleepFor(const std::chrono::duration<Rep, Period>& duration) noexcept
+    { Sleep(std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count()); }
     //! Sleep the current thread until the given timestamp
     /*!
         \param timestamp - Timestamp to stop sleeping
     */
     template <class Clock, class Duration>
-    static void SleepUntil(const std::chrono::time_point<Clock, Duration>& timestamp) noexcept;
+    static void SleepUntil(const std::chrono::time_point<Clock, Duration>& timestamp) noexcept
+    { SleepFor(timestamp - std::chrono::high_resolution_clock::now()); }
 
     //! Yield to other threads
     static void Yield() noexcept;
 };
 
 } // namespace CppCommon
-
-#include "thread.inl"
 
 #endif // CPPCOMMON_THREADS_THREAD_H

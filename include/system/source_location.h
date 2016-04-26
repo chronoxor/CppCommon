@@ -50,7 +50,8 @@ public:
     int line() const noexcept { return _line; }
 
     //! Get string from the current source location
-    std::string to_string() const;
+    std::string to_string() const
+    { std::stringstream ss; ss << *this; return ss.str(); }
 
     //! Output source location into the given output stream
     friend std::ostream& operator<<(std::ostream& os, const SourceLocation& instance);

@@ -60,7 +60,8 @@ public:
 
     //! Link exception with source location
     template<class T>
-    friend T&& operator+(const SourceLocation& location, T&& instance);
+    friend T&& operator+(const SourceLocation& location, T&& instance)
+    { instance._location = location; return std::forward<T>(instance); }
 
 protected:
     mutable std::string _cache;
@@ -118,7 +119,5 @@ private:
 };
 
 } // namespace CppCommon
-
-#include "exceptions.inl"
 
 #endif // CPPCOMMON_ERRORS_EXCEPTIONS_H

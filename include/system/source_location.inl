@@ -8,13 +8,6 @@
 
 namespace CppCommon {
 
-inline std::string SourceLocation::to_string() const
-{
-    std::stringstream ss;
-    ss << *this;
-    return ss.str();
-}
-
 inline std::ostream& operator<<(std::ostream& os, const SourceLocation& instance)
 {
     if ((instance.filename() == nullptr) || (instance.line() == 0))

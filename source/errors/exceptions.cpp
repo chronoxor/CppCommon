@@ -12,6 +12,20 @@
 
 namespace CppCommon {
 
+const char* Exception::what() const noexcept
+{
+    try
+    {
+        if (_cache.empty())
+            to_string();
+        return _cache.c_str();
+    }
+    catch (...)
+    {
+        return "Out of memory!";
+    }
+}
+
 std::string Exception::to_string() const
 {
     if (_cache.empty())

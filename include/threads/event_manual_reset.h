@@ -80,7 +80,8 @@ public:
         \return 'true' if the event was occurred, 'false' if the event was not occurred
     */
     template <class Rep, class Period>
-    bool TryWaitFor(const std::chrono::duration<Rep, Period>& duration);
+    bool TryWaitFor(const std::chrono::duration<Rep, Period>& duration)
+    { return TryLockFor(std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count()); }
     //! Try to wait the event until the given timestamp
     /*!
         Will block until the given timestamp in the worst case.
@@ -89,7 +90,8 @@ public:
         \return 'true' if the event was occurred, 'false' if the event was not occurred
     */
     template <class Clock, class Duration>
-    bool TryWaitUntil(const std::chrono::time_point<Clock, Duration>& timestamp);
+    bool TryWaitUntil(const std::chrono::time_point<Clock, Duration>& timestamp)
+    { return TryLockFor(timestamp - std::chrono::high_resolution_clock::now()); }
 
     //! Try to wait the event with block
     /*!
@@ -105,7 +107,5 @@ private:
 /*! \example threads_event_manual_reset.cpp Manual-reset event synchronization primitive example */
 
 } // namespace CppCommon
-
-#include "event_manual_reset.inl"
 
 #endif // CPPCOMMON_THREADS_EVENT_MANUAL_RESET_H
