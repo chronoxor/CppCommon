@@ -15,7 +15,7 @@ using namespace CppCommon;
 TEST_CASE("Manual-reset event", "[CppCommon][Threads]")
 {
     int concurrency = 8;
-    std::atomic<int> count = 0;
+    std::atomic<int> count(0);
 
     EventManualReset event;
 
