@@ -44,7 +44,7 @@ TEST_CASE("Semaphore locker", "[CppCommon][Threads]")
 {
     int items_to_produce = 10000;
     int producers_count = 8;
-    std::atomic<int> crc = 0;
+    std::atomic<int> crc(0);
 
     Semaphore lock(4);
 

@@ -38,7 +38,7 @@ TEST_CASE("Latch single thread", "[CppCommon][Threads]")
 TEST_CASE("Latch one thread to wait for multiple threads", "[CppCommon][Threads]")
 {
     int concurrency = 8;
-    std::atomic<int> count = 0;
+    std::atomic<int> count(0);
     Latch latch(concurrency);
 
     // Start some threads
@@ -72,7 +72,7 @@ TEST_CASE("Latch one thread to wait for multiple threads", "[CppCommon][Threads]
 TEST_CASE("Latch multiple threads to wait for the one initialization thread", "[CppCommon][Threads]")
 {
     int concurrency = 8;
-    std::atomic<int> count = 0;
+    std::atomic<int> count(0);
 
     Latch latch(1);
 
