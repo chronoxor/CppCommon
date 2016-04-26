@@ -77,21 +77,21 @@ class SystemException : public Exception
 public:
     //! Create system exception based on the last system error code
     SystemException()
-        : this(SystemError::GetLast())
+        : SystemException(SystemError::GetLast())
     {}
     //! Create system exception based on the given system error code
     /*!
         \param error - System error code
     */
     SystemException(int error)
-        : this(SystemError::to_string(error), error)
+        : SystemException(SystemError::to_string(error), error)
     {}
     //! Create system exception based on the given exception message
     /*!
         \param message - Exception message
     */
     SystemException(const std::string& message)
-        : this(message, SystemError::GetLast())
+        : SystemException(message, SystemError::GetLast())
     {}
     //! Create system exception based on the given exception message and system error code
     /*!
