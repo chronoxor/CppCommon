@@ -25,6 +25,7 @@
 #endif
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 #include <signal.h>
+#include <unistd.h>
 #endif
 
 namespace CppCommon {
