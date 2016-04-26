@@ -11,6 +11,7 @@
 
 #include <cfloat>
 #include <csignal>
+#include <exception>
 #include <iostream>
 #include <string>
 #include <thread>
