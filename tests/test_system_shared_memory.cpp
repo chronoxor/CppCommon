@@ -12,7 +12,7 @@ using namespace CppCommon;
 
 TEST_CASE("Shared memory manager", "[CppCommon][System]")
 {
-    const char* name = "test";
+    const char* name = "shared_memory_test";
     const char* message = "shared message";
     int size = 14;
 

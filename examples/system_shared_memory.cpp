@@ -15,7 +15,7 @@
 int main(int argc, char** argv)
 {
     // Create or open a shared memory buffer
-    CppCommon::SharedMemory buffer("mybuffer", 1024);
+    CppCommon::SharedMemory buffer("shared_memory_example", 1024);
     if (buffer.owner())
         std::cout << "SharedMemory created!" << std::endl;
     else
