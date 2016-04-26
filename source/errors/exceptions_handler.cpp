@@ -68,6 +68,12 @@ public:
         // Catch a termination request
         signal(SIGTERM, SigtermHandler);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
+        // Catch terminate() calls
+        set_terminate(TerminateHandler);
+
+        // Catch unexpected() calls
+        set_unexpected(UnexpectedHandler);
+
         // Prepare signal action structure
         struct sigaction sa;
         memset(&sa, 0, sizeof(sa));
@@ -545,6 +551,21 @@ private:
 
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 
+    // terminate() call handler
+    static void __cdecl TerminateHandler()
+    {
+        // Output error
+        OutputError(__LOCATION__ + SystemException("Abnormal program termination (terminate() function was called)"), StackTrace(1));
+    }
+
+    // unexpected() call handler
+    static void __cdecl UnexpectedHandler()
+    {
+        // Output error
+        OutputError(__LOCATION__ + SystemException("Unexpected error (unexpected() function was called)"), StackTrace(1));
+    }
+
+    // Signal handler
     static void SignalHanlder(int signo, siginfo_t* info, void* context)
     {
         // Output error
