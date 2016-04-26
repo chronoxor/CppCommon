@@ -23,9 +23,9 @@ TEST_CASE("Spin barrier single thread", "[CppCommon][Threads]")
 TEST_CASE("Spin barrier multiple threads", "[CppCommon][Threads]")
 {
     int concurrency = 8;
-    std::atomic<bool> failed = false;
-    std::atomic<int> count = 0;
-    std::atomic<int> last = 0;
+    std::atomic<bool> failed(false);
+    std::atomic<int> count(0);
+    std::atomic<int> last(0);
 
     SpinBarrier barrier(concurrency);
 
