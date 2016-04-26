@@ -59,7 +59,7 @@ void GenerateSIGFPE()
     float a = 1;
     float b = 0;
     float c = a / b;
-    c = 0;
+    a = c;
 }
 
 void GenerateSIGILL()
