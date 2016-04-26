@@ -39,7 +39,7 @@ public:
         result = pthread_cond_init(&_cond, nullptr);
         if (result != 0)
             throwex SystemException("Failed to initialize a conditional variable for the auto-reset event!", result);
-        _signaled = signaled;
+        _signaled = signaled ? 1 : 0;
 #endif
     }
 
@@ -67,7 +67,7 @@ public:
         int result = pthread_mutex_lock(&_mutex);
         if (result != 0)
             throwex SystemException("Failed to lock a mutex for the auto-reset event!", result);
-        _signaled = true;
+        ++_signaled;
         result = pthread_mutex_unlock(&_mutex);
         if (result != 0)
             throwex SystemException("Failed to unlock a mutex for the auto-reset event!", result);
@@ -88,7 +88,8 @@ public:
         int result = pthread_mutex_lock(&_mutex);
         if (result != 0)
             throwex SystemException("Failed to lock a mutex for the auto-reset event!", result);
-        bool signaled = _signaled;
+        bool signaled = (_signaled-- > 0);
+        _signaled = (_signaled < 0) ? 0 : _signaled;
         result = pthread_mutex_unlock(&_mutex);
         if (result != 0)
             throwex SystemException("Failed to unlock a mutex for the auto-reset event!", result);
@@ -117,9 +118,9 @@ public:
             if ((result != 0) && (result != ETIMEDOUT))
                 throwex SystemException("Failed to timeout waiting a conditional variable for the auto-reset event!", result);
             if (result == ETIMEDOUT)
-                signaled = _signaled;
+                signaled = (_signaled > 0);
         }
-        _signaled = false;
+        _signaled = (_signaled > 0) ? (_signaled - 1) : 0;
         result = pthread_mutex_unlock(&_mutex);
         if (result != 0)
             throwex SystemException("Failed to unlock a mutex for the auto-reset event!", result);
@@ -143,7 +144,7 @@ public:
             if ((result != 0) && (result != ETIMEDOUT))
                 throwex SystemException("Failed to waiting a conditional variable for the auto-reset event!", result);
         }
-        _signaled = false;
+        _signaled = (_signaled > 0) ? (_signaled - 1) : 0;
         result = pthread_mutex_unlock(&_mutex);
         if (result != 0)
             throwex SystemException("Failed to unlock a mutex for the auto-reset event!", result);
@@ -156,7 +157,7 @@ private:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     pthread_mutex_t _mutex;
     pthread_cond_t _cond;
-    bool _signaled;
+    int _signaled;
 #endif
 };
 
