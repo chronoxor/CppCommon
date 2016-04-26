@@ -7,7 +7,7 @@
 */
 
 namespace CppCommon {
-
+/*
 template <class Rep, class Period>
 inline bool EventAutoReset::TryLockFor(const std::chrono::duration<Rep, Period>& duration)
 {
@@ -19,5 +19,5 @@ inline bool EventAutoReset::TryLockUntil(const std::chrono::time_point<Clock, Du
 {
     return TryLockFor(timestamp - std::chrono::high_resolution_clock::now());
 }
-
+*/
 } // namespace CppCommon
