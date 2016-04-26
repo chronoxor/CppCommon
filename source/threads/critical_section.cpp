@@ -30,16 +30,16 @@ public:
         pthread_mutexattr_t attribute;
         int result = pthread_mutexattr_init(&attribute);
         if (result != 0)
-            throwex SystemException(result, "Failed to initialize a mutex attribute!");
+            throwex SystemException("Failed to initialize a mutex attribute!", result);
         result = pthread_mutexattr_settype(&attribute, PTHREAD_MUTEX_RECURSIVE);
         if (result != 0)
-            throwex SystemException(result, "Failed to set a mutex recursive attribute!");
+            throwex SystemException("Failed to set a mutex recursive attribute!", result);
         result = pthread_mutex_init(&_lock, &attribute);
         if (result != 0)
-            throwex SystemException(result, "Failed to initialize a mutex!");
+            throwex SystemException("Failed to initialize a mutex!", result);
         result = pthread_mutexattr_destroy(&attribute);
         if (result != 0)
-            throwex SystemException(result, "Failed to destroy a mutex attribute!");
+            throwex SystemException("Failed to destroy a mutex attribute!", result);
 #endif
     }
 
@@ -61,7 +61,7 @@ public:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = pthread_mutex_trylock(&_lock);
         if ((result != 0) && (result != EBUSY))
-            throwex SystemException(result, "Failed to try lock a mutex!");
+            throwex SystemException("Failed to try lock a mutex!", result);
         return (result == 0);
 #endif
     }
@@ -73,7 +73,7 @@ public:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = pthread_mutex_lock(&_lock);
         if (result != 0)
-            throwex SystemException(result, "Failed to lock a mutex!");
+            throwex SystemException("Failed to lock a mutex!", result);
 #endif
     }
 
@@ -84,7 +84,7 @@ public:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = pthread_mutex_unlock(&_lock);
         if (result != 0)
-            throwex SystemException(result, "Failed to unlock a mutex!");
+            throwex SystemException("Failed to unlock a mutex!", result);
 #endif
     }
 

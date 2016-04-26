@@ -34,7 +34,7 @@ public:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = pthread_barrier_init(&_barrier, nullptr, threads);
         if (result != 0)
-            throwex SystemException(result, "Failed to initialize a synchronization barrier!");
+            throwex SystemException("Failed to initialize a synchronization barrier!", result);
 #endif
     }
 
@@ -56,7 +56,7 @@ public:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = pthread_barrier_wait(&_barrier);
         if ((result != PTHREAD_BARRIER_SERIAL_THREAD) && (result != 0))
-            throwex SystemException(result, "Failed to wait at a synchronization barrier!");
+            throwex SystemException("Failed to wait at a synchronization barrier!", result);
         return (result == PTHREAD_BARRIER_SERIAL_THREAD);
 #endif
     }

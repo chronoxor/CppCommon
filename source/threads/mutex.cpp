@@ -35,7 +35,7 @@ public:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = pthread_mutex_init(&_mutex, nullptr);
         if (result != 0)
-            throwex SystemException(result, "Failed to initialize a mutex!");
+            throwex SystemException("Failed to initialize a mutex!", result);
 #endif
     }
 
@@ -61,7 +61,7 @@ public:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = pthread_mutex_trylock(&_mutex);
         if ((result != 0) && (result != EBUSY))
-            throwex SystemException(result, "Failed to try lock a mutex!");
+            throwex SystemException("Failed to try lock a mutex!", result);
         return (result == 0);
 #endif
     }
@@ -79,7 +79,7 @@ public:
         timeout.tv_nsec = nanoseconds % 1000000000;
         int result = pthread_mutex_timedlock(&_mutex, &timeout);
         if ((result != 0) && (result != ETIMEDOUT))
-            throwex SystemException(result, "Failed to try lock a mutex for the given timeout!");
+            throwex SystemException("Failed to try lock a mutex for the given timeout!", result);
         return (result == 0);
 #endif
     }
@@ -93,7 +93,7 @@ public:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = pthread_mutex_lock(&_mutex);
         if (result != 0)
-            throwex SystemException(result, "Failed to lock a mutex!");
+            throwex SystemException("Failed to lock a mutex!", result);
 #endif
     }
 
@@ -105,7 +105,7 @@ public:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = pthread_mutex_unlock(&_mutex);
         if (result != 0)
-            throwex SystemException(result, "Failed to unlock a mutex!");
+            throwex SystemException("Failed to unlock a mutex!", result);
 #endif
     }
 
