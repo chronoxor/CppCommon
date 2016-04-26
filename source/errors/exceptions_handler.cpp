@@ -13,6 +13,7 @@
 #include "system/timestamp.h"
 
 #include <cstring>
+#include <exception>
 #include <iostream>
 
 #if defined(_WIN32) || defined(_WIN64)
@@ -69,10 +70,10 @@ public:
         signal(SIGTERM, SigtermHandler);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         // Catch terminate() calls
-        set_terminate(TerminateHandler);
+        set::set_terminate(TerminateHandler);
 
         // Catch unexpected() calls
-        set_unexpected(UnexpectedHandler);
+        set::set_unexpected(UnexpectedHandler);
 
         // Prepare signal action structure
         struct sigaction sa;
@@ -552,14 +553,14 @@ private:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 
     // terminate() call handler
-    static void __cdecl TerminateHandler()
+    static void TerminateHandler()
     {
         // Output error
         OutputError(__LOCATION__ + SystemException("Abnormal program termination (terminate() function was called)"), StackTrace(1));
     }
 
     // unexpected() call handler
-    static void __cdecl UnexpectedHandler()
+    static void UnexpectedHandler()
     {
         // Output error
         OutputError(__LOCATION__ + SystemException("Unexpected error (unexpected() function was called)"), StackTrace(1));
