@@ -49,7 +49,7 @@ public:
     const SourceLocation& location() const noexcept { return _location; }
 
     //! Get string identifying exception
-    const char* what() const override;
+    const char* what() const noexcept override;
 
     //! Get string from the current exception
     virtual std::string to_string() const;

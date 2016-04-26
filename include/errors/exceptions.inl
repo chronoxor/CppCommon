@@ -8,11 +8,18 @@
 
 namespace CppCommon {
 
-inline const char* Exception::what() const
+inline const char* Exception::what() const noexcept
 {
-    if (_cache.empty())
-        to_string();
-    return _cache.c_str();
+    try
+    {
+        if (_cache.empty())
+            to_string();
+        return _cache.c_str();
+    }
+    catch (...)
+    {
+        return "Out of memory!";
+    }
 }
 
 template<class T>
