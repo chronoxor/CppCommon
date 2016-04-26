@@ -57,7 +57,7 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
         for (uint64_t i = 0; i < items_to_produce; ++i)
         {
             // Emulate producing
-            for (uint64_t j = 0; j < item_size; ++j)
+            for (int j = 0; j < item_size; ++j)
                 item[j] = (char)j;
 
             // Enqueue using the given waiting strategy
