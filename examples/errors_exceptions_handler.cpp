@@ -95,15 +95,28 @@ void GenerateUnexpected()
     unexpected();
 }
 
-void GenerateSEH()
+void GenerateExceptionThrow()
 {
-    int* p = nullptr;
-#pragma warning(push)
-// VS 6011: dereferencing NULL pointer <name>
-#pragma warning(disable: 6011)
-    *p = 0;
-#pragma warning(pop)
+    throw std::exception("My exception");
 }
+
+#if defined(_WIN32) || defined(_WIN64)
+void GenerateInvalidParameter()
+{
+    char* format = nullptr;
+    printf(format);
+}
+
+#pragma warning(push)
+// VS 4717: 'function' : recursive on all control paths, function will cause runtime stack overflow
+#pragma warning(disable: 4717)
+void GenerateRecurseAlloc()
+{
+    char* buffer = new char[0x1FFFFFFF];
+    buffer;
+    GenerateRecurseAlloc();
+}
+#pragma warning(pop)
 
 class Base;
 
@@ -132,29 +145,16 @@ void GeneratePureVirtualMethodCall()
     Derived derived;
 }
 
-void GenerateInvalidParameter()
+void GenerateSEH()
 {
-    char* format = nullptr;
-    printf(format);
-}
-
+    int* p = nullptr;
 #pragma warning(push)
-// VS 4717: 'function' : recursive on all control paths, function will cause runtime stack overflow
-#pragma warning(disable: 4717)
-void GenerateRecurseAlloc()
-{
-    char* buffer = new char[0x1FFFFFFF];
-    buffer;
-    GenerateRecurseAlloc();
-}
+// VS 6011: dereferencing NULL pointer <name>
+#pragma warning(disable: 6011)
+    *p = 0;
 #pragma warning(pop)
-
-void GenerateCppException()
-{
-    throw std::exception("My exception");
 }
 
-#if defined(_WIN32) || defined(_WIN64)
 void GenerateRaiseException()
 {
     RaiseException(123, EXCEPTION_NONCONTINUABLE, 0, nullptr);
@@ -193,21 +193,21 @@ void GenerateCustomException(int type)
             GenerateUnexpected();
             break;
         case 10:
-            GenerateSEH();
-            break;
-        case 11:
-            GeneratePureVirtualMethodCall();
-            break;
-        case 12:
-            GenerateInvalidParameter();
-            break;
-        case 13:
-            GenerateRecurseAlloc();
-            break;
-        case 14:
-            GenerateCppException();
+            GenerateExceptionThrow();
             break;
 #if defined(_WIN32) || defined(_WIN64)
+        case 11:
+            GenerateInvalidParameter();
+            break;
+        case 12:
+            GenerateRecurseAlloc();
+            break;
+        case 13:
+            GeneratePureVirtualMethodCall();
+            break;
+        case 14:
+            GenerateSEH();
+            break;
         case 15:
             GenerateRaiseException();
             break;
@@ -248,12 +248,12 @@ int main(int argc, char** argv)
     std::cout << "7 - exit" << std::endl;
     std::cout << "8 - terminate" << std::endl;
     std::cout << "9 - unexpected" << std::endl;
-    std::cout << "10 - SEH exception" << std::endl;
-    std::cout << "11 - pure virtual method call" << std::endl;
-    std::cout << "12 - invalid parameter" << std::endl;
-    std::cout << "13 - new operator fault" << std::endl;
-    std::cout << "14 - throw C++ exception" << std::endl;
+    std::cout << "10 - exception throw" << std::endl;
 #if defined(_WIN32) || defined(_WIN64)
+    std::cout << "11 - invalid parameter" << std::endl;
+    std::cout << "12 - new operator fault" << std::endl;
+    std::cout << "13 - pure virtual method call" << std::endl;
+    std::cout << "14 - SEH exception" << std::endl;
     std::cout << "15 - RaiseException()" << std::endl;
 #endif
     std::cout << "Choose an exception type: ";
