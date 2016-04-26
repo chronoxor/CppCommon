@@ -12,8 +12,8 @@ using namespace CppCommon;
 
 TEST_CASE("Shared memory manager", "[CppCommon][System]")
 {
-    char* name = "test";
-    char* message = "shared message";
+    const char* name = "test";
+    const char* message = "shared message";
     int size = 14;
 
     // Create new shared memory manager with the given name and size

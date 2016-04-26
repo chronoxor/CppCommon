@@ -15,7 +15,7 @@ TEST_CASE("Named semaphore locker", "[CppCommon][Threads]")
 {
     int items_to_produce = 10000;
     int producers_count = 8;
-    std::atomic<int> crc = 0;
+    std::atomic<int> crc(0);
 
     // Caclulate result value
     int result = 0;
