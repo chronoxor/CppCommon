@@ -79,7 +79,8 @@ public:
         \return 'true' if the spin-lock was successfully acquired, 'false' if the spin-lock is busy
     */
     template <class Rep, class Period>
-    bool TryLockFor(const std::chrono::duration<Rep, Period>& duration) noexcept;
+    bool TryLockFor(const std::chrono::duration<Rep, Period>& duration) noexcept
+    { return TryLockFor(std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count()); }
     //! Try to acquire spin-lock until the given timestamp
     /*!
         Will block until the given timestamp in the worst case.
@@ -88,7 +89,8 @@ public:
         \return 'true' if the spin-lock was successfully acquired, 'false' if the spin-lock is busy
     */
     template <class Clock, class Duration>
-    bool TryLockUntil(const std::chrono::time_point<Clock, Duration>& timestamp) noexcept;
+    bool TryLockUntil(const std::chrono::time_point<Clock, Duration>& timestamp) noexcept
+    { return TryLockFor(timestamp - std::chrono::high_resolution_clock::now()); }
 
     //! Acquire spin-lock with block
     /*!

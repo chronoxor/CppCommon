@@ -49,7 +49,7 @@ public:
     /*!
         \return Last system error message
     */
-    static std::string to_string();
+    static std::string to_string() { return to_string(GetLast()); }
     //! Convert the given system error code to the system error message
     /*!
         \param error - System error code
@@ -61,7 +61,5 @@ public:
 /*! \example errors_system_error.cpp System error wrapper example */
 
 } // namespace CppCommon
-
-#include "system_error.inl"
 
 #endif // CPPCOMMON_ERRORS_SYSTEM_ERROR_H

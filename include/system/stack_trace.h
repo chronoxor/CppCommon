@@ -40,7 +40,8 @@ public:
         int line;               //!< Frame line number
 
         //! Get string from the current stack trace frame
-        std::string to_string() const;
+        std::string to_string() const
+        { std::stringstream ss; ss << *this; return ss.str(); }
 
         //! Output stack trace frame into the given output stream
         friend std::ostream& operator<<(std::ostream& os, const Frame& instance);
@@ -63,7 +64,8 @@ public:
     const std::vector<Frame>& frames() const noexcept { return _frames; }
 
     //! Get string from the current stack trace snapshot
-    std::string to_string() const;
+    std::string to_string() const
+    { std::stringstream ss; ss << *this; return ss.str(); }
 
     //! Output stack trace into the given output stream
     friend std::ostream& operator<<(std::ostream& os, const StackTrace& instance);
@@ -75,7 +77,5 @@ private:
 /*! \example system_stack_trace.cpp Stack trace snapshot provider example */
 
 } // namespace CppCommon
-
-#include "stack_trace.inl"
 
 #endif // CPPCOMMON_SYSTEM_STACK_TRACE_H

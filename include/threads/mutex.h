@@ -61,7 +61,8 @@ public:
         \return 'true' if the mutex was successfully acquired, 'false' if the mutex is busy
     */
     template <class Rep, class Period>
-    bool TryLockFor(const std::chrono::duration<Rep, Period>& duration);
+    bool TryLockFor(const std::chrono::duration<Rep, Period>& duration)
+    { return TryLockFor(std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count()); }
     //! Try to acquire mutex until the given timestamp
     /*!
         Will block until the given timestamp in the worst case.
@@ -70,7 +71,8 @@ public:
         \return 'true' if the mutex was successfully acquired, 'false' if the mutex is busy
     */
     template <class Clock, class Duration>
-    bool TryLockUntil(const std::chrono::time_point<Clock, Duration>& timestamp);
+    bool TryLockUntil(const std::chrono::time_point<Clock, Duration>& timestamp)
+    { return TryLockFor(timestamp - std::chrono::high_resolution_clock::now()); }
 
     //! Acquire mutex with block
     /*!
@@ -92,7 +94,5 @@ private:
 /*! \example threads_mutex.cpp Mutex synchronization primitive example */
 
 } // namespace CppCommon
-
-#include "mutex.inl"
 
 #endif // CPPCOMMON_THREADS_MUTEX_H

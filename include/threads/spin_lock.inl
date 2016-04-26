@@ -46,18 +46,6 @@ inline bool SpinLock::TryLockFor(int64_t nanoseconds) noexcept
     return false;
 }
 
-template <class Rep, class Period>
-inline bool SpinLock::TryLockFor(const std::chrono::duration<Rep, Period>& duration) noexcept
-{
-    return TryLockFor(std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count());
-}
-
-template <class Clock, class Duration>
-inline bool SpinLock::TryLockUntil(const std::chrono::time_point<Clock, Duration>& timestamp) noexcept
-{
-    return TryLockFor(timestamp - std::chrono::high_resolution_clock::now());
-}
-
 inline void SpinLock::Lock() noexcept
 {
     while (_lock.exchange(true, std::memory_order_acquire));

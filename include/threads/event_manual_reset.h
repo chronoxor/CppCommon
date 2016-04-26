@@ -108,6 +108,4 @@ private:
 
 } // namespace CppCommon
 
-#include "event_manual_reset.inl"
-
 #endif // CPPCOMMON_THREADS_EVENT_MANUAL_RESET_H

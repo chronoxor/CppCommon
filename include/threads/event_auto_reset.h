@@ -100,6 +100,4 @@ private:
 
 } // namespace CppCommon
 
-#include "event_auto_reset.inl"
-
 #endif // CPPCOMMON_THREADS_EVENT_AUTO_RESET_H
