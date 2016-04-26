@@ -557,6 +557,9 @@ private:
     {
         // Output error
         OutputError(__LOCATION__ + SystemException("Abnormal program termination (terminate() function was called)"), StackTrace(1));
+
+        // Terminate process
+        kill(getpid(), SIGKILL);
     }
 
     // unexpected() call handler
@@ -564,6 +567,9 @@ private:
     {
         // Output error
         OutputError(__LOCATION__ + SystemException("Unexpected error (unexpected() function was called)"), StackTrace(1));
+
+        // Terminate process
+        kill(getpid(), SIGKILL);
     }
 
     // Signal handler
@@ -624,6 +630,9 @@ private:
                 OutputError(__LOCATION__ + SystemException("Caught unknown signal - " + std::to_string(signo)), StackTrace(1));
                 break;
         }
+
+        // Terminate process
+        kill(getpid(), SIGKILL);
     }
 
 #endif
