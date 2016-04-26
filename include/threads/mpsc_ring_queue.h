@@ -13,6 +13,7 @@
 #include "threads/spin_lock.h"
 #include "threads/spsc_ring_queue.h"
 
+#include <cstdio>
 #include <memory>
 #include <thread>
 #include <vector>
