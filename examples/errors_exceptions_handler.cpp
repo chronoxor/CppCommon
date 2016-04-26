@@ -28,6 +28,7 @@ void GenerateSIGFPE()
 {
     // Code taken from http://www.devx.com/cplus/Article/34993/1954
 
+#if defined(_WIN32) || defined(_WIN64)
     // Set the x86 floating-point control word according to what
     // exceptions you want to trap. Always call _clearfp before
     // setting the control word
@@ -52,6 +53,7 @@ void GenerateSIGFPE()
     // MCW_EM is defined in float.h.
     // Restore the original value when done:
     // _controlfp(cwOriginal, MCW_EM);
+#endif
 
     // Divide by zero
     float a = 1;
@@ -71,7 +73,7 @@ void GenerateSIGINT()
 }
 
 void GenerateSIGSEGV()
-{
+7{
     raise(SIGSEGV);
 }
 
