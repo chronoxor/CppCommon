@@ -59,7 +59,7 @@ void GenerateSIGFPE()
     float a = 1;
     float b = 0;
     float c = a / b;
-    c;
+    c = 0;
 }
 
 void GenerateSIGILL()
@@ -73,7 +73,7 @@ void GenerateSIGINT()
 }
 
 void GenerateSIGSEGV()
-7{
+{
     raise(SIGSEGV);
 }
 
