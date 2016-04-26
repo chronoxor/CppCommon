@@ -75,19 +75,30 @@ class RuntimeException : public Exception {};
 class SystemException : public Exception
 {
 public:
-    //! Default class constructor
-    /*!
-        \param message - Exception message (default is "")
-    */
-    SystemException(const std::string& message = "")
-        : SystemException(SystemError::GetLast(), message)
+    //! Create system exception based on the last system error code
+    SystemException()
+        : this(SystemError::GetLast())
     {}
     //! Create system exception based on the given system error code
     /*!
         \param error - System error code
-        \param message - Exception message (default is "")
     */
-    SystemException(int error, const std::string& message = "")
+    SystemException(int error)
+        : this(SystemError::to_string(error), error)
+    {}
+    //! Create system exception based on the given exception message
+    /*!
+        \param message - Exception message
+    */
+    SystemException(const std::string& message)
+        : this(message, SystemError::GetLast())
+    {}
+    //! Create system exception based on the given exception message and system error code
+    /*!
+        \param message - Exception message
+        \param error - System error code
+    */
+    SystemException(const std::string& message, int error)
         : Exception(message),
           _system_error(error),
           _system_message(SystemError::to_string(error))

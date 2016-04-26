@@ -39,7 +39,7 @@ public:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = sem_init(&_semaphore, 0, resources);
         if (result != 0)
-            throwex SystemException(result, "Failed to initialize a semaphore!");
+            throwex SystemException("Failed to initialize a semaphore!");
 #endif
     }
 
@@ -51,7 +51,7 @@ public:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = sem_destroy(&_semaphore);
         if (result != 0)
-            fatality("Failed to destroy a semaphore!", result);
+            fatality("Failed to destroy a semaphore!");
 #endif
     }
 
@@ -64,8 +64,8 @@ public:
         return (result == WAIT_OBJECT_0);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = sem_trywait(&_semaphore);
-        if ((result != 0) && (result != EAGAIN))
-            throwex SystemException(result, "Failed to try lock a semaphore!");
+        if ((result != 0) && (errno != EAGAIN))
+            throwex SystemException("Failed to try lock a semaphore!");
         return (result == 0);
 #endif
     }
@@ -82,8 +82,8 @@ public:
         timeout.tv_sec = nanoseconds / 1000000000;
         timeout.tv_nsec = nanoseconds % 1000000000;
         int result = sem_timedwait(&_semaphore, &timeout);
-        if ((result != 0) && (result != ETIMEDOUT))
-            throwex SystemException(result, "Failed to try lock a semaphore for the given timeout!");
+        if ((result != 0) && (errno != ETIMEDOUT))
+            throwex SystemException("Failed to try lock a semaphore for the given timeout!");
         return (result == 0);
 #endif
     }
@@ -97,7 +97,7 @@ public:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = sem_wait(&_semaphore);
         if (result != 0)
-            throwex SystemException(result, "Failed to lock a semaphore!");
+            throwex SystemException("Failed to lock a semaphore!");
 #endif
     }
 
@@ -109,7 +109,7 @@ public:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = sem_post(&_semaphore);
         if (result != 0)
-            throwex SystemException(result, "Failed to unlock a semaphore!");
+            throwex SystemException("Failed to unlock a semaphore!");
 #endif
     }
 

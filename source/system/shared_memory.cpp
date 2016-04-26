@@ -65,7 +65,7 @@ public:
         }
         int result = ftruncate(_shared, total);
         if (result != 0)
-            throwex SystemException(result, "Failed to truncate a shared memory handler!");
+            throwex SystemException("Failed to truncate a shared memory handler!");
         _ptr = mmap(nullptr, total, (PROT_READ | PROT_WRITE), MAP_SHARED, _shared, 0);
         if (_ptr == MAP_FAILED)
         {
@@ -115,7 +115,7 @@ public:
         size_t total = ((SharedMemoryHeader*)_ptr)->size + SHARED_MEMORY_HEADER_SIZE;
         int result = munmap(_ptr, total);
         if (result != 0)
-            fatality("Failed to unmap a shared memory buffer!", result);
+            fatality("Failed to unmap a shared memory buffer!");
         result = close(_shared);
         if (result != 0)
             fatality("Failed to close a shared memory handler!");
