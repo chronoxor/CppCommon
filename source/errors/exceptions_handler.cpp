@@ -70,10 +70,10 @@ public:
         signal(SIGTERM, SigtermHandler);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         // Catch terminate() calls
-        set::set_terminate(TerminateHandler);
+        std::set_terminate(TerminateHandler);
 
         // Catch unexpected() calls
-        set::set_unexpected(UnexpectedHandler);
+        std::set_unexpected(UnexpectedHandler);
 
         // Prepare signal action structure
         struct sigaction sa;
