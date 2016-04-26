@@ -90,17 +90,17 @@ void GenerateExit()
 
 void GenerateTerminate()
 {
-    terminate();
+    std::terminate();
 }
 
 void GenerateUnexpected()
 {
-    unexpected();
+    std::unexpected();
 }
 
 void GenerateExceptionThrow()
 {
-    throw std::exception("My exception");
+    throw std::exception();
 }
 
 #if defined(_WIN32) || defined(_WIN64)
