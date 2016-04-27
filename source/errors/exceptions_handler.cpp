@@ -70,20 +70,11 @@ public:
         // Catch a termination request
         signal(SIGTERM, SigtermHandler);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        // Catch terminate() calls
-        _old_terminate_hander = std::set_terminate(TerminateHandler);
-
-        // Catch unexpected() calls
-        _old_unexpected_hander = std::set_unexpected(UnexpectedHandler);
-
         // Prepare signal action structure
         struct sigaction sa;
         memset(&sa, 0, sizeof(sa));
         sa.sa_sigaction = SignalHanlder;
         sa.sa_flags = SA_SIGINFO;
-
-        // Clear old signal handlers
-        memset(_old_signal_hanlders, 0, sizeof(_old_signal_hanlders));
 
         // Define signals to catch
         int signals[] =
@@ -109,7 +100,7 @@ public:
         // Setup corresponding signals handlers
         for (size_t i = 0; i < sizeof(signals) / sizeof(signals[0]); ++i)
         {
-            int result = sigaction(signals[i], &sa, &_old_signal_hanlders[i]);
+            int result = sigaction(signals[i], &sa, nullptr);
             if (result != 0)
                 throwex SystemException("Failed to setup signal handler - " + std::to_string(signals[i]));
         }
@@ -520,36 +511,6 @@ private:
 
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 
-    static std::terminate_handler  _old_terminate_hander;
-    static std::unexpected_handler _old_unexpected_hander;
-    static struct sigaction        _old_signal_hanlders[64];
-
-    // terminate() call handler
-    static void TerminateHandler()
-    {
-        // Output error
-        OutputError(__LOCATION__ + SystemException("Abnormal program termination (terminate() function was called)"), StackTrace(1));
-
-        // Call the old handler or terminate process
-        if (_old_terminate_hander != nullptr)
-            _old_terminate_hander();
-        else
-            kill(getpid(), SIGKILL);
-    }
-
-    // unexpected() call handler
-    static void UnexpectedHandler()
-    {
-        // Output error
-        OutputError(__LOCATION__ + SystemException("Unexpected error (unexpected() function was called)"), StackTrace(1));
-
-        // Call the old handler or terminate process
-        if (_old_unexpected_hander != nullptr)
-            _old_unexpected_hander();
-        else
-            kill(getpid(), SIGKILL);
-    }
-
     // Signal handler
     static void SignalHanlder(int signo, siginfo_t* info, void* context)
     {
@@ -609,11 +570,15 @@ private:
                 break;
         }
 
-        // Call the old handler or terminate process
-        if (_old_signal_hanlders[signo].sa_sigaction != nullptr)
-            _old_signal_hanlders[signo].sa_sigaction(signo, info, context);
-        else if (_old_signal_hanlders[signo].sa_handler != nullptr)
-            _old_signal_hanlders[signo].sa_handler(signo);
+        // Prepare signal action structure
+        struct sigaction sa;
+        memset(&sa, 0, sizeof(sa));
+        sa.sa_handler = SIG_DFL;
+
+        // Setup the default signal handler and rise it!
+        int result = sigaction(signo, &sa, nullptr);
+        if (result == 0)
+            raise(signo);
         else
             kill(getpid(), SIGKILL);
     }
