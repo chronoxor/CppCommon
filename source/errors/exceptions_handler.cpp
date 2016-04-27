@@ -107,7 +107,7 @@ public:
         };
 
         // Setup corresponding signals handlers
-        for (int i = 0; i < sizeof(signals) / sizeof(signals[0]); ++i)
+        for (size_t i = 0; i < sizeof(signals) / sizeof(signals[0]); ++i)
         {
             int result = sigaction(signals[i], &sa, &_old_signal_hanlders[i]);
             if (result != 0)
@@ -532,7 +532,7 @@ private:
 
         // Call the old handler or terminate process
         if (_old_terminate_hander != nullptr)
-            _old_terminate_hander()
+            _old_terminate_hander();
         else
             kill(getpid(), SIGKILL);
     }
@@ -545,7 +545,7 @@ private:
 
         // Call the old handler or terminate process
         if (_old_unexpected_hander != nullptr)
-            _old_unexpected_hander()
+            _old_unexpected_hander();
         else
             kill(getpid(), SIGKILL);
     }
