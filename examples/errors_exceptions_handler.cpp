@@ -18,8 +18,6 @@
 
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
-#elif defined(linux) || defined(__linux) || defined(__linux__)
-#include <fenv.h>
 #endif
 
 void GenerateSIGABRT()
@@ -56,15 +54,12 @@ void GenerateSIGFPE()
     // MCW_EM is defined in float.h.
     // Restore the original value when done:
     // _controlfp(cwOriginal, MCW_EM);
-#elif defined(linux) || defined(__linux) || defined(__linux__)
-    feclearexcept(FE_ALL_EXCEPT);
-    fetestexcept(FE_DIVBYZERO | FE_INEXACT | FE_INVALID | FE_OVERFLOW | FE_UNDERFLOW);
 #endif
 
     // Divide by zero
-    float a = 1;
-    float b = 0;
-    float c = a / b;
+    int a = 1;
+    int b = 0;
+    int c = a / b;
     a = c;
 }
 
