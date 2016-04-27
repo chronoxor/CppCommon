@@ -57,10 +57,10 @@ void GenerateSIGFPE()
     // Restore the original value when done:
     // _controlfp(cwOriginal, MCW_EM);
 #elif defined(linux) || defined(__linux) || defined(__linux__)
-    fenv_t newval;
-    fegetenv(&newval);
-    newval.__control_word &= ~(FE_INVALID | FE_DIVBYZERO | FE_OVERFLOW);
-    fesetenv(&newval);
+    fenv_t fenv;
+    fegetenv(&fenv);
+    fenv.__control &= ~(FE_OVERFLOW | FE_UNDERFLOW | FE_ZERODIVIDE | FE_DENORMAL | FE_INVALID);
+    fesetenv(&fenv);
 #endif
 
     // Divide by zero
