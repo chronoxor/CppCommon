@@ -58,7 +58,7 @@ void GenerateSIGFPE()
     // _controlfp(cwOriginal, MCW_EM);
 #elif defined(linux) || defined(__linux) || defined(__linux__)
     feclearexcept(FE_ALL_EXCEPT);
-    fetestexcept(FE_OVERFLOW | FE_UNDERFLOW | FE_ZERODIVIDE | FE_DENORMAL | FE_INVALID);
+    fetestexcept(FE_DIVBYZERO | FE_INEXACT | FE_INVALID | FE_OVERFLOW | FE_UNDERFLOW);
 #endif
 
     // Divide by zero
