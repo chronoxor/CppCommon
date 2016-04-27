@@ -593,10 +593,6 @@ private:
     }
 };
 
-std::terminate_handler ExceptionsHandler::Impl::_old_terminate_hander = nullptr;
-std::unexpected_handler ExceptionsHandler::Impl::_old_unexpected_hander = nullptr;
-struct sigaction ExceptionsHandler::Impl::_old_signal_hanlders[64];
-
 std::unique_ptr<ExceptionsHandler::Impl> ExceptionsHandler::_pimpl(new Impl());
 
 void ExceptionsHandler::SetupProcess()
