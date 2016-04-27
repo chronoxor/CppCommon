@@ -77,7 +77,7 @@ public:
         _old_unexpected_hander = std::set_unexpected(UnexpectedHandler);
 
         // Prepare signal action structure
-        sigaction sa;
+        struct sigaction sa;
         memset(&sa, 0, sizeof(sa));
         sa.sa_sigaction = SignalHanlder;
         sa.sa_flags = SA_SIGINFO;
@@ -520,9 +520,9 @@ private:
 
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 
-    terminate_handler  _old_terminate_hander;
-    unexpected_handler _old_unexpected_hander;
-    sigaction          _old_signal_hanlders[64];
+    std::terminate_handler  _old_terminate_hander;
+    std::unexpected_handler _old_unexpected_hander;
+    struct sigaction        _old_signal_hanlders[64];
 
     // terminate() call handler
     static void TerminateHandler()
