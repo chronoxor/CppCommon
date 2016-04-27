@@ -71,81 +71,48 @@ public:
         signal(SIGTERM, SigtermHandler);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         // Catch terminate() calls
-        std::set_terminate(TerminateHandler);
+        _old_terminate_hander = std::set_terminate(TerminateHandler);
 
         // Catch unexpected() calls
-        std::set_unexpected(UnexpectedHandler);
+        _old_unexpected_hander = std::set_unexpected(UnexpectedHandler);
 
         // Prepare signal action structure
-        struct sigaction sa;
+        sigaction sa;
         memset(&sa, 0, sizeof(sa));
         sa.sa_sigaction = SignalHanlder;
         sa.sa_flags = SA_SIGINFO;
 
-        // Catch an abnormal program termination
-        int result = sigaction(SIGABRT, &sa, NULL);
-        if (result != 0)
-            throwex SystemException("Failed to setup SIGABRT handler!");
-        // Catch an alarm clock
-        result = sigaction(SIGALRM, &sa, NULL);
-        if (result != 0)
-            throwex SystemException("Failed to setup SIGALRM handler!");
-        // Catch a memory access error
-        result = sigaction(SIGBUS, &sa, NULL);
-        if (result != 0)
-            throwex SystemException("Failed to setup SIGBUS handler!");
-        // Catch a floating point exception
-        result = sigaction(SIGFPE, &sa, NULL);
-        if (result != 0)
-            throwex SystemException("Failed to setup SIGFPE handler!");
-        // Catch a hangup instruction
-        result = sigaction(SIGHUP, &sa, NULL);
-        if (result != 0)
-            throwex SystemException("Failed to setup SIGHUP handler!");
-        // Catch an illegal instruction
-        result = sigaction(SIGILL, &sa, NULL);
-        if (result != 0)
-            throwex SystemException("Failed to setup SIGILL handler!");
-        // Catch a terminal interrupt signal
-        result = sigaction(SIGINT, &sa, NULL);
-        if (result != 0)
-            throwex SystemException("Failed to setup SIGINT handler!");
-        // Catch a pipe write error
-        result = sigaction(SIGPIPE, &sa, NULL);
-        if (result != 0)
-            throwex SystemException("Failed to setup SIGPIPE handler!");
-        // Catch a pollable event
-        result = sigaction(SIGPOLL, &sa, NULL);
-        if (result != 0)
-            throwex SystemException("Failed to setup SIGPOLL handler!");
-        // Catch a profiling timer expired error
-        result = sigaction(SIGPROF, &sa, NULL);
-        if (result != 0)
-            throwex SystemException("Failed to setup SIGPROF handler!");
-        // Catch a terminal quit signal
-        result = sigaction(SIGQUIT, &sa, NULL);
-        if (result != 0)
-            throwex SystemException("Failed to setup SIGQUIT handler!");
-        // Catch an illegal storage access error
-        result = sigaction(SIGSEGV, &sa, NULL);
-        if (result != 0)
-            throwex SystemException("Failed to setup SIGSEGV handler!");
-        // Catch a bad system call error
-        result = sigaction(SIGSYS, &sa, NULL);
-        if (result != 0)
-            throwex SystemException("Failed to setup SIGSYS handler!");
-        // Catch a termination request
-        result = sigaction(SIGTERM, &sa, NULL);
-        if (result != 0)
-            throwex SystemException("Failed to setup SIGTERM handler!");
-        // Catch a CPU time limit exceeded error
-        result = sigaction(SIGXCPU, &sa, NULL);
-        if (result != 0)
-            throwex SystemException("Failed to setup SIGXCPU handler!");
-        // Catch a file size limit exceeded error
-        result = sigaction(SIGXFSZ, &sa, NULL);
-        if (result != 0)
-            throwex SystemException("Failed to setup SIGXFSZ handler!");
+        // Clear old signal handlers
+        memset(_old_signal_hanlders, 0, sizeof(_old_signal_hanlders));
+
+        // Define signals to catch
+        int signals[] =
+        {
+            SIGABRT,
+            SIGALRM,
+            SIGBUS,
+            SIGFPE,
+            SIGHUP,
+            SIGILL,
+            SIGINT,
+            SIGPIPE,
+            SIGPOLL,
+            SIGPROF,
+            SIGQUIT,
+            SIGSEGV,
+            SIGSYS,
+            SIGTERM,
+            SIGXCPU,
+            SIGXFSZ
+        };
+
+        // Setup corresponding signals handlers
+        for (int i = 0; i < sizeof(signals) / sizeof(signals[0]); ++i)
+        {
+            int result = sigaction(signals[i], &sa, &_old_signal_hanlders[i]);
+            if (result != 0)
+                throwex SystemException("Failed to setup signal handler - " + std::to_string(signals[i]));
+        }
 #endif
 
         _initialized = true;
@@ -553,14 +520,21 @@ private:
 
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 
+    terminate_handler  _old_terminate_hander;
+    unexpected_handler _old_unexpected_hander;
+    sigaction          _old_signal_hanlders[64];
+
     // terminate() call handler
     static void TerminateHandler()
     {
         // Output error
         OutputError(__LOCATION__ + SystemException("Abnormal program termination (terminate() function was called)"), StackTrace(1));
 
-        // Terminate process
-        kill(getpid(), SIGKILL);
+        // Call the old handler or terminate process
+        if (_old_terminate_hander != nullptr)
+            _old_terminate_hander()
+        else
+            kill(getpid(), SIGKILL);
     }
 
     // unexpected() call handler
@@ -569,8 +543,11 @@ private:
         // Output error
         OutputError(__LOCATION__ + SystemException("Unexpected error (unexpected() function was called)"), StackTrace(1));
 
-        // Terminate process
-        kill(getpid(), SIGKILL);
+        // Call the old handler or terminate process
+        if (_old_unexpected_hander != nullptr)
+            _old_unexpected_hander()
+        else
+            kill(getpid(), SIGKILL);
     }
 
     // Signal handler
@@ -632,8 +609,13 @@ private:
                 break;
         }
 
-        // Terminate process
-        kill(getpid(), SIGKILL);
+        // Call the old handler or terminate process
+        if (_old_signal_hanlders[signo].sa_sigaction != nullptr)
+            _old_signal_hanlders[signo].sa_sigaction(signo, info, context);
+        else if (_old_signal_hanlders[signo].sa_handler != nullptr)
+            _old_signal_hanlders[signo].sa_handler(signo);
+        else
+            kill(getpid(), SIGKILL);
     }
 
 #endif
