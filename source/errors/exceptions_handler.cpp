@@ -520,9 +520,9 @@ private:
 
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 
-    std::terminate_handler  _old_terminate_hander;
-    std::unexpected_handler _old_unexpected_hander;
-    struct sigaction        _old_signal_hanlders[64];
+    static std::terminate_handler  _old_terminate_hander;
+    static std::unexpected_handler _old_unexpected_hander;
+    static struct sigaction        _old_signal_hanlders[64];
 
     // terminate() call handler
     static void TerminateHandler()
@@ -627,6 +627,10 @@ private:
         std::cerr << trace;
     }
 };
+
+std::terminate_handler ExceptionsHandler::Impl::_old_terminate_hander = nullptr;
+std::unexpected_handler ExceptionsHandler::Impl::_old_unexpected_hander = nullptr;
+struct sigaction ExceptionsHandler::Impl::_old_signal_hanlders[64];
 
 std::unique_ptr<ExceptionsHandler::Impl> ExceptionsHandler::_pimpl(new Impl());
 
