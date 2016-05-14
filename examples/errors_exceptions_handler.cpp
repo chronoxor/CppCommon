@@ -8,13 +8,13 @@
 
 #include "errors/exceptions_handler.h"
 #include "system/stack_trace_manager.h"
+#include "threads/thread.h"
 
 #include <cfloat>
 #include <csignal>
 #include <exception>
 #include <iostream>
 #include <string>
-#include <thread>
 
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
@@ -218,25 +218,11 @@ void GenerateCustomException(int type)
     }
 }
 
-void GenerateCustomException(int type, bool thread)
-{
-    auto function = [=]()
-    {
-        // Setup exceptions handler for the created thread
-        if (thread)
-            CppCommon::ExceptionsHandler::SetupThread();
-
-        GenerateCustomException(type);
-    };
-
-    if (thread)
-        std::thread(function).join();
-    else
-        function();
-}
-
 int main(int argc, char** argv)
 {
+    // Generate all exceptions from separate thread
+    const bool thread = true;
+
     // Initialize stack trace manager of the current process
     CppCommon::StackTraceManager::Initialize();
     // Setup exceptions handler for the current process
@@ -265,7 +251,12 @@ int main(int argc, char** argv)
     if (getline(std::cin, line))
     {
         int type = std::stoi(line);
-        GenerateCustomException(type, true);
+
+        // Generate selected exception from separate or main thread
+        if (thread)
+            CppCommon::Thread::Start(GenerateCustomException, type).join();
+        else
+            GenerateCustomException(type);
     }
 
     // Cleanup stack trace manager of the current process

@@ -9,7 +9,11 @@
 #ifndef CPPCOMMON_THREADS_THREAD_H
 #define CPPCOMMON_THREADS_THREAD_H
 
+#include "errors/exceptions_handler.h"
+
 #include <chrono>
+#include <thread>
+#include <tuple>
 
 //! Current thread Id macro
 /*!
@@ -43,6 +47,18 @@ public:
     */
     static uint64_t CurrentThreadId() noexcept;
 
+    //! Start a new thread with an exception handler registered
+    /*!
+        Works the same way as std::thread() does but also register an exception handler
+        with ExceptionsHandler.SetupThread() call.
+
+        \param fn - Thread function
+        \param args - Thread function arguments
+        \return Instance of a new thread
+    */
+    template <class Fn, class... Args>
+    static std::thread Start(Fn&& fn, Args&&... args);
+
     //! Sleep the current thread for the given nanoseconds
     /*!
         \param nanoseconds - Nanoseconds to sleep
@@ -68,5 +84,7 @@ public:
 };
 
 } // namespace CppCommon
+
+#include "thread.inl"
 
 #endif // CPPCOMMON_THREADS_THREAD_H
