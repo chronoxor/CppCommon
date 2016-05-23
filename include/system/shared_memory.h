@@ -39,6 +39,9 @@ public:
     SharedMemory& operator=(const SharedMemory&) = delete;
     SharedMemory& operator=(SharedMemory&&) = default;
 
+    //! Check if the shared memory block is valid
+    explicit operator bool() const { return (ptr() != nullptr); }
+
     //! Get the shared memory block name
     const std::string& name() const { return _name; }
     //! Get the shared memory block size
@@ -49,7 +52,7 @@ public:
     //! Get the constant shared memory block pointer
     const void* ptr() const;
 
-    //! Get the shared memory owner flag (true if the new was created, false if the existing was opened)
+    //! Get the shared memory owner flag (true if the new one was created, false if the existing one was opened)
     bool owner() const;
 
 private:

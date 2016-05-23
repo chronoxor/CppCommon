@@ -10,6 +10,7 @@
 
 #include "errors/exceptions.h"
 #include "errors/fatal.h"
+#include "system/shared_type.h"
 
 #include <algorithm>
 
@@ -18,8 +19,7 @@
 #undef max
 #undef min
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-#include <fcntl.h>
-#include <semaphore.h>
+#include <pthread.h>
 #endif
 
 namespace CppCommon {
@@ -28,25 +28,28 @@ class NamedMutex::Impl
 {
 public:
     Impl(const std::string& name)
+#if defined(unix) || defined(__unix) || defined(__unix__)
+        : _shared(name, sizeof(NamedMutexHeader))
+#endif
     {
 #if defined(_WIN32) || defined(_WIN64)
         _mutex = CreateMutexA(nullptr, FALSE, name.c_str());
         if (_mutex == nullptr)
             throwex SystemException("Failed to create a named mutex!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        _name = name;
-        _owner = true;
-        // Try to create a named binary semaphore
-        _semaphore = sem_open(name.c_str(), (O_CREAT | O_EXCL), 0666, 1);
-        if (_semaphore == SEM_FAILED)
-        {
-            // Try to open a named binary semaphore
-            _semaphore = sem_open(name.c_str(), O_CREAT, 0666, 1);
-            if (_semaphore == SEM_FAILED)
-                throwex SystemException("Failed to initialize a named binary semaphore!");
-            else
-                _owner = false;
-        }
+        pthread_mutexattr_t attribute;
+        int result = pthread_mutexattr_init(&attribute);
+        if (result != 0)
+            throwex SystemException("Failed to initialize a named mutex attribute!", result);
+        result = pthread_mutexattr_setpshared(&attribute, PTHREAD_PROCESS_SHARED);
+        if (result != 0)
+            throwex SystemException("Failed to set a named mutex process shared attribute!", result);
+        result = pthread_mutex_init(&_shared->mutex, &attribute);
+        if (result != 0)
+            throwex SystemException("Failed to initialize a named mutex!", result);
+        result = pthread_mutexattr_destroy(&attribute);
+        if (result != 0)
+            throwex SystemException("Failed to destroy a named mutex attribute!", result);
 #endif
     }
 
@@ -56,15 +59,11 @@ public:
         if (!CloseHandle(_mutex))
             fatality("Failed to close a named mutex!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        int result = sem_close(_semaphore);
-        if (result != 0)
-            fatality("Failed to close a named binary semaphore!");
-        // Unlink the named semaphore (owner only)
-        if (_owner)
+        if (_shared.owner())
         {
-            result = sem_unlink(_name.c_str());
+            int result = pthread_mutex_destroy(&_shared->mutex);
             if (result != 0)
-                fatality("Failed to unlink a named binary semaphore!");
+                fatality("Failed to destroy a named mutex!", result);
         }
 #endif
     }
@@ -77,9 +76,9 @@ public:
             throwex SystemException("Failed to try lock a named mutex!");
         return (result == WAIT_OBJECT_0);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        int result = sem_trywait(_semaphore);
-        if ((result != 0) && (errno != EAGAIN))
-            throwex SystemException("Failed to try lock a named binary semaphore!");
+        int result = pthread_mutex_trylock(&_shared->mutex);
+        if ((result != 0) && (result != EBUSY))
+            throwex SystemException("Failed to try lock a named mutex!", result);
         return (result == 0);
 #endif
     }
@@ -95,9 +94,9 @@ public:
         struct timespec timeout;
         timeout.tv_sec = nanoseconds / 1000000000;
         timeout.tv_nsec = nanoseconds % 1000000000;
-        int result = sem_timedwait(_semaphore, &timeout);
-        if ((result != 0) && (errno != ETIMEDOUT))
-            throwex SystemException("Failed to try lock a named binary semaphore for the given timeout!");
+        int result = pthread_mutex_timedlock(&_shared->mutex, &timeout);
+        if ((result != 0) && (result != ETIMEDOUT))
+            throwex SystemException("Failed to try lock a named mutex for the given timeout!", result);
         return (result == 0);
 #endif
     }
@@ -109,9 +108,9 @@ public:
         if (result != WAIT_OBJECT_0)
             throwex SystemException("Failed to lock a named mutex!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        int result = sem_wait(_semaphore);
+        int result = pthread_mutex_lock(&_shared->mutex);
         if (result != 0)
-            throwex SystemException("Failed to lock a named binary semaphore!");
+            throwex SystemException("Failed to lock a named mutex!", result);
 #endif
     }
 
@@ -121,9 +120,9 @@ public:
         if (!ReleaseMutex(_mutex))
             throwex SystemException("Failed to unlock a named mutex!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        int result = sem_post(_semaphore);
+        int result = pthread_mutex_unlock(&_shared->mutex);
         if (result != 0)
-            throwex SystemException("Failed to unlock a named binary semaphore!");
+            throwex SystemException("Failed to unlock a named mutex!", result);
 #endif
     }
 
@@ -131,9 +130,14 @@ private:
 #if defined(_WIN32) || defined(_WIN64)
     HANDLE _mutex;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-    std::string _name;
-    sem_t* _semaphore;
-    bool _owner;
+    // Shared mutex structure
+    struct MutexHeader
+    {
+        pthread_mutex_t mutex;
+    };
+
+    // Shared mutex structure wrapper
+    SharedType<MutexHeader> _shared;
 #endif
 };
 
