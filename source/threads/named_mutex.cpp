@@ -37,6 +37,7 @@ public:
         if (_mutex == nullptr)
             throwex SystemException("Failed to create a named mutex!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
+        // Only the owner should initialize a shared mutex
         if (_shared.owner())
         {
             pthread_mutexattr_t attribute;
@@ -62,6 +63,7 @@ public:
         if (!CloseHandle(_mutex))
             fatality("Failed to close a named mutex!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
+        // Only the owner should destroy a shared mutex
         if (_shared.owner())
         {
             int result = pthread_mutex_destroy(&_shared->mutex);

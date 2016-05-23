@@ -19,7 +19,7 @@ namespace CppCommon {
 
 //! Named semaphore synchronization primitive
 /*!
-    Named semaphore behaves as a simple one but could be shared between processes
+    Named semaphore behaves as a simple semaphore but could be shared between processes
     on the same machine.
 
     Thread-safe.

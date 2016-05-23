@@ -19,7 +19,7 @@ namespace CppCommon {
 
 //! Named mutex synchronization primitive
 /*!
-    Named mutex behaves as a simple one but could be shared between processes
+    Named mutex behaves as a simple mutex but could be shared between processes
     on the same machine.
 
     Thread-safe.

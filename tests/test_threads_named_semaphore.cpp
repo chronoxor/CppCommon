@@ -22,7 +22,7 @@ TEST_CASE("Named semaphore locker", "[CppCommon][Threads]")
     for (int i = 0; i < items_to_produce; ++i)
         result += i;
 
-    // Named semaphore owner
+    // Named semaphore master
     NamedSemaphore lock("named_semaphore_test", 4);
 
     // Start producers threads
@@ -31,6 +31,7 @@ TEST_CASE("Named semaphore locker", "[CppCommon][Threads]")
     {
         producers.push_back(std::thread([&crc, producer, items_to_produce, producers_count]()
         {
+            // Named semaphore slave
             NamedSemaphore lock("named_semaphore_test", 4);
 
             int items = (items_to_produce / producers_count);
