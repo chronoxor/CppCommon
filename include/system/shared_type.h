@@ -31,8 +31,7 @@ public:
     /*!
         \param name - Shared memory type name
     */
-    explicit SharedType(const std::string& name) : _shared(name, sizeof(T))
-    { if (owner) new (_shared.ptr()) T(); }
+    explicit SharedType(const std::string& name);
     SharedType(const SharedType<T>&) = delete;
     SharedType(SharedType<T>&&) = default;
     ~SharedType() = default;
@@ -78,5 +77,7 @@ private:
 /*! \example system_shared_type.cpp Shared memory type wrapper example */
 
 } // namespace CppCommon
+
+#include "shared_type.inl"
 
 #endif // CPPCOMMON_SYSTEM_SHARED_TYPE_H
