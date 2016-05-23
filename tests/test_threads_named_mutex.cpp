@@ -21,6 +21,9 @@ TEST_CASE("Named mutex locker", "[CppCommon][Threads]")
     for (int i = 0; i < items_to_produce; ++i)
         result += i;
 
+    // Named mutex owner
+    NamedMutex lock("named_mutex_test");
+
     // Start producers threads
     std::vector<std::thread> producers;
     for (int producer = 0; producer < producers_count; ++producer)
