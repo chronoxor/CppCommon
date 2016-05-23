@@ -37,19 +37,22 @@ public:
         if (_mutex == nullptr)
             throwex SystemException("Failed to create a named mutex!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        pthread_mutexattr_t attribute;
-        int result = pthread_mutexattr_init(&attribute);
-        if (result != 0)
-            throwex SystemException("Failed to initialize a named mutex attribute!", result);
-        result = pthread_mutexattr_setpshared(&attribute, PTHREAD_PROCESS_SHARED);
-        if (result != 0)
-            throwex SystemException("Failed to set a named mutex process shared attribute!", result);
-        result = pthread_mutex_init(&_shared->mutex, &attribute);
-        if (result != 0)
-            throwex SystemException("Failed to initialize a named mutex!", result);
-        result = pthread_mutexattr_destroy(&attribute);
-        if (result != 0)
-            throwex SystemException("Failed to destroy a named mutex attribute!", result);
+        if (_shared.owner())
+        {
+            pthread_mutexattr_t attribute;
+            int result = pthread_mutexattr_init(&attribute);
+            if (result != 0)
+                throwex SystemException("Failed to initialize a named mutex attribute!", result);
+            result = pthread_mutexattr_setpshared(&attribute, PTHREAD_PROCESS_SHARED);
+            if (result != 0)
+                throwex SystemException("Failed to set a named mutex process shared attribute!", result);
+            result = pthread_mutex_init(&_shared->mutex, &attribute);
+            if (result != 0)
+                throwex SystemException("Failed to initialize a named mutex!", result);
+            result = pthread_mutexattr_destroy(&attribute);
+            if (result != 0)
+                throwex SystemException("Failed to destroy a named mutex attribute!", result);
+        }
 #endif
     }
 
