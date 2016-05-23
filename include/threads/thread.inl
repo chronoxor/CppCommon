@@ -11,13 +11,13 @@ namespace CppCommon {
 template <class Fn, class... Args>
 inline std::thread Thread::Start(Fn&& fn, Args&&... args)
 {
-    return std::thread([=]()
+    return std::thread([fn = fn, args...]()
     {
         // Setup exception handler for the new thread
         ExceptionsHandler::SetupThread();
 
         // Call the base thread function
-        fn(args...);
+        fn(std::move(args)...);
     });
 }
 
