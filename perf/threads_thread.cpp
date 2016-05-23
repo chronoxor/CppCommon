@@ -7,7 +7,7 @@
 #include "system/timestamp.h"
 #include "threads/thread.h"
 
-const uint64_t sleep_iterations = 1000;
+const uint64_t sleep_iterations = 10;
 const uint64_t yield_iterations = 1000000;
 
 BENCHMARK("Thread-Sleep")
