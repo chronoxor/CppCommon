@@ -30,6 +30,10 @@ int main(int argc, char** argv)
     {
         int item = std::stoi(line);
 
+        // Check for exit
+        if (item == 0)
+            break;
+
         // Show the old shared memory type wrapper content
         std::cout << "Old shared memory type wrapper value = " << *shared << std::endl;
 
@@ -38,9 +42,6 @@ int main(int argc, char** argv)
 
         // Show the new shared memory type wrapper content
         std::cout << "New shared memory type wrapper value = " << *shared << std::endl;
-
-        if (item == 0)
-            break;
     }
 
     return 0;
