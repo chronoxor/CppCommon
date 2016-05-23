@@ -10,8 +10,6 @@ using namespace CppCommon;
 
 TEST_CASE("System error wrapper", "[CppCommon][Errors]")
 {
-    REQUIRE(SystemError::GetLast() == 0);
-
     SystemError::SetLast(123);
     REQUIRE(SystemError::GetLast() == 123);
     SystemError::ClearLast();
