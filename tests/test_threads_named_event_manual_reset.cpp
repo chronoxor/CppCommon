@@ -17,7 +17,7 @@ TEST_CASE("Named manual-reset event", "[CppCommon][Threads]")
     int concurrency = 8;
     std::atomic<int> count(0);
 
-    // Named event master
+    // Named manual-reset event master
     NamedEventManualReset event("named_manual_reset_event_test");
 
     // Start some threads
@@ -26,7 +26,7 @@ TEST_CASE("Named manual-reset event", "[CppCommon][Threads]")
     {
         threads.push_back(std::thread([&count, thread]()
         {
-            // Named event slave
+            // Named manual-reset event slave
             NamedEventManualReset event("named_manual_reset_event_test");
 
             // Sleep for a while...
