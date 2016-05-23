@@ -29,7 +29,7 @@ class NamedMutex::Impl
 public:
     Impl(const std::string& name)
 #if defined(unix) || defined(__unix) || defined(__unix__)
-        : _shared(name, sizeof(NamedMutexHeader))
+        : _shared(name, sizeof(MutexHeader))
 #endif
     {
 #if defined(_WIN32) || defined(_WIN64)
