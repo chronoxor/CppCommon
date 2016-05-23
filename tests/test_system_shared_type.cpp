@@ -13,18 +13,17 @@ using namespace CppCommon;
 TEST_CASE("Shared memory type wrapper", "[CppCommon][System]")
 {
     std::string name = "shared_type_test";
-    std::string message = "shared message";
 
     // Create new shared memory type wrapper with the given name
-    SharedType<std::string> shared1(name);
+    SharedType<int> shared1(name);
     REQUIRE(shared1);
     REQUIRE(shared1.owner());
     REQUIRE(shared1.ptr() != nullptr);
 
     // Assign a new value to the shared memory type wrapper
-    *shared1 = message;
+    *shared1 = 123;
 
-    SharedType<std::string> shared2(name);
+    SharedType<int> shared2(name);
     REQUIRE(shared2);
     REQUIRE(!shared2.owner());
     REQUIRE(shared2.ptr() != nullptr);

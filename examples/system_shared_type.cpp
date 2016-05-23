@@ -14,31 +14,33 @@
 
 int main(int argc, char** argv)
 {
-    // Create or open a shared memory string wrapper
-    CppCommon::SharedType<std::string> shared("shared_type_example");
+    // Create or open a shared memory type wrapper
+    CppCommon::SharedType<int> shared("shared_type_example");
     if (shared.owner())
-        std::cout << "SharedType<std::string> created!" << std::endl;
+        std::cout << "SharedType<int> created!" << std::endl;
     else
-        std::cout << "SharedType<std::string> opened! Value = " << *shared << std::endl;
+        std::cout << "SharedType<int> opened! Value = " << *shared << std::endl;
 
     // Show help message
-    std::cout << "Please enter any string to put into shared memory string wrapper (several processes support). Enter '0' to exit..." << std::endl;
+    std::cout << "Please enter any integer number to put into shared memory type wrapper (several processes support). Enter '0' to exit..." << std::endl;
 
     // Perform text input
     std::string line;
     while (getline(std::cin, line))
     {
-        if (line == "0")
+        int item = std::stoi(line);
+
+        // Show the old shared memory type wrapper content
+        std::cout << "Old shared memory type wrapper value = " << *shared << std::endl;
+
+        // Write new integer value into the shared memory type wrapper
+        *shared = item;
+
+        // Show the new shared memory type wrapper content
+        std::cout << "New shared memory type wrapper value = " << *shared << std::endl;
+
+        if (item == 0)
             break;
-
-        // Show the old shared memory string wrapper content
-        std::cout << "Old shared memory string wrapper value = " << *shared << std::endl;
-
-        // Write text input into the shared memory string wrapper
-        *shared = line;
-
-        // Show the new shared memory string wrapper content
-        std::cout << "New shared memory string wrapper value = " << *shared << std::endl;
     }
 
     return 0;
