@@ -55,7 +55,7 @@ public:
                 throwex SystemException("Failed to destroy a mutex attribute for the named auto-reset event!", result);
 
             pthread_condattr_t cond_attribute;
-            int result = pthread_condattr_init(&cond_attribute);
+            result = pthread_condattr_init(&cond_attribute);
             if (result != 0)
                 throwex SystemException("Failed to initialize a conditional variable attribute for the named auto-reset event!", result);
             result = pthread_condattr_setpshared(&cond_attribute, PTHREAD_PROCESS_SHARED);
