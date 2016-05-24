@@ -40,17 +40,17 @@ public:
         // Only the owner should initializate a named mutex
         if (_shared.owner())
         {
-            pthread_mutexattr_t attribute;
-            int result = pthread_mutexattr_init(&attribute);
+            pthread_mutexattr_t mutex_attribute;
+            int result = pthread_mutexattr_init(&mutex_attribute);
             if (result != 0)
                 throwex SystemException("Failed to initialize a named mutex attribute!", result);
-            result = pthread_mutexattr_setpshared(&attribute, PTHREAD_PROCESS_SHARED);
+            result = pthread_mutexattr_setpshared(&mutex_attribute, PTHREAD_PROCESS_SHARED);
             if (result != 0)
                 throwex SystemException("Failed to set a named mutex process shared attribute!", result);
-            result = pthread_mutex_init(&_shared->mutex, &attribute);
+            result = pthread_mutex_init(&_shared->mutex, &mutex_attribute);
             if (result != 0)
                 throwex SystemException("Failed to initialize a named mutex!", result);
-            result = pthread_mutexattr_destroy(&attribute);
+            result = pthread_mutexattr_destroy(&mutex_attribute);
             if (result != 0)
                 throwex SystemException("Failed to destroy a named mutex attribute!", result);
         }

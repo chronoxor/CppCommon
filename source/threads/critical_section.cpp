@@ -27,17 +27,17 @@ public:
 #if defined(_WIN32) || defined(_WIN64)
         InitializeCriticalSection(&_lock);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        pthread_mutexattr_t attribute;
-        int result = pthread_mutexattr_init(&attribute);
+        pthread_mutexattr_t mutex_attribute;
+        int result = pthread_mutexattr_init(&mutex_attribute);
         if (result != 0)
             throwex SystemException("Failed to initialize a mutex attribute!", result);
-        result = pthread_mutexattr_settype(&attribute, PTHREAD_MUTEX_RECURSIVE);
+        result = pthread_mutexattr_settype(&mutex_attribute, PTHREAD_MUTEX_RECURSIVE);
         if (result != 0)
             throwex SystemException("Failed to set a mutex recursive attribute!", result);
-        result = pthread_mutex_init(&_lock, &attribute);
+        result = pthread_mutex_init(&_lock, &mutex_attribute);
         if (result != 0)
             throwex SystemException("Failed to initialize a mutex!", result);
-        result = pthread_mutexattr_destroy(&attribute);
+        result = pthread_mutexattr_destroy(&mutex_attribute);
         if (result != 0)
             throwex SystemException("Failed to destroy a mutex attribute!", result);
 #endif

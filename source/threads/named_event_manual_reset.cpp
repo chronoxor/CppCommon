@@ -40,12 +40,34 @@ public:
         // Only the owner should initializate a named manual-reset event
         if (_shared.owner())
         {
-            int result = pthread_mutex_init(&_shared->mutex, nullptr);
+            pthread_mutexattr_t mutex_attribute;
+            int result = pthread_mutexattr_init(&mutex_attribute);
+            if (result != 0)
+                throwex SystemException("Failed to initialize a mutex attribute for the named manual-reset event!", result);
+            result = pthread_mutexattr_setpshared(&mutex_attribute, PTHREAD_PROCESS_SHARED);
+            if (result != 0)
+                throwex SystemException("Failed to set a mutex process shared attribute for the named manual-reset event!", result);
+            result = pthread_mutex_init(&_shared->mutex, &mutex_attribute);
             if (result != 0)
                 throwex SystemException("Failed to initialize a mutex for the named manual-reset event!", result);
-            result = pthread_cond_init(&_shared->cond, nullptr);
+            result = pthread_mutexattr_destroy(&mutex_attribute);
+            if (result != 0)
+                throwex SystemException("Failed to destroy a mutex attribute for the named manual-reset event!", result);
+
+            pthread_condattr_t cond_attribute;
+            int result = pthread_condattr_init(&cond_attribute);
+            if (result != 0)
+                throwex SystemException("Failed to initialize a conditional variable attribute for the named manual-reset event!", result);
+            result = pthread_condattr_setpshared(&cond_attribute, PTHREAD_PROCESS_SHARED);
+            if (result != 0)
+                throwex SystemException("Failed to set a conditional variable process shared attribute for the named manual-reset event!", result);
+            result = pthread_cond_init(&_shared->cond, &cond_attribute);
             if (result != 0)
                 throwex SystemException("Failed to initialize a conditional variable for the named manual-reset event!", result);
+            result = pthread_condattr_destroy(&cond_attribute);
+            if (result != 0)
+                throwex SystemException("Failed to destroy a conditional variable attribute for the named manual-reset event!", result);
+
             _shared->signaled = signaled;
         }
 #endif
