@@ -27,19 +27,26 @@ class NamedEventAutoReset::Impl
 {
 public:
     Impl(const std::string& name, bool signaled)
+#if defined(unix) || defined(__unix) || defined(__unix__)
+        : _shared(name)
+#endif
     {
 #if defined(_WIN32) || defined(_WIN64)
         _event = CreateEventA(nullptr, FALSE, signaled ? TRUE : FALSE, name.c_str());
         if (_event == nullptr)
             throwex SystemException("Failed to create a named auto-reset event!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        int result = pthread_mutex_init(&_mutex, nullptr);
-        if (result != 0)
-            throwex SystemException("Failed to initialize a mutex for the named auto-reset event!", result);
-        result = pthread_cond_init(&_cond, nullptr);
-        if (result != 0)
-            throwex SystemException("Failed to initialize a conditional variable for the named auto-reset event!", result);
-        _signaled = signaled ? 1 : 0;
+        // Only the owner should initializate a named auto-reset event
+        if (_shared.owner())
+        {
+            int result = pthread_mutex_init(&_shared->mutex, nullptr);
+            if (result != 0)
+                throwex SystemException("Failed to initialize a mutex for the named auto-reset event!", result);
+            result = pthread_cond_init(&_shared->cond, nullptr);
+            if (result != 0)
+                throwex SystemException("Failed to initialize a conditional variable for the named auto-reset event!", result);
+            _shared->signaled = signaled ? 1 : 0;
+        }
 #endif
     }
 
@@ -49,12 +56,16 @@ public:
         if (!CloseHandle(_event))
             fatality("Failed to close a named auto-reset event!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        int result = pthread_mutex_destroy(&_mutex);
-        if (result != 0)
-            fatality("Failed to destroy a mutex for the named auto-reset event!", result);
-        result = pthread_cond_destroy(&_cond);
-        if (result != 0)
-            fatality("Failed to destroy a conditional variable for the named auto-reset event!", result);
+        // Only the owner should destroy a named auto-reset event
+        if (_shared.owner())
+        {
+            int result = pthread_mutex_destroy(&_shared->mutex);
+            if (result != 0)
+                fatality("Failed to destroy a mutex for the named auto-reset event!", result);
+            result = pthread_cond_destroy(&_shared->cond);
+            if (result != 0)
+                fatality("Failed to destroy a conditional variable for the named auto-reset event!", result);
+        }
 #endif
     }
 
@@ -64,14 +75,14 @@ public:
         if (!SetEvent(_event))
             throwex SystemException("Failed to signal a named auto-reset event!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        int result = pthread_mutex_lock(&_mutex);
+        int result = pthread_mutex_lock(&_shared->mutex);
         if (result != 0)
             throwex SystemException("Failed to lock a mutex for the named auto-reset event!", result);
-        ++_signaled;
-        result = pthread_mutex_unlock(&_mutex);
+        ++_shared->signaled;
+        result = pthread_mutex_unlock(&_shared->mutex);
         if (result != 0)
             throwex SystemException("Failed to unlock a mutex for the named auto-reset event!", result);
-        result = pthread_cond_signal(&_cond);
+        result = pthread_cond_signal(&_shared->cond);
         if (result != 0)
             throwex SystemException("Failed to signal a named auto-reset event!", result);
 #endif
@@ -85,12 +96,12 @@ public:
             throwex SystemException("Failed to try lock a named auto-reset event!");
         return (result == WAIT_OBJECT_0);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        int result = pthread_mutex_lock(&_mutex);
+        int result = pthread_mutex_lock(&_shared->mutex);
         if (result != 0)
             throwex SystemException("Failed to lock a mutex for the named auto-reset event!", result);
-        bool signaled = (_signaled-- > 0);
-        _signaled = (_signaled < 0) ? 0 : _signaled;
-        result = pthread_mutex_unlock(&_mutex);
+        bool signaled = (_shared->signaled-- > 0);
+        _shared->signaled = (_shared->signaled < 0) ? 0 : _shared->signaled;
+        result = pthread_mutex_unlock(&_shared->mutex);
         if (result != 0)
             throwex SystemException("Failed to unlock a mutex for the named auto-reset event!", result);
         return signaled;
@@ -108,20 +119,20 @@ public:
         struct timespec timeout;
         timeout.tv_sec = nanoseconds / 1000000000;
         timeout.tv_nsec = nanoseconds % 1000000000;
-        int result = pthread_mutex_lock(&_mutex);
+        int result = pthread_mutex_lock(&_shared->mutex);
         if (result != 0)
             throwex SystemException("Failed to lock a mutex for the named auto-reset event!", result);
         bool signaled = true;
-        while (!_signaled)
+        while (!_shared->signaled)
         {
-            result = pthread_cond_timedwait(&_cond, &_mutex, &timeout);
+            result = pthread_cond_timedwait(&_shared->cond, &_shared->mutex, &timeout);
             if ((result != 0) && (result != ETIMEDOUT))
                 throwex SystemException("Failed to timeout waiting a conditional variable for the named auto-reset event!", result);
             if (result == ETIMEDOUT)
-                signaled = (_signaled > 0);
+                signaled = (_shared->signaled > 0);
         }
-        _signaled = (_signaled > 0) ? (_signaled - 1) : 0;
-        result = pthread_mutex_unlock(&_mutex);
+        _shared->signaled = (_shared->signaled > 0) ? (_shared->signaled - 1) : 0;
+        result = pthread_mutex_unlock(&_shared->mutex);
         if (result != 0)
             throwex SystemException("Failed to unlock a mutex for the named auto-reset event!", result);
         return signaled;
@@ -135,17 +146,17 @@ public:
         if (result != WAIT_OBJECT_0)
             throwex SystemException("Failed to lock a named auto-reset event!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        int result = pthread_mutex_lock(&_mutex);
+        int result = pthread_mutex_lock(&_shared->mutex);
         if (result != 0)
             throwex SystemException("Failed to lock a mutex for the named auto-reset event!", result);
-        while (!_signaled)
+        while (!_shared->signaled)
         {
-            result = pthread_cond_wait(&_cond, &_mutex);
+            result = pthread_cond_wait(&_shared->cond, &_shared->mutex);
             if ((result != 0) && (result != ETIMEDOUT))
                 throwex SystemException("Failed to waiting a conditional variable for the named auto-reset event!", result);
         }
-        _signaled = (_signaled > 0) ? (_signaled - 1) : 0;
-        result = pthread_mutex_unlock(&_mutex);
+        _shared->signaled = (_shared->signaled > 0) ? (_shared->signaled - 1) : 0;
+        result = pthread_mutex_unlock(&_shared->mutex);
         if (result != 0)
             throwex SystemException("Failed to unlock a mutex for the named auto-reset event!", result);
 #endif
@@ -155,9 +166,16 @@ private:
 #if defined(_WIN32) || defined(_WIN64)
     HANDLE _event;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-    pthread_mutex_t _mutex;
-    pthread_cond_t _cond;
-    int _signaled;
+    // Shared auto-reset event structure
+    struct EventHeader
+    {
+        pthread_mutex_t mutex;
+        pthread_cond_t cond;
+        int signaled;
+    };
+
+    // Shared auto-reset event structure wrapper
+    SharedType<EventHeader> _shared;
 #endif
 };
 
