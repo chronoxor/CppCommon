@@ -44,7 +44,7 @@ public:
     NamedRWLock& operator=(NamedRWLock&&) = default;
 
     //! Get the read/write lock name
-    const std::string& name() const { return _name; }
+    const std::string& name() const;
 
     //! Try to acquire read lock without block
     /*!

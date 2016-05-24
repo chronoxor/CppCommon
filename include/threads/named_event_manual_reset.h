@@ -41,7 +41,7 @@ public:
     NamedEventManualReset& operator=(NamedEventManualReset&&) = default;
 
     //! Get the event name
-    const std::string& name() const { return _name; }
+    const std::string& name() const;
 
     //! Reset the event
     /*!
@@ -106,7 +106,6 @@ public:
 private:
     class Impl;
     std::unique_ptr<Impl> _pimpl;
-    std::string _name;
 };
 
 /*! \example threads_named_event_manual_reset.cpp Named manual-reset event synchronization primitive example */

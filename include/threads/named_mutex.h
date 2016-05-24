@@ -42,7 +42,7 @@ public:
     NamedMutex& operator=(NamedMutex&&) = default;
 
     //! Get the mutex name
-    const std::string& name() const { return _name; }
+    const std::string& name() const;
 
     //! Try to acquire mutex without block
     /*!
@@ -96,7 +96,6 @@ public:
 private:
     class Impl;
     std::unique_ptr<Impl> _pimpl;
-    std::string _name;
 };
 
 /*! \example threads_named_mutex.cpp Named mutex synchronization primitive example */

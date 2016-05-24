@@ -27,15 +27,15 @@ namespace CppCommon {
 class NamedEventAutoReset::Impl
 {
 public:
-    Impl(const std::string& name, bool signaled)
+    Impl(const std::string& name, bool signaled) : _name(name)
 #if defined(unix) || defined(__unix) || defined(__unix__)
-        : _shared(name)
+        , _shared(name)
 #endif
     {
 #if defined(_WIN32) || defined(_WIN64)
         _event = CreateEventA(nullptr, FALSE, signaled ? TRUE : FALSE, name.c_str());
         if (_event == nullptr)
-            throwex SystemException("Failed to create a named auto-reset event!");
+            throwex SystemException("Failed to create or open a named auto-reset event!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         // Only the owner should initializate a named auto-reset event
         if (_shared.owner())
@@ -90,6 +90,11 @@ public:
                 fatality("Failed to destroy a conditional variable for the named auto-reset event!", result);
         }
 #endif
+    }
+
+    const std::string& name() const
+    {
+        return _name;
     }
 
     void Signal()
@@ -186,6 +191,7 @@ public:
     }
 
 private:
+    std::string _name;
 #if defined(_WIN32) || defined(_WIN64)
     HANDLE _event;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
@@ -202,12 +208,17 @@ private:
 #endif
 };
 
-NamedEventAutoReset::NamedEventAutoReset(const std::string& name, bool signaled) : _pimpl(new Impl(name, signaled)), _name(name)
+NamedEventAutoReset::NamedEventAutoReset(const std::string& name, bool signaled) : _pimpl(new Impl(name, signaled))
 {
 }
 
 NamedEventAutoReset::~NamedEventAutoReset()
 {
+}
+
+const std::string& NamedEventAutoReset::name() const
+{
+    return _pimpl->name();
 }
 
 void NamedEventAutoReset::Signal()

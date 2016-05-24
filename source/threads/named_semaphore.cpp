@@ -28,16 +28,15 @@ namespace CppCommon {
 class NamedSemaphore::Impl
 {
 public:
-    Impl(const std::string& name, int resources)
+    Impl(const std::string& name, int resources) : _name(name), _resources(resources)
     {
         assert((resources > 0) && "Named semaphore resources counter must be greater than zero!");
 
 #if defined(_WIN32) || defined(_WIN64)
         _semaphore = CreateSemaphoreA(nullptr, resources, resources, name.c_str());
         if (_semaphore == nullptr)
-            throwex SystemException("Failed to create a named semaphore!");
+            throwex SystemException("Failed to create or open a named semaphore!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        _name = name;
         _owner = true;
         // Try to create a named binary semaphore
         _semaphore = sem_open(name.c_str(), (O_CREAT | O_EXCL), 0666, resources);
@@ -70,6 +69,16 @@ public:
                 fatality("Failed to unlink a named semaphore!");
         }
 #endif
+    }
+
+    const std::string& name() const
+    {
+        return _name;
+    }
+
+    int resources() const noexcept
+    {
+        return _resources;
     }
 
     bool TryLock()
@@ -131,21 +140,32 @@ public:
     }
 
 private:
+    std::string _name;
+    int _resources;
 #if defined(_WIN32) || defined(_WIN64)
     HANDLE _semaphore;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-    std::string _name;
     sem_t* _semaphore;
     bool _owner;
 #endif
 };
 
-NamedSemaphore::NamedSemaphore(const std::string& name, int resources) : _pimpl(new Impl(name, resources)), _name(name), _resources(resources)
+NamedSemaphore::NamedSemaphore(const std::string& name, int resources) : _pimpl(new Impl(name, resources))
 {
 }
 
 NamedSemaphore::~NamedSemaphore()
 {
+}
+
+const std::string& NamedSemaphore::name() const
+{
+    return _pimpl->name();
+}
+
+int NamedSemaphore::resources() const noexcept
+{
+    return _pimpl->resources();
 }
 
 bool NamedSemaphore::TryLock()

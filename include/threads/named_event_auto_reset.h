@@ -41,7 +41,7 @@ public:
     NamedEventAutoReset& operator=(NamedEventAutoReset&&) = default;
 
     //! Get the event name
-    const std::string& name() const { return _name; }
+    const std::string& name() const;
 
     //! Signal one of waiting thread about event occurred
     /*!
@@ -98,7 +98,6 @@ public:
 private:
     class Impl;
     std::unique_ptr<Impl> _pimpl;
-    std::string _name;
 };
 
 /*! \example threads_named_event_auto_reset.cpp Named auto-reset event synchronization primitive example */

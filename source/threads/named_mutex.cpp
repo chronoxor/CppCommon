@@ -27,15 +27,15 @@ namespace CppCommon {
 class NamedMutex::Impl
 {
 public:
-    Impl(const std::string& name)
+    Impl(const std::string& name) : _name(name)
 #if defined(unix) || defined(__unix) || defined(__unix__)
-        : _shared(name)
+        , _shared(name)
 #endif
     {
 #if defined(_WIN32) || defined(_WIN64)
         _mutex = CreateMutexA(nullptr, FALSE, name.c_str());
         if (_mutex == nullptr)
-            throwex SystemException("Failed to create a named mutex!");
+            throwex SystemException("Failed to create or open a named mutex!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         // Only the owner should initializate a named mutex
         if (_shared.owner())
@@ -71,6 +71,11 @@ public:
                 fatality("Failed to destroy a named mutex!", result);
         }
 #endif
+    }
+
+    const std::string& name() const
+    {
+        return _name;
     }
 
     bool TryLock()
@@ -132,6 +137,7 @@ public:
     }
 
 private:
+    std::string _name;
 #if defined(_WIN32) || defined(_WIN64)
     HANDLE _mutex;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
@@ -146,12 +152,17 @@ private:
 #endif
 };
 
-NamedMutex::NamedMutex(const std::string& name) : _pimpl(new Impl(name)), _name(name)
+NamedMutex::NamedMutex(const std::string& name) : _pimpl(new Impl(name))
 {
 }
 
 NamedMutex::~NamedMutex()
 {
+}
+
+const std::string& NamedMutex::name() const
+{
+    return _pimpl->name();
 }
 
 bool NamedMutex::TryLock()

@@ -43,9 +43,9 @@ public:
     NamedSemaphore& operator=(NamedSemaphore&&) = default;
 
     //! Get the semaphore name
-    const std::string& name() const { return _name; }
+    const std::string& name() const;
     //! Get the semaphore resources counter
-    int resources() const noexcept { return _resources; }
+    int resources() const noexcept;
 
     //! Try to acquire semaphore without block
     /*!
@@ -99,8 +99,6 @@ public:
 private:
     class Impl;
     std::unique_ptr<Impl> _pimpl;
-    std::string _name;
-    int _resources;
 };
 
 /*! \example threads_named_semaphore.cpp Named semaphore synchronization primitive example */
