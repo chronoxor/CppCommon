@@ -17,7 +17,8 @@
 #include <windows.h>
 #undef Yield
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-#include <pthread.h>
+#include <fcntl.h>
+#include <semaphore.h>
 #endif
 
 namespace CppCommon {
