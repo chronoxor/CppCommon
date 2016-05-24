@@ -10,6 +10,7 @@
 
 #include "errors/exceptions.h"
 #include "errors/fatal.h"
+#include "system/shared_type.h"
 
 #include <algorithm>
 
