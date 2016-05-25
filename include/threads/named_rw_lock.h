@@ -53,6 +53,7 @@ public:
         \return 'true' if the read lock was successfully acquired, 'false' if the read lock is busy
     */
     bool TryLockRead();
+
     //! Try to acquire write lock without block
     /*!
         Will not block.
@@ -60,6 +61,14 @@ public:
         \return 'true' if the write lock was successfully acquired, 'false' if the write lock is busy
     */
     bool TryLockWrite();
+
+    //! Try to convert write lock to read lock without block
+    /*!
+        Will not block.
+
+        \return 'true' if the write lock was successfully converted to the read one, 'false' if the write lock is busy
+    */
+    bool TryConvertWriteToRead();
 
     //! Acquire read lock with block
     /*!
@@ -82,6 +91,16 @@ public:
         Will not block.
     */
     void UnlockWrite();
+
+    //! Convert write lock to read lock without block
+    /*!
+        Exclusive acquires are not given a chance to acquire
+        the lock before this function does - as a result,
+        this function will never block.
+
+        Will not block.
+    */
+    void ConvertWriteToRead();
 
 private:
     class Impl;

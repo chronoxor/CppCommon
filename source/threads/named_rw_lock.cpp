@@ -452,9 +452,6 @@ public:
 
     void ConvertWriteToRead()
     {
-        /// Exclusive acquires are not given a chance to acquire
-        /// the lock before this function does - as a result,
-        /// this function will never block.
         while (true)
         {
             uint32_t value = *_value;
@@ -521,6 +518,11 @@ bool NamedRWLock::TryLockWrite()
     return _pimpl->TryLockWrite();
 }
 
+bool NamedRWLock::TryConvertWriteToRead()
+{
+    return _pimpl->TryConvertWriteToRead();
+}
+
 void NamedRWLock::LockRead()
 {
     _pimpl->LockRead();
@@ -539,6 +541,11 @@ void NamedRWLock::UnlockRead()
 void NamedRWLock::UnlockWrite()
 {
     _pimpl->UnlockWrite();
+}
+
+void NamedRWLock::ConvertWriteToRead()
+{
+    _pimpl->ConvertWriteToRead();
 }
 
 } // namespace CppCommon

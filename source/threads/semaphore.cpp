@@ -72,6 +72,8 @@ public:
 
     bool TryLockFor(int64_t nanoseconds)
     {
+        if (nanoseconds < 0)
+            return TryLock();
 #if defined(_WIN32) || defined(_WIN64)
         DWORD result = WaitForSingleObject(_semaphore, (DWORD)std::max(1ll, nanoseconds / 1000000000));
         if ((result != WAIT_OBJECT_0) && (result != WAIT_TIMEOUT))
