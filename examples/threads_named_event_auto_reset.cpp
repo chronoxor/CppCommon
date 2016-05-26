@@ -16,7 +16,7 @@
 
 int main(int argc, char** argv)
 {
-    std::string help = "Please enter '!' to signal the event (several processes support). Enter '0' to exit...";
+    std::string help = "Please enter '!' to signal the named auto-reset event (several processes support). Enter '0' to exit...";
 
     // Show help message
     std::cout << help << std::endl;

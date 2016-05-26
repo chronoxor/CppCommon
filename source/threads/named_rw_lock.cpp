@@ -277,6 +277,7 @@ public:
                 }
             }
 
+            // Yield to other threads
             Thread::Yield();
         }
     }
@@ -336,6 +337,7 @@ public:
                 }
             }
 
+            // Yield to other threads
             Thread::Yield();
         }
     }
@@ -387,6 +389,7 @@ public:
                     break;
             }
 
+            // Yield to other threads
             Thread::Yield();
         }
     }
@@ -446,6 +449,7 @@ public:
                 }
             }
 
+            // Yield to other threads
             Thread::Yield();
         }
     }
@@ -478,6 +482,7 @@ public:
                     }
 #endif
                 }
+
                 break;
             }
         }

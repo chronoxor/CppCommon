@@ -1,10 +1,10 @@
 //
-// Created by Ivan Shynkarenka on 28.01.2016.
+// Created by Ivan Shynkarenka on 26.05.2016.
 //
 
 #include "cppbenchmark.h"
 
-#include "threads/critical_section.h"
+#include "threads/named_critical_section.h"
 
 #include <functional>
 #include <thread>
@@ -20,19 +20,22 @@ void produce(CppBenchmark::Context& context)
     const int producers_count = context.x();
     uint64_t crc = 0;
 
-    // Create critical section synchronization primitive
-    CppCommon::CriticalSection lock;
+    // Create named critical section master
+    CppCommon::NamedCriticalSection lock("named_critical_section_perf");
 
     // Start producer threads
     std::vector<std::thread> producers;
     for (int producer = 0; producer < producers_count; ++producer)
     {
-        producers.push_back(std::thread([&lock, &crc, producer, producers_count]()
+        producers.push_back(std::thread([&crc, producer, producers_count]()
         {
+            // Create named critical section slave
+            CppCommon::NamedCriticalSection lock("named_critical_section_perf");
+
             uint64_t items = (items_to_produce / producers_count);
             for (uint64_t i = 0; i < items; ++i)
             {
-                CppCommon::Locker<CppCommon::CriticalSection> locker(lock);
+                CppCommon::Locker<CppCommon::NamedCriticalSection> locker(lock);
                 crc += (producer * items) + i;
             }
         }));
@@ -47,7 +50,7 @@ void produce(CppBenchmark::Context& context)
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK("Critical section", settings)
+BENCHMARK("Named critical section", settings)
 {
     produce(context);
 }

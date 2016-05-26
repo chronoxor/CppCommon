@@ -21,6 +21,7 @@ TEST_CASE("Named read/write lock", "[CppCommon][Threads]")
     // Test TryLockRead() method
     {
         NamedRWLock slave("named_rw_lock_test");
+
         REQUIRE(slave.TryLockRead());
         REQUIRE(!slave.TryLockWrite());
         slave.UnlockRead();
@@ -29,6 +30,7 @@ TEST_CASE("Named read/write lock", "[CppCommon][Threads]")
     // Test TryLockWrite() method
     {
         NamedRWLock slave("named_rw_lock_test");
+
         REQUIRE(slave.TryLockWrite());
         REQUIRE(!slave.TryLockRead());
         slave.UnlockWrite();
@@ -37,6 +39,7 @@ TEST_CASE("Named read/write lock", "[CppCommon][Threads]")
     // Test LockRead()/UnlockRead() methods
     {
         NamedRWLock slave("named_rw_lock_test");
+
         slave.LockRead();
         REQUIRE(!slave.TryLockWrite());
         slave.UnlockRead();
@@ -45,6 +48,7 @@ TEST_CASE("Named read/write lock", "[CppCommon][Threads]")
     // Test LockWrite()/UnlockWrite() methods
     {
         NamedRWLock slave("named_rw_lock_test");
+
         slave.LockWrite();
         REQUIRE(!slave.TryLockRead());
         slave.UnlockWrite();

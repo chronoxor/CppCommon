@@ -15,7 +15,7 @@
 
 int main(int argc, char** argv)
 {
-    std::string help = "Please enter '+' to lock and '-' to unlock the semaphore (several processes support). Enter '0' to exit...";
+    std::string help = "Please enter '+' to lock and '-' to unlock the named semaphore (several processes support). Enter '0' to exit...";
 
     // Show help message
     std::cout << help << std::endl;

@@ -15,7 +15,7 @@
 
 int main(int argc, char** argv)
 {
-    std::string help = "Please enter '+' or '*' to read/write lock and '-' or '/' to read/write unlock the mutex (several processes support). Enter '0' to exit...";
+    std::string help = "Please enter '+' or '*' to read/write lock and '-' or '/' to read/write unlock the named lock (several processes support). Enter '0' to exit...";
 
     // Show help message
     std::cout << help << std::endl;
