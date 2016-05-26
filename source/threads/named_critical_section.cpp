@@ -43,7 +43,12 @@ public:
 
     bool TryLock()
     {
-        uint32_t spin = 0;
+        return TryLock(0);
+    }
+
+    bool TryLock(uint32_t spin)
+    {
+        uint32_t iteration = 0;
         uint64_t thread_id = Thread::CurrentThreadId();
 
         while (true)
@@ -71,7 +76,7 @@ public:
                 _shared->recurse_count++;
                 return true;
             }
-            else if (spin++ >= _spin)
+            else if (iteration++ >= spin)
                 break;
 
             // Yield to other threads
@@ -84,7 +89,7 @@ public:
     void Lock()
     {
         // Spin, trying to get the named critical section
-        if (TryLock())
+        if (TryLock(_spin))
             return;
 
         // We couldn't get the the named critical section, wait for it

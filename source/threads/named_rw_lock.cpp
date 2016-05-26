@@ -225,7 +225,7 @@ public:
 
     void LockRead()
     {
-        uint32_t spin = 0;
+        uint32_t iteration = 0;
 
         while (true)
         {
@@ -254,7 +254,7 @@ public:
                     break;
             }
             // Other cases
-            else if (spin++ >= _spin)
+            else if (iteration++ >= _spin)
             {
 #if defined(_WIN32) || defined(_WIN64)
                 if (InterlockedCompareExchange(_value.ptr(), value + LOCK_SHARED_WAITERS_INC, value) == value)
@@ -284,7 +284,7 @@ public:
 
     void LockWrite()
     {
-        uint32_t spin = 0;
+        uint32_t iteration = 0;
 
         while (true)
         {
@@ -306,7 +306,7 @@ public:
             // The second case means an exclusive waiter has just been woken up and is
             // going to acquire the lock. We have to go to sleep to make sure we don't
             // steal the lock.
-            else if (spin++ >= _spin)
+            else if (iteration++ >= _spin)
             {
 #if defined(_WIN32) || defined(_WIN64)
                 if (InterlockedCompareExchange(_value.ptr(), value + LOCK_EXCLUSIVE_WAITERS_INC, value) == value)
