@@ -7,9 +7,6 @@
 [submodule "modules/catch"]
 	path = modules/catch
 	url = git@github.com:philsquared/Catch.git
-[submodule "modules/cpp-optparse"]
-	path = modules/cpp-optparse
-	url = git@github.com:weisslj/cpp-optparse.git
 [submodule "modules/CppBenchmark"]
 	path = modules/CppBenchmark
 	url = git@github.com:chronoxor/CppBenchmark.git
