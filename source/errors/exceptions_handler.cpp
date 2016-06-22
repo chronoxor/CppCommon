@@ -35,6 +35,11 @@ class ExceptionsHandler::Impl
 public:
     Impl() : _initialized(false) {}
 
+    void SetupHandler(const std::function<void (const SystemException&, const StackTrace&)>& handler)
+    {
+        _handler = handler;
+    }
+
     void SetupProcess()
     {
         // Check for double initialization
@@ -141,6 +146,8 @@ public:
 private:
     // Initialization flag for the current process
     bool _initialized;
+    // Exception handler function
+    static std::function<void (const SystemException&, const StackTrace&)> _handler;
 
 #if defined(_WIN32) || defined(_WIN64)
 
@@ -148,7 +155,7 @@ private:
     static LONG WINAPI SehHandler(PEXCEPTION_POINTERS pExceptionPtrs)
     {
         // Output error
-        OutputError(__LOCATION__ + SystemException("Unhandled SEH exception"), StackTrace(1));
+        _handler(__LOCATION__ + SystemException("Unhandled SEH exception"), StackTrace(1));
 
         // Write dump file
         CreateDumpFile(pExceptionPtrs);
@@ -164,7 +171,7 @@ private:
     static void __cdecl TerminateHandler()
     {
         // Output error
-        OutputError(__LOCATION__ + SystemException("Abnormal program termination (terminate() function was called)"), StackTrace(1));
+        _handler(__LOCATION__ + SystemException("Abnormal program termination (terminate() function was called)"), StackTrace(1));
 
         // Retrieve exception information
         EXCEPTION_POINTERS* pExceptionPtrs = nullptr;
@@ -184,7 +191,7 @@ private:
     static void __cdecl UnexpectedHandler()
     {
         // Output error
-        OutputError(__LOCATION__ + SystemException("Unexpected error (unexpected() function was called)"), StackTrace(1));
+        _handler(__LOCATION__ + SystemException("Unexpected error (unexpected() function was called)"), StackTrace(1));
 
         // Retrieve exception information
         EXCEPTION_POINTERS* pExceptionPtrs = nullptr;
@@ -204,7 +211,7 @@ private:
     static void __cdecl PureCallHandler()
     {
         // Output error
-        OutputError(__LOCATION__ + SystemException("Pure virtual function call"), StackTrace(1));
+        _handler(__LOCATION__ + SystemException("Pure virtual function call"), StackTrace(1));
 
         // Retrieve exception information
         EXCEPTION_POINTERS* pExceptionPtrs = nullptr;
@@ -224,7 +231,7 @@ private:
     static void __cdecl InvalidParameterHandler(const wchar_t* expression, const wchar_t* function, const wchar_t* file, unsigned int line, uintptr_t pReserved)
     {
         // Output error
-        OutputError(__LOCATION__ + SystemException("Invalid parameter exception"), StackTrace(1));
+        _handler(__LOCATION__ + SystemException("Invalid parameter exception"), StackTrace(1));
 
         // Retrieve exception information
         EXCEPTION_POINTERS* pExceptionPtrs = nullptr;
@@ -244,7 +251,7 @@ private:
     static int __cdecl NewHandler(size_t)
     {
         // Output error
-        OutputError(__LOCATION__ + SystemException("'new' operator memory allocation exception"), StackTrace(1));
+        _handler(__LOCATION__ + SystemException("'new' operator memory allocation exception"), StackTrace(1));
 
         // Retrieve exception information
         EXCEPTION_POINTERS* pExceptionPtrs = nullptr;
@@ -267,7 +274,7 @@ private:
     static void SigabrtHandler(int signum)
     {
         // Output error
-        OutputError(__LOCATION__ + SystemException("Caught abort (SIGABRT) signal"), StackTrace(1));
+        _handler(__LOCATION__ + SystemException("Caught abort (SIGABRT) signal"), StackTrace(1));
 
         // Retrieve exception information
         EXCEPTION_POINTERS* pExceptionPtrs = nullptr;
@@ -287,7 +294,7 @@ private:
     static void SigfpeHandler(int signum, int subcode)
     {
         // Output error
-        OutputError(__LOCATION__ + SystemException("Caught floating point exception (SIGFPE) signal"), StackTrace(1));
+        _handler(__LOCATION__ + SystemException("Caught floating point exception (SIGFPE) signal"), StackTrace(1));
 
         // Retrieve exception information
         EXCEPTION_POINTERS* pExceptionPtrs = (PEXCEPTION_POINTERS)_pxcptinfoptrs;
@@ -303,7 +310,7 @@ private:
     static void SigillHandler(int signum)
     {
         // Output error
-        OutputError(__LOCATION__ + SystemException("Caught illegal instruction (SIGILL) signal"), StackTrace(1));
+        _handler(__LOCATION__ + SystemException("Caught illegal instruction (SIGILL) signal"), StackTrace(1));
 
         // Retrieve exception information
         EXCEPTION_POINTERS* pExceptionPtrs = nullptr;
@@ -323,7 +330,7 @@ private:
     static void SigintHandler(int signum)
     {
         // Output error
-        OutputError(__LOCATION__ + SystemException("Caught interruption (SIGINT) signal"), StackTrace(1));
+        _handler(__LOCATION__ + SystemException("Caught interruption (SIGINT) signal"), StackTrace(1));
 
         // Retrieve exception information
         EXCEPTION_POINTERS* pExceptionPtrs = nullptr;
@@ -343,7 +350,7 @@ private:
     static void SigsegvHandler(int signum)
     {
         // Output error
-        OutputError(__LOCATION__ + SystemException("Caught invalid storage access (SIGSEGV) signal"), StackTrace(1));
+        _handler(__LOCATION__ + SystemException("Caught invalid storage access (SIGSEGV) signal"), StackTrace(1));
 
         // Retrieve exception information
         EXCEPTION_POINTERS* pExceptionPtrs = nullptr;
@@ -360,7 +367,7 @@ private:
     static void SigtermHandler(int signum)
     {
         // Output error
-        OutputError(__LOCATION__ + SystemException("Caught termination request (SIGTERM) signal"), StackTrace(1));
+        _handler(__LOCATION__ + SystemException("Caught termination request (SIGTERM) signal"), StackTrace(1));
 
         // Retrieve exception information
         EXCEPTION_POINTERS* pExceptionPtrs = nullptr;
@@ -518,55 +525,55 @@ private:
         switch (signo)
         {
             case SIGABRT:
-                OutputError(__LOCATION__ + SystemException("Caught abnormal program termination (SIGABRT) signal"), StackTrace(1));
+                _handler(__LOCATION__ + SystemException("Caught abnormal program termination (SIGABRT) signal"), StackTrace(1));
                 break;
             case SIGALRM:
-                OutputError(__LOCATION__ + SystemException("Caught alarm clock (SIGALRM) signal"), StackTrace(1));
+                _handler(__LOCATION__ + SystemException("Caught alarm clock (SIGALRM) signal"), StackTrace(1));
                 break;
             case SIGBUS:
-                OutputError(__LOCATION__ + SystemException("Caught memory access error (SIGBUS) signal"), StackTrace(1));
+                _handler(__LOCATION__ + SystemException("Caught memory access error (SIGBUS) signal"), StackTrace(1));
                 break;
             case SIGFPE:
-                OutputError(__LOCATION__ + SystemException("Caught floating point exception (SIGFPE) signal"), StackTrace(1));
+                _handler(__LOCATION__ + SystemException("Caught floating point exception (SIGFPE) signal"), StackTrace(1));
                 break;
             case SIGHUP:
-                OutputError(__LOCATION__ + SystemException("Caught hangup instruction (SIGHUP) signal"), StackTrace(1));
+                _handler(__LOCATION__ + SystemException("Caught hangup instruction (SIGHUP) signal"), StackTrace(1));
                 break;
             case SIGILL:
-                OutputError(__LOCATION__ + SystemException("Caught illegal instruction (SIGILL) signal"), StackTrace(1));
+                _handler(__LOCATION__ + SystemException("Caught illegal instruction (SIGILL) signal"), StackTrace(1));
                 break;
             case SIGINT:
-                OutputError(__LOCATION__ + SystemException("Caught terminal interrupt (SIGINT) signal"), StackTrace(1));
+                _handler(__LOCATION__ + SystemException("Caught terminal interrupt (SIGINT) signal"), StackTrace(1));
                 break;
             case SIGPIPE:
-                OutputError(__LOCATION__ + SystemException("Caught pipe write error (SIGPIPE) signal"), StackTrace(1));
+                _handler(__LOCATION__ + SystemException("Caught pipe write error (SIGPIPE) signal"), StackTrace(1));
                 break;
             case SIGPOLL:
-                OutputError(__LOCATION__ + SystemException("Caught pollable event (SIGPOLL) signal"), StackTrace(1));
+                _handler(__LOCATION__ + SystemException("Caught pollable event (SIGPOLL) signal"), StackTrace(1));
                 break;
             case SIGPROF:
-                OutputError(__LOCATION__ + SystemException("Caught profiling timer expired error (SIGPROF) signal"), StackTrace(1));
+                _handler(__LOCATION__ + SystemException("Caught profiling timer expired error (SIGPROF) signal"), StackTrace(1));
                 break;
             case SIGQUIT:
-                OutputError(__LOCATION__ + SystemException("Caught terminal quit (SIGQUIT) signal"), StackTrace(1));
+                _handler(__LOCATION__ + SystemException("Caught terminal quit (SIGQUIT) signal"), StackTrace(1));
                 break;
             case SIGSEGV:
-                OutputError(__LOCATION__ + SystemException("Caught illegal storage access error (SIGSEGV) signal"), StackTrace(1));
+                _handler(__LOCATION__ + SystemException("Caught illegal storage access error (SIGSEGV) signal"), StackTrace(1));
                 break;
             case SIGSYS:
-                OutputError(__LOCATION__ + SystemException("Caught bad system call (SIGSYS) signal"), StackTrace(1));
+                _handler(__LOCATION__ + SystemException("Caught bad system call (SIGSYS) signal"), StackTrace(1));
                 break;
             case SIGTERM:
-                OutputError(__LOCATION__ + SystemException("Caught termination request (SIGTERM) signal"), StackTrace(1));
+                _handler(__LOCATION__ + SystemException("Caught termination request (SIGTERM) signal"), StackTrace(1));
                 break;
             case SIGXCPU:
-                OutputError(__LOCATION__ + SystemException("Caught CPU time limit exceeded (SIGXCPU) signal"), StackTrace(1));
+                _handler(__LOCATION__ + SystemException("Caught CPU time limit exceeded (SIGXCPU) signal"), StackTrace(1));
                 break;
             case SIGXFSZ:
-                OutputError(__LOCATION__ + SystemException("Caught file size limit exceeded (SIGXFSZ) signal"), StackTrace(1));
+                _handler(__LOCATION__ + SystemException("Caught file size limit exceeded (SIGXFSZ) signal"), StackTrace(1));
                 break;
             default:
-                OutputError(__LOCATION__ + SystemException("Caught unknown signal - " + std::to_string(signo)), StackTrace(1));
+                _handler(__LOCATION__ + SystemException("Caught unknown signal - " + std::to_string(signo)), StackTrace(1));
                 break;
         }
 
@@ -584,16 +591,23 @@ private:
     }
 
 #endif
-
-    static void OutputError(const SystemException& exception, const StackTrace& trace)
-    {
-        std::cerr << exception;
-        std::cerr << "Stack trace:" << std::endl;
-        std::cerr << trace;
-    }
 };
 
+std::function<void (const SystemException&, const StackTrace&)> ExceptionsHandler::Impl::_handler = ExceptionsHandler::DefaultHandler;
+
 std::unique_ptr<ExceptionsHandler::Impl> ExceptionsHandler::_pimpl(new Impl());
+
+void ExceptionsHandler::DefaultHandler(const SystemException& exception, const StackTrace& trace)
+{
+    std::cerr << exception;
+    std::cerr << "Stack trace:" << std::endl;
+    std::cerr << trace;
+}
+
+void ExceptionsHandler::SetupHandler(const std::function<void (const SystemException&, const StackTrace&)>& handler)
+{
+    _pimpl->SetupHandler(handler);
+}
 
 void ExceptionsHandler::SetupProcess()
 {

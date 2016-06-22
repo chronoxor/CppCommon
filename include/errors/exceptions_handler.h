@@ -9,6 +9,10 @@
 #ifndef CPPCOMMON_ERRORS_EXCEPTIONS_HANDLER_H
 #define CPPCOMMON_ERRORS_EXCEPTIONS_HANDLER_H
 
+#include "errors/exceptions.h"
+#include "system/stack_trace.h"
+
+#include <functional>
 #include <memory>
 
 namespace CppCommon {
@@ -33,6 +37,20 @@ public:
     ExceptionsHandler& operator=(const ExceptionsHandler&) = delete;
     ExceptionsHandler& operator=(ExceptionsHandler&&) = delete;
 
+    //! Default exceptions handler
+    /*!
+        Default exceptions handler will print error message and stack trace to std::err
+    */
+    static void DefaultHandler(const SystemException& exception, const StackTrace& trace);
+
+    //! Setup new global exceptions handler function
+    /*!
+        This method should be called once for the current process.
+        It is recommended to call the method just after the current process start!
+
+        \param handler - Exceptions handler function
+    */
+    static void SetupHandler(const std::function<void (const SystemException&, const StackTrace&)>& handler);
     //! Setup exceptions handler for the current process
     /*!
         This method should be called once for the current process.
