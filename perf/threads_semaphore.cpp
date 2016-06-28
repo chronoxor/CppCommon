@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 25.05.2016.
 //
 
-#include "cppbenchmark.h"
+#include "benchmark/cppbenchmark.h"
 
 #include "threads/semaphore.h"
 

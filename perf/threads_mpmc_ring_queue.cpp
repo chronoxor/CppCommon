@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 19.01.2016.
 //
 
-#include "cppbenchmark.h"
+#include "benchmark/cppbenchmark.h"
 
 #include "threads/mpmc_ring_queue.h"
 

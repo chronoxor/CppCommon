@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 04.04.2016.
 //
 
-#include "cppbenchmark.h"
+#include "benchmark/cppbenchmark.h"
 
 #include "threads/mutex.h"
 

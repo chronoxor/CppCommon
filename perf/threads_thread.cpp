@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 27.01.2016.
 //
 
-#include "cppbenchmark.h"
+#include "benchmark/cppbenchmark.h"
 
 #include "system/timestamp.h"
 #include "threads/thread.h"
