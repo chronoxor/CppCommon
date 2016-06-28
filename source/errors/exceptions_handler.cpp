@@ -149,6 +149,14 @@ private:
     // Exception handler function
     static std::function<void (const SystemException&, const StackTrace&)> _handler;
 
+    // Default exception handler function
+    static void DefaultHandler(const SystemException& exception, const StackTrace& trace)
+    {
+        std::cerr << exception;
+        std::cerr << "Stack trace:" << std::endl;
+        std::cerr << trace;
+    }
+
 #if defined(_WIN32) || defined(_WIN64)
 
     // Structured exception handler
@@ -593,16 +601,9 @@ private:
 #endif
 };
 
-std::function<void (const SystemException&, const StackTrace&)> ExceptionsHandler::Impl::_handler = ExceptionsHandler::DefaultHandler;
+std::function<void (const SystemException&, const StackTrace&)> ExceptionsHandler::Impl::_handler = ExceptionsHandler::Impl::DefaultHandler;
 
 std::unique_ptr<ExceptionsHandler::Impl> ExceptionsHandler::_pimpl(new Impl());
-
-void ExceptionsHandler::DefaultHandler(const SystemException& exception, const StackTrace& trace)
-{
-    std::cerr << exception;
-    std::cerr << "Stack trace:" << std::endl;
-    std::cerr << trace;
-}
 
 void ExceptionsHandler::SetupHandler(const std::function<void (const SystemException&, const StackTrace&)>& handler)
 {

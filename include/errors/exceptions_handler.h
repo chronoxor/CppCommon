@@ -21,8 +21,9 @@ namespace CppCommon {
 /*!
     Exceptions handler allows to setup special handlers for all process and thread exceptions.
     This allows to catch different kinds of unhandled exceptions, signals, process abort and
-    termination. As the result corresponding exception will be printed in std::cerr with full
-    stack-trace and dump file will be created.
+    termination. As the result corresponding exception will be routed to the global exceptions
+    handler function (default one will print the exception in std::cerr with a full stack-trace)
+    and the dump file will be created.
 
     Not thread-safe.
 */
@@ -36,12 +37,6 @@ public:
 
     ExceptionsHandler& operator=(const ExceptionsHandler&) = delete;
     ExceptionsHandler& operator=(ExceptionsHandler&&) = delete;
-
-    //! Default exceptions handler
-    /*!
-        Default exceptions handler will print error message and stack trace to std::err
-    */
-    static void DefaultHandler(const SystemException& exception, const StackTrace& trace);
 
     //! Setup new global exceptions handler function
     /*!
