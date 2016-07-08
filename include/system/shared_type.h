@@ -53,9 +53,9 @@ public:
     const T* operator->() const { return ptr(); }
 
     //! Get the shared memory type name
-    const std::string& name() const { return _shared.name(); }
+    const std::string& name() const noexcept { return _shared.name(); }
     //! Get the shared memory type size
-    size_t size() const { return _shared.size(); }
+    size_t size() const noexcept { return _shared.size(); }
 
     //! Get the shared memory type pointer
     T* ptr() { return (T*)_shared.ptr(); }

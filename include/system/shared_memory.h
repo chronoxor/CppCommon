@@ -43,9 +43,9 @@ public:
     explicit operator bool() const { return (ptr() != nullptr); }
 
     //! Get the shared memory block name
-    const std::string& name() const { return _name; }
+    const std::string& name() const noexcept { return _name; }
     //! Get the shared memory block size
-    size_t size() const { return _size; }
+    size_t size() const noexcept { return _size; }
 
     //! Get the shared memory block pointer
     void* ptr();
