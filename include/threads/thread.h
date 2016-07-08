@@ -13,7 +13,6 @@
 
 #include <chrono>
 #include <thread>
-#include <tuple>
 
 //! Current thread Id macro
 /*!
