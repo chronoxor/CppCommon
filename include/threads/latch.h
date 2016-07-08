@@ -28,7 +28,7 @@ class Latch
 public:
     //! Default class constructor
     /*!
-        \param counter - Latch threads counter initial value
+        \param threads - Latch threads counter initial value
     */
     explicit Latch(int threads) noexcept;
     Latch(const Latch&) = delete;

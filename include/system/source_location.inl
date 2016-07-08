@@ -1,5 +1,5 @@
 /*!
-    \file system_location.inl
+    \file source_location.inl
     \brief Source location wrapper inline implementation
     \author Ivan Shynkarenka
     \date 09.02.2016
