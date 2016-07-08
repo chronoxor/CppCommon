@@ -115,7 +115,7 @@ void GenerateInvalidParameter()
 #pragma warning(disable: 4717)
 void GenerateRecurseAlloc()
 {
-    char* buffer = new char[0x1FFFFFFF];
+    uint8_t* buffer = new uint8_t[0x1FFFFFFF];
     buffer;
     GenerateRecurseAlloc();
 }

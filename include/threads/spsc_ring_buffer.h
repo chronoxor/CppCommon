@@ -76,7 +76,7 @@ private:
     cache_line_pad _pad0;
     const size_t _capacity;
     const size_t _mask;
-    char* const _buffer;
+    uint8_t* const _buffer;
 
     cache_line_pad _pad1;
     std::atomic<size_t> _head;

@@ -8,7 +8,7 @@
 
 namespace CppCommon {
 
-inline SPSCRingBuffer::SPSCRingBuffer(size_t capacity) : _capacity(capacity - 1), _mask(capacity - 1), _buffer(new char[capacity]), _head(0), _tail(0)
+inline SPSCRingBuffer::SPSCRingBuffer(size_t capacity) : _capacity(capacity - 1), _mask(capacity - 1), _buffer(new uint8_t[capacity]), _head(0), _tail(0)
 {
     assert((capacity > 1) && "Ring buffer capacity must be greater than one!");
     assert(((capacity & (capacity - 1)) == 0) && "Ring buffer capacity must be a power of two!");

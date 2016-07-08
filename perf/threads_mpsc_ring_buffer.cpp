@@ -32,7 +32,7 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     auto consumer = std::thread([&buffer, &wait_strategy, item_size, items_to_produce, &crc]()
     {
         // Use big items buffer to enable items batching
-        char* items = new char[N];
+        uint8_t* items = new uint8_t[N];
 
         for (uint64_t i = 0; i < items_to_produce;)
         {

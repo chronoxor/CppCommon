@@ -141,7 +141,7 @@ public:
 #endif
     }
 
-    void* ptr() { return (char*)_ptr + SHARED_MEMORY_HEADER_SIZE; }
+    void* ptr() { return (uint8_t*)_ptr + SHARED_MEMORY_HEADER_SIZE; }
     const void* ptr() const { return ptr(); }
     bool owner() { return _owner; }
 
