@@ -9,6 +9,8 @@
 #include <functional>
 #include <thread>
 
+using namespace CppCommon;
+
 const uint64_t items_to_produce = 100000000;
 
 template<typename T, uint64_t N>
@@ -17,7 +19,7 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     uint64_t crc = 0;
 
     // Create single producer / single consumer wait-free ring queue
-    CppCommon::SPSCRingQueue<T> queue(N);
+    SPSCRingQueue<T> queue(N);
 
     // Start consumer thread
     auto consumer = std::thread([&queue, &wait_strategy, &crc]()

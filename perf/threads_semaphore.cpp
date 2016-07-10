@@ -10,6 +10,8 @@
 #include <thread>
 #include <vector>
 
+using namespace CppCommon;
+
 const uint64_t items_to_produce = 1000000;
 const int semaphore_from = 1;
 const int semaphore_to = 32;
@@ -25,7 +27,7 @@ void produce(CppBenchmark::Context& context)
     uint64_t crc = 0;
 
     // Create semaphore synchronization primitive
-    CppCommon::Semaphore lock(semaphore_count);
+    Semaphore lock(semaphore_count);
 
     // Start producer threads
     std::vector<std::thread> producers;
@@ -36,7 +38,7 @@ void produce(CppBenchmark::Context& context)
             uint64_t items = (items_to_produce / producers_count);
             for (uint64_t i = 0; i < items; ++i)
             {
-                CppCommon::Locker<CppCommon::Semaphore> locker(lock);
+                Locker<Semaphore> locker(lock);
                 crc += (producer * items) + i;
             }
         }));

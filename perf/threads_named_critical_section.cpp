@@ -10,6 +10,8 @@
 #include <thread>
 #include <vector>
 
+using namespace CppCommon;
+
 const uint64_t items_to_produce = 10000000;
 const int producers_from = 1;
 const int producers_to = 32;
@@ -21,7 +23,7 @@ void produce(CppBenchmark::Context& context)
     uint64_t crc = 0;
 
     // Create named critical section master
-    CppCommon::NamedCriticalSection lock("named_critical_section_perf");
+    NamedCriticalSection lock("named_critical_section_perf");
 
     // Start producer threads
     std::vector<std::thread> producers;
@@ -30,12 +32,12 @@ void produce(CppBenchmark::Context& context)
         producers.push_back(std::thread([&crc, producer, producers_count]()
         {
             // Create named critical section slave
-            CppCommon::NamedCriticalSection lock("named_critical_section_perf");
+            NamedCriticalSection lock("named_critical_section_perf");
 
             uint64_t items = (items_to_produce / producers_count);
             for (uint64_t i = 0; i < items; ++i)
             {
-                CppCommon::Locker<CppCommon::NamedCriticalSection> locker(lock);
+                Locker<NamedCriticalSection> locker(lock);
                 crc += (producer * items) + i;
             }
         }));

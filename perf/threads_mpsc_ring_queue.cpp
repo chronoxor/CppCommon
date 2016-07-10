@@ -10,6 +10,8 @@
 #include <thread>
 #include <vector>
 
+using namespace CppCommon;
+
 const uint64_t items_to_produce = 10000000;
 const int producers_from = 1;
 const int producers_to = 8;
@@ -22,7 +24,7 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     uint64_t crc = 0;
 
     // Create multiple producers / single consumer wait-free ring queue
-    CppCommon::MPSCRingQueue<T> queue(N, producers_count);
+    MPSCRingQueue<T> queue(N, producers_count);
 
     // Start consumer thread
     auto consumer = std::thread([&queue, &wait_strategy, &crc]()

@@ -7,6 +7,8 @@
 #include "system/timestamp.h"
 #include "threads/thread.h"
 
+using namespace CppCommon;
+
 const uint64_t sleep_iterations = 10;
 const uint64_t yield_iterations = 1000000;
 
@@ -17,14 +19,14 @@ BENCHMARK("Thread-Sleep")
 
     double maxlatency = std::numeric_limits<double>::min();
     double minlatency = std::numeric_limits<double>::max();
-    int64_t previous = CppCommon::timestamp();
+    int64_t previous = timestamp();
     int64_t count = 0;
 
     for (uint64_t i = 0; i < iterations; ++i)
     {
-        CppCommon::Thread::SleepFor(std::chrono::milliseconds(100));
+        Thread::SleepFor(std::chrono::milliseconds(100));
 
-        int64_t current = CppCommon::timestamp();
+        int64_t current = timestamp();
         int64_t duration = current - previous;
         double latency = (double)duration / ++count;
         if (duration > 0)
@@ -58,14 +60,14 @@ BENCHMARK("Thread-Yield")
 
     double maxlatency = std::numeric_limits<double>::min();
     double minlatency = std::numeric_limits<double>::max();
-    int64_t previous = CppCommon::timestamp();
+    int64_t previous = timestamp();
     int64_t count = 0;
 
     for (uint64_t i = 0; i < iterations; ++i)
     {
-        CppCommon::Thread::Yield();
+        Thread::Yield();
 
-        int64_t current = CppCommon::timestamp();
+        int64_t current = timestamp();
         int64_t duration = current - previous;
         double latency = (double)duration / ++count;
         if (duration > 0)

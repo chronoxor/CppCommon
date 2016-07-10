@@ -9,6 +9,8 @@
 #include <functional>
 #include <thread>
 
+using namespace CppCommon;
+
 const uint64_t bytes_to_produce = 100000000;
 const int item_size_from = 4;
 const int item_size_to = 4096;
@@ -22,7 +24,7 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     uint64_t crc = 0;
 
     // Create single producer / single consumer wait-free ring buffer
-    CppCommon::SPSCRingBuffer buffer(N);
+    SPSCRingBuffer buffer(N);
 
     // Start consumer thread
     auto consumer = std::thread([&buffer, &wait_strategy, item_size, items_to_produce, &crc]()

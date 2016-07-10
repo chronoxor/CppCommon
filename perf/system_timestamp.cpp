@@ -6,6 +6,8 @@
 
 #include "system/timestamp.h"
 
+using namespace CppCommon;
+
 const uint64_t iterations = 100000000;
 
 BENCHMARK("Timestamp")
@@ -13,7 +15,7 @@ BENCHMARK("Timestamp")
     uint64_t crc = 0;
 
     for (uint64_t i = 0; i < iterations; ++i)
-        crc += CppCommon::timestamp();
+        crc += timestamp();
 
     // Update benchmark metrics
     context.metrics().AddIterations(iterations - 1);

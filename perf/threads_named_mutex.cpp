@@ -10,6 +10,8 @@
 #include <thread>
 #include <vector>
 
+using namespace CppCommon;
+
 const uint64_t items_to_produce = 1000000;
 const int producers_from = 1;
 const int producers_to = 32;
@@ -21,7 +23,7 @@ void produce(CppBenchmark::Context& context)
     uint64_t crc = 0;
 
     // Create named mutex master
-    CppCommon::NamedMutex lock("named_mutex_perf");
+    NamedMutex lock("named_mutex_perf");
 
     // Start producer threads
     std::vector<std::thread> producers;
@@ -30,12 +32,12 @@ void produce(CppBenchmark::Context& context)
         producers.push_back(std::thread([&crc, producer, producers_count]()
         {
             // Create named mutex slave
-            CppCommon::NamedMutex lock("named_mutex_perf");
+            NamedMutex lock("named_mutex_perf");
 
             uint64_t items = (items_to_produce / producers_count);
             for (uint64_t i = 0; i < items; ++i)
             {
-                CppCommon::Locker<CppCommon::NamedMutex> locker(lock);
+                Locker<NamedMutex> locker(lock);
                 crc += (producer * items) + i;
             }
         }));

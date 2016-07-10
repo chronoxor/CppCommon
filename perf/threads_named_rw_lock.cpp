@@ -10,6 +10,8 @@
 #include <thread>
 #include <vector>
 
+using namespace CppCommon;
+
 const uint64_t items_to_read = 10000000;
 const uint64_t items_to_write = 10000000;
 const int readers_from = 1;
@@ -27,7 +29,7 @@ void produce(CppBenchmark::Context& context)
     uint64_t writers_crc = 0;
 
     // Create named read/write lock master
-    CppCommon::NamedRWLock lock("named_rw_lock_perf");
+    NamedRWLock lock("named_rw_lock_perf");
 
     // Start readers threads
     std::vector<std::thread> readers;
@@ -36,12 +38,12 @@ void produce(CppBenchmark::Context& context)
         readers.push_back(std::thread([&readers_crc, reader, readers_count]()
         {
             // Create named read/write lock slave
-            CppCommon::NamedRWLock lock("named_rw_lock_perf");
+            NamedRWLock lock("named_rw_lock_perf");
 
             uint64_t items = (items_to_read / readers_count);
             for (uint64_t i = 0; i < items; ++i)
             {
-                CppCommon::ReadLocker<CppCommon::NamedRWLock> locker(lock);
+                ReadLocker<NamedRWLock> locker(lock);
                 readers_crc += (reader * items) + i;
             }
         }));
@@ -54,12 +56,12 @@ void produce(CppBenchmark::Context& context)
         writers.push_back(std::thread([&writers_crc, writer, writers_count]()
         {
             // Create named read/write lock slave
-            CppCommon::NamedRWLock lock("named_rw_lock_perf");
+            NamedRWLock lock("named_rw_lock_perf");
 
             uint64_t items = (items_to_write / writers_count);
             for (uint64_t i = 0; i < items; ++i)
             {
-                CppCommon::WriteLocker<CppCommon::NamedRWLock> locker(lock);
+                WriteLocker<NamedRWLock> locker(lock);
                 writers_crc += (writer * items) + i;
             }
         }));

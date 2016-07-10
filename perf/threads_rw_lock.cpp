@@ -10,6 +10,8 @@
 #include <thread>
 #include <vector>
 
+using namespace CppCommon;
+
 const uint64_t items_to_read = 10000000;
 const uint64_t items_to_write = 10000000;
 const int readers_from = 1;
@@ -27,7 +29,7 @@ void produce(CppBenchmark::Context& context)
     uint64_t writers_crc = 0;
 
     // Create read/write lock synchronization primitive
-    CppCommon::RWLock lock;
+    RWLock lock;
 
     // Start readers threads
     std::vector<std::thread> readers;
@@ -38,7 +40,7 @@ void produce(CppBenchmark::Context& context)
             uint64_t items = (items_to_read / readers_count);
             for (uint64_t i = 0; i < items; ++i)
             {
-                CppCommon::ReadLocker<CppCommon::RWLock> locker(lock);
+                ReadLocker<RWLock> locker(lock);
                 readers_crc += (reader * items) + i;
             }
         }));
@@ -53,7 +55,7 @@ void produce(CppBenchmark::Context& context)
             uint64_t items = (items_to_write / writers_count);
             for (uint64_t i = 0; i < items; ++i)
             {
-                CppCommon::WriteLocker<CppCommon::RWLock> locker(lock);
+                WriteLocker<RWLock> locker(lock);
                 writers_crc += (writer * items) + i;
             }
         }));
