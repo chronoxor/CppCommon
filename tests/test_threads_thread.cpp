@@ -4,8 +4,8 @@
 
 #include "catch.hpp"
 
-#include "system/timestamp.h"
 #include "threads/thread.h"
+#include "time/timestamp.h"
 
 using namespace CppCommon;
 

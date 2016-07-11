@@ -6,8 +6,8 @@
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_SYSTEM_TIMESTAMP_H
-#define CPPCOMMON_SYSTEM_TIMESTAMP_H
+#ifndef CPPCOMMON_TIME_TIMESTAMP_H
+#define CPPCOMMON_TIME_TIMESTAMP_H
 
 #include <cstdint>
 
@@ -21,8 +21,8 @@ namespace CppCommon {
 */
 uint64_t timestamp() noexcept;
 
-/*! \example system_timestamp.cpp Nanoseconds timestamp accessor example */
+/*! \example time_timestamp.cpp Nanoseconds timestamp accessor example */
 
 } // namespace CppCommon
 
-#endif // CPPCOMMON_SYSTEM_TIMESTAMP_H
+#endif // CPPCOMMON_TIME_TIMESTAMP_H

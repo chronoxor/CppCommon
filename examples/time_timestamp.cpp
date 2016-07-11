@@ -1,12 +1,12 @@
 /*!
-    \file system_timestamp.cpp
+    \file time_timestamp.cpp
     \brief Nanoseconds timestamp accessor example
     \author Ivan Shynkarenka
     \date 26.01.2016
     \copyright MIT License
 */
 
-#include "system/timestamp.h"
+#include "time/timestamp.h"
 
 #include <iostream>
 #include <thread>

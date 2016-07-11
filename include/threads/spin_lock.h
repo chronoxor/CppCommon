@@ -9,8 +9,8 @@
 #ifndef CPPCOMMON_THREADS_SPIN_LOCK_H
 #define CPPCOMMON_THREADS_SPIN_LOCK_H
 
-#include "system/timestamp.h"
 #include "threads/locker.h"
+#include "time/timestamp.h"
 
 #include <atomic>
 #include <chrono>

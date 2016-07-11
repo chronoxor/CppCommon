@@ -4,11 +4,11 @@
 
 #include "catch.hpp"
 
-#include "system/rdts.h"
+#include "time/rdts.h"
 
 using namespace CppCommon;
 
-TEST_CASE("Read Time Stamp Counter", "[CppCommon][System]")
+TEST_CASE("Read Time Stamp Counter", "[CppCommon][Time]")
 {
     REQUIRE(rdts() > 0);
 

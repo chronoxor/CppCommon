@@ -4,8 +4,8 @@
 
 #include "benchmark/cppbenchmark.h"
 
-#include "system/timestamp.h"
 #include "threads/thread.h"
+#include "time/timestamp.h"
 
 using namespace CppCommon;
 

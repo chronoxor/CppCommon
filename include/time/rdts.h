@@ -6,8 +6,8 @@
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_SYSTEM_RDTS_H
-#define CPPCOMMON_SYSTEM_RDTS_H
+#ifndef CPPCOMMON_TIME_RDTS_H
+#define CPPCOMMON_TIME_RDTS_H
 
 #include <cstdint>
 
@@ -26,8 +26,8 @@ namespace CppCommon {
 */
 uint64_t rdts() noexcept;
 
-/*! \example system_rdts.cpp Read Time Stamp Counter example */
+/*! \example time_rdts.cpp Read Time Stamp Counter example */
 
 } // namespace CppCommon
 
-#endif // CPPCOMMON_SYSTEM_RDTS_H
+#endif // CPPCOMMON_TIME_RDTS_H

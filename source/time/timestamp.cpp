@@ -6,7 +6,7 @@
     \copyright MIT License
 */
 
-#include "system/timestamp.h"
+#include "time/timestamp.h"
 
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>

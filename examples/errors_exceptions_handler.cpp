@@ -248,16 +248,14 @@ int main(int argc, char** argv)
     std::cout << "Choose an exception type: ";
 
     std::string line;
-    if (getline(std::cin, line))
-    {
-        int type = std::stoi(line);
+    getline(std::cin, line);
+    int type = std::stoi(line);
 
-        // Generate selected exception from separate or main thread
-        if (thread)
-            CppCommon::Thread::Start(GenerateCustomException, type).join();
-        else
-            GenerateCustomException(type);
-    }
+    // Generate selected exception from separate or main thread
+    if (thread)
+        CppCommon::Thread::Start(GenerateCustomException, type).join();
+    else
+        GenerateCustomException(type);
 
     // Cleanup stack trace manager of the current process
     CppCommon::StackTraceManager::Cleanup();

@@ -4,13 +4,11 @@
 
 #include "catch.hpp"
 
-#include "system/timestamp.h"
-
-#include <chrono>
+#include "time/timestamp.h"
 
 using namespace CppCommon;
 
-TEST_CASE("Nanoseconds timestamp accessor", "[CppCommon][System]")
+TEST_CASE("Nanoseconds timestamp accessor", "[CppCommon][Time]")
 {
     REQUIRE(timestamp() > 0);
 

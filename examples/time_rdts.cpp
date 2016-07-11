@@ -1,12 +1,12 @@
 /*!
-    \file system_rdts.cpp
+    \file time_rdts.cpp
     \brief Read Time Stamp Counter example
     \author Ivan Shynkarenka
     \date 22.01.2016
     \copyright MIT License
 */
 
-#include "system/rdts.h"
+#include "time/rdts.h"
 
 #include <iostream>
 #include <thread>
