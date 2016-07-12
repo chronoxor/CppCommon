@@ -13,6 +13,7 @@ using namespace CppCommon;
 TEST_CASE("Timestamp", "[CppCommon][Time]")
 {
     REQUIRE(Timestamp::current() > 0);
+    REQUIRE(Timestamp::epoch() == 0);
 
     uint64_t prev = 0;
     for (int i = 0; i < 1000; ++i)

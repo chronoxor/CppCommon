@@ -1,6 +1,6 @@
 /*!
     \file time_timestamp.cpp
-    \brief Nanoseconds timestamp accessor example
+    \brief Timestamp wrapper example
     \author Ivan Shynkarenka
     \date 26.01.2016
     \copyright MIT License

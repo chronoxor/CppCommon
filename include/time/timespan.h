@@ -1,6 +1,6 @@
 /*!
     \file timespan.h
-    \brief Timespan definition
+    \brief Timespan wrapper definition
     \author Ivan Shynkarenka
     \date 11.07.2016
     \copyright MIT License
@@ -24,7 +24,7 @@ namespace CppCommon {
 class Timespan
 {
 public:
-    //! Initialize timespan with a time duration value in nanoseconds
+    //! Initialize timespan with a given time duration value in nanoseconds
     /*!
         \param duration - Time duration value in nanoseconds
     */
@@ -33,6 +33,8 @@ public:
     Timespan(Timespan&&) noexcept = default;
     ~Timespan() noexcept = default;
 
+    Timespan& operator=(int64_t duration) noexcept
+    { _duration = duration; return *this; }
     Timespan& operator=(const Timespan&) noexcept = default;
     Timespan& operator=(Timespan&&) noexcept = default;
 
@@ -167,7 +169,7 @@ private:
     int64_t _duration;
 };
 
-/*! \example time_timespan.cpp Timespan example */
+/*! \example time_timespan.cpp Timespan wrapper example */
 
 } // namespace CppCommon
 

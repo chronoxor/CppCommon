@@ -1,6 +1,6 @@
 /*!
     \file time_timespan.cpp
-    \brief Timespan example
+    \brief Timespan wrapper example
     \author Ivan Shynkarenka
     \date 11.07.2016
     \copyright MIT License

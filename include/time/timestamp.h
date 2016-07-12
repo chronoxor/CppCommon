@@ -1,6 +1,6 @@
 /*!
     \file timestamp.h
-    \brief Timestamp definition
+    \brief Timestamp wrapper definition
     \author Ivan Shynkarenka
     \date 26.01.2016
     \copyright MIT License
@@ -19,6 +19,8 @@ namespace CppCommon {
     hours, minutes, seconds, milliseconds, microseconds or nanoseconds. Also it is possible
     to get difference between two timestamps as a timespan.
 
+    Timestamp epoch is 1970-01-01T00:00:00Z
+
     Not thread-safe.
 */
 class Timestamp
@@ -26,15 +28,17 @@ class Timestamp
 public:
     //! Initialize timestamp with a current time moment in nanoseconds
     Timestamp() noexcept : _timestamp(Timestamp::current()) {}
-    //! Initialize timestamp with a time moment in nanoseconds
+    //! Initialize timestamp with a given time moment in nanoseconds
     /*!
-        \param timestamp - Time moment in nanoseconds (default is the current time moment)
+        \param timestamp - Time moment in nanoseconds
     */
     explicit Timestamp(uint64_t timestamp) noexcept : _timestamp(timestamp) {}
     Timestamp(const Timestamp&) noexcept = default;
     Timestamp(Timestamp&&) noexcept = default;
     ~Timestamp() noexcept = default;
 
+    Timestamp& operator=(uint64_t timestamp) noexcept
+    { _timestamp = timestamp; return *this; }
     Timestamp& operator=(const Timestamp&) noexcept = default;
     Timestamp& operator=(Timestamp&&) noexcept = default;
 
@@ -120,19 +124,26 @@ public:
     { return Timestamp(std::chrono::duration_cast<std::chrono::nanoseconds>(time_point.time_since_epoch()).count()); }
 
     //! Get total days of the current timestamp
-    uint64_t days() const noexcept { return _timestamp / (24 * 60 * 60 * 1000000000ll); }
+    uint64_t days() const noexcept
+    { return _timestamp / (24 * 60 * 60 * 1000000000ll); }
     //! Get total hours of the current timestamp
-    uint64_t hours() const noexcept { return _timestamp / (60 * 60 * 1000000000ll); }
+    uint64_t hours() const noexcept
+    { return _timestamp / (60 * 60 * 1000000000ll); }
     //! Get total minutes of the current timestamp
-    uint64_t minutes() const noexcept { return _timestamp / (60 * 1000000000ll); }
+    uint64_t minutes() const noexcept
+    { return _timestamp / (60 * 1000000000ll); }
     //! Get total seconds of the current timestamp
-    uint64_t seconds() const noexcept { return _timestamp / 1000000000; }
+    uint64_t seconds() const noexcept
+    { return _timestamp / 1000000000; }
     //! Get total milliseconds of the current timestamp
-    uint64_t milliseconds() const noexcept { return _timestamp / 1000000; }
+    uint64_t milliseconds() const noexcept
+    { return _timestamp / 1000000; }
     //! Get total microseconds of the current timestamp
-    uint64_t microseconds() const noexcept { return _timestamp / 1000; }
+    uint64_t microseconds() const noexcept
+    { return _timestamp / 1000; }
     //! Get total nanoseconds of the current timestamp
-    uint64_t nanoseconds() const noexcept { return _timestamp; }
+    uint64_t nanoseconds() const noexcept
+    { return _timestamp; }
 
     //! Set total days of the current timestamp
     static Timestamp days(int64_t days) noexcept
@@ -163,9 +174,17 @@ public:
     /*!
         Thread-safe.
 
-        \return Timestamp in nanoseconds resolution
+        \return Current timestamp in nanoseconds resolution
     */
     static uint64_t current() noexcept;
+
+    //! Get the epoch nanoseconds timestamp
+    /*!
+        Thread-safe.
+
+        \return Epoch timestamp in nanoseconds resolution
+    */
+    static uint64_t epoch() noexcept { return 0; }
 
     //! Get the current value of RDTS (Read Time Stamp Counter)
     /*!
@@ -184,7 +203,7 @@ private:
     uint64_t _timestamp;
 };
 
-/*! \example time_timestamp.cpp Timestamp example */
+/*! \example time_timestamp.cpp Timestamp wrapper example */
 
 } // namespace CppCommon
 
