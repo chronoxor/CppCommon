@@ -18,6 +18,9 @@ namespace CppCommon {
     Time wraps date & time in a single object with a set of accessors - year, month, day,
     hours, minutes, seconds, milliseconds, microseconds or nanoseconds.
 
+    32 bit: time is limited in range 1970-01-01T00:00:00Z - 2038-01-18T23:59:59Z
+    64 bit: time is limited in range 1970-01-01T00:00:00Z - 3000-12-31T23:59:59Z
+
     Not thread-safe.
 */
 class Time
@@ -27,20 +30,33 @@ public:
     /*!
         \param localtime - Local time flag (default is false)
     */
-    Time(bool localtime = false) noexcept
-    { *this = localtime ? local() : utc(); }
+    Time(bool localtime = false) : Time(Timestamp(), localtime) {}
     //! Initialize time with a given timestamp as local or UTC
     /*!
         \param timestamp - Timestamp
         \param localtime - Local time flag (default is false)
     */
-    explicit Time(const Timestamp& timestamp, bool localtime = false) noexcept;
+    explicit Time(const Timestamp& timestamp, bool localtime = false);
+    //! Initialize time with a given date & time components (year, month, day, hour, minute, second, etc.)
+    /*!
+        \param year - Year value (1970-2038 for 32 bits or 1970-3000 for 64 bits)
+        \param month - Month value (1-12)
+        \param day - Day value (1-31)
+        \param hour - Hour value (0-23) (default is 0)
+        \param minute - Minute value (0-59) (default is 0)
+        \param second - Second value (0-59) (default is 0)
+        \param millisecond - Millisecond value (0-999) (default is 0)
+        \param microsecond - Microsecond value (0-999) (default is 0)
+        \param nanosecond - Nanosecond value (0-999) (default is 0)
+        \param localtime - Local time flag (default is false)
+    */
+    explicit Time(int year, int month, int day, int hour = 0, int minute = 0, int second = 0, int millisecond = 0, int microsecond = 0, int nanosecond = 0);
     Time(const Time&) noexcept = default;
     Time(Time&&) noexcept = default;
     ~Time() noexcept = default;
 
-    Time& operator=(const Timestamp& timestamp) noexcept
-    { *this = Time(timestamp); return *this; }
+    Time& operator=(const Timestamp& timestamp)
+    { return operator=(Time(timestamp)); }
     Time& operator=(const Time&) noexcept = default;
     Time& operator=(Time&&) noexcept = default;
 
@@ -52,7 +68,7 @@ public:
     static Time chrono(const std::chrono::time_point<Clock, Duration>& time_point)
     { return Time(Timestamp::chrono(time_point)); }
 
-    //! Get year value
+    //! Get year value (1970-2038 for 32 bits or 1970-3000 for 64 bits)
     int year() const noexcept { return _year; }
     //! Get month value (1-12)
     int month() const noexcept { return _month; }
@@ -80,7 +96,8 @@ public:
 
         \return Epoch date & time
     */
-    static Time epoch() noexcept;
+    static Time epoch()
+    { return Time(1970, 1, 1); }
 
     //! Get the current date & time as local time
     /*!
@@ -88,7 +105,8 @@ public:
 
         \return Current date & time as local time
     */
-    static Time local() noexcept;
+    static Time local()
+    { return Time(Timestamp(), true); }
 
     //! Get the current date & time as UTC time
     /*!
@@ -96,26 +114,8 @@ public:
 
         \return Current date & time as UTC time
     */
-    static Time utc() noexcept;
-
-    //! Get manual created date & time based on the provided components (year, month, day, hour, minute, second, etc.)
-    /*!
-        Only base argument verifications are made during manual constructing date & time!
-
-        Thread-safe.
-
-        \param year - Year value
-        \param month - Month value (1-12)
-        \param day - Day value (1-31)
-        \param hour - Hour value (0-23) (default is 0)
-        \param minute - Minute value (0-59) (default is 0)
-        \param second - Second value (0-59) (default is 0)
-        \param millisecond - Millisecond value (0-999) (default is 0)
-        \param microsecond - Microsecond value (0-999) (default is 0)
-        \param nanosecond - Nanosecond value (0-999) (default is 0)
-        \return Date & Time based on the given components
-    */
-    static Time manual(int year, int month, int day, int hour = 0, int minute = 0, int second = 0, int millisecond = 0, int microsecond = 0, int nanosecond = 0);
+    static Time utc()
+    { return Time(Timestamp(), false); }
 
 private:
     int _year;

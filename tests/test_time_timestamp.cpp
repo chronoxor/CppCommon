@@ -12,13 +12,13 @@ using namespace CppCommon;
 
 TEST_CASE("Timestamp", "[CppCommon][Time]")
 {
-    REQUIRE(Timestamp::current() > 0);
     REQUIRE(Timestamp::epoch() == 0);
+    REQUIRE(Timestamp::now() > 0);
 
     uint64_t prev = 0;
     for (int i = 0; i < 1000; ++i)
     {
-        uint64_t next = Timestamp::current();
+        uint64_t next = Timestamp::now();
         REQUIRE(prev <= next);
         prev = next;
     }

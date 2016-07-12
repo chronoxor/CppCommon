@@ -15,7 +15,7 @@ int main(int argc, char** argv)
 {
     for (int i = 0; i < 10; ++i)
     {
-        std::cout << "Timestamp value: " << CppCommon::Timestamp::current() << std::endl;
+        std::cout << "Timestamp value: " << CppCommon::Timestamp::now() << std::endl;
         std::this_thread::yield();
     }
 

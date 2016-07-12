@@ -15,7 +15,7 @@ BENCHMARK("Timestamp")
     uint64_t crc = 0;
 
     for (uint64_t i = 0; i < iterations; ++i)
-        crc += Timestamp::current();
+        crc += Timestamp::now();
 
     // Update benchmark metrics
     context.metrics().AddIterations(iterations - 1);

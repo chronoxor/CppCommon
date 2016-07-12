@@ -494,7 +494,7 @@ private:
         *(std::strrchr(path, '\\') + 1) = '\0';
 
         // Generate dump file name based on the current timestamp
-        std::string filename = std::string(path) + "crash-" + std::to_string(Timestamp::current()) + ".dmp";
+        std::string filename = std::string(path) + "crash-" + std::to_string(Timestamp::now()) + ".dmp";
 
         // Create the dump file
         HANDLE hFile = CreateFileA(filename.c_str(), GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);

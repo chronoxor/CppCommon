@@ -16,7 +16,7 @@
 
 namespace CppCommon {
 
-uint64_t Timestamp::current() noexcept
+uint64_t Timestamp::now() noexcept
 {
 #if defined(_WIN32) || defined(_WIN64)
     static uint64_t offset = 0;

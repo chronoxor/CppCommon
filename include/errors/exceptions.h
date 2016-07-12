@@ -69,8 +69,19 @@ protected:
     SourceLocation _location;
 };
 
+//! Argument exception
+class ArgumentException : public Exception
+{
+public:
+    using Exception::Exception;
+};
+
 //! Runtime exception
-class RuntimeException : public Exception {};
+class RuntimeException : public Exception
+{
+public:
+    using Exception::Exception;
+};
 
 //! System exception
 class SystemException : public Exception

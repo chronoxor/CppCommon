@@ -27,7 +27,7 @@ class Timestamp
 {
 public:
     //! Initialize timestamp with a current time moment in nanoseconds
-    Timestamp() noexcept : _timestamp(Timestamp::current()) {}
+    Timestamp() noexcept : _timestamp(Timestamp::now()) {}
     //! Initialize timestamp with a given time moment in nanoseconds
     /*!
         \param timestamp - Time moment in nanoseconds
@@ -170,14 +170,6 @@ public:
     //! Get total value of the current timestamp (total nanoseconds)
     uint64_t total() const noexcept { return _timestamp; }
 
-    //! Get the current nanoseconds timestamp
-    /*!
-        Thread-safe.
-
-        \return Current timestamp in nanoseconds resolution
-    */
-    static uint64_t current() noexcept;
-
     //! Get the epoch nanoseconds timestamp
     /*!
         Thread-safe.
@@ -185,6 +177,14 @@ public:
         \return Epoch timestamp in nanoseconds resolution
     */
     static uint64_t epoch() noexcept { return 0; }
+
+    //! Get the current nanoseconds timestamp
+    /*!
+        Thread-safe.
+
+        \return Current timestamp in nanoseconds resolution
+    */
+    static uint64_t now() noexcept;
 
     //! Get the current value of RDTS (Read Time Stamp Counter)
     /*!
