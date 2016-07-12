@@ -9,7 +9,8 @@
 #ifndef CPPCOMMON_THREADS_NAMED_EVENT_MANUAL_RESET_H
 #define CPPCOMMON_THREADS_NAMED_EVENT_MANUAL_RESET_H
 
-#include <chrono>
+#include "time/timestamp.h"
+
 #include <memory>
 #include <string>
 
@@ -68,24 +69,14 @@ public:
     */
     bool TryWait();
 
-    //! Try to wait the event for the given nanoseconds
+    //! Try to wait the event for the given timespan
     /*!
-        Will block for the given nanoseconds in the worst case.
+        Will block for the given timespan in the worst case.
 
-        \param nanoseconds - Nanoseconds to wait for the event
+        \param timespan - Timespan to wait for the event
         \return 'true' if the event was occurred, 'false' if the event was not occurred
     */
-    bool TryWaitFor(int64_t nanoseconds);
-    //! Try to wait the event for the given time duration
-    /*!
-        Will block for the given time duration in the worst case.
-
-        \param duration - Time duration to wait for the event
-        \return 'true' if the event was occurred, 'false' if the event was not occurred
-    */
-    template <class Rep, class Period>
-    bool TryWaitFor(const std::chrono::duration<Rep, Period>& duration)
-    { return TryLockFor(std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count()); }
+    bool TryWaitFor(const Timespan& timespan);
     //! Try to wait the event until the given timestamp
     /*!
         Will block until the given timestamp in the worst case.
@@ -93,9 +84,8 @@ public:
         \param timestamp - Timestamp to stop wait for the event
         \return 'true' if the event was occurred, 'false' if the event was not occurred
     */
-    template <class Clock, class Duration>
-    bool TryWaitUntil(const std::chrono::time_point<Clock, Duration>& timestamp)
-    { return TryLockFor(timestamp - std::chrono::high_resolution_clock::now()); }
+    bool TryWaitUntil(const Timestamp& timestamp)
+    { return TryWaitFor(timestamp - Timestamp()); }
 
     //! Try to wait the event with block
     /*!

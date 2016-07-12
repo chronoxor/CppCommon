@@ -10,8 +10,8 @@
 #define CPPCOMMON_THREADS_THREAD_H
 
 #include "errors/exceptions_handler.h"
+#include "time/timestamp.h"
 
-#include <chrono>
 #include <thread>
 
 //! Current thread Id macro
@@ -58,25 +58,23 @@ public:
     template <class Fn, class... Args>
     static std::thread Start(Fn&& fn, Args&&... args);
 
-    //! Sleep the current thread for the given nanoseconds
+    //! Sleep the current thread for the given milliseconds
     /*!
-        \param nanoseconds - Nanoseconds to sleep
+        \param milliseconds - Milliseconds to sleep
     */
-    static void Sleep(int64_t nanoseconds) noexcept;
-    //! Sleep the current thread for the given time duration
+    static void Sleep(int64_t milliseconds) noexcept
+    { SleepFor(Timespan::milliseconds(milliseconds)); }
+    //! Sleep the current thread for the given timespan
     /*!
-        \param duration - Time duration to sleep
+        \param timespan - Timespan to sleep
     */
-    template <class Rep, class Period>
-    static void SleepFor(const std::chrono::duration<Rep, Period>& duration) noexcept
-    { Sleep(std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count()); }
+    static void SleepFor(const Timespan& timespan) noexcept;
     //! Sleep the current thread until the given timestamp
     /*!
         \param timestamp - Timestamp to stop sleeping
     */
-    template <class Clock, class Duration>
-    static void SleepUntil(const std::chrono::time_point<Clock, Duration>& timestamp) noexcept
-    { SleepFor(timestamp - std::chrono::high_resolution_clock::now()); }
+    static void SleepUntil(const Timestamp& timestamp) noexcept
+    { SleepFor(timestamp - Timestamp()); }
 
     //! Yield to other threads
     static void Yield() noexcept;

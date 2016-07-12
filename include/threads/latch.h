@@ -9,6 +9,8 @@
 #ifndef CPPCOMMON_THREADS_LATCH_H
 #define CPPCOMMON_THREADS_LATCH_H
 
+#include "time/timestamp.h"
+
 #include <cassert>
 #include <condition_variable>
 #include <memory>
@@ -87,23 +89,14 @@ public:
     */
     bool TryWait() noexcept;
 
-    //! Try to wait for the latch for the given nanoseconds
+    //! Try to wait for the latch for the given timespan
     /*!
-        Will block for the given nanoseconds in the worst case.
+        Will block for the given timespan in the worst case.
 
-        \param nanoseconds - Nanoseconds to wait for the latch
+        \param timespan - Timepan to wait for the latch
         \return 'true' if the latch counter is zero, 'false' if the latch counter is not zero
     */
-    bool TryWaitFor(int64_t nanoseconds) noexcept;
-    //! Try to wait for the latch for the given time duration
-    /*!
-        Will block for the given time duration in the worst case.
-
-        \param duration - Time duration to wait for the latch
-        \return 'true' if the latch counter is zero, 'false' if the latch counter is not zero
-    */
-    template <class Rep, class Period>
-    bool TryWaitFor(const std::chrono::duration<Rep, Period>& duration) noexcept;
+    bool TryWaitFor(const Timespan& timespan) noexcept;
     //! Try to wait for the latch until the given timestamp
     /*!
         Will block until the given timestamp in the worst case.
@@ -111,8 +104,7 @@ public:
         \param timestamp - Timestamp to stop wait for the latch
         \return 'true' if the latch counter is zero, 'false' if the latch counter is not zero
     */
-    template <class Clock, class Duration>
-    bool TryWaitUntil(const std::chrono::time_point<Clock, Duration>& timestamp) noexcept;
+    bool TryWaitUntil(const Timestamp& timestamp) noexcept;
 
 private:
     std::mutex _mutex;

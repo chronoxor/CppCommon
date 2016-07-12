@@ -96,19 +96,19 @@ public:
 #endif
     }
 
-    bool TryLockFor(int64_t nanoseconds)
+    bool TryLockFor(const Timespan& timespan)
     {
-        if (nanoseconds < 0)
+        if (timespan < 0)
             return TryLock();
 #if defined(_WIN32) || defined(_WIN64)
-        DWORD result = WaitForSingleObject(_semaphore, (DWORD)std::max(1ll, nanoseconds / 1000000000));
+        DWORD result = WaitForSingleObject(_semaphore, (DWORD)std::max(1ll, timespan.milliseconds()));
         if ((result != WAIT_OBJECT_0) && (result != WAIT_TIMEOUT))
             throwex SystemException("Failed to try lock a named semaphore for the given timeout!");
         return (result == WAIT_OBJECT_0);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         struct timespec timeout;
-        timeout.tv_sec = nanoseconds / 1000000000;
-        timeout.tv_nsec = nanoseconds % 1000000000;
+        timeout.tv_sec = timespan.seconds();
+        timeout.tv_nsec = timespan.nanoseconds() % 1000000000;
         int result = sem_timedwait(_semaphore, &timeout);
         if ((result != 0) && (errno != ETIMEDOUT))
             throwex SystemException("Failed to try lock a named semaphore for the given timeout!");
@@ -175,9 +175,9 @@ bool NamedSemaphore::TryLock()
     return _pimpl->TryLock();
 }
 
-bool NamedSemaphore::TryLockFor(int64_t nanoseconds)
+bool NamedSemaphore::TryLockFor(const Timespan& timespan)
 {
-    return _pimpl->TryLockFor(nanoseconds);
+    return _pimpl->TryLockFor(timespan);
 }
 
 void NamedSemaphore::Lock()

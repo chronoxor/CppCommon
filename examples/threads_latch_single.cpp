@@ -34,12 +34,12 @@ int main(int argc, char** argv)
             std::cout << "Thread " << thread << " continue!" << std::endl;
 
             // Sleep for a while...
-            CppCommon::Thread::SleepFor(std::chrono::milliseconds(thread * 10));
+            CppCommon::Thread::SleepFor(CppCommon::Timespan::milliseconds(thread * 10));
         }));
     }
 
     // Perform some initialization
-    CppCommon::Thread::SleepFor(std::chrono::milliseconds(100));
+    CppCommon::Thread::SleepFor(CppCommon::Timespan::milliseconds(100));
 
     std::cout << "Main thread initialized!" << std::endl;
 

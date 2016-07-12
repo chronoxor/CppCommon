@@ -24,7 +24,7 @@ BENCHMARK("Thread-Sleep")
 
     for (uint64_t i = 0; i < iterations; ++i)
     {
-        Thread::SleepFor(std::chrono::milliseconds(100));
+        Thread::SleepFor(CppCommon::Timespan::milliseconds(100));
 
         int64_t current = Timestamp::current();
         int64_t duration = current - previous;

@@ -4,16 +4,24 @@
 
 #include "catch.hpp"
 
-#include "threads/thread.h"
 #include "time/timespan.h"
+
+#include <thread>
 
 using namespace CppCommon;
 
 TEST_CASE("Timespan", "[CppCommon][Time]")
 {
-    Timespan span1(2558755123456789ll);
+    Timespan span1 = Timespan::days(29) +
+                     Timespan::hours(14) +
+                     Timespan::minutes(45) +
+                     Timespan::seconds(55) +
+                     Timespan::milliseconds(123) +
+                     Timespan::microseconds(456) +
+                     Timespan::nanoseconds(789);
     Timespan span2(span1);
 
+    REQUIRE(span1.total() == 2558755123456789ll);
     REQUIRE(span1.days() == 29);
     REQUIRE((span1.hours() % 24) == 14);
     REQUIRE((span1.minutes() % 60) == 45);
@@ -22,6 +30,7 @@ TEST_CASE("Timespan", "[CppCommon][Time]")
     REQUIRE((span1.microseconds() % 1000) == 456);
     REQUIRE((span1.nanoseconds() % 1000) == 789);
 
+    REQUIRE(span2.total() == span1.total());
     REQUIRE(span2.days() == span1.days());
     REQUIRE(span2.hours() == (span1.days() * 24 + 14));
     REQUIRE(span2.minutes() == (span1.hours() * 60 + 45));
@@ -31,7 +40,7 @@ TEST_CASE("Timespan", "[CppCommon][Time]")
     REQUIRE(span2.nanoseconds() == (span1.microseconds() * 1000 + 789));
 
     // Compatibility with std::chrono
-    Timespan span3(std::chrono::milliseconds(10));
+    Timespan span3 = Timespan::chrono(std::chrono::milliseconds(10));
     REQUIRE(span3.milliseconds() == 10);
-    Thread::SleepFor(span3.chrono());
+    std::this_thread::sleep_for(span3.chrono());
 }

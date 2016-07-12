@@ -40,7 +40,7 @@ int main(int argc, char** argv)
                 }
 
                 // Sleep for a while...
-                CppCommon::Thread::SleepFor(std::chrono::milliseconds((producer + 1) * 1000));
+                CppCommon::Thread::SleepFor(CppCommon::Timespan::milliseconds((producer + 1) * 1000));
             }
         }));
     }
@@ -61,7 +61,7 @@ int main(int argc, char** argv)
                 }
 
                 // Sleep for a while...
-                CppCommon::Thread::SleepFor(std::chrono::milliseconds(100));
+                CppCommon::Thread::SleepFor(CppCommon::Timespan::milliseconds(100));
             }
         }));
     }

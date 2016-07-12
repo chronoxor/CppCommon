@@ -30,7 +30,7 @@ TEST_CASE("Named manual-reset event", "[CppCommon][Threads]")
             NamedEventManualReset event("named_manual_reset_event_test");
 
             // Sleep for a while...
-            Thread::SleepFor(std::chrono::milliseconds(thread * 10));
+            Thread::SleepFor(CppCommon::Timespan::milliseconds(thread * 10));
 
             // Wait for the event
             event.Wait();
@@ -41,7 +41,7 @@ TEST_CASE("Named manual-reset event", "[CppCommon][Threads]")
     }
 
     // Allow threads to start
-    Thread::SleepFor(std::chrono::milliseconds(100));
+    Thread::SleepFor(CppCommon::Timespan::milliseconds(100));
 
     // Signal the event
     event.Signal();

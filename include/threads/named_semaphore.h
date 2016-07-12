@@ -10,8 +10,8 @@
 #define CPPCOMMON_THREADS_NAMED_SEMAPHORE_H
 
 #include "threads/locker.h"
+#include "time/timestamp.h"
 
-#include <chrono>
 #include <memory>
 #include <string>
 
@@ -55,24 +55,14 @@ public:
     */
     bool TryLock();
 
-    //! Try to acquire semaphore for the given nanoseconds
+    //! Try to acquire semaphore for the given timespan
     /*!
-        Will block for the given nanoseconds in the worst case.
+        Will block for the given timespan in the worst case.
 
-        \param nanoseconds - Nanoseconds to wait for the semaphore
+        \param timespan - Timespan to wait for the semaphore
         \return 'true' if the semaphore was successfully acquired, 'false' if the semaphore is busy
     */
-    bool TryLockFor(int64_t nanoseconds);
-    //! Try to acquire semaphore for the given time duration
-    /*!
-        Will block for the given time duration in the worst case.
-
-        \param duration - Time duration to wait for the semaphore
-        \return 'true' if the semaphore was successfully acquired, 'false' if the semaphore is busy
-    */
-    template <class Rep, class Period>
-    bool TryLockFor(const std::chrono::duration<Rep, Period>& duration)
-    { return TryLockFor(std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count()); }
+    bool TryLockFor(const Timespan& timespan);
     //! Try to acquire semaphore until the given timestamp
     /*!
         Will block until the given timestamp in the worst case.
@@ -80,9 +70,8 @@ public:
         \param timestamp - Timestamp to stop wait for the semaphore
         \return 'true' if the semaphore was successfully acquired, 'false' if the semaphore is busy
     */
-    template <class Clock, class Duration>
-    bool TryLockUntil(const std::chrono::time_point<Clock, Duration>& timestamp)
-    { return TryLockFor(timestamp - std::chrono::high_resolution_clock::now()); }
+    bool TryLockUntil(const Timestamp& timestamp)
+    { return TryLockFor(timestamp - Timestamp()); }
 
     //! Acquire semaphore with block
     /*!

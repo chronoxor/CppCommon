@@ -14,7 +14,7 @@ TEST_CASE("Thread", "[CppCommon][Threads]")
     REQUIRE(Thread::CurrentThreadId() > 0);
 
     // Test Sleep() method
-    for (int64_t i = 1; i < 1000000; i *= 10)
+    for (int64_t i = 1; i < 10; ++i)
     {
         int64_t start = Timestamp::current();
         Thread::Sleep(i);
@@ -26,7 +26,7 @@ TEST_CASE("Thread", "[CppCommon][Threads]")
     for (int64_t i = 1; i < 1000000; i *= 10)
     {
         int64_t start = Timestamp::current();
-        Thread::SleepFor(std::chrono::nanoseconds(i));
+        Thread::SleepFor(CppCommon::Timespan::nanoseconds(i));
         int64_t stop = Timestamp::current();
         REQUIRE(((stop - start) >= 0));
     }
@@ -35,7 +35,7 @@ TEST_CASE("Thread", "[CppCommon][Threads]")
     for (int64_t i = 1; i < 1000000; i *= 10)
     {
         int64_t start = Timestamp::current();
-        Thread::SleepUntil(std::chrono::high_resolution_clock::now() + std::chrono::nanoseconds(i));
+        Thread::SleepUntil(CppCommon::Timestamp() + CppCommon::Timespan::nanoseconds(i));
         int64_t stop = Timestamp::current();
         REQUIRE(((stop - start) >= 0));
     }

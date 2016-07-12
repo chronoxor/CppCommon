@@ -66,19 +66,19 @@ public:
 #endif
     }
 
-    bool TryLockFor(int64_t nanoseconds)
+    bool TryLockFor(const Timespan& timespan)
     {
-        if (nanoseconds < 0)
+        if (timespan < 0)
             return TryLock();
 #if defined(_WIN32) || defined(_WIN64)
-        DWORD result = WaitForSingleObject(_mutex, (DWORD)std::max(1ll, nanoseconds / 1000000000));
+        DWORD result = WaitForSingleObject(_mutex, (DWORD)std::max(1ll, timespan.milliseconds()));
         if ((result != WAIT_OBJECT_0) && (result != WAIT_TIMEOUT))
             throwex SystemException("Failed to try lock a mutex for the given timeout!");
         return (result == WAIT_OBJECT_0);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         struct timespec timeout;
-        timeout.tv_sec = nanoseconds / 1000000000;
-        timeout.tv_nsec = nanoseconds % 1000000000;
+        timeout.tv_sec = timespan.seconds();
+        timeout.tv_nsec = timespan.nanoseconds() % 1000000000;
         int result = pthread_mutex_timedlock(&_mutex, &timeout);
         if ((result != 0) && (result != ETIMEDOUT))
             throwex SystemException("Failed to try lock a mutex for the given timeout!", result);
@@ -132,9 +132,9 @@ bool Mutex::TryLock()
     return _pimpl->TryLock();
 }
 
-bool Mutex::TryLockFor(int64_t nanoseconds)
+bool Mutex::TryLockFor(const Timespan& timespan)
 {
-    return _pimpl->TryLockFor(nanoseconds);
+    return _pimpl->TryLockFor(timespan);
 }
 
 void Mutex::Lock()

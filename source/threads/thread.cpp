@@ -59,11 +59,11 @@ uint64_t Thread::CurrentThreadId() noexcept
 #endif
 }
 
-void Thread::Sleep(int64_t nanoseconds) noexcept
+void Thread::SleepFor(const Timespan& timespan) noexcept
 {
-    if (nanoseconds < 0)
+    if (timespan < 0)
         return;
-    if (nanoseconds == 0)
+    if (timespan == 0)
         return Yield();
 #if defined(_WIN32) || defined(_WIN64)
     static NTSTATUS(__stdcall *NtDelayExecution)(IN BOOLEAN Alertable, IN PLARGE_INTEGER DelayInterval) = (NTSTATUS(__stdcall*)(BOOLEAN, PLARGE_INTEGER)) GetProcAddress(GetModuleHandle("ntdll.dll"), "NtDelayExecution");
@@ -71,8 +71,8 @@ void Thread::Sleep(int64_t nanoseconds) noexcept
     // Update once and get Windows Timer resolution
     static int64_t resolution = Internals::SetMinimumTimerResolution();
 
-    int64_t sleep = nanoseconds;
-    int64_t yield = nanoseconds % resolution;
+    int64_t sleep = timespan.nanoseconds();
+    int64_t yield = timespan.nanoseconds() % resolution;
 
     // Yield to other thread for a short time
     if (yield > 0)
@@ -105,8 +105,8 @@ void Thread::Sleep(int64_t nanoseconds) noexcept
     }
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     struct timespec req, rem;
-    req.tv_sec = nanoseconds / 1000000000;
-    req.tv_nsec = nanoseconds % 1000000000;
+    req.tv_sec = timespan.seconds();
+    req.tv_nsec = timespan.nanoseconds() % 1000000000;
 
     // Call nanosleep() in loop until we have remaining time to sleep
     while (nanosleep(&req, &rem) == -1)

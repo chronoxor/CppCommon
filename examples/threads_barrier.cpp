@@ -29,7 +29,7 @@ int main(int argc, char** argv)
             std::cout << "Thread " << thread << " initialized!" << std::endl;
 
             // Sleep for a while...
-            CppCommon::Thread::SleepFor(std::chrono::milliseconds(thread * 10));
+            CppCommon::Thread::SleepFor(CppCommon::Timespan::milliseconds(thread * 10));
 
             std::cout << "Thread " << thread << " before barrier!" << std::endl;
 

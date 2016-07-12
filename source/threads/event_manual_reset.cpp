@@ -112,19 +112,19 @@ public:
 #endif
     }
 
-    bool TryWaitFor(int64_t nanoseconds)
+    bool TryWaitFor(const Timespan& timespan)
     {
-        if (nanoseconds < 0)
+        if (timespan < 0)
             return TryWait();
 #if defined(_WIN32) || defined(_WIN64)
-        DWORD result = WaitForSingleObject(_event, (DWORD)std::max(1ll, nanoseconds / 1000000000));
+        DWORD result = WaitForSingleObject(_event, (DWORD)std::max(1ll, timespan.milliseconds()));
         if ((result != WAIT_OBJECT_0) && (result != WAIT_TIMEOUT))
             throwex SystemException("Failed to try lock a manual-reset event for the given timeout!");
         return (result == WAIT_OBJECT_0);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         struct timespec timeout;
-        timeout.tv_sec = nanoseconds / 1000000000;
-        timeout.tv_nsec = nanoseconds % 1000000000;
+        timeout.tv_sec = timespan.seconds();
+        timeout.tv_nsec = timespan.nanoseconds() % 1000000000;
         int result = pthread_mutex_lock(&_mutex);
         if (result != 0)
             throwex SystemException("Failed to lock a mutex for the manual-reset event!", result);
@@ -199,9 +199,9 @@ bool EventManualReset::TryWait()
     return _pimpl->TryWait();
 }
 
-bool EventManualReset::TryWaitFor(int64_t nanoseconds)
+bool EventManualReset::TryWaitFor(const Timespan& timespan)
 {
-    return _pimpl->TryWaitFor(nanoseconds);
+    return _pimpl->TryWaitFor(timespan);
 }
 
 void EventManualReset::Wait()

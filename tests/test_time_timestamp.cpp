@@ -6,6 +6,8 @@
 
 #include "time/timestamp.h"
 
+#include <thread>
+
 using namespace CppCommon;
 
 TEST_CASE("Timestamp", "[CppCommon][Time]")
@@ -19,6 +21,10 @@ TEST_CASE("Timestamp", "[CppCommon][Time]")
         REQUIRE(prev <= next);
         prev = next;
     }
+
+    // Compatibility with std::chrono
+    Timestamp timestamp = Timestamp::chrono(std::chrono::system_clock::now() + std::chrono::milliseconds(10));
+    std::this_thread::sleep_until(timestamp.chrono());
 }
 
 TEST_CASE("RDTS", "[CppCommon][Time]")

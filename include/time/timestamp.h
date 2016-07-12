@@ -17,7 +17,7 @@ namespace CppCommon {
 /*!
     Timestamp wraps time moment in nanoseconds and allows to get separate values of days,
     hours, minutes, seconds, milliseconds, microseconds or nanoseconds. Also it is possible
-    to get difference between two timestamps as a time span.
+    to get difference between two timestamps as a timespan.
 
     Not thread-safe.
 */
@@ -111,6 +111,14 @@ public:
     friend bool operator<=(const Timestamp& timestamp1, const Timestamp& timestamp2) noexcept
     { return timestamp1.total() <= timestamp2.total(); }
 
+    //! Convert timestamp to the std::chrono time point
+    std::chrono::time_point<std::chrono::system_clock, std::chrono::duration<uint64_t, std::nano>> chrono() const noexcept
+    { return std::chrono::time_point<std::chrono::system_clock>() + std::chrono::nanoseconds(_timestamp); }
+    //! Convert std::chrono time point to timestamp
+    template <class Clock, class Duration>
+    static Timestamp chrono(const std::chrono::time_point<Clock, Duration>& time_point) noexcept
+    { return Timestamp(std::chrono::duration_cast<std::chrono::nanoseconds>(time_point.time_since_epoch()).count()); }
+
     //! Get total days of the current timestamp
     uint64_t days() const noexcept { return _timestamp / (24 * 60 * 60 * 1000000000ll); }
     //! Get total hours of the current timestamp
@@ -118,13 +126,35 @@ public:
     //! Get total minutes of the current timestamp
     uint64_t minutes() const noexcept { return _timestamp / (60 * 1000000000ll); }
     //! Get total seconds of the current timestamp
-    uint64_t seconds() const noexcept { return _timestamp / 1000000000ll; }
+    uint64_t seconds() const noexcept { return _timestamp / 1000000000; }
     //! Get total milliseconds of the current timestamp
     uint64_t milliseconds() const noexcept { return _timestamp / 1000000; }
     //! Get total microseconds of the current timestamp
     uint64_t microseconds() const noexcept { return _timestamp / 1000; }
     //! Get total nanoseconds of the current timestamp
     uint64_t nanoseconds() const noexcept { return _timestamp; }
+
+    //! Set total days of the current timestamp
+    static Timestamp days(int64_t days) noexcept
+    { return Timestamp(days * 24 * 60 * 60 * 1000000000ll); }
+    //! Set total hours of the current timestamp
+    static Timestamp hours(int64_t hours) noexcept
+    { return Timestamp(hours * 60 * 60 * 1000000000ll); }
+    //! Set total minutes of the current timestamp
+    static Timestamp minutes(int64_t minutes) noexcept
+    { return Timestamp(minutes * 60 * 1000000000ll); }
+    //! Set total seconds of the current timestamp
+    static Timestamp seconds(int64_t seconds) noexcept
+    { return Timestamp(seconds * 1000000000); }
+    //! Set total milliseconds of the current timestamp
+    static Timestamp milliseconds(int64_t milliseconds) noexcept
+    { return Timestamp(milliseconds * 1000000); }
+    //! Set total microseconds of the current timestamp
+    static Timestamp microseconds(int64_t microseconds) noexcept
+    { return Timestamp(microseconds * 1000); }
+    //! Set total nanoseconds of the current timestamp
+    static Timestamp nanoseconds(int64_t nanoseconds) noexcept
+    { return Timestamp(nanoseconds); }
 
     //! Get total value of the current timestamp (total nanoseconds)
     uint64_t total() const noexcept { return _timestamp; }

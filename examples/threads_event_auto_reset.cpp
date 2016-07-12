@@ -29,7 +29,7 @@ int main(int argc, char** argv)
             std::cout << "Thread " << thread << " initialized!" << std::endl;
 
             // Sleep for a while...
-            CppCommon::Thread::SleepFor(std::chrono::milliseconds(thread * 10));
+            CppCommon::Thread::SleepFor(CppCommon::Timespan::milliseconds(thread * 10));
 
             std::cout << "Thread " << thread << " waiting for the event!" << std::endl;
 
@@ -41,7 +41,7 @@ int main(int argc, char** argv)
     }
 
     // Allow threads to start
-    CppCommon::Thread::SleepFor(std::chrono::milliseconds(100));
+    CppCommon::Thread::SleepFor(CppCommon::Timespan::milliseconds(100));
 
     // Signal the event for each thread that waits
     for (int thread = 0; thread < concurrency; ++thread)

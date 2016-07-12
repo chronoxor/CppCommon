@@ -37,7 +37,7 @@ TEST_CASE("Spin-lock", "[CppCommon][Threads]")
     REQUIRE(lock.TryLock());
     REQUIRE(lock.IsLocked());
     int64_t start = Timestamp::current();
-    REQUIRE(!lock.TryLockFor(std::chrono::nanoseconds(100)));
+    REQUIRE(!lock.TryLockFor(CppCommon::Timespan::nanoseconds(100)));
     int64_t stop = Timestamp::current();
     REQUIRE(((stop - start) >= 100));
     lock.Unlock();
@@ -47,7 +47,7 @@ TEST_CASE("Spin-lock", "[CppCommon][Threads]")
     REQUIRE(lock.TryLock());
     REQUIRE(lock.IsLocked());
     start = Timestamp::current();
-    REQUIRE(!lock.TryLockUntil(std::chrono::high_resolution_clock::now() + std::chrono::nanoseconds(100)));
+    REQUIRE(!lock.TryLockUntil(CppCommon::Timestamp() + CppCommon::Timespan::nanoseconds(100)));
     stop = Timestamp::current();
     REQUIRE(((stop - start) >= 100));
     lock.Unlock();

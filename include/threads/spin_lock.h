@@ -13,7 +13,6 @@
 #include "time/timestamp.h"
 
 #include <atomic>
-#include <chrono>
 
 namespace CppCommon {
 
@@ -63,24 +62,14 @@ public:
     */
     bool TryLockSpin(int64_t spin) noexcept;
 
-    //! Try to acquire spin-lock for the given nanoseconds
+    //! Try to acquire spin-lock for the given timespan
     /*!
-        Will block for the given nanoseconds in the worst case.
+        Will block for the given timespan in the worst case.
 
-        \param nanoseconds - Nanoseconds to wait for the spin-lock
+        \param timespan - Timespan to wait for the spin-lock
         \return 'true' if the spin-lock was successfully acquired, 'false' if the spin-lock is busy
     */
-    bool TryLockFor(int64_t nanoseconds) noexcept;
-    //! Try to acquire spin-lock for the given time duration
-    /*!
-        Will block for the given time duration in the worst case.
-
-        \param duration - Time duration to wait for the spin-lock
-        \return 'true' if the spin-lock was successfully acquired, 'false' if the spin-lock is busy
-    */
-    template <class Rep, class Period>
-    bool TryLockFor(const std::chrono::duration<Rep, Period>& duration) noexcept
-    { return TryLockFor(std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count()); }
+    bool TryLockFor(const Timespan& timespan) noexcept;
     //! Try to acquire spin-lock until the given timestamp
     /*!
         Will block until the given timestamp in the worst case.
@@ -88,9 +77,8 @@ public:
         \param timestamp - Timestamp to stop wait for the spin-lock
         \return 'true' if the spin-lock was successfully acquired, 'false' if the spin-lock is busy
     */
-    template <class Clock, class Duration>
-    bool TryLockUntil(const std::chrono::time_point<Clock, Duration>& timestamp) noexcept
-    { return TryLockFor(timestamp - std::chrono::high_resolution_clock::now()); }
+    bool TryLockUntil(const Timestamp& timestamp) noexcept
+    { return TryLockFor(timestamp - Timestamp()); }
 
     //! Acquire spin-lock with block
     /*!

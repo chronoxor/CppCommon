@@ -1,6 +1,6 @@
 /*!
     \file time_timespan.cpp
-    \brief Time span example
+    \brief Timespan example
     \author Ivan Shynkarenka
     \date 11.07.2016
     \copyright MIT License
@@ -13,13 +13,13 @@
 
 int main(int argc, char** argv)
 {
-    std::cout << "Please enter time span milliseconds as an integer number..." << std::endl;
+    std::cout << "Please enter timespan milliseconds as an integer number..." << std::endl;
 
     std::string line;
     getline(std::cin, line);
     int milliseconds = std::stoi(line);
 
-    CppCommon::Timespan timespan(milliseconds * 1000000ll);
+    CppCommon::Timespan timespan = CppCommon::Timespan::milliseconds(milliseconds);
 
     std::cout << "Timespan.days() = " << timespan.days() << std::endl;
     std::cout << "Timespan.hours() = " << (timespan.hours() % 24) << std::endl;
