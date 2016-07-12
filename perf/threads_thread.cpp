@@ -19,14 +19,14 @@ BENCHMARK("Thread-Sleep")
 
     double maxlatency = std::numeric_limits<double>::min();
     double minlatency = std::numeric_limits<double>::max();
-    int64_t previous = timestamp();
+    int64_t previous = Timestamp::current();
     int64_t count = 0;
 
     for (uint64_t i = 0; i < iterations; ++i)
     {
         Thread::SleepFor(std::chrono::milliseconds(100));
 
-        int64_t current = timestamp();
+        int64_t current = Timestamp::current();
         int64_t duration = current - previous;
         double latency = (double)duration / ++count;
         if (duration > 0)
@@ -60,14 +60,14 @@ BENCHMARK("Thread-Yield")
 
     double maxlatency = std::numeric_limits<double>::min();
     double minlatency = std::numeric_limits<double>::max();
-    int64_t previous = timestamp();
+    int64_t previous = Timestamp::current();
     int64_t count = 0;
 
     for (uint64_t i = 0; i < iterations; ++i)
     {
         Thread::Yield();
 
-        int64_t current = timestamp();
+        int64_t current = Timestamp::current();
         int64_t duration = current - previous;
         double latency = (double)duration / ++count;
         if (duration > 0)

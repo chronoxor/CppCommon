@@ -77,11 +77,11 @@ void Thread::Sleep(int64_t nanoseconds) noexcept
     // Yield to other thread for a short time
     if (yield > 0)
     {
-        int64_t current = timestamp();
+        int64_t current = Timestamp::current();
         do
         {
           SwitchToThread();
-          int64_t temp = timestamp() - current;
+          int64_t temp = Timestamp::current() - current;
           sleep -= temp;
           yield -= temp;
         } while (yield > 0);

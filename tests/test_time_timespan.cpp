@@ -9,10 +9,10 @@
 
 using namespace CppCommon;
 
-TEST_CASE("Time span", "[CppCommon][Time]")
+TEST_CASE("Timespan", "[CppCommon][Time]")
 {
-    TimeSpan span1(2558755123456789ll);
-    TimeSpan span2(span1);
+    Timespan span1(2558755123456789ll);
+    Timespan span2(span1);
 
     REQUIRE(span1.days() == 29);
     REQUIRE((span1.hours() % 24) == 14);
@@ -31,7 +31,7 @@ TEST_CASE("Time span", "[CppCommon][Time]")
     REQUIRE(span2.nanoseconds() == (span1.microseconds() * 1000 + 789));
 
     // Compatibility with std::chrono
-    TimeSpan span3(std::chrono::milliseconds(10));
+    Timespan span3(std::chrono::milliseconds(10));
     REQUIRE(span3.milliseconds() == 10);
     Thread::SleepFor(span3.chrono());
 }

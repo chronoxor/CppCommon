@@ -16,36 +16,36 @@ TEST_CASE("Thread", "[CppCommon][Threads]")
     // Test Sleep() method
     for (int64_t i = 1; i < 1000000; i *= 10)
     {
-        int64_t start = timestamp();
+        int64_t start = Timestamp::current();
         Thread::Sleep(i);
-        int64_t stop = timestamp();
+        int64_t stop = Timestamp::current();
         REQUIRE(((stop - start) >= 0));
     }
 
     // Test SleepFor() method
     for (int64_t i = 1; i < 1000000; i *= 10)
     {
-        int64_t start = timestamp();
+        int64_t start = Timestamp::current();
         Thread::SleepFor(std::chrono::nanoseconds(i));
-        int64_t stop = timestamp();
+        int64_t stop = Timestamp::current();
         REQUIRE(((stop - start) >= 0));
     }
 
     // Test SleepUntil() method
     for (int64_t i = 1; i < 1000000; i *= 10)
     {
-        int64_t start = timestamp();
+        int64_t start = Timestamp::current();
         Thread::SleepUntil(std::chrono::high_resolution_clock::now() + std::chrono::nanoseconds(i));
-        int64_t stop = timestamp();
+        int64_t stop = Timestamp::current();
         REQUIRE(((stop - start) >= 0));
     }
 
     // Test Yield() method
     for (int64_t i = 0; i < 10; ++i)
     {
-        int64_t start = timestamp();
+        int64_t start = Timestamp::current();
         Thread::Yield();
-        int64_t stop = timestamp();
+        int64_t stop = Timestamp::current();
         REQUIRE(((stop - start) >= 0));
     }
 }

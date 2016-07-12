@@ -26,7 +26,7 @@ inline size_t MPSCRingBuffer::size() const noexcept
 bool MPSCRingBuffer::Enqueue(const void* chunk, size_t size)
 {
     // Get producer index for the current thread based on RDTS value
-    size_t index = rdts() % _concurrency;
+    size_t index = Timestamp::rdts() % _concurrency;
 
     // Lock the chosen producer using its spin-lock
     Locker<SpinLock> lock(_producers[index]->lock);

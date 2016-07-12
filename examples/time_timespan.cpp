@@ -19,13 +19,13 @@ int main(int argc, char** argv)
     getline(std::cin, line);
     int milliseconds = std::stoi(line);
 
-    CppCommon::TimeSpan span(milliseconds * 1000000ll);
+    CppCommon::Timespan timespan(milliseconds * 1000000ll);
 
-    std::cout << "span.days() = " << span.days() << std::endl;
-    std::cout << "span.hours() = " << span.hours() << std::endl;
-    std::cout << "span.minutes() = " << span.minutes() << std::endl;
-    std::cout << "span.seconds() = " << span.seconds() << std::endl;
-    std::cout << "span.milliseconds() = " << span.milliseconds() << std::endl;
+    std::cout << "Timespan.days() = " << timespan.days() << std::endl;
+    std::cout << "Timespan.hours() = " << (timespan.hours() % 24) << std::endl;
+    std::cout << "Timespan.minutes() = " << (timespan.minutes() % 60) << std::endl;
+    std::cout << "Timespan.seconds() = " << (timespan.seconds() % 60) << std::endl;
+    std::cout << "Timespan.milliseconds() = " << (timespan.milliseconds() % 1000) << std::endl;
 
     return 0;
 }

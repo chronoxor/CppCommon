@@ -11,7 +11,7 @@
 
 #include "threads/spin_lock.h"
 #include "threads/spsc_ring_queue.h"
-#include "time/rdts.h"
+#include "time/timestamp.h"
 
 #include <cstdio>
 #include <memory>
