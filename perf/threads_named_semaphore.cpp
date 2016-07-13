@@ -56,7 +56,7 @@ void produce(CppBenchmark::Context& context)
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK("Named semaphore", settings)
+BENCHMARK("NamedSemaphore", settings)
 {
     produce(context);
 }

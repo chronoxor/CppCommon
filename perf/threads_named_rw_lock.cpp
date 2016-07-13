@@ -81,7 +81,7 @@ void produce(CppBenchmark::Context& context)
     context.metrics().SetCustom("CRC-Writers", writers_crc);
 }
 
-BENCHMARK("Named read/write lock", settings)
+BENCHMARK("NamedRWLock", settings)
 {
     produce(context);
 }

@@ -10,7 +10,7 @@ using namespace CppCommon;
 
 const uint64_t iterations = 1000000;
 
-BENCHMARK("Stack trace")
+BENCHMARK("StackTrace")
 {
     uint64_t crc = 0;
 

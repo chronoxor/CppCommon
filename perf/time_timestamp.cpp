@@ -10,7 +10,7 @@ using namespace CppCommon;
 
 const uint64_t iterations = 100000000;
 
-BENCHMARK("Timestamp")
+BENCHMARK("Timestamp-Now")
 {
     uint64_t crc = 0;
 
@@ -22,7 +22,7 @@ BENCHMARK("Timestamp")
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK("RDTS")
+BENCHMARK("Timestamp-RDTS")
 {
     uint64_t crc = 0;
 

@@ -28,15 +28,15 @@ class Time
 public:
     //! Initialize time with a current date & time values as local or UTC
     /*!
-        \param localtime - Local time flag (default is false)
+        \param localtime - Local time flag (default is true)
     */
-    Time(bool localtime = false) : Time(Timestamp(), localtime) {}
+    Time(bool localtime = true) : Time(Timestamp(), localtime) {}
     //! Initialize time with a given timestamp as local or UTC
     /*!
         \param timestamp - Timestamp
-        \param localtime - Local time flag (default is false)
+        \param localtime - Local time flag (default is true)
     */
-    explicit Time(const Timestamp& timestamp, bool localtime = false);
+    explicit Time(const Timestamp& timestamp, bool localtime = true);
     //! Initialize time with a given date & time components (year, month, day, hour, minute, second, etc.)
     /*!
         \param year - Year value (1970-2038 for 32 bits or 1970-3000 for 64 bits)
@@ -59,6 +59,61 @@ public:
     { return operator=(Time(timestamp)); }
     Time& operator=(const Time&) noexcept = default;
     Time& operator=(Time&&) noexcept = default;
+
+    Time& operator+=(const Timespan& offset)
+    { return operator=(Time(timestamp() + offset)); }
+
+    Time& operator-=(const Timespan& offset)
+    { return operator=(Time(timestamp() - offset)); }
+
+    friend Time operator+(const Time& time, const Timespan& offset)
+    { return Time(time.timestamp() + offset); }
+    friend Time operator+(const Timespan& offset, const Time& time)
+    { return Time(offset + time.timestamp()); }
+
+    friend Time operator-(const Time& time, const Timespan& offset)
+    { return Time(time.timestamp() - offset); }
+    friend Time operator-(const Timespan& offset, const Time& time)
+    { return Time(offset - time.timestamp()); }
+
+    friend Timespan operator-(const Time& time1, const Time& time2)
+    { return time1.timestamp() - time2.timestamp(); }
+
+    friend bool operator==(const Time& time, const Timestamp& timestamp)
+    { return time.timestamp() == timestamp; }
+    friend bool operator==(const Timestamp& timestamp, const Time& time)
+    { return timestamp == time.timestamp(); }
+    friend bool operator==(const Time& time1, const Time& time2) noexcept;
+
+    friend bool operator!=(const Time& time, const Timestamp& timestamp)
+    { return time.timestamp() != timestamp; }
+    friend bool operator!=(const Timestamp& timestamp, const Time& time)
+    { return timestamp != time.timestamp(); }
+    friend bool operator!=(const Time& time1, const Time& time2) noexcept;
+
+    friend bool operator>(const Time& time, const Timestamp& timestamp)
+    { return time.timestamp() > timestamp; }
+    friend bool operator>(const Timestamp& timestamp, const Time& time)
+    { return timestamp > time.timestamp(); }
+    friend bool operator>(const Time& time1, const Time& time2) noexcept;
+
+    friend bool operator<(const Time& time, const Timestamp& timestamp)
+    { return time.timestamp() < timestamp; }
+    friend bool operator<(const Timestamp& timestamp, const Time& time)
+    { return timestamp < time.timestamp(); }
+    friend bool operator<(const Time& time1, const Time& time2) noexcept;
+
+    friend bool operator>=(const Time& time, const Timestamp& timestamp)
+    { return time.timestamp() >= timestamp; }
+    friend bool operator>=(const Timestamp& timestamp, const Time& time)
+    { return timestamp >= time.timestamp(); }
+    friend bool operator>=(const Time& time1, const Time& time2) noexcept;
+
+    friend bool operator<=(const Time& time, const Timestamp& timestamp)
+    { return time.timestamp() <= timestamp; }
+    friend bool operator<=(const Timestamp& timestamp, const Time& time)
+    { return timestamp <= time.timestamp(); }
+    friend bool operator<=(const Time& time1, const Time& time2) noexcept;
 
     //! Convert date & time to the std::chrono time point
     std::chrono::time_point<std::chrono::system_clock, std::chrono::duration<uint64_t, std::nano>> chrono() const
@@ -132,5 +187,7 @@ private:
 /*! \example time_time.cpp Time wrapper example */
 
 } // namespace CppCommon
+
+#include "time.inl"
 
 #endif // CPPCOMMON_TIME_TIME_H

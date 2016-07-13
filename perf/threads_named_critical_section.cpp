@@ -52,7 +52,7 @@ void produce(CppBenchmark::Context& context)
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK("Named critical section", settings)
+BENCHMARK("NamedCriticalSection", settings)
 {
     produce(context);
 }

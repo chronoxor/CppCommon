@@ -52,7 +52,7 @@ void produce(CppBenchmark::Context& context)
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK("Named mutex", settings)
+BENCHMARK("NamedMutex", settings)
 {
     produce(context);
 }
