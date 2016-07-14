@@ -62,7 +62,7 @@ uint64_t Timestamp::local()
 
     timestamp.tv_sec -= 60 * tb.timezone;
     if (tb.dstflag != 0)
-        timestamp.tv_sec -= 3600;
+        timestamp.tv_sec += 3600;
 
     return (timestamp.tv_sec * 1000 * 1000 * 1000) + timestamp.tv_nsec;
 #endif

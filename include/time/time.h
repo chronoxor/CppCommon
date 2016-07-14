@@ -44,18 +44,69 @@ public:
     Time(Time&&) noexcept = default;
     ~Time() noexcept = default;
 
+    Time& operator=(const Timestamp& timestamp)
+    { return operator=(Time(timestamp)); }
     Time& operator=(const Time&) noexcept = default;
     Time& operator=(Time&&) noexcept = default;
 
-    friend Timespan operator-(const Time& time1, const Time& time2)
-    { return time1.timestamp() - time2.timestamp(); }
+    Time& operator+=(const Timespan& offset)
+    { return operator=(Time(utcstamp() + offset)); }
 
+    Time& operator-=(const Timespan& offset)
+    { return operator=(Time(utcstamp() - offset)); }
+
+    friend Time operator+(const Time& time, const Timespan& offset)
+    { return Time(time.utcstamp() + offset); }
+    friend Time operator+(const Timespan& offset, const Time& time)
+    { return Time(offset + time.utcstamp()); }
+
+    friend Time operator-(const Time& time, const Timespan& offset)
+    { return Time(time.utcstamp() - offset); }
+    friend Time operator-(const Timespan& offset, const Time& time)
+    { return Time(offset - time.utcstamp()); }
+
+    friend Timespan operator-(const Time& time1, const Time& time2)
+    { return time1.utcstamp() - time2.utcstamp(); }
+
+    friend bool operator==(const Time& time, const Timestamp& timestamp)
+    { return time == Time(timestamp); }
+    friend bool operator==(const Timestamp& timestamp, const Time& time)
+    { return Time(timestamp) == time; }
     friend bool operator==(const Time& time1, const Time& time2) noexcept;
+
+    friend bool operator!=(const Time& time, const Timestamp& timestamp)
+    { return time != Time(timestamp); }
+    friend bool operator!=(const Timestamp& timestamp, const Time& time)
+    { return Time(timestamp) != time; }
     friend bool operator!=(const Time& time1, const Time& time2) noexcept;
+
+    friend bool operator>(const Time& time, const Timestamp& timestamp)
+    { return time > Time(timestamp); }
+    friend bool operator>(const Timestamp& timestamp, const Time& time)
+    { return Time(timestamp) > time; }
     friend bool operator>(const Time& time1, const Time& time2) noexcept;
+
+    friend bool operator<(const Time& time, const Timestamp& timestamp)
+    { return time < Time(timestamp); }
+    friend bool operator<(const Timestamp& timestamp, const Time& time)
+    { return Time(timestamp) < time; }
     friend bool operator<(const Time& time1, const Time& time2) noexcept;
+
+    friend bool operator>=(const Time& time, const Timestamp& timestamp)
+    { return time >= Time(timestamp); }
+    friend bool operator>=(const Timestamp& timestamp, const Time& time)
+    { return Time(timestamp) >= time; }
     friend bool operator>=(const Time& time1, const Time& time2) noexcept;
+
+    friend bool operator<=(const Time& time, const Timestamp& timestamp)
+    { return time <= Time(timestamp); }
+    friend bool operator<=(const Timestamp& timestamp, const Time& time)
+    { return Time(timestamp) <= time; }
     friend bool operator<=(const Time& time1, const Time& time2) noexcept;
+
+    //! Convert date & time to the std::chrono time point
+    std::chrono::time_point<std::chrono::system_clock, std::chrono::duration<uint64_t, std::nano>> chrono() const
+    { return utcstamp().chrono(); }
 
     //! Get year value (1970-2038 for 32 bits or 1970-3000 for 64 bits)
     int year() const noexcept { return _year; }
@@ -76,12 +127,10 @@ public:
     //! Get nanosecond value (0-999)
     int nanosecond() const noexcept { return _nanosecond; }
 
-    //! Get timestamp from the current date & time value
-    Timestamp timestamp() const;
-
-    //! Convert date & time to the std::chrono time point
-    std::chrono::time_point<std::chrono::system_clock, std::chrono::duration<uint64_t, std::nano>> chrono() const
-    { return timestamp().chrono(); }
+    //! Get UTC timestamp from the current date & time value
+    UtcTimestamp utcstamp() const;
+    //! Get local timestamp from the current date & time value
+    LocalTimestamp localstamp() const;
 
     //! Get the epoch date & time
     /*!
@@ -105,6 +154,11 @@ protected:
 
     //! Protected default constructor
     Time() noexcept = default;
+    //! Protected initialize time with a timestamp
+    /*!
+        \param timestamp - Timestamp
+    */
+    explicit Time(const Timestamp& timestamp);
 };
 
 //! UTC time
@@ -116,76 +170,15 @@ public:
 
     //! Initialize UTC time with a current value
     UtcTime() : UtcTime(UtcTimestamp()) {}
-    //! Initialize UTC time with a timestamp
+    //! Initialize UTC time with a given timestamp
     /*!
         \param timestamp - Timestamp
     */
-    UtcTime(const Timestamp& timestamp);
+    explicit UtcTime(const Timestamp& timestamp);
     //! Initialize UTC time with another time value
-    /*!
-        \param time - Time
-    */
-    UtcTime(const Time& time) noexcept : Time(time) {};
-    UtcTime(const UtcTime&) noexcept = default;
-    UtcTime(UtcTime&&) noexcept = default;
-    ~UtcTime() noexcept = default;
+    UtcTime(const Time& time) : Time(time) {}
 
-    UtcTime& operator=(const Timestamp& timestamp)
-    { return operator=(UtcTime(timestamp)); }
-    UtcTime& operator=(const Time& time) noexcept
-    { Time::operator=(time); return *this; }
-    UtcTime& operator=(Time&& time) noexcept
-    { Time::operator=(time); return *this; }
-    UtcTime& operator=(const UtcTime&) noexcept = default;
-    UtcTime& operator=(UtcTime&&) noexcept = default;
-
-    UtcTime& operator+=(const Timespan& offset)
-    { return operator=(UtcTime(timestamp() + offset)); }
-
-    UtcTime& operator-=(const Timespan& offset)
-    { return operator=(UtcTime(timestamp() - offset)); }
-
-    friend UtcTime operator+(const UtcTime& time, const Timespan& offset)
-    { return UtcTime(time.timestamp() + offset); }
-    friend UtcTime operator+(const Timespan& offset, const UtcTime& time)
-    { return UtcTime(offset + time.timestamp()); }
-
-    friend UtcTime operator-(const UtcTime& time, const Timespan& offset)
-    { return UtcTime(time.timestamp() - offset); }
-    friend UtcTime operator-(const Timespan& offset, const UtcTime& time)
-    { return UtcTime(offset - time.timestamp()); }
-
-    friend bool operator==(const UtcTime& time, const Timestamp& timestamp)
-    { return time == UtcTime(timestamp); }
-    friend bool operator==(const Timestamp& timestamp, const UtcTime& time)
-    { return UtcTime(timestamp) == time; }
-
-    friend bool operator!=(const UtcTime& time, const Timestamp& timestamp)
-    { return time != UtcTime(timestamp); }
-    friend bool operator!=(const Timestamp& timestamp, const UtcTime& time)
-    { return UtcTime(timestamp) != time; }
-
-    friend bool operator>(const UtcTime& time, const Timestamp& timestamp)
-    { return time > UtcTime(timestamp); }
-    friend bool operator>(const Timestamp& timestamp, const UtcTime& time)
-    { return UtcTime(timestamp) > time; }
-
-    friend bool operator<(const UtcTime& time, const Timestamp& timestamp)
-    { return time < UtcTime(timestamp); }
-    friend bool operator<(const Timestamp& timestamp, const UtcTime& time)
-    { return UtcTime(timestamp) < time; }
-
-    friend bool operator>=(const UtcTime& time, const Timestamp& timestamp)
-    { return time >= UtcTime(timestamp); }
-    friend bool operator>=(const Timestamp& timestamp, const UtcTime& time)
-    { return UtcTime(timestamp) >= time; }
-
-    friend bool operator<=(const UtcTime& time, const Timestamp& timestamp)
-    { return time <= UtcTime(timestamp); }
-    friend bool operator<=(const Timestamp& timestamp, const UtcTime& time)
-    { return UtcTime(timestamp) <= time; }
-
-    //! Convert std::chrono time point to date & time
+    //! Convert std::chrono time point to UTC date & time
     template <class Clock, class Duration>
     static UtcTime chrono(const std::chrono::time_point<Clock, Duration>& time_point)
     { return UtcTime(Timestamp::chrono(time_point)); }
@@ -200,86 +193,18 @@ public:
 
     //! Initialize local time with a current value
     LocalTime() : LocalTime(UtcTimestamp()) {}
-    //! Initialize local time with a timestamp
+    //! Initialize local time with a given timestamp
     /*!
         \param timestamp - Timestamp
     */
-    LocalTime(const Timestamp& timestamp);
+    explicit LocalTime(const Timestamp& timestamp);
     //! Initialize local time with another time value
-    /*!
-        \param time - Time
-    */
-    LocalTime(const Time& time) noexcept : Time(time) {};
-    LocalTime(const LocalTime&) noexcept = default;
-    LocalTime(LocalTime&&) noexcept = default;
-    ~LocalTime() noexcept = default;
+    LocalTime(const Time& time) : Time(time) {}
 
-    LocalTime& operator=(const Timestamp& timestamp)
-    { return operator=(LocalTime(timestamp)); }
-    LocalTime& operator=(const Time& time) noexcept
-    { Time::operator=(time); return *this; }
-    LocalTime& operator=(Time&& time) noexcept
-    { Time::operator=(time); return *this; }
-    LocalTime& operator=(const LocalTime&) noexcept = default;
-    LocalTime& operator=(LocalTime&&) noexcept = default;
-
-    LocalTime& operator+=(const Timespan& offset)
-    { return operator=(UtcTime(timestamp() + offset)); }
-
-    LocalTime& operator-=(const Timespan& offset)
-    { return operator=(UtcTime(timestamp() - offset)); }
-
-    friend LocalTime operator+(const LocalTime& time, const Timespan& offset)
-    { return LocalTime(UtcTime(time.timestamp() + offset)); }
-    friend LocalTime operator+(const Timespan& offset, const LocalTime& time)
-    { return LocalTime(UtcTime(offset + time.timestamp())); }
-
-    friend LocalTime operator-(const LocalTime& time, const Timespan& offset)
-    { return LocalTime(UtcTime(time.timestamp() - offset)); }
-    friend LocalTime operator-(const Timespan& offset, const LocalTime& time)
-    { return LocalTime(UtcTime(offset - time.timestamp())); }
-
-    friend bool operator==(const LocalTime& time, const Timestamp& timestamp)
-    { return time == LocalTime(timestamp); }
-    friend bool operator==(const Timestamp& timestamp, const LocalTime& time)
-    { return LocalTime(timestamp) == time; }
-
-    friend bool operator!=(const LocalTime& time, const Timestamp& timestamp)
-    { return time != LocalTime(timestamp); }
-    friend bool operator!=(const Timestamp& timestamp, const LocalTime& time)
-    { return LocalTime(timestamp) != time; }
-
-    friend bool operator>(const LocalTime& time, const Timestamp& timestamp)
-    { return time > LocalTime(timestamp); }
-    friend bool operator>(const Timestamp& timestamp, const LocalTime& time)
-    { return LocalTime(timestamp) > time; }
-
-    friend bool operator<(const LocalTime& time, const Timestamp& timestamp)
-    { return time < LocalTime(timestamp); }
-    friend bool operator<(const Timestamp& timestamp, const LocalTime& time)
-    { return LocalTime(timestamp) < time; }
-
-    friend bool operator>=(const LocalTime& time, const Timestamp& timestamp)
-    { return time >= LocalTime(timestamp); }
-    friend bool operator>=(const Timestamp& timestamp, const LocalTime& time)
-    { return LocalTime(timestamp) >= time; }
-
-    friend bool operator<=(const LocalTime& time, const Timestamp& timestamp)
-    { return time <= LocalTime(timestamp); }
-    friend bool operator<=(const Timestamp& timestamp, const LocalTime& time)
-    { return LocalTime(timestamp) <= time; }
-
-    //! Convert std::chrono time point to date & time
+    //! Convert std::chrono time point to local date & time
     template <class Clock, class Duration>
     static LocalTime chrono(const std::chrono::time_point<Clock, Duration>& time_point)
     { return LocalTime(Timestamp::chrono(time_point)); }
-
-private:
-    //! Clone UTC time without conversion to local time
-    /*!
-        \param time - UTC time
-    */
-    LocalTime(const UtcTime& time) : Time(time) {}
 };
 
 /*! \example time_time.cpp Time wrapper example */

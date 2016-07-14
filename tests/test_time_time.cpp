@@ -22,22 +22,24 @@ TEST_CASE("Time", "[CppCommon][Time]")
     REQUIRE(time1.millisecond() == 123);
     REQUIRE(time1.microsecond() == 456);
     REQUIRE(time1.nanosecond() == 789);
-    REQUIRE(time1.timestamp().total() == 1468398153123456789ll);
+    REQUIRE(time1.utcstamp().total() == 1468408953123456789ll);
 
     Time time2(time1);
-    UtcTime time3(time2.timestamp());
+    UtcTime time3(time2.utcstamp());
+    LocalTime time4(time2.localstamp());
     REQUIRE(time2 == time3);
+    REQUIRE(time2 == time4);
 
-    Time time4 = Time::epoch();
-    REQUIRE(time4 == Time(1970, 1, 1, 0, 0, 0, 0, 0, 0));
+    Time time5 = Time::epoch();
+    REQUIRE(time5 == Time(1970, 1, 1, 0, 0, 0, 0, 0, 0));
 
-    UtcTime time5 = UtcTime();
-    LocalTime time6 = LocalTime();
-    REQUIRE(time5 > Time::epoch());
+    UtcTime time6 = UtcTime();
+    LocalTime time7 = LocalTime();
     REQUIRE(time6 > Time::epoch());
-    REQUIRE(std::abs((time5 - time6).hours()) < 24);
+    REQUIRE(time7 > Time::epoch());
+    REQUIRE(std::abs((time6 - time7).hours()) < 24);
 
     // Compatibility with std::chrono
-    UtcTime time7 = UtcTime::chrono(std::chrono::system_clock::now() + std::chrono::milliseconds(10));
-    std::this_thread::sleep_until(time7.chrono());
+    UtcTime time8 = UtcTime::chrono(std::chrono::system_clock::now() + std::chrono::milliseconds(10));
+    std::this_thread::sleep_until(time8.chrono());
 }

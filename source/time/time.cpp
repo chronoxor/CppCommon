@@ -14,6 +14,28 @@
 
 namespace CppCommon {
 
+Time::Time(const Timestamp& timestamp)
+{
+    struct tm result;
+    time_t time = timestamp.seconds();
+#if defined(_WIN32) || defined(_WIN64)
+    if (gmtime_s(&result, &time))
+        throwex SystemException("Cannot convert the given timestamp (" + std::to_string(timestamp.total()) + ") to date & time structure!");
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    if (gmtime_r(&time, &result) != &result)
+        throwex SystemException("Cannot convert the given timestamp (" + std::to_string(timestamp.total()) + ") to date & time structure!");
+#endif
+    _year = result.tm_year + 1900;
+    _month = result.tm_mon + 1;
+    _day = result.tm_mday;
+    _hour = result.tm_hour;
+    _minute = result.tm_min;
+    _second = result.tm_sec % 60;
+    _millisecond = timestamp.milliseconds() % 1000;
+    _microsecond = timestamp.microseconds() % 1000;
+    _nanosecond = timestamp.nanoseconds() % 1000;
+}
+
 Time::Time(int year, int month, int day, int hour, int minute, int second, int millisecond, int microsecond, int nanosecond)
 {
     if (sizeof(time_t) == 4)
@@ -54,7 +76,28 @@ Time::Time(int year, int month, int day, int hour, int minute, int second, int m
     _nanosecond = nanosecond;
 }
 
-Timestamp Time::timestamp() const
+UtcTimestamp Time::utcstamp() const
+{
+    struct tm result;
+    result.tm_year = _year - 1900;
+    result.tm_mon = _month - 1;
+    result.tm_mday = _day;
+    result.tm_hour = _hour;
+    result.tm_min = _minute;
+    result.tm_sec = _second;
+
+#if defined(_WIN32) || defined(_WIN64)
+    time_t time = _mkgmtime(&result);
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    time_t time = timegm(&result);
+#endif
+    if (time == -1)
+        throwex SystemException("Cannot convert date & time to UTC timestamp!");
+
+    return UtcTimestamp(time * 1000000000ull + _millisecond * 1000000ull + _microsecond * 1000ull + _nanosecond);
+}
+
+LocalTimestamp Time::localstamp() const
 {
     struct tm result;
     result.tm_year = _year - 1900;
@@ -66,9 +109,9 @@ Timestamp Time::timestamp() const
 
     time_t time = mktime(&result);
     if (time == -1)
-        throwex SystemException("Cannot convert date & time to timestamp!");
+        throwex SystemException("Cannot convert date & time to local timestamp!");
 
-    return Timestamp(time * 1000000000ll + _millisecond * 1000000ll + _microsecond * 1000ll + _nanosecond);
+    return LocalTimestamp(time * 1000000000ull + _millisecond * 1000000ull + _microsecond * 1000ull + _nanosecond);
 }
 
 UtcTime::UtcTime(const Timestamp& timestamp)
@@ -77,10 +120,10 @@ UtcTime::UtcTime(const Timestamp& timestamp)
     time_t time = timestamp.seconds();
 #if defined(_WIN32) || defined(_WIN64)
     if (gmtime_s(&result, &time))
-        throwex SystemException("Cannot convert UTC timestamp (" + std::to_string(timestamp.total()) + ") to UTC date & time structure!");
+        throwex SystemException("Cannot convert the given timestamp (" + std::to_string(timestamp.total()) + ") to UTC date & time structure!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     if (gmtime_r(&time, &result) != &result)
-        throwex SystemException("Cannot convert UTC timestamp (" + std::to_string(timestamp.total()) + ") to UTC date & time structure!");
+        throwex SystemException("Cannot convert the given timestamp (" + std::to_string(timestamp.total()) + ") to UTC date & time structure!");
 #endif
     _year = result.tm_year + 1900;
     _month = result.tm_mon + 1;
@@ -99,10 +142,10 @@ LocalTime::LocalTime(const Timestamp& timestamp)
     time_t time = timestamp.seconds();
 #if defined(_WIN32) || defined(_WIN64)
     if (localtime_s(&result, &time))
-        throwex SystemException("Cannot convert local timestamp (" + std::to_string(timestamp.total()) + ") to local date & time structure!");
+        throwex SystemException("Cannot convert the given timestamp (" + std::to_string(timestamp.total()) + ") to local date & time structure!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     if (localtime_r(&time, &result) != &result)
-        throwex SystemException("Cannot convert local timestamp (" + std::to_string(timestamp.total()) + ") to local date & time structure!");
+        throwex SystemException("Cannot convert the given timestamp (" + std::to_string(timestamp.total()) + ") to local date & time structure!");
 #endif
     _year = result.tm_year + 1900;
     _month = result.tm_mon + 1;

@@ -34,13 +34,26 @@ BENCHMARK("LocalTime")
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK("Time.timestamp")
+BENCHMARK("Time.utcstamp")
 {
     uint64_t crc = 0;
 
     UtcTime time = UtcTime();
     for (uint64_t i = 0; i < iterations; ++i)
-        crc += time.timestamp().total();
+        crc += time.utcstamp().total();
+
+    // Update benchmark metrics
+    context.metrics().AddIterations(iterations - 1);
+    context.metrics().SetCustom("CRC", crc);
+}
+
+BENCHMARK("Time.localstamp")
+{
+    uint64_t crc = 0;
+
+    UtcTime time = UtcTime();
+    for (uint64_t i = 0; i < iterations; ++i)
+        crc += time.localstamp().total();
 
     // Update benchmark metrics
     context.metrics().AddIterations(iterations - 1);
