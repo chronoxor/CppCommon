@@ -27,11 +27,11 @@ void show(const CppCommon::Time& time)
 
 int main(int argc, char** argv)
 {
-    std::cout << "Local time:" << std::endl;
-    show(CppCommon::Time::local());
-
     std::cout << "Utc time:" << std::endl;
-    show(CppCommon::Time::utc());
+    show(CppCommon::UtcTime());
+
+    std::cout << "Local time:" << std::endl;
+    show(CppCommon::LocalTime());
 
     return 0;
 }

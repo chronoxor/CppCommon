@@ -10,35 +10,35 @@ using namespace CppCommon;
 
 const uint64_t iterations = 10000000;
 
-BENCHMARK("Time-UTC")
+BENCHMARK("UtcTime")
 {
     uint64_t crc = 0;
 
     for (uint64_t i = 0; i < iterations; ++i)
-        crc += Time::utc().nanosecond();
+        crc += UtcTime().second();
 
     // Update benchmark metrics
     context.metrics().AddIterations(iterations - 1);
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK("Time-Local")
+BENCHMARK("LocalTime")
 {
     uint64_t crc = 0;
 
     for (uint64_t i = 0; i < iterations; ++i)
-        crc += Time::local().nanosecond();
+        crc += LocalTime().second();
 
     // Update benchmark metrics
     context.metrics().AddIterations(iterations - 1);
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK("Time-Timestamp")
+BENCHMARK("Time.timestamp")
 {
     uint64_t crc = 0;
 
-    Time time = Time::utc();
+    UtcTime time = UtcTime();
     for (uint64_t i = 0; i < iterations; ++i)
         crc += time.timestamp().total();
 

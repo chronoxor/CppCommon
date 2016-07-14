@@ -25,19 +25,19 @@ TEST_CASE("Time", "[CppCommon][Time]")
     REQUIRE(time1.timestamp().total() == 1468398153123456789ll);
 
     Time time2(time1);
-    Time time3(time2.timestamp());
+    UtcTime time3(time2.timestamp());
     REQUIRE(time2 == time3);
 
     Time time4 = Time::epoch();
     REQUIRE(time4 == Time(1970, 1, 1, 0, 0, 0, 0, 0, 0));
 
-    Time time5 = Time::local();
-    Time time6 = Time::utc();
+    UtcTime time5 = UtcTime();
+    LocalTime time6 = LocalTime();
     REQUIRE(time5 > Time::epoch());
     REQUIRE(time6 > Time::epoch());
-    REQUIRE((time5 - time6).hours() < 24);
+    REQUIRE(std::abs((time5 - time6).hours()) < 24);
 
     // Compatibility with std::chrono
-    Time time7 = Time::chrono(std::chrono::system_clock::now() + std::chrono::milliseconds(10));
+    UtcTime time7 = UtcTime::chrono(std::chrono::system_clock::now() + std::chrono::milliseconds(10));
     std::this_thread::sleep_until(time7.chrono());
 }

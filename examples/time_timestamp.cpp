@@ -25,18 +25,19 @@ int main(int argc, char** argv)
 {
     for (int i = 0; i < 10; ++i)
     {
-        std::cout << "Local value: " << CppCommon::Timestamp::local() << std::endl;
         std::cout << "UTC value: " << CppCommon::Timestamp::utc() << std::endl;
+        std::cout << "Local value: " << CppCommon::Timestamp::local() << std::endl;
         std::cout << "Nano value: " << CppCommon::Timestamp::nano() << std::endl;
         std::cout << "RDTS value: " << CppCommon::Timestamp::rdts() << std::endl;
         std::this_thread::yield();
     }
-
-    std::cout << "Local timestamp:" << std::endl;
-    show(CppCommon::LocalTimestamp());
+    std::cout << std::endl;
 
     std::cout << "UTC timestamp:" << std::endl;
     show(CppCommon::UtcTimestamp());
+
+    std::cout << "Local timestamp:" << std::endl;
+    show(CppCommon::LocalTimestamp());
 
     std::cout << "Nano timestamp:" << std::endl;
     show(CppCommon::NanoTimestamp());

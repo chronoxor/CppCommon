@@ -19,15 +19,13 @@ namespace CppCommon {
     hours, minutes, seconds, milliseconds, microseconds or nanoseconds. Also it is possible
     to get difference between two timestamps as a timespan.
 
-    Timestamp epoch is 1970-01-01T00:00:00Z
+    Timestamp epoch January 1, 1970 at 00:00:00
 
     Not thread-safe.
 */
 class Timestamp
 {
 public:
-    //! Initialize timestamp with a current time moment in nanoseconds
-    Timestamp() noexcept : _timestamp(Timestamp::now()) {}
     //! Initialize timestamp with a given time moment in nanoseconds
     /*!
         \param timestamp - Time moment in nanoseconds
@@ -170,21 +168,37 @@ public:
     //! Get total value of the current timestamp (total nanoseconds)
     uint64_t total() const noexcept { return _timestamp; }
 
-    //! Get the epoch nanoseconds timestamp
+    //! Get the epoch timestamp
     /*!
         Thread-safe.
 
-        \return Epoch timestamp in nanoseconds resolution
+        \return Epoch timestamp
     */
     static uint64_t epoch() noexcept { return 0; }
 
-    //! Get the current nanoseconds timestamp
+    //! Get the UTC timestamp
     /*!
         Thread-safe.
 
-        \return Current timestamp in nanoseconds resolution
+        \return UTC timestamp
     */
-    static uint64_t now() noexcept;
+    static uint64_t utc();
+
+    //! Get the local timestamp
+    /*!
+        Thread-safe.
+
+        \return Local timestamp
+    */
+    static uint64_t local();
+
+    //! Get the high resolution timestamp
+    /*!
+        Thread-safe.
+
+        \return High resolution timestamp
+    */
+    static uint64_t nano();
 
     //! Get the current value of RDTS (Read Time Stamp Counter)
     /*!
@@ -197,10 +211,111 @@ public:
 
         \return Number of CPU cycles since the last system reset
     */
-    static uint64_t rdts() noexcept;
+    static uint64_t rdts();
 
-private:
+protected:
     uint64_t _timestamp;
+};
+
+//! UTC timestamp
+class UtcTimestamp : public Timestamp
+{
+public:
+    using Timestamp::Timestamp;
+
+    //! Initialize UTC timestamp with a current UTC time
+    UtcTimestamp() : Timestamp(Timestamp::utc()) {}
+    //! Initialize UTC timestamp with another timestamp value
+    /*!
+        \param timestamp - Timestamp
+    */
+    UtcTimestamp(const Timestamp& timestamp) noexcept : Timestamp(timestamp) {};
+    UtcTimestamp(const UtcTimestamp&) noexcept = default;
+    UtcTimestamp(UtcTimestamp&&) noexcept = default;
+    ~UtcTimestamp() noexcept = default;
+
+    UtcTimestamp& operator=(const Timestamp& timestamp) noexcept
+    { Timestamp::operator=(timestamp); return *this; }
+    UtcTimestamp& operator=(Timestamp&& timestamp) noexcept
+    { Timestamp::operator=(timestamp); return *this; }
+    UtcTimestamp& operator=(const UtcTimestamp&) noexcept = default;
+    UtcTimestamp& operator=(UtcTimestamp&&) noexcept = default;
+};
+
+//! Local timestamp
+class LocalTimestamp : public Timestamp
+{
+public:
+    using Timestamp::Timestamp;
+
+    //! Initialize local timestamp with a current local time
+    LocalTimestamp() : Timestamp(Timestamp::local()) {}
+    //! Initialize local timestamp with another timestamp value
+    /*!
+        \param timestamp - Timestamp
+    */
+    LocalTimestamp(const Timestamp& timestamp) noexcept : Timestamp(timestamp) {};
+    LocalTimestamp(const LocalTimestamp&) noexcept = default;
+    LocalTimestamp(LocalTimestamp&&) noexcept = default;
+    ~LocalTimestamp() noexcept = default;
+
+    LocalTimestamp& operator=(const Timestamp& timestamp) noexcept
+    { Timestamp::operator=(timestamp); return *this; }
+    LocalTimestamp& operator=(Timestamp&& timestamp) noexcept
+    { Timestamp::operator=(timestamp); return *this; }
+    LocalTimestamp& operator=(const LocalTimestamp&) noexcept = default;
+    LocalTimestamp& operator=(LocalTimestamp&&) noexcept = default;
+};
+
+//! High resolution timestamp
+class NanoTimestamp : public Timestamp
+{
+public:
+    using Timestamp::Timestamp;
+
+    //! Initialize high resolution timestamp with a current high resolution time
+    NanoTimestamp() : Timestamp(Timestamp::nano()) {}
+    //! Initialize high resolution timestamp with another timestamp value
+    /*!
+        \param timestamp - Timestamp
+    */
+    NanoTimestamp(const Timestamp& timestamp) noexcept : Timestamp(timestamp) {};
+    NanoTimestamp(const NanoTimestamp&) noexcept = default;
+    NanoTimestamp(NanoTimestamp&&) noexcept = default;
+    ~NanoTimestamp() noexcept = default;
+
+
+    NanoTimestamp& operator=(const Timestamp& timestamp) noexcept
+    { Timestamp::operator=(timestamp); return *this; }
+    NanoTimestamp& operator=(Timestamp&& timestamp) noexcept
+    { Timestamp::operator=(timestamp); return *this; }
+    NanoTimestamp& operator=(const NanoTimestamp&) noexcept = default;
+    NanoTimestamp& operator=(NanoTimestamp&&) noexcept = default;
+};
+
+//! RDTS timestamp
+class RdtsTimestamp : public Timestamp
+{
+public:
+    using Timestamp::Timestamp;
+
+    //! Initialize RDTS timestamp with a current RDTS time
+    RdtsTimestamp() : Timestamp(Timestamp::rdts()) {}
+    //! Initialize RDTS timestamp with another timestamp value
+    /*!
+        \param timestamp - Timestamp
+    */
+    RdtsTimestamp(const Timestamp& timestamp) noexcept : Timestamp(timestamp) {};
+    RdtsTimestamp(const RdtsTimestamp&) noexcept = default;
+    RdtsTimestamp(RdtsTimestamp&&) noexcept = default;
+    ~RdtsTimestamp() noexcept = default;
+
+    RdtsTimestamp& operator=(const Timestamp& timestamp) noexcept
+    { Timestamp::operator=(timestamp); return *this; }
+    RdtsTimestamp& operator=(Timestamp&& timestamp) noexcept
+    { Timestamp::operator=(timestamp); return *this; }
+    RdtsTimestamp& operator=(const RdtsTimestamp&) noexcept = default;
+    RdtsTimestamp& operator=(RdtsTimestamp&&) noexcept = default;
 };
 
 /*! \example time_timestamp.cpp Timestamp wrapper example */

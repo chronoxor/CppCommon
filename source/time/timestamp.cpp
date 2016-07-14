@@ -8,15 +8,67 @@
 
 #include "time/timestamp.h"
 
+#include "errors/exceptions.h"
+
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 #include <time.h>
+#include <sys/timeb.h>
 #endif
 
 namespace CppCommon {
 
-uint64_t Timestamp::now() noexcept
+uint64_t Timestamp::utc()
+{
+#if defined(_WIN32) || defined(_WIN64)
+    FILETIME ft;
+    GetSystemTimePreciseAsFileTime(&ft);
+
+    ULARGE_INTEGER result;
+    result.LowPart = ft.dwLowDateTime;
+    result.HighPart = ft.dwHighDateTime;
+    return (result.QuadPart - 116444736000000000ull) * 100;
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    struct timespec timestamp;
+    if (clock_gettime(CLOCK_REALTIME, &timestamp) != 0)
+        throwex SystemException("Cannot get value of CLOCK_REALTIME timer!");
+    return (timestamp.tv_sec * 1000 * 1000 * 1000) + timestamp.tv_nsec;
+#endif
+}
+
+uint64_t Timestamp::local()
+{
+#if defined(_WIN32) || defined(_WIN64)
+    FILETIME ft;
+    GetSystemTimePreciseAsFileTime(&ft);
+
+    FILETIME ft_local;
+    if (!FileTimeToLocalFileTime(&ft, &ft_local))
+        throwex SystemException("Cannot convert UTC file time to local file time structure!");
+
+    ULARGE_INTEGER result;
+    result.LowPart = ft_local.dwLowDateTime;
+    result.HighPart = ft_local.dwHighDateTime;
+    return (result.QuadPart - 116444736000000000ull) * 100;
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    struct timespec timestamp;
+    if (clock_gettime(CLOCK_REALTIME, &timestamp) != 0)
+        throwex SystemException("Cannot get value of CLOCK_REALTIME timer!");
+
+    struct timeb tb;
+    if (ftime(&tb) != 0)
+        throwex SystemException("Cannot get system date & time value!");
+
+    timestamp.tv_sec -= 60 * tb.timezone;
+    if (tb.dstflag != 0)
+        timestamp.tv_sec -= 3600;
+
+    return (timestamp.tv_sec * 1000 * 1000 * 1000) + timestamp.tv_nsec;
+#endif
+}
+
+uint64_t Timestamp::nano()
 {
 #if defined(_WIN32) || defined(_WIN64)
     static uint64_t offset = 0;
@@ -28,15 +80,15 @@ uint64_t Timestamp::now() noexcept
     if (!initialized)
     {
         // Calculate timestamp offset
-        FILETIME timestamp;
-        GetSystemTimePreciseAsFileTime(&timestamp);
+        FILETIME fs;
+        GetSystemTimePreciseAsFileTime(&fs);
 
         ULARGE_INTEGER result;
-        result.LowPart = timestamp.dwLowDateTime;
-        result.HighPart = timestamp.dwHighDateTime;
+        result.LowPart = fs.dwLowDateTime;
+        result.HighPart = fs.dwHighDateTime;
 
         // Convert 01.01.1601 to 01.01.1970
-        result.QuadPart -= 116444736000000000ll;
+        result.QuadPart -= 116444736000000000ull;
         offset = result.QuadPart * 100;
 
         // Setup performance counter
@@ -56,12 +108,13 @@ uint64_t Timestamp::now() noexcept
         return offset;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     struct timespec timestamp;
-    clock_gettime(CLOCK_REALTIME, &timestamp);
+    if (clock_gettime(CLOCK_MONOTONIC, &timestamp) != 0)
+        throwex SystemException("Cannot get value of CLOCK_MONOTONIC timer!");
     return (timestamp.tv_sec * 1000 * 1000 * 1000) + timestamp.tv_nsec;
 #endif
 }
 
-uint64_t Timestamp::rdts() noexcept
+uint64_t Timestamp::rdts()
 {
 #if defined(_MSC_VER)
     return __rdtsc();
