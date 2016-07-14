@@ -10,19 +10,43 @@ using namespace CppCommon;
 
 const uint64_t iterations = 100000000;
 
-BENCHMARK("Timestamp-Now")
+BENCHMARK("LocalTimestamp")
 {
     uint64_t crc = 0;
 
     for (uint64_t i = 0; i < iterations; ++i)
-        crc += Timestamp::now();
+        crc += Timestamp::local();
 
     // Update benchmark metrics
     context.metrics().AddIterations(iterations - 1);
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK("Timestamp-RDTS")
+BENCHMARK("UtcTimestamp")
+{
+    uint64_t crc = 0;
+
+    for (uint64_t i = 0; i < iterations; ++i)
+        crc += Timestamp::utc();
+
+    // Update benchmark metrics
+    context.metrics().AddIterations(iterations - 1);
+    context.metrics().SetCustom("CRC", crc);
+}
+
+BENCHMARK("NanoTimestamp")
+{
+    uint64_t crc = 0;
+
+    for (uint64_t i = 0; i < iterations; ++i)
+        crc += Timestamp::nano();
+
+    // Update benchmark metrics
+    context.metrics().AddIterations(iterations - 1);
+    context.metrics().SetCustom("CRC", crc);
+}
+
+BENCHMARK("RdtsTimestamp")
 {
     uint64_t crc = 0;
 

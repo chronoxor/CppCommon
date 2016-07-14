@@ -67,8 +67,8 @@ public:
         \param timestamp - Timestamp to stop wait for the mutex
         \return 'true' if the mutex was successfully acquired, 'false' if the mutex is busy
     */
-    bool TryLockUntil(const Timestamp& timestamp)
-    { return TryLockFor(timestamp - Timestamp()); }
+    bool TryLockUntil(const UtcTimestamp& timestamp)
+    { return TryLockFor(timestamp - UtcTimestamp()); }
 
     //! Acquire mutex with block
     /*!

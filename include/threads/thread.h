@@ -73,8 +73,8 @@ public:
     /*!
         \param timestamp - Timestamp to stop sleeping
     */
-    static void SleepUntil(const Timestamp& timestamp) noexcept
-    { SleepFor(timestamp - Timestamp()); }
+    static void SleepUntil(const NanoTimestamp& timestamp) noexcept
+    { SleepFor(timestamp - NanoTimestamp()); }
 
     //! Yield to other threads
     static void Yield() noexcept;

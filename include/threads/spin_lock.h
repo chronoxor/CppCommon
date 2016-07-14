@@ -77,8 +77,8 @@ public:
         \param timestamp - Timestamp to stop wait for the spin-lock
         \return 'true' if the spin-lock was successfully acquired, 'false' if the spin-lock is busy
     */
-    bool TryLockUntil(const Timestamp& timestamp) noexcept
-    { return TryLockFor(timestamp - Timestamp()); }
+    bool TryLockUntil(const UtcTimestamp& timestamp) noexcept
+    { return TryLockFor(timestamp - UtcTimestamp()); }
 
     //! Acquire spin-lock with block
     /*!

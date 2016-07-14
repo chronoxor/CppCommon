@@ -67,8 +67,8 @@ public:
         \param timestamp - Timestamp to stop wait for the semaphore
         \return 'true' if the semaphore was successfully acquired, 'false' if the semaphore is busy
     */
-    bool TryLockUntil(const Timestamp& timestamp)
-    { return TryLockFor(timestamp - Timestamp()); }
+    bool TryLockUntil(const UtcTimestamp& timestamp)
+    { return TryLockFor(timestamp - UtcTimestamp()); }
 
     //! Acquire semaphore with block
     /*!

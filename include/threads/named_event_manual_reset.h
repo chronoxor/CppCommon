@@ -84,8 +84,8 @@ public:
         \param timestamp - Timestamp to stop wait for the event
         \return 'true' if the event was occurred, 'false' if the event was not occurred
     */
-    bool TryWaitUntil(const Timestamp& timestamp)
-    { return TryWaitFor(timestamp - Timestamp()); }
+    bool TryWaitUntil(const UtcTimestamp& timestamp)
+    { return TryWaitFor(timestamp - UtcTimestamp()); }
 
     //! Try to wait the event with block
     /*!

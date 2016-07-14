@@ -77,11 +77,11 @@ void Thread::SleepFor(const Timespan& timespan) noexcept
     // Yield to other thread for a short time
     if (yield > 0)
     {
-        int64_t current = Timestamp::now();
+        int64_t current = Timestamp::nano();
         do
         {
           SwitchToThread();
-          int64_t temp = Timestamp::now() - current;
+          int64_t temp = Timestamp::nano() - current;
           sleep -= temp;
           yield -= temp;
         } while (yield > 0);

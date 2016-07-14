@@ -36,9 +36,9 @@ TEST_CASE("Spin-lock", "[CppCommon][Threads]")
     // Test TryLockFor() method
     REQUIRE(lock.TryLock());
     REQUIRE(lock.IsLocked());
-    int64_t start = Timestamp::now();
+    int64_t start = Timestamp::nano();
     REQUIRE(!lock.TryLockFor(CppCommon::Timespan::nanoseconds(100)));
-    int64_t stop = Timestamp::now();
+    int64_t stop = Timestamp::nano();
     REQUIRE(((stop - start) >= 100));
     lock.Unlock();
     REQUIRE(!lock.IsLocked());
@@ -46,9 +46,9 @@ TEST_CASE("Spin-lock", "[CppCommon][Threads]")
     // Test TryLockUntil() method
     REQUIRE(lock.TryLock());
     REQUIRE(lock.IsLocked());
-    start = Timestamp::now();
-    REQUIRE(!lock.TryLockUntil(CppCommon::Timestamp() + CppCommon::Timespan::nanoseconds(100)));
-    stop = Timestamp::now();
+    start = Timestamp::nano();
+    REQUIRE(!lock.TryLockUntil(CppCommon::UtcTimestamp() + CppCommon::Timespan::nanoseconds(100)));
+    stop = Timestamp::nano();
     REQUIRE(((stop - start) >= 100));
     lock.Unlock();
     REQUIRE(!lock.IsLocked());

@@ -33,14 +33,14 @@ inline bool SpinLock::TryLockSpin(int64_t spin) noexcept
 
 inline bool SpinLock::TryLockFor(const Timespan& timespan) noexcept
 {
-    Timestamp finish = Timestamp() + timespan;
+    NanoTimestamp finish = NanoTimestamp() + timespan;
 
     // Try to acquire spin-lock at least one time
     do
     {
         if (TryLock())
             return true;
-    } while (Timestamp() < finish);
+    } while (NanoTimestamp() < finish);
 
     // Failed to acquire spin-lock
     return false;
