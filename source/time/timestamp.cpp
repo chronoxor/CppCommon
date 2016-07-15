@@ -65,10 +65,6 @@ uint64_t Timestamp::local()
     if (time == -1)
         throwex SystemException("Cannot convert date & time to local timestamp!");
 
-    // Special handling of Daylight Saving Time
-    if (result.tm_isdst > 0)
-        time -= 3600;
-
     return (time * 1000 * 1000 * 1000) + timestamp.tv_nsec;
 #endif
 }
