@@ -61,7 +61,7 @@ uint64_t Timestamp::local()
     if (localtime_r(&time, &result) != &result)
         throwex SystemException("Cannot convert CLOCK_REALTIME time to local date & time structure!");
 
-    time = mktime(&result);
+    time = timegm(&result);
     if (time == -1)
         throwex SystemException("Cannot convert date & time to local timestamp!");
 
