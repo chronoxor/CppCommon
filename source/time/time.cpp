@@ -85,6 +85,7 @@ UtcTimestamp Time::utcstamp() const
     result.tm_hour = _hour;
     result.tm_min = _minute;
     result.tm_sec = _second;
+    result.tm_isdst = -1;
 
 #if defined(_WIN32) || defined(_WIN64)
     time_t time = _mkgmtime(&result);
@@ -106,6 +107,7 @@ LocalTimestamp Time::localstamp() const
     result.tm_hour = _hour;
     result.tm_min = _minute;
     result.tm_sec = _second;
+    result.tm_isdst = -1;
 
     time_t time = mktime(&result);
     if (time == -1)
