@@ -37,7 +37,6 @@ public:
         \param millisecond - Millisecond value (0-999) (default is 0)
         \param microsecond - Microsecond value (0-999) (default is 0)
         \param nanosecond - Nanosecond value (0-999) (default is 0)
-        \param localtime - Local time flag (default is false)
     */
     explicit Time(int year, int month, int day, int hour = 0, int minute = 0, int second = 0, int millisecond = 0, int microsecond = 0, int nanosecond = 0);
     Time(const Time&) noexcept = default;
