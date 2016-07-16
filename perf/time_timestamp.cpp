@@ -15,7 +15,7 @@ BENCHMARK("UtcTimestamp")
     uint64_t crc = 0;
 
     for (uint64_t i = 0; i < iterations; ++i)
-        crc += Timestamp::utc();
+        crc += UtcTimestamp().total();
 
     // Update benchmark metrics
     context.metrics().AddIterations(iterations - 1);
@@ -27,7 +27,7 @@ BENCHMARK("LocalTimestamp")
     uint64_t crc = 0;
 
     for (uint64_t i = 0; i < iterations; ++i)
-        crc += Timestamp::local();
+        crc += LocalTimestamp().total();
 
     // Update benchmark metrics
     context.metrics().AddIterations(iterations - 1);
@@ -39,7 +39,7 @@ BENCHMARK("NanoTimestamp")
     uint64_t crc = 0;
 
     for (uint64_t i = 0; i < iterations; ++i)
-        crc += Timestamp::nano();
+        crc += NanoTimestamp().total();
 
     // Update benchmark metrics
     context.metrics().AddIterations(iterations - 1);
@@ -51,7 +51,7 @@ BENCHMARK("RdtsTimestamp")
     uint64_t crc = 0;
 
     for (uint64_t i = 0; i < iterations; ++i)
-        crc += Timestamp::rdts();
+        crc += RdtsTimestamp().total();
 
     // Update benchmark metrics
     context.metrics().AddIterations(iterations - 1);
