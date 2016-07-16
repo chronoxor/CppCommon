@@ -56,14 +56,12 @@ uint64_t Timestamp::local()
     if (clock_gettime(CLOCK_REALTIME, &timestamp) != 0)
         throwex SystemException("Cannot get value of CLOCK_REALTIME timer!");
 
-    struct tm result;
+    // Adjust UTC time with local timezone offset
+    struct tm local;
     time_t time = timestamp.tv_sec;
-    if (localtime_r(&time, &result) != &result)
+    if (localtime_r(&time, &local) != &local)
         throwex SystemException("Cannot convert CLOCK_REALTIME time to local date & time structure!");
-
-    time = timegm(&result);
-    if (time == -1)
-        throwex SystemException("Cannot convert date & time to local timestamp!");
+    timestamp.tv_sec += local.tm_gmtoff;
 
     return (time * 1000 * 1000 * 1000) + timestamp.tv_nsec;
 #endif
