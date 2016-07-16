@@ -92,12 +92,12 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK("MPSCRingBuffer-SpinWait", settings)
+BENCHMARK("MPSCRingBuffer<SpinWait>", settings)
 {
     produce_consume<1048576>(context, []{});
 }
 
-BENCHMARK("MPSCRingBuffer-YieldWait", settings)
+BENCHMARK("MPSCRingBuffer<YieldWait>", settings)
 {
     produce_consume<1048576>(context, []{ std::this_thread::yield(); });
 }

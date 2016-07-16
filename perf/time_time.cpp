@@ -10,7 +10,7 @@ using namespace CppCommon;
 
 const uint64_t iterations = 10000000;
 
-BENCHMARK("UtcTime")
+BENCHMARK("UtcTime()")
 {
     uint64_t crc = 0;
 
@@ -22,7 +22,7 @@ BENCHMARK("UtcTime")
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK("LocalTime")
+BENCHMARK("LocalTime()")
 {
     uint64_t crc = 0;
 
@@ -34,7 +34,7 @@ BENCHMARK("LocalTime")
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK("Time.utcstamp")
+BENCHMARK("Time::utcstamp()")
 {
     uint64_t crc = 0;
 
@@ -47,7 +47,7 @@ BENCHMARK("Time.utcstamp")
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK("Time.localstamp")
+BENCHMARK("Time::localstamp()")
 {
     uint64_t crc = 0;
 

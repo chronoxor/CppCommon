@@ -10,7 +10,7 @@ using namespace CppCommon;
 
 const uint64_t iterations = 100000000;
 
-BENCHMARK("UtcTimestamp")
+BENCHMARK("UtcTimestamp()")
 {
     uint64_t crc = 0;
 
@@ -22,7 +22,7 @@ BENCHMARK("UtcTimestamp")
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK("LocalTimestamp")
+BENCHMARK("LocalTimestamp()")
 {
     uint64_t crc = 0;
 
@@ -34,7 +34,7 @@ BENCHMARK("LocalTimestamp")
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK("NanoTimestamp")
+BENCHMARK("NanoTimestamp()")
 {
     uint64_t crc = 0;
 
@@ -46,7 +46,7 @@ BENCHMARK("NanoTimestamp")
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK("RdtsTimestamp")
+BENCHMARK("RdtsTimestamp()")
 {
     uint64_t crc = 0;
 

@@ -71,12 +71,12 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK("MPSCLinkedQueue-SpinWait-producers", settings)
+BENCHMARK("MPSCLinkedQueue<SpinWait>-producers", settings)
 {
     produce_consume<int>(context, []{});
 }
 
-BENCHMARK("MPSCLinkedQueue-YieldWait-producers", settings)
+BENCHMARK("MPSCLinkedQueue<YieldWait>-producers", settings)
 {
     produce_consume<int>(context, []{ std::this_thread::yield(); });
 }

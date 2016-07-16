@@ -61,12 +61,12 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK("SPSCRingQueue-SpinWait")
+BENCHMARK("SPSCRingQueue<SpinWait>")
 {
     produce_consume<int, 1048576>(context, []{});
 }
 
-BENCHMARK("SPSCRingQueue-YieldWait")
+BENCHMARK("SPSCRingQueue<YieldWait>")
 {
     produce_consume<int, 1048576>(context, []{ std::this_thread::yield(); });
 }

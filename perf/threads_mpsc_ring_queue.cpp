@@ -93,22 +93,22 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK("MPSCRingBatcher-SpinWait-producers", settings)
+BENCHMARK("MPSCRingBatcher<SpinWait>-producers", settings)
 {
     produce_consume<int, 1048576, true>(context, []{});
 }
 
-BENCHMARK("MPSCRingBatcher-YieldWait-producers", settings)
+BENCHMARK("MPSCRingBatcher<YieldWait>-producers", settings)
 {
     produce_consume<int, 1048576, true>(context, []{ std::this_thread::yield(); });
 }
 
-BENCHMARK("MPSCRingQueue-SpinWait-producers", settings)
+BENCHMARK("MPSCRingQueue<SpinWait>-producers", settings)
 {
     produce_consume<int, 1048576, false>(context, []{});
 }
 
-BENCHMARK("MPSCRingQueue-YieldWait-producers", settings)
+BENCHMARK("MPSCRingQueue<YieldWait>-producers", settings)
 {
     produce_consume<int, 1048576, false>(context, []{ std::this_thread::yield(); });
 }
