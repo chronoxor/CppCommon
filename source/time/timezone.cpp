@@ -44,7 +44,7 @@ Timezone::Timezone() : _name(), _offset(Timespan::zero()), _dstoffset(Timespan::
             if (!WideCharToMultiByte(CP_UTF8, WC_ERR_INVALID_CHARS, dtzi.DaylightName, -1, buffer, 1024, nullptr, nullptr))
                 throwex SystemException("Cannot get dynamic time zone daylight name!");
             _name = buffer;
-            _offset = -Timespan::minutes(dtzi.Bias - dtzi.DaylightBias);
+            _offset = -Timespan::minutes(dtzi.Bias);
             _dstoffset = -Timespan::minutes(dtzi.DaylightBias);
             break;
         default:
