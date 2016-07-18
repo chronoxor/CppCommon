@@ -21,29 +21,24 @@ namespace CppCommon {
 Timezone::Timezone() : _name(), _offset(Timespan::zero()), _dstoffset(Timespan::zero())
 {
 #if defined(_WIN32) || defined(_WIN64)
+    WCHAR* name;
     char buffer[1024];
     DYNAMIC_TIME_ZONE_INFORMATION dtzi;
     DWORD result = GetDynamicTimeZoneInformation(&dtzi);
     switch (result)
     {
         case TIME_ZONE_ID_UNKNOWN:
-            if (!WideCharToMultiByte(CP_UTF8, WC_ERR_INVALID_CHARS, dtzi.TimeZoneKeyName, -1, buffer, 1024, nullptr, nullptr))
-                throwex SystemException("Cannot get dynamic time zone key name!");
-            _name = buffer;
+            name = dtzi.TimeZoneKeyName;
             _offset = -Timespan::minutes(dtzi.Bias);
             _dstoffset = Timespan::zero();
             break;
         case TIME_ZONE_ID_STANDARD:
-            if (!WideCharToMultiByte(CP_UTF8, WC_ERR_INVALID_CHARS, dtzi.StandardName, -1, buffer, 1024, nullptr, nullptr))
-                throwex SystemException("Cannot get dynamic time zone standard name!");
-            _name = buffer;
+            name = dtzi.StandardName;
             _offset = -Timespan::minutes(dtzi.Bias);
             _dstoffset = Timespan::zero();
             break;
         case TIME_ZONE_ID_DAYLIGHT:
-            if (!WideCharToMultiByte(CP_UTF8, WC_ERR_INVALID_CHARS, dtzi.DaylightName, -1, buffer, 1024, nullptr, nullptr))
-                throwex SystemException("Cannot get dynamic time zone daylight name!");
-            _name = buffer;
+            name = dtzi.DaylightName;
             _offset = -Timespan::minutes(dtzi.Bias);
             _dstoffset = -Timespan::minutes(dtzi.DaylightBias);
             break;
@@ -51,6 +46,10 @@ Timezone::Timezone() : _name(), _offset(Timespan::zero()), _dstoffset(Timespan::
             throwex SystemException("Cannot get dynamic time zone informaction!");
             break;
     }
+    // Convert time zone name to UTF-8 encoding.
+    if (!WideCharToMultiByte(CP_UTF8, WC_ERR_INVALID_CHARS, name, -1, buffer, 1024, nullptr, nullptr))
+        throwex SystemException("Cannot get dynamic time zone key name!");
+    _name = buffer;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     struct tm local;
     time_t seconds = time(nullptr);
