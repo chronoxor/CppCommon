@@ -14,7 +14,6 @@
 #include <windows.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 #include <time.h>
-#include <sys/timeb.h>
 #endif
 
 namespace CppCommon {

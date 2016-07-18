@@ -165,6 +165,14 @@ public:
     int64_t total() const noexcept
     { return _duration; }
 
+    //! Get zero timespan
+    /*!
+        Thread-safe.
+
+        \return Zero timestamp
+    */
+    static Timespan zero() noexcept { return Timespan(0); }
+
 private:
     int64_t _duration;
 };

@@ -9,7 +9,6 @@
 #include "time/time.h"
 
 #include <iostream>
-#include <string>
 
 void show(const CppCommon::Time& time)
 {
@@ -27,7 +26,7 @@ void show(const CppCommon::Time& time)
 
 int main(int argc, char** argv)
 {
-    std::cout << "Utc time:" << std::endl;
+    std::cout << "UTC time:" << std::endl;
     show(CppCommon::UtcTime());
 
     std::cout << "Local time:" << std::endl;
