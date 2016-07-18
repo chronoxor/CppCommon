@@ -53,8 +53,8 @@ Timezone::Timezone() : _name(), _offset(Timespan::zero()), _dstoffset(Timespan::
     }
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     struct tm local;
-    time_t time = time(nullptr);
-    if (localtime_r(&time, &local) != &local)
+    time_t seconds = time(nullptr);
+    if (localtime_r(&seconds, &local) != &local)
         throwex SystemException("Cannot convert current time to local date & time structure!");
     _name = local.tm_zone;
     if (local.tm_isdst > 0)

@@ -17,12 +17,12 @@ namespace CppCommon {
 Time::Time(const Timestamp& timestamp)
 {
     struct tm result;
-    time_t time = timestamp.seconds();
+    time_t seconds = timestamp.seconds();
 #if defined(_WIN32) || defined(_WIN64)
-    if (gmtime_s(&result, &time))
+    if (gmtime_s(&result, &seconds))
         throwex SystemException("Cannot convert the given timestamp (" + std::to_string(timestamp.total()) + ") to date & time structure!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-    if (gmtime_r(&time, &result) != &result)
+    if (gmtime_r(&seconds, &result) != &result)
         throwex SystemException("Cannot convert the given timestamp (" + std::to_string(timestamp.total()) + ") to date & time structure!");
 #endif
     _year = result.tm_year + 1900;
@@ -88,14 +88,14 @@ UtcTimestamp Time::utcstamp() const
     result.tm_isdst = -1;
 
 #if defined(_WIN32) || defined(_WIN64)
-    time_t time = _mkgmtime(&result);
+    time_t seconds = _mkgmtime(&result);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-    time_t time = timegm(&result);
+    time_t seconds = timegm(&result);
 #endif
-    if (time == -1)
+    if (seconds == -1)
         throwex SystemException("Cannot convert date & time to UTC timestamp!");
 
-    return UtcTimestamp(time * 1000000000ull + _millisecond * 1000000ull + _microsecond * 1000ull + _nanosecond);
+    return UtcTimestamp(seconds * 1000000000ull + _millisecond * 1000000ull + _microsecond * 1000ull + _nanosecond);
 }
 
 LocalTimestamp Time::localstamp() const
@@ -109,22 +109,22 @@ LocalTimestamp Time::localstamp() const
     result.tm_sec = _second;
     result.tm_isdst = -1;
 
-    time_t time = mktime(&result);
-    if (time == -1)
+    time_t seconds = mktime(&result);
+    if (seconds == -1)
         throwex SystemException("Cannot convert date & time to local timestamp!");
 
-    return LocalTimestamp(time * 1000000000ull + _millisecond * 1000000ull + _microsecond * 1000ull + _nanosecond);
+    return LocalTimestamp(seconds * 1000000000ull + _millisecond * 1000000ull + _microsecond * 1000ull + _nanosecond);
 }
 
 UtcTime::UtcTime(const Timestamp& timestamp)
 {
     struct tm result;
-    time_t time = timestamp.seconds();
+    time_t seconds = timestamp.seconds();
 #if defined(_WIN32) || defined(_WIN64)
-    if (gmtime_s(&result, &time))
+    if (gmtime_s(&result, &seconds))
         throwex SystemException("Cannot convert the given timestamp (" + std::to_string(timestamp.total()) + ") to UTC date & time structure!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-    if (gmtime_r(&time, &result) != &result)
+    if (gmtime_r(&seconds, &result) != &result)
         throwex SystemException("Cannot convert the given timestamp (" + std::to_string(timestamp.total()) + ") to UTC date & time structure!");
 #endif
     _year = result.tm_year + 1900;
@@ -141,12 +141,12 @@ UtcTime::UtcTime(const Timestamp& timestamp)
 LocalTime::LocalTime(const Timestamp& timestamp)
 {
     struct tm result;
-    time_t time = timestamp.seconds();
+    time_t seconds = timestamp.seconds();
 #if defined(_WIN32) || defined(_WIN64)
-    if (localtime_s(&result, &time))
+    if (localtime_s(&result, &seconds))
         throwex SystemException("Cannot convert the given timestamp (" + std::to_string(timestamp.total()) + ") to local date & time structure!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-    if (localtime_r(&time, &result) != &result)
+    if (localtime_r(&seconds, &result) != &result)
         throwex SystemException("Cannot convert the given timestamp (" + std::to_string(timestamp.total()) + ") to local date & time structure!");
 #endif
     _year = result.tm_year + 1900;

@@ -57,8 +57,8 @@ uint64_t Timestamp::local()
 
     // Adjust UTC time with local timezone offset
     struct tm local;
-    time_t time = timestamp.tv_sec;
-    if (localtime_r(&time, &local) != &local)
+    time_t seconds = timestamp.tv_sec;
+    if (localtime_r(&seconds, &local) != &local)
         throwex SystemException("Cannot convert CLOCK_REALTIME time to local date & time structure!");
     timestamp.tv_sec += local.tm_gmtoff;
 
