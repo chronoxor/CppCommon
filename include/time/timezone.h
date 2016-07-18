@@ -71,14 +71,14 @@ public:
         \return Local time
     */
     LocalTime Convert(const UtcTime& utctime)
-    { return LocalTime(utctime - total()); }
+    { return LocalTime(utctime + total()); }
     //! Convert local time to UTC time using the current time zone
     /*!
         \param localtime - Local time
         \return Local time
     */
     UtcTime Convert(const LocalTime& localtime)
-    { return UtcTime(localtime + total()); }
+    { return UtcTime(localtime - total()); }
 
     //! Get the UTC time zone (Greenwich Mean Time)
     /*!

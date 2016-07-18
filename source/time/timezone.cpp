@@ -30,22 +30,22 @@ Timezone::Timezone() : _name(), _offset(Timespan::zero()), _dstoffset(Timespan::
             if (!WideCharToMultiByte(CP_UTF8, WC_ERR_INVALID_CHARS, dtzi.TimeZoneKeyName, -1, buffer, 1024, nullptr, nullptr))
                 throwex SystemException("Cannot get dynamic time zone key name!");
             _name = buffer;
-            _offset = Timespan::minutes(dtzi.Bias);
+            _offset = -Timespan::minutes(dtzi.Bias);
             _dstoffset = Timespan::zero();
             break;
         case TIME_ZONE_ID_STANDARD:
             if (!WideCharToMultiByte(CP_UTF8, WC_ERR_INVALID_CHARS, dtzi.StandardName, -1, buffer, 1024, nullptr, nullptr))
                 throwex SystemException("Cannot get dynamic time zone standard name!");
             _name = buffer;
-            _offset = Timespan::minutes(dtzi.Bias);
+            _offset = -Timespan::minutes(dtzi.Bias);
             _dstoffset = Timespan::zero();
             break;
         case TIME_ZONE_ID_DAYLIGHT:
             if (!WideCharToMultiByte(CP_UTF8, WC_ERR_INVALID_CHARS, dtzi.DaylightName, -1, buffer, 1024, nullptr, nullptr))
                 throwex SystemException("Cannot get dynamic time zone daylight name!");
             _name = buffer;
-            _offset = Timespan::minutes(dtzi.Bias - dtzi.DaylightBias);
-            _dstoffset = Timespan::minutes(dtzi.DaylightBias);
+            _offset = -Timespan::minutes(dtzi.Bias - dtzi.DaylightBias);
+            _dstoffset = -Timespan::minutes(dtzi.DaylightBias);
             break;
         default:
             throwex SystemException("Cannot get dynamic time zone informaction!");
