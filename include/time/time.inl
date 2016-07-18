@@ -210,4 +210,10 @@ inline bool operator<=(const Time& time1, const Time& time2) noexcept
     return true;
 }
 
+inline UtcTime::UtcTime(const LocalTime& time) : UtcTime(time.localstamp())
+{}
+
+inline LocalTime::LocalTime(const UtcTime& time) : LocalTime(time.utcstamp())
+{}
+
 } // namespace CppCommon

@@ -19,9 +19,8 @@ TEST_CASE("Timezone", "[CppCommon][Time]")
     Timezone timezone2 = Timezone::utc();
     REQUIRE(timezone2 == Timezone("GMT", Timespan::zero()));
 
-    UtcTimestamp current;
-    UtcTime utctime(current);
-    LocalTime localtime(current);
+    UtcTime utctime;
+    LocalTime localtime(utctime);
     Timezone timezone3 = Timezone::local();
     REQUIRE(localtime == timezone3.Convert(utctime));
     REQUIRE(utctime == timezone3.Convert(localtime));

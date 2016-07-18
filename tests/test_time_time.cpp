@@ -33,13 +33,15 @@ TEST_CASE("Time", "[CppCommon][Time]")
     Time time5 = Time::epoch();
     REQUIRE(time5 == Time(1970, 1, 1, 0, 0, 0, 0, 0, 0));
 
-    UtcTime time6 = UtcTime();
-    LocalTime time7 = LocalTime();
+    UtcTime time6;
+    LocalTime time7(time6);
+    UtcTime time8(time7);
+    REQUIRE(time6 == time8);
     REQUIRE(time6 > Time::epoch());
     REQUIRE(time7 > Time::epoch());
     REQUIRE(std::abs((time6 - time7).hours()) < 24);
 
     // Compatibility with std::chrono
-    UtcTime time8 = UtcTime::chrono(std::chrono::system_clock::now() + std::chrono::milliseconds(10));
-    std::this_thread::sleep_until(time8.chrono());
+    UtcTime time9 = UtcTime::chrono(std::chrono::system_clock::now() + std::chrono::milliseconds(10));
+    std::this_thread::sleep_until(time9.chrono());
 }

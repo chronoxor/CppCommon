@@ -160,6 +160,10 @@ protected:
     explicit Time(const Timestamp& timestamp);
 };
 
+// Forward class declarations
+class UtcTime;
+class LocalTime;
+
 //! UTC time
 class UtcTime : public Time
 {
@@ -176,6 +180,8 @@ public:
     explicit UtcTime(const Timestamp& timestamp);
     //! Initialize UTC time with another time value
     UtcTime(const Time& time) : Time(time) {}
+    //! Initialize UTC time with another local time value
+    UtcTime(const LocalTime& time);
 
     //! Convert std::chrono time point to UTC date & time
     template <class Clock, class Duration>
@@ -199,6 +205,8 @@ public:
     explicit LocalTime(const Timestamp& timestamp);
     //! Initialize local time with another time value
     LocalTime(const Time& time) : Time(time) {}
+    //! Initialize local time with another UTC time value
+    LocalTime(const UtcTime& time);
 
     //! Convert std::chrono time point to local date & time
     template <class Clock, class Duration>
