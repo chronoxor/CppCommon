@@ -18,7 +18,7 @@ inline MPSCRingBuffer::MPSCRingBuffer(size_t capacity, size_t concurrency) : _ca
 inline size_t MPSCRingBuffer::size() const noexcept
 {
     size_t size = 0;
-    for (auto producer : _producers)
+    for (auto& producer : _producers)
         size += producer->buffer.size();
     return size;
 }

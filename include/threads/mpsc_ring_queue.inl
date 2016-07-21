@@ -20,7 +20,7 @@ template<typename T>
 inline size_t MPSCRingQueue<T>::size() const noexcept
 {
     size_t size = 0;
-    for (auto producer : _producers)
+    for (auto& producer : _producers)
         size += producer->queue.size();
     return size;
 }
@@ -57,7 +57,7 @@ inline bool MPSCRingQueue<T>::Dequeue(const std::function<void(const T&)>& handl
     bool result = false;
 
     // Consume all available items from producers' ring queues
-    for (auto producer : _producers)
+    for (auto& producer : _producers)
     {
         T item;
         while (producer->queue.Dequeue(item))
