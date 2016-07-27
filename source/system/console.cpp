@@ -55,15 +55,14 @@ void Console::SetColor(Color color, Color background)
     };
     const char* backgrounds[] =
     {
-//        "\033[22;40m",  // Black color
-        "\033[0m",
-        "\033[22;44m",  // Blue color
-        "\033[22;42m",  // Green color
-        "\033[22;46m",  // Cyan color
-        "\033[22;41m",  // Red color
-        "\033[22;45m",  // Magenta color
-        "\033[22;43m",  // Brown color
-        "\033[22;47m",  // Grey color
+        "\033[00000m",  // Black color
+        "\033[02;44m",  // Blue color
+        "\033[02;42m",  // Green color
+        "\033[02;46m",  // Cyan color
+        "\033[02;41m",  // Red color
+        "\033[02;45m",  // Magenta color
+        "\033[02;43m",  // Brown color
+        "\033[02;47m",  // Grey color
         "\033[01;40m",  // Dark grey color
         "\033[01;44m",  // Light blue color
         "\033[01;42m",  // Light green color
