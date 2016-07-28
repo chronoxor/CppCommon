@@ -11,6 +11,7 @@
 
 #include <atomic>
 #include <cassert>
+#include <cstdio>
 
 namespace CppCommon {
 
