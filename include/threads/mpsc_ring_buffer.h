@@ -13,7 +13,6 @@
 #include "threads/spsc_ring_buffer.h"
 #include "time/timestamp.h"
 
-#include <cstdio>
 #include <memory>
 #include <thread>
 #include <vector>
