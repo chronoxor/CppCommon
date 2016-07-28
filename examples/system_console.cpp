@@ -17,7 +17,7 @@ int main(int argc, char** argv)
     {
         for (int j = (int)CppCommon::Color::BLACK; j <= (int)CppCommon::Color::WHITE; ++j)
         {
-            std::cout << std::make_pair<CppCommon::Color, CppCommon::Color>((CppCommon::Color)i, (CppCommon::Color)j);
+            std::cout << std::make_pair((CppCommon::Color)i, (CppCommon::Color)j);
             std::cout << " ";
             std::cout << std::setfill('0') << std::setw(2) << i;
             std::cout << " / ";
