@@ -1,1 +1,3 @@
 # CppCommon todo
+  * Documentation
+  * Release
