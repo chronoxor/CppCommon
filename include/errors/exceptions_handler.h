@@ -30,10 +30,9 @@ namespace CppCommon {
 class ExceptionsHandler
 {
 public:
-    ExceptionsHandler() = delete;
     ExceptionsHandler(const ExceptionsHandler&) = delete;
     ExceptionsHandler(ExceptionsHandler&&) = delete;
-    virtual ~ExceptionsHandler() = delete;
+    ~ExceptionsHandler();
 
     ExceptionsHandler& operator=(const ExceptionsHandler&) = delete;
     ExceptionsHandler& operator=(ExceptionsHandler&&) = delete;
@@ -61,7 +60,13 @@ public:
 
 private:
     class Impl;
-    static std::unique_ptr<Impl> _pimpl;
+    std::unique_ptr<Impl> _pimpl;
+
+    ExceptionsHandler();
+
+    //! Get singleton instance
+    static ExceptionsHandler& GetInstance()
+    { static ExceptionsHandler instance; return instance; }
 };
 
 /*! \example errors_exceptions_handler.cpp Exceptions handler example */

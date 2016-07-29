@@ -33,7 +33,10 @@ namespace CppCommon {
 class ExceptionsHandler::Impl
 {
 public:
-    Impl() : _initialized(false) {}
+    Impl() : _initialized(false), _handler(ExceptionsHandler::Impl::DefaultHandler) {}
+
+    static ExceptionsHandler::Impl& GetInstance()
+    { return *ExceptionsHandler::GetInstance()._pimpl; }
 
     void SetupHandler(const std::function<void (const SystemException&, const StackTrace&)>& handler)
     {
@@ -147,7 +150,7 @@ private:
     // Initialization flag for the current process
     bool _initialized;
     // Exception handler function
-    static std::function<void (const SystemException&, const StackTrace&)> _handler;
+    std::function<void (const SystemException&, const StackTrace&)> _handler;
 
     // Default exception handler function
     static void DefaultHandler(const SystemException& exception, const StackTrace& trace)
@@ -163,7 +166,7 @@ private:
     static LONG WINAPI SehHandler(PEXCEPTION_POINTERS pExceptionPtrs)
     {
         // Output error
-        _handler(__LOCATION__ + SystemException("Unhandled SEH exception"), StackTrace(1));
+        GetInstance()._handler(__LOCATION__ + SystemException("Unhandled SEH exception"), StackTrace(1));
 
         // Write dump file
         CreateDumpFile(pExceptionPtrs);
@@ -179,7 +182,7 @@ private:
     static void __cdecl TerminateHandler()
     {
         // Output error
-        _handler(__LOCATION__ + SystemException("Abnormal program termination (terminate() function was called)"), StackTrace(1));
+        GetInstance()._handler(__LOCATION__ + SystemException("Abnormal program termination (terminate() function was called)"), StackTrace(1));
 
         // Retrieve exception information
         EXCEPTION_POINTERS* pExceptionPtrs = nullptr;
@@ -199,7 +202,7 @@ private:
     static void __cdecl UnexpectedHandler()
     {
         // Output error
-        _handler(__LOCATION__ + SystemException("Unexpected error (unexpected() function was called)"), StackTrace(1));
+        GetInstance()._handler(__LOCATION__ + SystemException("Unexpected error (unexpected() function was called)"), StackTrace(1));
 
         // Retrieve exception information
         EXCEPTION_POINTERS* pExceptionPtrs = nullptr;
@@ -219,7 +222,7 @@ private:
     static void __cdecl PureCallHandler()
     {
         // Output error
-        _handler(__LOCATION__ + SystemException("Pure virtual function call"), StackTrace(1));
+        GetInstance()._handler(__LOCATION__ + SystemException("Pure virtual function call"), StackTrace(1));
 
         // Retrieve exception information
         EXCEPTION_POINTERS* pExceptionPtrs = nullptr;
@@ -239,7 +242,7 @@ private:
     static void __cdecl InvalidParameterHandler(const wchar_t* expression, const wchar_t* function, const wchar_t* file, unsigned int line, uintptr_t pReserved)
     {
         // Output error
-        _handler(__LOCATION__ + SystemException("Invalid parameter exception"), StackTrace(1));
+        GetInstance()._handler(__LOCATION__ + SystemException("Invalid parameter exception"), StackTrace(1));
 
         // Retrieve exception information
         EXCEPTION_POINTERS* pExceptionPtrs = nullptr;
@@ -259,7 +262,7 @@ private:
     static int __cdecl NewHandler(size_t)
     {
         // Output error
-        _handler(__LOCATION__ + SystemException("'new' operator memory allocation exception"), StackTrace(1));
+        GetInstance()._handler(__LOCATION__ + SystemException("'new' operator memory allocation exception"), StackTrace(1));
 
         // Retrieve exception information
         EXCEPTION_POINTERS* pExceptionPtrs = nullptr;
@@ -282,7 +285,7 @@ private:
     static void SigabrtHandler(int signum)
     {
         // Output error
-        _handler(__LOCATION__ + SystemException("Caught abort (SIGABRT) signal"), StackTrace(1));
+        GetInstance()._handler(__LOCATION__ + SystemException("Caught abort (SIGABRT) signal"), StackTrace(1));
 
         // Retrieve exception information
         EXCEPTION_POINTERS* pExceptionPtrs = nullptr;
@@ -302,7 +305,7 @@ private:
     static void SigfpeHandler(int signum, int subcode)
     {
         // Output error
-        _handler(__LOCATION__ + SystemException("Caught floating point exception (SIGFPE) signal"), StackTrace(1));
+        GetInstance()._handler(__LOCATION__ + SystemException("Caught floating point exception (SIGFPE) signal"), StackTrace(1));
 
         // Retrieve exception information
         EXCEPTION_POINTERS* pExceptionPtrs = (PEXCEPTION_POINTERS)_pxcptinfoptrs;
@@ -318,7 +321,7 @@ private:
     static void SigillHandler(int signum)
     {
         // Output error
-        _handler(__LOCATION__ + SystemException("Caught illegal instruction (SIGILL) signal"), StackTrace(1));
+        GetInstance()._handler(__LOCATION__ + SystemException("Caught illegal instruction (SIGILL) signal"), StackTrace(1));
 
         // Retrieve exception information
         EXCEPTION_POINTERS* pExceptionPtrs = nullptr;
@@ -338,7 +341,7 @@ private:
     static void SigintHandler(int signum)
     {
         // Output error
-        _handler(__LOCATION__ + SystemException("Caught interruption (SIGINT) signal"), StackTrace(1));
+        GetInstance()._handler(__LOCATION__ + SystemException("Caught interruption (SIGINT) signal"), StackTrace(1));
 
         // Retrieve exception information
         EXCEPTION_POINTERS* pExceptionPtrs = nullptr;
@@ -358,7 +361,7 @@ private:
     static void SigsegvHandler(int signum)
     {
         // Output error
-        _handler(__LOCATION__ + SystemException("Caught invalid storage access (SIGSEGV) signal"), StackTrace(1));
+        GetInstance()._handler(__LOCATION__ + SystemException("Caught invalid storage access (SIGSEGV) signal"), StackTrace(1));
 
         // Retrieve exception information
         EXCEPTION_POINTERS* pExceptionPtrs = nullptr;
@@ -375,7 +378,7 @@ private:
     static void SigtermHandler(int signum)
     {
         // Output error
-        _handler(__LOCATION__ + SystemException("Caught termination request (SIGTERM) signal"), StackTrace(1));
+        GetInstance()._handler(__LOCATION__ + SystemException("Caught termination request (SIGTERM) signal"), StackTrace(1));
 
         // Retrieve exception information
         EXCEPTION_POINTERS* pExceptionPtrs = nullptr;
@@ -601,23 +604,27 @@ private:
 #endif
 };
 
-std::function<void (const SystemException&, const StackTrace&)> ExceptionsHandler::Impl::_handler = ExceptionsHandler::Impl::DefaultHandler;
+ExceptionsHandler::ExceptionsHandler() : _pimpl(new Impl())
+{
+}
 
-std::unique_ptr<ExceptionsHandler::Impl> ExceptionsHandler::_pimpl(new Impl());
+ExceptionsHandler::~ExceptionsHandler()
+{
+}
 
 void ExceptionsHandler::SetupHandler(const std::function<void (const SystemException&, const StackTrace&)>& handler)
 {
-    _pimpl->SetupHandler(handler);
+    GetInstance()._pimpl->SetupHandler(handler);
 }
 
 void ExceptionsHandler::SetupProcess()
 {
-    _pimpl->SetupProcess();
+    GetInstance()._pimpl->SetupProcess();
 }
 
 void ExceptionsHandler::SetupThread()
 {
-    _pimpl->SetupThread();
+    GetInstance()._pimpl->SetupThread();
 }
 
 } // namespace CppCommon

@@ -71,16 +71,22 @@ private:
     bool _initialized;
 };
 
-std::unique_ptr<StackTraceManager::Impl> StackTraceManager::_pimpl(new Impl());
+StackTraceManager::StackTraceManager() : _pimpl(new Impl())
+{
+}
+
+StackTraceManager::~StackTraceManager()
+{
+}
 
 void StackTraceManager::Initialize()
 {
-    _pimpl->Initialize();
+    GetInstance()._pimpl->Initialize();
 }
 
 void StackTraceManager::Cleanup()
 {
-    _pimpl->Cleanup();
+    GetInstance()._pimpl->Cleanup();
 }
 
 } // namespace CppCommon

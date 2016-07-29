@@ -22,10 +22,9 @@ namespace CppCommon {
 class StackTraceManager
 {
 public:
-    StackTraceManager() = delete;
     StackTraceManager(const StackTraceManager&) = delete;
     StackTraceManager(StackTraceManager&&) = delete;
-    ~StackTraceManager() = delete;
+    ~StackTraceManager();
 
     StackTraceManager& operator=(const StackTraceManager&) = delete;
     StackTraceManager& operator=(StackTraceManager&&) = delete;
@@ -44,7 +43,13 @@ public:
 
 private:
     class Impl;
-    static std::unique_ptr<Impl> _pimpl;
+    std::unique_ptr<Impl> _pimpl;
+
+    StackTraceManager();
+
+    //! Get singleton instance
+    static StackTraceManager& GetInstance()
+    { static StackTraceManager instance; return instance; }
 };
 
 } // namespace CppCommon
