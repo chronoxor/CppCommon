@@ -25,7 +25,7 @@ public:
     SystemError() = delete;
     SystemError(const SystemError&) = delete;
     SystemError(SystemError&&) = delete;
-    virtual ~SystemError() = delete;
+    ~SystemError() = delete;
 
     SystemError& operator=(const SystemError&) = delete;
     SystemError& operator=(SystemError&&) = delete;
