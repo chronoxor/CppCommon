@@ -23,7 +23,7 @@ inline size_t MPSCRingBuffer::size() const noexcept
     return size;
 }
 
-bool MPSCRingBuffer::Enqueue(const void* chunk, size_t size)
+inline bool MPSCRingBuffer::Enqueue(const void* chunk, size_t size)
 {
     // Get producer index for the current thread based on RDTS value
     size_t index = Timestamp::rdts() % _concurrency;
@@ -35,7 +35,7 @@ bool MPSCRingBuffer::Enqueue(const void* chunk, size_t size)
     return _producers[index]->buffer.Enqueue(chunk, size);
 }
 
-bool MPSCRingBuffer::Dequeue(void* chunk, size_t& size)
+inline bool MPSCRingBuffer::Dequeue(void* chunk, size_t& size)
 {
     // Try to dequeue one item from the one of producer's ring buffers
     for (size_t i = 0; i < _concurrency; ++i)
