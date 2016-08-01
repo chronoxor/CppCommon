@@ -42,8 +42,8 @@ inline bool SPSCRingBuffer::Enqueue(const void* chunk, size_t size)
     size_t remain = (_capacity - head) & _mask;
     size_t first = (size > remain) ? remain : size;
     size_t last = (size > remain) ? size - remain : 0;
-    memcpy(&_buffer[head & _mask], (char*)chunk, first);
-    memcpy(_buffer, (char*)chunk + first, last);
+    memcpy(&_buffer[head & _mask], (uint8_t*)chunk, first);
+    memcpy(_buffer, (uint8_t*)chunk + first, last);
 
     // Increase the head cursor
     _head.store(head + size, std::memory_order_release);
@@ -76,8 +76,8 @@ inline bool SPSCRingBuffer::Dequeue(void* chunk, size_t& size)
     size_t remain = (_capacity - tail) & _mask;
     size_t first = (size > remain) ? remain : size;
     size_t last = (size > remain) ? size - remain : 0;
-    memcpy((char*)chunk, &_buffer[tail & _mask], first);
-    memcpy((char*)chunk + first, _buffer, last);
+    memcpy((uint8_t*)chunk, &_buffer[tail & _mask], first);
+    memcpy((uint8_t*)chunk + first, _buffer, last);
 
     // Increase the tail cursor
     _tail.store(tail + size, std::memory_order_release);
