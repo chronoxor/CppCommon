@@ -6,10 +6,6 @@
     \copyright MIT License
 */
 
-#include <windows.h>
-#include <debugapi.h>
-#include <string>
-
 namespace CppCommon {
 
 inline SPSCRingBuffer::SPSCRingBuffer(size_t capacity) : _capacity(capacity), _mask(capacity - 1), _buffer(new uint8_t[capacity]), _head(0), _tail(0)
