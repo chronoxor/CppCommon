@@ -8,9 +8,6 @@
 
 #include "threads/spsc_ring_buffer.h"
 
-#include <windows.h>
-#include <debugapi.h>
-
 #include <iostream>
 #include <string>
 #include <thread>
@@ -30,7 +27,6 @@ int main(int argc, char** argv)
         char local_buffer[local_capacity];
         size_t local_size;
 
-		uint8_t prev = 127;
         do
         {
             // Dequeue with yield waiting strategy
@@ -38,26 +34,26 @@ int main(int argc, char** argv)
                 std::this_thread::yield();
 
             // Consume items
-			for (int i = 0; i < local_size; ++i)
-			{
-				//OutputDebugStringA(("OUT: " + std::to_string(local_buffer[i]) + "\n").c_str());
-				if (((local_buffer[i] == 0) && (prev != 127)) || ((local_buffer[i] > 0) && (local_buffer[i] <= prev)))
-					break;
-
-			    prev = local_buffer[i];
-			}
-        } while (true);
+            std::cout << "Your entered: ";
+            std::cout.write(local_buffer, local_size);
+            std::cout << std::endl;
+        } while (memchr(local_buffer, '#', local_size) == nullptr);
     });
 
-	while (true)
-	{
-		for (uint8_t i = 0; i < 128; ++i)
-		{
-			//OutputDebugStringA(("IN: " + std::to_string(i) + "\n").c_str());
-			while (!buffer.Enqueue(&i, sizeof(uint8_t)))
-				std::this_thread::yield();
-		}
-	}
+    // Perform text input
+    std::string line;
+    while (getline(std::cin, line))
+    {
+        // Enqueue using yield waiting strategy
+        while (!buffer.Enqueue(line.c_str(), line.size()))
+            std::this_thread::yield();
+
+        if (line.find('#') != std::string::npos)
+            break;
+    }
+
+    // Wait for the consumer thread
+    consumer.join();
 
     return 0;
 }
