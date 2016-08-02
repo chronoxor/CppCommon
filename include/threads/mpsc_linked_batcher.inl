@@ -23,13 +23,20 @@ inline MPSCLinkedBatcher<T>::~MPSCLinkedBatcher()
 template<typename T>
 inline bool MPSCLinkedBatcher<T>::Enqueue(const T& item)
 {
+    T temp = item;
+    return Enqueue(std::forward<T>(temp));
+}
+
+template<typename T>
+inline bool MPSCLinkedBatcher<T>::Enqueue(T&& item)
+{
     // Create new head node
     Node* node = new Node;
     if (node == nullptr)
         return false;
 
     // Fill new head node with the given value
-    node->value = item;
+    node->value = std::move(item);
 
     // Insert new head node into the batcher and linked it with the previous one
     Node* prev_head = _head.load(std::memory_order_relaxed);

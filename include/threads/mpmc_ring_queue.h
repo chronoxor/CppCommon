@@ -54,10 +54,18 @@ public:
         \return 'true' if the item was successfully enqueue, 'false' if the ring queue is full
     */
     bool Enqueue(const T& item);
+    //! Enqueue an item into the ring queue (multiple producers threads method)
+    /*!
+        The item will be moved into the ring queue.
+
+        \param item - Item to enqueue
+        \return 'true' if the item was successfully enqueue, 'false' if the ring queue is full
+    */
+    bool Enqueue(T&& item);
 
     //! Dequeue an item from the ring queue (multiple consumers threads method)
     /*!
-        The item will be copied from the ring queue.
+        The item will be moved from the ring queue.
 
         \param item - Item to dequeue
         \return 'true' if the item was successfully dequeue, 'false' if the ring queue is empty

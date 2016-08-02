@@ -27,6 +27,13 @@ inline size_t SPSCRingQueue<T>::size() const noexcept
 template<typename T>
 inline bool SPSCRingQueue<T>::Enqueue(const T& item)
 {
+    T temp = item;
+    return Enqueue(std::forward<T>(temp));
+}
+
+template<typename T>
+inline bool SPSCRingQueue<T>::Enqueue(T&& item)
+{
     const size_t head = _head.load(std::memory_order_relaxed);
     const size_t tail = _tail.load(std::memory_order_acquire);
 
@@ -35,7 +42,7 @@ inline bool SPSCRingQueue<T>::Enqueue(const T& item)
         return false;
 
     // Store the item value
-    _buffer[head & _mask] = item;
+    _buffer[head & _mask] = std::move(item);
 
     // Increase the head cursor
     _head.store(head + 1, std::memory_order_release);
@@ -54,7 +61,7 @@ inline bool SPSCRingQueue<T>::Dequeue(T& item)
         return false;
 
     // Get the item value
-    item = _buffer[tail & _mask];
+    item = std::move(_buffer[tail & _mask]);
 
     // Increase the tail cursor
     _tail.store(tail + 1, std::memory_order_release);

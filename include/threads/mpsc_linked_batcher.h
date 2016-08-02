@@ -45,6 +45,14 @@ public:
         \return 'true' if the item was successfully enqueue, 'false' if there is no enough memory for the batcher node
     */
     bool Enqueue(const T& item);
+    //! Enqueue an item into the linked batcher (multiple producers threads method)
+    /*!
+        The item will be moved into the linked batcher.
+
+        \param item - Item to enqueue
+        \return 'true' if the item was successfully enqueue, 'false' if there is no enough memory for the batcher node
+    */
+    bool Enqueue(T&& item);
 
     //! Dequeue all items from the linked queue (single consumer thread method)
     /*!

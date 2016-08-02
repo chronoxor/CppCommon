@@ -31,13 +31,20 @@ inline MPSCLinkedQueue<T>::~MPSCLinkedQueue()
 template<typename T>
 inline bool MPSCLinkedQueue<T>::Enqueue(const T& item)
 {
+    T temp = item;
+    return Enqueue(std::forward<T>(temp));
+}
+
+template<typename T>
+inline bool MPSCLinkedQueue<T>::Enqueue(T&& item)
+{
     // Create new head node
     Node* node = new Node;
     if (node == nullptr)
         return false;
 
     // Fill new head node with the given value
-    node->value = item;
+    node->value = std::move(item);
     node->next.store(nullptr, std::memory_order_relaxed);
 
     // Insert new head node into the queue and linked it with the previous one
@@ -58,7 +65,7 @@ inline bool MPSCLinkedQueue<T>::Dequeue(T& item)
         return false;
 
     // Get the item value
-    item = next->value;
+    item = std::move(next->value);
 
     // Update tail node with a next one
     _tail.store(next, std::memory_order_release);

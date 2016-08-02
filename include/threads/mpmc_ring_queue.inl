@@ -31,6 +31,13 @@ inline size_t MPMCRingQueue<T>::size() const noexcept
 template<typename T>
 inline bool MPMCRingQueue<T>::Enqueue(const T& item)
 {
+    T temp = item;
+    return Enqueue(std::forward<T>(temp));
+}
+
+template<typename T>
+inline bool MPMCRingQueue<T>::Enqueue(T&& item)
+{
     size_t head_sequence = _head.load(std::memory_order_relaxed);
 
     for (;;)
@@ -49,7 +56,7 @@ inline bool MPMCRingQueue<T>::Enqueue(const T& item)
             if (_head.compare_exchange_weak(head_sequence, head_sequence + 1, std::memory_order_relaxed))
             {
                 // Store the item value
-                node->value = item;
+                node->value = std::move(item);
 
                 // Increment the sequence so that the tail knows it's accessible
                 node->sequence.store(head_sequence + 1, std::memory_order_release);
@@ -94,7 +101,7 @@ inline bool MPMCRingQueue<T>::Dequeue(T& item)
             if (_tail.compare_exchange_weak(tail_sequence, tail_sequence + 1, std::memory_order_relaxed))
             {
                 // Get the item value
-                item = node->value;
+                item = std::move(node->value);
 
                 // Set the sequence to what the head sequence should be next time around
                 node->sequence.store(tail_sequence + _mask + 1, std::memory_order_release);

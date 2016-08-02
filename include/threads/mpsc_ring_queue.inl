@@ -28,6 +28,13 @@ inline size_t MPSCRingQueue<T>::size() const noexcept
 template<typename T>
 inline bool MPSCRingQueue<T>::Enqueue(const T& item)
 {
+    T temp = item;
+    return Enqueue(std::forward<T>(temp));
+}
+
+template<typename T>
+inline bool MPSCRingQueue<T>::Enqueue(T&& item)
+{
     // Get producer index for the current thread based on RDTS value
     size_t index = Timestamp::rdts() % _concurrency;
 
@@ -35,7 +42,7 @@ inline bool MPSCRingQueue<T>::Enqueue(const T& item)
     Locker<SpinLock> lock(_producers[index]->lock);
 
     // Enqueue the item into the producer's ring queue
-    return _producers[index]->queue.Enqueue(item);
+    return _producers[index]->queue.Enqueue(std::forward<T>(item));
 }
 
 template<typename T>
