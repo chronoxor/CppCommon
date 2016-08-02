@@ -67,8 +67,6 @@ public:
     //! Dequeue a chunk of bytes from the ring buffer (single consumer thread method)
     /*!
         The chunk of bytes will be copied from the ring buffer using 'memcpy()' function.
-        Chunk size should be enough to dequeue the whole data from the ring buffer so it
-        should be greater than ring buffer capacity!
 
         \param chunk - Chunk buffer to dequeue
         \param size - Chunk buffer size
