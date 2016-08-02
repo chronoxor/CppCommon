@@ -21,7 +21,7 @@ inline size_t SPSCRingQueue<T>::size() const noexcept
     const size_t head = _head.load(std::memory_order_acquire);
     const size_t tail = _tail.load(std::memory_order_acquire);
 
-    return (head >= tail) ? (head - tail) : (_capacity + 1 + head - tail);
+    return head - tail;
 }
 
 template<typename T>

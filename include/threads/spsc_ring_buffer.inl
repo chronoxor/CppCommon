@@ -6,6 +6,10 @@
     \copyright MIT License
 */
 
+#include <windows.h>
+#include <debugapi.h>
+#include <string>
+
 namespace CppCommon {
 
 inline SPSCRingBuffer::SPSCRingBuffer(size_t capacity) : _capacity(capacity - 1), _mask(capacity - 1), _buffer(new uint8_t[capacity]), _head(0), _tail(0)
@@ -19,7 +23,7 @@ inline size_t SPSCRingBuffer::size() const noexcept
     const size_t head = _head.load(std::memory_order_acquire);
     const size_t tail = _tail.load(std::memory_order_acquire);
 
-    return (head >= tail) ? (head - tail) : (_capacity + 1 + head - tail);
+    return head - tail;
 }
 
 inline bool SPSCRingBuffer::Enqueue(const void* chunk, size_t size)
@@ -35,14 +39,16 @@ inline bool SPSCRingBuffer::Enqueue(const void* chunk, size_t size)
     const size_t tail = _tail.load(std::memory_order_acquire);
 
     // Check if there is required free space in the ring buffer
-    if ((size + ((head - tail) & _mask)) > _capacity)
+    if ((size + head - tail - 1) > _capacity)
         return false;
 
     // Copy chunk of bytes into the ring buffer
-    size_t remain = (_capacity - head) & _mask;
+    size_t head_index = head & _mask;
+    size_t tail_index = tail & _mask;
+    size_t remain = (tail_index > head_index) ? (tail_index - head_index) : (_capacity - head_index + 1);
     size_t first = (size > remain) ? remain : size;
     size_t last = (size > remain) ? size - remain : 0;
-    memcpy(&_buffer[head & _mask], (uint8_t*)chunk, first);
+    memcpy(&_buffer[head_index], (uint8_t*)chunk, first);
     memcpy(_buffer, (uint8_t*)chunk + first, last);
 
     // Increase the head cursor
@@ -64,7 +70,7 @@ inline bool SPSCRingBuffer::Dequeue(void* chunk, size_t& size)
     const size_t head = _head.load(std::memory_order_acquire);
 
     // Get the ring buffer size
-    size_t available = ((head - tail) & _mask);
+    size_t available = head - tail;
     if (size > available)
         size = available;
 
@@ -73,10 +79,12 @@ inline bool SPSCRingBuffer::Dequeue(void* chunk, size_t& size)
         return false;
 
     // Copy chunk of bytes from the ring buffer
-    size_t remain = (_capacity - tail) & _mask;
+    size_t head_index = head & _mask;
+    size_t tail_index = tail & _mask;
+    size_t remain = (head_index > tail_index) ? (head_index - tail_index) : (_capacity - tail_index + 1);
     size_t first = (size > remain) ? remain : size;
     size_t last = (size > remain) ? size - remain : 0;
-    memcpy((uint8_t*)chunk, &_buffer[tail & _mask], first);
+    memcpy((uint8_t*)chunk, &_buffer[tail_index], first);
     memcpy((uint8_t*)chunk + first, _buffer, last);
 
     // Increase the tail cursor
