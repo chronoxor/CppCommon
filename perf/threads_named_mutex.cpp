@@ -6,7 +6,6 @@
 
 #include "threads/named_mutex.h"
 
-#include <functional>
 #include <thread>
 #include <vector>
 
@@ -23,7 +22,7 @@ void produce(CppBenchmark::Context& context)
     uint64_t crc = 0;
 
     // Create named mutex master
-    NamedMutex lock("named_mutex_perf");
+    NamedMutex lock_master("named_mutex_perf");
 
     // Start producer threads
     std::vector<std::thread> producers;
@@ -32,12 +31,12 @@ void produce(CppBenchmark::Context& context)
         producers.push_back(std::thread([&crc, producer, producers_count]()
         {
             // Create named mutex slave
-            NamedMutex lock("named_mutex_perf");
+            NamedMutex lock_slave("named_mutex_perf");
 
             uint64_t items = (items_to_produce / producers_count);
             for (uint64_t i = 0; i < items; ++i)
             {
-                Locker<NamedMutex> locker(lock);
+                Locker<NamedMutex> locker(lock_slave);
                 crc += (producer * items) + i;
             }
         }));

@@ -44,7 +44,6 @@ Timezone::Timezone() : _name(), _offset(Timespan::zero()), _dstoffset(Timespan::
             break;
         default:
             throwex SystemException("Cannot get dynamic time zone informaction!");
-            break;
     }
     // Convert time zone name to UTF-8 encoding.
     if (!WideCharToMultiByte(CP_UTF8, WC_ERR_INVALID_CHARS, name, -1, buffer, 1024, nullptr, nullptr))

@@ -8,7 +8,6 @@
 
 #include "system/shared_type.h"
 
-#include <algorithm>
 #include <iostream>
 #include <string>
 

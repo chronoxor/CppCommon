@@ -6,7 +6,6 @@
 
 #include "threads/mutex.h"
 
-#include <functional>
 #include <thread>
 #include <vector>
 

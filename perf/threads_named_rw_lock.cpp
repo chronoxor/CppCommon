@@ -6,7 +6,6 @@
 
 #include "threads/named_rw_lock.h"
 
-#include <functional>
 #include <thread>
 #include <vector>
 
@@ -29,7 +28,7 @@ void produce(CppBenchmark::Context& context)
     uint64_t writers_crc = 0;
 
     // Create named read/write lock master
-    NamedRWLock lock("named_rw_lock_perf");
+    NamedRWLock lock_master("named_rw_lock_perf");
 
     // Start readers threads
     std::vector<std::thread> readers;
@@ -38,12 +37,12 @@ void produce(CppBenchmark::Context& context)
         readers.push_back(std::thread([&readers_crc, reader, readers_count]()
         {
             // Create named read/write lock slave
-            NamedRWLock lock("named_rw_lock_perf");
+            NamedRWLock lock_slave("named_rw_lock_perf");
 
             uint64_t items = (items_to_read / readers_count);
             for (uint64_t i = 0; i < items; ++i)
             {
-                ReadLocker<NamedRWLock> locker(lock);
+                ReadLocker<NamedRWLock> locker(lock_slave);
                 readers_crc += (reader * items) + i;
             }
         }));

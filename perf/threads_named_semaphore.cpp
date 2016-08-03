@@ -6,7 +6,6 @@
 
 #include "threads/named_semaphore.h"
 
-#include <functional>
 #include <thread>
 #include <vector>
 
@@ -27,7 +26,7 @@ void produce(CppBenchmark::Context& context)
     uint64_t crc = 0;
 
     // Create named semaphore master
-    NamedSemaphore lock("named_semaphore_perf", semaphore_count);
+    NamedSemaphore lock_master("named_semaphore_perf", semaphore_count);
 
     // Start producer threads
     std::vector<std::thread> producers;
@@ -36,12 +35,12 @@ void produce(CppBenchmark::Context& context)
         producers.push_back(std::thread([&crc, producer, producers_count, semaphore_count]()
         {
             // Create named semaphore slave
-            NamedSemaphore lock("named_semaphore_perf", semaphore_count);
+            NamedSemaphore lock_slave("named_semaphore_perf", semaphore_count);
 
             uint64_t items = (items_to_produce / producers_count);
             for (uint64_t i = 0; i < items; ++i)
             {
-                Locker<NamedSemaphore> locker(lock);
+                Locker<NamedSemaphore> locker(lock_slave);
                 crc += (producer * items) + i;
             }
         }));

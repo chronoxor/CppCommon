@@ -6,7 +6,6 @@
 
 #include "threads/critical_section.h"
 
-#include <functional>
 #include <thread>
 #include <vector>
 

@@ -7,7 +7,6 @@
 #include "threads/rw_lock.h"
 #include "threads/thread.h"
 
-#include <atomic>
 #include <thread>
 #include <vector>
 

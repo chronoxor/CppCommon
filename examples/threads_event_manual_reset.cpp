@@ -9,7 +9,6 @@
 #include "threads/event_manual_reset.h"
 #include "threads/thread.h"
 
-#include <atomic>
 #include <iostream>
 #include <thread>
 #include <vector>

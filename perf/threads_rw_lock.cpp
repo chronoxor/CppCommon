@@ -6,7 +6,6 @@
 
 #include "threads/rw_lock.h"
 
-#include <functional>
 #include <thread>
 #include <vector>
 

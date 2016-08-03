@@ -8,12 +8,12 @@
 
 #include "threads/rw_lock.h"
 
-#include "errors/exceptions.h"
 #include "errors/fatal.h"
 
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__)
+#include "errors/exceptions.h"
 #include <pthread.h>
 #endif
 

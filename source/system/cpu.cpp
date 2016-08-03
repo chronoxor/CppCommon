@@ -8,13 +8,12 @@
 
 #include "system/cpu.h"
 
-#include <fstream>
-#include <regex>
-
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 #include <unistd.h>
+#include <fstream>
+#include <regex>
 #endif
 
 namespace CppCommon {

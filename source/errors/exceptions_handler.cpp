@@ -117,7 +117,7 @@ public:
         _initialized = true;
     }
 
-    void SetupThread()
+    static void SetupThread()
     {
 #if defined(_WIN32) || defined(_WIN64)
         // Catch terminate() calls

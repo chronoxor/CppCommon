@@ -22,7 +22,7 @@ TEST_CASE("Named mutex locker", "[CppCommon][Threads]")
         result += i;
 
     // Named mutex master
-    NamedMutex lock("named_mutex_test");
+    NamedMutex lock_master("named_mutex_test");
 
     // Start producers threads
     std::vector<std::thread> producers;
@@ -31,12 +31,12 @@ TEST_CASE("Named mutex locker", "[CppCommon][Threads]")
         producers.push_back(std::thread([&crc, producer, items_to_produce, producers_count]()
         {
             // Named mutex slave
-            NamedMutex lock("named_mutex_test");
+            NamedMutex lock_slave("named_mutex_test");
 
             int items = (items_to_produce / producers_count);
             for (int i = 0; i < items; ++i)
             {
-                Locker<NamedMutex> locker(lock);
+                Locker<NamedMutex> locker(lock_slave);
                 crc += (producer * items) + i;
             }
         }));

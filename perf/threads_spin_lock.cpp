@@ -6,7 +6,6 @@
 
 #include "threads/spin_lock.h"
 
-#include <functional>
 #include <thread>
 #include <vector>
 

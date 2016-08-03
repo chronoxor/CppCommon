@@ -14,8 +14,6 @@
 #include "threads/named_event_auto_reset.h"
 #include "threads/thread.h"
 
-#include <cassert>
-
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
 #undef Yield

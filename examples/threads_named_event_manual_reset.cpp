@@ -9,7 +9,6 @@
 #include "threads/named_event_manual_reset.h"
 #include "threads/thread.h"
 
-#include <atomic>
 #include <iostream>
 #include <thread>
 #include <vector>
@@ -24,7 +23,7 @@ int main(int argc, char** argv)
     int concurrency = 8;
 
     // Named manual-reset event master
-    CppCommon::NamedEventManualReset event("named_manual_reset_event_example");
+    CppCommon::NamedEventManualReset event_master("named_manual_reset_event_example");
 
     // Start some threads
     std::vector<std::thread> threads;
@@ -33,7 +32,7 @@ int main(int argc, char** argv)
         threads.push_back(std::thread([thread]()
         {
             // Named manual-reset event slave
-            CppCommon::NamedEventManualReset event("named_manual_reset_event_example");
+            CppCommon::NamedEventManualReset event_slave("named_manual_reset_event_example");
 
             std::cout << "Thread " << thread << " initialized!" << std::endl;
 
@@ -43,7 +42,7 @@ int main(int argc, char** argv)
             std::cout << "Thread " << thread << " waiting for the event!" << std::endl;
 
             // Wait for the event
-            event.Wait();
+            event_slave.Wait();
 
             std::cout << "Thread " << thread << " signaled!" << std::endl;
         }));
@@ -56,7 +55,7 @@ int main(int argc, char** argv)
         if (line == "!")
         {
             std::cout << "Signal event!" << std::endl;
-            event.Signal();
+            event_master.Signal();
         }
         else if (line == "0")
             break;

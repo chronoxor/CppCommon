@@ -7,7 +7,6 @@
 #include "threads/named_rw_lock.h"
 #include "threads/thread.h"
 
-#include <atomic>
 #include <thread>
 #include <vector>
 
@@ -64,7 +63,7 @@ TEST_CASE("Named read/write locker", "[CppCommon][Threads]")
     int current = 0;
 
     // Named read/write lock master
-    NamedRWLock lock("named_rw_lock_test");
+    NamedRWLock lock_master("named_rw_lock_test");
 
     // Reset consumers' results
     for (int i = 0; i < consumers_count; ++i)
@@ -79,13 +78,13 @@ TEST_CASE("Named read/write locker", "[CppCommon][Threads]")
     std::thread producer = std::thread([&crc, &current, items_to_produce]()
     {
         // Named read/write lock slave
-        NamedRWLock lock("named_rw_lock_test");
+        NamedRWLock lock_slave("named_rw_lock_test");
 
         for (int i = 0; i < items_to_produce; ++i)
         {
             // Use a write locker to produce the item
             {
-                WriteLocker<NamedRWLock> locker(lock);
+                WriteLocker<NamedRWLock> locker(lock_slave);
 
                 // Update the current produced item and produced crc
                 current = i;
@@ -104,14 +103,14 @@ TEST_CASE("Named read/write locker", "[CppCommon][Threads]")
         consumers.push_back(std::thread([&crcs, &current, consumer, items_to_produce]()
         {
             // Named read/write lock slave
-            NamedRWLock lock("named_rw_lock_test");
+            NamedRWLock lock_slave("named_rw_lock_test");
 
             int item = 0;
             while (item < (items_to_produce - 1))
             {
                 // Use a read locker to consume the item
                 {
-                    ReadLocker<NamedRWLock> locker(lock);
+                    ReadLocker<NamedRWLock> locker(lock_slave);
 
                     // Check for the current item changed
                     if (item != current)

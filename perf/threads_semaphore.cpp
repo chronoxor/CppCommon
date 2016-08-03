@@ -6,7 +6,6 @@
 
 #include "threads/semaphore.h"
 
-#include <functional>
 #include <thread>
 #include <vector>
 

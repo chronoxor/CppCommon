@@ -18,7 +18,7 @@ TEST_CASE("Named manual-reset event", "[CppCommon][Threads]")
     std::atomic<int> count(0);
 
     // Named manual-reset event master
-    NamedEventManualReset event("named_manual_reset_event_test");
+    NamedEventManualReset event_master("named_manual_reset_event_test");
 
     // Start some threads
     std::vector<std::thread> threads;
@@ -27,13 +27,13 @@ TEST_CASE("Named manual-reset event", "[CppCommon][Threads]")
         threads.push_back(std::thread([&count, thread]()
         {
             // Named manual-reset event slave
-            NamedEventManualReset event("named_manual_reset_event_test");
+            NamedEventManualReset event_slave("named_manual_reset_event_test");
 
             // Sleep for a while...
             Thread::SleepFor(CppCommon::Timespan::milliseconds(thread * 10));
 
             // Wait for the event
-            event.Wait();
+            event_slave.Wait();
 
             // Increment threads counter
             ++count;
@@ -44,7 +44,7 @@ TEST_CASE("Named manual-reset event", "[CppCommon][Threads]")
     Thread::SleepFor(CppCommon::Timespan::milliseconds(100));
 
     // Signal the event
-    event.Signal();
+    event_master.Signal();
 
     // Wait for all threads to complete
     for (auto& thread : threads)

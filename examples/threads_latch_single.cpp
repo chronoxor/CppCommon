@@ -9,7 +9,6 @@
 #include "threads/latch.h"
 #include "threads/thread.h"
 
-#include <atomic>
 #include <iostream>
 #include <thread>
 #include <vector>

@@ -10,7 +10,6 @@
 
 #include "errors/exceptions.h"
 #include "errors/fatal.h"
-#include "system/shared_type.h"
 
 #include <algorithm>
 
@@ -19,6 +18,7 @@
 #undef max
 #undef min
 #elif defined(unix) || defined(__unix) || defined(__unix__)
+#include "system/shared_type.h"
 #include <pthread.h>
 #endif
 
