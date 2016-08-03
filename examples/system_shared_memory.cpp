@@ -9,6 +9,7 @@
 #include "system/shared_memory.h"
 
 #include <algorithm>
+#include <cstring>
 #include <iostream>
 
 int main(int argc, char** argv)

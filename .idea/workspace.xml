@@ -2,58 +2,105 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" assignedExecutableTargets="true" buildAllGenerated="true">
     <generated>
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_mpsc_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-tests" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-mpmc" />
-      <config projectName="cppcommon" targetName="cppcommon-example-benchmark-ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_spsc_ring_buffer" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpsc_ring_buffer" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-atomic" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-system_rdts" />
-      <config projectName="cppcommon" targetName="cppcommon" />
-      <config projectName="cppcommon" targetName="cppcommon-example-system_timestamp" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-spsc" />
-      <config projectName="cppcommon" targetName="cpp-optparse" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpmc_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-example-spsc_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-benchmark-wf_ring_buffer" />
-      <config projectName="cppcommon" targetName="cppcommon-example-mpsc_linked_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-spsc_ring_buffer" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_mpsc_linked_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_mpmc_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-example-mpmc_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-mpsc_linked_queue" />
       <config projectName="cppcommon" targetName="cppbenchmark-example-sort" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-fwrite" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpsc_linked_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-example-wf_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-mpmc_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_spsc_ring_queue" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-threads" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-random" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_spsc_ring_queue" />
-      <config projectName="cppcommon" targetName="cppbenchmark-tests" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_spinlock" />
-      <config projectName="cppcommon" targetName="cppcommon-example-system_rdts" />
-      <config projectName="cppcommon" targetName="cppcommon-benchmark-wf_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-mpsc_linked_batcher" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-iterators" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_spsc_ring_buffer" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-mpsc" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-containers" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_event_manual_reset" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-system_stack_trace" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-time_timezone" />
       <config projectName="cppcommon" targetName="cppbenchmark-example-timers" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpsc_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpsc_linked_batcher" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-executor" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-spsc_ring_queue" />
       <config projectName="cppcommon" targetName="cppbenchmark" />
-      <config projectName="cppcommon" targetName="cppcommon-example-wf_ring_buffer" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-system_timestamp" />
-      <config projectName="cppcommon" targetName="cppcommon-example-spsc_ring_buffer" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-fpu" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_latch_single" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_barrier" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_console" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpsc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-example-time_timezone" />
       <config projectName="cppcommon" targetName="cppcommon-perf-mpmc_ring_queue_ex" />
+      <config projectName="cppcommon" targetName="cppcommon-example-mpmc_ring_queue" />
+      <config projectName="cppcommon" targetName="cpp-optparse" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_timestamp" />
+      <config projectName="cppcommon" targetName="cppcommon-example-errors_exceptions_handler" />
+      <config projectName="cppcommon" targetName="cppcommon-example-errors_fatal" />
+      <config projectName="cppcommon" targetName="cppcommon-example-benchmark-ring_queue" />
       <config projectName="cppcommon" targetName="cppcommon-example-threads_mpsc_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_critical_section" />
       <config projectName="cppcommon" targetName="cppcommon-perf-mpsc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppbenchmark-tests" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_named_critical_section" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_spin_lock" />
+      <config projectName="cppcommon" targetName="cppcommon-example-mpsc_linked_queue" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-atomic" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-threads" />
+      <config projectName="cppcommon" targetName="cppcommon-example-spsc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_rw_lock" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-spsc" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_spinlock" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-mpsc_linked_batcher" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-mpmc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_named_rw_lock" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_mpmc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpsc_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-system_rdts" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-mpmc" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-spsc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_named_mutex" />
+      <config projectName="cppcommon" targetName="cppcommon-example-errors_system_error" />
+      <config projectName="cppcommon" targetName="cppcommon-benchmark-wf_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_named_mutex" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-iterators" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_event_auto_reset" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpmc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_stack_trace" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_mpsc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_critical_section" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_spin_barrier" />
+      <config projectName="cppcommon" targetName="cppcommon-example-spsc_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_named_critical_section" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_spsc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_named_event_auto_reset" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_spsc_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_spsc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-benchmark-wf_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mutex" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-mpsc" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_rdts" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_mutex" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-fpu" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_shared_type" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_named_semaphore" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-time_timestamp" />
+      <config projectName="cppcommon" targetName="cppcommon-example-time_timestamp" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-fwrite" />
+      <config projectName="cppcommon" targetName="cppcommon-example-wf_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppcommon-tests" />
+      <config projectName="cppcommon" targetName="cppcommon" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_rw_lock" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_environment" />
+      <config projectName="cppcommon" targetName="cppcommon-example-time_timespan" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_cpu" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_semaphore" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_mpsc_linked_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_semaphore" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-spsc_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-time_time" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_spsc_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-mpsc_linked_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_named_semaphore" />
+      <config projectName="cppcommon" targetName="doxygen" />
+      <config projectName="cppcommon" targetName="cppcommon-example-time_time" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-executor" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpsc_linked_batcher" />
+      <config projectName="cppcommon" targetName="cppcommon-example-wf_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpsc_linked_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-system_timestamp" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_spin_lock" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-containers" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_memory" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_named_event_manual_reset" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_source_location" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_thread" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_named_rw_lock" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_shared_memory" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_latch_multi" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-random" />
     </generated>
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="false" GENERATION_PASS_SYSTEM_ENVIRONMENT="true">
@@ -62,7 +109,12 @@
     </ADDITIONAL_GENERATION_ENVIRONMENT>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="559410a7-8ec3-4eef-81f5-f9dd5eddd0fc" name="Default" comment="" />
+    <list default="true" id="559410a7-8ec3-4eef-81f5-f9dd5eddd0fc" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/CppCommon.iml" afterPath="$PROJECT_DIR$/.idea/CppCommon.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/system_shared_memory.cpp" afterPath="$PROJECT_DIR$/examples/system_shared_memory.cpp" />
+    </list>
     <ignored path="CppCommon.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -72,7 +124,6 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
@@ -81,58 +132,7 @@
     <favorites_list name="CppCommon" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/CppBenchmark/CMakeLists.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="rdts.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/include/system/rdts.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="timestamp.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/include/system/timestamp.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="thread.h" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/include/threads/thread.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5925926">
-              <caret line="74" column="0" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SetCompilerFeatures.cmake" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmake/SetCompilerFeatures.cmake">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -151,19 +151,21 @@
         <option value="$PROJECT_DIR$/include/system/rdts.h" />
         <option value="$PROJECT_DIR$/include/system/timestamp.h" />
         <option value="$PROJECT_DIR$/include/threads/thread.h" />
+        <option value="$PROJECT_DIR$/examples/system_shared_memory.cpp" />
       </list>
     </option>
   </component>
-  <component name="JsBuildToolGruntFileManager" detection-done="true" />
-  <component name="JsBuildToolPackageJson" detection-done="true" />
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
   <component name="JsGulpfileManager">
     <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="x" value="65" />
+    <option name="y" value="24" />
+    <option name="width" value="1615" />
+    <option name="height" value="1026" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -224,98 +226,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CppCommon" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CppCommon" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CppCommon" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CppCommon" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="include" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CppCommon" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CppCommon" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="include" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="threads" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CppCommon" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CppCommon" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="include" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="system" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CppCommon" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CppCommon" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="examples" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CppCommon" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CppCommon" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cmake" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -324,13 +234,14 @@
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.C/C++" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files (x86)\nodejs\node.exe" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
   </component>
   <component name="RunManager" selected="Application.Build All">
-    <configuration default="true" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" PASS_PARENT_ENVS="FALSE" TEST_MODE="SUITE_TEST">
+    <configuration default="true" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" PASS_PARENT_ENVS_2="true" TEST_MODE="SUITE_TEST">
       <envs />
       <method />
     </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon" CONFIG_NAME="Debug">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon" CONFIG_NAME="Debug">
       <envs />
       <method />
     </configuration>
@@ -338,6 +249,7 @@
       <method />
     </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-interpreter>project</node-interpreter>
       <node-options />
       <gulpfile />
       <tasks />
@@ -348,222 +260,411 @@
     <configuration default="true" type="js.build_tools.npm" factoryName="npm">
       <command value="run-script" />
       <scripts />
+      <node-interpreter value="project" />
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="Build All" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" CONFIG_NAME="Debug" EXPLICIT_BUILD_TARGET_NAME="all">
+    <configuration default="false" name="Build All" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" EXPLICIT_BUILD_TARGET_NAME="all">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon" CONFIG_NAME="Debug">
+    <configuration default="false" name="cppcommon" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon" CONFIG_NAME="Debug">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-tests" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-tests" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-tests">
+    <configuration default="false" name="cppcommon-tests" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-tests" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-tests">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cpp-optparse" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cpp-optparse" CONFIG_NAME="Debug">
+    <configuration default="false" name="cpp-optparse" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cpp-optparse" CONFIG_NAME="Debug">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppbenchmark" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark" CONFIG_NAME="Debug">
+    <configuration default="false" name="cppbenchmark" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark" CONFIG_NAME="Debug">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppbenchmark-example-atomic" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-atomic" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-atomic">
+    <configuration default="false" name="cppbenchmark-example-atomic" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-atomic" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-atomic">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppbenchmark-example-containers" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-containers" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-containers">
+    <configuration default="false" name="cppbenchmark-example-containers" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-containers" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-containers">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppbenchmark-example-executor" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-executor" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-executor">
+    <configuration default="false" name="cppbenchmark-example-executor" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-executor" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-executor">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppbenchmark-example-fpu" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-fpu" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-fpu">
+    <configuration default="false" name="cppbenchmark-example-fpu" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-fpu" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-fpu">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppbenchmark-example-fwrite" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-fwrite" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-fwrite">
+    <configuration default="false" name="cppbenchmark-example-fwrite" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-fwrite" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-fwrite">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppbenchmark-example-iterators" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-iterators" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-iterators">
+    <configuration default="false" name="cppbenchmark-example-iterators" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-iterators" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-iterators">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppbenchmark-example-mpmc" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-mpmc" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-mpmc">
+    <configuration default="false" name="cppbenchmark-example-mpmc" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-mpmc" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-mpmc">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppbenchmark-example-mpsc" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-mpsc" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-mpsc">
+    <configuration default="false" name="cppbenchmark-example-mpsc" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-mpsc" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-mpsc">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppbenchmark-example-random" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-random" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-random">
+    <configuration default="false" name="cppbenchmark-example-random" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-random" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-random">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppbenchmark-example-sort" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-sort" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-sort">
+    <configuration default="false" name="cppbenchmark-example-sort" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-sort" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-sort">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppbenchmark-example-spsc" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-spsc" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-spsc">
+    <configuration default="false" name="cppbenchmark-example-spsc" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-spsc" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-spsc">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppbenchmark-example-threads" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-threads" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-threads">
+    <configuration default="false" name="cppbenchmark-example-threads" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-threads" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-threads">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppbenchmark-example-timers" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-timers" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-timers">
+    <configuration default="false" name="cppbenchmark-example-timers" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-example-timers" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-example-timers">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppbenchmark-tests" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-tests" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-tests">
+    <configuration default="false" name="cppbenchmark-tests" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppbenchmark-tests" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppbenchmark-tests">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-example-benchmark-ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-benchmark-ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-benchmark-ring_queue">
+    <configuration default="false" name="cppcommon-example-benchmark-ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-benchmark-ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-benchmark-ring_queue">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-benchmark-wf_ring_buffer" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-benchmark-wf_ring_buffer" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-benchmark-wf_ring_buffer">
+    <configuration default="false" name="cppcommon-benchmark-wf_ring_buffer" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-benchmark-wf_ring_buffer" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-benchmark-wf_ring_buffer">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-benchmark-wf_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-benchmark-wf_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-benchmark-wf_ring_queue">
+    <configuration default="false" name="cppcommon-benchmark-wf_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-benchmark-wf_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-benchmark-wf_ring_queue">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-example-wf_ring_buffer" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-wf_ring_buffer" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-wf_ring_buffer">
+    <configuration default="false" name="cppcommon-example-wf_ring_buffer" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-wf_ring_buffer" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-wf_ring_buffer">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-example-wf_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-wf_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-wf_ring_queue">
+    <configuration default="false" name="cppcommon-example-wf_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-wf_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-wf_ring_queue">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-example-mpmc_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-mpmc_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-mpmc_ring_queue">
+    <configuration default="false" name="cppcommon-example-mpmc_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-mpmc_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-mpmc_ring_queue">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-example-mpsc_linked_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-mpsc_linked_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-mpsc_linked_queue">
+    <configuration default="false" name="cppcommon-example-mpsc_linked_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-mpsc_linked_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-mpsc_linked_queue">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-example-spsc_ring_buffer" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-spsc_ring_buffer" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-spsc_ring_buffer">
+    <configuration default="false" name="cppcommon-example-spsc_ring_buffer" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-spsc_ring_buffer" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-spsc_ring_buffer">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-example-spsc_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-spsc_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-spsc_ring_queue">
+    <configuration default="false" name="cppcommon-example-spsc_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-spsc_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-spsc_ring_queue">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-perf-mpmc_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-mpmc_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-mpmc_ring_queue">
+    <configuration default="false" name="cppcommon-perf-mpmc_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-mpmc_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-mpmc_ring_queue">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-perf-mpmc_ring_queue_ex" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-mpmc_ring_queue_ex" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-mpmc_ring_queue_ex">
+    <configuration default="false" name="cppcommon-perf-mpmc_ring_queue_ex" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-mpmc_ring_queue_ex" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-mpmc_ring_queue_ex">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-perf-mpsc_linked_batcher" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-mpsc_linked_batcher" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-mpsc_linked_batcher">
+    <configuration default="false" name="cppcommon-perf-mpsc_linked_batcher" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-mpsc_linked_batcher" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-mpsc_linked_batcher">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-perf-mpsc_linked_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-mpsc_linked_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-mpsc_linked_queue">
+    <configuration default="false" name="cppcommon-perf-mpsc_linked_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-mpsc_linked_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-mpsc_linked_queue">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-perf-mpsc_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-mpsc_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-mpsc_ring_queue">
+    <configuration default="false" name="cppcommon-perf-mpsc_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-mpsc_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-mpsc_ring_queue">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-perf-spsc_ring_buffer" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-spsc_ring_buffer" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-spsc_ring_buffer">
+    <configuration default="false" name="cppcommon-perf-spsc_ring_buffer" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-spsc_ring_buffer" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-spsc_ring_buffer">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-perf-spsc_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-spsc_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-spsc_ring_queue">
+    <configuration default="false" name="cppcommon-perf-spsc_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-spsc_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-spsc_ring_queue">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-example-system_rdts" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-system_rdts" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-system_rdts">
+    <configuration default="false" name="cppcommon-example-system_rdts" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-system_rdts" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-system_rdts">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-example-system_timestamp" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-system_timestamp" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-system_timestamp">
+    <configuration default="false" name="cppcommon-example-system_timestamp" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-system_timestamp" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-system_timestamp">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-example-threads_mpmc_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_mpmc_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_mpmc_ring_queue">
+    <configuration default="false" name="cppcommon-example-threads_mpmc_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_mpmc_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_mpmc_ring_queue">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-example-threads_mpsc_linked_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_mpsc_linked_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_mpsc_linked_queue">
+    <configuration default="false" name="cppcommon-example-threads_mpsc_linked_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_mpsc_linked_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_mpsc_linked_queue">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-example-threads_mpsc_ring_buffer" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_mpsc_ring_buffer" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_mpsc_ring_buffer">
+    <configuration default="false" name="cppcommon-example-threads_mpsc_ring_buffer" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_mpsc_ring_buffer" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_mpsc_ring_buffer">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-example-threads_mpsc_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_mpsc_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_mpsc_ring_queue">
+    <configuration default="false" name="cppcommon-example-threads_mpsc_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_mpsc_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_mpsc_ring_queue">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-example-threads_spinlock" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_spinlock" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_spinlock">
+    <configuration default="false" name="cppcommon-example-threads_spinlock" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_spinlock" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_spinlock">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-example-threads_spsc_ring_buffer" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_spsc_ring_buffer" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_spsc_ring_buffer">
+    <configuration default="false" name="cppcommon-example-threads_spsc_ring_buffer" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_spsc_ring_buffer" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_spsc_ring_buffer">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-example-threads_spsc_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_spsc_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_spsc_ring_queue">
+    <configuration default="false" name="cppcommon-example-threads_spsc_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_spsc_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_spsc_ring_queue">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-perf-system_rdts" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-system_rdts" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-system_rdts">
+    <configuration default="false" name="cppcommon-perf-system_rdts" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-system_rdts" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-system_rdts">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-perf-system_timestamp" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-system_timestamp" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-system_timestamp">
+    <configuration default="false" name="cppcommon-perf-system_timestamp" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-system_timestamp" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-system_timestamp">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-perf-threads_mpmc_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-threads_mpmc_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-threads_mpmc_ring_queue">
+    <configuration default="false" name="cppcommon-perf-threads_mpmc_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-threads_mpmc_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-threads_mpmc_ring_queue">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-perf-threads_mpsc_linked_batcher" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-threads_mpsc_linked_batcher" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-threads_mpsc_linked_batcher">
+    <configuration default="false" name="cppcommon-perf-threads_mpsc_linked_batcher" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-threads_mpsc_linked_batcher" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-threads_mpsc_linked_batcher">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-perf-threads_mpsc_linked_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-threads_mpsc_linked_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-threads_mpsc_linked_queue">
+    <configuration default="false" name="cppcommon-perf-threads_mpsc_linked_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-threads_mpsc_linked_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-threads_mpsc_linked_queue">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-perf-threads_mpsc_ring_buffer" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-threads_mpsc_ring_buffer" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-threads_mpsc_ring_buffer">
+    <configuration default="false" name="cppcommon-perf-threads_mpsc_ring_buffer" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-threads_mpsc_ring_buffer" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-threads_mpsc_ring_buffer">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-perf-threads_mpsc_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-threads_mpsc_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-threads_mpsc_ring_queue">
+    <configuration default="false" name="cppcommon-perf-threads_mpsc_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-threads_mpsc_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-threads_mpsc_ring_queue">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-perf-threads_spsc_ring_buffer" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-threads_spsc_ring_buffer" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-threads_spsc_ring_buffer">
+    <configuration default="false" name="cppcommon-perf-threads_spsc_ring_buffer" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-threads_spsc_ring_buffer" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-threads_spsc_ring_buffer">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="cppcommon-perf-threads_spsc_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-threads_spsc_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-threads_spsc_ring_queue">
+    <configuration default="false" name="cppcommon-perf-threads_spsc_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-threads_spsc_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-threads_spsc_ring_queue">
       <envs />
       <method />
     </configuration>
-    <list size="53">
+    <configuration default="false" name="cppcommon-example-errors_exceptions_handler" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-errors_exceptions_handler" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-errors_exceptions_handler">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-errors_fatal" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-errors_fatal" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-errors_fatal">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-errors_system_error" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-errors_system_error" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-errors_system_error">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-system_console" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-system_console" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-system_console">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-system_cpu" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-system_cpu" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-system_cpu">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-system_environment" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-system_environment" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-system_environment">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-system_memory" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-system_memory" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-system_memory">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-system_shared_memory" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-system_shared_memory" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-system_shared_memory">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-system_shared_type" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-system_shared_type" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-system_shared_type">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-system_source_location" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-system_source_location" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-system_source_location">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-system_stack_trace" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-system_stack_trace" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-system_stack_trace">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-threads_barrier" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_barrier" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_barrier">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-threads_critical_section" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_critical_section" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_critical_section">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-threads_event_auto_reset" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_event_auto_reset" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_event_auto_reset">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-threads_event_manual_reset" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_event_manual_reset" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_event_manual_reset">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-threads_latch_multi" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_latch_multi" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_latch_multi">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-threads_latch_single" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_latch_single" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_latch_single">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-threads_mutex" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_mutex" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_mutex">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-threads_named_critical_section" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_named_critical_section" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_named_critical_section">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-threads_named_event_auto_reset" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_named_event_auto_reset" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_named_event_auto_reset">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-threads_named_event_manual_reset" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_named_event_manual_reset" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_named_event_manual_reset">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-threads_named_mutex" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_named_mutex" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_named_mutex">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-threads_named_rw_lock" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_named_rw_lock" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_named_rw_lock">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-threads_named_semaphore" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_named_semaphore" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_named_semaphore">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-threads_rw_lock" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_rw_lock" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_rw_lock">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-threads_semaphore" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_semaphore" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_semaphore">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-threads_spin_barrier" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_spin_barrier" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_spin_barrier">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-threads_spin_lock" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_spin_lock" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_spin_lock">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-time_time" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-time_time" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-time_time">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-time_timespan" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-time_timespan" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-time_timespan">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-time_timestamp" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-time_timestamp" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-time_timestamp">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-time_timezone" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-time_timezone" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-time_timezone">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-perf-system_stack_trace" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-system_stack_trace" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-system_stack_trace">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-perf-threads_critical_section" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-threads_critical_section" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-threads_critical_section">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-perf-threads_mutex" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-threads_mutex" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-threads_mutex">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-perf-threads_named_critical_section" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-threads_named_critical_section" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-threads_named_critical_section">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-perf-threads_named_mutex" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-threads_named_mutex" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-threads_named_mutex">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-perf-threads_named_rw_lock" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-threads_named_rw_lock" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-threads_named_rw_lock">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-perf-threads_named_semaphore" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-threads_named_semaphore" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-threads_named_semaphore">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-perf-threads_rw_lock" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-threads_rw_lock" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-threads_rw_lock">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-perf-threads_semaphore" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-threads_semaphore" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-threads_semaphore">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-perf-threads_spin_lock" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-threads_spin_lock" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-threads_spin_lock">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-perf-threads_thread" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-threads_thread" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-threads_thread">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-perf-time_time" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-time_time" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-time_time">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-perf-time_timestamp" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-time_timestamp" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-time_timestamp">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-perf-time_timezone" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-perf-time_timezone" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-perf-time_timezone">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="doxygen" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="doxygen" CONFIG_NAME="Debug">
+      <envs />
+      <method />
+    </configuration>
+    <list size="100">
       <item index="0" class="java.lang.String" itemvalue="Application.Build All" />
       <item index="1" class="java.lang.String" itemvalue="Application.cppcommon" />
       <item index="2" class="java.lang.String" itemvalue="Application.cppcommon-tests" />
@@ -617,9 +718,58 @@
       <item index="50" class="java.lang.String" itemvalue="Application.cppcommon-perf-threads_mpsc_ring_queue" />
       <item index="51" class="java.lang.String" itemvalue="Application.cppcommon-perf-threads_spsc_ring_buffer" />
       <item index="52" class="java.lang.String" itemvalue="Application.cppcommon-perf-threads_spsc_ring_queue" />
+      <item index="53" class="java.lang.String" itemvalue="Application.cppcommon-example-errors_exceptions_handler" />
+      <item index="54" class="java.lang.String" itemvalue="Application.cppcommon-example-errors_fatal" />
+      <item index="55" class="java.lang.String" itemvalue="Application.cppcommon-example-errors_system_error" />
+      <item index="56" class="java.lang.String" itemvalue="Application.cppcommon-example-system_console" />
+      <item index="57" class="java.lang.String" itemvalue="Application.cppcommon-example-system_cpu" />
+      <item index="58" class="java.lang.String" itemvalue="Application.cppcommon-example-system_environment" />
+      <item index="59" class="java.lang.String" itemvalue="Application.cppcommon-example-system_memory" />
+      <item index="60" class="java.lang.String" itemvalue="Application.cppcommon-example-system_shared_memory" />
+      <item index="61" class="java.lang.String" itemvalue="Application.cppcommon-example-system_shared_type" />
+      <item index="62" class="java.lang.String" itemvalue="Application.cppcommon-example-system_source_location" />
+      <item index="63" class="java.lang.String" itemvalue="Application.cppcommon-example-system_stack_trace" />
+      <item index="64" class="java.lang.String" itemvalue="Application.cppcommon-example-threads_barrier" />
+      <item index="65" class="java.lang.String" itemvalue="Application.cppcommon-example-threads_critical_section" />
+      <item index="66" class="java.lang.String" itemvalue="Application.cppcommon-example-threads_event_auto_reset" />
+      <item index="67" class="java.lang.String" itemvalue="Application.cppcommon-example-threads_event_manual_reset" />
+      <item index="68" class="java.lang.String" itemvalue="Application.cppcommon-example-threads_latch_multi" />
+      <item index="69" class="java.lang.String" itemvalue="Application.cppcommon-example-threads_latch_single" />
+      <item index="70" class="java.lang.String" itemvalue="Application.cppcommon-example-threads_mutex" />
+      <item index="71" class="java.lang.String" itemvalue="Application.cppcommon-example-threads_named_critical_section" />
+      <item index="72" class="java.lang.String" itemvalue="Application.cppcommon-example-threads_named_event_auto_reset" />
+      <item index="73" class="java.lang.String" itemvalue="Application.cppcommon-example-threads_named_event_manual_reset" />
+      <item index="74" class="java.lang.String" itemvalue="Application.cppcommon-example-threads_named_mutex" />
+      <item index="75" class="java.lang.String" itemvalue="Application.cppcommon-example-threads_named_rw_lock" />
+      <item index="76" class="java.lang.String" itemvalue="Application.cppcommon-example-threads_named_semaphore" />
+      <item index="77" class="java.lang.String" itemvalue="Application.cppcommon-example-threads_rw_lock" />
+      <item index="78" class="java.lang.String" itemvalue="Application.cppcommon-example-threads_semaphore" />
+      <item index="79" class="java.lang.String" itemvalue="Application.cppcommon-example-threads_spin_barrier" />
+      <item index="80" class="java.lang.String" itemvalue="Application.cppcommon-example-threads_spin_lock" />
+      <item index="81" class="java.lang.String" itemvalue="Application.cppcommon-example-time_time" />
+      <item index="82" class="java.lang.String" itemvalue="Application.cppcommon-example-time_timespan" />
+      <item index="83" class="java.lang.String" itemvalue="Application.cppcommon-example-time_timestamp" />
+      <item index="84" class="java.lang.String" itemvalue="Application.cppcommon-example-time_timezone" />
+      <item index="85" class="java.lang.String" itemvalue="Application.cppcommon-perf-system_stack_trace" />
+      <item index="86" class="java.lang.String" itemvalue="Application.cppcommon-perf-threads_critical_section" />
+      <item index="87" class="java.lang.String" itemvalue="Application.cppcommon-perf-threads_mutex" />
+      <item index="88" class="java.lang.String" itemvalue="Application.cppcommon-perf-threads_named_critical_section" />
+      <item index="89" class="java.lang.String" itemvalue="Application.cppcommon-perf-threads_named_mutex" />
+      <item index="90" class="java.lang.String" itemvalue="Application.cppcommon-perf-threads_named_rw_lock" />
+      <item index="91" class="java.lang.String" itemvalue="Application.cppcommon-perf-threads_named_semaphore" />
+      <item index="92" class="java.lang.String" itemvalue="Application.cppcommon-perf-threads_rw_lock" />
+      <item index="93" class="java.lang.String" itemvalue="Application.cppcommon-perf-threads_semaphore" />
+      <item index="94" class="java.lang.String" itemvalue="Application.cppcommon-perf-threads_spin_lock" />
+      <item index="95" class="java.lang.String" itemvalue="Application.cppcommon-perf-threads_thread" />
+      <item index="96" class="java.lang.String" itemvalue="Application.cppcommon-perf-time_time" />
+      <item index="97" class="java.lang.String" itemvalue="Application.cppcommon-perf-time_timestamp" />
+      <item index="98" class="java.lang.String" itemvalue="Application.cppcommon-perf-time_timezone" />
+      <item index="99" class="java.lang.String" itemvalue="Application.doxygen" />
     </list>
   </component>
-  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -628,31 +778,38 @@
       <changelist id="559410a7-8ec3-4eef-81f5-f9dd5eddd0fc" name="Default" comment="" />
       <created>1452808628019</created>
       <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
       <updated>1452808628019</updated>
+      <workItem from="1470261277647" duration="494000" />
+      <workItem from="1470261883268" duration="44000" />
     </task>
     <servers />
   </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="538000" />
+  </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="65" y="24" width="1615" height="1026" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32963988" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -671,185 +828,9 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/modules/CppBenchmark/CMakeLists.txt">
+    <entry file="file://$PROJECT_DIR$/examples/system_shared_memory.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/include/system/rdts.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/include/system/timestamp.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/include/threads/thread.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmake/SetCompilerFeatures.cmake">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/CppBenchmark/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/include/system/rdts.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/include/system/timestamp.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/include/threads/thread.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmake/SetCompilerFeatures.cmake">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/CppBenchmark/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/include/system/rdts.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/include/system/timestamp.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmake/SetCompilerFeatures.cmake">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/CppBenchmark/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/include/system/rdts.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmake/SetCompilerFeatures.cmake">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/CppBenchmark/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmake/SetCompilerFeatures.cmake">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/CppBenchmark/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmake/SetCompilerFeatures.cmake">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/CppBenchmark/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmake/SetCompilerFeatures.cmake">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
@@ -857,40 +838,171 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/CppBenchmark/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state relative-caret-position="240">
           <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmake/SetCompilerFeatures.cmake">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/include/system/rdts.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/include/system/timestamp.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/include/threads/thread.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5925926">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake/SetCompilerFeatures.cmake">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/CppBenchmark/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/system/rdts.h" />
+    <entry file="file://$PROJECT_DIR$/include/system/timestamp.h" />
+    <entry file="file://$PROJECT_DIR$/include/threads/thread.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake/SetCompilerFeatures.cmake">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/CppBenchmark/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/system/rdts.h" />
+    <entry file="file://$PROJECT_DIR$/include/system/timestamp.h" />
+    <entry file="file://$PROJECT_DIR$/include/threads/thread.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake/SetCompilerFeatures.cmake">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/CppBenchmark/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/system/rdts.h" />
+    <entry file="file://$PROJECT_DIR$/include/system/timestamp.h" />
+    <entry file="file://$PROJECT_DIR$/cmake/SetCompilerFeatures.cmake">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/CppBenchmark/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/system/rdts.h" />
+    <entry file="file://$PROJECT_DIR$/cmake/SetCompilerFeatures.cmake">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/CppBenchmark/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake/SetCompilerFeatures.cmake">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/CppBenchmark/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake/SetCompilerFeatures.cmake">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/CppBenchmark/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake/SetCompilerFeatures.cmake">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/CppBenchmark/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/system/rdts.h" />
+    <entry file="file://$PROJECT_DIR$/include/system/timestamp.h" />
+    <entry file="file://$PROJECT_DIR$/include/threads/thread.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="587">
           <caret line="74" column="0" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake/SetCompilerFeatures.cmake">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/system_shared_memory.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="18" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
           <folding />
         </state>
       </provider>
