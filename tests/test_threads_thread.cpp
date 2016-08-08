@@ -12,6 +12,7 @@ using namespace CppCommon;
 TEST_CASE("Thread", "[CppCommon][Threads]")
 {
     REQUIRE(Thread::CurrentThreadId() > 0);
+    REQUIRE(Thread::CurrentThreadAffinity() >= 0);
 
     // Test Sleep() method
     for (int64_t i = 1; i < 10; ++i)
@@ -48,4 +49,16 @@ TEST_CASE("Thread", "[CppCommon][Threads]")
         int64_t stop = Timestamp::nano();
         REQUIRE(((stop - start) >= 0));
     }
+
+    // Test thread CPU affinity
+    std::bitset<64> affinity = Thread::GetAffinity();
+    REQUIRE(affinity.to_ullong() > 0);
+    affinity.flip(0);
+    Thread::SetAffinity(affinity);
+
+    // Test thread priority
+    Thread::Priority priority = Thread::GetPriority();
+    REQUIRE(priority == Thread::Priority::NORMAL);
+    priority = Thread::Priority::HIGH;
+    Thread::SetPriority(priority);
 }

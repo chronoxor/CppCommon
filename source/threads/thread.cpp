@@ -63,7 +63,7 @@ uint64_t Thread::CurrentThreadId() noexcept
 #endif
 }
 
-uint32_t CurrentThreadAffinity() noexcept
+uint32_t Thread::CurrentThreadAffinity() noexcept
 {
 #if defined(_WIN32) || defined(_WIN64)
     return GetCurrentProcessorNumber();
@@ -243,7 +243,7 @@ std::bitset<64> Thread::GetAffinity(std::thread& thread)
 void Thread::SetAffinity(const std::bitset<64>& affinity)
 {
 #if defined(_WIN32) || defined(_WIN64)
-    DWORD_PTR dwThreadAffinityMask = affinity.to_ulong();
+    DWORD_PTR dwThreadAffinityMask = affinity.to_ullong();
     if (!SetThreadAffinityMask(GetCurrentThread(), dwThreadAffinityMask))
         throwex SystemException("Failed to set the current thread CPU affinity!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
@@ -260,7 +260,7 @@ void Thread::SetAffinity(const std::bitset<64>& affinity)
 void Thread::SetAffinity(std::thread& thread, const std::bitset<64>& affinity)
 {
 #if defined(_WIN32) || defined(_WIN64)
-    DWORD_PTR dwThreadAffinityMask = affinity.to_ulong();
+    DWORD_PTR dwThreadAffinityMask = affinity.to_ullong();
     if (!SetThreadAffinityMask(thread.native_handle(), dwThreadAffinityMask))
         throwex SystemException("Failed to set the current thread CPU affinity!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
@@ -274,26 +274,26 @@ void Thread::SetAffinity(std::thread& thread, const std::bitset<64>& affinity)
 #endif
 }
 
-ThreadPriority Thread::GetPriority()
+Thread::Priority Thread::GetPriority()
 {
 #if defined(_WIN32) || defined(_WIN64)
     int priority = GetThreadPriority(GetCurrentThread());
     if (priority == THREAD_PRIORITY_ERROR_RETURN)
         throwex SystemException("Failed to get the current thread priority!");
     if (priority < THREAD_PRIORITY_LOWEST)
-        return ThreadPriority::IDLE;
+        return Priority::IDLE;
     else if (priority < THREAD_PRIORITY_BELOW_NORMAL)
-        return ThreadPriority::LOWEST;
+        return Priority::LOWEST;
     else if (priority < THREAD_PRIORITY_NORMAL)
-        return ThreadPriority::LOW;
+        return Priority::LOW;
     else if (priority < THREAD_PRIORITY_ABOVE_NORMAL)
-        return ThreadPriority::NORMAL;
+        return Priority::NORMAL;
     else if (priority < THREAD_PRIORITY_HIGHEST)
-        return ThreadPriority::HIGH;
+        return Priority::HIGH;
     else if (priority < THREAD_PRIORITY_TIME_CRITICAL)
-        return ThreadPriority::HIGHEST;
+        return Priority::HIGHEST;
     else
-        return ThreadPriority::REALTIME;
+        return Priority::REALTIME;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     int policy;
     struct sched_param sched;
@@ -303,45 +303,45 @@ ThreadPriority Thread::GetPriority()
     if ((policy == SCHED_FIFO) || (policy == SCHED_RR))
     {
         if (sched.sched_priority < 15)
-            return ThreadPriority::IDLE;
+            return Priority::IDLE;
         else if (sched.sched_priority < 30)
-            return ThreadPriority::LOWEST;
+            return Priority::LOWEST;
         else if (sched.sched_priority < 50)
-            return ThreadPriority::LOW;
+            return Priority::LOW;
         else if (sched.sched_priority < 70)
-            return ThreadPriority::NORMAL;
+            return Priority::NORMAL;
         else if (sched.sched_priority < 85)
-            return ThreadPriority::HIGH;
+            return Priority::HIGH;
         else if (sched.sched_priority < 99)
-            return ThreadPriority::HIGHEST;
+            return Priority::HIGHEST;
         else
-            return ThreadPriority::REALTIME;
+            return Priority::REALTIME;
     }
     else
-        return ThreadPriority::NORMAL;
+        return Priority::NORMAL;
 #endif
 }
 
-ThreadPriority Thread::GetPriority(std::thread& thread)
+Thread::Priority Thread::GetPriority(std::thread& thread)
 {
 #if defined(_WIN32) || defined(_WIN64)
     int priority = GetThreadPriority(thread.native_handle());
     if (priority == THREAD_PRIORITY_ERROR_RETURN)
         throwex SystemException("Failed to get the given thread priority!");
     if (priority < THREAD_PRIORITY_LOWEST)
-        return ThreadPriority::IDLE;
+        return Priority::IDLE;
     else if (priority < THREAD_PRIORITY_BELOW_NORMAL)
-        return ThreadPriority::LOWEST;
+        return Priority::LOWEST;
     else if (priority < THREAD_PRIORITY_NORMAL)
-        return ThreadPriority::LOW;
+        return Priority::LOW;
     else if (priority < THREAD_PRIORITY_ABOVE_NORMAL)
-        return ThreadPriority::NORMAL;
+        return Priority::NORMAL;
     else if (priority < THREAD_PRIORITY_HIGHEST)
-        return ThreadPriority::HIGH;
+        return Priority::HIGH;
     else if (priority < THREAD_PRIORITY_TIME_CRITICAL)
-        return ThreadPriority::HIGHEST;
+        return Priority::HIGHEST;
     else
-        return ThreadPriority::REALTIME;
+        return Priority::REALTIME;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     int policy;
     struct sched_param sched;
@@ -351,50 +351,50 @@ ThreadPriority Thread::GetPriority(std::thread& thread)
     if ((policy == SCHED_FIFO) || (policy == SCHED_RR))
     {
         if (sched.sched_priority < 15)
-            return ThreadPriority::IDLE;
+            return Priority::IDLE;
         else if (sched.sched_priority < 30)
-            return ThreadPriority::LOWEST;
+            return Priority::LOWEST;
         else if (sched.sched_priority < 50)
-            return ThreadPriority::LOW;
+            return Priority::LOW;
         else if (sched.sched_priority < 70)
-            return ThreadPriority::NORMAL;
+            return Priority::NORMAL;
         else if (sched.sched_priority < 85)
-            return ThreadPriority::HIGH;
+            return Priority::HIGH;
         else if (sched.sched_priority < 99)
-            return ThreadPriority::HIGHEST;
+            return Priority::HIGHEST;
         else
-            return ThreadPriority::REALTIME;
+            return Priority::REALTIME;
     }
     else
-        return ThreadPriority::NORMAL;
+        return Priority::NORMAL;
 #endif
 }
 
-void Thread::SetPriority(ThreadPriority priority)
+void Thread::SetPriority(Priority priority)
 {
 #if defined(_WIN32) || defined(_WIN64)
     int nPriority = THREAD_PRIORITY_NORMAL;
     switch (priority)
     {
-        case ThreadPriority::IDLE:
+        case Priority::IDLE:
             nPriority = THREAD_PRIORITY_IDLE;
             break;
-        case ThreadPriority::LOWEST:
+        case Priority::LOWEST:
             nPriority = THREAD_PRIORITY_LOWEST;
             break;
-        case ThreadPriority::LOW:
+        case Priority::LOW:
             nPriority = THREAD_PRIORITY_BELOW_NORMAL;
             break;
-        case ThreadPriority::NORMAL:
+        case Priority::NORMAL:
             nPriority = THREAD_PRIORITY_NORMAL;
             break;
-        case ThreadPriority::HIGH:
+        case Priority::HIGH:
             nPriority = THREAD_PRIORITY_ABOVE_NORMAL;
             break;
-        case ThreadPriority::HIGHEST:
+        case Priority::HIGHEST:
             nPriority = THREAD_PRIORITY_HIGHEST;
             break;
-        case ThreadPriority::REALTIME:
+        case Priority::REALTIME:
             nPriority = THREAD_PRIORITY_TIME_CRITICAL;
             break;
     }
@@ -407,25 +407,25 @@ void Thread::SetPriority(ThreadPriority priority)
     sched.sched_priority = 50;
     switch (priority)
     {
-        case ThreadPriority::IDLE:
+        case Priority::IDLE:
             sched.sched_priority = 1;
             break;
-        case ThreadPriority::LOWEST:
+        case Priority::LOWEST:
             sched.sched_priority = 15;
             break;
-        case ThreadPriority::LOW:
+        case Priority::LOW:
             sched.sched_priority = 30;
             break;
-        case ThreadPriority::NORMAL:
+        case Priority::NORMAL:
             sched.sched_priority = 50;
             break;
-        case ThreadPriority::HIGH:
+        case Priority::HIGH:
             sched.sched_priority = 70;
             break;
-        case ThreadPriority::HIGHEST:
+        case Priority::HIGHEST:
             sched.sched_priority = 85;
             break;
-        case ThreadPriority::REALTIME:
+        case Priority::REALTIME:
             sched.sched_priority = 99;
             break;
     }
@@ -436,31 +436,31 @@ void Thread::SetPriority(ThreadPriority priority)
 #endif
 }
 
-void Thread::SetPriority(std::thread& thread, ThreadPriority priority)
+void Thread::SetPriority(std::thread& thread, Priority priority)
 {
 #if defined(_WIN32) || defined(_WIN64)
     int nPriority = THREAD_PRIORITY_NORMAL;
     switch (priority)
     {
-        case ThreadPriority::IDLE:
+        case Priority::IDLE:
             nPriority = THREAD_PRIORITY_IDLE;
             break;
-        case ThreadPriority::LOWEST:
+        case Priority::LOWEST:
             nPriority = THREAD_PRIORITY_LOWEST;
             break;
-        case ThreadPriority::LOW:
+        case Priority::LOW:
             nPriority = THREAD_PRIORITY_BELOW_NORMAL;
             break;
-        case ThreadPriority::NORMAL:
+        case Priority::NORMAL:
             nPriority = THREAD_PRIORITY_NORMAL;
             break;
-        case ThreadPriority::HIGH:
+        case Priority::HIGH:
             nPriority = THREAD_PRIORITY_ABOVE_NORMAL;
             break;
-        case ThreadPriority::HIGHEST:
+        case Priority::HIGHEST:
             nPriority = THREAD_PRIORITY_HIGHEST;
             break;
-        case ThreadPriority::REALTIME:
+        case Priority::REALTIME:
             nPriority = THREAD_PRIORITY_TIME_CRITICAL;
             break;
     }
@@ -473,25 +473,25 @@ void Thread::SetPriority(std::thread& thread, ThreadPriority priority)
     sched.sched_priority = 50;
     switch (priority)
     {
-        case ThreadPriority::IDLE:
+        case Priority::IDLE:
             sched.sched_priority = 1;
             break;
-        case ThreadPriority::LOWEST:
+        case Priority::LOWEST:
             sched.sched_priority = 15;
             break;
-        case ThreadPriority::LOW:
+        case Priority::LOW:
             sched.sched_priority = 30;
             break;
-        case ThreadPriority::NORMAL:
+        case Priority::NORMAL:
             sched.sched_priority = 50;
             break;
-        case ThreadPriority::HIGH:
+        case Priority::HIGH:
             sched.sched_priority = 70;
             break;
-        case ThreadPriority::HIGHEST:
+        case Priority::HIGHEST:
             sched.sched_priority = 85;
             break;
-        case ThreadPriority::REALTIME:
+        case Priority::REALTIME:
             sched.sched_priority = 99;
             break;
     }

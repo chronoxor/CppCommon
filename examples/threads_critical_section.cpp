@@ -15,9 +15,9 @@
 
 int main(int argc, char** argv)
 {
-    CppCommon::CriticalSection lock;
-
     std::cout << "Press Enter to stop..." << std::endl;
+
+    CppCommon::CriticalSection lock;
 
     // Start some threads
     std::atomic<bool> stop(false);

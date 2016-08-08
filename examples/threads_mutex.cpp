@@ -15,9 +15,9 @@
 
 int main(int argc, char** argv)
 {
-    CppCommon::Mutex lock;
-
     std::cout << "Press Enter to stop..." << std::endl;
+
+    CppCommon::Mutex lock;
 
     // Start some threads
     std::atomic<bool> stop(false);

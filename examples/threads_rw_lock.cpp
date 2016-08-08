@@ -16,9 +16,9 @@
 
 int main(int argc, char** argv)
 {
-    CppCommon::RWLock lock;
-
     std::cout << "Press Enter to stop..." << std::endl;
+
+    CppCommon::RWLock lock;
 
     int current = 0;
     std::atomic<bool> stop(false);
