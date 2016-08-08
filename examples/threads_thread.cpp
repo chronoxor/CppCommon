@@ -48,7 +48,7 @@ int main(int argc, char** argv)
                 std::cout << "Thread Number: " << thread << ", Thread Id: " << CppCommon::Thread::CurrentThreadId() << ", Thread CPU affinity: " << CppCommon::Thread::CurrentThreadAffinity() << std::endl;
 
                 // Sleep for one second...
-                CppCommon::Thread::Sleep(100);
+                CppCommon::Thread::Sleep(rand() % 1000);
             }
         });
 
