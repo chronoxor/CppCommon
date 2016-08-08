@@ -53,12 +53,8 @@ TEST_CASE("Thread", "[CppCommon][Threads]")
     // Test thread CPU affinity
     std::bitset<64> affinity = Thread::GetAffinity();
     REQUIRE(affinity.to_ullong() > 0);
-    affinity.flip(0);
-    Thread::SetAffinity(affinity);
 
     // Test thread priority
     Thread::Priority priority = Thread::GetPriority();
     REQUIRE(priority == Thread::Priority::NORMAL);
-    priority = Thread::Priority::HIGH;
-    Thread::SetPriority(priority);
 }
