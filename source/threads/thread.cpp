@@ -266,25 +266,25 @@ void Thread::SetPriority(ThreadPriority priority)
     switch (priority)
     {
         case ThreadPriority::IDLE:
-            nPriority = 1;
+            sched.sched_priority = 1;
             break;
         case ThreadPriority::LOWEST:
-            nPriority = 15;
+            sched.sched_priority = 15;
             break;
         case ThreadPriority::LOW:
-            nPriority = 30;
+            sched.sched_priority = 30;
             break;
         case ThreadPriority::NORMAL:
-            nPriority = 50;
+            sched.sched_priority = 50;
             break;
         case ThreadPriority::HIGH:
-            nPriority = 70;
+            sched.sched_priority = 70;
             break;
         case ThreadPriority::HIGHEST:
-            nPriority = 85;
+            sched.sched_priority = 85;
             break;
         case ThreadPriority::REALTIME:
-            nPriority = 99;
+            sched.sched_priority = 99;
             break;
     }
 
@@ -333,25 +333,25 @@ void Thread::SetPriority(std::thread& thread, ThreadPriority priority)
     switch (priority)
     {
         case ThreadPriority::IDLE:
-            nPriority = 1;
+            sched.sched_priority = 1;
             break;
         case ThreadPriority::LOWEST:
-            nPriority = 15;
+            sched.sched_priority = 15;
             break;
         case ThreadPriority::LOW:
-            nPriority = 30;
+            sched.sched_priority = 30;
             break;
         case ThreadPriority::NORMAL:
-            nPriority = 50;
+            sched.sched_priority = 50;
             break;
         case ThreadPriority::HIGH:
-            nPriority = 70;
+            sched.sched_priority = 70;
             break;
         case ThreadPriority::HIGHEST:
-            nPriority = 85;
+            sched.sched_priority = 85;
             break;
         case ThreadPriority::REALTIME:
-            nPriority = 99;
+            sched.sched_priority = 99;
             break;
     }
 
