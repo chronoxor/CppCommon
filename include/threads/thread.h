@@ -22,6 +22,18 @@
 
 namespace CppCommon {
 
+//! Supported thread priorities
+enum class ThreadPriority : uint8_t
+{
+    IDLE     = 0x00,    //!< Idle thread priority
+    LOWEST   = 0x1F,    //!< Lowest thread priority
+    LOW      = 0x3F,    //!< Low thread priority
+    NORMAL   = 0x7F,    //!< Normal thread priority
+    HIGH     = 0x9F,    //!< High thread priority
+    HIGHEST  = 0xBF,    //!< Highest thread priority
+    REALTIME = 0xFF     //!< Realtime thread priority
+};
+
 //! Thread abstraction
 /*!
     Thread abstraction contains different kinds of thread manipulation functionality such as retrive the current thread
@@ -78,6 +90,30 @@ public:
 
     //! Yield to other threads
     static void Yield() noexcept;
+
+    //! Get the current thread priority
+    /*!
+        \return Priority of the current thread
+    */
+    static ThreadPriority GetPriority();
+    //! Get the given thread priority
+    /*!
+        \param thread - Thread
+        \return Priority of the given thread
+    */
+    static ThreadPriority GetPriority(std::thread& thread);
+
+    //! Set the current thread priority
+    /*!
+        \param priority - Thread priority
+    */
+    static void SetPriority(ThreadPriority priority);
+    //! Set the given thread priority
+    /*!
+        \param thread - Thread
+        \param priority - Thread priority
+    */
+    static void SetPriority(std::thread& thread, ThreadPriority priority);
 };
 
 } // namespace CppCommon

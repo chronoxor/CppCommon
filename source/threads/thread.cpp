@@ -8,6 +8,7 @@
 
 #include "threads/thread.h"
 
+#include "errors/exceptions.h"
 #include "time/timestamp.h"
 
 #if defined(_WIN32) || defined(_WIN64)
@@ -125,6 +126,238 @@ void Thread::Yield() noexcept
     SwitchToThread();
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     pthread_yield();
+#endif
+}
+
+ThreadPriority Thread::GetPriority()
+{
+#if defined(_WIN32) || defined(_WIN64)
+    HANDLE hThread = GetCurrentThread();
+    int priority = GetThreadPriority(hThread);
+    if (priority == THREAD_PRIORITY_ERROR_RETURN)
+        throwex SystemException("Failed to get the current thread priority!");
+    if (priority < THREAD_PRIORITY_LOWEST)
+        return ThreadPriority::IDLE;
+    else if (priority < THREAD_PRIORITY_BELOW_NORMAL)
+        return ThreadPriority::LOWEST;
+    else if (priority < THREAD_PRIORITY_NORMAL)
+        return ThreadPriority::LOW;
+    else if (priority < THREAD_PRIORITY_ABOVE_NORMAL)
+        return ThreadPriority::NORMAL;
+    else if (priority < THREAD_PRIORITY_HIGHEST)
+        return ThreadPriority::HIGH;
+    else if (priority < THREAD_PRIORITY_TIME_CRITICAL)
+        return ThreadPriority::HIGHEST;
+    else
+        return ThreadPriority::REALTIME;
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    int policy;
+    struct sched_param sched;
+    int result = pthread_getschedparam(pthread_self(), &policy, &sched);
+    if (result != 0)
+        throwex SystemException("Failed to get the current thread priority!");
+    if ((policy == SCHED_FIFO) || (policy == SCHED_RR))
+    {
+        if (sched.sched_priority < 15)
+            return ThreadPriority::IDLE;
+        else if (sched.sched_priority < 30)
+            return ThreadPriority::LOWEST;
+        else if (sched.sched_priority < 50)
+            return ThreadPriority::LOW;
+        else if (sched.sched_priority < 70)
+            return ThreadPriority::NORMAL;
+        else if (sched.sched_priority < 85)
+            return ThreadPriority::HIGH;
+        else if (sched.sched_priority < 99)
+            return ThreadPriority::HIGHEST;
+        else
+            return ThreadPriority::REALTIME;
+    }
+    else
+        return ThreadPriority::NORMAL;
+#endif
+}
+
+ThreadPriority Thread::GetPriority(std::thread& thread)
+{
+#if defined(_WIN32) || defined(_WIN64)
+    HANDLE hThread = thread.native_handle();
+    int priority = GetThreadPriority(hThread);
+    if (priority == THREAD_PRIORITY_ERROR_RETURN)
+        throwex SystemException("Failed to get the given thread priority!");
+    if (priority < THREAD_PRIORITY_LOWEST)
+        return ThreadPriority::IDLE;
+    else if (priority < THREAD_PRIORITY_BELOW_NORMAL)
+        return ThreadPriority::LOWEST;
+    else if (priority < THREAD_PRIORITY_NORMAL)
+        return ThreadPriority::LOW;
+    else if (priority < THREAD_PRIORITY_ABOVE_NORMAL)
+        return ThreadPriority::NORMAL;
+    else if (priority < THREAD_PRIORITY_HIGHEST)
+        return ThreadPriority::HIGH;
+    else if (priority < THREAD_PRIORITY_TIME_CRITICAL)
+        return ThreadPriority::HIGHEST;
+    else
+        return ThreadPriority::REALTIME;
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    int policy;
+    struct sched_param sched;
+    int result = pthread_getschedparam(thread.native_handle(), &policy, &sched);
+    if (result != 0)
+        throwex SystemException("Failed to get the given thread priority!");
+    if ((policy == SCHED_FIFO) || (policy == SCHED_RR))
+    {
+        if (sched.sched_priority < 15)
+            return ThreadPriority::IDLE;
+        else if (sched.sched_priority < 30)
+            return ThreadPriority::LOWEST;
+        else if (sched.sched_priority < 50)
+            return ThreadPriority::LOW;
+        else if (sched.sched_priority < 70)
+            return ThreadPriority::NORMAL;
+        else if (sched.sched_priority < 85)
+            return ThreadPriority::HIGH;
+        else if (sched.sched_priority < 99)
+            return ThreadPriority::HIGHEST;
+        else
+            return ThreadPriority::REALTIME;
+    }
+    else
+        return ThreadPriority::NORMAL;
+#endif
+}
+
+void Thread::SetPriority(ThreadPriority priority)
+{
+#if defined(_WIN32) || defined(_WIN64)
+    int nPriority = THREAD_PRIORITY_NORMAL;
+    switch (priority)
+    {
+        case ThreadPriority::IDLE:
+            nPriority = THREAD_PRIORITY_IDLE;
+            break;
+        case ThreadPriority::LOWEST:
+            nPriority = THREAD_PRIORITY_LOWEST;
+            break;
+        case ThreadPriority::LOW:
+            nPriority = THREAD_PRIORITY_BELOW_NORMAL;
+            break;
+        case ThreadPriority::NORMAL:
+            nPriority = THREAD_PRIORITY_NORMAL;
+            break;
+        case ThreadPriority::HIGH:
+            nPriority = THREAD_PRIORITY_ABOVE_NORMAL;
+            break;
+        case ThreadPriority::HIGHEST:
+            nPriority = THREAD_PRIORITY_HIGHEST;
+            break;
+        case ThreadPriority::REALTIME:
+            nPriority = THREAD_PRIORITY_TIME_CRITICAL;
+            break;
+    }
+
+    HANDLE hThread = GetCurrentThread();
+    if (!SetThreadPriority(hThread, nPriority))
+        throwex SystemException("Failed to set the current thread priority!");
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    int policy = SCHED_RR;
+    struct sched_param sched;
+    sched.sched_priority = 50;
+    switch (priority)
+    {
+        case ThreadPriority::IDLE:
+            nPriority = 1;
+            break;
+        case ThreadPriority::LOWEST:
+            nPriority = 15;
+            break;
+        case ThreadPriority::LOW:
+            nPriority = 30;
+            break;
+        case ThreadPriority::NORMAL:
+            nPriority = 50;
+            break;
+        case ThreadPriority::HIGH:
+            nPriority = 70;
+            break;
+        case ThreadPriority::HIGHEST:
+            nPriority = 85;
+            break;
+        case ThreadPriority::REALTIME:
+            nPriority = 99;
+            break;
+    }
+
+    int result = pthread_setschedparam(pthread_self(), policy, &sched);
+    if (result != 0)
+        throwex SystemException("Failed to set the current thread priority!");
+#endif
+}
+
+void Thread::SetPriority(std::thread& thread, ThreadPriority priority)
+{
+#if defined(_WIN32) || defined(_WIN64)
+    int nPriority = THREAD_PRIORITY_NORMAL;
+    switch (priority)
+    {
+        case ThreadPriority::IDLE:
+            nPriority = THREAD_PRIORITY_IDLE;
+            break;
+        case ThreadPriority::LOWEST:
+            nPriority = THREAD_PRIORITY_LOWEST;
+            break;
+        case ThreadPriority::LOW:
+            nPriority = THREAD_PRIORITY_BELOW_NORMAL;
+            break;
+        case ThreadPriority::NORMAL:
+            nPriority = THREAD_PRIORITY_NORMAL;
+            break;
+        case ThreadPriority::HIGH:
+            nPriority = THREAD_PRIORITY_ABOVE_NORMAL;
+            break;
+        case ThreadPriority::HIGHEST:
+            nPriority = THREAD_PRIORITY_HIGHEST;
+            break;
+        case ThreadPriority::REALTIME:
+            nPriority = THREAD_PRIORITY_TIME_CRITICAL;
+            break;
+    }
+
+    HANDLE hThread = thread.native_handle();
+    if (!SetThreadPriority(hThread, nPriority))
+        throwex SystemException("Failed to set the given thread priority!");
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    int policy = SCHED_RR;
+    struct sched_param sched;
+    sched.sched_priority = 50;
+    switch (priority)
+    {
+        case ThreadPriority::IDLE:
+            nPriority = 1;
+            break;
+        case ThreadPriority::LOWEST:
+            nPriority = 15;
+            break;
+        case ThreadPriority::LOW:
+            nPriority = 30;
+            break;
+        case ThreadPriority::NORMAL:
+            nPriority = 50;
+            break;
+        case ThreadPriority::HIGH:
+            nPriority = 70;
+            break;
+        case ThreadPriority::HIGHEST:
+            nPriority = 85;
+            break;
+        case ThreadPriority::REALTIME:
+            nPriority = 99;
+            break;
+    }
+
+    int result = pthread_setschedparam(thread.native_handle(), policy, &sched);
+    if (result != 0)
+        throwex SystemException("Failed to set the given thread priority!");
 #endif
 }
 
