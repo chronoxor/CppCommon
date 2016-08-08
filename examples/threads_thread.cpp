@@ -56,9 +56,6 @@ int main(int argc, char** argv)
         // Set thread CPU affinity
         CppCommon::Thread::SetAffinity(thrd, ((thread % 2) == 0) ? affinity1 : affinity2);
 
-        // Set thread priority
-        CppCommon::Thread::SetPriority(thrd, ((thread % 2) == 0) ? CppCommon::Thread::Priority::LOWEST : CppCommon::Thread::Priority::HIGHEST);
-
         // Add the created thread to the collection
         threads.emplace_back(std::move(thrd));
     }
