@@ -183,11 +183,11 @@ std::bitset<64> Thread::GetAffinity()
     int result = pthread_getaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpuset);
     if (result != 0)
         throwex SystemException("Failed to get the current thread CPU affinity!");
-    std::bitset<64> result;
+    std::bitset<64> affinity;
     for (int i = 0; i < std::min(CPU_SETSIZE, 64); ++i)
         if (CPU_ISSET(i, &cpuset))
-            result.set(i);
-    return result;
+            affinity.set(i);
+    return affinity;
 #endif
 }
 
@@ -232,11 +232,11 @@ std::bitset<64> Thread::GetAffinity(std::thread& thread)
     int result = pthread_getaffinity_np(thread.native_handle(), sizeof(cpu_set_t), &cpuset);
     if (result != 0)
         throwex SystemException("Failed to get the current thread CPU affinity!");
-    std::bitset<64> result;
+    std::bitset<64> affinity;
     for (int i = 0; i < std::min(CPU_SETSIZE, 64); ++i)
         if (CPU_ISSET(i, &cpuset))
-            result.set(i);
-    return result;
+            affinity.set(i);
+    return affinity;
 #endif
 }
 
