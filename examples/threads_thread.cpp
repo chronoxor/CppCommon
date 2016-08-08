@@ -43,12 +43,13 @@ int main(int argc, char** argv)
             while (!stop)
             {
                 // Use locker with critical section to protect the output
-                CppCommon::Locker<CppCommon::CriticalSection> locker(lock);
-
-                std::cout << "Thread Number: " << thread << ", Thread Id: " << CppCommon::Thread::CurrentThreadId() << ", Thread CPU affinity: " << CppCommon::Thread::CurrentThreadAffinity() << std::endl;
+                {
+                    CppCommon::Locker<CppCommon::CriticalSection> locker(lock);
+                    std::cout << "Thread Number: " << thread << ", Thread Id: " << CppCommon::Thread::CurrentThreadId() << ", Thread CPU affinity: " << CppCommon::Thread::CurrentThreadAffinity() << std::endl;
+                }
 
                 // Sleep for one second...
-                CppCommon::Thread::Sleep(rand() % 1000);
+                CppCommon::Thread::Sleep(1000);
             }
         });
 
