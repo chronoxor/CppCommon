@@ -73,6 +73,17 @@ std::string CPU::Architecture()
 #endif
 }
 
+int CPU::Affinity()
+{
+#if defined(_WIN32) || defined(_WIN64)
+    SYSTEM_INFO si;
+    GetSystemInfo(&si);
+    return si.dwNumberOfProcessors;
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    return sysconf(_SC_NPROCESSORS_ONLN);
+#endif
+}
+
 int CPU::LogicalCores()
 {
     return TotalCores().first;

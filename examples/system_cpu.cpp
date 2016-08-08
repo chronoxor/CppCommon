@@ -13,6 +13,7 @@
 int main(int argc, char** argv)
 {
     std::cout << "CPU architecture: " << CppCommon::CPU::Architecture() << std::endl;
+    std::cout << "CPU affinity: " << CppCommon::CPU::Affinity() << std::endl;
     std::cout << "CPU logical cores: " << CppCommon::CPU::LogicalCores() << std::endl;
     std::cout << "CPU physical cores: " << CppCommon::CPU::PhysicalCores() << std::endl;
     std::cout << "CPU clock speed: " << CppCommon::CPU::ClockSpeed() << " Hz" << std::endl;

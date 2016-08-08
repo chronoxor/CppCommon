@@ -12,6 +12,7 @@
 #include "errors/exceptions_handler.h"
 #include "time/timestamp.h"
 
+#include <bitset>
 #include <thread>
 
 //! Current thread Id macro
@@ -58,6 +59,12 @@ public:
     */
     static uint64_t CurrentThreadId() noexcept;
 
+    //! Get the current thread CPU affinity
+    /*!
+        \return Current thread CPU affinity
+    */
+    static uint32_t CurrentThreadAffinity() noexcept;
+
     //! Start a new thread with an exception handler registered
     /*!
         Works the same way as std::thread() does but also register an exception handler
@@ -90,6 +97,30 @@ public:
 
     //! Yield to other threads
     static void Yield() noexcept;
+
+    //! Get the current thread CPU affinity bitset
+    /*!
+        \return CPU affinity bitset of the current thread
+    */
+    static std::bitset<64> GetAffinity();
+    //! Get the given thread CPU affinity bitset
+    /*!
+        \param thread - Thread
+        \return CPU affinity bitset of the given thread
+    */
+    static std::bitset<64> GetAffinity(std::thread& thread);
+
+    //! Set the current thread CPU affinity bitset
+    /*!
+        \param affinity - Thread CPU affinity bitset
+    */
+    static void SetAffinity(const std::bitset<64>& affinity);
+    //! Set the given thread CPU affinity bitset
+    /*!
+        \param thread - Thread
+        \param affinity - Thread CPU affinity bitset
+    */
+    static void SetAffinity(std::thread& thread, const std::bitset<64>& affinity);
 
     //! Get the current thread priority
     /*!

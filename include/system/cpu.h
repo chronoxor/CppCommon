@@ -33,6 +33,8 @@ public:
 
     //! CPU architecture string
     static std::string Architecture();
+    //! CPU affinity count
+    static int Affinity();
     //! CPU logical cores count
     static int LogicalCores();
     //! CPU physical cores count
