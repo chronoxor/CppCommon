@@ -250,7 +250,8 @@ void Thread::SetAffinity(const std::bitset<64>& affinity)
     cpu_set_t cpuset;
     CPU_ZERO(&cpuset);
     for (int i = 0; i < std::min(CPU_SETSIZE, 64); ++i)
-        CPU_SET(i, &cpuset);
+        if (affinity[i])
+            CPU_SET(i, &cpuset);
     int result = pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpuset);
     if (result != 0)
         throwex SystemException("Failed to set the current thread CPU affinity!");
@@ -267,7 +268,8 @@ void Thread::SetAffinity(std::thread& thread, const std::bitset<64>& affinity)
     cpu_set_t cpuset;
     CPU_ZERO(&cpuset);
     for (int i = 0; i < std::min(CPU_SETSIZE, 64); ++i)
-        CPU_SET(i, &cpuset);
+        if (affinity[i])
+            CPU_SET(i, &cpuset);
     int result = pthread_setaffinity_np(thread.native_handle(), sizeof(cpu_set_t), &cpuset);
     if (result != 0)
         throwex SystemException("Failed to set the current thread CPU affinity!");
