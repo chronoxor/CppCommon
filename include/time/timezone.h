@@ -42,6 +42,7 @@ public:
     Timezone& operator=(const Timezone&) noexcept = default;
     Timezone& operator=(Timezone&&) noexcept = default;
 
+    // Timezone comparison
     friend bool operator==(const Timezone& timezone1, const Timezone& timezone2) noexcept
     { return timezone1.total() == timezone2.total(); }
     friend bool operator!=(const Timezone& timezone1, const Timezone& timezone2) noexcept

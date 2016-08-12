@@ -13,27 +13,28 @@
 
 namespace CppCommon {
 
-Path::Path(const std::string& path) : _path(path)
-{
-}
-
 Path::Path(const std::wstring& path)
 {
-    std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
+    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
     _path = converter.to_bytes(path);
-}
-
-Path& Path::operator=(const std::string& path)
-{
-    _path = path;
-    return *this;
 }
 
 Path& Path::operator=(const std::wstring& path)
 {
-    std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
+    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
     _path = converter.to_bytes(path);
     return *this;
+}
+
+std::string Path::string() const
+{
+    return std::string(_path);
+}
+
+std::wstring Path::wstring() const
+{
+    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+    return converter.from_bytes(_path);
 }
 
 } // namespace CppCommon

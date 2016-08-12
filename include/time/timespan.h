@@ -38,6 +38,7 @@ public:
     Timespan& operator=(const Timespan&) noexcept = default;
     Timespan& operator=(Timespan&&) noexcept = default;
 
+    // Timespan offset operations
     Timespan operator+() const
     { return Timespan(+_duration); }
     Timespan operator-() const
@@ -67,6 +68,7 @@ public:
     friend Timespan operator-(const Timespan& timespan1, const Timespan& timespan2) noexcept
     { return Timespan(timespan1.total() - timespan2.total()); }
 
+    // Timespan comparison
     friend bool operator==(const Timespan& timespan, int64_t offset) noexcept
     { return timespan.total() == offset; }
     friend bool operator==(int64_t offset, const Timespan& timespan) noexcept

@@ -48,6 +48,7 @@ public:
     Time& operator=(const Time&) noexcept = default;
     Time& operator=(Time&&) noexcept = default;
 
+    // Time offset operations
     Time& operator+=(const Timespan& offset)
     { return operator=(Time(utcstamp() + offset)); }
 
@@ -67,6 +68,7 @@ public:
     friend Timespan operator-(const Time& time1, const Time& time2)
     { return time1.utcstamp() - time2.utcstamp(); }
 
+    // Time comparison
     friend bool operator==(const Time& time, const Timestamp& timestamp)
     { return time == Time(timestamp); }
     friend bool operator==(const Timestamp& timestamp, const Time& time)

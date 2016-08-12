@@ -13,5 +13,6 @@ TEST_CASE("Environment management", "[CppCommon][System]")
     REQUIRE((Environment::Is32BitOS() || Environment::Is64BitOS()));
     REQUIRE((Environment::Is32BitProcess() || Environment::Is64BitProcess()));
     REQUIRE((Environment::IsDebug() || Environment::IsRelease()));
+    REQUIRE((Environment::IsBigEndian() || Environment::IsLittleEndian()));
     REQUIRE(Environment::OSVersion().length() > 0);
 }

@@ -40,6 +40,7 @@ public:
     Timestamp& operator=(const Timestamp&) noexcept = default;
     Timestamp& operator=(Timestamp&&) noexcept = default;
 
+    // Timestamp offset operations
     Timestamp& operator+=(int64_t offset) noexcept
     { _timestamp += offset; return *this; }
     Timestamp& operator+=(const Timespan& offset) noexcept
@@ -71,6 +72,7 @@ public:
     friend Timespan operator-(const Timestamp& timestamp1, const Timestamp& timestamp2) noexcept
     { return Timespan(timestamp1.total() - timestamp2.total()); }
 
+    // Timestamp comparison
     friend bool operator==(const Timestamp& timestamp1, uint64_t timestamp2) noexcept
     { return timestamp1.total() == timestamp2; }
     friend bool operator==(uint64_t timestamp1, const Timestamp& timestamp2) noexcept

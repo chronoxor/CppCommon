@@ -18,6 +18,8 @@ int main(int argc, char** argv)
     std::cout << "64 bit process: " << (CppCommon::Environment::Is64BitProcess() ? "true" : "false") << std::endl;
     std::cout << "Debug build: " << (CppCommon::Environment::IsDebug() ? "true" : "false") << std::endl;
     std::cout << "Release build: " << (CppCommon::Environment::IsRelease() ? "true" : "false") << std::endl;
+    std::cout << "Big endian system: " << (CppCommon::Environment::IsBigEndian() ? "true" : "false") << std::endl;
+    std::cout << "Little endian system: " << (CppCommon::Environment::IsLittleEndian() ? "true" : "false") << std::endl;
     std::cout << "OS version: " << CppCommon::Environment::OSVersion() << std::endl;
     return 0;
 }
