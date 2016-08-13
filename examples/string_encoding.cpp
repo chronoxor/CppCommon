@@ -15,6 +15,9 @@
 #include <io.h>
 #include <fcntl.h>
 int mode = _setmode(_fileno(stdout), _O_U16TEXT);
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+#include <locale.h>
+char* locale = setlocale (LC_ALL, "");
 #endif
 
 int main(int argc, char** argv)
