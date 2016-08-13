@@ -9,6 +9,8 @@
 #ifndef CPPCOMMON_FILESYSTEM_PATH_H
 #define CPPCOMMON_FILESYSTEM_PATH_H
 
+#include "string/encoding.h"
+
 #include <string>
 
 namespace CppCommon {
@@ -33,18 +35,20 @@ public:
     /*!
         \param path - Path value in UTF-8 encoding
     */
-    explicit Path(const std::string& path);
+    explicit Path(const std::string& path) : _path(path) {}
     //! Initialize path with a given string value in UTF-16 encoding (Windows)
     /*!
         \param path - Path value in UTF-16 encoding
     */
-    explicit Path(const std::wstring& path);
+    explicit Path(const std::wstring& path) : _path(Encoding::ToUTF8(path)) {}
     Path(const Path&) = default;
     Path(Path&&) noexcept = default;
     ~Path() = default;
 
-    Path& operator=(const std::string& path);
-    Path& operator=(const std::wstring& path);
+    Path& operator=(const std::string& path)
+    { _path = path; return *this; }
+    Path& operator=(const std::wstring& path)
+    { _path = Encoding::ToUTF8(path); return *this; }
     Path& operator=(const Path&) = default;
     Path& operator=(Path&&) noexcept = default;
 
@@ -104,9 +108,9 @@ public:
     const std::string& native() const noexcept { return _path; }
 
     //! Get the path value in UTF-8 format
-    std::string string() const;
+    std::string string() const { return std::string(_path); }
     //! Get the path value in UTF-16 format
-    std::wstring wstring() const;
+    std::wstring wstring() const { return Encoding::FromUTF8(_path); }
 
     //! Is the path empty?
     bool empty() const noexcept { return _path.empty(); }

@@ -8,16 +8,6 @@
 
 namespace CppCommon {
 
-Path::Path(const std::string& path) : _path(path)
-{
-}
-
-Path& Path::operator=(const std::string& path)
-{
-    _path = path;
-    return *this;
-}
-
 void swap(Path& path1, Path& path2)
 {
     using std::swap;
