@@ -8,6 +8,18 @@
 
 namespace CppCommon {
 
+inline Path& Path::Assign(const Path& path)
+{
+    _path = path._path;
+    return *this;
+}
+
+inline Path& Path::Concat(const Path& path)
+{
+    _path.append(path._path);
+    return *this;
+}
+
 inline char Path::separator()
 {
 #if defined(_WIN32) || defined(_WIN64)

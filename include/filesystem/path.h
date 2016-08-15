@@ -46,46 +46,47 @@ public:
     ~Path() = default;
 
     Path& operator=(const std::string& path)
-    { _path = path; return *this; }
+    { return Assign(path); }
     Path& operator=(const std::wstring& path)
-    { _path = Encoding::ToUTF8(path); return *this; }
+    { return Assign(path); }
     Path& operator=(const Path&) = default;
     Path& operator=(Path&&) noexcept = default;
 
     // Append the given path with a path separator
     Path& operator/=(const std::string& path)
-    { return *this /= Path(path); }
+    { return Append(path); }
     Path& operator/=(const std::wstring& path)
-    { return *this /= Path(path); }
-    Path& operator/=(const Path& path);
+    { return Append(path); }
+    Path& operator/=(const Path& path)
+    { return Append(path); }
     friend Path operator/(const Path& path1, const std::string& path2)
-    { return Path(path1) /= path2; }
+    { return Path(path1).Append(path2); }
     friend Path operator/(const std::string& path1, const Path& path2)
-    { return Path(path1) /= path2; }
+    { return Path(path1).Append(path2); }
     friend Path operator/(const Path& path1, const std::wstring& path2)
-    { return Path(path1) /= path2; }
+    { return Path(path1).Append(path2); }
     friend Path operator/(const std::wstring& path1, const Path& path2)
-    { return Path(path1) /= path2; }
+    { return Path(path1).Append(path2); }
     friend Path operator/(const Path& path1, const Path& path2)
-    { return Path(path1) /= path2; }
+    { return Path(path1).Append(path2); }
 
     // Concatenate the given path without a path separator
     Path& operator+=(const std::string& path)
-    { return *this += Path(path); }
+    { return Concat(path); }
     Path& operator+=(const std::wstring& path)
-    { return *this += Path(path); }
+    { return Concat(path); }
     Path& operator+=(const Path& path)
-    { _path += path._path; return *this; }
+    { return Concat(path); }
     friend Path operator+(const Path& path1, const std::string& path2)
-    { return Path(path1) += path2; }
+    { return Path(path1).Concat(path2); }
     friend Path operator+(const std::string& path1, const Path& path2)
-    { return Path(path1) += path2; }
+    { return Path(path1).Concat(path2); }
     friend Path operator+(const Path& path1, const std::wstring& path2)
-    { return Path(path1) += path2; }
+    { return Path(path1).Concat(path2); }
     friend Path operator+(const std::wstring& path1, const Path& path2)
-    { return Path(path1) += path2; }
+    { return Path(path1).Concat(path2); }
     friend Path operator+(const Path& path1, const Path& path2)
-    { return Path(path1) += path2; }
+    { return Path(path1).Concat(path2); }
 
     // Path comparison
     friend bool operator==(const Path& path1, const std::string& path2)
@@ -173,24 +174,50 @@ public:
     //! Clear path content
     void clear() noexcept { return _path.clear(); }
 
+    //! Assign the given path to the current one
+    Path& Assign(const std::string& path)
+    { return Assign(Path(path)); }
+    Path& Assign(const std::wstring& path)
+    { return Assign(Path(path)); }
+    Path& Assign(const Path& path);
+
+    //! Append the given path to the current one
+    Path& Append(const std::string& path)
+    { return Append(Path(path)); }
+    Path& Append(const std::wstring& path)
+    { return Append(Path(path)); }
+    Path& Append(const Path& path);
+
+    //! Concatenate the given path to the current one
+    Path& Concat(const std::string& path)
+    { return Concat(Path(path)); }
+    Path& Concat(const std::wstring& path)
+    { return Concat(Path(path)); }
+    Path& Concat(const Path& path);
+
     //! Convert all path separators to system ones ('\' for Windows or '/' for Unix)
     Path& MakePreferred();
+
     //! Replace the current path filename with a given one
     Path& ReplaceFilename(const std::string& filename)
     { return ReplaceFilename(Path(filename)); }
     Path& ReplaceFilename(const std::wstring& filename)
     { return ReplaceFilename(Path(filename)); }
     Path& ReplaceFilename(const Path& filename);
+
     //! Replace the current path extension with a given one
     Path& ReplaceExtension(const std::string& extension)
     { return ReplaceExtension(Path(extension)); }
     Path& ReplaceExtension(const std::wstring& extension)
     { return ReplaceExtension(Path(extension)); }
     Path& ReplaceExtension(const Path& extension);
+
     //! Remove the current path filename
     Path& RemoveFilename() { return ReplaceFilename(""); }
     //! Remove the current path extension
     Path& RemoveExtension() { return ReplaceExtension(""); }
+    //! Remove all trailing separators form the current path
+    Path& RemoveTrailingSeparators();
 
     //! Get the system path separator character ('\' for Windows or '/' for Unix)
     static char separator();

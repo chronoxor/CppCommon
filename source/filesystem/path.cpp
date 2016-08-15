@@ -12,7 +12,7 @@
 
 namespace CppCommon {
 
-Path& Path::operator/=(const Path& path)
+Path& Path::Append(const Path& path)
 {
     if (_path.empty())
         _path = path._path;
@@ -48,13 +48,18 @@ Path& Path::ReplaceFilename(const Path& filename)
     else
     {
         size_t index = _path.size();
-        while (index-- > 0)
+        while (index > 0)
         {
+            --index;
             if ((_path[index] == '\\') || (_path[index] == '/'))
+            {
+                if (!filename.empty())
+                    ++index;
                 break;
+            }
         }
 
-        _path.resize(filename._path.empty() ? index : index + 1);
+        _path.resize(index);
         _path.append(filename._path);
     }
     return *this;
@@ -74,15 +79,20 @@ Path& Path::ReplaceExtension(const Path& extension)
     {
         size_t dot = _path.size();
         size_t index = _path.size();
-        while (index-- > 0)
+        while (index > 0)
         {
+            --index;
             if (_path[index] == '.')
             {
                 dot = index;
                 break;
             }
             if ((_path[index] == '\\') || (_path[index] == '/'))
+            {
+                if (!extension.empty())
+                    ++index;
                 break;
+            }
         }
 
         _path.resize(dot);
@@ -90,6 +100,23 @@ Path& Path::ReplaceExtension(const Path& extension)
             _path.append(".");
         _path.append(extension._path);
     }
+    return *this;
+}
+
+Path& Path::RemoveTrailingSeparators()
+{
+    size_t index = _path.size();
+    while (index > 0)
+    {
+        --index;
+        if ((_path[index] != '\\') && (_path[index] != '/'))
+        {
+            ++index;
+            break;
+        }
+    }
+
+    _path.resize(index);
     return *this;
 }
 
