@@ -8,25 +8,6 @@
 
 namespace CppCommon {
 
-inline Path& Path::operator/=(const std::string& path)
-{
-    if (_path.empty())
-        _path = path;
-    else
-    {
-        char last = _path[_path.size() - 1];
-        if ((last == '\\') || (last == '/'))
-            _path += path;
-        else
-        {
-            _path += separator();
-            _path += path;
-        }
-    }
-
-    return *this;
-}
-
 inline char Path::separator()
 {
 #if defined(_WIN32) || defined(_WIN64)
