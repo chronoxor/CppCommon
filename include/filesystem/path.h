@@ -54,55 +54,110 @@ public:
 
     // Append the given path with a path separator
     Path& operator/=(const std::string& path);
-    Path& operator/=(const std::wstring& path);
-    Path& operator/=(const Path&);
-    friend Path operator/(const Path& path1, const std::string& path2);
-    friend Path operator/(const std::string& path1, const Path& path2);
-    friend Path operator/(const Path& path1, const std::wstring& path2);
-    friend Path operator/(const std::wstring& path1, const Path& path2);
-    friend Path operator/(const Path& path1, const Path& path2);
+    Path& operator/=(const std::wstring& path)
+    { return *this /= Path(path)._path; }
+    Path& operator/=(const Path& path)
+    { return *this /= path._path; }
+    friend Path operator/(const Path& path1, const std::string& path2)
+    { return Path(path1) /= path2; }
+    friend Path operator/(const std::string& path1, const Path& path2)
+    { return Path(path1) /= path2; }
+    friend Path operator/(const Path& path1, const std::wstring& path2)
+    { return Path(path1) /= path2; }
+    friend Path operator/(const std::wstring& path1, const Path& path2)
+    { return Path(path1) /= path2; }
+    friend Path operator/(const Path& path1, const Path& path2)
+    { return Path(path1) /= path2; }
 
     // Concatenate the given path without a path separator
-    Path& operator+=(const std::string& path);
-    Path& operator+=(const std::wstring& path);
-    Path& operator+=(const Path&);
-    friend Path operator+(const Path& path1, const std::string& path2);
-    friend Path operator+(const std::string& path1, const Path& path2);
-    friend Path operator+(const Path& path1, const std::wstring& path2);
-    friend Path operator+(const std::wstring& path1, const Path& path2);
-    friend Path operator+(const Path& path1, const Path& path2);
+    Path& operator+=(const std::string& path)
+    { _path += path; return *this; }
+    Path& operator+=(const std::wstring& path)
+    { _path += Encoding::ToUTF8(path); return *this; }
+    Path& operator+=(const Path& path)
+    { _path += path._path; return *this; }
+    friend Path operator+(const Path& path1, const std::string& path2)
+    { return Path(path1) += path2; }
+    friend Path operator+(const std::string& path1, const Path& path2)
+    { return Path(path1) += path2; }
+    friend Path operator+(const Path& path1, const std::wstring& path2)
+    { return Path(path1) += path2; }
+    friend Path operator+(const std::wstring& path1, const Path& path2)
+    { return Path(path1) += path2; }
+    friend Path operator+(const Path& path1, const Path& path2)
+    { return Path(path1) += path2; }
 
     // Path comparison
-    friend bool operator==(const Path& path1, const std::string& path2);
-    friend bool operator==(const std::string& path1, const Path& path2);
-    friend bool operator==(const Path& path1, const std::wstring& path2);
-    friend bool operator==(const std::wstring& path1, const Path& path2);
-    friend bool operator==(const Path& path1, const Path& path2);
-    friend bool operator!=(const Path& path1, const std::string& path2);
-    friend bool operator!=(const std::string& path1, const Path& path2);
-    friend bool operator!=(const Path& path1, const std::wstring& path2);
-    friend bool operator!=(const std::wstring& path1, const Path& path2);
-    friend bool operator!=(const Path& path1, const Path& path2);
-    friend bool operator<(const Path& path1, const std::string& path2);
-    friend bool operator<(const std::string& path1, const Path& path2);
-    friend bool operator<(const Path& path1, const std::wstring& path2);
-    friend bool operator<(const std::wstring& path1, const Path& path2);
-    friend bool operator<(const Path& path1, const Path& path2);
-    friend bool operator>(const Path& path1, const std::string& path2);
-    friend bool operator>(const std::string& path1, const Path& path2);
-    friend bool operator>(const Path& path1, const std::wstring& path2);
-    friend bool operator>(const std::wstring& path1, const Path& path2);
-    friend bool operator>(const Path& path1, const Path& path2);
-    friend bool operator<=(const Path& path1, const std::string& path2);
-    friend bool operator<=(const std::string& path1, const Path& path2);
-    friend bool operator<=(const Path& path1, const std::wstring& path2);
-    friend bool operator<=(const std::wstring& path1, const Path& path2);
-    friend bool operator<=(const Path& path1, const Path& path2);
-    friend bool operator>=(const Path& path1, const std::string& path2);
-    friend bool operator>=(const std::string& path1, const Path& path2);
-    friend bool operator>=(const Path& path1, const std::wstring& path2);
-    friend bool operator>=(const std::wstring& path1, const Path& path2);
-    friend bool operator>=(const Path& path1, const Path& path2);
+    friend bool operator==(const Path& path1, const std::string& path2)
+    { return path1._path == path2; }
+    friend bool operator==(const std::string& path1, const Path& path2)
+    { return path1 == path2._path; }
+    friend bool operator==(const Path& path1, const std::wstring& path2)
+    { return path1._path == Encoding::ToUTF8(path2); }
+    friend bool operator==(const std::wstring& path1, const Path& path2)
+    { return Encoding::ToUTF8(path1) == path2._path; }
+    friend bool operator==(const Path& path1, const Path& path2)
+    { return path1._path == path2._path; }
+    friend bool operator!=(const Path& path1, const std::string& path2)
+    { return path1._path != path2; }
+    friend bool operator!=(const std::string& path1, const Path& path2)
+    { return path1 != path2._path; }
+    friend bool operator!=(const Path& path1, const std::wstring& path2)
+    { return path1._path != Encoding::ToUTF8(path2); }
+    friend bool operator!=(const std::wstring& path1, const Path& path2)
+    { return Encoding::ToUTF8(path1) != path2._path; }
+    friend bool operator!=(const Path& path1, const Path& path2)
+    { return path1._path != path2._path; }
+    friend bool operator<(const Path& path1, const std::string& path2)
+    { return path1._path < path2; }
+    friend bool operator<(const std::string& path1, const Path& path2)
+    { return path1 < path2._path; }
+    friend bool operator<(const Path& path1, const std::wstring& path2)
+    { return path1._path < Encoding::ToUTF8(path2); }
+    friend bool operator<(const std::wstring& path1, const Path& path2)
+    { return Encoding::ToUTF8(path1) < path2._path; }
+    friend bool operator<(const Path& path1, const Path& path2)
+    { return path1._path < path2._path; }
+    friend bool operator>(const Path& path1, const std::string& path2)
+    { return path1._path > path2; }
+    friend bool operator>(const std::string& path1, const Path& path2)
+    { return path1 > path2._path; }
+    friend bool operator>(const Path& path1, const std::wstring& path2)
+    { return path1._path > Encoding::ToUTF8(path2); }
+    friend bool operator>(const std::wstring& path1, const Path& path2)
+    { return Encoding::ToUTF8(path1) > path2._path; }
+    friend bool operator>(const Path& path1, const Path& path2)
+    { return path1._path > path2._path; }
+    friend bool operator<=(const Path& path1, const std::string& path2)
+    { return path1._path <= path2; }
+    friend bool operator<=(const std::string& path1, const Path& path2)
+    { return path1 <= path2._path; }
+    friend bool operator<=(const Path& path1, const std::wstring& path2)
+    { return path1._path <= Encoding::ToUTF8(path2); }
+    friend bool operator<=(const std::wstring& path1, const Path& path2)
+    { return Encoding::ToUTF8(path1) <= path2._path; }
+    friend bool operator<=(const Path& path1, const Path& path2)
+    { return path1._path <= path2._path; }
+    friend bool operator>=(const Path& path1, const std::string& path2)
+    { return path1._path >= path2; }
+    friend bool operator>=(const std::string& path1, const Path& path2)
+    { return path1 >= path2._path; }
+    friend bool operator>=(const Path& path1, const std::wstring& path2)
+    { return path1._path >= Encoding::ToUTF8(path2); }
+    friend bool operator>=(const std::wstring& path1, const Path& path2)
+    { return Encoding::ToUTF8(path1) >= path2._path; }
+    friend bool operator>=(const Path& path1, const Path& path2)
+    { return path1._path >= path2._path; }
+
+    //! Input instance from the given input stream
+    friend std::istream& operator>>(std::istream& is, Path& instance)
+    { is >> instance._path; return is; }
+    //! Output instance into the given output stream
+    friend std::ostream& operator<<(std::ostream& os, const Path& instance)
+    { os << instance._path; return os; }
+
+    //! Swap two instances
+    friend void swap(Path& path1, Path& path2);
 
     //! Get the native path value
     const std::string& native() const noexcept { return _path; }
@@ -118,12 +173,8 @@ public:
     //! Clear path content
     void clear() noexcept { return _path.clear(); }
 
-    //! Swap two path wrappers
-    /*!
-         \param path1 - Path wrapper
-         \param path2 - Path wrapper
-    */
-    friend void swap(Path& path1, Path& path2);
+    //! Get the path separator character ('\' for Windows or '/' for Unix)
+    static char separator();
 
 protected:
     std::string _path;
