@@ -23,6 +23,8 @@ inline Path& Path::operator/=(const std::string& path)
             _path += path;
         }
     }
+
+    return *this;
 }
 
 inline char Path::separator()
