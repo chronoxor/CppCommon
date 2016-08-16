@@ -13,25 +13,143 @@ TEST_CASE("Path", "[CppCommon][FileSystem]")
     // Test make preferred method
     REQUIRE(Path("test/test\\test").MakePreferred() == Path(std::string("test") + Path::separator() + std::string("test") + Path::separator() + std::string("test")));
 
-    // Test path concatenate operator
-    REQUIRE((Path() / "test").MakePreferred() == Path("test").MakePreferred());
-    REQUIRE((Path("/") / "test").MakePreferred() == Path("/test").MakePreferred());
-    REQUIRE((Path("test") / "test").MakePreferred() == Path("test/test").MakePreferred());
-    REQUIRE((Path("test/") / "test").MakePreferred() == Path("test/test").MakePreferred());
+    // Test parent path decomposition method
+    REQUIRE(Path().parent().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path(".").parent().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("..").parent().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("/").parent().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("/.").parent().MakePreferred() == Path("/").MakePreferred());
+    REQUIRE(Path("/..").parent().MakePreferred() == Path("/").MakePreferred());
+    REQUIRE(Path("./").parent().MakePreferred() == Path(".").MakePreferred());
+    REQUIRE(Path("../").parent().MakePreferred() == Path("..").MakePreferred());
+    REQUIRE(Path("C:").parent().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("C:/").parent().MakePreferred() == Path("C:").MakePreferred());
+    REQUIRE(Path("C:/foobar").parent().MakePreferred() == Path("C:").MakePreferred());
+    REQUIRE(Path("C:/foo/bar").parent().MakePreferred() == Path("C:/foo").MakePreferred());
+    REQUIRE(Path("\\\\?\\").parent().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("\\\\?\\C:").parent().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("\\\\?\\C:/").parent().MakePreferred() == Path("\\\\?\\C:").MakePreferred());
+    REQUIRE(Path("\\\\?\\C:/foobar").parent().MakePreferred() == Path("\\\\?\\C:").MakePreferred());
+    REQUIRE(Path("\\\\?\\C:/foo/bar").parent().MakePreferred() == Path("\\\\?\\C:/foo").MakePreferred());
+    REQUIRE(Path("//net").parent().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("//net/").parent().MakePreferred() == Path("//net").MakePreferred());
+    REQUIRE(Path("//net/foobar").parent().MakePreferred() == Path("//net").MakePreferred());
+    REQUIRE(Path("//net/foo/bar").parent().MakePreferred() == Path("//net/foo").MakePreferred());
+    REQUIRE(Path("foobar").parent().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("foobar.").parent().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("foobar..").parent().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("foo.bar").parent().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("/foobar").parent().MakePreferred() == Path("/").MakePreferred());
+    REQUIRE(Path("/foobar/").parent().MakePreferred() == Path("/foobar").MakePreferred());
+    REQUIRE(Path("/foobar/.").parent().MakePreferred() == Path("/foobar").MakePreferred());
+    REQUIRE(Path("/foobar/..").parent().MakePreferred() == Path("/foobar").MakePreferred());
+    REQUIRE(Path("/foo/bar").parent().MakePreferred() == Path("/foo").MakePreferred());
+    REQUIRE(Path("foo/bar").parent().MakePreferred() == Path("foo").MakePreferred());
+    REQUIRE(Path("foo/bar/goo").parent().MakePreferred() == Path("foo/bar").MakePreferred());
+    REQUIRE(Path("///foo///").parent().MakePreferred() == Path("///foo").MakePreferred());
+    REQUIRE(Path("///foo///bar").parent().MakePreferred() == Path("///foo").MakePreferred());
 
-    // Test path append operator
-    REQUIRE((Path() + "test").MakePreferred() == Path("test").MakePreferred());
-    REQUIRE((Path("/") + "test").MakePreferred() == Path("/test").MakePreferred());
-    REQUIRE((Path("/") + "/test").MakePreferred() == Path("//test").MakePreferred());
-    REQUIRE((Path("test") + "test").MakePreferred() == Path("testtest").MakePreferred());
-    REQUIRE((Path("test/") + "test").MakePreferred() == Path("test/test").MakePreferred());
-    REQUIRE((Path("test/") + "/test").MakePreferred() == Path("test//test").MakePreferred());
+    // Test filename decomposition method
+    REQUIRE(Path().filename().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path(".").filename().MakePreferred() == Path(".").MakePreferred());
+    REQUIRE(Path("..").filename().MakePreferred() == Path("..").MakePreferred());
+    REQUIRE(Path("/").filename().MakePreferred() == Path(".").MakePreferred());
+    REQUIRE(Path("C:").filename().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("C:/").filename().MakePreferred() == Path(".").MakePreferred());
+    REQUIRE(Path("C:/foobar").filename().MakePreferred() == Path("foobar").MakePreferred());
+    REQUIRE(Path("C:/foo.bar").filename().MakePreferred() == Path("foo.bar").MakePreferred());
+    REQUIRE(Path("\\\\?\\").filename().MakePreferred() == Path(".").MakePreferred());
+    REQUIRE(Path("\\\\?\\C:").filename().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("\\\\?\\C:/").filename().MakePreferred() == Path(".").MakePreferred());
+    REQUIRE(Path("\\\\?\\C:/foobar").filename().MakePreferred() == Path("foobar").MakePreferred());
+    REQUIRE(Path("\\\\?\\C:/foo.bar").filename().MakePreferred() == Path("foo.bar").MakePreferred());
+    REQUIRE(Path("foobar").filename().MakePreferred() == Path("foobar").MakePreferred());
+    REQUIRE(Path("foobar.").filename().MakePreferred() == Path("foobar.").MakePreferred());
+    REQUIRE(Path("foobar..").filename().MakePreferred() == Path("foobar..").MakePreferred());
+    REQUIRE(Path("foo.bar").filename().MakePreferred() == Path("foo.bar").MakePreferred());
+    REQUIRE(Path("/foobar").filename().MakePreferred() == Path("foobar").MakePreferred());
+    REQUIRE(Path("/foobar/").filename().MakePreferred() == Path(".").MakePreferred());
+    REQUIRE(Path("/foobar/.").filename().MakePreferred() == Path(".").MakePreferred());
+    REQUIRE(Path("/foobar/..").filename().MakePreferred() == Path("..").MakePreferred());
+    REQUIRE(Path("/foo.bar").filename().MakePreferred() == Path("foo.bar").MakePreferred());
+    REQUIRE(Path("foo/bar").filename().MakePreferred() == Path("bar").MakePreferred());
+    REQUIRE(Path("foo/bar.goo").filename().MakePreferred() == Path("bar.goo").MakePreferred());
+
+    // Test stem decomposition method
+    REQUIRE(Path().stem().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path(".").stem().MakePreferred() == Path(".").MakePreferred());
+    REQUIRE(Path("..").stem().MakePreferred() == Path("..").MakePreferred());
+    REQUIRE(Path("/").stem().MakePreferred() == Path(".").MakePreferred());
+    REQUIRE(Path("C:").stem().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("C:/").stem().MakePreferred() == Path(".").MakePreferred());
+    REQUIRE(Path("C:/foobar").stem().MakePreferred() == Path("foobar").MakePreferred());
+    REQUIRE(Path("C:/foo.bar").stem().MakePreferred() == Path("foo").MakePreferred());
+    REQUIRE(Path("\\\\?\\").stem().MakePreferred() == Path(".").MakePreferred());
+    REQUIRE(Path("\\\\?\\C:").stem().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("\\\\?\\C:/").stem().MakePreferred() == Path(".").MakePreferred());
+    REQUIRE(Path("\\\\?\\C:/foobar").stem().MakePreferred() == Path("foobar").MakePreferred());
+    REQUIRE(Path("\\\\?\\C:/foo.bar").stem().MakePreferred() == Path("foo").MakePreferred());
+    REQUIRE(Path("foobar").stem().MakePreferred() == Path("foobar").MakePreferred());
+    REQUIRE(Path("foobar.").stem().MakePreferred() == Path("foobar.").MakePreferred());
+    REQUIRE(Path("foobar..").stem().MakePreferred() == Path("foobar..").MakePreferred());
+    REQUIRE(Path("foo.bar").stem().MakePreferred() == Path("foo").MakePreferred());
+    REQUIRE(Path("/foobar").stem().MakePreferred() == Path("foobar").MakePreferred());
+    REQUIRE(Path("/foobar/").stem().MakePreferred() == Path(".").MakePreferred());
+    REQUIRE(Path("/foobar/.").stem().MakePreferred() == Path(".").MakePreferred());
+    REQUIRE(Path("/foobar/..").stem().MakePreferred() == Path("..").MakePreferred());
+    REQUIRE(Path("/foo.bar").stem().MakePreferred() == Path("foo").MakePreferred());
+    REQUIRE(Path("foo/bar").stem().MakePreferred() == Path("bar").MakePreferred());
+    REQUIRE(Path("foo/bar.goo").stem().MakePreferred() == Path("bar").MakePreferred());
+
+    // Test extension decomposition method
+    REQUIRE(Path().extension().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path(".").extension().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("..").extension().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("/").extension().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("C:").extension().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("C:/").extension().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("C:/foobar").extension().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("C:/foo.bar").extension().MakePreferred() == Path(".bar").MakePreferred());
+    REQUIRE(Path("\\\\?\\").extension().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("\\\\?\\C:").extension().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("\\\\?\\C:/").extension().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("\\\\?\\C:/foobar").extension().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("\\\\?\\C:/foo.bar").extension().MakePreferred() == Path(".bar").MakePreferred());
+    REQUIRE(Path("foobar").extension().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("foobar.").extension().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("foobar..").extension().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("foo.bar").extension().MakePreferred() == Path(".bar").MakePreferred());
+    REQUIRE(Path("/foobar").extension().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("/foobar/").extension().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("/foobar/.").extension().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("/foobar/..").extension().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("/foo.bar").extension().MakePreferred() == Path(".bar").MakePreferred());
+    REQUIRE(Path("foo/bar").extension().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("foo/bar.goo").extension().MakePreferred() == Path(".goo").MakePreferred());
+
+    // Test path append method
+    REQUIRE(Path().Append("test").MakePreferred() == Path("test").MakePreferred());
+    REQUIRE(Path("/").Append("test").MakePreferred() == Path("/test").MakePreferred());
+    REQUIRE(Path("C:").Append("test").MakePreferred() == Path("C:/test").MakePreferred());
+    REQUIRE(Path("test").Append("test").MakePreferred() == Path("test/test").MakePreferred());
+    REQUIRE(Path("test/").Append("test").MakePreferred() == Path("test/test").MakePreferred());
+
+    // Test path concatenate method
+    REQUIRE(Path().Concat("test").MakePreferred() == Path("test").MakePreferred());
+    REQUIRE(Path("/").Concat("test").MakePreferred() == Path("/test").MakePreferred());
+    REQUIRE(Path("C:").Concat("test").MakePreferred() == Path("C:test").MakePreferred());
+    REQUIRE(Path("/").Concat("/test").MakePreferred() == Path("//test").MakePreferred());
+    REQUIRE(Path("C:/").Concat("/test").MakePreferred() == Path("C://test").MakePreferred());
+    REQUIRE(Path("test").Concat("test").MakePreferred() == Path("testtest").MakePreferred());
+    REQUIRE(Path("test/").Concat("test").MakePreferred() == Path("test/test").MakePreferred());
+    REQUIRE(Path("test/").Concat("/test").MakePreferred() == Path("test//test").MakePreferred());
 
     // Test replace filename method
     REQUIRE(Path().ReplaceFilename("test").MakePreferred() == Path("test").MakePreferred());
     REQUIRE(Path("foobar").ReplaceFilename("test").MakePreferred() == Path("test").MakePreferred());
     REQUIRE(Path("foo.bar").ReplaceFilename("test").MakePreferred() == Path("test").MakePreferred());
     REQUIRE(Path("/foobar").ReplaceFilename("test").MakePreferred() == Path("/test").MakePreferred());
+    REQUIRE(Path("C:foobar").ReplaceFilename("test").MakePreferred() == Path("C:test").MakePreferred());
     REQUIRE(Path("/foobar/").ReplaceFilename("test").MakePreferred() == Path("/foobar/test").MakePreferred());
     REQUIRE(Path("/foo.bar").ReplaceFilename("test").MakePreferred() == Path("/test").MakePreferred());
     REQUIRE(Path("foo/bar").ReplaceFilename("test").MakePreferred() == Path("foo/test").MakePreferred());
@@ -44,6 +162,9 @@ TEST_CASE("Path", "[CppCommon][FileSystem]")
     REQUIRE(Path(".").ReplaceExtension(".").MakePreferred() == Path(".").MakePreferred());
     REQUIRE(Path(".").ReplaceExtension("test").MakePreferred() == Path(".test").MakePreferred());
     REQUIRE(Path(".").ReplaceExtension(".test").MakePreferred() == Path(".test").MakePreferred());
+    REQUIRE(Path("..").ReplaceExtension(".").MakePreferred() == Path(".").MakePreferred());
+    REQUIRE(Path("..").ReplaceExtension("test").MakePreferred() == Path(".test").MakePreferred());
+    REQUIRE(Path("..").ReplaceExtension(".test").MakePreferred() == Path(".test").MakePreferred());
     REQUIRE(Path("foobar").ReplaceExtension(".").MakePreferred() == Path("foobar.").MakePreferred());
     REQUIRE(Path("foobar").ReplaceExtension("test").MakePreferred() == Path("foobar.test").MakePreferred());
     REQUIRE(Path("foobar").ReplaceExtension(".test").MakePreferred() == Path("foobar.test").MakePreferred());
@@ -59,6 +180,12 @@ TEST_CASE("Path", "[CppCommon][FileSystem]")
     REQUIRE(Path("/foobar/").ReplaceExtension(".").MakePreferred() == Path("/foobar/.").MakePreferred());
     REQUIRE(Path("/foobar/").ReplaceExtension("test").MakePreferred() == Path("/foobar/.test").MakePreferred());
     REQUIRE(Path("/foobar/").ReplaceExtension(".test").MakePreferred() == Path("/foobar/.test").MakePreferred());
+    REQUIRE(Path("/foobar/.").ReplaceExtension(".").MakePreferred() == Path("/foobar/.").MakePreferred());
+    REQUIRE(Path("/foobar/.").ReplaceExtension("test").MakePreferred() == Path("/foobar/.test").MakePreferred());
+    REQUIRE(Path("/foobar/.").ReplaceExtension(".test").MakePreferred() == Path("/foobar/.test").MakePreferred());
+    REQUIRE(Path("/foobar/..").ReplaceExtension(".").MakePreferred() == Path("/foobar/.").MakePreferred());
+    REQUIRE(Path("/foobar/..").ReplaceExtension("test").MakePreferred() == Path("/foobar/.test").MakePreferred());
+    REQUIRE(Path("/foobar/..").ReplaceExtension(".test").MakePreferred() == Path("/foobar/.test").MakePreferred());
     REQUIRE(Path("/foo.bar").ReplaceExtension(".").MakePreferred() == Path("/foo.").MakePreferred());
     REQUIRE(Path("/foo.bar").ReplaceExtension("test").MakePreferred() == Path("/foo.test").MakePreferred());
     REQUIRE(Path("/foo.bar").ReplaceExtension(".test").MakePreferred() == Path("/foo.test").MakePreferred());
@@ -102,6 +229,9 @@ TEST_CASE("Path", "[CppCommon][FileSystem]")
     REQUIRE(Path("/").RemoveTrailingSeparators().MakePreferred() == Path().MakePreferred());
     REQUIRE(Path("//").RemoveTrailingSeparators().MakePreferred() == Path().MakePreferred());
     REQUIRE(Path("///").RemoveTrailingSeparators().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("C:").RemoveTrailingSeparators().MakePreferred() == Path("C:").MakePreferred());
+    REQUIRE(Path("C:/").RemoveTrailingSeparators().MakePreferred() == Path("C:/").MakePreferred());
+    REQUIRE(Path("C://").RemoveTrailingSeparators().MakePreferred() == Path("C:/").MakePreferred());
     REQUIRE(Path("foobar").RemoveTrailingSeparators().MakePreferred() == Path("foobar").MakePreferred());
     REQUIRE(Path("foobar/").RemoveTrailingSeparators().MakePreferred() == Path("foobar").MakePreferred());
     REQUIRE(Path("foobar//").RemoveTrailingSeparators().MakePreferred() == Path("foobar").MakePreferred());

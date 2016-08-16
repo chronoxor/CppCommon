@@ -171,6 +171,30 @@ public:
     //! Is the path empty?
     bool empty() const noexcept { return _path.empty(); }
 
+    //! Has root path?
+    bool HasRoot() const { return !root().empty(); }
+    //! Has relative path?
+    bool HasRelative() const { return !relative().empty(); }
+    //! Has parent path?
+    bool HasParent() const { return !parent().empty(); }
+    //! Has filename?
+    bool HasFilename() const { return !filename().empty(); }
+    //! Has stem?
+    bool HasStem() const { return !stem().empty(); }
+    //! Has extension?
+    bool HasExtension() const { return !extension().empty(); }
+
+    //! Is absolute path?
+    bool IsAbsolute() const { return HasRoot(); }
+    //! Is relative path?
+    bool IsRelative() const { return !HasRoot(); }
+
+    //! Decompose root path from the current path
+    Path root() const;
+    //! Decompose relative path from the current path
+    Path relative() const;
+    //! Decompose parent path from the current path
+    Path parent() const;
     //! Decompose filename from the current path
     Path filename() const;
     //! Decompose stem from the current path
@@ -179,7 +203,7 @@ public:
     Path extension() const;
 
     //! Clear path content
-    void clear() noexcept { return _path.clear(); }
+    void Ñlear() noexcept { return _path.clear(); }
 
     //! Assign the given path to the current one
     Path& Assign(const std::string& path)
