@@ -170,6 +170,13 @@ public:
     //! Is the path empty?
     bool empty() const noexcept { return _path.empty(); }
 
+    //! Decompose filename from the current path
+    Path filename() const;
+    //! Decompose stem from the current path
+    Path stem() const;
+    //! Decompose extension from the current path
+    Path extension() const;
+
     //! Clear path content
     void clear() noexcept { return _path.clear(); }
 
@@ -193,7 +200,7 @@ public:
     Path& RemoveExtension() { return ReplaceExtension(""); }
 
     //! Get the system path separator character ('\' for Windows or '/' for Unix)
-    static char separator();
+    static char separator() noexcept;
 
 protected:
     std::string _path;

@@ -8,7 +8,7 @@
 
 namespace CppCommon {
 
-inline char Path::separator()
+inline char Path::separator() noexcept
 {
 #if defined(_WIN32) || defined(_WIN64)
     return '\\';
