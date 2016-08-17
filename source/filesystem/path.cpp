@@ -17,6 +17,7 @@
 #include <windows.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 #include <limits.h>
+#include <string.h>
 #include <unistd.h>
 #endif
 
@@ -439,7 +440,7 @@ Path Path::current()
         throwex SystemException("Cannot get current path of the current process!");
 
     // Adjust the path length
-    path.resize(std::strlen(path.c_str()));
+    path.resize(std::strlen(path.data()));
 
     return Path(std::string(path.begin(), path.end()));
 #endif
