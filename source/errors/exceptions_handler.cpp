@@ -499,6 +499,10 @@ private:
         if (hFile == INVALID_HANDLE_VALUE)
             throwex SystemException("Cannot create a dump file - " + dump.native());
 
+        // Smart resource deleter pattern
+        auto clear = [](HANDLE hFile) { CloseHandle(hFile); };
+        auto file = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear)>(hFile, clear);
+
         MINIDUMP_EXCEPTION_INFORMATION mei;
         MINIDUMP_CALLBACK_INFORMATION mci;
 
@@ -510,15 +514,8 @@ private:
         mci.CallbackParam = nullptr;
 
         // Write dump file information
-        if (!MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), hFile, MiniDumpNormal, &mei, nullptr, &mci))
-        {
-            CloseHandle(hFile);
+        if (!MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), file.get(), MiniDumpNormal, &mei, nullptr, &mci))
             throwex SystemException("Cannot write a dump file - " + dump.native());
-        }
-
-        // Close dump file
-        if (!CloseHandle(hFile))
-            throwex SystemException("Cannot close a dump file - " + dump.native());
 #endif
     }
 

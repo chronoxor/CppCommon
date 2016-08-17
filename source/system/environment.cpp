@@ -341,6 +341,7 @@ std::map<std::string, std::string> Environment::envars()
 {
     std::map<std::string, std::string> result;
 #if defined(_WIN32) || defined(_WIN64)
+    // Smart resource deleter pattern
     auto clear = [](wchar_t* envars) { FreeEnvironmentStringsW(envars); };
     auto envars = std::unique_ptr<wchar_t, decltype(clear)>(GetEnvironmentStringsW(), clear);
 
