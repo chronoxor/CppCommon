@@ -440,7 +440,7 @@ Path Path::current()
         throwex SystemException("Cannot get current path of the current process!");
 
     // Adjust the path length
-    path.resize(std::strlen(path.data()));
+    path.resize(strlen(path.data()));
 
     return Path(std::string(path.begin(), path.end()));
 #endif
