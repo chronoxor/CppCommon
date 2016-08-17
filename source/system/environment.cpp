@@ -8,12 +8,18 @@
 
 #include "system/environment.h"
 
+#include "errors/exceptions.h"
+#include "string/encoding.h"
+
 #include <sstream>
 
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
+#include <memory>
+#include <vector>
 #elif defined(linux) || defined(__linux) || defined(__linux__)
 #include <sys/stat.h>
+#include <stdlib.h>
 #include <fstream>
 #include <regex>
 #endif
@@ -326,6 +332,82 @@ std::string Environment::OSVersion()
     return "<linux>";
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     return "<unix>";
+#endif
+}
+
+std::map<std::string, std::string> Environment::AllEnvars()
+{
+    std::map<std::string, std::string> result;
+#if defined(_WIN32) || defined(_WIN64)
+    auto clear = [](wchar_t* envars) { FreeEnvironmentStringsW(envars); };
+    auto envars = std::unique_ptr<wchar_t, decltype(clear)>(GetEnvironmentStringsW(), clear);
+
+    for (const wchar_t* envar = envars.get(); *envar != L'\0'; )
+    {
+        const wchar_t* separator = std::wcschr(envar, L'=');
+        std::wstring key(envar, separator - envar);
+
+        const wchar_t* pvalue = separator + 1;
+        std::wstring value(pvalue);
+
+        result[Encoding::ToUTF8(key)] = Encoding::ToUTF8(value);
+
+        envar = pvalue + value.size() + 1;
+    }
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    for (char** envar = environ; *envar; ++envar)
+    {
+        const char* separator = std::strchr(envar, '=');
+        std::string key(envar, separator - envar);
+
+        const wchar_t* pvalue = separator + 1;
+        std::string value(pvalue);
+
+        result[key] = value;
+    }
+#endif
+    return result;
+}
+
+std::string Environment::GetEnvar(const std::string name)
+{
+#if defined(_WIN32) || defined(_WIN64)
+    std::wstring wname = Encoding::FromUTF8(name);
+    std::vector<wchar_t> buffer(MAX_PATH);
+
+    DWORD size = GetEnvironmentVariableW(wname.c_str(), buffer.data(), (DWORD)buffer.size());
+    if (size > buffer.size())
+    {
+        buffer.resize(size);
+        size = GetEnvironmentVariableW(wname.c_str(), buffer.data(), (DWORD)buffer.size());
+    }
+
+    return (size > 0) ? Encoding::ToUTF8(std::wstring(buffer.data(), size)) : std::string();
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    char* envar = getenv(name.c_str());
+    return (envar != nullptr) ? std::string(envar) : std::string();
+#endif
+}
+
+void Environment::SetEnvar(const std::string name, const std::string value)
+{
+#if defined(_WIN32) || defined(_WIN64)
+    if (!SetEnvironmentVariableW(Encoding::FromUTF8(name).c_str(), Encoding::FromUTF8(value).c_str()))
+        throwex SystemException("Cannot set environment variable - " + name);
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    if (setenv(name.c_str(), value.c_str(), 1) != 0)
+        throwex SystemException("Cannot set environment variable - " + name);
+#endif
+}
+
+void Environment::ClearEnvar(const std::string name)
+{
+#if defined(_WIN32) || defined(_WIN64)
+    if (!SetEnvironmentVariableW(Encoding::FromUTF8(name).c_str(), nullptr))
+        throwex SystemException("Cannot clear environment variable - " + name);
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    if (unsetenv(name.c_str()) != 0)
+        throwex SystemException("Cannot clear environment variable - " + name);
 #endif
 }
 

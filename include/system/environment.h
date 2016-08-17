@@ -9,6 +9,7 @@
 #ifndef CPPCOMMON_SYSTEM_ENVIRONMENT_H
 #define CPPCOMMON_SYSTEM_ENVIRONMENT_H
 
+#include <map>
 #include <string>
 
 namespace CppCommon {
@@ -53,6 +54,29 @@ public:
 
     //! Get OS version string
     static std::string OSVersion();
+
+    //! Get all environment variables
+    /*!
+        \return Environment variables collection
+    */
+    static std::map<std::string, std::string> AllEnvars();
+    //! Get environment variable value by the given name
+    /*!
+        \param name - Environment variable name
+        \return Environment variable value
+    */
+    static std::string GetEnvar(const std::string name);
+    //! Set environment variable value by the given name
+    /*!
+        \param name - Environment variable name
+        \param value - Environment variable value
+    */
+    static void SetEnvar(const std::string name, const std::string value);
+    //! Clear environment variable by the given name
+    /*!
+        \param name - Environment variable name
+    */
+    static void ClearEnvar(const std::string name);
 };
 
 /*! \example system_environment.cpp Environment management example */
