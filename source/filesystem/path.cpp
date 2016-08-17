@@ -18,6 +18,7 @@
 #include <userenv.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 #include <limits.h>
+#include <pwd.h>
 #include <stdlib.h>
 #include <unistd.h>
 #endif
