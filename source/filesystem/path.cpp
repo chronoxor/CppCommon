@@ -15,9 +15,10 @@
 
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
+#include <userenv.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 #include <limits.h>
-#include <string.h>
+#include <stdlib.h>
 #include <unistd.h>
 #endif
 
@@ -25,6 +26,8 @@ namespace CppCommon {
 
 //! @cond
 namespace Internals {
+
+Path initial = Path::current();
 
 std::pair<Path, size_t> root(const std::string& path)
 {
@@ -383,66 +386,132 @@ Path& Path::RemoveTrailingSeparators()
     return *this;
 }
 
-Path Path::executable()
+Path Path::initial()
 {
-#if defined(_WIN32) || defined(_WIN64)
-    std::vector<wchar_t> path(MAX_PATH);
-    DWORD result;
-
-    while ((result = GetModuleFileNameW(nullptr, path.data(), (DWORD)path.size())) == path.size())
-        path.resize(path.size() * 2);
-
-    if (result == 0)
-        throwex SystemException("Cannot get executable path of the current process!");
-
-    return Path(std::wstring(path.begin(), path.end()));
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    std::vector<char> path(PATH_MAX);
-    ssize_t result;
-
-    while ((result = readlink("/proc/self/exe", path.data(), path.size())) == (ssize_t)path.size())
-        path.resize(path.size() * 2);
-
-    if (result == -1)
-        throwex SystemException("Cannot get executable path of the current process!");
-
-    return Path(std::string(path.begin(), path.end()));
-#endif
+    return Internals::initial;
 }
 
 Path Path::current()
 {
 #if defined(_WIN32) || defined(_WIN64)
-    std::vector<wchar_t> path(MAX_PATH);
+    std::vector<wchar_t> buffer(MAX_PATH);
 
-    DWORD result = GetCurrentDirectoryW((DWORD)path.size(), path.data());
-    if (result > path.size())
+    DWORD size = GetCurrentDirectoryW((DWORD)buffer.size(), buffer.data());
+    if (size > buffer.size())
     {
-        path.resize(result);
-        result = GetCurrentDirectoryW((DWORD)path.size(), path.data());
+        buffer.resize(size);
+        size = GetCurrentDirectoryW((DWORD)buffer.size(), buffer.data());
     }
 
-    if (result == 0)
-        throwex SystemException("Cannot get current path of the current process!");
+    if (size == 0)
+        throwex SystemException("Cannot get the current path of the current process!");
 
-    // Adjust the path length
-    path.resize(result);
-
-    return Path(std::wstring(path.begin(), path.end()));
+    return Path(std::wstring(buffer.data(), size));
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-    std::vector<char> path(PATH_MAX);
+    std::vector<char> buffer(PATH_MAX);
     char* result;
 
-    while (((result = getcwd(path.data(), path.size())) == nullptr) && (errno == ERANGE))
-        path.resize(path.size() * 2);
+    while (((result = getcwd(buffer.data(), buffer.size())) == nullptr) && (errno == ERANGE))
+        buffer.resize(buffer.size() * 2);
 
     if (result == nullptr)
-        throwex SystemException("Cannot get current path of the current process!");
+        throwex SystemException("Cannot get the current path of the current process!");
 
-    // Adjust the path length
-    path.resize(strlen(path.data()));
+    return Path(std::string(buffer.data()));
+#endif
+}
 
-    return Path(std::string(path.begin(), path.end()));
+Path Path::executable()
+{
+#if defined(_WIN32) || defined(_WIN64)
+    std::vector<wchar_t> buffer(MAX_PATH);
+    DWORD size;
+
+    while ((size = GetModuleFileNameW(nullptr, buffer.data(), (DWORD)buffer.size())) == buffer.size())
+        buffer.resize(buffer.size() * 2);
+
+    if (size == 0)
+        throwex SystemException("Cannot get the executable path of the current process!");
+
+    return Path(std::wstring(buffer.data(), size));
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    std::vector<char> buffer(PATH_MAX);
+    ssize_t size;
+
+    while ((size = readlink("/proc/self/exe", buffer.data(), buffer.size())) == (ssize_t)buffer.size())
+        buffer.resize(buffer.size() * 2);
+
+    if (size < 0)
+        throwex SystemException("Cannot get the executable path of the current process!");
+
+    return Path(std::string(buffer.data(), size));
+#endif
+}
+
+Path Path::home()
+{
+#if defined(_WIN32) || defined(_WIN64)
+    std::vector<wchar_t> buffer(MAX_PATH);
+
+    HANDLE hToken;
+    if (!OpenProcessToken(GetCurrentProcess(), TOKEN_READ, &hToken))
+        throwex SystemException("Cannot open the current process token!");
+
+    DWORD size = (DWORD)buffer.size();
+    if (!GetUserProfileDirectoryW(hToken, buffer.data(), &size))
+    {
+        buffer.resize(size);
+        if (!GetUserProfileDirectoryW(hToken, buffer.data(), &size))
+        {
+            CloseHandle(hToken);
+            throwex SystemException("Cannot get the home path of the current process!");
+        }
+    }
+
+    if (!CloseHandle(hToken))
+        throwex SystemException("Cannot close the current process token!");
+
+    return Path(std::wstring(buffer.data(), size));
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    std::vector<char> buffer(PATH_MAX);
+    uid_t uid = getuid();
+    int result;
+
+    struct passwd pwd;
+    struct passwd* ppwd;
+
+    while (((result = getpwuid_r(uid, &pwd, buffer.data(), buffer.size(), &ppwd)) != 0) && (result == ERANGE))
+        buffer.resize(buffer.size() * 2);
+
+    if ((result != 0) || (ppwd == nullptr))
+        throwex SystemException("Cannot get the home path of the current process!");
+
+    return Path(std::string(pwd.pw_dir));
+#endif
+}
+
+Path Path::temp()
+{
+#if defined(_WIN32) || defined(_WIN64)
+    std::vector<wchar_t> buffer(MAX_PATH);
+
+    DWORD size = GetTempPathW((DWORD)buffer.size(), buffer.data());
+    if (size > buffer.size())
+    {
+        buffer.resize(size);
+        size = GetTempPathW((DWORD)buffer.size(), buffer.data());
+    }
+
+    if (size == 0)
+        throwex SystemException("Cannot get the temporary path of the current process!");
+
+    return Path(std::wstring(buffer.data(), size));
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    char* temp;
+    if (((temp = getenv("TMPDIR")) != nullptr) || ((temp = getenv("TMP")) != nullptr) || ((temp = getenv("TEMP")) != nullptr) || ((temp = getenv("TEMPDIR")) != nullptr))
+        return Path(std::string(temp));
+    else
+        return Path(std::string("/tmp"));
 #endif
 }
 

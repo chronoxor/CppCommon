@@ -28,6 +28,7 @@ if(UNIX)
 endif()
 if(WIN32)
   find_package(DbgHelp)
+  find_package(Userenv)
 endif()
 
 # System link libraries
@@ -39,6 +40,7 @@ if(UNIX)
 endif()
 if(WIN32)
   list(APPEND SYSTEM ${DBGHELP_LIBRARIES})
+  list(APPEND SYSTEM ${USERENV_LIBRARIES})
 endif()
 
 # Modules

@@ -8,11 +8,34 @@
 
 using namespace CppCommon;
 
-TEST_CASE("Path", "[CppCommon][FileSystem]")
+TEST_CASE("Path common", "[CppCommon][FileSystem]")
+{
+    // Test other methods
+    char separator = Path::separator();
+    REQUIRE(((separator == '\\') || (separator == '/')));
+    REQUIRE(!Path::initial().empty());
+    REQUIRE(!Path::current().empty());
+    REQUIRE(!Path::executable().empty());
+    REQUIRE(!Path::home().empty());
+    REQUIRE(!Path::temp().empty());
+
+    // Test swap method
+    Path swap_path_1("foo");
+    Path swap_path_2("bar");
+    swap(swap_path_1, swap_path_2);
+    REQUIRE(swap_path_1 == Path("bar"));
+    REQUIRE(swap_path_2 == Path("foo"));
+}
+
+
+TEST_CASE("Path preferred", "[CppCommon][FileSystem]")
 {
     // Test make preferred method
     REQUIRE(Path("test/test\\test").MakePreferred() == Path(std::string("test") + Path::separator() + std::string("test") + Path::separator() + std::string("test")));
+}
 
+TEST_CASE("Path decompositions", "[CppCommon][FileSystem]")
+{
     // Test root path decomposition method
     REQUIRE(Path().root().MakePreferred() == Path().MakePreferred());
     REQUIRE(Path(".").root().MakePreferred() == Path().MakePreferred());
@@ -204,7 +227,10 @@ TEST_CASE("Path", "[CppCommon][FileSystem]")
     REQUIRE(Path("/foo.bar").extension().MakePreferred() == Path(".bar").MakePreferred());
     REQUIRE(Path("foo/bar").extension().MakePreferred() == Path().MakePreferred());
     REQUIRE(Path("foo/bar.goo").extension().MakePreferred() == Path(".goo").MakePreferred());
+}
 
+TEST_CASE("Path manipulations", "[CppCommon][FileSystem]")
+{
     // Test path append method
     REQUIRE(Path().Append("test").MakePreferred() == Path("test").MakePreferred());
     REQUIRE(Path("/").Append("test").MakePreferred() == Path("/test").MakePreferred());
@@ -317,17 +343,5 @@ TEST_CASE("Path", "[CppCommon][FileSystem]")
     REQUIRE(Path("/foo/bar/").RemoveTrailingSeparators().MakePreferred() == Path("/foo/bar").MakePreferred());
     REQUIRE(Path("/foo/bar//").RemoveTrailingSeparators().MakePreferred() == Path("/foo/bar").MakePreferred());
     REQUIRE(Path("/foo/bar///").RemoveTrailingSeparators().MakePreferred() == Path("/foo/bar").MakePreferred());
-
-    // Test other methods
-    char separator = Path::separator();
-    REQUIRE(((separator == '\\') || (separator == '/')));
-    REQUIRE(!Path::current().empty());
-    REQUIRE(!Path::executable().empty());
-
-    // Test swap method
-    Path swap_path_1("foo");
-    Path swap_path_2("bar");
-    swap(swap_path_1, swap_path_2);
-    REQUIRE(swap_path_1 == Path("bar"));
-    REQUIRE(swap_path_2 == Path("foo"));
 }
+

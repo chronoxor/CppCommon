@@ -253,10 +253,16 @@ public:
     //! Get the system path separator character ('\' for Windows or '/' for Unix)
     static char separator() noexcept;
 
-    //! Get current path of the current process
+    //! Get the initial path of the current process
+    static Path initial();
+    //! Get the current path of the current process
     static Path current();
-    //! Get executable path of the current process
+    //! Get the executable path of the current process
     static Path executable();
+    //! Get the home path of the current process
+    static Path home();
+    //! Get the temporary path of the current process
+    static Path temp();
 
 protected:
     std::string _path;
