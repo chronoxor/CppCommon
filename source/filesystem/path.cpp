@@ -16,6 +16,7 @@
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__)
+#include <limits.h>
 #include <unistd.h>
 #endif
 
@@ -104,7 +105,7 @@ std::pair<Path, size_t> root(const std::string& path)
         ++root_length;
     }
 
-    return (root_found && (root_length > 0)) ? std::make_pair(Path(path.substr(0, root_length)), root_length) : std::make_pair(Path(), 0u);
+    return (root_found && (root_length > 0)) ? std::make_pair(Path(path.substr(0, root_length)), root_length) : std::make_pair<Path, size_t>(Path(), 0);
 }
 
 } // namespace Internals
