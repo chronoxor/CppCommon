@@ -9,6 +9,7 @@
 #include "filesystem/path.h"
 
 #include "errors/exceptions.h"
+#include "system/environment.h"
 
 #include <algorithm>
 #include <vector>

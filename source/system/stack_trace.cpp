@@ -81,7 +81,7 @@ StackTrace::StackTrace(int skip)
         module.SizeOfStruct = sizeof(module);
         if (SymGetModuleInfo64(hProcess, (DWORD64)frame.address, &module))
         {
-            const char* image = std::strrchr(module.ImageName, '\\');
+            const char* image = strrchr(module.ImageName, '\\');
             if (image != nullptr)
                 frame.module = image + 1;
         }
@@ -149,7 +149,7 @@ StackTrace::StackTrace(int skip)
         // Get the frame module
         if (info.dli_fname != nullptr)
         {
-            const char* module = std::strrchr(info.dli_fname, '/');
+            const char* module = strrchr(info.dli_fname, '/');
             if (module != nullptr)
                 frame.module = module + 1;
         }

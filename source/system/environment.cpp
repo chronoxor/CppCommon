@@ -303,7 +303,7 @@ std::string Environment::OSVersion()
     }
 
     // Windows Service Pack version
-    if (std::strlen(osvi.szCSDVersion) > 0)
+    if (strlen(osvi.szCSDVersion) > 0)
         os << " " << osvi.szCSDVersion;
 
     // Windows build
@@ -347,7 +347,7 @@ std::map<std::string, std::string> Environment::envars()
     for (const wchar_t* envar = envars.get(); *envar != L'\0'; )
     {
         int offset = (envar[0] == '=') ? 1 : 0;
-        const wchar_t* separator = std::wcschr(envar + offset, L'=');
+        const wchar_t* separator = wcschr(envar + offset, L'=');
         std::wstring key(envar, separator - envar);
 
         const wchar_t* pvalue = separator + 1;
@@ -361,7 +361,7 @@ std::map<std::string, std::string> Environment::envars()
     for (char** envar = environ; *envar; ++envar)
     {
         int offset = (envar[0] == '=') ? 1 : 0;
-        char* separator = std::strchr(envar + offset, '=');
+        char* separator = strchr(envar + offset, '=');
         std::string key(envar, separator - envar);
 
         char* pvalue = separator + 1;
