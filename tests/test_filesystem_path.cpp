@@ -11,7 +11,7 @@ using namespace CppCommon;
 TEST_CASE("Path", "[CppCommon][FileSystem]")
 {
     // Test make preferred method
-    REQUIRE(Path("test/test\\test").MakePreferred() == Path(std::string("test") + Path::Separator() + std::string("test") + Path::Separator() + std::string("test")));
+    REQUIRE(Path("test/test\\test").MakePreferred() == Path(std::string("test") + Path::separator() + std::string("test") + Path::separator() + std::string("test")));
 
     // Test root path decomposition method
     REQUIRE(Path().root().MakePreferred() == Path().MakePreferred());
@@ -319,9 +319,9 @@ TEST_CASE("Path", "[CppCommon][FileSystem]")
     REQUIRE(Path("/foo/bar///").RemoveTrailingSeparators().MakePreferred() == Path("/foo/bar").MakePreferred());
 
     // Test other methods
-    char separator = Path::Separator();
+    char separator = Path::separator();
     REQUIRE(((separator == '\\') || (separator == '/')));
-    REQUIRE(!Path::Executable().empty());
+    REQUIRE(!Path::executable().empty());
 
     // Test swap method
     Path swap_path_1("foo");

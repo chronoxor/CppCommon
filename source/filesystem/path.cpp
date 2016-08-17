@@ -104,7 +104,7 @@ std::pair<Path, size_t> root(const std::string& path)
         ++root_length;
     }
 
-    return (root_found && (root_length > 0)) ? std::make_pair(Path(path.substr(0, root_length)), root_length) : std::make_pair(Path(), 0);
+    return (root_found && (root_length > 0)) ? std::make_pair(Path(path.substr(0, root_length)), root_length) : std::make_pair(Path(), 0u);
 }
 
 } // namespace Internals
@@ -276,7 +276,7 @@ Path& Path::Append(const Path& path)
             _path += path._path;
         else
         {
-            _path += Separator();
+            _path += separator();
             _path += path._path;
         }
     }
@@ -381,7 +381,7 @@ Path& Path::RemoveTrailingSeparators()
     return *this;
 }
 
-Path Path::Executable()
+Path Path::executable()
 {
 #if defined(_WIN32) || defined(_WIN64)
     std::vector<wchar_t> path(MAX_PATH);
@@ -395,10 +395,10 @@ Path Path::Executable()
 
     return Path(std::wstring(path.begin(), path.end()));
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-    std::vector<char> path(MAX_PATH);
-    int result;
+    std::vector<char> path(PATH_MAX);
+    ssize_t result;
 
-    while ((result = readlink("/proc/self/exe", path.data(), path.size())) == path.size())
+    while ((result = readlink("/proc/self/exe", path.data(), path.size())) == (ssize_t)path.size())
         path.resize(path.size() * 2);
 
     if (result == -1)

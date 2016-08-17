@@ -12,7 +12,7 @@
 
 int main(int argc, char** argv)
 {
-    std::cout << "Path separator: " << CppCommon::Path::Separator() << std::endl;
-    std::cout << "Executable path: " << CppCommon::Path::Executable() << std::endl;
+    std::cout << "Path separator: " << CppCommon::Path::separator() << std::endl;
+    std::cout << "Executable path: " << CppCommon::Path::executable() << std::endl;
     return 0;
 }

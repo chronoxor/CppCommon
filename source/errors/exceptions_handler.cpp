@@ -492,7 +492,7 @@ private:
     {
 #if defined(DBGHELP_SUPPORT)
         // Generate dump file name based on the current timestamp
-        Path dump = Path::Executable().parent() / "crash-" + std::to_string(Timestamp::utc()) + ".dmp";
+        Path dump = Path::executable().parent() / "crash-" + std::to_string(Timestamp::utc()) + ".dmp";
 
         // Create the dump file
         HANDLE hFile = CreateFileW(dump.wstring().c_str(), GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);

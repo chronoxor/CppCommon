@@ -168,6 +168,19 @@ public:
     //! Get the path value in UTF-16 format
     std::wstring wstring() const { return Encoding::FromUTF8(_path); }
 
+    //! Decompose root path from the current path
+    Path root() const;
+    //! Decompose relative path from the current path
+    Path relative() const;
+    //! Decompose parent path from the current path
+    Path parent() const;
+    //! Decompose filename from the current path
+    Path filename() const;
+    //! Decompose stem from the current path
+    Path stem() const;
+    //! Decompose extension from the current path
+    Path extension() const;
+
     //! Is the path empty?
     bool empty() const noexcept { return _path.empty(); }
 
@@ -189,21 +202,8 @@ public:
     //! Is relative path?
     bool IsRelative() const { return !HasRoot(); }
 
-    //! Decompose root path from the current path
-    Path root() const;
-    //! Decompose relative path from the current path
-    Path relative() const;
-    //! Decompose parent path from the current path
-    Path parent() const;
-    //! Decompose filename from the current path
-    Path filename() const;
-    //! Decompose stem from the current path
-    Path stem() const;
-    //! Decompose extension from the current path
-    Path extension() const;
-
     //! Clear path content
-    void Ñlear() noexcept { return _path.clear(); }
+    void Clear() noexcept { return _path.clear(); }
 
     //! Assign the given path to the current one
     Path& Assign(const std::string& path)
@@ -251,10 +251,10 @@ public:
     Path& RemoveTrailingSeparators();
 
     //! Get the system path separator character ('\' for Windows or '/' for Unix)
-    static char Separator() noexcept;
+    static char separator() noexcept;
 
     //! Get executable path of the current process
-    static Path Executable();
+    static Path executable();
 
 protected:
     std::string _path;
