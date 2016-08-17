@@ -360,7 +360,7 @@ std::map<std::string, std::string> Environment::envars()
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     for (char** envars = environ; *envars; ++envars)
     {
-        char envar = *envars;
+        char* envar = *envars;
         int offset = (envar[0] == '=') ? 1 : 0;
         char* separator = std::strchr(envar + offset, '=');
         std::string key(envar, separator - envar);
