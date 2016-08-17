@@ -9,6 +9,7 @@
 #include "errors/exceptions_handler.h"
 
 #include "errors/exceptions.h"
+#include "filesystem/path.h"
 #include "system/stack_trace.h"
 #include "time/timestamp.h"
 
@@ -490,19 +491,13 @@ private:
     static void CreateDumpFile(EXCEPTION_POINTERS* pExcPtrs)
     {
 #if defined(DBGHELP_SUPPORT)
-        // Get the current module path
-        char path[4096];
-        if (GetModuleFileNameA(nullptr, path, sizeof(path) / sizeof(path[0])) == 0)
-            throwex SystemException("Cannot get the current module filename!");
-        *(std::strrchr(path, '\\') + 1) = '\0';
-
         // Generate dump file name based on the current timestamp
-        std::string filename = std::string(path) + "crash-" + std::to_string(Timestamp::utc()) + ".dmp";
+        Path dump = Path::Executable().parent() / "crash-" + std::to_string(Timestamp::utc()) + ".dmp";
 
         // Create the dump file
-        HANDLE hFile = CreateFileA(filename.c_str(), GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
+        HANDLE hFile = CreateFileW(dump.wstring().c_str(), GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
         if (hFile == INVALID_HANDLE_VALUE)
-            throwex SystemException("Cannot create a dump file - " + filename);
+            throwex SystemException("Cannot create a dump file - " + dump.native());
 
         MINIDUMP_EXCEPTION_INFORMATION mei;
         MINIDUMP_CALLBACK_INFORMATION mci;
@@ -518,12 +513,12 @@ private:
         if (!MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), hFile, MiniDumpNormal, &mei, nullptr, &mci))
         {
             CloseHandle(hFile);
-            throwex SystemException("Cannot write a dump file - " + filename);
+            throwex SystemException("Cannot write a dump file - " + dump.native());
         }
 
         // Close dump file
         if (!CloseHandle(hFile))
-            throwex SystemException("Cannot close a dump file - " + filename);
+            throwex SystemException("Cannot close a dump file - " + dump.native());
 #endif
     }
 

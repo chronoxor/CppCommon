@@ -11,7 +11,83 @@ using namespace CppCommon;
 TEST_CASE("Path", "[CppCommon][FileSystem]")
 {
     // Test make preferred method
-    REQUIRE(Path("test/test\\test").MakePreferred() == Path(std::string("test") + Path::separator() + std::string("test") + Path::separator() + std::string("test")));
+    REQUIRE(Path("test/test\\test").MakePreferred() == Path(std::string("test") + Path::Separator() + std::string("test") + Path::Separator() + std::string("test")));
+
+    // Test root path decomposition method
+    REQUIRE(Path().root().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path(".").root().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("..").root().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("/").root().MakePreferred() == Path("/").MakePreferred());
+    REQUIRE(Path("/.").root().MakePreferred() == Path("/").MakePreferred());
+    REQUIRE(Path("/..").root().MakePreferred() == Path("/").MakePreferred());
+    REQUIRE(Path("./").root().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("../").root().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("C:").root().MakePreferred() == Path("C:").MakePreferred());
+    REQUIRE(Path("C:/").root().MakePreferred() == Path("C:/").MakePreferred());
+    REQUIRE(Path("C:/foobar").root().MakePreferred() == Path("C:/").MakePreferred());
+    REQUIRE(Path("C:/foo/bar").root().MakePreferred() == Path("C:/").MakePreferred());
+    REQUIRE(Path("\\\\?\\").root().MakePreferred() == Path("\\\\?\\").MakePreferred());
+    REQUIRE(Path("\\\\?\\C:").root().MakePreferred() == Path("\\\\?\\C:").MakePreferred());
+    REQUIRE(Path("\\\\?\\C:/").root().MakePreferred() == Path("\\\\?\\C:/").MakePreferred());
+    REQUIRE(Path("\\\\?\\C:/foobar").root().MakePreferred() == Path("\\\\?\\C:/").MakePreferred());
+    REQUIRE(Path("\\\\?\\C:/foo/bar").root().MakePreferred() == Path("\\\\?\\C:/").MakePreferred());
+    REQUIRE(Path("//net").root().MakePreferred() == Path("//net").MakePreferred());
+    REQUIRE(Path("//net/").root().MakePreferred() == Path("//net/").MakePreferred());
+    REQUIRE(Path("//net/foobar").root().MakePreferred() == Path("//net/").MakePreferred());
+    REQUIRE(Path("//net/foo/bar").root().MakePreferred() == Path("//net/").MakePreferred());
+    REQUIRE(Path("foobar").root().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("foobar.").root().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("foobar..").root().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("foo.bar").root().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("/foobar").root().MakePreferred() == Path("/").MakePreferred());
+    REQUIRE(Path("/foobar/").root().MakePreferred() == Path("/").MakePreferred());
+    REQUIRE(Path("/foobar/.").root().MakePreferred() == Path("/").MakePreferred());
+    REQUIRE(Path("/foobar/..").root().MakePreferred() == Path("/").MakePreferred());
+    REQUIRE(Path("/foo/bar").root().MakePreferred() == Path("/").MakePreferred());
+    REQUIRE(Path("foo/bar").root().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("foo/bar/goo").root().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("///foo").root().MakePreferred() == Path("/").MakePreferred());
+    REQUIRE(Path("///foo/").root().MakePreferred() == Path("/").MakePreferred());
+    REQUIRE(Path("///foo///").root().MakePreferred() == Path("/").MakePreferred());
+    REQUIRE(Path("///foo///bar").root().MakePreferred() == Path("/").MakePreferred());
+
+    // Test relative path decomposition method
+    REQUIRE(Path().relative().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path(".").relative().MakePreferred() == Path(".").MakePreferred());
+    REQUIRE(Path("..").relative().MakePreferred() == Path("..").MakePreferred());
+    REQUIRE(Path("/").relative().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("/.").relative().MakePreferred() == Path(".").MakePreferred());
+    REQUIRE(Path("/..").relative().MakePreferred() == Path("..").MakePreferred());
+    REQUIRE(Path("./").relative().MakePreferred() == Path("./").MakePreferred());
+    REQUIRE(Path("../").relative().MakePreferred() == Path("../").MakePreferred());
+    REQUIRE(Path("C:").relative().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("C:/").relative().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("C:/foobar").relative().MakePreferred() == Path("foobar").MakePreferred());
+    REQUIRE(Path("C:/foo/bar").relative().MakePreferred() == Path("foo/bar").MakePreferred());
+    REQUIRE(Path("\\\\?\\").relative().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("\\\\?\\C:").relative().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("\\\\?\\C:/").relative().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("\\\\?\\C:/foobar").relative().MakePreferred() == Path("foobar").MakePreferred());
+    REQUIRE(Path("\\\\?\\C:/foo/bar").relative().MakePreferred() == Path("foo/bar").MakePreferred());
+    REQUIRE(Path("//net").relative().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("//net/").relative().MakePreferred() == Path().MakePreferred());
+    REQUIRE(Path("//net/foobar").relative().MakePreferred() == Path("foobar").MakePreferred());
+    REQUIRE(Path("//net/foo/bar").relative().MakePreferred() == Path("foo/bar").MakePreferred());
+    REQUIRE(Path("foobar").relative().MakePreferred() == Path("foobar").MakePreferred());
+    REQUIRE(Path("foobar.").relative().MakePreferred() == Path("foobar.").MakePreferred());
+    REQUIRE(Path("foobar..").relative().MakePreferred() == Path("foobar..").MakePreferred());
+    REQUIRE(Path("foo.bar").relative().MakePreferred() == Path("foo.bar").MakePreferred());
+    REQUIRE(Path("/foobar").relative().MakePreferred() == Path("foobar").MakePreferred());
+    REQUIRE(Path("/foobar/").relative().MakePreferred() == Path("foobar/").MakePreferred());
+    REQUIRE(Path("/foobar/.").relative().MakePreferred() == Path("foobar/.").MakePreferred());
+    REQUIRE(Path("/foobar/..").relative().MakePreferred() == Path("foobar/..").MakePreferred());
+    REQUIRE(Path("/foo/bar").relative().MakePreferred() == Path("foo/bar").MakePreferred());
+    REQUIRE(Path("foo/bar").relative().MakePreferred() == Path("foo/bar").MakePreferred());
+    REQUIRE(Path("foo/bar/goo").relative().MakePreferred() == Path("foo/bar/goo").MakePreferred());
+    REQUIRE(Path("///foo").relative().MakePreferred() == Path("foo").MakePreferred());
+    REQUIRE(Path("///foo/").relative().MakePreferred() == Path("foo/").MakePreferred());
+    REQUIRE(Path("///foo///").relative().MakePreferred() == Path("foo///").MakePreferred());
+    REQUIRE(Path("///foo///bar").relative().MakePreferred() == Path("foo///bar").MakePreferred());
 
     // Test parent path decomposition method
     REQUIRE(Path().parent().MakePreferred() == Path().MakePreferred());
@@ -46,6 +122,8 @@ TEST_CASE("Path", "[CppCommon][FileSystem]")
     REQUIRE(Path("/foo/bar").parent().MakePreferred() == Path("/foo").MakePreferred());
     REQUIRE(Path("foo/bar").parent().MakePreferred() == Path("foo").MakePreferred());
     REQUIRE(Path("foo/bar/goo").parent().MakePreferred() == Path("foo/bar").MakePreferred());
+    REQUIRE(Path("///foo").parent().MakePreferred() == Path("/").MakePreferred());
+    REQUIRE(Path("///foo/").parent().MakePreferred() == Path("///foo").MakePreferred());
     REQUIRE(Path("///foo///").parent().MakePreferred() == Path("///foo").MakePreferred());
     REQUIRE(Path("///foo///bar").parent().MakePreferred() == Path("///foo").MakePreferred());
 
@@ -239,6 +317,11 @@ TEST_CASE("Path", "[CppCommon][FileSystem]")
     REQUIRE(Path("/foo/bar/").RemoveTrailingSeparators().MakePreferred() == Path("/foo/bar").MakePreferred());
     REQUIRE(Path("/foo/bar//").RemoveTrailingSeparators().MakePreferred() == Path("/foo/bar").MakePreferred());
     REQUIRE(Path("/foo/bar///").RemoveTrailingSeparators().MakePreferred() == Path("/foo/bar").MakePreferred());
+
+    // Test other methods
+    char separator = Path::Separator();
+    REQUIRE(((separator == '\\') || (separator == '/')));
+    REQUIRE(!Path::Executable().empty());
 
     // Test swap method
     Path swap_path_1("foo");

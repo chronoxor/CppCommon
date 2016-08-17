@@ -251,7 +251,10 @@ public:
     Path& RemoveTrailingSeparators();
 
     //! Get the system path separator character ('\' for Windows or '/' for Unix)
-    static char separator() noexcept;
+    static char Separator() noexcept;
+
+    //! Get executable path of the current process
+    static Path Executable();
 
 protected:
     std::string _path;
