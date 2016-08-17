@@ -335,7 +335,7 @@ std::string Environment::OSVersion()
 #endif
 }
 
-std::map<std::string, std::string> Environment::AllEnvars()
+std::map<std::string, std::string> Environment::envars()
 {
     std::map<std::string, std::string> result;
 #if defined(_WIN32) || defined(_WIN64)
@@ -344,7 +344,8 @@ std::map<std::string, std::string> Environment::AllEnvars()
 
     for (const wchar_t* envar = envars.get(); *envar != L'\0'; )
     {
-        const wchar_t* separator = std::wcschr(envar, L'=');
+        int offset = (envar[0] == '=') ? 1 : 0;
+        const wchar_t* separator = std::wcschr(envar + offset, L'=');
         std::wstring key(envar, separator - envar);
 
         const wchar_t* pvalue = separator + 1;
@@ -357,7 +358,8 @@ std::map<std::string, std::string> Environment::AllEnvars()
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     for (char** envar = environ; *envar; ++envar)
     {
-        const char* separator = std::strchr(envar, '=');
+        int offset = (envar[0] == '=') ? 1 : 0;
+        const char* separator = std::strchr(envar + offset, '=');
         std::string key(envar, separator - envar);
 
         const wchar_t* pvalue = separator + 1;

@@ -59,7 +59,8 @@ public:
     /*!
         \return Environment variables collection
     */
-    static std::map<std::string, std::string> AllEnvars();
+    static std::map<std::string, std::string> envars();
+
     //! Get environment variable value by the given name
     /*!
         \param name - Environment variable name

@@ -21,5 +21,10 @@ int main(int argc, char** argv)
     std::cout << "Big endian system: " << (CppCommon::Environment::IsBigEndian() ? "true" : "false") << std::endl;
     std::cout << "Little endian system: " << (CppCommon::Environment::IsLittleEndian() ? "true" : "false") << std::endl;
     std::cout << "OS version: " << CppCommon::Environment::OSVersion() << std::endl;
+
+    std::cout << std::endl << "Environment variables: " << std::endl;
+    for (auto& envar : CppCommon::Environment::envars())
+        std::cout << envar.first << "=" << envar.second << std::endl;
+
     return 0;
 }
