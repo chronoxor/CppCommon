@@ -20,8 +20,10 @@
 #elif defined(linux) || defined(__linux) || defined(__linux__)
 #include <sys/stat.h>
 #include <stdlib.h>
+#include <cstring>
 #include <fstream>
 #include <regex>
+extern char **environ;
 #endif
 
 namespace CppCommon {
@@ -359,10 +361,10 @@ std::map<std::string, std::string> Environment::envars()
     for (char** envar = environ; *envar; ++envar)
     {
         int offset = (envar[0] == '=') ? 1 : 0;
-        const char* separator = std::strchr(envar + offset, '=');
+        char* separator = std::strchr(envar + offset, '=');
         std::string key(envar, separator - envar);
 
-        const wchar_t* pvalue = separator + 1;
+        char* pvalue = separator + 1;
         std::string value(pvalue);
 
         result[key] = value;
