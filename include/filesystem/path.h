@@ -253,6 +253,8 @@ public:
     //! Get the system path separator character ('\' for Windows or '/' for Unix)
     static char separator() noexcept;
 
+    //! Get current path of the current process
+    static Path current();
     //! Get executable path of the current process
     static Path executable();
 

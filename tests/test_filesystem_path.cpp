@@ -321,6 +321,7 @@ TEST_CASE("Path", "[CppCommon][FileSystem]")
     // Test other methods
     char separator = Path::separator();
     REQUIRE(((separator == '\\') || (separator == '/')));
+    REQUIRE(!Path::current().empty());
     REQUIRE(!Path::executable().empty());
 
     // Test swap method

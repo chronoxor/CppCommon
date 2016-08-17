@@ -392,7 +392,7 @@ Path Path::executable()
         path.resize(path.size() * 2);
 
     if (result == 0)
-        throwex SystemException("Cannot executable path of the current process!");
+        throwex SystemException("Cannot get executable path of the current process!");
 
     return Path(std::wstring(path.begin(), path.end()));
 #elif defined(unix) || defined(__unix) || defined(__unix__)
@@ -403,7 +403,43 @@ Path Path::executable()
         path.resize(path.size() * 2);
 
     if (result == -1)
-        throwex SystemException("Cannot executable path of the current process!");
+        throwex SystemException("Cannot get executable path of the current process!");
+
+    return Path(std::string(path.begin(), path.end()));
+#endif
+}
+
+Path Path::current()
+{
+#if defined(_WIN32) || defined(_WIN64)
+    std::vector<wchar_t> path(MAX_PATH);
+
+    DWORD result = GetCurrentDirectoryW((DWORD)path.size(), path.data());
+    if (result > path.size())
+    {
+        path.resize(result);
+        result = GetCurrentDirectoryW((DWORD)path.size(), path.data());
+    }
+
+    if (result == 0)
+        throwex SystemException("Cannot get current path of the current process!");
+
+    // Adjust the path length
+    path.resize(result);
+
+    return Path(std::wstring(path.begin(), path.end()));
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    std::vector<char> path(PATH_MAX);
+    char* result;
+
+    while (((result = getcwd(path.data(), path.size())) == nullptr) && (errno == ERANGE))
+        path.resize(path.size() * 2);
+
+    if (result == nullptr)
+        throwex SystemException("Cannot get current path of the current process!");
+
+    // Adjust the path length
+    path.resize(std::strlen(path.c_str()));
 
     return Path(std::string(path.begin(), path.end()));
 #endif
