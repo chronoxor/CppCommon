@@ -56,7 +56,7 @@ std::string CPU::Architecture()
     auto key = std::unique_ptr<std::remove_pointer<HKEY>::type, decltype(clear)>(hKey, clear);
 
     CHAR pBuffer[_MAX_PATH] = { 0 };
-    DWORD dwBufferSize = _MAX_PATH;
+    DWORD dwBufferSize = sizeof(pBuffer);
     lError = RegQueryValueExA(key.get(), "ProcessorNameString", nullptr, nullptr, (LPBYTE)pBuffer, &dwBufferSize);
     if (lError != ERROR_SUCCESS)
         return "<unknown>";

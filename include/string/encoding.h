@@ -15,7 +15,7 @@ namespace CppCommon {
 
 //! Encoding utilities
 /*!
-    Encoding utilities contains methods for UTF-8, UTF-16, UTF-32, USC-2, USC-4 encoding conversions.
+    Encoding utilities contains methods for UTF-8, UTF-16, UTF-32 encoding conversions.
 
     Thread-safe.
 */

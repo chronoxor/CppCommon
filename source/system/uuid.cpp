@@ -21,36 +21,68 @@
 
 namespace CppCommon {
 
+//! @cond
+namespace Internals {
+
+uint8_t unhex(char ch)
+{
+    if ((ch >= '0') && (ch <= '9'))
+        return ch - '0';
+    else if ((ch >= 'a') && (ch <= 'f'))
+        return 10 + ch - 'a';
+    else if ((ch >= 'A') && (ch <= 'F'))
+        return 10 + ch - 'A';
+    else
+        return 0;
+}
+
+} // namespace Internals
+//! @endcond
+
 UUID::UUID(const std::string& uuid)
 {
+    char v1 = 0;
+    char v2 = 0;
+    bool pack = false;
+    int index = 0;
 
+    for (auto ch : uuid)
+    {
+        if ((ch == '-') || (ch == '{') || (ch == '}'))
+            continue;
+
+        if (pack)
+        {
+            v2 = ch;
+            pack = false;
+            _data[index++] = Internals::unhex(v1) * 16 + Internals::unhex(v2);
+            if (index >= 16)
+                break;
+        }
+        else
+        {
+            v1 = ch;
+            pack = true;
+        }
+    }
 }
 
 std::string UUID::to_string() const
 {
-    std::stringstream stream;
-    stream << std::hex << std::setfill('0')
-    << std::setw(2) << _data[0]
-    << std::setw(2) << _data[1]
-    << std::setw(2) << _data[2]
-    << std::setw(2) << _data[3]
-    << '-'
-    << std::setw(2) << _data[4]
-    << std::setw(2) << _data[5]
-    << '-'
-    << std::setw(2) << _data[6]
-    << std::setw(2) << _data[7]
-    << '-'
-    << std::setw(2) << _data[8]
-    << std::setw(2) << _data[9]
-    << '-'
-    << std::setw(2) << _data[10]
-    << std::setw(2) << _data[11]
-    << std::setw(2) << _data[12]
-    << std::setw(2) << _data[13]
-    << std::setw(2) << _data[14]
-    << std::setw(2) << _data[15];
-    return stream.str();
+    std::string result(36, '0');
+
+    const char* digits = "0123456789ABCDEF";
+
+    int index = 0;
+    for (auto value : _data)
+    {
+        result[index++] = digits[(value >> 4) & 0x0F];
+        result[index++] = digits[(value >> 0) & 0x0F];
+        if ((index == 8) || (index == 13) || (index == 18) || (index == 23))
+            result[index++] = '-';
+    }
+
+    return result;
 }
 
 UUID UUID::Generate()

@@ -8,6 +8,8 @@
 
 #include "errors/system_error.h"
 
+#include "string/encoding.h"
+
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__)
@@ -43,11 +45,12 @@ void SystemError::ClearLast() noexcept
 std::string SystemError::to_string(int error)
 {
     const int capacity = 1024;
-    char buffer[capacity];
 #if defined(_WIN32) || defined(_WIN64)
-    DWORD size = FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, nullptr, error, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), buffer, capacity, nullptr);
-    return std::string(buffer, (size - 2));
+    WCHAR buffer[capacity];
+    DWORD size = FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, nullptr, error, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), buffer, capacity, nullptr);
+    return Encoding::ToUTF8(std::wstring(buffer, (size - 2)));
 #elif defined(unix) || defined(__unix) || defined(__unix__)
+    char buffer[capacity];
     char* result = strerror_r(error, buffer, capacity);
     if (result == nullptr)
         return std::string("Cannot convert the given system error code to the system message - " + std::to_string(error));
