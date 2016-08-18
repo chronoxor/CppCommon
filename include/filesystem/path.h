@@ -150,23 +150,13 @@ public:
     friend bool operator>=(const Path& path1, const Path& path2)
     { return path1._path >= path2._path; }
 
-    //! Input instance from the given input stream
-    friend std::istream& operator>>(std::istream& is, Path& instance)
-    { is >> instance._path; return is; }
-    //! Output instance into the given output stream
-    friend std::ostream& operator<<(std::ostream& os, const Path& instance)
-    { os << instance._path; return os; }
-
-    //! Swap two instances
-    friend void swap(Path& path1, Path& path2);
-
     //! Get the native path value
     const std::string& native() const noexcept { return _path; }
 
-    //! Get the path value in UTF-8 format
-    std::string string() const { return std::string(_path); }
+    //! Get the pah value in UTF-8 format
+    std::string to_string() const { return std::string(_path); }
     //! Get the path value in UTF-16 format
-    std::wstring wstring() const { return Encoding::FromUTF8(_path); }
+    std::wstring to_wstring() const { return Encoding::FromUTF8(_path); }
 
     //! Decompose root path from the current path
     Path root() const;
@@ -263,6 +253,16 @@ public:
     static Path home();
     //! Get the temporary path of the current process
     static Path temp();
+
+    //! Input instance from the given input stream
+    friend std::istream& operator>>(std::istream& is, Path& instance)
+    { is >> instance._path; return is; }
+    //! Output instance into the given output stream
+    friend std::ostream& operator<<(std::ostream& os, const Path& instance)
+    { os << instance._path; return os; }
+
+    //! Swap two instances
+    friend void swap(Path& path1, Path& path2) noexcept;
 
 protected:
     std::string _path;

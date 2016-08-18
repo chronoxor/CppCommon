@@ -29,7 +29,7 @@ inline char Path::separator() noexcept
 #endif
 }
 
-inline void swap(Path& path1, Path& path2)
+inline void swap(Path& path1, Path& path2) noexcept
 {
     using std::swap;
     swap(path1._path, path2._path);

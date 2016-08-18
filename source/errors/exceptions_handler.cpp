@@ -495,7 +495,7 @@ private:
         Path dump = Path::executable().parent() / "crash-" + std::to_string(Timestamp::utc()) + ".dmp";
 
         // Create the dump file
-        HANDLE hFile = CreateFileW(dump.wstring().c_str(), GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
+        HANDLE hFile = CreateFileW(dump.to_wstring().c_str(), GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
         if (hFile == INVALID_HANDLE_VALUE)
             throwex SystemException("Cannot create a dump file - " + dump.native());
 

@@ -49,7 +49,7 @@ public:
     //! Get line number
     int line() const noexcept { return _line; }
 
-    //! Get string from the current source location
+    //! Get the string from the current source location
     std::string to_string() const
     { std::stringstream ss; ss << *this; return ss.str(); }
 
