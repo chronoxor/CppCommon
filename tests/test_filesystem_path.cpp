@@ -18,6 +18,7 @@ TEST_CASE("Path common", "[CppCommon][FileSystem]")
     REQUIRE(!Path::executable().empty());
     REQUIRE(!Path::home().empty());
     REQUIRE(!Path::temp().empty());
+    REQUIRE(!Path::unique().empty());
 
     // Test swap method
     Path swap_path_1("foo");
@@ -344,4 +345,3 @@ TEST_CASE("Path manipulations", "[CppCommon][FileSystem]")
     REQUIRE(Path("/foo/bar//").RemoveTrailingSeparators().MakePreferred() == Path("/foo/bar").MakePreferred());
     REQUIRE(Path("/foo/bar///").RemoveTrailingSeparators().MakePreferred() == Path("/foo/bar").MakePreferred());
 }
-

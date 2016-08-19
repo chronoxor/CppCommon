@@ -253,6 +253,8 @@ public:
     static Path home();
     //! Get the temporary path of the current process
     static Path temp();
+    //! Get the unique filename in UUID format "00000000-0000-0000-0000-000000000000"
+    static Path unique();
 
     //! Input instance from the given input stream
     friend std::istream& operator>>(std::istream& is, Path& instance)

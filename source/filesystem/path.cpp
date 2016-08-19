@@ -10,6 +10,7 @@
 
 #include "errors/exceptions.h"
 #include "system/environment.h"
+#include "system/uuid.h"
 
 #include <algorithm>
 #include <vector>
@@ -515,6 +516,11 @@ Path Path::temp()
     else
         return Path(std::string("/tmp"));
 #endif
+}
+
+Path Path::unique()
+{
+    return Path(UUID::Generate().to_string());
 }
 
 } // namespace CppCommon

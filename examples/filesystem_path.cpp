@@ -18,5 +18,6 @@ int main(int argc, char** argv)
     std::cout << "Executable path: " << CppCommon::Path::executable() << std::endl;
     std::cout << "Home path: " << CppCommon::Path::home() << std::endl;
     std::cout << "Temporary path: " << CppCommon::Path::temp() << std::endl;
+    std::cout << "Unique filename: " << CppCommon::Path::unique() << std::endl;
     return 0;
 }

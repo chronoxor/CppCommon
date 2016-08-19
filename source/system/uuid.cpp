@@ -115,7 +115,7 @@ UUID UUID::Generate()
     result._data[15] = guid.Data4[7];
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     uuid_t uuid;
-    uuid_generate(uuid);
+    uuid_generate_time(uuid);
 
     result._data[0] = uuid[0];
     result._data[1] = uuid[1];
