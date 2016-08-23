@@ -19,6 +19,7 @@
 #include <windows.h>
 #include <userenv.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__)
+#include <sys/stat.h>
 #include <limits.h>
 #include <pwd.h>
 #include <stdlib.h>
