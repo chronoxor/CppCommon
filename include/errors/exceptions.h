@@ -124,7 +124,7 @@ public:
     //! Get string from the current system exception
     std::string to_string() const override;
 
-private:
+protected:
     int _system_error;
     std::string _system_message;
 };

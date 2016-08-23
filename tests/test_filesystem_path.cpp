@@ -13,12 +13,35 @@ TEST_CASE("Path common", "[CppCommon][FileSystem]")
     // Test other methods
     char separator = Path::separator();
     REQUIRE(((separator == '\\') || (separator == '/')));
-    REQUIRE(!Path::initial().empty());
-    REQUIRE(!Path::current().empty());
-    REQUIRE(!Path::executable().empty());
-    REQUIRE(!Path::home().empty());
-    REQUIRE(!Path::temp().empty());
-    REQUIRE(!Path::unique().empty());
+
+    Path initial = Path::initial();
+    REQUIRE(!initial.empty());
+    REQUIRE(initial.IsExists());
+    REQUIRE(initial.IsDirectory());
+
+    Path current = Path::current();
+    REQUIRE(!current.empty());
+    REQUIRE(current.IsExists());
+    REQUIRE(current.IsDirectory());
+
+    Path executable = Path::executable();
+    REQUIRE(!executable.empty());
+    REQUIRE(executable.IsExists());
+    REQUIRE(executable.IsRegularFile());
+
+    Path home = Path::home();
+    REQUIRE(!home.empty());
+    REQUIRE(home.IsExists());
+    REQUIRE(home.IsDirectory());
+
+    Path temp = Path::temp();
+    REQUIRE(!temp.empty());
+    REQUIRE(temp.IsExists());
+    REQUIRE(temp.IsDirectory());
+
+    Path unique = Path::unique();
+    REQUIRE(!unique.empty());
+    REQUIRE(!unique.IsExists());
 
     // Test swap method
     Path swap_path_1("foo");

@@ -123,7 +123,7 @@ void Thread::SleepFor(const Timespan& timespan) noexcept
     req.tv_nsec = timespan.nanoseconds() % 1000000000;
 
     // Call nanosleep() in loop until we have remaining time to sleep
-    while (nanosleep(&req, &rem) == -1)
+    while (nanosleep(&req, &rem) != 0)
     {
         if (errno == EINTR)
             req = rem;

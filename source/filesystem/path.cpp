@@ -8,7 +8,7 @@
 
 #include "filesystem/path.h"
 
-#include "errors/exceptions.h"
+#include "filesystem/exceptions.h"
 #include "system/environment.h"
 #include "system/uuid.h"
 
@@ -273,6 +273,50 @@ Path Path::extension() const
     return (ext_found && (ext_length > 1)) ? Path(_path.substr(ext_begin, ext_length)) : Path();
 }
 
+FileType Path::type() const
+{
+#if defined(_WIN32) || defined(_WIN64)
+    DWORD result = GetFileAttributesW(to_wstring().c_str());
+    if (result == INVALID_FILE_ATTRIBUTES)
+        return FileType::NONE;
+    else if (result & FILE_ATTRIBUTE_REPARSE_POINT)
+        return FileType::SYMLINK;
+    else if (result & FILE_ATTRIBUTE_DIRECTORY)
+        return FileType::DIRECTORY;
+    else
+        return FileType::REGULAR;
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    struct stat st;
+    int result = stat(native().c_str(), &st);
+    if (result != 0)
+    {
+        if ((errno == ENOENT) || (errno == ENOTDIR))
+            return FileType::NONE;
+        else
+            throwex FileSystemException("Cannot get the status of the current path!").Attach(*this);
+    }
+
+    if (S_ISREG(st.st_mode))
+        return FileType::REGULAR;
+    else if (S_ISDIR(st.st_mode))
+        return FileType::DIRECTORY;
+    else if (S_ISLNK(st.st_mode))
+        return FileType::SYMLINK;
+    else if (S_ISLNK(st.st_mode))
+        return FileType::SYMLINK;
+    else if (S_ISBLK(st.st_mode))
+        return FileType::BLOCK;
+    else if (S_ISCHR(st.st_mode))
+        return FileType::CHARACTER;
+    else if (S_ISFIFO(st.st_mode))
+        return FileType::FIFO;
+    else if (S_ISSOCK(st.st_mode))
+        return FileType::SOCKET;
+    else
+        return FileType::UNKNOWN;
+#endif
+}
+
 Path& Path::Append(const Path& path)
 {
     if (_path.empty())
@@ -407,7 +451,7 @@ Path Path::current()
     }
 
     if (size == 0)
-        throwex SystemException("Cannot get the current path of the current process!");
+        throwex FileSystemException("Cannot get the current path of the current process!");
 
     return Path(std::wstring(buffer.data(), size));
 #elif defined(unix) || defined(__unix) || defined(__unix__)
@@ -418,7 +462,7 @@ Path Path::current()
         buffer.resize(buffer.size() * 2);
 
     if (result == nullptr)
-        throwex SystemException("Cannot get the current path of the current process!");
+        throwex FileSystemException("Cannot get the current path of the current process!");
 
     return Path(std::string(buffer.data()));
 #endif
@@ -434,7 +478,7 @@ Path Path::executable()
         buffer.resize(buffer.size() * 2);
 
     if (size == 0)
-        throwex SystemException("Cannot get the executable path of the current process!");
+        throwex FileSystemException("Cannot get the executable path of the current process!");
 
     return Path(std::wstring(buffer.data(), size));
 #elif defined(unix) || defined(__unix) || defined(__unix__)
@@ -445,7 +489,7 @@ Path Path::executable()
         buffer.resize(buffer.size() * 2);
 
     if (size < 0)
-        throwex SystemException("Cannot get the executable path of the current process!");
+        throwex FileSystemException("Cannot get the executable path of the current process!");
 
     return Path(std::string(buffer.data(), size));
 #endif
@@ -458,7 +502,7 @@ Path Path::home()
 
     HANDLE hToken;
     if (!OpenProcessToken(GetCurrentProcess(), TOKEN_READ, &hToken))
-        throwex SystemException("Cannot open the current process token!");
+        throwex FileSystemException("Cannot open the current process token!");
 
     DWORD size = (DWORD)buffer.size();
     if (!GetUserProfileDirectoryW(hToken, buffer.data(), &size))
@@ -467,12 +511,12 @@ Path Path::home()
         if (!GetUserProfileDirectoryW(hToken, buffer.data(), &size))
         {
             CloseHandle(hToken);
-            throwex SystemException("Cannot get the home path of the current process!");
+            throwex FileSystemException("Cannot get the home path of the current process!");
         }
     }
 
     if (!CloseHandle(hToken))
-        throwex SystemException("Cannot close the current process token!");
+        throwex FileSystemException("Cannot close the current process token!");
 
     return Path(std::wstring(buffer.data(), size));
 #elif defined(unix) || defined(__unix) || defined(__unix__)
@@ -487,7 +531,7 @@ Path Path::home()
         buffer.resize(buffer.size() * 2);
 
     if ((result != 0) || (ppwd == nullptr))
-        throwex SystemException("Cannot get the home path of the current process!");
+        throwex FileSystemException("Cannot get the home path of the current process!");
 
     return Path(std::string(pwd.pw_dir));
 #endif
@@ -506,7 +550,7 @@ Path Path::temp()
     }
 
     if (size == 0)
-        throwex SystemException("Cannot get the temporary path of the current process!");
+        throwex FileSystemException("Cannot get the temporary path of the current process!");
 
     return Path(std::wstring(buffer.data(), size));
 #elif defined(unix) || defined(__unix) || defined(__unix__)

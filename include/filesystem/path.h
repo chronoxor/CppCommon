@@ -15,6 +15,20 @@
 
 namespace CppCommon {
 
+//! File types
+enum class FileType
+{
+    NONE      = 0,      //!< None (file not found)
+    REGULAR   = 1,      //!< Regular file
+    DIRECTORY = 2,      //!< Directory
+    SYMLINK   = 3,      //!< Symbolic link
+    BLOCK     = 4,      //!< Block device
+    CHARACTER = 5,      //!< Character device
+    FIFO      = 6,      //!< FIFO (named pipe)
+    SOCKET    = 7,      //!< Socket
+    UNKNOWN   = 8       //!< Unknown
+};
+
 //! Filesystem path
 /*!
     Filesystem path wraps string directory, filename, symlink and other path types
@@ -43,7 +57,7 @@ public:
     explicit Path(const std::wstring& path) : _path(Encoding::ToUTF8(path)) {}
     Path(const Path&) = default;
     Path(Path&&) noexcept = default;
-    ~Path() = default;
+    virtual ~Path() = default;
 
     Path& operator=(const std::string& path)
     { return Assign(path); }
@@ -171,7 +185,10 @@ public:
     //! Decompose extension from the current path
     Path extension() const;
 
-    //! Is the path empty?
+    //! Get the path file type
+    FileType type() const;
+
+    //! Is path empty?
     bool empty() const noexcept { return _path.empty(); }
 
     //! Has root path?
@@ -191,6 +208,18 @@ public:
     bool IsAbsolute() const { return HasRoot(); }
     //! Is relative path?
     bool IsRelative() const { return !HasRoot(); }
+
+    //! Is path exists?
+    virtual bool IsExists() const { return type() != FileType::NONE; }
+
+    //! Is path points to regular file?
+    bool IsRegularFile() const { return type() == FileType::REGULAR; }
+    //! Is path points to directory?
+    bool IsDirectory() const { return type() == FileType::DIRECTORY; }
+    //! Is path points to symbolic link?
+    bool IsSymlink() const { return type() == FileType::SYMLINK; }
+    //! Is path points to special file (block, character, FIFO, socket)?
+    bool IsOther() const;
 
     //! Clear path content
     void Clear() noexcept { return _path.clear(); }

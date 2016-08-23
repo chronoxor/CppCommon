@@ -8,6 +8,12 @@
 
 namespace CppCommon {
 
+inline bool Path::IsOther() const
+{
+    FileType t = type();
+    return ((t != FileType::NONE) && (t != FileType::REGULAR) && (t != FileType::DIRECTORY) && (t != FileType::SYMLINK));
+}
+
 inline Path& Path::Assign(const Path& path)
 {
     _path = path._path;
