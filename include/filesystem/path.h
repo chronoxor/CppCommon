@@ -29,6 +29,26 @@ enum class FileType
     UNKNOWN   = 8       //!< Unknown
 };
 
+//! File attributes (Windows specific)
+enum class FileAttributes
+{
+    NONE      = 0x00,   //!< None
+    NORMAL    = 0x01,   //!< Normal
+    ARCHIVED  = 0x02,   //!< Archived
+    HIDDEN    = 0x04,   //!< Hidden
+    INDEXED   = 0x08,   //!< Indexed
+    OFFLINE   = 0x10,   //!< Offline
+    READONLY  = 0x20,   //!< Readonly
+    SYSTEM    = 0x40,   //!< System
+    TEMPORARY = 0x80    //!< Temporary
+};
+FileAttributes operator~(FileAttributes e);
+FileAttributes operator&(FileAttributes e1, FileAttributes e2);
+FileAttributes operator|(FileAttributes e1, FileAttributes e2);
+FileAttributes& operator&=(FileAttributes& e1, FileAttributes e2);
+FileAttributes& operator|=(FileAttributes& e1, FileAttributes e2);
+bool operator&&(FileAttributes e1, FileAttributes e2);
+
 //! Filesystem path
 /*!
     Filesystem path wraps string directory, filename, symlink and other path types
@@ -187,6 +207,8 @@ public:
 
     //! Get the path file type
     FileType type() const;
+    //! Get the path file attributes
+    FileAttributes attributes() const;
 
     //! Is path empty?
     bool empty() const noexcept { return _path.empty(); }
@@ -268,6 +290,9 @@ public:
     Path& RemoveExtension() { return ReplaceExtension(""); }
     //! Remove all trailing separators form the current path
     Path& RemoveTrailingSeparators();
+
+    //! Set file attributes of the current path
+    void SetAttributes(FileAttributes attributes);
 
     //! Get the system path separator character ('\' for Windows or '/' for Unix)
     static char separator() noexcept;

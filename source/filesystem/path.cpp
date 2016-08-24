@@ -277,12 +277,12 @@ Path Path::extension() const
 FileType Path::type() const
 {
 #if defined(_WIN32) || defined(_WIN64)
-    DWORD result = GetFileAttributesW(to_wstring().c_str());
-    if (result == INVALID_FILE_ATTRIBUTES)
+    DWORD attributes = GetFileAttributesW(to_wstring().c_str());
+    if (attributes == INVALID_FILE_ATTRIBUTES)
         return FileType::NONE;
-    else if (result & FILE_ATTRIBUTE_REPARSE_POINT)
+    else if (attributes & FILE_ATTRIBUTE_REPARSE_POINT)
         return FileType::SYMLINK;
-    else if (result & FILE_ATTRIBUTE_DIRECTORY)
+    else if (attributes & FILE_ATTRIBUTE_DIRECTORY)
         return FileType::DIRECTORY;
     else
         return FileType::REGULAR;
@@ -294,7 +294,7 @@ FileType Path::type() const
         if ((errno == ENOENT) || (errno == ENOTDIR))
             return FileType::NONE;
         else
-            throwex FileSystemException("Cannot get the status of the current path!").Attach(*this);
+            throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
     }
 
     if (S_ISREG(st.st_mode))
@@ -315,6 +315,77 @@ FileType Path::type() const
         return FileType::SOCKET;
     else
         return FileType::UNKNOWN;
+#endif
+}
+
+FileAttributes Path::attributes() const
+{
+    FileAttributes result = FileAttributes::NONE;
+#if defined(_WIN32) || defined(_WIN64)
+    DWORD attributes = GetFileAttributesW(to_wstring().c_str());
+    if (attributes == INVALID_FILE_ATTRIBUTES)
+        return FileAttributes::NONE;
+    if (attributes & FILE_ATTRIBUTE_NORMAL)
+        result |= FileAttributes::NORMAL;
+    if (attributes & FILE_ATTRIBUTE_ARCHIVE)
+        result |= FileAttributes::ARCHIVED;
+    if (attributes & FILE_ATTRIBUTE_HIDDEN)
+        result |= FileAttributes::HIDDEN;
+    if (attributes & FILE_ATTRIBUTE_NOT_CONTENT_INDEXED)
+        result |= FileAttributes::INDEXED;
+    if (attributes & FILE_ATTRIBUTE_OFFLINE)
+        result |= FileAttributes::OFFLINE;
+    if (attributes & FILE_ATTRIBUTE_READONLY)
+        result |= FileAttributes::READONLY;
+    if (attributes & FILE_ATTRIBUTE_SYSTEM)
+        result |= FileAttributes::SYSTEM;
+    if (attributes & FILE_ATTRIBUTE_TEMPORARY)
+        result |= FileAttributes::TEMPORARY;
+#endif
+    return result;
+}
+
+void Path::SetAttributes(FileAttributes attributes)
+{
+#if defined(_WIN32) || defined(_WIN64)
+    std::wstring path = to_wstring();
+    DWORD result = GetFileAttributesW(path.c_str());
+    if (result == INVALID_FILE_ATTRIBUTES)
+        throwex FileSystemException("Cannot get file attributes of the path!").Attach(*this);
+    if (attributes && FileAttributes::NORMAL)
+        result |= FILE_ATTRIBUTE_NORMAL;
+    else
+        result &= ~FILE_ATTRIBUTE_NORMAL;
+    if (attributes && FileAttributes::ARCHIVED)
+        result |= FILE_ATTRIBUTE_ARCHIVE;
+    else
+        result &= ~FILE_ATTRIBUTE_ARCHIVE;
+    if (attributes && FileAttributes::HIDDEN)
+        result |= FILE_ATTRIBUTE_HIDDEN;
+    else
+        result &= ~FILE_ATTRIBUTE_HIDDEN;
+    if (attributes && FileAttributes::INDEXED)
+        result |= FILE_ATTRIBUTE_NOT_CONTENT_INDEXED;
+    else
+        result &= ~FILE_ATTRIBUTE_NOT_CONTENT_INDEXED;
+    if (attributes && FileAttributes::OFFLINE)
+        result |= FILE_ATTRIBUTE_OFFLINE;
+    else
+        result &= ~FILE_ATTRIBUTE_OFFLINE;
+    if (attributes && FileAttributes::READONLY)
+        result |= FILE_ATTRIBUTE_READONLY;
+    else
+        result &= ~FILE_ATTRIBUTE_READONLY;
+    if (attributes && FileAttributes::SYSTEM)
+        result |= FILE_ATTRIBUTE_SYSTEM;
+    else
+        result &= ~FILE_ATTRIBUTE_SYSTEM;
+    if (attributes && FileAttributes::TEMPORARY)
+        result |= FILE_ATTRIBUTE_TEMPORARY;
+    else
+        result &= ~FILE_ATTRIBUTE_TEMPORARY;
+    if (!SetFileAttributesW(path.c_str(), result))
+        throwex FileSystemException("Cannot set file attributes of the path!").Attach(*this);
 #endif
 }
 

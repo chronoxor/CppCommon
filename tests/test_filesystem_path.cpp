@@ -340,7 +340,20 @@ TEST_CASE("Path manipulations", "[CppCommon][FileSystem]")
     REQUIRE(Path("/foo/bar///").RemoveTrailingSeparators().MakePreferred() == Path("/foo/bar").MakePreferred());
 }
 
-TEST_CASE("Paths of the current process", "[CppCommon][FileSystem]")
+#if defined(_WIN32) || defined(_WIN64)
+TEST_CASE("Path attributes", "[CppCommon][FileSystem]")
+{
+    Path current = Path::current();
+    FileAttributes old_attributes = current.attributes();
+    FileAttributes new_attributes = old_attributes | FileAttributes::ARCHIVED | FileAttributes::READONLY;
+    current.SetAttributes(new_attributes);
+    REQUIRE(current.attributes() == new_attributes);
+    current.SetAttributes(old_attributes);
+    REQUIRE(current.attributes() == old_attributes);
+}
+#endif
+
+TEST_CASE("Path constants of the current process", "[CppCommon][FileSystem]")
 {
     Path initial = Path::initial();
     REQUIRE(!initial.empty());
