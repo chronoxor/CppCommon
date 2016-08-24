@@ -285,6 +285,13 @@ public:
     //! Get the unique filename in UUID format "00000000-0000-0000-0000-000000000000"
     static Path unique();
 
+    //! Set the current path of the current process
+    static void SetCurrent(const std::string& path)
+    { SetCurrent(Path(path)); }
+    static void SetCurrent(const std::wstring& path)
+    { SetCurrent(Path(path)); }
+    static void SetCurrent(const Path& path);
+
     //! Input instance from the given input stream
     friend std::istream& operator>>(std::istream& is, Path& instance)
     { is >> instance._path; return is; }

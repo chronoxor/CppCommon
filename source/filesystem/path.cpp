@@ -568,4 +568,17 @@ Path Path::unique()
     return Path(UUID::Generate().to_string());
 }
 
+void Path::SetCurrent(const Path& path)
+{
+#if defined(_WIN32) || defined(_WIN64)
+    Path temp(path / "");
+    if (!SetCurrentDirectoryW(temp.to_wstring().c_str()))
+        throwex FileSystemException("Cannot set the current path of the current process!").Attach(temp);
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    int result = chdir(path.native().c_str());
+    if (result != 0)
+        throwex FileSystemException("Cannot set the current path of the current process!").Attach(path);
+#endif
+}
+
 } // namespace CppCommon

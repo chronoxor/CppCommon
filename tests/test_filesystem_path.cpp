@@ -14,35 +14,6 @@ TEST_CASE("Path common", "[CppCommon][FileSystem]")
     char separator = Path::separator();
     REQUIRE(((separator == '\\') || (separator == '/')));
 
-    Path initial = Path::initial();
-    REQUIRE(!initial.empty());
-    REQUIRE(initial.IsExists());
-    REQUIRE(initial.IsDirectory());
-
-    Path current = Path::current();
-    REQUIRE(!current.empty());
-    REQUIRE(current.IsExists());
-    REQUIRE(current.IsDirectory());
-
-    Path executable = Path::executable();
-    REQUIRE(!executable.empty());
-    REQUIRE(executable.IsExists());
-    REQUIRE(executable.IsRegularFile());
-
-    Path home = Path::home();
-    REQUIRE(!home.empty());
-    REQUIRE(home.IsExists());
-    REQUIRE(home.IsDirectory());
-
-    Path temp = Path::temp();
-    REQUIRE(!temp.empty());
-    REQUIRE(temp.IsExists());
-    REQUIRE(temp.IsDirectory());
-
-    Path unique = Path::unique();
-    REQUIRE(!unique.empty());
-    REQUIRE(!unique.IsExists());
-
     // Test swap method
     Path swap_path_1("foo");
     Path swap_path_2("bar");
@@ -367,4 +338,42 @@ TEST_CASE("Path manipulations", "[CppCommon][FileSystem]")
     REQUIRE(Path("/foo/bar/").RemoveTrailingSeparators().MakePreferred() == Path("/foo/bar").MakePreferred());
     REQUIRE(Path("/foo/bar//").RemoveTrailingSeparators().MakePreferred() == Path("/foo/bar").MakePreferred());
     REQUIRE(Path("/foo/bar///").RemoveTrailingSeparators().MakePreferred() == Path("/foo/bar").MakePreferred());
+}
+
+TEST_CASE("Paths of the current process", "[CppCommon][FileSystem]")
+{
+    Path initial = Path::initial();
+    REQUIRE(!initial.empty());
+    REQUIRE(initial.IsExists());
+    REQUIRE(initial.IsDirectory());
+
+    Path current = Path::current();
+    REQUIRE(!current.empty());
+    REQUIRE(current.IsExists());
+    REQUIRE(current.IsDirectory());
+
+    Path executable = Path::executable();
+    REQUIRE(!executable.empty());
+    REQUIRE(executable.IsExists());
+    REQUIRE(executable.IsRegularFile());
+
+    Path home = Path::home();
+    REQUIRE(!home.empty());
+    REQUIRE(home.IsExists());
+    REQUIRE(home.IsDirectory());
+
+    Path temp = Path::temp();
+    REQUIRE(!temp.empty());
+    REQUIRE(temp.IsExists());
+    REQUIRE(temp.IsDirectory());
+
+    Path unique = Path::unique();
+    REQUIRE(!unique.empty());
+    REQUIRE(!unique.IsExists());
+
+    Path parent = current.parent();
+    Path::SetCurrent(parent);
+    REQUIRE(Path::current() == parent);
+    Path::SetCurrent(current);
+    REQUIRE(Path::current() == current);
 }
