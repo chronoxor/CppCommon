@@ -318,9 +318,9 @@ FileType Path::type() const
 #endif
 }
 
-FileAttributes Path::attributes() const
+Flags<FileAttributes> Path::attributes() const
 {
-    Flags<FileAttributes> result = FileAttributes::NONE;
+    Flags<FileAttributes> result;
 #if defined(_WIN32) || defined(_WIN64)
     DWORD attributes = GetFileAttributesW(to_wstring().c_str());
     if (attributes == INVALID_FILE_ATTRIBUTES)
@@ -342,10 +342,10 @@ FileAttributes Path::attributes() const
     if (attributes & FILE_ATTRIBUTE_TEMPORARY)
         result |= FileAttributes::TEMPORARY;
 #endif
-    return result.value();
+    return result;
 }
 
-void Path::SetAttributes(FileAttributes attributes)
+void Path::SetAttributes(const Flags<FileAttributes>& attributes)
 {
 #if defined(_WIN32) || defined(_WIN64)
     std::wstring path = to_wstring();

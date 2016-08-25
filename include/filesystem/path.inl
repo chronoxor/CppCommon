@@ -6,6 +6,8 @@
     \copyright MIT License
 */
 
+ENUM_FLAGS(CppCommon::FileAttributes)
+
 namespace CppCommon {
 
 inline bool Path::IsOther() const

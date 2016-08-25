@@ -44,7 +44,6 @@ enum class FileAttributes
     SYSTEM    = 0x40,   //!< System
     TEMPORARY = 0x80    //!< Temporary
 };
-template <> struct IsEnumFlags<FileAttributes> : std::true_type {};
 
 //! Filesystem path
 /*!
@@ -205,7 +204,7 @@ public:
     //! Get the path file type
     FileType type() const;
     //! Get the path file attributes
-    FileAttributes attributes() const;
+    Flags<FileAttributes> attributes() const;
 
     //! Is path empty?
     bool empty() const noexcept { return _path.empty(); }
@@ -289,7 +288,7 @@ public:
     Path& RemoveTrailingSeparators();
 
     //! Set file attributes of the current path
-    void SetAttributes(FileAttributes attributes);
+    void SetAttributes(const Flags<FileAttributes>& attributes);
 
     //! Get the system path separator character ('\' for Windows or '/' for Unix)
     static char separator() noexcept;
