@@ -297,14 +297,12 @@ FileType Path::type() const
             throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
     }
 
-    if (S_ISREG(st.st_mode))
-        return FileType::REGULAR;
+    if (S_ISLNK(st.st_mode))
+        return FileType::SYMLINK;
     else if (S_ISDIR(st.st_mode))
         return FileType::DIRECTORY;
-    else if (S_ISLNK(st.st_mode))
-        return FileType::SYMLINK;
-    else if (S_ISLNK(st.st_mode))
-        return FileType::SYMLINK;
+    else if (S_ISREG(st.st_mode))
+        return FileType::REGULAR;
     else if (S_ISBLK(st.st_mode))
         return FileType::BLOCK;
     else if (S_ISCHR(st.st_mode))
@@ -386,6 +384,78 @@ void Path::SetAttributes(const Flags<FileAttributes>& attributes)
         result &= ~FILE_ATTRIBUTE_TEMPORARY;
     if (!SetFileAttributesW(path.c_str(), result))
         throwex FileSystemException("Cannot set file attributes of the path!").Attach(*this);
+#endif
+}
+
+Flags<FilePermissions> Path::permissions() const
+{
+    Flags<FilePermissions> result;
+#if defined(unix) || defined(__unix) || defined(__unix__)
+    struct stat st;
+    int result = stat(native().c_str(), &st);
+    if (result != 0)
+    {
+        if ((errno == ENOENT) || (errno == ENOTDIR))
+            return FilePermissions::NONE;
+        else
+            throwex FileSystemException("Cannot get file permissions of the path!").Attach(*this);
+    }
+
+    if (st.st_mode & S_IROTH)
+        return FilePermissions::IROTH;
+    if (st.st_mode & S_IWOTH)
+        return FilePermissions::IWOTH;
+    if (st.st_mode & S_IXOTH)
+        return FilePermissions::IXOTH;
+    if (st.st_mode & S_IRWXO)
+        return FilePermissions::IRWXO;
+    if (st.st_mode & S_ISUID)
+        return FilePermissions::ISUID;
+    if (st.st_mode & S_ISGID)
+        return FilePermissions::ISGID;
+    if (st.st_mode & S_ISVTX)
+        return FilePermissions::ISVTX;
+#endif
+    return result;
+}
+
+void Path::SetPermissions(const Flags<FilePermissions>& permissions)
+{
+#if defined(_WIN32) || defined(_WIN64)
+    mode_t mode = 0;
+    if (permissions & FilePermissions::IRUSR)
+        mode |= S_IRUSR;
+    if (permissions & FilePermissions::IWUSR)
+        mode |= S_IWUSR;
+    if (permissions & FilePermissions::IXUSR)
+        mode |= S_IXUSR;
+    if (permissions & FilePermissions::IRWXU)
+        mode |= S_IRWXU;
+    if (permissions & FilePermissions::IRGRP)
+        mode |= S_IRGRP;
+    if (permissions & FilePermissions::IWGRP)
+        mode |= S_IWGRP;
+    if (permissions & FilePermissions::IXGRP)
+        mode |= S_IXGRP;
+    if (permissions & FilePermissions::IRWXG)
+        mode |= S_IRWXG;
+    if (permissions & FilePermissions::IROTH)
+        mode |= S_IROTH;
+    if (permissions & FilePermissions::IWOTH)
+        mode |= S_IWOTH;
+    if (permissions & FilePermissions::IXOTH)
+        mode |= S_IXOTH;
+    if (permissions & FilePermissions::IRWXO)
+        mode |= S_IRWXO;
+    if (permissions & FilePermissions::ISUID)
+        mode |= S_ISUID;
+    if (permissions & FilePermissions::ISGID)
+        mode |= S_ISGID;
+    if (permissions & FilePermissions::ISVTX)
+        mode |= S_ISVTX;
+    int result = chmod(native().c_str(), mode);
+    if (result != 0)
+        throwex FileSystemException("Cannot set file permissions of the path!").Attach(*this);
 #endif
 }
 

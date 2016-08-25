@@ -353,6 +353,19 @@ TEST_CASE("Path attributes", "[CppCommon][FileSystem]")
 }
 #endif
 
+#if defined(unix) || defined(__unix) || defined(__unix__)
+TEST_CASE("Path permissions", "[CppCommon][FileSystem]")
+{
+    Path current = Path::current();
+    auto old_permissions = current.permissions();
+    auto new_permissions = old_permissions | FilePermissions::IRWXU | FilePermissions::IRWXG | FilePermissions::IRWXO;
+    current.SetPermissions(new_permissions);
+    REQUIRE(current.permissions() == new_permissions);
+    current.SetPermissions(old_permissions);
+    REQUIRE(current.permissions() == old_permissions);
+}
+#endif
+
 TEST_CASE("Path constants of the current process", "[CppCommon][FileSystem]")
 {
     Path initial = Path::initial();

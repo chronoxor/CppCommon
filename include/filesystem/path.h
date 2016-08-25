@@ -45,6 +45,27 @@ enum class FileAttributes
     TEMPORARY = 0x80    //!< Temporary
 };
 
+//! File permissions (Unix specific)
+enum class FilePermissions
+{
+    NONE      = 00000,  //!< None
+    IRUSR     = 00400,  //!< Read permission bit for the owner of the file
+    IWUSR     = 00200,  //!< Write permission bit for the owner of the file
+    IXUSR     = 00100,  //!< Execute (for ordinary files) or search (for directories) permission bit for the owner of the file
+    IRWXU     = 00700,  //!< This is equivalent to IRUSR | IWUSR | IXUSR
+    IRGRP     = 00040,  //!< Read permission bit for the group owner of the file
+    IWGRP     = 00020,  //!< Write permission bit for the group owner of the file
+    IXGRP     = 00010,  //!< Execute or search permission bit for the group owner of the file
+    IRWXG     = 00070,  //!< This is equivalent to IRGRP | IWGRP | IXGRP
+    IROTH     = 00004,  //!< Read permission bit for other users
+    IWOTH     = 00002,  //!< Write permission bit for other users
+    IXOTH     = 00001,  //!< Execute or search permission bit for other users
+    IRWXO     = 00007,  //!< This is equivalent to IROTH | IWOTH | IXOTH
+    ISUID     = 04000,  //!< This is the set-user-ID on execute bit
+    ISGID     = 02000,  //!< This is the set-group-ID on execute bit
+    ISVTX     = 01000,  //!< This is the sticky bit
+};
+
 //! Filesystem path
 /*!
     Filesystem path wraps string directory, filename, symlink and other path types
@@ -205,6 +226,8 @@ public:
     FileType type() const;
     //! Get the path file attributes
     Flags<FileAttributes> attributes() const;
+    //! Get the path file permissions
+    Flags<FilePermissions> permissions() const;
 
     //! Is path empty?
     bool empty() const noexcept { return _path.empty(); }
@@ -289,6 +312,8 @@ public:
 
     //! Set file attributes of the current path
     void SetAttributes(const Flags<FileAttributes>& attributes);
+    //! Set file permissions of the current path
+    void SetPermissions(const Flags<FilePermissions>& permissions);
 
     //! Get the system path separator character ('\' for Windows or '/' for Unix)
     static char separator() noexcept;
