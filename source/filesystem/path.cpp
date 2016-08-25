@@ -421,7 +421,7 @@ Flags<FilePermissions> Path::permissions() const
 
 void Path::SetPermissions(const Flags<FilePermissions>& permissions)
 {
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(unix) || defined(__unix) || defined(__unix__)
     mode_t mode = 0;
     if (permissions & FilePermissions::IRUSR)
         mode |= S_IRUSR;
