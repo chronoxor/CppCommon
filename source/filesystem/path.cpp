@@ -389,7 +389,7 @@ void Path::SetAttributes(const Flags<FileAttributes>& attributes)
 
 Flags<FilePermissions> Path::permissions() const
 {
-    Flags<FilePermissions> result;
+    Flags<FilePermissions> permissions;
 #if defined(unix) || defined(__unix) || defined(__unix__)
     struct stat st;
     int result = stat(native().c_str(), &st);
@@ -402,21 +402,21 @@ Flags<FilePermissions> Path::permissions() const
     }
 
     if (st.st_mode & S_IROTH)
-        return FilePermissions::IROTH;
+        permissions |= FilePermissions::IROTH;
     if (st.st_mode & S_IWOTH)
-        return FilePermissions::IWOTH;
+        permissions |= FilePermissions::IWOTH;
     if (st.st_mode & S_IXOTH)
-        return FilePermissions::IXOTH;
+        permissions |= FilePermissions::IXOTH;
     if (st.st_mode & S_IRWXO)
-        return FilePermissions::IRWXO;
+        permissions |= FilePermissions::IRWXO;
     if (st.st_mode & S_ISUID)
-        return FilePermissions::ISUID;
+        permissions |= FilePermissions::ISUID;
     if (st.st_mode & S_ISGID)
-        return FilePermissions::ISGID;
+        permissions |= FilePermissions::ISGID;
     if (st.st_mode & S_ISVTX)
-        return FilePermissions::ISVTX;
+        permissions |= FilePermissions::ISVTX;
 #endif
-    return result;
+    return permissions;
 }
 
 void Path::SetPermissions(const Flags<FilePermissions>& permissions)
