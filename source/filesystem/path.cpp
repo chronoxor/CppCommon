@@ -401,6 +401,22 @@ Flags<FilePermissions> Path::permissions() const
             throwex FileSystemException("Cannot get file permissions of the path!").Attach(*this);
     }
 
+    if (st.st_mode & S_IRUSR)
+        permissions |= FilePermissions::IRUSR;
+    if (st.st_mode & S_IWUSR)
+        permissions |= FilePermissions::IWUSR;
+    if (st.st_mode & S_IXUSR)
+        permissions |= FilePermissions::IXUSR;
+    if (st.st_mode & S_IRWXU)
+        permissions |= FilePermissions::IRWXU;
+    if (st.st_mode & S_IRGRP)
+        permissions |= FilePermissions::IRGRP;
+    if (st.st_mode & S_IWGRP)
+        permissions |= FilePermissions::IWGRP;
+    if (st.st_mode & S_IXGRP)
+        permissions |= FilePermissions::IXGRP;
+    if (st.st_mode & S_IRWXG)
+        permissions |= FilePermissions::IRWXG;
     if (st.st_mode & S_IROTH)
         permissions |= FilePermissions::IROTH;
     if (st.st_mode & S_IWOTH)
