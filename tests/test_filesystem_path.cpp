@@ -344,8 +344,8 @@ TEST_CASE("Path manipulations", "[CppCommon][FileSystem]")
 TEST_CASE("Path attributes", "[CppCommon][FileSystem]")
 {
     Path current = Path::current();
-    FileAttributes old_attributes = current.attributes();
-    FileAttributes new_attributes = old_attributes | FileAttributes::ARCHIVED | FileAttributes::READONLY;
+    auto old_attributes = current.attributes();
+    auto new_attributes = old_attributes | FileAttributes::ARCHIVED | FileAttributes::READONLY;
     current.SetAttributes(new_attributes);
     REQUIRE(current.attributes() == new_attributes);
     current.SetAttributes(old_attributes);

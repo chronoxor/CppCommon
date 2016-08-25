@@ -320,7 +320,7 @@ FileType Path::type() const
 
 FileAttributes Path::attributes() const
 {
-    FileAttributes result = FileAttributes::NONE;
+    Flags<FileAttributes> result = FileAttributes::NONE;
 #if defined(_WIN32) || defined(_WIN64)
     DWORD attributes = GetFileAttributesW(to_wstring().c_str());
     if (attributes == INVALID_FILE_ATTRIBUTES)
@@ -342,7 +342,7 @@ FileAttributes Path::attributes() const
     if (attributes & FILE_ATTRIBUTE_TEMPORARY)
         result |= FileAttributes::TEMPORARY;
 #endif
-    return result;
+    return result.value();
 }
 
 void Path::SetAttributes(FileAttributes attributes)
@@ -352,35 +352,35 @@ void Path::SetAttributes(FileAttributes attributes)
     DWORD result = GetFileAttributesW(path.c_str());
     if (result == INVALID_FILE_ATTRIBUTES)
         throwex FileSystemException("Cannot get file attributes of the path!").Attach(*this);
-    if (attributes && FileAttributes::NORMAL)
+    if (attributes & FileAttributes::NORMAL)
         result |= FILE_ATTRIBUTE_NORMAL;
     else
         result &= ~FILE_ATTRIBUTE_NORMAL;
-    if (attributes && FileAttributes::ARCHIVED)
+    if (attributes & FileAttributes::ARCHIVED)
         result |= FILE_ATTRIBUTE_ARCHIVE;
     else
         result &= ~FILE_ATTRIBUTE_ARCHIVE;
-    if (attributes && FileAttributes::HIDDEN)
+    if (attributes & FileAttributes::HIDDEN)
         result |= FILE_ATTRIBUTE_HIDDEN;
     else
         result &= ~FILE_ATTRIBUTE_HIDDEN;
-    if (attributes && FileAttributes::INDEXED)
+    if (attributes & FileAttributes::INDEXED)
         result |= FILE_ATTRIBUTE_NOT_CONTENT_INDEXED;
     else
         result &= ~FILE_ATTRIBUTE_NOT_CONTENT_INDEXED;
-    if (attributes && FileAttributes::OFFLINE)
+    if (attributes & FileAttributes::OFFLINE)
         result |= FILE_ATTRIBUTE_OFFLINE;
     else
         result &= ~FILE_ATTRIBUTE_OFFLINE;
-    if (attributes && FileAttributes::READONLY)
+    if (attributes & FileAttributes::READONLY)
         result |= FILE_ATTRIBUTE_READONLY;
     else
         result &= ~FILE_ATTRIBUTE_READONLY;
-    if (attributes && FileAttributes::SYSTEM)
+    if (attributes & FileAttributes::SYSTEM)
         result |= FILE_ATTRIBUTE_SYSTEM;
     else
         result &= ~FILE_ATTRIBUTE_SYSTEM;
-    if (attributes && FileAttributes::TEMPORARY)
+    if (attributes & FileAttributes::TEMPORARY)
         result |= FILE_ATTRIBUTE_TEMPORARY;
     else
         result &= ~FILE_ATTRIBUTE_TEMPORARY;

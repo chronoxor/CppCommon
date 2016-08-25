@@ -8,36 +8,6 @@
 
 namespace CppCommon {
 
-inline FileAttributes operator~(FileAttributes e)
-{
-    return (FileAttributes)(~(int)e);
-}
-
-inline FileAttributes operator&(FileAttributes e1, FileAttributes e2)
-{
-    return (FileAttributes)((int)e1 & (int)e2);
-}
-
-inline FileAttributes operator|(FileAttributes e1, FileAttributes e2)
-{
-    return (FileAttributes)((int)e1 | (int)e2);
-}
-
-inline FileAttributes& operator&=(FileAttributes& e1, FileAttributes e2)
-{
-    return (e1 = (FileAttributes)((int)e1 & (int)e2));
-}
-
-inline FileAttributes& operator|=(FileAttributes& e1, FileAttributes e2)
-{
-    return (e1 = (FileAttributes)((int)e1 | (int)e2));
-}
-
-inline bool operator&&(FileAttributes e1, FileAttributes e2)
-{
-    return (((int)e1 & (int)e2) != 0);
-}
-
 inline bool Path::IsOther() const
 {
     FileType t = type();

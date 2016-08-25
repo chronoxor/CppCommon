@@ -11,6 +11,8 @@
 
 #include "string/encoding.h"
 
+#include "types/flags.h"
+
 #include <string>
 
 namespace CppCommon {
@@ -42,12 +44,7 @@ enum class FileAttributes
     SYSTEM    = 0x40,   //!< System
     TEMPORARY = 0x80    //!< Temporary
 };
-FileAttributes operator~(FileAttributes e);
-FileAttributes operator&(FileAttributes e1, FileAttributes e2);
-FileAttributes operator|(FileAttributes e1, FileAttributes e2);
-FileAttributes& operator&=(FileAttributes& e1, FileAttributes e2);
-FileAttributes& operator|=(FileAttributes& e1, FileAttributes e2);
-bool operator&&(FileAttributes e1, FileAttributes e2);
+template <> struct IsEnumFlags<FileAttributes> : std::true_type {};
 
 //! Filesystem path
 /*!
