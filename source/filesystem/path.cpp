@@ -563,7 +563,7 @@ void Path::SetCreated(const UtcTimestamp& timestamp)
     struct timeval times[2];
     TIMESPEC_TO_TIMEVAL(&times[0], &st.st_atim);
     times[1].tv_sec = timestamp.seconds();
-    times[1].tv_nsec = timestamp.nanoseconds() % 1000000000;
+    times[1].tv_usec = timestamp.microseconds() % 1000000;
 
     result = utimes(native().c_str(), times);
     if (result != 0)
@@ -599,7 +599,7 @@ void Path::SetModified(const UtcTimestamp& timestamp)
     struct timeval times[2];
     TIMESPEC_TO_TIMEVAL(&times[0], &st.st_atim);
     times[1].tv_sec = timestamp.seconds();
-    times[1].tv_nsec = timestamp.nanoseconds() % 1000000000;
+    times[1].tv_usec = timestamp.microseconds() % 1000000;
 
     result = utimes(native().c_str(), times);
     if (result != 0)
