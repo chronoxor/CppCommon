@@ -561,7 +561,7 @@ void Path::SetCreated(const UtcTimestamp& timestamp)
         throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
 
     struct timeval times[2];
-    TIMESPEC_TO_TIMEVAL(&st.st_atim, &times[0]);
+    TIMESPEC_TO_TIMEVAL(&times[0], &st.st_atim);
     times[1].tv_sec = timestamp.seconds();
     times[1].tv_nsec = timestamp.nanoseconds() % 1000000000;
 
@@ -597,7 +597,7 @@ void Path::SetModified(const UtcTimestamp& timestamp)
         throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
 
     struct timeval times[2];
-    TIMESPEC_TO_TIMEVAL(&st.st_atim, &times[0]);
+    TIMESPEC_TO_TIMEVAL(&times[0], &st.st_atim);
     times[1].tv_sec = timestamp.seconds();
     times[1].tv_nsec = timestamp.nanoseconds() % 1000000000;
 
