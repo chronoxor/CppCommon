@@ -626,6 +626,32 @@ Path& Path::Append(const Path& path)
     return *this;
 }
 
+int Path::hardlinks() const
+{
+#if defined(_WIN32) || defined(_WIN64)
+    HANDLE hFile = CreateFileW(to_wstring().c_str(), GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+    if (hFile == INVALID_HANDLE_VALUE)
+        throwex FileSystemException("Cannot open the path for reading!").Attach(*this);
+
+    // Smart resource deleter pattern
+    auto clear = [](HANDLE hFile) { CloseHandle(hFile); };
+    auto file = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear)>(hFile, clear);
+
+    BY_HANDLE_FILE_INFORMATION bhfi;
+    if (!GetFileInformationByHandle(file.get(), &bhfi))
+        throwex FileSystemException("Cannot get file information of the path!").Attach(*this);
+
+    return (int)bhfi.nNumberOfLinks;
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    struct stat st;
+    int result = stat(native().c_str(), &st);
+    if (result != 0)
+        throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
+
+    return (int)st.st_nlink;
+#endif
+}
+
 Path& Path::MakePreferred()
 {
 #if defined(_WIN32) || defined(_WIN64)

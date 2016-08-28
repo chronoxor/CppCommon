@@ -233,6 +233,8 @@ public:
     UtcTimestamp created() const;
     //! Get the path modified UTC timestamp
     UtcTimestamp modified() const;
+    //! Get the path count of hardlinks
+    int hardlinks() const;
 
     //! Is path empty?
     bool empty() const noexcept { return _path.empty(); }
@@ -323,6 +325,8 @@ public:
     void SetCreated(const UtcTimestamp& timestamp);
     //! Set modified UTC timestamp of the current path
     void SetModified(const UtcTimestamp& timestamp);
+    //! Touch the current path and set its modified UTC timestamp to the current value
+    void Touch() { SetModified(UtcTimestamp()); }
 
     //! Get the system path separator character ('\' for Windows or '/' for Unix)
     static char separator() noexcept;

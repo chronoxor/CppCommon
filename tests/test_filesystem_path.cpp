@@ -366,6 +366,21 @@ TEST_CASE("Path permissions", "[CppCommon][FileSystem]")
 }
 #endif
 
+TEST_CASE("Path timestamps", "[CppCommon][FileSystem]")
+{
+    Path executable = Path::executable();
+    REQUIRE(executable.created().total() > 0);
+    REQUIRE(executable.created().total() <= UtcTimestamp());
+    REQUIRE(executable.modified().total() > 0);
+    REQUIRE(executable.modified().total() <= UtcTimestamp());
+}
+
+TEST_CASE("Path hardlinks", "[CppCommon][FileSystem]")
+{
+    Path executable = Path::executable();
+    REQUIRE(executable.hardlinks() > 0);
+}
+
 TEST_CASE("Path constants of the current process", "[CppCommon][FileSystem]")
 {
     Path initial = Path::initial();
