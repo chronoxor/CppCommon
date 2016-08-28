@@ -500,12 +500,7 @@ UtcTimestamp Path::created() const
     struct stat st;
     int result = stat(native().c_str(), &st);
     if (result != 0)
-    {
-        if ((errno == ENOENT) || (errno == ENOTDIR))
-            return FileType::NONE;
-        else
-            throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
-    }
+        throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
 
     return UtcTimestamp(Timestamp((st.st_mtim.tv_sec * 1000 * 1000 * 1000) + st.st_mtim.tv_nsec));
 #endif
@@ -534,12 +529,7 @@ UtcTimestamp Path::modified() const
     struct stat st;
     int result = stat(native().c_str(), &st);
     if (result != 0)
-    {
-        if ((errno == ENOENT) || (errno == ENOTDIR))
-            return FileType::NONE;
-        else
-            throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
-    }
+        throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
 
     return UtcTimestamp(Timestamp((st.st_mtim.tv_sec * 1000 * 1000 * 1000) + st.st_mtim.tv_nsec));
 #endif
@@ -571,7 +561,7 @@ void Path::SetCreated(const UtcTimestamp& timestamp)
         throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
 
     struct timeval times[2];
-    TIMESPEC_TO_TIMEVAL(st.st_atim, times[0]);
+    TIMESPEC_TO_TIMEVAL(&st.st_atim, &times[0]);
     times[1].tv_sec = timestamp.seconds();
     times[1].tv_nsec = timestamp.nanoseconds() % 1000000000;
 
@@ -607,7 +597,7 @@ void Path::SetModified(const UtcTimestamp& timestamp)
         throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
 
     struct timeval times[2];
-    TIMESPEC_TO_TIMEVAL(st.st_atim, times[0]);
+    TIMESPEC_TO_TIMEVAL(&st.st_atim, &times[0]);
     times[1].tv_sec = timestamp.seconds();
     times[1].tv_nsec = timestamp.nanoseconds() % 1000000000;
 
