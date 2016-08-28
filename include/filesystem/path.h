@@ -11,6 +11,7 @@
 
 #include "string/encoding.h"
 
+#include "time/timestamp.h"
 #include "types/flags.h"
 
 #include <string>
@@ -228,6 +229,10 @@ public:
     Flags<FileAttributes> attributes() const;
     //! Get the path file permissions
     Flags<FilePermissions> permissions() const;
+    //! Get the path created UTC timestamp
+    UtcTimestamp created() const;
+    //! Get the path modified UTC timestamp
+    UtcTimestamp modified() const;
 
     //! Is path empty?
     bool empty() const noexcept { return _path.empty(); }
@@ -314,6 +319,10 @@ public:
     void SetAttributes(const Flags<FileAttributes>& attributes);
     //! Set file permissions of the current path
     void SetPermissions(const Flags<FilePermissions>& permissions);
+    //! Set created UTC timestamp of the current path
+    void SetCreated(const UtcTimestamp& timestamp);
+    //! Set modified UTC timestamp of the current path
+    void SetModified(const UtcTimestamp& timestamp);
 
     //! Get the system path separator character ('\' for Windows or '/' for Unix)
     static char separator() noexcept;

@@ -13,6 +13,7 @@
 #include "system/uuid.h"
 
 #include <algorithm>
+#include <memory>
 #include <vector>
 
 #if defined(_WIN32) || defined(_WIN64)
@@ -20,6 +21,7 @@
 #include <userenv.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 #include <sys/stat.h>
+#include <sys/time.h>
 #include <limits.h>
 #include <pwd.h>
 #include <stdlib.h>
@@ -472,6 +474,146 @@ void Path::SetPermissions(const Flags<FilePermissions>& permissions)
     int result = chmod(native().c_str(), mode);
     if (result != 0)
         throwex FileSystemException("Cannot set file permissions of the path!").Attach(*this);
+#endif
+}
+
+UtcTimestamp Path::created() const
+{
+#if defined(_WIN32) || defined(_WIN64)
+    HANDLE hFile = CreateFileW(to_wstring().c_str(), GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+    if (hFile == INVALID_HANDLE_VALUE)
+        throwex FileSystemException("Cannot open the path for reading!").Attach(*this);
+
+    // Smart resource deleter pattern
+    auto clear = [](HANDLE hFile) { CloseHandle(hFile); };
+    auto file = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear)>(hFile, clear);
+
+    FILETIME created;
+    if (!GetFileTime(file.get(), &created, nullptr, nullptr))
+        throwex FileSystemException("Cannot get file created time of the path!").Attach(*this);
+
+    ULARGE_INTEGER result;
+    result.LowPart = created.dwLowDateTime;
+    result.HighPart = created.dwHighDateTime;
+    return UtcTimestamp(Timestamp((result.QuadPart - 116444736000000000ull) * 100));
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    struct stat st;
+    int result = stat(native().c_str(), &st);
+    if (result != 0)
+    {
+        if ((errno == ENOENT) || (errno == ENOTDIR))
+            return FileType::NONE;
+        else
+            throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
+    }
+
+    return UtcTimestamp(Timestamp((st.st_mtim.tv_sec * 1000 * 1000 * 1000) + st.st_mtim.tv_nsec));
+#endif
+}
+
+UtcTimestamp Path::modified() const
+{
+#if defined(_WIN32) || defined(_WIN64)
+    HANDLE hFile = CreateFileW(to_wstring().c_str(), GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+    if (hFile == INVALID_HANDLE_VALUE)
+        throwex FileSystemException("Cannot open the path for reading!").Attach(*this);
+
+    // Smart resource deleter pattern
+    auto clear = [](HANDLE hFile) { CloseHandle(hFile); };
+    auto file = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear)>(hFile, clear);
+
+    FILETIME write;
+    if (!GetFileTime(file.get(), nullptr, nullptr, &write))
+        throwex FileSystemException("Cannot get file modified time of the path!").Attach(*this);
+
+    ULARGE_INTEGER result;
+    result.LowPart = write.dwLowDateTime;
+    result.HighPart = write.dwHighDateTime;
+    return UtcTimestamp(Timestamp((result.QuadPart - 116444736000000000ull) * 100));
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    struct stat st;
+    int result = stat(native().c_str(), &st);
+    if (result != 0)
+    {
+        if ((errno == ENOENT) || (errno == ENOTDIR))
+            return FileType::NONE;
+        else
+            throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
+    }
+
+    return UtcTimestamp(Timestamp((st.st_mtim.tv_sec * 1000 * 1000 * 1000) + st.st_mtim.tv_nsec));
+#endif
+}
+
+void Path::SetCreated(const UtcTimestamp& timestamp)
+{
+#if defined(_WIN32) || defined(_WIN64)
+    HANDLE hFile = CreateFileW(to_wstring().c_str(), GENERIC_WRITE, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+    if (hFile == INVALID_HANDLE_VALUE)
+        throwex FileSystemException("Cannot open the path for writing!").Attach(*this);
+
+    // Smart resource deleter pattern
+    auto clear = [](HANDLE hFile) { CloseHandle(hFile); };
+    auto file = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear)>(hFile, clear);
+
+    ULARGE_INTEGER result;
+    result.QuadPart = (timestamp.total() / 100) + 116444736000000000ull;
+
+    FILETIME created;
+    created.dwLowDateTime = result.LowPart;
+    created.dwHighDateTime = result.HighPart;
+    if (!SetFileTime(file.get(), &created, nullptr, nullptr))
+        throwex FileSystemException("Cannot set file created time of the path!").Attach(*this);
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    struct stat st;
+    int result = stat(native().c_str(), &st);
+    if (result != 0)
+        throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
+
+    struct timeval times[2];
+    TIMESPEC_TO_TIMEVAL(st.st_atim, times[0]);
+    times[1].tv_sec = timestamp.seconds();
+    times[1].tv_nsec = timestamp.nanoseconds() % 1000000000;
+
+    result = utimes(native().c_str(), times);
+    if (result != 0)
+        throwex FileSystemException("Cannot set file created time of the path!").Attach(*this);
+#endif
+}
+
+void Path::SetModified(const UtcTimestamp& timestamp)
+{
+#if defined(_WIN32) || defined(_WIN64)
+    HANDLE hFile = CreateFileW(to_wstring().c_str(), GENERIC_WRITE, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+    if (hFile == INVALID_HANDLE_VALUE)
+        throwex FileSystemException("Cannot open the path for writing!").Attach(*this);
+
+    // Smart resource deleter pattern
+    auto clear = [](HANDLE hFile) { CloseHandle(hFile); };
+    auto file = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear)>(hFile, clear);
+
+    ULARGE_INTEGER result;
+    result.QuadPart = (timestamp.total() / 100) + 116444736000000000ull;
+
+    FILETIME write;
+    write.dwLowDateTime = result.LowPart;
+    write.dwHighDateTime = result.HighPart;
+    if (!SetFileTime(file.get(), nullptr, nullptr, &write))
+        throwex FileSystemException("Cannot set file modified time of the path!").Attach(*this);
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    struct stat st;
+    int result = stat(native().c_str(), &st);
+    if (result != 0)
+        throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
+
+    struct timeval times[2];
+    TIMESPEC_TO_TIMEVAL(st.st_atim, times[0]);
+    times[1].tv_sec = timestamp.seconds();
+    times[1].tv_nsec = timestamp.nanoseconds() % 1000000000;
+
+    result = utimes(native().c_str(), times);
+    if (result != 0)
+        throwex FileSystemException("Cannot set file modified time of the path!").Attach(*this);
 #endif
 }
 
