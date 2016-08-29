@@ -62,7 +62,12 @@ public:
 
     //! Get the current read/write offset of the opened file
     uint64_t offset() const;
+    //! Get the current file size
+    uint64_t size() const;
 
+    //! Is file empty?
+    bool IsFileEmpty() const
+    { return (size() == 0); }
     //! Is file exists?
     bool IsFileExists() const;
     //! Is file opened?

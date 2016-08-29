@@ -23,11 +23,14 @@ TEST_CASE("File", "[CppCommon][FileSystem]")
     REQUIRE(test.IsFileExists());
     REQUIRE(test.IsFileOpened());
     REQUIRE(test.offset() == 0);
+    REQUIRE(test.size() == 0);
     test.Write(buffer.data(), buffer.size());
-	test.Flush();
+    test.Flush();
     REQUIRE(test.offset() == 4);
+    REQUIRE(test.size() == 4);
     test.Close();
     REQUIRE(!test.IsFileOpened());
+    REQUIRE(test.size() == 4);
 
     std::vector<uint8_t> read(buffer.size());
 
@@ -36,30 +39,40 @@ TEST_CASE("File", "[CppCommon][FileSystem]")
     REQUIRE(test.IsFileExists());
     REQUIRE(test.IsFileOpened());
     REQUIRE(test.offset() == 0);
+    REQUIRE(test.size() == 4);
     test.Read(read.data(), read.size());
     REQUIRE(read == buffer);
     REQUIRE(test.offset() == 4);
+    REQUIRE(test.size() == 4);
     test.Close();
     REQUIRE(!test.IsFileOpened());
+    REQUIRE(test.size() == 4);
 
     // Open file for append
     test.Open(true, true);
     REQUIRE(test.IsFileExists());
     REQUIRE(test.IsFileOpened());
     REQUIRE(test.offset() == 0);
-	test.Seek(4);
-	REQUIRE(test.offset() == 4);
+    REQUIRE(test.size() == 4);
+    test.Seek(4);
+    REQUIRE(test.offset() == 4);
+    REQUIRE(test.size() == 4);
     test.Write(read.data(), read.size());
-	test.Flush();
+    test.Flush();
     REQUIRE(test.offset() == 8);
+    REQUIRE(test.size() == 8);
     test.Seek(0);
     REQUIRE(test.offset() == 0);
+    REQUIRE(test.size() == 8);
     test.Read(read.data(), read.size());
     REQUIRE(read == buffer);
     REQUIRE(test.offset() == 4);
+    REQUIRE(test.size() == 8);
     test.Read(read.data(), read.size());
     REQUIRE(read == buffer);
     REQUIRE(test.offset() == 8);
+    REQUIRE(test.size() == 8);
     test.Close();
     REQUIRE(!test.IsFileOpened());
+    REQUIRE(test.size() == 8);
 }

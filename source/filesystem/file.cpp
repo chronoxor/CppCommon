@@ -54,17 +54,58 @@ public:
         if (!IsFileOpened())
             throwex FileSystemException("File is not opened!").Attach(_path);
 #if defined(_WIN32) || defined(_WIN64)
-        LARGE_INTEGER liOffset;
-        LARGE_INTEGER liResult;
-        liOffset.QuadPart = 0;
-        if (!SetFilePointerEx(_file, liOffset, &liResult, FILE_CURRENT))
+        LARGE_INTEGER seek;
+        LARGE_INTEGER result;
+        seek.QuadPart = 0;
+        if (!SetFilePointerEx(_file, seek, &result, FILE_CURRENT))
             throwex FileSystemException("Cannot seek the file!").Attach(_path);
-        return (uint64_t)liResult.QuadPart;
+        return (uint64_t)result.QuadPart;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         off_t result = lseek64(_file, 0, SEEK_CUR);
         if (result == (off_t)-1)
             throwex FileSystemException("Cannot seek the file!").Attach(_path);
         return (uint64_t)result;
+#endif
+    }
+
+    uint64_t size() const
+    {
+#if defined(_WIN32) || defined(_WIN64)
+        if (IsFileOpened())
+        {
+            LARGE_INTEGER result;
+            if (!GetFileSizeEx(_file, &result))
+                throwex FileSystemException("Cannot git the current file size!").Attach(_path);
+            return (uint64_t)result.QuadPart;
+        }
+        else
+        {
+            WIN32_FILE_ATTRIBUTE_DATA fad;
+            if (!GetFileAttributesExW(_path.to_wstring().c_str(), GetFileExInfoStandard, &fad))
+                throwex FileSystemException("Cannot git the current file size!").Attach(_path);
+
+            LARGE_INTEGER result;
+            result.HighPart = fad.nFileSizeHigh;
+            result.LowPart = fad.nFileSizeLow;
+            return (uint64_t)result.QuadPart;
+        }
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+        if (IsFileOpened())
+        {
+            struct stat st;
+            int result = fstat(_file, &st);
+            if (result != 0)
+                throwex FileSystemException("Cannot git the current file size!").Attach(_path);
+            return (uint64_t)st.st_size;
+        }
+        else
+        {
+            struct stat st;
+            int result = stat(_path.native().c_str(), &st);
+            if (result != 0)
+                throwex FileSystemException("Cannot git the current file size!").Attach(_path);
+            return (uint64_t)st.st_size;
+        }
 #endif
     }
 
@@ -296,10 +337,10 @@ public:
         if (!IsFileOpened())
             throwex FileSystemException("File is not opened!").Attach(_path);
 #if defined(_WIN32) || defined(_WIN64)
-        LARGE_INTEGER liOffset;
-        LARGE_INTEGER liResult;
-        liOffset.QuadPart = offset;
-        if (!SetFilePointerEx(_file, liOffset, &liResult, FILE_BEGIN))
+        LARGE_INTEGER seek;
+        LARGE_INTEGER result;
+        seek.QuadPart = offset;
+        if (!SetFilePointerEx(_file, seek, &result, FILE_BEGIN))
             throwex FileSystemException("Cannot seek the file!").Attach(_path);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         off_t result = lseek64(_file, offset, SEEK_SET);
@@ -379,6 +420,11 @@ File::~File()
 uint64_t File::offset() const
 {
     return _pimpl->offset();
+}
+
+uint64_t File::size() const
+{
+    return _pimpl->size();
 }
 
 bool File::IsFileExists() const
