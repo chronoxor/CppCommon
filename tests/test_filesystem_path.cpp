@@ -22,7 +22,6 @@ TEST_CASE("Path common", "[CppCommon][FileSystem]")
     REQUIRE(swap_path_2 == Path("foo"));
 }
 
-
 TEST_CASE("Path preferred", "[CppCommon][FileSystem]")
 {
     // Test make preferred method

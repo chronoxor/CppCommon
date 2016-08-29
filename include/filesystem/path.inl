@@ -37,10 +37,15 @@ inline char Path::separator() noexcept
 #endif
 }
 
-inline void swap(Path& path1, Path& path2) noexcept
+inline void Path::swap(Path& path) noexcept
 {
     using std::swap;
-    swap(path1._path, path2._path);
+    swap(_path, path._path);
+}
+
+inline void swap(Path& path1, Path& path2) noexcept
+{
+    path1.swap(path2);
 }
 
 } // namespace CppCommon

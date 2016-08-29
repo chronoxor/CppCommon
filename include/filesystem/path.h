@@ -36,6 +36,7 @@ enum class FileType
 enum class FileAttributes
 {
     NONE      = 0x00,   //!< None
+    DEFAULT   = 0x01,   //!< Default attributes (Normal)
     NORMAL    = 0x01,   //!< Normal
     ARCHIVED  = 0x02,   //!< Archived
     HIDDEN    = 0x04,   //!< Hidden
@@ -50,6 +51,7 @@ enum class FileAttributes
 enum class FilePermissions
 {
     NONE      = 00000,  //!< None
+    DEFAULT   = 00666,  //!< Default permissions (IRUSR | IWUSR | IRGRP | IWGRP | IROTH | IWOTH)
     IRUSR     = 00400,  //!< Read permission bit for the owner of the file
     IWUSR     = 00200,  //!< Write permission bit for the owner of the file
     IXUSR     = 00100,  //!< Execute (for ordinary files) or search (for directories) permission bit for the owner of the file
@@ -64,7 +66,7 @@ enum class FilePermissions
     IRWXO     = 00007,  //!< This is equivalent to IROTH | IWOTH | IXOTH
     ISUID     = 04000,  //!< This is the set-user-ID on execute bit
     ISGID     = 02000,  //!< This is the set-group-ID on execute bit
-    ISVTX     = 01000,  //!< This is the sticky bit
+    ISVTX     = 01000   //!< This is the sticky bit
 };
 
 //! Filesystem path
@@ -95,7 +97,7 @@ public:
     explicit Path(const std::wstring& path) : _path(Encoding::ToUTF8(path)) {}
     Path(const Path&) = default;
     Path(Path&&) noexcept = default;
-    virtual ~Path() = default;
+    ~Path() = default;
 
     Path& operator=(const std::string& path)
     { return Assign(path); }
@@ -234,7 +236,7 @@ public:
     //! Get the path modified UTC timestamp
     UtcTimestamp modified() const;
     //! Get the path count of hardlinks
-    int hardlinks() const;
+    size_t hardlinks() const;
 
     //! Is path empty?
     bool empty() const noexcept { return _path.empty(); }
@@ -258,7 +260,7 @@ public:
     bool IsRelative() const { return !HasRoot(); }
 
     //! Is path exists?
-    virtual bool IsExists() const { return type() != FileType::NONE; }
+    bool IsExists() const { return type() != FileType::NONE; }
 
     //! Is path points to regular file?
     bool IsRegularFile() const { return type() == FileType::REGULAR; }
@@ -359,6 +361,7 @@ public:
     { os << instance._path; return os; }
 
     //! Swap two instances
+    void swap(Path& path) noexcept;
     friend void swap(Path& path1, Path& path2) noexcept;
 
 protected:

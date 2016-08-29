@@ -626,7 +626,7 @@ Path& Path::Append(const Path& path)
     return *this;
 }
 
-int Path::hardlinks() const
+size_t Path::hardlinks() const
 {
 #if defined(_WIN32) || defined(_WIN64)
     HANDLE hFile = CreateFileW(to_wstring().c_str(), GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
@@ -641,14 +641,14 @@ int Path::hardlinks() const
     if (!GetFileInformationByHandle(file.get(), &bhfi))
         throwex FileSystemException("Cannot get file information of the path!").Attach(*this);
 
-    return (int)bhfi.nNumberOfLinks;
+    return (size_t)bhfi.nNumberOfLinks;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     struct stat st;
     int result = stat(native().c_str(), &st);
     if (result != 0)
         throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
 
-    return (int)st.st_nlink;
+    return (size_t)st.st_nlink;
 #endif
 }
 

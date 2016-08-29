@@ -8,10 +8,15 @@
 
 namespace CppCommon {
 
-inline void swap(UUID& uuid1, UUID& uuid2) noexcept
+inline void UUID::swap(UUID& uuid) noexcept
 {
     using std::swap;
-    swap(uuid1._data, uuid2._data);
+    swap(_data, uuid._data);
+}
+
+inline void swap(UUID& uuid1, UUID& uuid2) noexcept
+{
+    uuid1.swap(uuid2);
 }
 
 } // namespace CppCommon

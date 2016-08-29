@@ -78,6 +78,7 @@ public:
     { os << instance.to_string(); return os; }
 
     //! Swap two instances
+    void swap(UUID& uuid) noexcept;
     friend void swap(UUID& uuid1, UUID& uuid2) noexcept;
 
 protected:
