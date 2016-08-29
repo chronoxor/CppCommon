@@ -112,24 +112,18 @@ public:
             mode |= S_IWUSR;
         if (permissions & FilePermissions::IXUSR)
             mode |= S_IXUSR;
-        if (permissions & FilePermissions::IRWXU)
-            mode |= S_IRWXU;
         if (permissions & FilePermissions::IRGRP)
             mode |= S_IRGRP;
         if (permissions & FilePermissions::IWGRP)
             mode |= S_IWGRP;
         if (permissions & FilePermissions::IXGRP)
             mode |= S_IXGRP;
-        if (permissions & FilePermissions::IRWXG)
-            mode |= S_IRWXG;
         if (permissions & FilePermissions::IROTH)
             mode |= S_IROTH;
         if (permissions & FilePermissions::IWOTH)
             mode |= S_IWOTH;
         if (permissions & FilePermissions::IXOTH)
             mode |= S_IXOTH;
-        if (permissions & FilePermissions::IRWXO)
-            mode |= S_IRWXO;
         if (permissions & FilePermissions::ISUID)
             mode |= S_ISUID;
         if (permissions & FilePermissions::ISGID)
@@ -177,24 +171,18 @@ public:
             mode |= S_IWUSR;
         if (permissions & FilePermissions::IXUSR)
             mode |= S_IXUSR;
-        if (permissions & FilePermissions::IRWXU)
-            mode |= S_IRWXU;
         if (permissions & FilePermissions::IRGRP)
             mode |= S_IRGRP;
         if (permissions & FilePermissions::IWGRP)
             mode |= S_IWGRP;
         if (permissions & FilePermissions::IXGRP)
             mode |= S_IXGRP;
-        if (permissions & FilePermissions::IRWXG)
-            mode |= S_IRWXG;
         if (permissions & FilePermissions::IROTH)
             mode |= S_IROTH;
         if (permissions & FilePermissions::IWOTH)
             mode |= S_IWOTH;
         if (permissions & FilePermissions::IXOTH)
             mode |= S_IXOTH;
-        if (permissions & FilePermissions::IRWXO)
-            mode |= S_IRWXO;
         if (permissions & FilePermissions::ISUID)
             mode |= S_ISUID;
         if (permissions & FilePermissions::ISGID)
@@ -242,24 +230,18 @@ public:
             mode |= S_IWUSR;
         if (permissions & FilePermissions::IXUSR)
             mode |= S_IXUSR;
-        if (permissions & FilePermissions::IRWXU)
-            mode |= S_IRWXU;
         if (permissions & FilePermissions::IRGRP)
             mode |= S_IRGRP;
         if (permissions & FilePermissions::IWGRP)
             mode |= S_IWGRP;
         if (permissions & FilePermissions::IXGRP)
             mode |= S_IXGRP;
-        if (permissions & FilePermissions::IRWXG)
-            mode |= S_IRWXG;
         if (permissions & FilePermissions::IROTH)
             mode |= S_IROTH;
         if (permissions & FilePermissions::IWOTH)
             mode |= S_IWOTH;
         if (permissions & FilePermissions::IXOTH)
             mode |= S_IXOTH;
-        if (permissions & FilePermissions::IRWXO)
-            mode |= S_IRWXO;
         if (permissions & FilePermissions::ISUID)
             mode |= S_ISUID;
         if (permissions & FilePermissions::ISGID)

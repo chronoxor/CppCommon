@@ -409,24 +409,18 @@ Flags<FilePermissions> Path::permissions() const
         permissions |= FilePermissions::IWUSR;
     if (st.st_mode & S_IXUSR)
         permissions |= FilePermissions::IXUSR;
-    if (st.st_mode & S_IRWXU)
-        permissions |= FilePermissions::IRWXU;
     if (st.st_mode & S_IRGRP)
         permissions |= FilePermissions::IRGRP;
     if (st.st_mode & S_IWGRP)
         permissions |= FilePermissions::IWGRP;
     if (st.st_mode & S_IXGRP)
         permissions |= FilePermissions::IXGRP;
-    if (st.st_mode & S_IRWXG)
-        permissions |= FilePermissions::IRWXG;
     if (st.st_mode & S_IROTH)
         permissions |= FilePermissions::IROTH;
     if (st.st_mode & S_IWOTH)
         permissions |= FilePermissions::IWOTH;
     if (st.st_mode & S_IXOTH)
         permissions |= FilePermissions::IXOTH;
-    if (st.st_mode & S_IRWXO)
-        permissions |= FilePermissions::IRWXO;
     if (st.st_mode & S_ISUID)
         permissions |= FilePermissions::ISUID;
     if (st.st_mode & S_ISGID)
@@ -447,24 +441,18 @@ void Path::SetPermissions(const Flags<FilePermissions>& permissions)
         mode |= S_IWUSR;
     if (permissions & FilePermissions::IXUSR)
         mode |= S_IXUSR;
-    if (permissions & FilePermissions::IRWXU)
-        mode |= S_IRWXU;
     if (permissions & FilePermissions::IRGRP)
         mode |= S_IRGRP;
     if (permissions & FilePermissions::IWGRP)
         mode |= S_IWGRP;
     if (permissions & FilePermissions::IXGRP)
         mode |= S_IXGRP;
-    if (permissions & FilePermissions::IRWXG)
-        mode |= S_IRWXG;
     if (permissions & FilePermissions::IROTH)
         mode |= S_IROTH;
     if (permissions & FilePermissions::IWOTH)
         mode |= S_IWOTH;
     if (permissions & FilePermissions::IXOTH)
         mode |= S_IXOTH;
-    if (permissions & FilePermissions::IRWXO)
-        mode |= S_IRWXO;
     if (permissions & FilePermissions::ISUID)
         mode |= S_ISUID;
     if (permissions & FilePermissions::ISGID)
