@@ -75,4 +75,10 @@ TEST_CASE("File", "[CppCommon][FileSystem]")
     test.Close();
     REQUIRE(!test.IsFileOpened());
     REQUIRE(test.size() == 8);
+
+    // Resize the file
+    test.Resize(10);
+    REQUIRE(test.size() == 10);
+    test.Resize(4);
+    REQUIRE(test.size() == 4);
 }

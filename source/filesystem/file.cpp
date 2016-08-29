@@ -61,7 +61,7 @@ public:
             throwex FileSystemException("Cannot seek the file!").Attach(_path);
         return (uint64_t)result.QuadPart;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        off_t result = lseek64(_file, 0, SEEK_CUR);
+        off_t result = lseek(_file, 0, SEEK_CUR);
         if (result == (off_t)-1)
             throwex FileSystemException("Cannot seek the file!").Attach(_path);
         return (uint64_t)result;
@@ -118,7 +118,7 @@ public:
 #endif
     }
 
-    void Create(bool read, bool write, bool truncate, const Flags<FileAttributes>& attributes, const Flags<FilePermissions>& permissions)
+    void Create(bool read, bool write, bool truncate = false, const Flags<FileAttributes>& attributes = File::DEFAULT_ATTRIBUTES, const Flags<FilePermissions>& permissions = File::DEFAULT_PERMISSIONS)
     {
         // Close previously opened file
         assert(!IsFileOpened() && "File is already opened!");
@@ -177,7 +177,7 @@ public:
 #endif
     }
 
-    void Open(bool read, bool write, bool truncate, const Flags<FileAttributes>& attributes, const Flags<FilePermissions>& permissions)
+    void Open(bool read, bool write, bool truncate = false, const Flags<FileAttributes>& attributes = File::DEFAULT_ATTRIBUTES, const Flags<FilePermissions>& permissions = File::DEFAULT_PERMISSIONS)
     {
         // Close previously opened file
         assert(!IsFileOpened() && "File is already opened!");
@@ -236,7 +236,7 @@ public:
 #endif
     }
 
-    void OpenOrCreate(bool read, bool write, bool truncate, const Flags<FileAttributes>& attributes, const Flags<FilePermissions>& permissions)
+    void OpenOrCreate(bool read, bool write, bool truncate = false, const Flags<FileAttributes>& attributes = File::DEFAULT_ATTRIBUTES, const Flags<FilePermissions>& permissions = File::DEFAULT_PERMISSIONS)
     {
         // Close previously opened file
         assert(!IsFileOpened() && "File is already opened!");
@@ -343,9 +343,42 @@ public:
         if (!SetFilePointerEx(_file, seek, &result, FILE_BEGIN))
             throwex FileSystemException("Cannot seek the file!").Attach(_path);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        off_t result = lseek64(_file, offset, SEEK_SET);
+        off_t result = lseek(_file, (off_t)offset, SEEK_SET);
         if (result == (off_t)-1)
             throwex FileSystemException("Cannot seek the file!").Attach(_path);
+#endif
+    }
+
+    void Resize(uint64_t size)
+    {
+#if defined(_WIN32) || defined(_WIN64)
+        if (IsFileOpened())
+        {
+            uint64_t current = offset();
+            Seek(size);
+            if (!SetEndOfFile(_file))
+                throwex FileSystemException("Cannot resize the current file!").Attach(_path);
+            Seek((current < size) ? current : size);
+        }
+        else
+        {
+            OpenOrCreate(false, true);
+            Resize(size);
+            Close();
+        }
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+        if (IsFileOpened())
+        {
+            int result = ftruncate(_file, (off_t)size);
+            if (result != 0)
+                throwex FileSystemException("Cannot resize the current file!").Attach(_path);
+        }
+        else
+        {
+            int result = truncate(_path.native().c_str(), (off_t)size);
+            if (result != 0)
+                throwex FileSystemException("Cannot resize the current file!").Attach(_path);
+        }
 #endif
     }
 
@@ -498,6 +531,11 @@ size_t File::Write(const uint8_t* buffer, size_t size)
 void File::Seek(uint64_t offset)
 {
     return _pimpl->Seek(offset);
+}
+
+void File::Resize(uint64_t size)
+{
+    return _pimpl->Resize(size);
 }
 
 void File::Flush()

@@ -137,6 +137,17 @@ public:
         \param offset - Seek offset
     */
     void Seek(uint64_t offset);
+    //! Resize the current file
+    /*!
+        If the current file size is greater than required size then the file
+        will be truncated with data loss. If the current file size is less
+        than required size then the file will be extend.
+
+        Works for opened and not opened files!
+
+        \param size - File size
+    */
+    void Resize(uint64_t size);
 
     //! Flush the file
     /*!
