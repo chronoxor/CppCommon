@@ -7,6 +7,7 @@
 */
 
 ENUM_FLAGS(CppCommon::FileAttributes)
+ENUM_FLAGS(CppCommon::FilePermissions)
 
 namespace CppCommon {
 

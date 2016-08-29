@@ -25,6 +25,11 @@ namespace CppCommon {
 class File : public Path
 {
 public:
+    //! Default file attributes (Normal)
+    static const Flags<FileAttributes> DEFAULT_ATTRIBUTES;
+    //! Default file permissions (IRUSR | IWUSR | IRGRP | IROTH)
+    static const Flags<FilePermissions> DEFAULT_PERMISSIONS;
+
     //! Default constructor
     File();
     //! Initialize file path with a given string value in UTF-8 encoding (Unix)
@@ -71,10 +76,10 @@ public:
         \param read - Read mode
         \param write - Write mode
         \param truncate - Truncate file (default is false)
-        \param attributes - File attributes (default is FileAttributes::DEFAULT)
-        \param permissions - File permissions (default is FilePermissions::DEFAULT)
+        \param attributes - File attributes (default is File::DEFAULT_ATTRIBUTES)
+        \param permissions - File permissions (default is File::DEFAULT_PERMISSIONS)
     */
-    void Create(bool read, bool write, bool truncate = false, const Flags<FileAttributes>& attributes = FileAttributes::DEFAULT, const Flags<FilePermissions>& permissions = FilePermissions::DEFAULT);
+    void Create(bool read, bool write, bool truncate = false, const Flags<FileAttributes>& attributes = File::DEFAULT_ATTRIBUTES, const Flags<FilePermissions>& permissions = File::DEFAULT_PERMISSIONS);
     //! Open an existing file
     /*!
         If the file with the same name is not exist the method will raise
@@ -83,20 +88,20 @@ public:
         \param read - Read mode
         \param write - Write mode
         \param truncate - Truncate file (default is false)
-        \param attributes - File attributes (default is FileAttributes::DEFAULT)
-        \param permissions - File permissions (default is FilePermissions::DEFAULT)
+        \param attributes - File attributes (default is File::DEFAULT_ATTRIBUTES)
+        \param permissions - File permissions (default is File::DEFAULT_PERMISSIONS)
     */
-    void Open(bool read, bool write, bool truncate = false, const Flags<FileAttributes>& attributes = FileAttributes::DEFAULT, const Flags<FilePermissions>& permissions = FilePermissions::DEFAULT);
+    void Open(bool read, bool write, bool truncate = false, const Flags<FileAttributes>& attributes = File::DEFAULT_ATTRIBUTES, const Flags<FilePermissions>& permissions = File::DEFAULT_PERMISSIONS);
     //! Open or create file
     /*!
         \param read - Read mode
         \param write - Write mode
         \param truncate - Truncate file (default is false)
-        \param attributes - File attributes (default is FileAttributes::DEFAULT)
-        \param permissions - File permissions (default is FilePermissions::DEFAULT)
+        \param attributes - File attributes (default is File::DEFAULT_ATTRIBUTES)
+        \param permissions - File permissions (default is File::DEFAULT_PERMISSIONS)
         \return The current file instance (opened or created)
     */
-    void OpenOrCreate(bool read, bool write, bool truncate = false, const Flags<FileAttributes>& attributes = FileAttributes::DEFAULT, const Flags<FilePermissions>& permissions = FilePermissions::DEFAULT);
+    void OpenOrCreate(bool read, bool write, bool truncate = false, const Flags<FileAttributes>& attributes = File::DEFAULT_ATTRIBUTES, const Flags<FilePermissions>& permissions = File::DEFAULT_PERMISSIONS);
 
     //! Read from the opened file
     /*!

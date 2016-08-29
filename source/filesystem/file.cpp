@@ -366,6 +366,9 @@ private:
 #endif
 };
 
+const Flags<FileAttributes> File::DEFAULT_ATTRIBUTES = FileAttributes::NORMAL;
+const Flags<FilePermissions> File::DEFAULT_PERMISSIONS = FilePermissions::IRUSR | FilePermissions::IWUSR | FilePermissions::IRGRP | FilePermissions::IROTH;
+
 File::File() : Path(), _pimpl(new Impl(*this))
 {
 }

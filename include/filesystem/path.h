@@ -36,7 +36,6 @@ enum class FileType
 enum class FileAttributes
 {
     NONE      = 0x00,   //!< None
-    DEFAULT   = 0x01,   //!< Default attributes (Normal)
     NORMAL    = 0x01,   //!< Normal
     ARCHIVED  = 0x02,   //!< Archived
     HIDDEN    = 0x04,   //!< Hidden
@@ -51,7 +50,6 @@ enum class FileAttributes
 enum class FilePermissions
 {
     NONE      = 00000,  //!< None
-    DEFAULT   = 00666,  //!< Default permissions (IRUSR | IWUSR | IRGRP | IWGRP | IROTH | IWOTH)
     IRUSR     = 00400,  //!< Read permission bit for the owner of the file
     IWUSR     = 00200,  //!< Write permission bit for the owner of the file
     IXUSR     = 00100,  //!< Execute (for ordinary files) or search (for directories) permission bit for the owner of the file
