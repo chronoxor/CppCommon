@@ -45,6 +45,9 @@ struct IsEnumFlags : public std::false_type {};
     \endcode
 */
 #define ENUM_FLAGS(type)\
+using CppCommon::operator&;\
+using CppCommon::operator|;\
+using CppCommon::operator^;\
 namespace CppCommon {\
 template <> struct IsEnumFlags<type> : std::true_type {};\
 }

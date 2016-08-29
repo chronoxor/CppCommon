@@ -16,6 +16,7 @@ enum class MyFlags
     Three = 0x4,
     Four  = 0x8
 };
+
 ENUM_FLAGS(MyFlags)
 
 TEST_CASE("Enum-based flags", "[CppCommon][Types]")

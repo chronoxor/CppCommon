@@ -6,20 +6,24 @@
     \copyright MIT License
 */
 
+namespace CppCommon {
+
 template <typename TEnum>
-constexpr auto operator&(TEnum value1, TEnum value2) noexcept -> typename std::enable_if<CppCommon::IsEnumFlags<TEnum>::value, CppCommon::Flags<TEnum>>::type
+constexpr auto operator&(TEnum value1, TEnum value2) noexcept -> typename std::enable_if<IsEnumFlags<TEnum>::value, Flags<TEnum>>::type
 {
-    return CppCommon::Flags<TEnum>(value1) & value2;
+    return Flags<TEnum>(value1) & value2;
 }
 
 template <typename TEnum>
-constexpr auto operator|(TEnum value1, TEnum value2) noexcept -> typename std::enable_if<CppCommon::IsEnumFlags<TEnum>::value, CppCommon::Flags<TEnum>>::type
+constexpr auto operator|(TEnum value1, TEnum value2) noexcept -> typename std::enable_if<IsEnumFlags<TEnum>::value, Flags<TEnum>>::type
 {
-    return CppCommon::Flags<TEnum>(value1) | value2;
+    return Flags<TEnum>(value1) | value2;
 }
 
 template <typename TEnum>
-constexpr auto operator^(TEnum value1, TEnum value2) noexcept -> typename std::enable_if<CppCommon::IsEnumFlags<TEnum>::value, CppCommon::Flags<TEnum>>::type
+constexpr auto operator^(TEnum value1, TEnum value2) noexcept -> typename std::enable_if<IsEnumFlags<TEnum>::value, Flags<TEnum>>::type
 {
-    return CppCommon::Flags<TEnum>(value1) ^ value2;
+    return Flags<TEnum>(value1) ^ value2;
 }
+
+} // namespace CppCommon
