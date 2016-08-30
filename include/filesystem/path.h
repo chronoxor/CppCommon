@@ -227,23 +227,54 @@ public:
     static Path unique();
 
     //! Rename the given source path to destination path (file, empty directory, symlink, etc)
+    /*!
+        \param src - Source path
+        \param dst - Destination path
+        \return Renamed path
+    */
     static Path Rename(const Path& src, const Path& dst);
     //! Remove the given path (file, empty directory, symlink, etc) from the filesystem
-    static void Remove(const Path& path);
+    /*!
+        \param path - Path to remove
+        \return Parent path
+    */
+    static Path Remove(const Path& path);
 
     //! Set file attributes for the given path
+    /*!
+        \param path - Path to modify
+        \param attributes - Path attributes
+    */
     static void SetAttributes(const Path& path, const Flags<FileAttributes>& attributes);
     //! Set file permissions for the given path
+    /*!
+        \param path - Path to modify
+        \param permissions - Path permissions
+    */
     static void SetPermissions(const Path& path, const Flags<FilePermissions>& permissions);
     //! Set created UTC timestamp for the given path
+    /*!
+        \param path - Path to modify
+        \param timestamp - Created timestamp
+    */
     static void SetCreated(const Path& path, const UtcTimestamp& timestamp);
     //! Set modified UTC timestamp for the given path
+    /*!
+        \param path - Path to modify
+        \param timestamp - Modified timestamp
+    */
     static void SetModified(const Path& path, const UtcTimestamp& timestamp);
     //! Touch the given path and set its modified UTC timestamp to the current value
+    /*!
+        \param path - Path to modify
+    */
     static void Touch(const Path& path)
     { SetModified(path, UtcTimestamp()); }
 
     //! Set the given path of the process as a current one
+    /*!
+        \param path - Current path
+    */
     static void SetCurrent(const Path& path);
 
     //! Input instance from the given input stream

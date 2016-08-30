@@ -107,7 +107,7 @@ public:
         };
 
         // Setup corresponding signals handlers
-        for (size_t i = 0; i < sizeof(signals) / sizeof(signals[0]); ++i)
+        for (size_t i = 0; i < countof(signals); ++i)
         {
             int result = sigaction(signals[i], &sa, nullptr);
             if (result != 0)

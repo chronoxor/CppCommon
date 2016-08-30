@@ -4,9 +4,8 @@
 
 #include "catch.hpp"
 
-#include "filesystem/file.h"
-
 #include "filesystem/exceptions.h"
+#include "filesystem/file.h"
 
 using namespace CppCommon;
 
@@ -87,6 +86,7 @@ TEST_CASE("File", "[CppCommon][FileSystem]")
 
     // Remove the file
     REQUIRE(test.IsFileExists());
-    Path::Remove(test);
+    Path parent = Path::Remove(test);
+    REQUIRE(parent == test.parent());
     REQUIRE(!test.IsFileExists());
 }

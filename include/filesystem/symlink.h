@@ -44,11 +44,30 @@ public:
     { return !target().empty(); }
 
     //! Create a new symlink
+    /*!
+        \param src - Source path
+        \param dst - Destination path
+        \return Created symlink
+    */
     static Symlink CreateSymlink(const Path& src, const Path& dst);
     //! Create a new hardlink
+    /*!
+        \param src - Source path
+        \param dst - Destination path
+        \return Created hardlink
+    */
     static Path CreateHardlink(const Path& src, const Path& dst);
 
     //! Copy the current symlink to another destination path
+    /*!
+        If the source path is a symlink then a new destination symlink
+        will be created based on its target. Otherwise symlink will be
+        created explicitly based on the source path.
+
+        \param src - Source path
+        \param dst - Destination path
+        \return Copied symlink
+    */
     static Symlink CopySymlink(const Path& src, const Path& dst)
     { return CreateSymlink((src.IsSymlink() ? Symlink(src).target() : src), dst); }
 

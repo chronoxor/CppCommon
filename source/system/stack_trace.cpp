@@ -9,6 +9,7 @@
 #include "system/stack_trace.h"
 
 #include "threads/critical_section.h"
+#include "utility/countof.h"
 
 #include <cstring>
 #include <iomanip>
@@ -88,14 +89,14 @@ StackTrace::StackTrace(int skip)
 
         // Get the frame function
         char symbol[sizeof(SYMBOL_INFO) + MAX_SYM_NAME];
-        ZeroMemory(&symbol, sizeof(symbol) / sizeof(symbol[0]));
+        ZeroMemory(&symbol, countof(symbol));
         PSYMBOL_INFO pSymbol = (PSYMBOL_INFO)symbol;
         pSymbol->SizeOfStruct = sizeof(SYMBOL_INFO);
         pSymbol->MaxNameLen = MAX_SYM_NAME;
         if (SymFromAddr(hProcess, (DWORD64)frame.address, nullptr, pSymbol))
         {
             char buffer[4096];
-            if (UnDecorateSymbolName(pSymbol->Name, buffer, sizeof(buffer) / sizeof(buffer[0]), UNDNAME_NAME_ONLY) > 0)
+            if (UnDecorateSymbolName(pSymbol->Name, buffer, (DWORD)countof(buffer), UNDNAME_NAME_ONLY) > 0)
                 frame.function = buffer;
         }
 

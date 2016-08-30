@@ -9,10 +9,12 @@
 #include "filesystem/directory.h"
 
 #include "filesystem/exceptions.h"
+#include "utility/countof.h"
+
+#include <memory>
 
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
-#include <shlwapi.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -20,6 +22,9 @@
 #endif
 
 namespace CppCommon {
+
+const Flags<FileAttributes> Directory::DEFAULT_ATTRIBUTES = FileAttributes::NORMAL;
+const Flags<FilePermissions> Directory::DEFAULT_PERMISSIONS = FilePermissions::IRUSR | FilePermissions::IWUSR | FilePermissions::IXUSR | FilePermissions::IRGRP | FilePermissions::IXGRP | FilePermissions::IROTH | FilePermissions::IXOTH;
 
 bool Directory::IsDirectoryExists() const
 {
@@ -53,14 +58,33 @@ bool Directory::IsDirectoryExists() const
 bool Directory::IsDirectoryEmpty() const
 {
 #if defined(_WIN32) || defined(_WIN64)
-    if (!IsDirectoryExists())
-        throwex FileSystemException("Directory is not exists!").Attach(*this);
+    WIN32_FIND_DATAW fd;
+    HANDLE hDirectory = FindFirstFileW((*this / "*").to_wstring().c_str(), &fd);
+    if (hDirectory == INVALID_HANDLE_VALUE)
+        throwex FileSystemException("Cannot open a directory!").Attach(*this);
 
-    return PathIsDirectoryEmptyW(to_wstring().c_str()) ? true : false;
+    // Smart resource deleter pattern
+    auto clear = [](HANDLE hDirectory) { FindClose(hDirectory); };
+    auto directory = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear)>(hDirectory, clear);
+
+    do
+    {
+        if (std::wcsncmp(fd.cFileName, L".", countof(fd.cFileName)) == 0)
+            continue;
+        if (std::wcsncmp(fd.cFileName, L"..", countof(fd.cFileName)) == 0)
+            continue;
+        return false;
+    } while (FindNextFileW(hDirectory, &fd) != 0);
+
+    return true;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     DIR* dir = opendir(native().c_str());
     if (dir == nullptr)
         throwex FileSystemException("Cannot open a directory!").Attach(*this);
+
+    // Smart resource deleter pattern
+    auto clear = [](DIR* dir) { closedir(dir); };
+    auto directory = std::unique_ptr<DIR, decltype(clear)>(dir, clear);
 
     struct dirent entry;
     struct dirent* pentry;
@@ -133,17 +157,20 @@ Directory Directory::CreateTree(const Path& path, const Flags<FileAttributes>& a
     // Try to create the directory
     try
     {
-        Directory::Create(result);
+        Create(result);
         return result;
     }
     catch (FileSystemException) {}
 
     // Failed, try to get the parent path and retry
-    result = result.parent();
-    if (result.empty())
+    Directory parent = result.parent();
+    if (parent.empty())
         throwex FileSystemException("Cannot create directory tree!").Attach(path);
     else
-        CreateTree(result);
+        CreateTree(parent);
+
+    // Retry to create the directory
+    Create(result);
 
     return result;
 }

@@ -735,58 +735,55 @@ Path Path::Rename(const Path& src, const Path& dst)
     return dst;
 }
 
-void Path::Remove(const Path& path)
+Path Path::Remove(const Path& path)
 {
 #if defined(_WIN32) || defined(_WIN64)
-    const wchar_t* wpath = path.to_wstring().c_str();
-
-    DWORD attributes = GetFileAttributesW(wpath);
+    std::wstring wpath = path.to_wstring();
+    DWORD attributes = GetFileAttributesW(wpath.c_str());
     if (attributes == INVALID_FILE_ATTRIBUTES)
         throwex FileSystemException("Cannot get file attributes of the deleted path!").Attach(path);
 
     if (attributes & FILE_ATTRIBUTE_DIRECTORY)
     {
-        if (!RemoveDirectoryW(wpath))
+        if (!RemoveDirectoryW(wpath.c_str()))
             throwex FileSystemException("Cannot remove the path directory!").Attach(path);
     }
     else
     {
         if (attributes & FILE_ATTRIBUTE_READONLY)
             attributes &= ~FILE_ATTRIBUTE_READONLY;
-        if (!SetFileAttributesW(wpath, attributes))
+        if (!SetFileAttributesW(wpath.c_str(), attributes))
             throwex FileSystemException("Cannot set file attributes of the deleted path!").Attach(path);
-        if (!DeleteFileW(wpath))
+        if (!DeleteFileW(wpath.c_str()))
             throwex FileSystemException("Cannot delete the path file!").Attach(path);
     }
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-    const char* cpath = path.native().c_str();
-
     struct stat st;
-    int result = stat(cpath, &st);
+    int result = stat(path.native().c_str(), &st);
     if (result != 0)
         throwex FileSystemException("Cannot get the status of the path!").Attach(path);
 
     if (S_ISDIR(st.st_mode))
     {
-        int result = rmdir(cpath);
+        int result = rmdir(path.native().c_str());
         if (result != 0)
             throwex FileSystemException("Cannot remove the path directory!").Attach(path);
     }
     else
     {
-        int result = unlink(cpath);
+        int result = unlink(path.native().c_str());
         if (result != 0)
             throwex FileSystemException("Cannot unlink the path file!").Attach(path);
     }
 #endif
+    return path.parent();
 }
 
 void Path::SetAttributes(const Path& path, const Flags<FileAttributes>& attributes)
 {
 #if defined(_WIN32) || defined(_WIN64)
-    const wchar_t* wpath = path.to_wstring().c_str();
-
-    DWORD result = GetFileAttributesW(wpath);
+    std::wstring wpath = path.to_wstring();
+    DWORD result = GetFileAttributesW(wpath.c_str());
     if (result == INVALID_FILE_ATTRIBUTES)
         throwex FileSystemException("Cannot get file attributes of the path!").Attach(path);
 
@@ -823,7 +820,7 @@ void Path::SetAttributes(const Path& path, const Flags<FileAttributes>& attribut
     else
         result &= ~FILE_ATTRIBUTE_TEMPORARY;
 
-    if (!SetFileAttributesW(wpath, result))
+    if (!SetFileAttributesW(wpath.c_str(), result))
         throwex FileSystemException("Cannot set file attributes of the path!").Attach(path);
 #endif
 }
@@ -883,10 +880,8 @@ void Path::SetCreated(const Path& path, const UtcTimestamp& timestamp)
     if (!SetFileTime(file.get(), &created, nullptr, nullptr))
         throwex FileSystemException("Cannot set file created time of the path!").Attach(path);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-    const char* cpath = path.native().c_str();
-
     struct stat st;
-    int result = stat(cpath, &st);
+    int result = stat(path.native().c_str(), &st);
     if (result != 0)
         throwex FileSystemException("Cannot get the status of the path!").Attach(path);
 
@@ -895,7 +890,7 @@ void Path::SetCreated(const Path& path, const UtcTimestamp& timestamp)
     times[1].tv_sec = timestamp.seconds();
     times[1].tv_usec = timestamp.microseconds() % 1000000;
 
-    result = utimes(cpath, times);
+    result = utimes(path.native().c_str(), times);
     if (result != 0)
         throwex FileSystemException("Cannot set file created time of the path!").Attach(path);
 #endif
@@ -921,10 +916,8 @@ void Path::SetModified(const Path& path, const UtcTimestamp& timestamp)
     if (!SetFileTime(file.get(), nullptr, nullptr, &write))
         throwex FileSystemException("Cannot set file modified time of the path!").Attach(path);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-    const char* cpath = path.native().c_str();
-
     struct stat st;
-    int result = stat(cpath, &st);
+    int result = stat(path.native().c_str(), &st);
     if (result != 0)
         throwex FileSystemException("Cannot get the status of the path!").Attach(path);
 
@@ -933,7 +926,7 @@ void Path::SetModified(const Path& path, const UtcTimestamp& timestamp)
     times[1].tv_sec = timestamp.seconds();
     times[1].tv_usec = timestamp.microseconds() % 1000000;
 
-    result = utimes(cpath, times);
+    result = utimes(path.native().c_str(), times);
     if (result != 0)
         throwex FileSystemException("Cannot set file modified time of the path!").Attach(path);
 #endif

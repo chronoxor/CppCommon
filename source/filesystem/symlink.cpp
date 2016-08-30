@@ -142,12 +142,12 @@ Symlink Symlink::CreateSymlink(const Path& src, const Path& dst)
 
     if (attributes & FILE_ATTRIBUTE_DIRECTORY)
     {
-        if (!CreateSymbolicLinkW(source.c_str(), dst.to_wstring().c_str(), SYMBOLIC_LINK_FLAG_DIRECTORY))
+        if (!CreateSymbolicLinkW(dst.to_wstring().c_str(), source.c_str(), SYMBOLIC_LINK_FLAG_DIRECTORY))
             throwex FileSystemException("Cannot create symbolic link for the directory!").Attach(src, dst);
     }
     else
     {
-        if (!CreateSymbolicLinkW(source.c_str(), dst.to_wstring().c_str(), 0))
+        if (!CreateSymbolicLinkW(dst.to_wstring().c_str(), source.c_str(), 0))
             throwex FileSystemException("Cannot create symbolic link for the file!").Attach(src, dst);
     }
 #elif defined(unix) || defined(__unix) || defined(__unix__)
@@ -161,7 +161,7 @@ Symlink Symlink::CreateSymlink(const Path& src, const Path& dst)
 Path Symlink::CreateHardlink(const Path& src, const Path& dst)
 {
 #if defined(_WIN32) || defined(_WIN64)
-    if (!CreateHardLinkW(src.to_wstring().c_str(), dst.to_wstring().c_str(), nullptr))
+    if (!CreateHardLinkW(dst.to_wstring().c_str(), src.to_wstring().c_str(), nullptr))
         throwex FileSystemException("Cannot create hard link!").Attach(src, dst);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     int result = link(src.native().c_str(), dst.native().c_str());
