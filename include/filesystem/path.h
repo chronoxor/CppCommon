@@ -83,122 +83,40 @@ class Path
 public:
     //! Default constructor
     Path() : _path() {}
-    //! Initialize path with a given string value in UTF-8 encoding (Unix)
-    /*!
-        \param path - Path value in UTF-8 encoding
-    */
-    explicit Path(const std::string& path) : _path(path) {}
-    //! Initialize path with a given string value in UTF-16 encoding (Windows)
-    /*!
-        \param path - Path value in UTF-16 encoding
-    */
-    explicit Path(const std::wstring& path) : _path(Encoding::ToUTF8(path)) {}
+    Path(const char* path) : _path(path) {}
+    Path(const std::string& path) : _path(path) {}
+    Path(const wchar_t* path) : _path(Encoding::ToUTF8(path)) {}
+    Path(const std::wstring& path) : _path(Encoding::ToUTF8(path)) {}
     Path(const Path&) = default;
     Path(Path&&) noexcept = default;
     ~Path() = default;
 
-    Path& operator=(const std::string& path)
-    { return Assign(path); }
-    Path& operator=(const std::wstring& path)
-    { return Assign(path); }
     Path& operator=(const Path&) = default;
     Path& operator=(Path&&) noexcept = default;
 
     // Append the given path with a path separator
-    Path& operator/=(const std::string& path)
-    { return Append(path); }
-    Path& operator/=(const std::wstring& path)
-    { return Append(path); }
     Path& operator/=(const Path& path)
     { return Append(path); }
-    friend Path operator/(const Path& path1, const std::string& path2)
-    { return Path(path1).Append(path2); }
-    friend Path operator/(const std::string& path1, const Path& path2)
-    { return Path(path1).Append(path2); }
-    friend Path operator/(const Path& path1, const std::wstring& path2)
-    { return Path(path1).Append(path2); }
-    friend Path operator/(const std::wstring& path1, const Path& path2)
-    { return Path(path1).Append(path2); }
     friend Path operator/(const Path& path1, const Path& path2)
     { return Path(path1).Append(path2); }
 
     // Concatenate the given path without a path separator
-    Path& operator+=(const std::string& path)
-    { return Concat(path); }
-    Path& operator+=(const std::wstring& path)
-    { return Concat(path); }
     Path& operator+=(const Path& path)
     { return Concat(path); }
-    friend Path operator+(const Path& path1, const std::string& path2)
-    { return Path(path1).Concat(path2); }
-    friend Path operator+(const std::string& path1, const Path& path2)
-    { return Path(path1).Concat(path2); }
-    friend Path operator+(const Path& path1, const std::wstring& path2)
-    { return Path(path1).Concat(path2); }
-    friend Path operator+(const std::wstring& path1, const Path& path2)
-    { return Path(path1).Concat(path2); }
     friend Path operator+(const Path& path1, const Path& path2)
     { return Path(path1).Concat(path2); }
 
     // Path comparison
-    friend bool operator==(const Path& path1, const std::string& path2)
-    { return path1 == Path(path2); }
-    friend bool operator==(const std::string& path1, const Path& path2)
-    { return Path(path1) == path2; }
-    friend bool operator==(const Path& path1, const std::wstring& path2)
-    { return path1 == Path(path2); }
-    friend bool operator==(const std::wstring& path1, const Path& path2)
-    { return Path(path1) == path2; }
     friend bool operator==(const Path& path1, const Path& path2)
     { return path1._path == path2._path; }
-    friend bool operator!=(const Path& path1, const std::string& path2)
-    { return path1 != Path(path2); }
-    friend bool operator!=(const std::string& path1, const Path& path2)
-    { return Path(path1) != path2; }
-    friend bool operator!=(const Path& path1, const std::wstring& path2)
-    { return path1 != Path(path2); }
-    friend bool operator!=(const std::wstring& path1, const Path& path2)
-    { return Path(path1) != path2; }
     friend bool operator!=(const Path& path1, const Path& path2)
     { return path1._path != path2._path; }
-    friend bool operator<(const Path& path1, const std::string& path2)
-    { return path1 < Path(path2); }
-    friend bool operator<(const std::string& path1, const Path& path2)
-    { return Path(path1) < path2; }
-    friend bool operator<(const Path& path1, const std::wstring& path2)
-    { return path1 < Path(path2); }
-    friend bool operator<(const std::wstring& path1, const Path& path2)
-    { return Path(path1) < path2; }
     friend bool operator<(const Path& path1, const Path& path2)
     { return path1._path < path2._path; }
-    friend bool operator>(const Path& path1, const std::string& path2)
-    { return path1 > Path(path2); }
-    friend bool operator>(const std::string& path1, const Path& path2)
-    { return Path(path1) > path2; }
-    friend bool operator>(const Path& path1, const std::wstring& path2)
-    { return path1 > Path(path2); }
-    friend bool operator>(const std::wstring& path1, const Path& path2)
-    { return Path(path1) > path2; }
     friend bool operator>(const Path& path1, const Path& path2)
     { return path1._path > path2._path; }
-    friend bool operator<=(const Path& path1, const std::string& path2)
-    { return path1 <= Path(path2); }
-    friend bool operator<=(const std::string& path1, const Path& path2)
-    { return Path(path1) <= path2; }
-    friend bool operator<=(const Path& path1, const std::wstring& path2)
-    { return path1 <= Path(path2); }
-    friend bool operator<=(const std::wstring& path1, const Path& path2)
-    { return Path(path1) <= path2; }
     friend bool operator<=(const Path& path1, const Path& path2)
     { return path1._path <= path2._path; }
-    friend bool operator>=(const Path& path1, const std::string& path2)
-    { return path1 >= Path(path2); }
-    friend bool operator>=(const std::string& path1, const Path& path2)
-    { return Path(path1) >= path2; }
-    friend bool operator>=(const Path& path1, const std::wstring& path2)
-    { return path1 >= Path(path2); }
-    friend bool operator>=(const std::wstring& path1, const Path& path2)
-    { return Path(path1) >= path2; }
     friend bool operator>=(const Path& path1, const Path& path2)
     { return path1._path >= path2._path; }
 
@@ -273,41 +191,16 @@ public:
     void Clear() noexcept { return _path.clear(); }
 
     //! Assign the given path to the current one
-    Path& Assign(const std::string& path)
-    { return Assign(Path(path)); }
-    Path& Assign(const std::wstring& path)
-    { return Assign(Path(path)); }
     Path& Assign(const Path& path);
-
     //! Append the given path to the current one
-    Path& Append(const std::string& path)
-    { return Append(Path(path)); }
-    Path& Append(const std::wstring& path)
-    { return Append(Path(path)); }
     Path& Append(const Path& path);
-
     //! Concatenate the given path to the current one
-    Path& Concat(const std::string& path)
-    { return Concat(Path(path)); }
-    Path& Concat(const std::wstring& path)
-    { return Concat(Path(path)); }
     Path& Concat(const Path& path);
-
     //! Convert all path separators to system ones ('\' for Windows or '/' for Unix)
     Path& MakePreferred();
-
     //! Replace the current path filename with a given one
-    Path& ReplaceFilename(const std::string& filename)
-    { return ReplaceFilename(Path(filename)); }
-    Path& ReplaceFilename(const std::wstring& filename)
-    { return ReplaceFilename(Path(filename)); }
     Path& ReplaceFilename(const Path& filename);
-
     //! Replace the current path extension with a given one
-    Path& ReplaceExtension(const std::string& extension)
-    { return ReplaceExtension(Path(extension)); }
-    Path& ReplaceExtension(const std::wstring& extension)
-    { return ReplaceExtension(Path(extension)); }
     Path& ReplaceExtension(const Path& extension);
 
     //! Remove the current path filename
@@ -317,48 +210,40 @@ public:
     //! Remove all trailing separators form the current path
     Path& RemoveTrailingSeparators();
 
-    //! Set file attributes of the current path
-    void SetAttributes(const Flags<FileAttributes>& attributes);
-    //! Set file permissions of the current path
-    void SetPermissions(const Flags<FilePermissions>& permissions);
-    //! Set created UTC timestamp of the current path
-    void SetCreated(const UtcTimestamp& timestamp);
-    //! Set modified UTC timestamp of the current path
-    void SetModified(const UtcTimestamp& timestamp);
-    //! Touch the current path and set its modified UTC timestamp to the current value
-    void Touch() { SetModified(UtcTimestamp()); }
-
-    //! Rename the current path object (file, empty directory, symlink, etc)
-    void Rename(const std::string& path)
-    { Rename(Path(path)); }
-    void Rename(const std::wstring& path)
-    { Rename(Path(path)); }
-    void Rename(const Path& path);
-
-    //! Remove the current path object (file, empty directory, symlink, etc) from the filesystem
-    void Remove();
-
     //! Get the system path separator character ('\' for Windows or '/' for Unix)
     static char separator() noexcept;
 
-    //! Get the initial path of the current process
+    //! Get the initial path of the process
     static Path initial();
-    //! Get the current path of the current process
+    //! Get the current path of the process
     static Path current();
-    //! Get the executable path of the current process
+    //! Get the executable path of the process
     static Path executable();
-    //! Get the home path of the current process
+    //! Get the home path of the process
     static Path home();
-    //! Get the temporary path of the current process
+    //! Get the temporary path of the process
     static Path temp();
     //! Get the unique filename in UUID format "00000000-0000-0000-0000-000000000000"
     static Path unique();
 
-    //! Set the current path of the current process
-    static void SetCurrent(const std::string& path)
-    { SetCurrent(Path(path)); }
-    static void SetCurrent(const std::wstring& path)
-    { SetCurrent(Path(path)); }
+    //! Rename the given source path to destination path (file, empty directory, symlink, etc)
+    static Path Rename(const Path& src, const Path& dst);
+    //! Remove the given path (file, empty directory, symlink, etc) from the filesystem
+    static void Remove(const Path& path);
+
+    //! Set file attributes for the given path
+    static void SetAttributes(const Path& path, const Flags<FileAttributes>& attributes);
+    //! Set file permissions for the given path
+    static void SetPermissions(const Path& path, const Flags<FilePermissions>& permissions);
+    //! Set created UTC timestamp for the given path
+    static void SetCreated(const Path& path, const UtcTimestamp& timestamp);
+    //! Set modified UTC timestamp for the given path
+    static void SetModified(const Path& path, const UtcTimestamp& timestamp);
+    //! Touch the given path and set its modified UTC timestamp to the current value
+    static void Touch(const Path& path)
+    { SetModified(path, UtcTimestamp()); }
+
+    //! Set the given path of the process as a current one
     static void SetCurrent(const Path& path);
 
     //! Input instance from the given input stream

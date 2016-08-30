@@ -282,7 +282,8 @@ FileType Path::type() const
     DWORD attributes = GetFileAttributesW(to_wstring().c_str());
     if (attributes == INVALID_FILE_ATTRIBUTES)
         return FileType::NONE;
-    else if (attributes & FILE_ATTRIBUTE_REPARSE_POINT)
+
+    if (attributes & FILE_ATTRIBUTE_REPARSE_POINT)
         return FileType::SYMLINK;
     else if (attributes & FILE_ATTRIBUTE_DIRECTORY)
         return FileType::DIRECTORY;
@@ -345,50 +346,6 @@ Flags<FileAttributes> Path::attributes() const
     return result;
 }
 
-void Path::SetAttributes(const Flags<FileAttributes>& attributes)
-{
-#if defined(_WIN32) || defined(_WIN64)
-    std::wstring path = to_wstring();
-    DWORD result = GetFileAttributesW(path.c_str());
-    if (result == INVALID_FILE_ATTRIBUTES)
-        throwex FileSystemException("Cannot get file attributes of the path!").Attach(*this);
-    if (attributes & FileAttributes::NORMAL)
-        result |= FILE_ATTRIBUTE_NORMAL;
-    else
-        result &= ~FILE_ATTRIBUTE_NORMAL;
-    if (attributes & FileAttributes::ARCHIVED)
-        result |= FILE_ATTRIBUTE_ARCHIVE;
-    else
-        result &= ~FILE_ATTRIBUTE_ARCHIVE;
-    if (attributes & FileAttributes::HIDDEN)
-        result |= FILE_ATTRIBUTE_HIDDEN;
-    else
-        result &= ~FILE_ATTRIBUTE_HIDDEN;
-    if (attributes & FileAttributes::INDEXED)
-        result |= FILE_ATTRIBUTE_NOT_CONTENT_INDEXED;
-    else
-        result &= ~FILE_ATTRIBUTE_NOT_CONTENT_INDEXED;
-    if (attributes & FileAttributes::OFFLINE)
-        result |= FILE_ATTRIBUTE_OFFLINE;
-    else
-        result &= ~FILE_ATTRIBUTE_OFFLINE;
-    if (attributes & FileAttributes::READONLY)
-        result |= FILE_ATTRIBUTE_READONLY;
-    else
-        result &= ~FILE_ATTRIBUTE_READONLY;
-    if (attributes & FileAttributes::SYSTEM)
-        result |= FILE_ATTRIBUTE_SYSTEM;
-    else
-        result &= ~FILE_ATTRIBUTE_SYSTEM;
-    if (attributes & FileAttributes::TEMPORARY)
-        result |= FILE_ATTRIBUTE_TEMPORARY;
-    else
-        result &= ~FILE_ATTRIBUTE_TEMPORARY;
-    if (!SetFileAttributesW(path.c_str(), result))
-        throwex FileSystemException("Cannot set file attributes of the path!").Attach(*this);
-#endif
-}
-
 Flags<FilePermissions> Path::permissions() const
 {
     Flags<FilePermissions> permissions;
@@ -429,40 +386,6 @@ Flags<FilePermissions> Path::permissions() const
         permissions |= FilePermissions::ISVTX;
 #endif
     return permissions;
-}
-
-void Path::SetPermissions(const Flags<FilePermissions>& permissions)
-{
-#if defined(unix) || defined(__unix) || defined(__unix__)
-    mode_t mode = 0;
-    if (permissions & FilePermissions::IRUSR)
-        mode |= S_IRUSR;
-    if (permissions & FilePermissions::IWUSR)
-        mode |= S_IWUSR;
-    if (permissions & FilePermissions::IXUSR)
-        mode |= S_IXUSR;
-    if (permissions & FilePermissions::IRGRP)
-        mode |= S_IRGRP;
-    if (permissions & FilePermissions::IWGRP)
-        mode |= S_IWGRP;
-    if (permissions & FilePermissions::IXGRP)
-        mode |= S_IXGRP;
-    if (permissions & FilePermissions::IROTH)
-        mode |= S_IROTH;
-    if (permissions & FilePermissions::IWOTH)
-        mode |= S_IWOTH;
-    if (permissions & FilePermissions::IXOTH)
-        mode |= S_IXOTH;
-    if (permissions & FilePermissions::ISUID)
-        mode |= S_ISUID;
-    if (permissions & FilePermissions::ISGID)
-        mode |= S_ISGID;
-    if (permissions & FilePermissions::ISVTX)
-        mode |= S_ISVTX;
-    int result = chmod(native().c_str(), mode);
-    if (result != 0)
-        throwex FileSystemException("Cannot set file permissions of the path!").Attach(*this);
-#endif
 }
 
 UtcTimestamp Path::created() const
@@ -523,97 +446,6 @@ UtcTimestamp Path::modified() const
 #endif
 }
 
-void Path::SetCreated(const UtcTimestamp& timestamp)
-{
-#if defined(_WIN32) || defined(_WIN64)
-    HANDLE hFile = CreateFileW(to_wstring().c_str(), GENERIC_WRITE, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
-    if (hFile == INVALID_HANDLE_VALUE)
-        throwex FileSystemException("Cannot open the path for writing!").Attach(*this);
-
-    // Smart resource deleter pattern
-    auto clear = [](HANDLE hFile) { CloseHandle(hFile); };
-    auto file = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear)>(hFile, clear);
-
-    ULARGE_INTEGER result;
-    result.QuadPart = (timestamp.total() / 100) + 116444736000000000ull;
-
-    FILETIME created;
-    created.dwLowDateTime = result.LowPart;
-    created.dwHighDateTime = result.HighPart;
-    if (!SetFileTime(file.get(), &created, nullptr, nullptr))
-        throwex FileSystemException("Cannot set file created time of the path!").Attach(*this);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    struct stat st;
-    int result = stat(native().c_str(), &st);
-    if (result != 0)
-        throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
-
-    struct timeval times[2];
-    TIMESPEC_TO_TIMEVAL(&times[0], &st.st_atim);
-    times[1].tv_sec = timestamp.seconds();
-    times[1].tv_usec = timestamp.microseconds() % 1000000;
-
-    result = utimes(native().c_str(), times);
-    if (result != 0)
-        throwex FileSystemException("Cannot set file created time of the path!").Attach(*this);
-#endif
-}
-
-void Path::SetModified(const UtcTimestamp& timestamp)
-{
-#if defined(_WIN32) || defined(_WIN64)
-    HANDLE hFile = CreateFileW(to_wstring().c_str(), GENERIC_WRITE, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
-    if (hFile == INVALID_HANDLE_VALUE)
-        throwex FileSystemException("Cannot open the path for writing!").Attach(*this);
-
-    // Smart resource deleter pattern
-    auto clear = [](HANDLE hFile) { CloseHandle(hFile); };
-    auto file = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear)>(hFile, clear);
-
-    ULARGE_INTEGER result;
-    result.QuadPart = (timestamp.total() / 100) + 116444736000000000ull;
-
-    FILETIME write;
-    write.dwLowDateTime = result.LowPart;
-    write.dwHighDateTime = result.HighPart;
-    if (!SetFileTime(file.get(), nullptr, nullptr, &write))
-        throwex FileSystemException("Cannot set file modified time of the path!").Attach(*this);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    struct stat st;
-    int result = stat(native().c_str(), &st);
-    if (result != 0)
-        throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
-
-    struct timeval times[2];
-    TIMESPEC_TO_TIMEVAL(&times[0], &st.st_atim);
-    times[1].tv_sec = timestamp.seconds();
-    times[1].tv_usec = timestamp.microseconds() % 1000000;
-
-    result = utimes(native().c_str(), times);
-    if (result != 0)
-        throwex FileSystemException("Cannot set file modified time of the path!").Attach(*this);
-#endif
-}
-
-Path& Path::Append(const Path& path)
-{
-    if (_path.empty())
-        _path = path._path;
-    else
-    {
-        char last = _path[_path.size() - 1];
-        if ((last == '\\') || (last == '/'))
-            _path += path._path;
-        else
-        {
-            _path += separator();
-            _path += path._path;
-        }
-    }
-
-    return *this;
-}
-
 size_t Path::hardlinks() const
 {
 #if defined(_WIN32) || defined(_WIN64)
@@ -638,6 +470,25 @@ size_t Path::hardlinks() const
 
     return (size_t)st.st_nlink;
 #endif
+}
+
+Path& Path::Append(const Path& path)
+{
+    if (_path.empty())
+        _path = path._path;
+    else
+    {
+        char last = _path[_path.size() - 1];
+        if ((last == '\\') || (last == '/'))
+            _path += path._path;
+        else
+        {
+            _path += separator();
+            _path += path._path;
+        }
+    }
+
+    return *this;
 }
 
 Path& Path::MakePreferred()
@@ -735,62 +586,6 @@ Path& Path::RemoveTrailingSeparators()
 
     _path.resize(index);
     return *this;
-}
-
-void Path::Rename(const Path& path)
-{
-#if defined(_WIN32) || defined(_WIN64)
-    if (!MoveFileW(to_wstring().c_str(), path.to_wstring().c_str()))
-        throwex FileSystemException("Cannot move the path!").Attach(*this, path);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    int result = rename(native().c_str(), path.native().c_str());
-    if (result != 0)
-        throwex FileSystemException("Cannot rename the path!").Attach(*this, path);
-#endif
-    Assign(path);
-}
-
-void Path::Remove()
-{
-#if defined(_WIN32) || defined(_WIN64)
-    std::wstring path = to_wstring();
-    DWORD attributes = GetFileAttributesW(path.c_str());
-    if (attributes == INVALID_FILE_ATTRIBUTES)
-        throwex FileSystemException("Cannot get file attributes of the deleted path!").Attach(*this);
-
-    if (attributes & FILE_ATTRIBUTE_DIRECTORY)
-    {
-        if (!RemoveDirectoryW(path.c_str()))
-            throwex FileSystemException("Cannot remove the path directory!").Attach(*this);
-    }
-    else
-    {
-        if (attributes & FILE_ATTRIBUTE_READONLY)
-            attributes &= ~FILE_ATTRIBUTE_READONLY;
-        if (!SetFileAttributesW(path.c_str(), attributes))
-            throwex FileSystemException("Cannot set file attributes of the deleted path!").Attach(*this);
-        if (!DeleteFileW(path.c_str()))
-            throwex FileSystemException("Cannot delete the path file!").Attach(*this);
-    }
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    struct stat st;
-    int result = stat(native().c_str(), &st);
-    if (result != 0)
-        throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
-
-    if (S_ISDIR(st.st_mode))
-    {
-        int result = rmdir(native().c_str());
-        if (result != 0)
-            throwex FileSystemException("Cannot remove the path directory!").Attach(*this);
-    }
-    else
-    {
-        int result = unlink(native().c_str());
-        if (result != 0)
-            throwex FileSystemException("Cannot unlink the path file!").Attach(*this);
-    }
-#endif
 }
 
 Path Path::initial()
@@ -925,6 +720,223 @@ Path Path::temp()
 Path Path::unique()
 {
     return Path(UUID::Generate().to_string());
+}
+
+Path Path::Rename(const Path& src, const Path& dst)
+{
+#if defined(_WIN32) || defined(_WIN64)
+    if (!MoveFileW(src.to_wstring().c_str(), dst.to_wstring().c_str()))
+        throwex FileSystemException("Cannot move the path!").Attach(src, dst);
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    int result = rename(src.native().c_str(), dst.native().c_str());
+    if (result != 0)
+        throwex FileSystemException("Cannot rename the path!").Attach(src, dst);
+#endif
+    return dst;
+}
+
+void Path::Remove(const Path& path)
+{
+#if defined(_WIN32) || defined(_WIN64)
+    const wchar_t* wpath = path.to_wstring().c_str();
+
+    DWORD attributes = GetFileAttributesW(wpath);
+    if (attributes == INVALID_FILE_ATTRIBUTES)
+        throwex FileSystemException("Cannot get file attributes of the deleted path!").Attach(path);
+
+    if (attributes & FILE_ATTRIBUTE_DIRECTORY)
+    {
+        if (!RemoveDirectoryW(wpath))
+            throwex FileSystemException("Cannot remove the path directory!").Attach(path);
+    }
+    else
+    {
+        if (attributes & FILE_ATTRIBUTE_READONLY)
+            attributes &= ~FILE_ATTRIBUTE_READONLY;
+        if (!SetFileAttributesW(wpath, attributes))
+            throwex FileSystemException("Cannot set file attributes of the deleted path!").Attach(path);
+        if (!DeleteFileW(wpath))
+            throwex FileSystemException("Cannot delete the path file!").Attach(path);
+    }
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    const char* cpath = path.native().c_str();
+
+    struct stat st;
+    int result = stat(cpath, &st);
+    if (result != 0)
+        throwex FileSystemException("Cannot get the status of the path!").Attach(path);
+
+    if (S_ISDIR(st.st_mode))
+    {
+        int result = rmdir(cpath);
+        if (result != 0)
+            throwex FileSystemException("Cannot remove the path directory!").Attach(path);
+    }
+    else
+    {
+        int result = unlink(cpath);
+        if (result != 0)
+            throwex FileSystemException("Cannot unlink the path file!").Attach(path);
+    }
+#endif
+}
+
+void Path::SetAttributes(const Path& path, const Flags<FileAttributes>& attributes)
+{
+#if defined(_WIN32) || defined(_WIN64)
+    const wchar_t* wpath = path.to_wstring().c_str();
+
+    DWORD result = GetFileAttributesW(wpath);
+    if (result == INVALID_FILE_ATTRIBUTES)
+        throwex FileSystemException("Cannot get file attributes of the path!").Attach(path);
+
+    if (attributes & FileAttributes::NORMAL)
+        result |= FILE_ATTRIBUTE_NORMAL;
+    else
+        result &= ~FILE_ATTRIBUTE_NORMAL;
+    if (attributes & FileAttributes::ARCHIVED)
+        result |= FILE_ATTRIBUTE_ARCHIVE;
+    else
+        result &= ~FILE_ATTRIBUTE_ARCHIVE;
+    if (attributes & FileAttributes::HIDDEN)
+        result |= FILE_ATTRIBUTE_HIDDEN;
+    else
+        result &= ~FILE_ATTRIBUTE_HIDDEN;
+    if (attributes & FileAttributes::INDEXED)
+        result |= FILE_ATTRIBUTE_NOT_CONTENT_INDEXED;
+    else
+        result &= ~FILE_ATTRIBUTE_NOT_CONTENT_INDEXED;
+    if (attributes & FileAttributes::OFFLINE)
+        result |= FILE_ATTRIBUTE_OFFLINE;
+    else
+        result &= ~FILE_ATTRIBUTE_OFFLINE;
+    if (attributes & FileAttributes::READONLY)
+        result |= FILE_ATTRIBUTE_READONLY;
+    else
+        result &= ~FILE_ATTRIBUTE_READONLY;
+    if (attributes & FileAttributes::SYSTEM)
+        result |= FILE_ATTRIBUTE_SYSTEM;
+    else
+        result &= ~FILE_ATTRIBUTE_SYSTEM;
+    if (attributes & FileAttributes::TEMPORARY)
+        result |= FILE_ATTRIBUTE_TEMPORARY;
+    else
+        result &= ~FILE_ATTRIBUTE_TEMPORARY;
+
+    if (!SetFileAttributesW(wpath, result))
+        throwex FileSystemException("Cannot set file attributes of the path!").Attach(path);
+#endif
+}
+
+void Path::SetPermissions(const Path& path, const Flags<FilePermissions>& permissions)
+{
+#if defined(unix) || defined(__unix) || defined(__unix__)
+    mode_t mode = 0;
+    if (permissions & FilePermissions::IRUSR)
+        mode |= S_IRUSR;
+    if (permissions & FilePermissions::IWUSR)
+        mode |= S_IWUSR;
+    if (permissions & FilePermissions::IXUSR)
+        mode |= S_IXUSR;
+    if (permissions & FilePermissions::IRGRP)
+        mode |= S_IRGRP;
+    if (permissions & FilePermissions::IWGRP)
+        mode |= S_IWGRP;
+    if (permissions & FilePermissions::IXGRP)
+        mode |= S_IXGRP;
+    if (permissions & FilePermissions::IROTH)
+        mode |= S_IROTH;
+    if (permissions & FilePermissions::IWOTH)
+        mode |= S_IWOTH;
+    if (permissions & FilePermissions::IXOTH)
+        mode |= S_IXOTH;
+    if (permissions & FilePermissions::ISUID)
+        mode |= S_ISUID;
+    if (permissions & FilePermissions::ISGID)
+        mode |= S_ISGID;
+    if (permissions & FilePermissions::ISVTX)
+        mode |= S_ISVTX;
+
+    int result = chmod(path.native().c_str(), mode);
+    if (result != 0)
+        throwex FileSystemException("Cannot set file permissions of the path!").Attach(path);
+#endif
+}
+
+void Path::SetCreated(const Path& path, const UtcTimestamp& timestamp)
+{
+#if defined(_WIN32) || defined(_WIN64)
+    HANDLE hFile = CreateFileW(path.to_wstring().c_str(), GENERIC_WRITE, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+    if (hFile == INVALID_HANDLE_VALUE)
+        throwex FileSystemException("Cannot open the path for writing!").Attach(path);
+
+    // Smart resource deleter pattern
+    auto clear = [](HANDLE hFile) { CloseHandle(hFile); };
+    auto file = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear)>(hFile, clear);
+
+    ULARGE_INTEGER result;
+    result.QuadPart = (timestamp.total() / 100) + 116444736000000000ull;
+
+    FILETIME created;
+    created.dwLowDateTime = result.LowPart;
+    created.dwHighDateTime = result.HighPart;
+    if (!SetFileTime(file.get(), &created, nullptr, nullptr))
+        throwex FileSystemException("Cannot set file created time of the path!").Attach(path);
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    const char* cpath = path.native().c_str();
+
+    struct stat st;
+    int result = stat(cpath, &st);
+    if (result != 0)
+        throwex FileSystemException("Cannot get the status of the path!").Attach(path);
+
+    struct timeval times[2];
+    TIMESPEC_TO_TIMEVAL(&times[0], &st.st_atim);
+    times[1].tv_sec = timestamp.seconds();
+    times[1].tv_usec = timestamp.microseconds() % 1000000;
+
+    result = utimes(cpath, times);
+    if (result != 0)
+        throwex FileSystemException("Cannot set file created time of the path!").Attach(path);
+#endif
+}
+
+void Path::SetModified(const Path& path, const UtcTimestamp& timestamp)
+{
+#if defined(_WIN32) || defined(_WIN64)
+    HANDLE hFile = CreateFileW(path.to_wstring().c_str(), GENERIC_WRITE, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+    if (hFile == INVALID_HANDLE_VALUE)
+        throwex FileSystemException("Cannot open the path for writing!").Attach(path);
+
+    // Smart resource deleter pattern
+    auto clear = [](HANDLE hFile) { CloseHandle(hFile); };
+    auto file = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear)>(hFile, clear);
+
+    ULARGE_INTEGER result;
+    result.QuadPart = (timestamp.total() / 100) + 116444736000000000ull;
+
+    FILETIME write;
+    write.dwLowDateTime = result.LowPart;
+    write.dwHighDateTime = result.HighPart;
+    if (!SetFileTime(file.get(), nullptr, nullptr, &write))
+        throwex FileSystemException("Cannot set file modified time of the path!").Attach(path);
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    const char* cpath = path.native().c_str();
+
+    struct stat st;
+    int result = stat(cpath, &st);
+    if (result != 0)
+        throwex FileSystemException("Cannot get the status of the path!").Attach(path);
+
+    struct timeval times[2];
+    TIMESPEC_TO_TIMEVAL(&times[0], &st.st_atim);
+    times[1].tv_sec = timestamp.seconds();
+    times[1].tv_usec = timestamp.microseconds() % 1000000;
+
+    result = utimes(cpath, times);
+    if (result != 0)
+        throwex FileSystemException("Cannot set file modified time of the path!").Attach(path);
+#endif
 }
 
 void Path::SetCurrent(const Path& path)

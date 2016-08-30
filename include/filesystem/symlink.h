@@ -23,31 +23,12 @@ namespace CppCommon {
 class Symlink : public Path
 {
 public:
-    //! Default constructor
     Symlink() : Path() {}
-    //! Initialize symlink path with a given string value in UTF-8 encoding (Unix)
-    /*!
-        \param path - Path value in UTF-8 encoding
-    */
-    explicit Symlink(const std::string& path) : Path(path) {}
-    //! Initialize symlink path with a given string value in UTF-16 encoding (Windows)
-    /*!
-        \param path - Path value in UTF-16 encoding
-    */
-    explicit Symlink(const std::wstring& path) : Path(path) {}
-    //! Initialize symlink path with a given path
-    /*!
-        \param path - Path value
-    */
-    explicit Symlink(const Path& path) : Path(path) {}
+    Symlink(const Path& path) : Path(path) {}
     Symlink(const Symlink&) = default;
     Symlink(Symlink&&) noexcept = default;
     ~Symlink() = default;
 
-    Symlink& operator=(const std::string& path)
-    { Assign(path); return *this; }
-    Symlink& operator=(const std::wstring& path)
-    { Assign(path); return *this; }
     Symlink& operator=(const Path& path)
     { Assign(path); return *this; }
     Symlink& operator=(const Symlink&) = default;
@@ -57,31 +38,19 @@ public:
     Path target() const;
 
     //! Is symlink exists?
-    bool IsSymlinkExists() const
-    { return type() == FileType::SYMLINK; }
+    bool IsSymlinkExists() const;
     //! Is target exists?
     bool IsTargetExists() const
     { return !target().empty(); }
 
-    //! Copy the current symlink to another destination path
-    /*!
-        \param dst - Destination symlink path
-    */
-    void CopySymlink(const Path& dst) const
-    { IsSymlink() ? CreateSymlink(target(), dst) : CreateSymlink(*this, dst); }
-
     //! Create a new symlink
-    /*!
-        \param src - Source path
-        \param dst - Destination symlink path
-    */
-    static void CreateSymlink(const Path& src, const Path& dst);
+    static Symlink CreateSymlink(const Path& src, const Path& dst);
     //! Create a new hardlink
-    /*!
-        \param src - Source path
-        \param dst - Destination hardlink path
-    */
-    static void CreateHardlink(const Path& src, const Path& dst);
+    static Path CreateHardlink(const Path& src, const Path& dst);
+
+    //! Copy the current symlink to another destination path
+    static Symlink CopySymlink(const Path& src, const Path& dst)
+    { return CreateSymlink((src.IsSymlink() ? Symlink(src).target() : src), dst); }
 
     //! Swap two instances
     void swap(Symlink& symlink) noexcept;

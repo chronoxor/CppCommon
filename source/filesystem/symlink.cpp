@@ -103,7 +103,36 @@ Path Symlink::target() const
 #endif
 }
 
-void Symlink::CreateSymlink(const Path& src, const Path& dst)
+bool Symlink::IsSymlinkExists() const
+{
+#if defined(_WIN32) || defined(_WIN64)
+    DWORD attributes = GetFileAttributesW(to_wstring().c_str());
+    if (attributes == INVALID_FILE_ATTRIBUTES)
+        return false;
+
+    if (attributes & FILE_ATTRIBUTE_REPARSE_POINT)
+        return true;
+    else
+        return false;
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    struct stat st;
+    int result = lstat(native().c_str(), &st);
+    if (result != 0)
+    {
+        if ((errno == ENOENT) || (errno == ENOTDIR))
+            return false;
+        else
+            throwex FileSystemException("Cannot get the status of the symbolic link!").Attach(*this);
+    }
+
+    if (S_ISLNK(st.st_mode))
+        return true;
+    else
+        return false;
+#endif
+}
+
+Symlink Symlink::CreateSymlink(const Path& src, const Path& dst)
 {
 #if defined(_WIN32) || defined(_WIN64)
     std::wstring source = src.to_wstring();
@@ -126,9 +155,10 @@ void Symlink::CreateSymlink(const Path& src, const Path& dst)
     if (result != 0)
         throwex FileSystemException("Cannot create symbolic link!").Attach(src, dst);
 #endif
+    return dst;
 }
 
-void Symlink::CreateHardlink(const Path& src, const Path& dst)
+Path Symlink::CreateHardlink(const Path& src, const Path& dst)
 {
 #if defined(_WIN32) || defined(_WIN64)
     if (!CreateHardLinkW(src.to_wstring().c_str(), dst.to_wstring().c_str(), nullptr))
@@ -138,6 +168,7 @@ void Symlink::CreateHardlink(const Path& src, const Path& dst)
     if (result != 0)
         throwex FileSystemException("Cannot create hard link!").Attach(src, dst);
 #endif
+    return dst;
 }
 
 } // namespace CppCommon

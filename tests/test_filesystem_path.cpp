@@ -345,9 +345,9 @@ TEST_CASE("Path attributes", "[CppCommon][FileSystem]")
     Path current = Path::current();
     auto old_attributes = current.attributes();
     auto new_attributes = old_attributes | FileAttributes::ARCHIVED | FileAttributes::READONLY;
-    current.SetAttributes(new_attributes);
+    Path::SetAttributes(current, new_attributes);
     REQUIRE(current.attributes() == new_attributes);
-    current.SetAttributes(old_attributes);
+    Path::SetAttributes(current, old_attributes);
     REQUIRE(current.attributes() == old_attributes);
 }
 #endif
@@ -358,9 +358,9 @@ TEST_CASE("Path permissions", "[CppCommon][FileSystem]")
     Path current = Path::current();
     auto old_permissions = current.permissions();
     auto new_permissions = old_permissions | FilePermissions::IRWXU | FilePermissions::IRWXG | FilePermissions::IRWXO;
-    current.SetPermissions(new_permissions);
+    Path::SetPermissions(current, new_permissions);
     REQUIRE(current.permissions() == new_permissions);
-    current.SetPermissions(old_permissions);
+    Path::SetPermissions(current, old_permissions);
     REQUIRE(current.permissions() == old_permissions);
 }
 #endif

@@ -142,6 +142,7 @@ public:
             dwFlagsAndAttributes |= FILE_ATTRIBUTE_SYSTEM;
         if (attributes & FileAttributes::TEMPORARY)
             dwFlagsAndAttributes |= FILE_ATTRIBUTE_TEMPORARY;
+
         _file = CreateFileW(_path.to_wstring().c_str(), (read ? GENERIC_READ : 0) | (write ? GENERIC_WRITE : 0), 0, nullptr, CREATE_NEW | (truncate ? TRUNCATE_EXISTING : 0), dwFlagsAndAttributes, nullptr);
         if (_file == INVALID_HANDLE_VALUE)
             throwex FileSystemException("Cannot create a new file!").Attach(_path);
@@ -171,6 +172,7 @@ public:
             mode |= S_ISGID;
         if (permissions & FilePermissions::ISVTX)
             mode |= S_ISVTX;
+
         _file = open(_path.native().c_str(), O_CREAT | O_EXCL | ((read && write) ? O_RDWR : (read ? O_RDONLY : (write ? O_WRONLY : 0))) | (truncate ? O_TRUNC : 0), mode);
         if (_file < 0)
             throwex FileSystemException("Cannot create a new file!").Attach(_path);
@@ -201,6 +203,7 @@ public:
             dwFlagsAndAttributes |= FILE_ATTRIBUTE_SYSTEM;
         if (attributes & FileAttributes::TEMPORARY)
             dwFlagsAndAttributes |= FILE_ATTRIBUTE_TEMPORARY;
+
         _file = CreateFileW(_path.to_wstring().c_str(), (read ? GENERIC_READ : 0) | (write ? GENERIC_WRITE : 0), 0, nullptr, OPEN_EXISTING | (truncate ? TRUNCATE_EXISTING : 0), dwFlagsAndAttributes, nullptr);
         if (_file == INVALID_HANDLE_VALUE)
             throwex FileSystemException("Cannot open existing file!").Attach(_path);
@@ -230,6 +233,7 @@ public:
             mode |= S_ISGID;
         if (permissions & FilePermissions::ISVTX)
             mode |= S_ISVTX;
+
         _file = open(_path.native().c_str(), ((read && write) ? O_RDWR : (read ? O_RDONLY : (write ? O_WRONLY : 0))) | (truncate ? O_TRUNC : 0), mode);
         if (_file < 0)
             throwex FileSystemException("Cannot create a new file!").Attach(_path);
@@ -260,6 +264,7 @@ public:
             dwFlagsAndAttributes |= FILE_ATTRIBUTE_SYSTEM;
         if (attributes & FileAttributes::TEMPORARY)
             dwFlagsAndAttributes |= FILE_ATTRIBUTE_TEMPORARY;
+
         _file = CreateFileW(_path.to_wstring().c_str(), (read ? GENERIC_READ : 0) | (write ? GENERIC_WRITE : 0), 0, nullptr, OPEN_ALWAYS | (truncate ? TRUNCATE_EXISTING : 0), dwFlagsAndAttributes, nullptr);
         if (_file == INVALID_HANDLE_VALUE)
             throwex FileSystemException("Cannot open existing file!").Attach(_path);
@@ -289,6 +294,7 @@ public:
             mode |= S_ISGID;
         if (permissions & FilePermissions::ISVTX)
             mode |= S_ISVTX;
+
         _file = open(_path.native().c_str(), O_CREAT | ((read && write) ? O_RDWR : (read ? O_RDONLY : (write ? O_WRONLY : 0))) | (truncate ? O_TRUNC : 0), mode);
         if (_file < 0)
             throwex FileSystemException("Cannot create a new file!").Attach(_path);
@@ -430,19 +436,11 @@ File::File() : Path(), _pimpl(new Impl(*this))
 {
 }
 
-File::File(const std::string& path) : Path(path), _pimpl(new Impl(*this))
-{
-}
-
-File::File(const std::wstring& path) : Path(path), _pimpl(new Impl(*this))
-{
-}
-
 File::File(const Path& path) : Path(path), _pimpl(new Impl(*this))
 {
 }
 
-File::File(const File& instance) : Path(instance), _pimpl(new Impl(*this))
+File::File(const File& instance) : File((const Path&)instance)
 {
 }
 
@@ -466,7 +464,8 @@ bool File::IsFileExists() const
     DWORD attributes = GetFileAttributesW(to_wstring().c_str());
     if (attributes == INVALID_FILE_ATTRIBUTES)
         return false;
-    else if (attributes & FILE_ATTRIBUTE_DIRECTORY)
+
+    if (attributes & FILE_ATTRIBUTE_DIRECTORY)
         return false;
     else
         return true;
@@ -481,7 +480,7 @@ bool File::IsFileExists() const
             throwex FileSystemException("Cannot get the status of the file!").Attach(*this);
     }
 
-    else if (S_ISDIR(st.st_mode))
+    if (S_ISDIR(st.st_mode))
         return false;
     else if (S_ISREG(st.st_mode))
         return true;

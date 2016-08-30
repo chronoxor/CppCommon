@@ -31,29 +31,11 @@ public:
 
     //! Default constructor
     File();
-    //! Initialize file path with a given string value in UTF-8 encoding (Unix)
-    /*!
-        \param path - Path value in UTF-8 encoding
-    */
-    explicit File(const std::string& path);
-    //! Initialize file path with a given string value in UTF-16 encoding (Windows)
-    /*!
-        \param path - Path value in UTF-16 encoding
-    */
-    explicit File(const std::wstring& path);
-    //! Initialize file path with a given path
-    /*!
-        \param path - Path value
-    */
-    explicit File(const Path& path);
+    File(const Path& path);
     File(const File& instance);
     File(File&&) noexcept = default;
     ~File();
 
-    File& operator=(const std::string& path)
-    { Assign(path); return *this; }
-    File& operator=(const std::wstring& path)
-    { Assign(path); return *this; }
     File& operator=(const Path& path)
     { Assign(path); return *this; }
     File& operator=(const File&) = default;
@@ -64,11 +46,11 @@ public:
     //! Get the current file size
     uint64_t size() const;
 
+    //! Is file exists?
+    bool IsFileExists() const;
     //! Is file empty?
     bool IsFileEmpty() const
     { return (size() == 0); }
-    //! Is file exists?
-    bool IsFileExists() const;
     //! Is file opened?
     bool IsFileOpened() const;
 

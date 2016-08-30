@@ -83,10 +83,10 @@ TEST_CASE("File", "[CppCommon][FileSystem]")
     REQUIRE(test.size() == 4);
 
     // Rename the file
-    test.Rename("test.renamed.tmp");
+    test = Path::Rename(test, "test.renamed.tmp");
 
     // Remove the file
     REQUIRE(test.IsFileExists());
-    test.Remove();
+    Path::Remove(test);
     REQUIRE(!test.IsFileExists());
 }
