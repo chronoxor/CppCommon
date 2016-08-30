@@ -17,8 +17,7 @@ namespace CppCommon {
 
 //! Filesystem file
 /*!
-    Filesystem file wraps file management operations (create, open, read, write, flush)
-    and file manipulation methods (copy, rename, move, remove).
+    Filesystem file wraps file management operations (create, open, read, write, flush).
 
     Not thread-safe.
 */
