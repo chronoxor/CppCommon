@@ -290,6 +290,12 @@ FileType Path::type() const
     else
         return FileType::REGULAR;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
+    // Special check for symlink
+    struct stat lst;
+    int lresult = lstat(native().c_str(), &lst);
+    if ((lresult == 0) && S_ISLNK(lst.st_mode))
+        return FileType::SYMLINK;
+
     struct stat st;
     int result = stat(native().c_str(), &st);
     if (result != 0)
@@ -758,12 +764,7 @@ Path Path::Remove(const Path& path)
             throwex FileSystemException("Cannot delete the path file!").Attach(path);
     }
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-    struct stat st;
-    int result = stat(path.native().c_str(), &st);
-    if (result != 0)
-        throwex FileSystemException("Cannot get the status of the path!").Attach(path);
-
-    if (S_ISDIR(st.st_mode) && !S_ISLNK(st.st_mode))
+    if (path.IsDirectory())
     {
         int result = rmdir(path.native().c_str());
         if (result != 0)

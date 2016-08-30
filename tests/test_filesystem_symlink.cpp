@@ -37,6 +37,8 @@ TEST_CASE("Symlink", "[CppCommon][FileSystem]")
     Directory test1 = Directory::Create(current / "test1");
     REQUIRE(test1.IsExists());
     Symlink symlink1 = Symlink::CreateSymlink(temp, test1 / "test1.tmp");
+    REQUIRE(symlink1.IsExists());
+    REQUIRE(symlink1.IsSymlink());
     REQUIRE(symlink1.IsSymlinkExists());
     REQUIRE(symlink1.IsTargetExists());
     REQUIRE(symlink1.target() == temp);
@@ -44,6 +46,7 @@ TEST_CASE("Symlink", "[CppCommon][FileSystem]")
     // Create a directory symlink
     Symlink symlink2 = Symlink::CreateSymlink(test1, current / "test2");
     REQUIRE(symlink2.IsExists());
+    REQUIRE(symlink2.IsSymlink());
     REQUIRE(symlink2.IsSymlinkExists());
     REQUIRE(symlink2.IsTargetExists());
     REQUIRE(symlink2.target() == current / "test1");
