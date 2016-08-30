@@ -58,6 +58,7 @@ typedef struct _REPARSE_DATA_BUFFER
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <limits.h>
 #include <unistd.h>
 #endif
 
@@ -94,7 +95,7 @@ Path Symlink::target() const
     std::vector<char> buffer(PATH_MAX);
     ssize_t size;
 
-    while ((size = readlink(native.c_str(), buffer.data(), buffer.size())) == (ssize_t)buffer.size())
+    while ((size = readlink(native().c_str(), buffer.data(), buffer.size())) == (ssize_t)buffer.size())
         buffer.resize(buffer.size() * 2);
 
     if (size < 0)

@@ -12,6 +12,7 @@
 #include "filesystem/path.h"
 #include "system/stack_trace.h"
 #include "time/timestamp.h"
+#include "utility/countof.h"
 
 #include <cstring>
 #include <exception>
