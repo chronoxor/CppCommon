@@ -763,7 +763,7 @@ Path Path::Remove(const Path& path)
     if (result != 0)
         throwex FileSystemException("Cannot get the status of the path!").Attach(path);
 
-    if (S_ISDIR(st.st_mode))
+    if (S_ISDIR(st.st_mode) && !S_ISLNK(st.st_mode))
     {
         int result = rmdir(path.native().c_str());
         if (result != 0)
