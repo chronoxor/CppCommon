@@ -737,6 +737,62 @@ Path& Path::RemoveTrailingSeparators()
     return *this;
 }
 
+void Path::Rename(const Path& path)
+{
+#if defined(_WIN32) || defined(_WIN64)
+    if (!MoveFileW(to_wstring().c_str(), path.to_wstring().c_str()))
+        throwex FileSystemException("Cannot move the path!").Attach(*this, path);
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    int result = rename(native().c_str(), path.native().c_str());
+    if (result != 0)
+        throwex FileSystemException("Cannot rename the path!").Attach(*this, path);
+#endif
+    Assign(path);
+}
+
+void Path::Remove()
+{
+#if defined(_WIN32) || defined(_WIN64)
+    std::wstring path = to_wstring();
+    DWORD attributes = GetFileAttributesW(path.c_str());
+    if (attributes == INVALID_FILE_ATTRIBUTES)
+        throwex FileSystemException("Cannot get file attributes of the deleted path!").Attach(*this);
+
+    if (attributes & FILE_ATTRIBUTE_DIRECTORY)
+    {
+        if (!RemoveDirectoryW(path.c_str()))
+            throwex FileSystemException("Cannot remove the path directory!").Attach(*this);
+    }
+    else
+    {
+        if (attributes & FILE_ATTRIBUTE_READONLY)
+            attributes &= ~FILE_ATTRIBUTE_READONLY;
+        if (!SetFileAttributesW(path.c_str(), attributes))
+            throwex FileSystemException("Cannot set file attributes of the deleted path!").Attach(*this);
+        if (!DeleteFileW(path.c_str()))
+            throwex FileSystemException("Cannot delete the path file!").Attach(*this);
+    }
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    struct stat st;
+    int result = stat(native().c_str(), &st);
+    if (result != 0)
+        throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
+
+    if (S_ISDIR(st.st_mode))
+    {
+        int result = rmdir(native().c_str());
+        if (result != 0)
+            throwex FileSystemException("Cannot remove the path directory!").Attach(*this);
+    }
+    else
+    {
+        int result = unlink(native().c_str());
+        if (result != 0)
+            throwex FileSystemException("Cannot unlink the path file!").Attach(*this);
+    }
+#endif
+}
+
 Path Path::initial()
 {
     return Internals::initial;

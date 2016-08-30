@@ -33,9 +33,18 @@ public:
     */
     FileSystemException& Attach(const Path& path)
     { _path = path; return *this; }
+    //! Attach the given source and destination paths to the exception
+    /*!
+        \param src - Exception source path
+        \param dst - Exception destination path
+    */
+    FileSystemException& Attach(const Path& src, const Path& dst)
+    { _src = src; _dst = dst; return *this; }
 
 protected:
     Path _path;
+    Path _src;
+    Path _dst;
 };
 
 } // namespace CppCommon

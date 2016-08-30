@@ -81,4 +81,12 @@ TEST_CASE("File", "[CppCommon][FileSystem]")
     REQUIRE(test.size() == 10);
     test.Resize(4);
     REQUIRE(test.size() == 4);
+
+    // Rename the file
+    test.Rename("test.renamed.tmp");
+
+    // Remove the file
+    REQUIRE(test.IsFileExists());
+    test.Remove();
+    REQUIRE(!test.IsFileExists());
 }

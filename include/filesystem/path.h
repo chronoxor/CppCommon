@@ -328,6 +328,16 @@ public:
     //! Touch the current path and set its modified UTC timestamp to the current value
     void Touch() { SetModified(UtcTimestamp()); }
 
+    //! Rename the current path object (file, empty directory, symlink, etc)
+    void Rename(const std::string& path)
+    { Rename(Path(path)); }
+    void Rename(const std::wstring& path)
+    { Rename(Path(path)); }
+    void Rename(const Path& path);
+
+    //! Remove the current path object (file, empty directory, symlink, etc) from the filesystem
+    void Remove();
+
     //! Get the system path separator character ('\' for Windows or '/' for Unix)
     static char separator() noexcept;
 
