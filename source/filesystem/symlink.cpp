@@ -11,6 +11,7 @@
 #include "filesystem/exceptions.h"
 
 #include <memory>
+#include <vector>
 
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>

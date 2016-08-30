@@ -11,12 +11,14 @@
 #include "filesystem/exceptions.h"
 #include "utility/countof.h"
 
+#include <cstring>
 #include <memory>
 
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 #include <sys/stat.h>
+#include <dirent.h>
 #include <fcntl.h>
 #include <unistd.h>
 #endif
@@ -108,9 +110,9 @@ bool Directory::IsDirectoryEmpty() const
 
 Directory Directory::Create(const Path& path, const Flags<FileAttributes>& attributes, const Flags<FilePermissions>& permissions)
 {
-    Directory result(path);
-    if (result.IsDirectoryExists())
-        return result;
+    Directory directory(path);
+    if (directory.IsDirectoryExists())
+        return directory;
 #if defined(_WIN32) || defined(_WIN64)
     if (!CreateDirectoryW(path.to_wstring().c_str(), nullptr))
         throwex FileSystemException("Cannot create directory!").Attach(path);
@@ -145,34 +147,34 @@ Directory Directory::Create(const Path& path, const Flags<FileAttributes>& attri
     if (result != 0)
         throwex FileSystemException("Cannot create directory!").Attach(path);
 #endif
-    return result;
+    return directory;
 }
 
 Directory Directory::CreateTree(const Path& path, const Flags<FileAttributes>& attributes, const Flags<FilePermissions>& permissions)
 {
-    Directory result(path);
-    if (result.IsDirectoryExists())
-        return result;
+    Directory tree(path);
+    if (tree.IsDirectoryExists())
+        return tree;
 
-    // Try to create the directory
+    // Try to create the last directory
     try
     {
-        Create(result);
-        return result;
+        Create(tree);
+        return tree;
     }
     catch (FileSystemException) {}
 
     // Failed, try to get the parent path and retry
-    Directory parent = result.parent();
+    Directory parent = tree.parent();
     if (parent.empty())
         throwex FileSystemException("Cannot create directory tree!").Attach(path);
     else
         CreateTree(parent);
 
-    // Retry to create the directory
-    Create(result);
+    // Retry to create the last directory
+    Create(tree);
 
-    return result;
+    return tree;
 }
 
 } // namespace CppCommon
