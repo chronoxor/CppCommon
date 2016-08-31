@@ -10,3 +10,4 @@ Filesystem
   * RemoveAll (notifications)
   * Copy (notifications)
   * Devices (enumeration, capacity, free, available)
+  * File locks
