@@ -21,7 +21,7 @@ private:
 
     static void StaticConstructor()
     {
-        CppCommon::StaticConstructor<&TestConstructor::StaticConstructor>::instance;
+        CppCommon::StaticConstructor<&TestConstructor::StaticConstructor>::instance();
         value = 123;
     }
 };
@@ -41,7 +41,7 @@ private:
 
     static void StaticConstructor()
     {
-        CppCommon::StaticConstructor<&TestDestructor::StaticConstructor, &TestDestructor::StaticDestructor>::instance;
+        CppCommon::StaticConstructor<&TestDestructor::StaticConstructor, &TestDestructor::StaticDestructor>::instance();
         value = 321;
     }
 

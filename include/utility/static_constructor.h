@@ -25,7 +25,7 @@ namespace CppCommon {
     private:
         static void StaticConstructor()
         {
-            CppCommon::StaticConstructor<&MyClass::StaticConstructor, &MyClass::StaticDestructor>::instance;
+            CppCommon::StaticConstructor<&MyClass::StaticConstructor, &MyClass::StaticDestructor>::instance();
             ...
         }
 
@@ -52,6 +52,8 @@ struct StaticConstructor
             if (destruct != nullptr)
                 destruct();
         }
+
+        void operator()() {}
     };
 
     static constructor instance;

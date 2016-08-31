@@ -23,7 +23,7 @@ private:
 
     static void StaticConstructor()
     {
-        CppCommon::StaticConstructor<&MyClass::StaticConstructor, &MyClass::StaticDestructor>::instance;
+        CppCommon::StaticConstructor<&MyClass::StaticConstructor, &MyClass::StaticDestructor>::instance();
 
         value = 123;
         std::cout << "MyClass::StaticConstructor() - MyClass::value = " << value << std::endl;
