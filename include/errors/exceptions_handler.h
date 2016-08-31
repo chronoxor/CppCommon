@@ -11,6 +11,7 @@
 
 #include "errors/exceptions.h"
 #include "system/stack_trace.h"
+#include "utility/singleton.h"
 
 #include <functional>
 #include <memory>
@@ -27,8 +28,10 @@ namespace CppCommon {
 
     Not thread-safe.
 */
-class ExceptionsHandler
+class ExceptionsHandler : public CppCommon::Singleton<ExceptionsHandler>
 {
+   friend CppCommon::Singleton<ExceptionsHandler>;
+
 public:
     ExceptionsHandler(const ExceptionsHandler&) = delete;
     ExceptionsHandler(ExceptionsHandler&&) = delete;
@@ -63,10 +66,6 @@ private:
     std::unique_ptr<Impl> _pimpl;
 
     ExceptionsHandler();
-
-    //! Get singleton instance
-    static ExceptionsHandler& GetInstance()
-    { static ExceptionsHandler instance; return instance; }
 };
 
 /*! \example errors_exceptions_handler.cpp Exceptions handler example */

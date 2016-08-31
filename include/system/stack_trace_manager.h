@@ -9,6 +9,8 @@
 #ifndef CPPCOMMON_SYSTEM_STACK_TRACE_MANAGER_H
 #define CPPCOMMON_SYSTEM_STACK_TRACE_MANAGER_H
 
+#include "utility/singleton.h"
+
 #include <memory>
 
 namespace CppCommon {
@@ -19,8 +21,10 @@ namespace CppCommon {
 
     Not thread-safe.
 */
-class StackTraceManager
+class StackTraceManager : public CppCommon::Singleton<StackTraceManager>
 {
+   friend CppCommon::Singleton<StackTraceManager>;
+
 public:
     StackTraceManager(const StackTraceManager&) = delete;
     StackTraceManager(StackTraceManager&&) = delete;
@@ -46,10 +50,6 @@ private:
     std::unique_ptr<Impl> _pimpl;
 
     StackTraceManager();
-
-    //! Get singleton instance
-    static StackTraceManager& GetInstance()
-    { static StackTraceManager instance; return instance; }
 };
 
 } // namespace CppCommon

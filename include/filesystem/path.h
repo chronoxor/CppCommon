@@ -12,7 +12,7 @@
 #include "string/encoding.h"
 
 #include "time/timestamp.h"
-#include "types/flags.h"
+#include "utility/flags.h"
 
 #include <string>
 

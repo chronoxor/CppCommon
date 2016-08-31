@@ -6,8 +6,8 @@
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_TYPES_FLAGS_H
-#define CPPCOMMON_TYPES_FLAGS_H
+#ifndef CPPCOMMON_UTILITY_FLAGS_H
+#define CPPCOMMON_UTILITY_FLAGS_H
 
 #include <bitset>
 #include <type_traits>
@@ -122,10 +122,10 @@ private:
     type _value;
 };
 
-/*! \example types_flags.cpp Enum-based flags example */
+/*! \example utility_flags.cpp Enum-based flags example */
 
 } // namespace CppCommon
 
 #include "flags.inl"
 
-#endif // CPPCOMMON_TYPES_FLAGS_H
+#endif // CPPCOMMON_UTILITY_FLAGS_H
