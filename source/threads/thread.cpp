@@ -243,7 +243,7 @@ std::bitset<64> Thread::GetAffinity(std::thread& thread)
 void Thread::SetAffinity(const std::bitset<64>& affinity)
 {
 #if defined(_WIN32) || defined(_WIN64)
-    DWORD_PTR dwThreadAffinityMask = affinity.to_ullong();
+    DWORD_PTR dwThreadAffinityMask = (DWORD_PTR)affinity.to_ullong();
     if (!SetThreadAffinityMask(GetCurrentThread(), dwThreadAffinityMask))
         throwex SystemException("Failed to set the current thread CPU affinity!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
@@ -261,7 +261,7 @@ void Thread::SetAffinity(const std::bitset<64>& affinity)
 void Thread::SetAffinity(std::thread& thread, const std::bitset<64>& affinity)
 {
 #if defined(_WIN32) || defined(_WIN64)
-    DWORD_PTR dwThreadAffinityMask = affinity.to_ullong();
+    DWORD_PTR dwThreadAffinityMask = (DWORD_PTR)affinity.to_ullong();
     if (!SetThreadAffinityMask(thread.native_handle(), dwThreadAffinityMask))
         throwex SystemException("Failed to set the current thread CPU affinity!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
