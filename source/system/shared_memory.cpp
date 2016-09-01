@@ -117,26 +117,26 @@ public:
 #if defined(_WIN32) || defined(_WIN64)
         // Unmap the shared memory buffer
         if (!UnmapViewOfFile(_ptr))
-            fatality("Failed to unmap a shared memory buffer!");
+            fatality(SystemException("Failed to unmap a shared memory buffer!"));
         // Close the shared memory handler
         if (!CloseHandle(_shared))
-            fatality("Failed to close a shared memory handler!");
+            fatality(SystemException("Failed to close a shared memory handler!"));
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         // Unmap the shared memory buffer
         size_t total = ((SharedMemoryHeader*)_ptr)->size + SHARED_MEMORY_HEADER_SIZE;
         int result = munmap(_ptr, total);
         if (result != 0)
-            fatality("Failed to unmap a shared memory buffer!");
+            fatality(SystemException("Failed to unmap a shared memory buffer!"));
         // Close the shared memory handler
         result = close(_shared);
         if (result != 0)
-            fatality("Failed to close a shared memory handler!");
+            fatality(SystemException("Failed to close a shared memory handler!"));
         // Unlink the shared memory handler (owner only)
         if (_owner)
         {
             result = shm_unlink(_name.c_str());
             if (result != 0)
-                fatality("Failed to unlink a shared memory handler!");
+                fatality(SystemException("Failed to unlink a shared memory handler!"));
         }
 #endif
     }

@@ -50,7 +50,7 @@ public:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = pthread_mutex_destroy(&_lock);
         if (result != 0)
-            fatality("Failed to destroy a mutex!", result);
+            fatality(SystemException("Failed to destroy a mutex!", result));
 #endif
     }
 

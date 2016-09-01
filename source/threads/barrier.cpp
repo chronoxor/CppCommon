@@ -45,7 +45,7 @@ public:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = pthread_barrier_destroy(&_barrier);
         if (result != 0)
-            fatality("Failed to destroy a synchronization barrier!", result);
+            fatality(SystemException("Failed to destroy a synchronization barrier!", result));
 #endif
     }
 

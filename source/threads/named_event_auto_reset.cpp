@@ -77,17 +77,17 @@ public:
     {
 #if defined(_WIN32) || defined(_WIN64)
         if (!CloseHandle(_event))
-            fatality("Failed to close a named auto-reset event!");
+            fatality(SystemException("Failed to close a named auto-reset event!"));
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         // Only the owner should destroy a named auto-reset event
         if (_shared.owner())
         {
             int result = pthread_mutex_destroy(&_shared->mutex);
             if (result != 0)
-                fatality("Failed to destroy a mutex for the named auto-reset event!", result);
+                fatality(SystemException("Failed to destroy a mutex for the named auto-reset event!", result));
             result = pthread_cond_destroy(&_shared->cond);
             if (result != 0)
-                fatality("Failed to destroy a conditional variable for the named auto-reset event!", result);
+                fatality(SystemException("Failed to destroy a conditional variable for the named auto-reset event!", result));
         }
 #endif
     }

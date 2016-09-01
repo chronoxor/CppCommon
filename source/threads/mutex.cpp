@@ -43,11 +43,11 @@ public:
     {
 #if defined(_WIN32) || defined(_WIN64)
         if (!CloseHandle(_mutex))
-            fatality("Failed to close a mutex!");
+            fatality(SystemException("Failed to close a mutex!"));
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = pthread_mutex_destroy(&_mutex);
         if (result != 0)
-            fatality("Failed to destroy a mutex!", result);
+            fatality(SystemException("Failed to destroy a mutex!", result));
 #endif
     }
 

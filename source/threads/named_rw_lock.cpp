@@ -135,25 +135,25 @@ public:
     {
 #if defined(_WIN32) || defined(_WIN64)
         if (!CloseHandle(_exclusive_wake))
-            fatality("Failed to close an exclusive wake semaphore for the named read/write lock!");
+            fatality(SystemException("Failed to close an exclusive wake semaphore for the named read/write lock!"));
         if (!CloseHandle(_shared_wake))
-            fatality("Failed to close a shared wake semaphore for the named read/write lock!");
+            fatality(SystemException("Failed to close a shared wake semaphore for the named read/write lock!"));
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = sem_close(_exclusive_wake);
         if (result != 0)
-            fatality("Failed to close an exclusive wake semaphore for the named read/write lock");
+            fatality(SystemException("Failed to close an exclusive wake semaphore for the named read/write lock"));
         result = sem_close(_shared_wake);
         if (result != 0)
-            fatality("Failed to close an shared wake semaphore for the named read/write lock");
+            fatality(SystemException("Failed to close an shared wake semaphore for the named read/write lock"));
         // Unlink the named semaphores (owner only)
         if (_value.owner())
         {
             result = sem_unlink((name() + "_exclusive").c_str());
             if (result != 0)
-                fatality("Failed to unlink an exclusive wake semaphore for the named read/write lock!");
+                fatality(SystemException("Failed to unlink an exclusive wake semaphore for the named read/write lock!"));
             result = sem_unlink((name() + "_shared").c_str());
             if (result != 0)
-                fatality("Failed to unlink an shared wake semaphore for the named read/write lock!");
+                fatality(SystemException("Failed to unlink an shared wake semaphore for the named read/write lock!"));
         }
 #endif
     }

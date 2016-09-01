@@ -23,4 +23,10 @@ void fatal(const SourceLocation& location, const StackTrace& trace, const std::s
     std::abort();
 }
 
+void fatal(const SourceLocation& location, const StackTrace& trace, const std::exception& fatal) noexcept
+{
+    std::cerr << fatal.what() << std::endl;
+    std::abort();
+}
+
 } // namespace CppCommon

@@ -11,8 +11,7 @@
 
 using namespace CppCommon;
 
-const uint64_t items_to_read = 10000000;
-const uint64_t items_to_write = 10000000;
+const uint64_t items_to_produce = 10000000;
 const int readers_from = 1;
 const int readers_to = 32;
 const int writers_from = 1;
@@ -39,7 +38,7 @@ void produce(CppBenchmark::Context& context)
             // Create named read/write lock slave
             NamedRWLock lock_slave("named_rw_lock_perf");
 
-            uint64_t items = (items_to_read / readers_count);
+            uint64_t items = (items_to_produce / readers_count);
             for (uint64_t i = 0; i < items; ++i)
             {
                 ReadLocker<NamedRWLock> locker(lock_slave);
@@ -57,7 +56,7 @@ void produce(CppBenchmark::Context& context)
             // Create named read/write lock slave
             NamedRWLock lock("named_rw_lock_perf");
 
-            uint64_t items = (items_to_write / writers_count);
+            uint64_t items = (items_to_produce / writers_count);
             for (uint64_t i = 0; i < items; ++i)
             {
                 WriteLocker<NamedRWLock> locker(lock);
@@ -75,7 +74,7 @@ void produce(CppBenchmark::Context& context)
         writer.join();
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items_to_read + items_to_write - 1);
+    context.metrics().AddIterations(items_to_produce - 1);
     context.metrics().SetCustom("CRC-Readers", readers_crc);
     context.metrics().SetCustom("CRC-Writers", writers_crc);
 }

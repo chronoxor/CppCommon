@@ -40,7 +40,7 @@ public:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = pthread_rwlock_destroy(&_rwlock);
         if (result != 0)
-            fatality("Failed to destroy a read/write lock!", result);
+            fatality(SystemException("Failed to destroy a read/write lock!", result));
 #endif
     }
 
@@ -51,7 +51,7 @@ public:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = pthread_rwlock_tryrdlock(&_rwlock);
         if ((result != 0) && (result != EBUSY))
-            throwex SystemException("Failed to try lock a read/write lock!", result);
+            throwex SystemException("Failed to try lock for read!", result);
         return (result == 0);
 #endif
     }
@@ -63,7 +63,7 @@ public:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = pthread_rwlock_trywrlock(&_rwlock);
         if ((result != 0) && (result != EBUSY))
-            throwex SystemException("Failed to try lock a read/write lock!", result);
+            throwex SystemException("Failed to try lock for write!", result);
         return (result == 0);
 #endif
     }
@@ -75,7 +75,7 @@ public:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = pthread_rwlock_rdlock(&_rwlock);
         if (result != 0)
-            throwex SystemException("Failed to lock a read/write lock!", result);
+            throwex SystemException("Failed to lock for read!", result);
 #endif
     }
 
@@ -86,7 +86,7 @@ public:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = pthread_rwlock_wrlock(&_rwlock);
         if (result != 0)
-            throwex SystemException("Failed to lock a read/write lock!", result);
+            throwex SystemException("Failed to lock for write!", result);
 #endif
     }
 
@@ -97,7 +97,7 @@ public:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = pthread_rwlock_unlock(&_rwlock);
         if (result != 0)
-            throwex SystemException("Failed to unlock a read/write lock!", result);
+            throwex SystemException("Failed to unlock read lock!", result);
 #endif
     }
 
@@ -108,7 +108,7 @@ public:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = pthread_rwlock_unlock(&_rwlock);
         if (result != 0)
-            throwex SystemException("Failed to unlock a read/write lock!", result);
+            throwex SystemException("Failed to unlock write lock!", result);
 #endif
     }
 

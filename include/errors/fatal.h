@@ -37,6 +37,19 @@ namespace CppCommon {
     \param error - System error code
 */
 void fatal(const SourceLocation& location, const StackTrace& trace, const std::string& message, int error = SystemError::GetLast()) noexcept;
+//! Fatal abort execution
+/*!
+    Fatal aborts execution. It will print fatal exception into the std::cerr stream,
+    get and print the last system error code and message, stack trace if available.
+    Finally abort() function will be called!
+
+    Thread-safe.
+
+    \param location - Source location wrapper
+    \param trace - Stack trace
+    \param fatal - Fatal exception
+*/
+void fatal(const SourceLocation& location, const StackTrace& trace, const std::exception& fatal) noexcept;
 
 /*! \example errors_fatal.cpp Fatal abort execution example */
 

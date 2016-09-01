@@ -56,17 +56,17 @@ public:
     {
 #if defined(_WIN32) || defined(_WIN64)
         if (!CloseHandle(_semaphore))
-            fatality("Failed to close a named semaphore!");
+            fatality(SystemException("Failed to close a named semaphore!"));
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = sem_close(_semaphore);
         if (result != 0)
-            fatality("Failed to close a named semaphore!");
+            fatality(SystemException("Failed to close a named semaphore!"));
         // Unlink the named semaphore (owner only)
         if (_owner)
         {
             result = sem_unlink(_name.c_str());
             if (result != 0)
-                fatality("Failed to unlink a named semaphore!");
+                fatality(SystemException("Failed to unlink a named semaphore!"));
         }
 #endif
     }

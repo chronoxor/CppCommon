@@ -31,7 +31,7 @@ public:
     ~Impl()
     {
         if (_shared->thread_id == Thread::CurrentThreadId())
-            fatality("Named critical section should not be destroyed if our thread owns it!");
+            fatality(SystemException("Named critical section should not be destroyed if our thread owns it!"));
     }
 
     const std::string& name() const

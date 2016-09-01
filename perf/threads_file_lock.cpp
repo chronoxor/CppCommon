@@ -1,17 +1,17 @@
 //
-// Created by Ivan Shynkarenka on 25.05.2016.
+// Created by Ivan Shynkarenka on 02.09.2016.
 //
 
 #include "benchmark/cppbenchmark.h"
 
-#include "threads/rw_lock.h"
+#include "threads/file_lock.h"
 
 #include <thread>
 #include <vector>
 
 using namespace CppCommon;
 
-const uint64_t items_to_produce = 10000000;
+const uint64_t items_to_produce = 100000;
 const int readers_from = 1;
 const int readers_to = 32;
 const int writers_from = 1;
@@ -26,19 +26,21 @@ void produce(CppBenchmark::Context& context)
     uint64_t readers_crc = 0;
     uint64_t writers_crc = 0;
 
-    // Create read/write lock synchronization primitive
-    RWLock lock;
+    // Create file-lock synchronization primitive
+    FileLock lock(".lock");
 
     // Start readers threads
     std::vector<std::thread> readers;
     for (int reader = 0; reader < readers_count; ++reader)
     {
-        readers.push_back(std::thread([&lock, &readers_crc, reader, readers_count]()
+        readers.push_back(std::thread([&readers_crc, reader, readers_count]()
         {
+            FileLock lock(".lock");
+
             uint64_t items = (items_to_produce / readers_count);
             for (uint64_t i = 0; i < items; ++i)
             {
-                ReadLocker<RWLock> locker(lock);
+                ReadLocker<FileLock> locker(lock);
                 readers_crc += (reader * items) + i;
             }
         }));
@@ -48,12 +50,14 @@ void produce(CppBenchmark::Context& context)
     std::vector<std::thread> writers;
     for (int writer = 0; writer < writers_count; ++writer)
     {
-        writers.push_back(std::thread([&lock, &writers_crc, writer, writers_count]()
+        writers.push_back(std::thread([&writers_crc, writer, writers_count]()
         {
+            FileLock lock(".lock");
+
             uint64_t items = (items_to_produce / writers_count);
             for (uint64_t i = 0; i < items; ++i)
             {
-                WriteLocker<RWLock> locker(lock);
+                WriteLocker<FileLock> locker(lock);
                 writers_crc += (writer * items) + i;
             }
         }));
@@ -73,7 +77,7 @@ void produce(CppBenchmark::Context& context)
     context.metrics().SetCustom("CRC-Writers", writers_crc);
 }
 
-BENCHMARK("RWLock", settings)
+BENCHMARK("FileLock", settings)
 {
     produce(context);
 }

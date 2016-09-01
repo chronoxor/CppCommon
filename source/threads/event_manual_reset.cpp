@@ -47,14 +47,14 @@ public:
     {
 #if defined(_WIN32) || defined(_WIN64)
         if (!CloseHandle(_event))
-            fatality("Failed to close a manual-reset event!");
+            fatality(SystemException("Failed to close a manual-reset event!"));
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = pthread_mutex_destroy(&_mutex);
         if (result != 0)
-            fatality("Failed to destroy a mutex for the manual-reset event!", result);
+            fatality(SystemException("Failed to destroy a mutex for the manual-reset event!", result));
         result = pthread_cond_destroy(&_cond);
         if (result != 0)
-            fatality("Failed to destroy a conditional variable for the manual-reset event!", result);
+            fatality(SystemException("Failed to destroy a conditional variable for the manual-reset event!", result));
 #endif
     }
 

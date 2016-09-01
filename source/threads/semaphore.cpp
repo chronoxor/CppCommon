@@ -47,11 +47,11 @@ public:
     {
 #if defined(_WIN32) || defined(_WIN64)
         if (!CloseHandle(_semaphore))
-            fatality("Failed to close a semaphore!");
+            fatality(SystemException("Failed to close a semaphore!"));
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = sem_destroy(&_semaphore);
         if (result != 0)
-            fatality("Failed to destroy a semaphore!");
+            fatality(SystemException("Failed to destroy a semaphore!"));
 #endif
     }
 

@@ -61,14 +61,14 @@ public:
     {
 #if defined(_WIN32) || defined(_WIN64)
         if (!CloseHandle(_mutex))
-            fatality("Failed to close a named mutex!");
+            fatality(SystemException("Failed to close a named mutex!"));
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         // Only the owner should destroy a named mutex
         if (_shared.owner())
         {
             int result = pthread_mutex_destroy(&_shared->mutex);
             if (result != 0)
-                fatality("Failed to destroy a named mutex!", result);
+                fatality(SystemException("Failed to destroy a named mutex!", result));
         }
 #endif
     }

@@ -8,6 +8,7 @@
 
 #include "filesystem/file.h"
 
+#include "errors/fatal.h"
 #include "filesystem/exceptions.h"
 
 #include <cassert>
@@ -39,11 +40,12 @@ public:
         if (IsFileOpened())
         {
 #if defined(_WIN32) || defined(_WIN64)
-            CloseHandle(_file);
-            _file = INVALID_HANDLE_VALUE;
+            if (!CloseHandle(_file))
+                fatality(FileSystemException("Cannot close the file handle!").Attach(_path));
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-            close(_file);
-            _file = -1;
+            int result = close(_file);
+            if (result != 0)
+                fatality(FileSystemException("Cannot close the file descriptor!").Attach(_path));
 #endif
         }
     }
@@ -143,7 +145,7 @@ public:
         if (attributes & FileAttributes::TEMPORARY)
             dwFlagsAndAttributes |= FILE_ATTRIBUTE_TEMPORARY;
 
-        _file = CreateFileW(_path.to_wstring().c_str(), (read ? GENERIC_READ : 0) | (write ? GENERIC_WRITE : 0), 0, nullptr, CREATE_NEW | (truncate ? TRUNCATE_EXISTING : 0), dwFlagsAndAttributes, nullptr);
+        _file = CreateFileW(_path.to_wstring().c_str(), (read ? GENERIC_READ : 0) | (write ? GENERIC_WRITE : 0), FILE_SHARE_READ, nullptr, CREATE_NEW | (truncate ? TRUNCATE_EXISTING : 0), dwFlagsAndAttributes, nullptr);
         if (_file == INVALID_HANDLE_VALUE)
             throwex FileSystemException("Cannot create a new file!").Attach(_path);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
@@ -204,7 +206,7 @@ public:
         if (attributes & FileAttributes::TEMPORARY)
             dwFlagsAndAttributes |= FILE_ATTRIBUTE_TEMPORARY;
 
-        _file = CreateFileW(_path.to_wstring().c_str(), (read ? GENERIC_READ : 0) | (write ? GENERIC_WRITE : 0), 0, nullptr, OPEN_EXISTING | (truncate ? TRUNCATE_EXISTING : 0), dwFlagsAndAttributes, nullptr);
+        _file = CreateFileW(_path.to_wstring().c_str(), (read ? GENERIC_READ : 0) | (write ? GENERIC_WRITE : 0), FILE_SHARE_READ, nullptr, OPEN_EXISTING | (truncate ? TRUNCATE_EXISTING : 0), dwFlagsAndAttributes, nullptr);
         if (_file == INVALID_HANDLE_VALUE)
             throwex FileSystemException("Cannot open existing file!").Attach(_path);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
@@ -265,7 +267,7 @@ public:
         if (attributes & FileAttributes::TEMPORARY)
             dwFlagsAndAttributes |= FILE_ATTRIBUTE_TEMPORARY;
 
-        _file = CreateFileW(_path.to_wstring().c_str(), (read ? GENERIC_READ : 0) | (write ? GENERIC_WRITE : 0), 0, nullptr, OPEN_ALWAYS | (truncate ? TRUNCATE_EXISTING : 0), dwFlagsAndAttributes, nullptr);
+        _file = CreateFileW(_path.to_wstring().c_str(), (read ? GENERIC_READ : 0) | (write ? GENERIC_WRITE : 0), FILE_SHARE_READ, nullptr, OPEN_ALWAYS | (truncate ? TRUNCATE_EXISTING : 0), dwFlagsAndAttributes, nullptr);
         if (_file == INVALID_HANDLE_VALUE)
             throwex FileSystemException("Cannot open existing file!").Attach(_path);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
