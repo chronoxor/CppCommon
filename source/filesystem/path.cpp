@@ -397,7 +397,7 @@ Flags<FilePermissions> Path::permissions() const
 UtcTimestamp Path::created() const
 {
 #if defined(_WIN32) || defined(_WIN64)
-    HANDLE hFile = CreateFileW(to_wstring().c_str(), GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+    HANDLE hFile = CreateFileW(to_wstring().c_str(), 0, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
     if (hFile == INVALID_HANDLE_VALUE)
         throwex FileSystemException("Cannot open the path for reading!").Attach(*this);
 
@@ -426,7 +426,7 @@ UtcTimestamp Path::created() const
 UtcTimestamp Path::modified() const
 {
 #if defined(_WIN32) || defined(_WIN64)
-    HANDLE hFile = CreateFileW(to_wstring().c_str(), GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+    HANDLE hFile = CreateFileW(to_wstring().c_str(), 0, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
     if (hFile == INVALID_HANDLE_VALUE)
         throwex FileSystemException("Cannot open the path for reading!").Attach(*this);
 
@@ -455,7 +455,7 @@ UtcTimestamp Path::modified() const
 size_t Path::hardlinks() const
 {
 #if defined(_WIN32) || defined(_WIN64)
-    HANDLE hFile = CreateFileW(to_wstring().c_str(), GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+    HANDLE hFile = CreateFileW(to_wstring().c_str(), 0, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
     if (hFile == INVALID_HANDLE_VALUE)
         throwex FileSystemException("Cannot open the path for reading!").Attach(*this);
 
@@ -864,7 +864,7 @@ void Path::SetPermissions(const Path& path, const Flags<FilePermissions>& permis
 void Path::SetCreated(const Path& path, const UtcTimestamp& timestamp)
 {
 #if defined(_WIN32) || defined(_WIN64)
-    HANDLE hFile = CreateFileW(path.to_wstring().c_str(), GENERIC_WRITE, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+    HANDLE hFile = CreateFileW(path.to_wstring().c_str(), FILE_WRITE_ATTRIBUTES, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
     if (hFile == INVALID_HANDLE_VALUE)
         throwex FileSystemException("Cannot open the path for writing!").Attach(path);
 
@@ -900,7 +900,7 @@ void Path::SetCreated(const Path& path, const UtcTimestamp& timestamp)
 void Path::SetModified(const Path& path, const UtcTimestamp& timestamp)
 {
 #if defined(_WIN32) || defined(_WIN64)
-    HANDLE hFile = CreateFileW(path.to_wstring().c_str(), GENERIC_WRITE, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+    HANDLE hFile = CreateFileW(path.to_wstring().c_str(), FILE_WRITE_ATTRIBUTES, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
     if (hFile == INVALID_HANDLE_VALUE)
         throwex FileSystemException("Cannot open the path for writing!").Attach(path);
 
