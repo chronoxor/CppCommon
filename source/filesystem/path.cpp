@@ -143,56 +143,56 @@ Path Path::parent() const
     while (parent_length > 0)
     {
         --parent_length;
-		if ((_path[parent_length] == '\\') || (_path[parent_length] == '/'))
-		{
-			parent_found = true;
+        if ((_path[parent_length] == '\\') || (_path[parent_length] == '/'))
+        {
+            parent_found = true;
 
-			// Windows case 1: "\\net" or "//net"
-			if ((parent_length == 1) && ((_path[parent_length - 1] == '\\') || (_path[parent_length - 1] == '/')))
-			{
-				parent_found = false;
-				break;
-			}
-			// Windows case 2: "\\?\"
-			if ((parent_length > 0) && (_path[parent_length - 1] == '?'))
-			{
-				parent_found = filepart;
-				++parent_length;
-				break;
-			}
-			// Windows case 3: "C:\"
-			if ((parent_length > 0) && (_path[parent_length - 1] == ':'))
-			{
-				parent_found = filepart;
-				++parent_length;
-				break;
-			}
+            // Windows case 1: "\\net" or "//net"
+            if ((parent_length == 1) && ((_path[parent_length - 1] == '\\') || (_path[parent_length - 1] == '/')))
+            {
+                parent_found = false;
+                break;
+            }
+            // Windows case 2: "\\?\"
+            if ((parent_length > 0) && (_path[parent_length - 1] == '?'))
+            {
+                parent_found = filepart;
+                ++parent_length;
+                break;
+            }
+            // Windows case 3: "C:\"
+            if ((parent_length > 0) && (_path[parent_length - 1] == ':'))
+            {
+                parent_found = filepart;
+                ++parent_length;
+                break;
+            }
 
-			// Skip multiple path separators
-			while (parent_length > 0)
-			{
-				--parent_length;
-				if ((_path[parent_length] != '\\') && (_path[parent_length] != '/'))
-				{
-					++parent_length;
-					break;
-				}
-			}
+            // Skip multiple path separators
+            while (parent_length > 0)
+            {
+                --parent_length;
+                if ((_path[parent_length] != '\\') && (_path[parent_length] != '/'))
+                {
+                    ++parent_length;
+                    break;
+                }
+            }
 
-			// Unix case 1: "/foo" -> "/", but "/" -> ""
-			if ((parent_length == 0) && (_path.size() > 1))
-				++parent_length;
+            // Unix case 1: "/foo" -> "/", but "/" -> ""
+            if ((parent_length == 0) && (_path.size() > 1))
+                ++parent_length;
 
-			filepart = false;
+            filepart = false;
 
-			break;
-		}
-		else if (_path[parent_length] == ':')
-		{
-			parent_found = false;
-			++parent_length;
-			break;
-		}
+            break;
+        }
+        else if (_path[parent_length] == ':')
+        {
+            parent_found = false;
+            ++parent_length;
+            break;
+        }
         else
             filepart = true;
     }
@@ -336,7 +336,7 @@ Path Path::absolute() const
     if (result == nullptr)
         throwex FileSystemException("Cannot get the real path of the current path!").Attach(*this);
 
-    return Path(std::wstring(result));
+    return Path(std::string(result));
 #endif
 }
 
