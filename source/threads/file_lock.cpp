@@ -127,6 +127,22 @@ public:
         OVERLAPPED overlapped;
         ZeroMemory(&overlapped, sizeof(OVERLAPPED));
         return LockFileEx(_file, LOCKFILE_FAIL_IMMEDIATELY, 0, MAXDWORD, MAXDWORD, &overlapped) ? true : false;
+#elif defined(linux) || defined(__linux) || defined(__linux__)
+        struct flock lock;
+        lock.l_type = F_RDLCK;
+        lock.l_whence = SEEK_SET;
+        lock.l_start = 0;
+        lock.l_len = 0;
+        int result = fcntl(_file, F_OFD_SETLK, &lock);
+        if (result == -1)
+        {
+           if  (errno == EAGAIN)
+               return false;
+           else
+               throwex FileSystemException("Failed to try lock for read!", result).Attach(_path);
+        }
+        else
+           return true;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = flock(_file, LOCK_SH | LOCK_NB);
         if (result != 0)
@@ -147,6 +163,22 @@ public:
         OVERLAPPED overlapped;
         ZeroMemory(&overlapped, sizeof(OVERLAPPED));
         return LockFileEx(_file, LOCKFILE_EXCLUSIVE_LOCK | LOCKFILE_FAIL_IMMEDIATELY, 0, MAXDWORD, MAXDWORD, &overlapped) ? true : false;
+#elif defined(linux) || defined(__linux) || defined(__linux__)
+        struct flock lock;
+        lock.l_type = F_WRLCK;
+        lock.l_whence = SEEK_SET;
+        lock.l_start = 0;
+        lock.l_len = 0;
+        int result = fcntl(_file, F_OFD_SETLK, &lock);
+        if (result == -1)
+        {
+           if  (errno == EAGAIN)
+               return false;
+           else
+               throwex FileSystemException("Failed to try lock for write!", result).Attach(_path);
+        }
+        else
+           return true;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = flock(_file, LOCK_EX | LOCK_NB);
         if (result != 0)
@@ -168,6 +200,15 @@ public:
         ZeroMemory(&overlapped, sizeof(OVERLAPPED));
         if (!LockFileEx(_file, 0, 0, MAXDWORD, MAXDWORD, &overlapped))
             throwex FileSystemException("Failed to lock for read!").Attach(_path);
+#elif defined(linux) || defined(__linux) || defined(__linux__)
+        struct flock lock;
+        lock.l_type = F_RDLCK;
+        lock.l_whence = SEEK_SET;
+        lock.l_start = 0;
+        lock.l_len = 0;
+        int result = fcntl(_file, F_OFD_SETLKW, &lock);
+        if (result == -1)
+            throwex FileSystemException("Failed to lock for read!", result).Attach(_path);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = flock(_file, LOCK_SH);
         if (result != 0)
@@ -182,6 +223,15 @@ public:
         ZeroMemory(&overlapped, sizeof(OVERLAPPED));
         if (!LockFileEx(_file, LOCKFILE_EXCLUSIVE_LOCK, 0, MAXDWORD, MAXDWORD, &overlapped))
             throwex FileSystemException("Failed to lock for write!").Attach(_path);
+#elif defined(linux) || defined(__linux) || defined(__linux__)
+        struct flock lock;
+        lock.l_type = F_WRLCK;
+        lock.l_whence = SEEK_SET;
+        lock.l_start = 0;
+        lock.l_len = 0;
+        int result = fcntl(_file, F_OFD_SETLKW, &lock);
+        if (result == -1)
+            throwex FileSystemException("Failed to lock for write!", result).Attach(_path);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = flock(_file, LOCK_EX);
         if (result != 0)
@@ -195,7 +245,16 @@ public:
         OVERLAPPED overlapped;
         ZeroMemory(&overlapped, sizeof(OVERLAPPED));
         if (!UnlockFileEx(_file, 0, MAXDWORD, MAXDWORD, &overlapped))
-            throwex FileSystemException("Failed to unlock read lock!").Attach(_path);
+            throwex FileSystemException("Failed to unlock the read lock!").Attach(_path);
+#elif defined(linux) || defined(__linux) || defined(__linux__)
+        struct flock lock;
+        lock.l_type = F_UNLCK;
+        lock.l_whence = SEEK_SET;
+        lock.l_start = 0;
+        lock.l_len = 0;
+        int result = fcntl(_file, F_OFD_SETLK, &lock);
+        if (result != 0)
+            throwex FileSystemException("Failed to unlock the read lock!", result).Attach(_path);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = flock(_file, LOCK_UN);
         if (result != 0)
@@ -209,7 +268,16 @@ public:
         OVERLAPPED overlapped;
         ZeroMemory(&overlapped, sizeof(OVERLAPPED));
         if (!UnlockFileEx(_file, 0, MAXDWORD, MAXDWORD, &overlapped))
-            throwex FileSystemException("Failed to unlock write lock!").Attach(_path);
+            throwex FileSystemException("Failed to unlock the write lock!").Attach(_path);
+#elif defined(linux) || defined(__linux) || defined(__linux__)
+        struct flock lock;
+        lock.l_type = F_UNLCK;
+        lock.l_whence = SEEK_SET;
+        lock.l_start = 0;
+        lock.l_len = 0;
+        int result = fcntl(_file, F_OFD_SETLK, &lock);
+        if (result != 0)
+            throwex FileSystemException("Failed to unlock the write lock!", result).Attach(_path);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = flock(_file, LOCK_UN);
         if (result != 0)
