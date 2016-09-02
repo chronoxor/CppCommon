@@ -654,7 +654,7 @@ bool Path::IsEquivalent(const Path& path) const
         throwex FileSystemException("Cannot get the status of the path!").Attach(path);
 
     // Compare the file meta information to detect if two path point to the same node on a filesystem
-    return ((st1.st_dev == st2.st_dev) && (st1.st_ino == st2.st_ino) && (st1.st_size == st2.st_size) && (st1.st_mtime == s2.st_mtime));
+    return ((st1.st_dev == st2.st_dev) && (st1.st_ino == st2.st_ino) && (st1.st_size == st2.st_size) && (st1.st_mtime == st2.st_mtime));
 #endif
 }
 
