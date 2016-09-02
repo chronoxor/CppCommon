@@ -411,6 +411,12 @@ TEST_CASE("Path constants of the current process", "[CppCommon][FileSystem]")
     REQUIRE(!unique.empty());
     REQUIRE(!unique.IsExists());
 
+    REQUIRE(Path(".").absolute() == current);
+    REQUIRE(Path("..").absolute() == current.parent());
+
+    REQUIRE(!current.IsEquivalent(executable));
+    REQUIRE(current.IsEquivalent(executable.parent()));
+
     Path parent = current.parent();
     Path::SetCurrent(parent);
     REQUIRE(Path::current() == parent);

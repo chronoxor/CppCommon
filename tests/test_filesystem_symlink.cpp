@@ -41,6 +41,7 @@ TEST_CASE("Symlink", "[CppCommon][FileSystem]")
     REQUIRE(symlink1.IsSymlink());
     REQUIRE(symlink1.IsSymlinkExists());
     REQUIRE(symlink1.IsTargetExists());
+    REQUIRE(symlink1.IsEquivalent(temp));
     REQUIRE(symlink1.target() == temp);
 
     // Create a directory symlink
@@ -49,6 +50,7 @@ TEST_CASE("Symlink", "[CppCommon][FileSystem]")
     REQUIRE(symlink2.IsSymlink());
     REQUIRE(symlink2.IsSymlinkExists());
     REQUIRE(symlink2.IsTargetExists());
+    REQUIRE(symlink2.IsEquivalent(test1));
     REQUIRE(symlink2.target() == current / "test1");
 
     // Create a file hardlink
@@ -58,6 +60,7 @@ TEST_CASE("Symlink", "[CppCommon][FileSystem]")
     REQUIRE(hardlink3.IsExists());
     REQUIRE(hardlink3.IsRegularFile());
     REQUIRE(!hardlink3.IsSymlink());
+    REQUIRE(hardlink3.IsEquivalent(temp));
     REQUIRE(hardlink3.hardlinks() == 2);
 
     // Remove a file hardlink

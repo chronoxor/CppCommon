@@ -6,7 +6,6 @@ General
 
 Filesystem
   * Directory iterations (recursive)
-  * Path canonization
   * RemoveAll (notifications)
   * Copy (notifications)
   * Devices (enumeration, capacity, free, available)

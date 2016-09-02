@@ -141,6 +141,11 @@ public:
     //! Decompose extension from the current path
     Path extension() const;
 
+    //! Transform the current path to the real path on a filesystem
+    Path absolute() const;
+    //! Transform the current path and replace all '.' and '..' properly
+    Path canonical() const;
+
     //! Get the path file type
     FileType type() const;
     //! Get the path file attributes
@@ -186,6 +191,9 @@ public:
     bool IsSymlink() const { return type() == FileType::SYMLINK; }
     //! Is path points to special file (block, character, FIFO, socket)?
     bool IsOther() const;
+
+    //! Is the current path is equivalent to the given one (points to the same node on a filesystem)?
+    bool IsEquivalent(const Path& path) const;
 
     //! Clear path content
     void Clear() noexcept { return _path.clear(); }

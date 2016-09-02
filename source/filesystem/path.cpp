@@ -276,6 +276,88 @@ Path Path::extension() const
     return (ext_found && (ext_length > 1)) ? Path(_path.substr(ext_begin, ext_length)) : Path();
 }
 
+Path Path::absolute() const
+{
+#if defined(_WIN32) || defined(_WIN64)
+    std::vector<wchar_t> buffer(MAX_PATH);
+
+    DWORD size = GetFullPathNameW(to_wstring().c_str(), (DWORD)buffer.size(), buffer.data(), nullptr);
+    if (size > buffer.size())
+    {
+        buffer.resize(size);
+        size = GetFullPathNameW(to_wstring().c_str(), (DWORD)buffer.size(), buffer.data(), nullptr);
+    }
+
+    if (size == 0)
+        throwex FileSystemException("Cannot get the full path name of the current path!").Attach(*this);
+
+    std::wstring fullpath(buffer.data(), size);
+
+    size = GetLongPathNameW(fullpath.c_str(), buffer.data(), (DWORD)buffer.size());
+    if (size > buffer.size())
+    {
+        buffer.resize(size);
+        size = GetLongPathNameW(fullpath.c_str(), buffer.data(), (DWORD)buffer.size());
+    }
+
+    if (size == 0)
+        throwex FileSystemException("Cannot get the long path name of the current path!").Attach(*this);
+
+    return Path(std::wstring(buffer.data(), size));
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    char buffer[PATH_MAX];
+
+    char* result = realpath(native().c_str(), buffer);
+    if (result == nullptr)
+        throwex FileSystemException("Cannot get the real path of the current path!").Attach(*this);
+
+    return Path(std::wstring(result));
+#endif
+}
+
+Path Path::canonical() const
+{
+    // Append the root part of the path
+    Path result = root();
+
+    // Get the root index
+    size_t index = result.size();
+    size_t length = result.size() + 1;
+
+    // If the root part is empty fill it with a current path
+    if (result.empty())
+        result = current();
+
+    // Append relative part of the path
+    while (length < path.size())
+    {
+        // Append path file/directory part
+        if ((_path[length] == '\\') || (_path[length] == '/'))
+        {
+            std::string temp(_path.data() + index, length - index);
+            if (!temp.empty())
+                result /= temp;
+            index = length + 1;
+        }
+        // Skip the current directory part
+        else if ((_path[length] == '.') && (((length + 1) == path.size()) || ((_path[length + 1] == '\\') || (_path[length + 1] == '/'))))
+           index = length + 1;
+        // Reset to the parent directory
+        else if ((_path[length] == '.') && ((lenght + 1) < path.size()) && (_path[length + 1] == '.')  (((length + 2) == path.size()) || ((_path[length + 2] == '\\') || (_path[length + 2] == '/'))))
+        {
+           index = length + 2;
+           result = result.parent();
+           // If the parent directory is empty then also return an empty path
+           if (result.empty())
+               return result;
+        }
+
+        ++length;
+    }
+
+    return result;
+}
+
 FileType Path::type() const
 {
 #if defined(_WIN32) || defined(_WIN64)
@@ -399,7 +481,7 @@ UtcTimestamp Path::created() const
 #if defined(_WIN32) || defined(_WIN64)
     HANDLE hFile = CreateFileW(to_wstring().c_str(), 0, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
     if (hFile == INVALID_HANDLE_VALUE)
-        throwex FileSystemException("Cannot open the path for reading!").Attach(*this);
+        throwex FileSystemException("Cannot open the path for getting create time!").Attach(*this);
 
     // Smart resource deleter pattern
     auto clear = [](HANDLE hFile) { CloseHandle(hFile); };
@@ -428,7 +510,7 @@ UtcTimestamp Path::modified() const
 #if defined(_WIN32) || defined(_WIN64)
     HANDLE hFile = CreateFileW(to_wstring().c_str(), 0, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
     if (hFile == INVALID_HANDLE_VALUE)
-        throwex FileSystemException("Cannot open the path for reading!").Attach(*this);
+        throwex FileSystemException("Cannot open the path for getting modified time!").Attach(*this);
 
     // Smart resource deleter pattern
     auto clear = [](HANDLE hFile) { CloseHandle(hFile); };
@@ -457,7 +539,7 @@ size_t Path::hardlinks() const
 #if defined(_WIN32) || defined(_WIN64)
     HANDLE hFile = CreateFileW(to_wstring().c_str(), 0, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
     if (hFile == INVALID_HANDLE_VALUE)
-        throwex FileSystemException("Cannot open the path for reading!").Attach(*this);
+        throwex FileSystemException("Cannot open the path for getting hard links count!").Attach(*this);
 
     // Smart resource deleter pattern
     auto clear = [](HANDLE hFile) { CloseHandle(hFile); };
@@ -475,6 +557,59 @@ size_t Path::hardlinks() const
         throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
 
     return (size_t)st.st_nlink;
+#endif
+}
+
+bool Path::IsEquivalent(const Path& path) const
+{
+#if defined(_WIN32) || defined(_WIN64)
+    // Access to the file meta information
+    HANDLE hFile1 = CreateFileW(to_wstring().c_str(), 0, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
+    if (hFile1 == INVALID_HANDLE_VALUE)
+        throwex FileSystemException("Cannot open the path for getting meta information!").Attach(*this);
+
+    // Smart resource deleter pattern
+    auto clear1 = [](HANDLE hFile) { CloseHandle(hFile); };
+    auto file1 = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear1)>(hFile1, clear1);
+
+    BY_HANDLE_FILE_INFORMATION info1;
+    if (!GetFileInformationByHandle(file1.get(), &info1))
+        throwex FileSystemException("Cannot get the file meta information!").Attach(*this);
+
+    // Access to the file meta information
+    HANDLE hFile2 = CreateFileW(path.to_wstring().c_str(), 0, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
+    if (hFile2 == INVALID_HANDLE_VALUE)
+        throwex FileSystemException("Cannot open the path for getting meta information!").Attach(path);
+
+    // Smart resource deleter pattern
+    auto clear2 = [](HANDLE hFile) { CloseHandle(hFile); };
+    auto file2 = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear2)>(hFile2, clear2);
+
+    BY_HANDLE_FILE_INFORMATION info2;
+    if (!GetFileInformationByHandle(file2.get(), &info2))
+        throwex FileSystemException("Cannot get the file meta information!").Attach(path);
+
+    // Compare the file meta information to detect if two path point to the same node on a filesystem
+    return ((info1.dwVolumeSerialNumber == info2.dwVolumeSerialNumber) &&
+            (info1.nFileIndexHigh == info2.nFileIndexHigh) &&
+            (info1.nFileIndexLow == info2.nFileIndexLow) &&
+            (info1.nFileSizeHigh == info2.nFileSizeHigh) &&
+            (info1.nFileSizeLow == info2.nFileSizeLow) &&
+            (info1.ftLastWriteTime.dwLowDateTime == info2.ftLastWriteTime.dwLowDateTime) &&
+            (info1.ftLastWriteTime.dwHighDateTime == info2.ftLastWriteTime.dwHighDateTime));
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    struct stat st1;
+    int result = stat(native().c_str(), &st1);
+    if (result != 0)
+        throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
+
+    struct stat st2;
+    result = stat(path.native().c_str(), &st2);
+    if (result != 0)
+        throwex FileSystemException("Cannot get the status of the path!").Attach(path);
+
+    // Compare the file meta information to detect if two path point to the same node on a filesystem
+    return ((st1.st_dev == st2.st_dev) && (st1.st_ino == st2.st_ino) && (st1.st_size == st2.st_size) && (st1.st_mtime == s2.st_mtime));
 #endif
 }
 
@@ -866,7 +1001,7 @@ void Path::SetCreated(const Path& path, const UtcTimestamp& timestamp)
 #if defined(_WIN32) || defined(_WIN64)
     HANDLE hFile = CreateFileW(path.to_wstring().c_str(), FILE_WRITE_ATTRIBUTES, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
     if (hFile == INVALID_HANDLE_VALUE)
-        throwex FileSystemException("Cannot open the path for writing!").Attach(path);
+        throwex FileSystemException("Cannot open the path for writing created time!").Attach(path);
 
     // Smart resource deleter pattern
     auto clear = [](HANDLE hFile) { CloseHandle(hFile); };
@@ -902,7 +1037,7 @@ void Path::SetModified(const Path& path, const UtcTimestamp& timestamp)
 #if defined(_WIN32) || defined(_WIN64)
     HANDLE hFile = CreateFileW(path.to_wstring().c_str(), FILE_WRITE_ATTRIBUTES, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
     if (hFile == INVALID_HANDLE_VALUE)
-        throwex FileSystemException("Cannot open the path for writing!").Attach(path);
+        throwex FileSystemException("Cannot open the path for writing modified time!").Attach(path);
 
     // Smart resource deleter pattern
     auto clear = [](HANDLE hFile) { CloseHandle(hFile); };
