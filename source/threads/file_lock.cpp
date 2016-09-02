@@ -139,7 +139,7 @@ public:
            if  (errno == EAGAIN)
                return false;
            else
-               throwex FileSystemException("Failed to try lock for read!", result).Attach(_path);
+               throwex FileSystemException("Failed to try lock for read!").Attach(_path);
         }
         else
            return true;
@@ -150,7 +150,7 @@ public:
            if  (errno == EWOULDBLOCK)
                return false;
            else
-               throwex FileSystemException("Failed to try lock for read!", result).Attach(_path);
+               throwex FileSystemException("Failed to try lock for read!").Attach(_path);
         }
         else
            return true;
@@ -175,7 +175,7 @@ public:
            if  (errno == EAGAIN)
                return false;
            else
-               throwex FileSystemException("Failed to try lock for write!", result).Attach(_path);
+               throwex FileSystemException("Failed to try lock for write!").Attach(_path);
         }
         else
            return true;
@@ -186,7 +186,7 @@ public:
            if  (errno == EWOULDBLOCK)
                return false;
            else
-               throwex FileSystemException("Failed to try lock for write!", result).Attach(_path);
+               throwex FileSystemException("Failed to try lock for write!").Attach(_path);
         }
         else
            return true;
@@ -208,11 +208,11 @@ public:
         lock.l_len = 0;
         int result = fcntl(_file, F_OFD_SETLKW, &lock);
         if (result == -1)
-            throwex FileSystemException("Failed to lock for read!", result).Attach(_path);
+            throwex FileSystemException("Failed to lock for read!").Attach(_path);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = flock(_file, LOCK_SH);
         if (result != 0)
-            throwex FileSystemException("Failed to lock for read!", result).Attach(_path);
+            throwex FileSystemException("Failed to lock for read!").Attach(_path);
 #endif
     }
 
@@ -231,11 +231,11 @@ public:
         lock.l_len = 0;
         int result = fcntl(_file, F_OFD_SETLKW, &lock);
         if (result == -1)
-            throwex FileSystemException("Failed to lock for write!", result).Attach(_path);
+            throwex FileSystemException("Failed to lock for write!").Attach(_path);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = flock(_file, LOCK_EX);
         if (result != 0)
-            throwex FileSystemException("Failed to lock for write!", result).Attach(_path);
+            throwex FileSystemException("Failed to lock for write!").Attach(_path);
 #endif
     }
 
@@ -254,11 +254,11 @@ public:
         lock.l_len = 0;
         int result = fcntl(_file, F_OFD_SETLK, &lock);
         if (result != 0)
-            throwex FileSystemException("Failed to unlock the read lock!", result).Attach(_path);
+            throwex FileSystemException("Failed to unlock the read lock!").Attach(_path);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = flock(_file, LOCK_UN);
         if (result != 0)
-            throwex FileSystemException("Failed to unlock the read lock!", result).Attach(_path);
+            throwex FileSystemException("Failed to unlock the read lock!").Attach(_path);
 #endif
     }
 
@@ -277,11 +277,11 @@ public:
         lock.l_len = 0;
         int result = fcntl(_file, F_OFD_SETLK, &lock);
         if (result != 0)
-            throwex FileSystemException("Failed to unlock the write lock!", result).Attach(_path);
+            throwex FileSystemException("Failed to unlock the write lock!").Attach(_path);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = flock(_file, LOCK_UN);
         if (result != 0)
-            throwex FileSystemException("Failed to unlock the write lock!", result).Attach(_path);
+            throwex FileSystemException("Failed to unlock the write lock!").Attach(_path);
 #endif
     }
 
