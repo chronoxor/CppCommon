@@ -139,37 +139,62 @@ Path Path::parent() const
     size_t parent_length = _path.size();
 
     // Find parent path position
+    bool filepart = false;
     while (parent_length > 0)
     {
         --parent_length;
-        if ((_path[parent_length] == '\\') || (_path[parent_length] == '/'))
-        {
-            parent_found = true;
+		if ((_path[parent_length] == '\\') || (_path[parent_length] == '/'))
+		{
+			parent_found = true;
 
-            // Windows case 1: "\\net" or "//net"
-            if ((parent_length == 1) && ((_path[parent_length - 1] == '\\') || (_path[parent_length - 1] == '/')))
-                parent_found = false;
-            // Windows case 2: "\\?\"
-            if ((parent_length > 0) && (_path[parent_length - 1] == '?'))
-                parent_found = false;
+			// Windows case 1: "\\net" or "//net"
+			if ((parent_length == 1) && ((_path[parent_length - 1] == '\\') || (_path[parent_length - 1] == '/')))
+			{
+				parent_found = false;
+				break;
+			}
+			// Windows case 2: "\\?\"
+			if ((parent_length > 0) && (_path[parent_length - 1] == '?'))
+			{
+				parent_found = filepart;
+				++parent_length;
+				break;
+			}
+			// Windows case 3: "C:\"
+			if ((parent_length > 0) && (_path[parent_length - 1] == ':'))
+			{
+				parent_found = filepart;
+				++parent_length;
+				break;
+			}
 
-            // Skip multiple path separators
-            while (parent_length > 0)
-            {
-                --parent_length;
-                if ((_path[parent_length] != '\\') && (_path[parent_length] != '/'))
-                {
-                    ++parent_length;
-                    break;
-                }
-            }
+			// Skip multiple path separators
+			while (parent_length > 0)
+			{
+				--parent_length;
+				if ((_path[parent_length] != '\\') && (_path[parent_length] != '/'))
+				{
+					++parent_length;
+					break;
+				}
+			}
 
-            // Unix case 1: "/foo" -> "/", but "/" -> ""
-            if ((parent_length == 0) && (_path.size() > 1))
-                ++parent_length;
+			// Unix case 1: "/foo" -> "/", but "/" -> ""
+			if ((parent_length == 0) && (_path.size() > 1))
+				++parent_length;
 
-            break;
-        }
+			filepart = false;
+
+			break;
+		}
+		else if (_path[parent_length] == ':')
+		{
+			parent_found = false;
+			++parent_length;
+			break;
+		}
+        else
+            filepart = true;
     }
 
     return (parent_found && (parent_length > 0)) ? Path(_path.substr(0, parent_length)) : Path();
@@ -317,43 +342,63 @@ Path Path::absolute() const
 
 Path Path::canonical() const
 {
+    // Check for empty path
+    if (empty())
+        return Path();
+
     // Append the root part of the path
     Path result = root();
 
     // Get the root index
-    size_t index = result.size();
-    size_t length = result.size() + 1;
+    size_t index = result._path.size();
+    size_t length = result._path.size();
 
     // If the root part is empty fill it with a current path
     if (result.empty())
         result = current();
 
     // Append relative part of the path
-    while (length < path.size())
+    bool filepart = false;
+    while (length < _path.size())
     {
-        // Append path file/directory part
         if ((_path[length] == '\\') || (_path[length] == '/'))
         {
+            // Append path file/directory part
             std::string temp(_path.data() + index, length - index);
             if (!temp.empty())
                 result /= temp;
             index = length + 1;
+            filepart = false;
         }
-        // Skip the current directory part
-        else if ((_path[length] == '.') && (((length + 1) == path.size()) || ((_path[length + 1] == '\\') || (_path[length + 1] == '/'))))
-           index = length + 1;
-        // Reset to the parent directory
-        else if ((_path[length] == '.') && ((lenght + 1) < path.size()) && (_path[length + 1] == '.')  (((length + 2) == path.size()) || ((_path[length + 2] == '\\') || (_path[length + 2] == '/'))))
+        else if (!filepart && (_path[length] == '.') && (((length + 1) == _path.size()) || ((_path[length + 1] == '\\') || (_path[length + 1] == '/'))))
         {
+           // Skip the current directory part
+           index = length + 1;
+           filepart = false;
+        }
+        else if (!filepart && (_path[length] == '.') && (((length + 1) < _path.size()) && (_path[length + 1] == '.')) && (((length + 2) == _path.size()) || ((_path[length + 2] == '\\') || (_path[length + 2] == '/'))))
+        {
+           // Reset to the parent directory
            index = length + 2;
+           filepart = false;
+
+           ++length;
+
            result = result.parent();
            // If the parent directory is empty then also return an empty path
            if (result.empty())
                return result;
         }
+        else
+            filepart = true;
 
         ++length;
     }
+
+    // Append the last path file/directory part
+    std::string temp(_path.data() + index, length - index);
+    if (!temp.empty())
+        result /= temp;
 
     return result;
 }
