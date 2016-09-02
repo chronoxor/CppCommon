@@ -133,6 +133,7 @@ public:
         lock.l_whence = SEEK_SET;
         lock.l_start = 0;
         lock.l_len = 0;
+        lock.l_pid = 0;
         int result = fcntl(_file, F_OFD_SETLK, &lock);
         if (result == -1)
         {
@@ -169,6 +170,7 @@ public:
         lock.l_whence = SEEK_SET;
         lock.l_start = 0;
         lock.l_len = 0;
+        lock.l_pid = 0;
         int result = fcntl(_file, F_OFD_SETLK, &lock);
         if (result == -1)
         {
@@ -206,6 +208,7 @@ public:
         lock.l_whence = SEEK_SET;
         lock.l_start = 0;
         lock.l_len = 0;
+        lock.l_pid = 0;
         int result = fcntl(_file, F_OFD_SETLKW, &lock);
         if (result == -1)
             throwex FileSystemException("Failed to lock for read!").Attach(_path);
@@ -229,6 +232,7 @@ public:
         lock.l_whence = SEEK_SET;
         lock.l_start = 0;
         lock.l_len = 0;
+        lock.l_pid = 0;
         int result = fcntl(_file, F_OFD_SETLKW, &lock);
         if (result == -1)
             throwex FileSystemException("Failed to lock for write!").Attach(_path);
@@ -252,6 +256,7 @@ public:
         lock.l_whence = SEEK_SET;
         lock.l_start = 0;
         lock.l_len = 0;
+        lock.l_pid = 0;
         int result = fcntl(_file, F_OFD_SETLK, &lock);
         if (result != 0)
             throwex FileSystemException("Failed to unlock the read lock!").Attach(_path);
@@ -275,6 +280,7 @@ public:
         lock.l_whence = SEEK_SET;
         lock.l_start = 0;
         lock.l_len = 0;
+        lock.l_pid = 0;
         int result = fcntl(_file, F_OFD_SETLK, &lock);
         if (result != 0)
             throwex FileSystemException("Failed to unlock the write lock!").Attach(_path);
