@@ -7,19 +7,20 @@
 */
 
 #include "filesystem/file.h"
+#include "utility/countof.h"
 
 #include <iostream>
 
 int main(int argc, char** argv)
 {
-    char* buffer = "The quick brown fox jumps over the lazy dog";
+    char buffer[] = "The quick brown fox jumps over the lazy dog";
 
     // Create file for writing
     CppCommon::File file("example.txt");
     file.Create(false, true);
 
     // Write buffer into the file
-    file.Write((uint8_t*)buffer, std::strlen(buffer));
+    file.Write((uint8_t*)buffer, CppCommon::countof(buffer));
 
     // Flush the file
     file.Flush();

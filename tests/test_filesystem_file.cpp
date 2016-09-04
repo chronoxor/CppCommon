@@ -6,6 +6,7 @@
 
 #include "filesystem/exceptions.h"
 #include "filesystem/file.h"
+#include "utility/countof.h"
 
 using namespace CppCommon;
 
@@ -93,9 +94,9 @@ TEST_CASE("File common", "[CppCommon][FileSystem]")
 
 TEST_CASE("File read/write static methods", "[CppCommon][FileSystem]")
 {
-    char* buffer = "The quick brown fox jumps over the lazy dog";
-    REQUIRE(File::WriteAllBytes("test.tmp", (uint8_t*)buffer, std::strlen(buffer)) == std::strlen(buffer));
-    REQUIRE(File::ReadAllBytes("test.tmp").size() == std::strlen(buffer));
+    char buffer[] = "The quick brown fox jumps over the lazy dog";
+    REQUIRE(File::WriteAllBytes("test.tmp", (uint8_t*)buffer, countof(buffer)) == countof(buffer));
+    REQUIRE(File::ReadAllBytes("test.tmp").size() == countof(buffer));
     Path::Remove("test.tmp");
 
     std::vector<std::string> lines = { "one", "two", "three", "four", "five" };
