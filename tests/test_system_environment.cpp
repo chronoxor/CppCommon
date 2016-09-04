@@ -15,6 +15,7 @@ TEST_CASE("Environment management", "[CppCommon][System]")
     REQUIRE((Environment::IsDebug() || Environment::IsRelease()));
     REQUIRE((Environment::IsBigEndian() || Environment::IsLittleEndian()));
     REQUIRE(Environment::OSVersion().length() > 0);
+    REQUIRE(Environment::EndLine().length() > 0);
 }
 
 TEST_CASE("Environment variables", "[CppCommon][System]")

@@ -10,6 +10,7 @@
 
 #include "errors/fatal.h"
 #include "filesystem/exceptions.h"
+#include "system/environment.h"
 
 #include <cassert>
 
@@ -77,14 +78,14 @@ public:
         {
             LARGE_INTEGER result;
             if (!GetFileSizeEx(_file, &result))
-                throwex FileSystemException("Cannot git the current file size!").Attach(_path);
+                throwex FileSystemException("Cannot get the current file size!").Attach(_path);
             return (uint64_t)result.QuadPart;
         }
         else
         {
             WIN32_FILE_ATTRIBUTE_DATA fad;
             if (!GetFileAttributesExW(_path.to_wstring().c_str(), GetFileExInfoStandard, &fad))
-                throwex FileSystemException("Cannot git the current file size!").Attach(_path);
+                throwex FileSystemException("Cannot get the current file size!").Attach(_path);
 
             LARGE_INTEGER result;
             result.HighPart = fad.nFileSizeHigh;
@@ -97,7 +98,7 @@ public:
             struct stat st;
             int result = fstat(_file, &st);
             if (result != 0)
-                throwex FileSystemException("Cannot git the current file size!").Attach(_path);
+                throwex FileSystemException("Cannot get the current file size!").Attach(_path);
             return (uint64_t)st.st_size;
         }
         else
@@ -105,7 +106,7 @@ public:
             struct stat st;
             int result = stat(_path.native().c_str(), &st);
             if (result != 0)
-                throwex FileSystemException("Cannot git the current file size!").Attach(_path);
+                throwex FileSystemException("Cannot get the current file size!").Attach(_path);
             return (uint64_t)st.st_size;
         }
 #endif
@@ -145,7 +146,7 @@ public:
         if (attributes & FileAttributes::TEMPORARY)
             dwFlagsAndAttributes |= FILE_ATTRIBUTE_TEMPORARY;
 
-        _file = CreateFileW(_path.to_wstring().c_str(), (read ? GENERIC_READ : 0) | (write ? GENERIC_WRITE : 0), FILE_SHARE_READ, nullptr, CREATE_NEW | (truncate ? TRUNCATE_EXISTING : 0), dwFlagsAndAttributes, nullptr);
+        _file = CreateFileW(_path.to_wstring().c_str(), (read ? GENERIC_READ : 0) | (write ? GENERIC_WRITE : 0), FILE_SHARE_READ, nullptr, CREATE_NEW, dwFlagsAndAttributes, nullptr);
         if (_file == INVALID_HANDLE_VALUE)
             throwex FileSystemException("Cannot create a new file!").Attach(_path);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
@@ -175,10 +176,12 @@ public:
         if (permissions & FilePermissions::ISVTX)
             mode |= S_ISVTX;
 
-        _file = open(_path.native().c_str(), O_CREAT | O_EXCL | ((read && write) ? O_RDWR : (read ? O_RDONLY : (write ? O_WRONLY : 0))) | (truncate ? O_TRUNC : 0), mode);
+        _file = open(_path.native().c_str(), O_CREAT | O_EXCL | ((read && write) ? O_RDWR : (read ? O_RDONLY : (write ? O_WRONLY : 0))), mode);
         if (_file < 0)
             throwex FileSystemException("Cannot create a new file!").Attach(_path);
 #endif
+        if (truncate)
+            Resize(0);
     }
 
     void Open(bool read, bool write, bool truncate = false, const Flags<FileAttributes>& attributes = File::DEFAULT_ATTRIBUTES, const Flags<FilePermissions>& permissions = File::DEFAULT_PERMISSIONS)
@@ -206,7 +209,7 @@ public:
         if (attributes & FileAttributes::TEMPORARY)
             dwFlagsAndAttributes |= FILE_ATTRIBUTE_TEMPORARY;
 
-        _file = CreateFileW(_path.to_wstring().c_str(), (read ? GENERIC_READ : 0) | (write ? GENERIC_WRITE : 0), FILE_SHARE_READ, nullptr, OPEN_EXISTING | (truncate ? TRUNCATE_EXISTING : 0), dwFlagsAndAttributes, nullptr);
+        _file = CreateFileW(_path.to_wstring().c_str(), (read ? GENERIC_READ : 0) | (write ? GENERIC_WRITE : 0), FILE_SHARE_READ, nullptr, OPEN_EXISTING, dwFlagsAndAttributes, nullptr);
         if (_file == INVALID_HANDLE_VALUE)
             throwex FileSystemException("Cannot open existing file!").Attach(_path);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
@@ -236,10 +239,12 @@ public:
         if (permissions & FilePermissions::ISVTX)
             mode |= S_ISVTX;
 
-        _file = open(_path.native().c_str(), ((read && write) ? O_RDWR : (read ? O_RDONLY : (write ? O_WRONLY : 0))) | (truncate ? O_TRUNC : 0), mode);
+        _file = open(_path.native().c_str(), ((read && write) ? O_RDWR : (read ? O_RDONLY : (write ? O_WRONLY : 0))), mode);
         if (_file < 0)
             throwex FileSystemException("Cannot create a new file!").Attach(_path);
 #endif
+        if (truncate)
+            Resize(0);
     }
 
     void OpenOrCreate(bool read, bool write, bool truncate = false, const Flags<FileAttributes>& attributes = File::DEFAULT_ATTRIBUTES, const Flags<FilePermissions>& permissions = File::DEFAULT_PERMISSIONS)
@@ -267,7 +272,7 @@ public:
         if (attributes & FileAttributes::TEMPORARY)
             dwFlagsAndAttributes |= FILE_ATTRIBUTE_TEMPORARY;
 
-        _file = CreateFileW(_path.to_wstring().c_str(), (read ? GENERIC_READ : 0) | (write ? GENERIC_WRITE : 0), FILE_SHARE_READ, nullptr, OPEN_ALWAYS | (truncate ? TRUNCATE_EXISTING : 0), dwFlagsAndAttributes, nullptr);
+        _file = CreateFileW(_path.to_wstring().c_str(), (read ? GENERIC_READ : 0) | (write ? GENERIC_WRITE : 0), FILE_SHARE_READ, nullptr, OPEN_ALWAYS, dwFlagsAndAttributes, nullptr);
         if (_file == INVALID_HANDLE_VALUE)
             throwex FileSystemException("Cannot open existing file!").Attach(_path);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
@@ -297,10 +302,12 @@ public:
         if (permissions & FilePermissions::ISVTX)
             mode |= S_ISVTX;
 
-        _file = open(_path.native().c_str(), O_CREAT | ((read && write) ? O_RDWR : (read ? O_RDONLY : (write ? O_WRONLY : 0))) | (truncate ? O_TRUNC : 0), mode);
+        _file = open(_path.native().c_str(), O_CREAT | ((read && write) ? O_RDWR : (read ? O_RDONLY : (write ? O_WRONLY : 0))), mode);
         if (_file < 0)
             throwex FileSystemException("Cannot create a new file!").Attach(_path);
 #endif
+        if (truncate)
+            Resize(0);
     }
 
     size_t Read(uint8_t* buffer, size_t size)
@@ -547,6 +554,78 @@ void File::Flush()
 void File::Close()
 {
     _pimpl->Close();
+}
+
+std::vector<uint8_t> File::ReadAllBytes(const Path& path)
+{
+    File temp(path);
+    temp.Open(true, false);
+    std::vector<uint8_t> result(temp.size());
+    result.resize(temp.Read(result.data(), result.size()));
+    temp.Close();
+    return result;
+}
+
+std::vector<std::string> File::ReadAllLines(const Path& path)
+{
+    std::string temp;
+    std::vector<std::string> result;
+    std::vector<uint8_t> bytes = ReadAllBytes(path);
+
+    for (auto ch : bytes)
+    {
+        if ((ch == '\r') || (ch == '\n'))
+        {
+            if (!temp.empty())
+            {
+                result.push_back(temp);
+                temp.clear();
+            }
+        }
+        else
+            temp += ch;
+    }
+
+    return result;
+}
+
+std::string File::ReadAllText(const Path& path)
+{
+    std::vector<uint8_t> bytes = ReadAllBytes(path);
+    return std::string(bytes.begin(), bytes.end());
+}
+
+size_t File::WriteAllBytes(const Path& path, const uint8_t* buffer, size_t size)
+{
+    File temp(path);
+    temp.OpenOrCreate(false, true, true);
+    size_t result = temp.Write(buffer, size);
+    temp.Close();
+    return result;
+}
+
+size_t File::WriteAllLines(const Path& path, const std::vector<std::string>& lines)
+{
+    static std::string endline = Environment::EndLine();
+
+    File temp(path);
+    temp.OpenOrCreate(false, true, true);
+    size_t result = 0;
+    for (auto& line : lines)
+    {
+        if (temp.Write((const uint8_t*)line.data(), line.size()) != line.size())
+            break;
+        if (temp.Write((const uint8_t*)endline.data(), endline.size()) != endline.size())
+            break;
+        ++result;
+    }
+    temp.Close();
+    return result;
+}
+
+size_t File::WriteAllText(const Path& path, const std::string& text)
+{
+    return WriteAllBytes(path, (const uint8_t*)text.data(), text.size());
 }
 
 } // namespace CppCommon

@@ -337,6 +337,15 @@ std::string Environment::OSVersion()
 #endif
 }
 
+std::string Environment::EndLine()
+{
+#if defined(_WIN32) || defined(_WIN64)
+    return "\r\n";
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    return "\n";
+#endif
+}
+
 std::map<std::string, std::string> Environment::envars()
 {
     std::map<std::string, std::string> result;

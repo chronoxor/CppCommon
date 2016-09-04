@@ -9,7 +9,7 @@
 
 using namespace CppCommon;
 
-TEST_CASE("File", "[CppCommon][FileSystem]")
+TEST_CASE("File common", "[CppCommon][FileSystem]")
 {
     std::string str("test");
     std::vector<uint8_t> buffer(str.begin(), str.end());
@@ -89,4 +89,28 @@ TEST_CASE("File", "[CppCommon][FileSystem]")
     Path parent = Path::Remove(test);
     REQUIRE(parent == test.parent());
     REQUIRE(!test.IsFileExists());
+}
+
+TEST_CASE("File read/write static methods", "[CppCommon][FileSystem]")
+{
+    char* buffer = "The quick brown fox jumps over the lazy dog";
+    REQUIRE(File::WriteAllBytes("test.tmp", (uint8_t*)buffer, std::strlen(buffer)) == std::strlen(buffer));
+    REQUIRE(File::ReadAllBytes("test.tmp").size() == std::strlen(buffer));
+    Path::Remove("test.tmp");
+
+    std::vector<std::string> lines = { "one", "two", "three", "four", "five" };
+    REQUIRE(File::WriteAllLines("test.tmp", lines) == 5);
+    lines = File::ReadAllLines("test.tmp");
+    REQUIRE(lines.size() == 5);
+    REQUIRE(lines[0] == "one");
+    REQUIRE(lines[1] == "two");
+    REQUIRE(lines[2] == "three");
+    REQUIRE(lines[3] == "four");
+    REQUIRE(lines[4] == "five");
+    Path::Remove("test.tmp");
+
+    std::string text(buffer);
+    REQUIRE(File::WriteAllText("test.tmp", text) == text.size());
+    REQUIRE(File::ReadAllText("test.tmp") == text);
+    Path::Remove("test.tmp");
 }

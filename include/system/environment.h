@@ -55,6 +55,9 @@ public:
     //! Get OS version string
     static std::string OSVersion();
 
+    //! Get text end line separator
+    static std::string EndLine();
+
     //! Get all environment variables
     /*!
         \return Environment variables collection

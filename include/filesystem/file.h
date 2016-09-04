@@ -12,6 +12,7 @@
 #include "filesystem/path.h"
 
 #include <memory>
+#include <vector>
 
 namespace CppCommon {
 
@@ -144,6 +145,48 @@ public:
         filesystem exception!
     */
     void Close();
+
+    //! Read all bytes from the given file
+    /*!
+        \param path - File path
+        \return Bytes buffer
+    */
+    static std::vector<uint8_t> ReadAllBytes(const Path& path);
+    //! Read all text lines from the given file
+    /*!
+        \param path - File path
+        \return Text lines
+    */
+    static std::vector<std::string> ReadAllLines(const Path& path);
+    //! Read all text from the given file
+    /*!
+        \param path - File path
+        \return Text string
+    */
+    static std::string ReadAllText(const Path& path);
+
+    //! Write a bytes buffer into the given file
+    /*!
+        \param path - File path
+        \param buffer - Buffer to write
+        \param size - Buffer size
+        \return Count of written bytes
+    */
+    static size_t WriteAllBytes(const Path& path, const uint8_t* buffer, size_t size);
+    //! Write text lines into the given file
+    /*!
+        \param path - File path
+        \param lines - Text lines
+        \return Count of written lines
+    */
+    static size_t WriteAllLines(const Path& path, const std::vector<std::string>& lines);
+    //! Write a text string into the given file
+    /*!
+        \param path - File path
+        \param text - Text string
+        \return Count of written characters
+    */
+    static size_t WriteAllText(const Path& path, const std::string& text);
 
     //! Swap two instances
     void swap(File& file) noexcept;
