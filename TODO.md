@@ -5,6 +5,5 @@ General
   * Release
 
 Filesystem
-  * RemoveAll (notifications)
   * Copy (notifications)
   * Devices (enumeration, capacity, free, available)

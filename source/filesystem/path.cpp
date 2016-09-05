@@ -8,6 +8,7 @@
 
 #include "filesystem/path.h"
 
+#include "filesystem/directory.h"
 #include "filesystem/exceptions.h"
 #include "system/environment.h"
 #include "system/uuid.h"
@@ -927,7 +928,7 @@ Path Path::Remove(const Path& path)
     std::wstring wpath = path.wstring();
     DWORD attributes = GetFileAttributesW(wpath.c_str());
     if (attributes == INVALID_FILE_ATTRIBUTES)
-        throwex FileSystemException("Cannot get file attributes of the deleted path!").Attach(path);
+        throwex FileSystemException("Cannot get file attributes of the removed path!").Attach(path);
 
     if (attributes & FILE_ATTRIBUTE_DIRECTORY)
     {
@@ -944,7 +945,12 @@ Path Path::Remove(const Path& path)
             throwex FileSystemException("Cannot delete the path file!").Attach(path);
     }
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-    if (path.IsDirectory())
+    struct stat st;
+    int result = stat(path.native().c_str(), &st);
+    if (result != 0)
+        throwex FileSystemException("Cannot get the status of the removed path!").Attach(*this);
+
+    if (S_ISDIR(st.st_mode))
     {
         int result = rmdir(path.native().c_str());
         if (result != 0)
@@ -958,6 +964,37 @@ Path Path::Remove(const Path& path)
     }
 #endif
     return path.parent();
+}
+
+Path Path::RemoveAll(const Path& path)
+{
+    bool is_directory = false;
+#if defined(_WIN32) || defined(_WIN64)
+    std::wstring wpath = path.wstring();
+    DWORD attributes = GetFileAttributesW(wpath.c_str());
+    if (attributes == INVALID_FILE_ATTRIBUTES)
+        throwex FileSystemException("Cannot get file attributes of the removed path!").Attach(path);
+
+    if (attributes & FILE_ATTRIBUTE_DIRECTORY)
+        is_directory = true;
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    struct stat st;
+    int result = stat(path.native().c_str(), &st);
+    if (result != 0)
+        throwex FileSystemException("Cannot get the status of the removed path!").Attach(*this);
+
+    if (S_ISDIR(st.st_mode))
+        is_directory = true;
+#endif
+    if (is_directory)
+    {
+        // Recursively remove all directory entries
+        Directory directory(path);
+        for (auto it = directory.rbegin(); it != directory.rend(); ++it)
+            Remove(*it);
+    }
+    // Remove the path
+    return Remove(path);
 }
 
 void Path::SetAttributes(const Path& path, const Flags<FileAttributes>& attributes)

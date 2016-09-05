@@ -246,6 +246,12 @@ public:
         \return Parent path
     */
     static Path Remove(const Path& path);
+    //! Recursively remove the given path (file, empty directory, symlink, etc) from the filesystem
+    /*!
+        \param path - Path to remove
+        \return Parent path
+    */
+    static Path RemoveAll(const Path& path);
 
     //! Set file attributes for the given path
     /*!

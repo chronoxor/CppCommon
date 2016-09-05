@@ -12,14 +12,14 @@ using namespace CppCommon;
 
 TEST_CASE("Directory", "[CppCommon][FileSystem]")
 {
-    Directory current = Path::current();
-    REQUIRE(current.IsExists());
-    REQUIRE(current.IsDirectory());
-    REQUIRE(current.IsDirectoryExists());
-    REQUIRE(!current.IsDirectoryEmpty());
+    Directory test = Directory::Create(Path::current() / "test");
+    REQUIRE(test.IsExists());
+    REQUIRE(test.IsDirectory());
+    REQUIRE(test.IsDirectoryExists());
+    REQUIRE(test.IsDirectoryEmpty());
 
     // Create directory
-    Directory test1 = Directory::Create(current / "test1");
+    Directory test1 = Directory::Create(test / "test1");
     REQUIRE(test1.IsDirectoryExists());
     REQUIRE(test1.IsDirectoryEmpty());
     Directory test2 = Directory::Create(test1 / "test2");
@@ -30,27 +30,16 @@ TEST_CASE("Directory", "[CppCommon][FileSystem]")
     // Remove directory
     REQUIRE(Path::Remove(test2) == test1);
     REQUIRE(!test2.IsDirectoryExists());
-    REQUIRE(Path::Remove(test1) == current);
+    REQUIRE(Path::Remove(test1) == test);
     REQUIRE(!test1.IsDirectoryExists());
 
     // Create directory tree
-    Directory test3 = Directory::CreateTree(current / "test1" / "test2" / "test3");
+    Directory test3 = Directory::CreateTree(test / "test1" / "test2" / "test3");
     REQUIRE(test3.IsDirectoryExists());
     REQUIRE(test3.IsDirectoryEmpty());
 
     // Remove directory tree
-    Directory test4 = Path::Remove(test3);
-    REQUIRE(test4.IsDirectoryExists());
-    REQUIRE(test4.IsDirectoryEmpty());
-    REQUIRE(test4 == current / "test1" / "test2");
-    Directory test5 = Path::Remove(test4);
-    REQUIRE(test5.IsDirectoryExists());
-    REQUIRE(test5.IsDirectoryEmpty());
-    REQUIRE(test5 == current / "test1");
-    Directory test6 = Path::Remove(test5);
-    REQUIRE(test6.IsDirectoryExists());
-    REQUIRE(!test6.IsDirectoryEmpty());
-    REQUIRE(test6 == current);
+    REQUIRE(Path::RemoveAll(test) == Path::current());
 }
 
 TEST_CASE("Directory iterator", "[CppCommon][FileSystem]")
@@ -113,24 +102,5 @@ TEST_CASE("Directory iterator", "[CppCommon][FileSystem]")
     REQUIRE(test.GetSymlinksRecurse("test4.*").size() == 1);
 
     // Remove complex directory structure
-    Path::Remove(test5);
-    Path::Remove(test44tmp);
-    Path::Remove(test4);
-    Path::Remove(test33tmp);
-    Path::Remove(test3tmp);
-    Path::Remove(test3);
-    Path::Remove(test222tmp);
-    Path::Remove(test22tmp);
-    Path::Remove(test22);
-    Path::Remove(test2tmp);
-    Path::Remove(test2);
-    Path::Remove(test1111tmp);
-    Path::Remove(test2222tmp);
-    Path::Remove(test111tmp);
-    Path::Remove(test111);
-    Path::Remove(test11tmp);
-    Path::Remove(test11);
-    Path::Remove(test1tmp);
-    Path::Remove(test1);
-    Path::Remove(test);
+    REQUIRE(Path::RemoveAll(test) == Path::current());
 }
