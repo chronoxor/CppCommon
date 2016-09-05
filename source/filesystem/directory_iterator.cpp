@@ -38,7 +38,7 @@ public:
     Impl& operator=(const Impl&) = default;
     Impl& operator=(Impl&&) noexcept = default;
 
-    virtual Path Next() = 0;
+    virtual Path Next() { return Path(); }
 
 protected:
     Path _parent;
