@@ -124,8 +124,18 @@ RWLock::RWLock() : _pimpl(std::make_unique<Impl>())
 {
 }
 
+RWLock::RWLock(RWLock&& lock) noexcept : _pimpl(std::move(lock._pimpl))
+{
+}
+
 RWLock::~RWLock()
 {
+}
+
+RWLock& RWLock::operator=(RWLock&& lock) noexcept
+{
+    _pimpl = std::move(lock._pimpl);
+    return *this;
 }
 
 bool RWLock::TryLockRead()

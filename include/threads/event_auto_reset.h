@@ -34,11 +34,11 @@ public:
     */
     explicit EventAutoReset(bool signaled = false);
     EventAutoReset(const EventAutoReset&) = delete;
-    EventAutoReset(EventAutoReset&&) = default;
+    EventAutoReset(EventAutoReset&& event) noexcept;
     ~EventAutoReset();
 
     EventAutoReset& operator=(const EventAutoReset&) = delete;
-    EventAutoReset& operator=(EventAutoReset&&) = default;
+    EventAutoReset& operator=(EventAutoReset&& event) noexcept;
 
     //! Signal one of waiting thread about event occurred
     /*!

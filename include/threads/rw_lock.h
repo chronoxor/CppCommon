@@ -31,11 +31,11 @@ class RWLock
 public:
     RWLock();
     RWLock(const RWLock&) = delete;
-    RWLock(RWLock&&) = default;
+    RWLock(RWLock&& lock) noexcept;
     ~RWLock();
 
     RWLock& operator=(const RWLock&) = delete;
-    RWLock& operator=(RWLock&&) = default;
+    RWLock& operator=(RWLock&& lock) noexcept;
 
     //! Try to acquire read lock without block
     /*!

@@ -31,14 +31,14 @@ public:
     */
     explicit Barrier(int threads);
     Barrier(const Barrier&) = delete;
-    Barrier(Barrier&&) = default;
+    Barrier(Barrier&& barrier) noexcept;
     ~Barrier();
 
     Barrier& operator=(const Barrier&) = delete;
-    Barrier& operator=(Barrier&&) = default;
+    Barrier& operator=(Barrier&& barrier) noexcept;
 
     //! Get the count of threads to wait at the barrier
-    int threads() const noexcept { return _threads; }
+    int threads() const noexcept;
 
     //! Wait at the barrier until all other threads reach this barrier
     /*!
@@ -51,7 +51,6 @@ public:
 private:
     class Impl;
     std::unique_ptr<Impl> _pimpl;
-    int _threads;
 };
 
 /*! \example threads_barrier.cpp Barrier synchronization primitive example */

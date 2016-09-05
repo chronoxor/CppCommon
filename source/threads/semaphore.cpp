@@ -28,7 +28,7 @@ namespace CppCommon {
 class Semaphore::Impl
 {
 public:
-    Impl(int resources)
+    Impl(int resources) : _resources(resources)
     {
         assert((resources > 0) && "Semaphore resources counter must be greater than zero!");
 
@@ -53,6 +53,11 @@ public:
         if (result != 0)
             fatality(SystemException("Failed to destroy a semaphore!"));
 #endif
+    }
+
+    int resources() const noexcept
+    {
+        return _resources;
     }
 
     bool TryLock()
@@ -116,6 +121,7 @@ public:
     }
 
 private:
+    int _resources;
 #if defined(_WIN32) || defined(_WIN64)
     HANDLE _semaphore;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
@@ -123,12 +129,27 @@ private:
 #endif
 };
 
-Semaphore::Semaphore(int resources) : _pimpl(std::make_unique<Impl>(resources)), _resources(resources)
+Semaphore::Semaphore(int resources) : _pimpl(std::make_unique<Impl>(resources))
+{
+}
+
+Semaphore::Semaphore(Semaphore&& semaphore) noexcept : _pimpl(std::move(semaphore._pimpl))
 {
 }
 
 Semaphore::~Semaphore()
 {
+}
+
+Semaphore& Semaphore::operator=(Semaphore&& semaphore) noexcept
+{
+    _pimpl = std::move(semaphore._pimpl);
+    return *this;
+}
+
+int Semaphore::resources() const noexcept
+{
+    return _pimpl->resources();
 }
 
 bool Semaphore::TryLock()

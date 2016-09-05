@@ -35,14 +35,14 @@ public:
     */
     explicit Semaphore(int resources);
     Semaphore(const Semaphore&) = delete;
-    Semaphore(Semaphore&&) = default;
+    Semaphore(Semaphore&& semaphore) noexcept;
     ~Semaphore();
 
     Semaphore& operator=(const Semaphore&) = delete;
-    Semaphore& operator=(Semaphore&&) = default;
+    Semaphore& operator=(Semaphore&& semaphore) noexcept;
 
     //! Get the semaphore resources counter
-    int resources() const noexcept { return _resources; }
+    int resources() const noexcept;
 
     //! Try to acquire semaphore without block
     /*!
@@ -85,7 +85,6 @@ public:
 private:
     class Impl;
     std::unique_ptr<Impl> _pimpl;
-    int _resources;
 };
 
 /*! \example threads_semaphore.cpp Semaphore synchronization primitive example */

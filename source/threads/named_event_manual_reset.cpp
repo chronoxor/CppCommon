@@ -227,8 +227,18 @@ NamedEventManualReset::NamedEventManualReset(const std::string& name, bool signa
 {
 }
 
+NamedEventManualReset::NamedEventManualReset(NamedEventManualReset&& event) noexcept : _pimpl(std::move(event._pimpl))
+{
+}
+
 NamedEventManualReset::~NamedEventManualReset()
 {
+}
+
+NamedEventManualReset& NamedEventManualReset::operator=(NamedEventManualReset&& event) noexcept
+{
+    _pimpl = std::move(event._pimpl);
+    return *this;
 }
 
 const std::string& NamedEventManualReset::name() const

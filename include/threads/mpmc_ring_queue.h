@@ -36,11 +36,11 @@ public:
     */
     explicit MPMCRingQueue(size_t capacity);
     MPMCRingQueue(const MPMCRingQueue&) = delete;
-    MPMCRingQueue(MPMCRingQueue&&) = default;
+    MPMCRingQueue(MPMCRingQueue&&) noexcept = default;
     ~MPMCRingQueue() { delete[] _buffer; }
 
     MPMCRingQueue& operator=(const MPMCRingQueue&) = delete;
-    MPMCRingQueue& operator=(MPMCRingQueue&&) = default;
+    MPMCRingQueue& operator=(MPMCRingQueue&&) noexcept = default;
 
     //! Get ring queue capacity
     size_t capacity() const noexcept { return _capacity; }

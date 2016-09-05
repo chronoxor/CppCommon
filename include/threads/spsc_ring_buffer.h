@@ -36,11 +36,11 @@ public:
     */
     explicit SPSCRingBuffer(size_t capacity);
     SPSCRingBuffer(const SPSCRingBuffer&) = delete;
-    SPSCRingBuffer(SPSCRingBuffer&&) = default;
+    SPSCRingBuffer(SPSCRingBuffer&&) noexcept = default;
     ~SPSCRingBuffer() { delete[] _buffer; }
 
     SPSCRingBuffer& operator=(const SPSCRingBuffer&) = delete;
-    SPSCRingBuffer& operator=(SPSCRingBuffer&&) = default;
+    SPSCRingBuffer& operator=(SPSCRingBuffer&&) noexcept = default;
 
     //! Get ring buffer capacity in bytes
     size_t capacity() const noexcept { return _capacity; }

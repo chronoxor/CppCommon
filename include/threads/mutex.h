@@ -31,11 +31,11 @@ class Mutex
 public:
     Mutex();
     Mutex(const Mutex&) = delete;
-    Mutex(Mutex&&) = default;
+    Mutex(Mutex&& mutex) noexcept;
     ~Mutex();
 
     Mutex& operator=(const Mutex&) = delete;
-    Mutex& operator=(Mutex&&) = default;
+    Mutex& operator=(Mutex&& mutex) noexcept;
 
     //! Try to acquire mutex without block
     /*!

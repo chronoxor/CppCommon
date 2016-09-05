@@ -175,8 +175,18 @@ NamedCriticalSection::NamedCriticalSection(const std::string& name) : _pimpl(std
 {
 }
 
+NamedCriticalSection::NamedCriticalSection(NamedCriticalSection&& cs) noexcept : _pimpl(std::move(cs._pimpl))
+{
+}
+
 NamedCriticalSection::~NamedCriticalSection()
 {
+}
+
+NamedCriticalSection& NamedCriticalSection::operator=(NamedCriticalSection&& cs) noexcept
+{
+    _pimpl = std::move(cs._pimpl);
+    return *this;
 }
 
 const std::string& NamedCriticalSection::name() const

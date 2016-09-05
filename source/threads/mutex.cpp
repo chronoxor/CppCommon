@@ -123,8 +123,18 @@ Mutex::Mutex() : _pimpl(std::make_unique<Impl>())
 {
 }
 
+Mutex::Mutex(Mutex&& mutex) noexcept : _pimpl(std::move(mutex._pimpl))
+{
+}
+
 Mutex::~Mutex()
 {
+}
+
+Mutex& Mutex::operator=(Mutex&& mutex) noexcept
+{
+    _pimpl = std::move(mutex._pimpl);
+    return *this;
 }
 
 bool Mutex::TryLock()

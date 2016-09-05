@@ -34,11 +34,11 @@ class FileLock
 public:
     explicit FileLock(const Path& path);
     FileLock(const FileLock&) = delete;
-    FileLock(FileLock&&) = default;
+    FileLock(FileLock&& lock) noexcept;
     ~FileLock();
 
     FileLock& operator=(const FileLock&) = delete;
-    FileLock& operator=(FileLock&&) = default;
+    FileLock& operator=(FileLock&& lock) noexcept;
 
     //! Get the file-lock path
     const Path& path() const noexcept;

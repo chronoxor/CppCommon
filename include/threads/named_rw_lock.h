@@ -37,11 +37,11 @@ public:
     */
     explicit NamedRWLock(const std::string& name);
     NamedRWLock(const NamedRWLock&) = delete;
-    NamedRWLock(NamedRWLock&&) = default;
+    NamedRWLock(NamedRWLock&& lock) noexcept;
     ~NamedRWLock();
 
     NamedRWLock& operator=(const NamedRWLock&) = delete;
-    NamedRWLock& operator=(NamedRWLock&&) = default;
+    NamedRWLock& operator=(NamedRWLock&& lock) noexcept;
 
     //! Get the read/write lock name
     const std::string& name() const;

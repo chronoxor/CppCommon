@@ -100,8 +100,18 @@ CriticalSection::CriticalSection() : _pimpl(std::make_unique<Impl>())
 {
 }
 
+CriticalSection::CriticalSection(CriticalSection&& cs) noexcept : _pimpl(std::move(cs._pimpl))
+{
+}
+
 CriticalSection::~CriticalSection()
 {
+}
+
+CriticalSection& CriticalSection::operator=(CriticalSection&& cs) noexcept
+{
+    _pimpl = std::move(cs._pimpl);
+    return *this;
 }
 
 bool CriticalSection::TryLock()

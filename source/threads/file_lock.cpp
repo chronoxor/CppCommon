@@ -305,8 +305,18 @@ FileLock::FileLock(const Path& path) : _pimpl(std::make_unique<Impl>(path))
 {
 }
 
+FileLock::FileLock(FileLock&& lock) noexcept : _pimpl(std::move(lock._pimpl))
+{
+}
+
 FileLock::~FileLock()
 {
+}
+
+FileLock& FileLock::operator=(FileLock&& lock) noexcept
+{
+    _pimpl = std::move(lock._pimpl);
+    return *this;
 }
 
 const Path& FileLock::path() const noexcept

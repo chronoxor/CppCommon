@@ -504,8 +504,18 @@ NamedRWLock::NamedRWLock(const std::string& name) : _pimpl(std::make_unique<Impl
 {
 }
 
+NamedRWLock::NamedRWLock(NamedRWLock&& lock) noexcept : _pimpl(std::move(lock._pimpl))
+{
+}
+
 NamedRWLock::~NamedRWLock()
 {
+}
+
+NamedRWLock& NamedRWLock::operator=(NamedRWLock&& lock) noexcept
+{
+    _pimpl = std::move(lock._pimpl);
+    return *this;
 }
 
 const std::string& NamedRWLock::name() const

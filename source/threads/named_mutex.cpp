@@ -158,8 +158,18 @@ NamedMutex::NamedMutex(const std::string& name) : _pimpl(std::make_unique<Impl>(
 {
 }
 
+NamedMutex::NamedMutex(NamedMutex&& mutex) noexcept : _pimpl(std::move(mutex._pimpl))
+{
+}
+
 NamedMutex::~NamedMutex()
 {
+}
+
+NamedMutex& NamedMutex::operator=(NamedMutex&& mutex) noexcept
+{
+    _pimpl = std::move(mutex._pimpl);
+    return *this;
 }
 
 const std::string& NamedMutex::name() const

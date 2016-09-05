@@ -156,8 +156,18 @@ NamedSemaphore::NamedSemaphore(const std::string& name, int resources) : _pimpl(
 {
 }
 
+NamedSemaphore::NamedSemaphore(NamedSemaphore&& semaphore) noexcept : _pimpl(std::move(semaphore._pimpl))
+{
+}
+
 NamedSemaphore::~NamedSemaphore()
 {
+}
+
+NamedSemaphore& NamedSemaphore::operator=(NamedSemaphore&& semaphore) noexcept
+{
+    _pimpl = std::move(semaphore._pimpl);
+    return *this;
 }
 
 const std::string& NamedSemaphore::name() const

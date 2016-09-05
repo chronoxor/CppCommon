@@ -35,11 +35,11 @@ public:
     */
     explicit NamedMutex(const std::string& name);
     NamedMutex(const NamedMutex&) = delete;
-    NamedMutex(NamedMutex&&) = default;
+    NamedMutex(NamedMutex&& mutex) noexcept;
     ~NamedMutex();
 
     NamedMutex& operator=(const NamedMutex&) = delete;
-    NamedMutex& operator=(NamedMutex&&) = default;
+    NamedMutex& operator=(NamedMutex&& mutex) noexcept;
 
     //! Get the mutex name
     const std::string& name() const;

@@ -42,11 +42,11 @@ public:
     */
     explicit MPSCRingQueue(size_t capacity, size_t concurrency = std::thread::hardware_concurrency());
     MPSCRingQueue(const MPSCRingQueue&) = delete;
-    MPSCRingQueue(MPSCRingQueue&&) = default;
+    MPSCRingQueue(MPSCRingQueue&&) noexcept = default;
     ~MPSCRingQueue() = default;
 
     MPSCRingQueue& operator=(const MPSCRingQueue&) = delete;
-    MPSCRingQueue& operator=(MPSCRingQueue&&) = default;
+    MPSCRingQueue& operator=(MPSCRingQueue&&) noexcept = default;
 
     //! Get ring queue capacity
     size_t capacity() const noexcept { return _capacity; }

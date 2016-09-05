@@ -24,7 +24,7 @@ namespace CppCommon {
 class Barrier::Impl
 {
 public:
-    Impl(int threads)
+    Impl(int threads) : _threads(threads)
     {
         assert((threads > 0) && "Barrier threads counter must be greater than zero!");
 
@@ -49,6 +49,11 @@ public:
 #endif
     }
 
+    int threads() const noexcept
+    {
+        return _threads;
+    }
+
     bool Wait()
     {
 #if defined(_WIN32) || defined(_WIN64)
@@ -62,6 +67,7 @@ public:
     }
 
 private:
+    int _threads;
 #if defined(_WIN32) || defined(_WIN64)
     SYNCHRONIZATION_BARRIER _barrier;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
@@ -69,12 +75,27 @@ private:
 #endif
 };
 
-Barrier::Barrier(int threads) : _pimpl(std::make_unique<Impl>(threads)), _threads(threads)
+Barrier::Barrier(int threads) : _pimpl(std::make_unique<Impl>(threads))
+{
+}
+
+Barrier::Barrier(Barrier&& barrier) noexcept : _pimpl(std::move(barrier._pimpl))
 {
 }
 
 Barrier::~Barrier()
 {
+}
+
+Barrier& Barrier::operator=(Barrier&& barrier) noexcept
+{
+    _pimpl = std::move(barrier._pimpl);
+    return *this;
+}
+
+int Barrier::threads() const noexcept
+{
+    return _pimpl->threads();
 }
 
 bool Barrier::Wait()
