@@ -11,4 +11,5 @@ Filesystem
   * Devices (enumeration, capacity, free, available)
 
 Threads
+  * Pimpl fix
   * Timeout lock emulation

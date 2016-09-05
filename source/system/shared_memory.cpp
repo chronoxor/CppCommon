@@ -174,8 +174,20 @@ SharedMemory::SharedMemory(const std::string& name, size_t size) : _pimpl(std::m
 {
 }
 
+SharedMemory::SharedMemory(SharedMemory&& shmem) : _pimpl(std::move(shmem._pimpl)), _name(std::move(shmem._name)), _size(std::move(shmem._size))
+{
+}
+
 SharedMemory::~SharedMemory()
 {
+}
+
+SharedMemory& SharedMemory::operator=(SharedMemory&& shmem)
+{
+    _pimpl = std::move(shmem._pimpl);
+    _name = std::move(shmem._name);
+    _size = std::move(shmem._size);
+    return *this;
 }
 
 void* SharedMemory::ptr()
