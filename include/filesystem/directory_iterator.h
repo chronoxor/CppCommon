@@ -37,6 +37,7 @@ public:
     typedef std::forward_iterator_tag iterator_category;
 
     DirectoryIterator();
+    DirectoryIterator(DirectoryIterator&) = default;
     DirectoryIterator(DirectoryIterator&&) noexcept = default;
     ~DirectoryIterator();
 

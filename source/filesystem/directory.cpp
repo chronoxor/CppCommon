@@ -111,6 +111,26 @@ bool Directory::IsDirectoryEmpty() const
 #endif
 }
 
+DirectoryIterator Directory::begin() const
+{
+    return DirectoryIterator(*this, false);
+}
+
+DirectoryIterator Directory::end() const
+{
+    return DirectoryIterator();
+}
+
+DirectoryIterator Directory::rbegin() const
+{
+    return DirectoryIterator(*this, true);
+}
+
+DirectoryIterator Directory::rend() const
+{
+    return DirectoryIterator();
+}
+
 Directory Directory::Create(const Path& path, const Flags<FileAttributes>& attributes, const Flags<FilePermissions>& permissions)
 {
     Directory directory(path);

@@ -45,18 +45,14 @@ public:
     bool IsDirectoryEmpty() const;
 
     //! Get the directory begin iterator
-    DirectoryIterator begin() const
-    { return DirectoryIterator(*this, false); }
+    DirectoryIterator begin() const;
     //! Get the directory end iterator
-    DirectoryIterator end() const
-    { return DirectoryIterator(); }
+    DirectoryIterator end() const;
 
     //! Get the directory recursive begin iterator
-    DirectoryIterator rbegin() const
-    { return DirectoryIterator(*this, true); }
+    DirectoryIterator rbegin() const;
     //! Get the directory recursive end iterator
-    DirectoryIterator rend() const
-    { return DirectoryIterator(); }
+    DirectoryIterator rend() const;
 
     //! Create directory from the given path
     /*!
