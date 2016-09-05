@@ -27,7 +27,7 @@ namespace CppCommon {
 class File::Impl
 {
 public:
-    Impl(Path& path) : _path(path)
+    Impl(const Path& path) : _path(path)
     {
 #if defined(_WIN32) || defined(_WIN64)
         _file = INVALID_HANDLE_VALUE;
@@ -424,7 +424,7 @@ public:
     }
 
 private:
-    Path& _path;
+    const Path& _path;
 #if defined(_WIN32) || defined(_WIN64)
     HANDLE _file;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
@@ -443,12 +443,30 @@ File::File(const Path& path) : Path(path), _pimpl(std::make_unique<Impl>(*this))
 {
 }
 
-File::File(const File& instance) : File((const Path&)instance)
+File::File(const File& file) : Path(file), _pimpl(std::make_unique<Impl>(*this))
+{
+}
+
+File::File(File&& file) noexcept : Path(file), _pimpl(std::move(file._pimpl))
 {
 }
 
 File::~File()
 {
+}
+
+File& File::operator=(const File& file)
+{
+    Path::operator=(file);
+    _pimpl = std::make_unique<Impl>(file);
+    return *this;
+}
+
+File& File::operator=(File&& file) noexcept
+{
+    Path::operator=(file);
+    _pimpl = std::move(file._pimpl);
+    return *this;
 }
 
 uint64_t File::offset() const

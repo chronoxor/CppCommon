@@ -32,14 +32,14 @@ public:
 
     File();
     File(const Path& path);
-    File(const File& instance);
-    File(File&&) noexcept = default;
+    File(const File& file);
+    File(File&& file) noexcept;
     ~File();
 
     File& operator=(const Path& path)
     { Assign(path); return *this; }
-    File& operator=(const File&) = default;
-    File& operator=(File&&) noexcept = default;
+    File& operator=(const File& file);
+    File& operator=(File&& file) noexcept;
 
     //! Get the current read/write offset of the opened file
     uint64_t offset() const;
