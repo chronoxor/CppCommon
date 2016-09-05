@@ -945,12 +945,7 @@ Path Path::Remove(const Path& path)
             throwex FileSystemException("Cannot delete the path file!").Attach(path);
     }
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-    struct stat st;
-    int result = stat(path.native().c_str(), &st);
-    if (result != 0)
-        throwex FileSystemException("Cannot get the status of the removed path!").Attach(path);
-
-    if (S_ISDIR(st.st_mode))
+    if (path.IsDirectory())
     {
         int result = rmdir(path.native().c_str());
         if (result != 0)
@@ -978,12 +973,7 @@ Path Path::RemoveAll(const Path& path)
     if (attributes & FILE_ATTRIBUTE_DIRECTORY)
         is_directory = true;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-    struct stat st;
-    int result = stat(path.native().c_str(), &st);
-    if (result != 0)
-        throwex FileSystemException("Cannot get the status of the removed path!").Attach(path);
-
-    if (S_ISDIR(st.st_mode))
+    if (path.IsDirectory())
         is_directory = true;
 #endif
     if (is_directory)
