@@ -72,7 +72,7 @@ public:
                 fatality(FileSystemException("Cannot close the directory handle!").Attach(_parent));
         }
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        if (_directory != -1)
+        if (_directory != nullptr)
         {
             int result = closedir(_directory);
             if (result != 0)
@@ -120,7 +120,7 @@ public:
         }
 
         if (result != 0)
-            throwex FileSystemException("Cannot read directory entries!").Attach(*this);
+            throwex FileSystemException("Cannot read directory entries!").Attach(_parent);
 #endif
         _end = true;
         return Path();
@@ -137,7 +137,7 @@ public:
 #if defined(_WIN32) || defined(_WIN64)
         instance._directory = INVALID_HANDLE_VALUE;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        instance._directory = -1;
+        instance._directory = nullptr;
 #endif
     }
 
