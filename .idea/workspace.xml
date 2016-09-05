@@ -3,6 +3,7 @@
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" assignedExecutableTargets="true" buildAllGenerated="true">
     <generated>
       <config projectName="cppcommon" targetName="cppbenchmark-example-sort" />
+      <config projectName="cppcommon" targetName="cppcommon-example-filesystem_file" />
       <config projectName="cppcommon" targetName="cppcommon-example-threads_event_manual_reset" />
       <config projectName="cppcommon" targetName="cppcommon-perf-threads_file_lock" />
       <config projectName="cppcommon" targetName="cppcommon-perf-system_stack_trace" />
@@ -10,6 +11,7 @@
       <config projectName="cppcommon" targetName="cppcommon-example-system_uuid" />
       <config projectName="cppcommon" targetName="cppbenchmark-example-timers" />
       <config projectName="cppcommon" targetName="cppbenchmark" />
+      <config projectName="cppcommon" targetName="cppcommon-example-filesystem_directoryr" />
       <config projectName="cppcommon" targetName="cppcommon-example-threads_latch_single" />
       <config projectName="cppcommon" targetName="cppcommon-example-threads_barrier" />
       <config projectName="cppcommon" targetName="cppcommon-example-system_console" />
@@ -22,6 +24,7 @@
       <config projectName="cppcommon" targetName="cppcommon-example-errors_exceptions_handler" />
       <config projectName="cppcommon" targetName="cppcommon-example-errors_fatal" />
       <config projectName="cppcommon" targetName="cppcommon-example-string_encoding" />
+      <config projectName="cppcommon" targetName="cppcommon-example-filesystem_directory" />
       <config projectName="cppcommon" targetName="cppcommon-example-benchmark-ring_queue" />
       <config projectName="cppcommon" targetName="cppcommon-example-threads_mpsc_ring_buffer" />
       <config projectName="cppcommon" targetName="cppcommon-example-threads_critical_section" />
@@ -77,9 +80,10 @@
       <config projectName="cppcommon" targetName="cppcommon-example-wf_ring_buffer" />
       <config projectName="cppcommon" targetName="cppcommon-tests" />
       <config projectName="cppcommon" targetName="cppcommon" />
+      <config projectName="cppcommon" targetName="cppcommon-example-filesystem_symlink" />
       <config projectName="cppcommon" targetName="cppcommon-perf-threads_rw_lock" />
-      <config projectName="cppcommon" targetName="cppcommon-example-system_environment" />
       <config projectName="cppcommon" targetName="cppcommon-example-math_math" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_environment" />
       <config projectName="cppcommon" targetName="cppcommon-example-time_timespan" />
       <config projectName="cppcommon" targetName="cppcommon-example-system_cpu" />
       <config projectName="cppcommon" targetName="cppcommon-perf-threads_semaphore" />
@@ -122,9 +126,7 @@
     </ADDITIONAL_GENERATION_ENVIRONMENT>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="559410a7-8ec3-4eef-81f5-f9dd5eddd0fc" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/CppCommon.iml" afterPath="$PROJECT_DIR$/.idea/CppCommon.iml" />
-    </list>
+    <list default="true" id="559410a7-8ec3-4eef-81f5-f9dd5eddd0fc" name="Default" comment="" />
     <ignored path="CppCommon.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -146,7 +148,7 @@
       <file leaf-file-name="catch.hpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/catch/single_include/catch.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
+            <state relative-caret-position="123405">
               <caret line="8227" column="0" selection-start-line="8227" selection-start-column="0" selection-end-line="8227" selection-end-column="0" />
               <folding />
             </state>
@@ -156,18 +158,52 @@
       <file leaf-file-name="file_lock.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/threads/file_lock.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
-              <caret line="172" column="0" selection-start-line="172" selection-start-column="0" selection-end-line="172" selection-end-column="0" />
+            <state relative-caret-position="3015">
+              <caret line="201" column="0" selection-start-line="201" selection-start-column="0" selection-end-line="201" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test_threads_file_lock.cpp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="test_threads_file_lock.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/test_threads_file_lock.cpp">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="195">
               <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="directory_iterator.h" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/include/filesystem/directory_iterator.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="176">
+              <caret line="39" column="4" selection-start-line="39" selection-start-column="4" selection-end-line="39" selection-end-column="4" />
+              <folding>
+                <element signature="e#269#297#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="directory.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/filesystem/directory.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+              <folding>
+                <element signature="e#164#197#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="unique_ptr.h" pinned="false" current-in-tab="false">
+        <entry file="file:///usr/include/c++/5/bits/unique_ptr.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="191">
+              <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -196,6 +232,7 @@
         <option value="$PROJECT_DIR$/source/filesystem/path.cpp" />
         <option value="$PROJECT_DIR$/tests/test_filesystem_symlink.cpp" />
         <option value="$PROJECT_DIR$/tests/test_threads_file_lock.cpp" />
+        <option value="$PROJECT_DIR$/include/filesystem/directory_iterator.h" />
       </list>
     </option>
   </component>
@@ -327,6 +364,38 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="source" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="filesystem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CppCommon" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CppCommon" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="include" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CppCommon" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CppCommon" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="include" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -824,7 +893,23 @@
       <envs />
       <method />
     </configuration>
-    <list size="113">
+    <configuration default="false" name="cppcommon-example-filesystem_directory" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-filesystem_directory" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-filesystem_directory">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-filesystem_directoryr" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-filesystem_directoryr" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-filesystem_directoryr">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-filesystem_file" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-filesystem_file" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-filesystem_file">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-filesystem_symlink" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-filesystem_symlink" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-filesystem_symlink">
+      <envs />
+      <method />
+    </configuration>
+    <list size="117">
       <item index="0" class="java.lang.String" itemvalue="Application.Build All" />
       <item index="1" class="java.lang.String" itemvalue="Application.cppcommon" />
       <item index="2" class="java.lang.String" itemvalue="Application.cppcommon-tests" />
@@ -938,6 +1023,10 @@
       <item index="110" class="java.lang.String" itemvalue="Application.cppcommon-example-utility_static_constructor" />
       <item index="111" class="java.lang.String" itemvalue="Application.cppcommon-perf-filesystem_file" />
       <item index="112" class="java.lang.String" itemvalue="Application.cppcommon-perf-threads_file_lock" />
+      <item index="113" class="java.lang.String" itemvalue="Application.cppcommon-example-filesystem_directory" />
+      <item index="114" class="java.lang.String" itemvalue="Application.cppcommon-example-filesystem_directoryr" />
+      <item index="115" class="java.lang.String" itemvalue="Application.cppcommon-example-filesystem_file" />
+      <item index="116" class="java.lang.String" itemvalue="Application.cppcommon-example-filesystem_symlink" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
@@ -958,11 +1047,12 @@
       <workItem from="1472160533879" duration="355000" />
       <workItem from="1472599969669" duration="962000" />
       <workItem from="1472775115278" duration="1191000" />
+      <workItem from="1473037166650" duration="841000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3046000" />
+    <option name="totallyTimeSpent" value="3887000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1615" height="1026" extended-state="6" />
@@ -970,7 +1060,7 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32963988" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1004,12 +1094,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/source/threads/file_lock.cpp</url>
-          <line>135</line>
+          <line>148</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/source/threads/file_lock.cpp</url>
-          <line>160</line>
+          <line>189</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
@@ -1018,11 +1108,26 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/source/threads/file_lock.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2580">
+          <caret line="172" column="0" selection-start-line="172" selection-start-column="0" selection-end-line="172" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_threads_file_lock.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_filesystem_path.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5640">
           <caret line="376" column="0" selection-start-line="376" selection-start-column="0" selection-end-line="376" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1030,7 +1135,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="11475">
           <caret line="765" column="48" selection-start-line="765" selection-start-column="48" selection-end-line="765" selection-end-column="48" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1038,7 +1142,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1054,7 +1157,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5430">
           <caret line="362" column="0" selection-start-line="362" selection-start-column="0" selection-end-line="362" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1062,7 +1164,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1255,7 +1356,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="260">
           <caret line="766" column="27" selection-start-line="766" selection-start-column="27" selection-end-line="766" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1263,7 +1363,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1271,13 +1370,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="373" column="31" selection-start-line="373" selection-start-column="31" selection-end-line="373" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/catch/single_include/catch.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
+        <state relative-caret-position="123405">
           <caret line="8227" column="0" selection-start-line="8227" selection-start-column="0" selection-end-line="8227" selection-end-column="0" />
           <folding />
         </state>
@@ -1285,8 +1383,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/source/threads/file_lock.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="172" column="0" selection-start-line="172" selection-start-column="0" selection-end-line="172" selection-end-column="0" />
+        <state relative-caret-position="3015">
+          <caret line="201" column="0" selection-start-line="201" selection-start-column="0" selection-end-line="201" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1296,6 +1394,34 @@
         <state relative-caret-position="195">
           <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/c++/5/bits/unique_ptr.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="191">
+          <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/filesystem/directory.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding>
+            <element signature="e#164#197#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/filesystem/directory_iterator.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="39" column="4" selection-start-line="39" selection-start-column="4" selection-end-line="39" selection-end-column="4" />
+          <folding>
+            <element signature="e#269#297#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
