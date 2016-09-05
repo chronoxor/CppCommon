@@ -5,11 +5,9 @@ General
   * Release
 
 Filesystem
-  * Directory iterations (recursive)
   * RemoveAll (notifications)
   * Copy (notifications)
   * Devices (enumeration, capacity, free, available)
 
 Threads
-  * Pimpl fix
   * Timeout lock emulation
