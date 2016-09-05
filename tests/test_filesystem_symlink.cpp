@@ -15,23 +15,9 @@ TEST_CASE("Symlink", "[CppCommon][FileSystem]")
     Directory current = Path::current();
 
     // Create a temporary file
-    std::string str("test");
-    std::vector<uint8_t> buffer(str.begin(), str.end());
+    std::string text("test");
     File temp(current / "test.tmp");
-    REQUIRE(!temp.IsFileExists());
-    REQUIRE(!temp.IsFileOpened());
-    temp.Create(false, true);
-    REQUIRE(temp.IsFileExists());
-    REQUIRE(temp.IsFileOpened());
-    REQUIRE(temp.offset() == 0);
-    REQUIRE(temp.size() == 0);
-    temp.Write(buffer.data(), buffer.size());
-    temp.Flush();
-    REQUIRE(temp.offset() == 4);
-    REQUIRE(temp.size() == 4);
-    temp.Close();
-    REQUIRE(!temp.IsFileOpened());
-    REQUIRE(temp.size() == 4);
+    REQUIRE(File::WriteAllText(temp, text) == text.size());
 
     // Create a file symlink
     Directory test1 = Directory::Create(current / "test1");
