@@ -13,6 +13,7 @@
 
 #include <cstring>
 #include <memory>
+#include <regex>
 
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
@@ -129,6 +130,130 @@ DirectoryIterator Directory::rbegin() const
 DirectoryIterator Directory::rend() const
 {
     return DirectoryIterator();
+}
+
+std::vector<Path> Directory::GetEntries(const std::string& pattern)
+{
+    std::vector<Path> result;
+    std::regex matcher(pattern);
+    for (auto it = begin(); it != end(); ++it)
+        if (pattern.empty() || std::regex_match(it->filename().string(), matcher))
+            result.push_back(*it);
+    return result;
+}
+
+std::vector<Path> Directory::GetEntriesRecurse(const std::string& pattern)
+{
+    std::vector<Path> result;
+    std::regex matcher(pattern);
+    for (auto it = rbegin(); it != rend(); ++it)
+        if (pattern.empty() || std::regex_match(it->filename().string(), matcher))
+            result.push_back(Directory(*it));
+    return result;
+}
+
+std::vector<Directory> Directory::GetDirectories(const std::string& pattern)
+{
+    std::vector<Directory> result;
+    std::regex matcher(pattern);
+    for (auto it = begin(); it != end(); ++it)
+    {
+        // Special check for symbolic link
+        Directory target(*it);
+        if (it->IsSymlink())
+            target = Symlink(target).target();
+
+        // Special check for directory
+        if (target.IsDirectory())
+            if (pattern.empty() || std::regex_match(it->filename().string(), matcher))
+                result.push_back(*it);
+    }
+    return result;
+}
+
+std::vector<Directory> Directory::GetDirectoriesRecurse(const std::string& pattern)
+{
+    std::vector<Directory> result;
+    std::regex matcher(pattern);
+    for (auto it = rbegin(); it != rend(); ++it)
+    {
+        // Special check for symbolic link
+        Directory target(*it);
+        if (it->IsSymlink())
+            target = Symlink(target).target();
+
+        // Special check for directory
+        if (target.IsDirectory())
+            if (pattern.empty() || std::regex_match(it->filename().string(), matcher))
+                result.push_back(*it);
+    }
+    return result;
+}
+
+std::vector<File> Directory::GetFiles(const std::string& pattern)
+{
+    std::vector<File> result;
+    std::regex matcher(pattern);
+    for (auto it = begin(); it != end(); ++it)
+    {
+        // Special check for symbolic link
+        File target(*it);
+        if (it->IsSymlink())
+            target = Symlink(target).target();
+
+        // Special check for directory
+        if (!target.IsDirectory())
+            if (pattern.empty() || std::regex_match(it->filename().string(), matcher))
+                result.push_back(*it);
+    }
+    return result;
+}
+
+std::vector<File> Directory::GetFilesRecurse(const std::string& pattern)
+{
+    std::vector<File> result;
+    std::regex matcher(pattern);
+    for (auto it = rbegin(); it != rend(); ++it)
+    {
+        // Special check for symbolic link
+        File target(*it);
+        if (it->IsSymlink())
+            target = Symlink(target).target();
+
+        // Special check for directory
+        if (!target.IsDirectory())
+            if (pattern.empty() || std::regex_match(it->filename().string(), matcher))
+                result.push_back(*it);
+    }
+    return result;
+}
+
+std::vector<Symlink> Directory::GetSymlinks(const std::string& pattern)
+{
+    std::vector<Symlink> result;
+    std::regex matcher(pattern);
+    for (auto it = begin(); it != end(); ++it)
+    {
+        // Special check for symbolic link
+        if (it->IsSymlink())
+            if (pattern.empty() || std::regex_match(it->filename().string(), matcher))
+                result.push_back(Symlink(*it));
+    }
+    return result;
+}
+
+std::vector<Symlink> Directory::GetSymlinksRecurse(const std::string& pattern)
+{
+    std::vector<Symlink> result;
+    std::regex matcher(pattern);
+    for (auto it = rbegin(); it != rend(); ++it)
+    {
+        // Special check for symbolic link
+        if (it->IsSymlink())
+            if (pattern.empty() || std::regex_match(it->filename().string(), matcher))
+                result.push_back(Symlink(*it));
+    }
+    return result;
 }
 
 Directory Directory::Create(const Path& path, const Flags<FileAttributes>& attributes, const Flags<FilePermissions>& permissions)

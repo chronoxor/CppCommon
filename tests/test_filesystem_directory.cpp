@@ -94,17 +94,23 @@ TEST_CASE("Directory iterator", "[CppCommon][FileSystem]")
 
     Symlink test5 = Symlink::CreateSymlink(test2, test / "test5");
 
-    // Iterate through all directory entries
-    int count = 0;
-    for (auto entry = test.begin(); entry != test.end(); ++entry)
-        ++count;
-    REQUIRE(count == 8);
-
-    // Iterate recursively through all directory entries
-    count = 0;
-    for (auto entry = test.rbegin(); entry != test.rend(); ++entry)
-        ++count;
-    REQUIRE(count == 22);
+    // Check directory entries
+    REQUIRE(test.GetEntries().size() == 8);
+    REQUIRE(test.GetEntries("test1.*").size() == 2);
+    REQUIRE(test.GetEntriesRecurse().size() == 22);
+    REQUIRE(test.GetEntriesRecurse("test2.*").size() == 9);
+    REQUIRE(test.GetDirectories().size() == 5);
+    REQUIRE(test.GetDirectories("test1.*").size() == 1);
+    REQUIRE(test.GetDirectoriesRecurse().size() == 9);
+    REQUIRE(test.GetDirectoriesRecurse("test2.*").size() == 3);
+    REQUIRE(test.GetFiles().size() == 3);
+    REQUIRE(test.GetFiles("test1.*").size() == 1);
+    REQUIRE(test.GetFilesRecurse().size() == 13);
+    REQUIRE(test.GetFilesRecurse("test2.*").size() == 6);
+    REQUIRE(test.GetSymlinks().size() == 1);
+    REQUIRE(test.GetSymlinks("test5.*").size() == 1);
+    REQUIRE(test.GetSymlinksRecurse().size() == 2);
+    REQUIRE(test.GetSymlinksRecurse("test4.*").size() == 1);
 
     // Remove complex directory structure
     Path::Remove(test5);

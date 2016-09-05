@@ -30,7 +30,7 @@ class DirectoryIterator::Impl
     friend class RecurseImpl;
 
 public:
-    Impl(const Path& parent) : _parent(parent) {}
+    Impl(const Path& parent) : _parent(parent), _current() {}
     Impl(const Impl&) = default;
     Impl(Impl&&) noexcept = default;
     virtual ~Impl() = default;
@@ -38,10 +38,14 @@ public:
     Impl& operator=(const Impl&) = default;
     Impl& operator=(Impl&&) noexcept = default;
 
+    const Path& parent() const noexcept { return _parent; }
+    const Path& current() const noexcept { return _current; }
+
     virtual Path Next() = 0;
 
 protected:
     Path _parent;
+    Path _current;
 };
 
 class DirectoryIterator::SimpleImpl : public DirectoryIterator::Impl
@@ -87,7 +91,7 @@ public:
     Path Next() override
     {
         if (_end)
-            return Path();
+            return _current;
 #if defined(_WIN32) || defined(_WIN64)
         do
         {
@@ -101,7 +105,8 @@ public:
             if (std::wcsncmp(_entry.cFileName, L"..", countof(_entry.cFileName)) == 0)
                 continue;
             _next = true;
-            return _parent / _entry.cFileName;
+            _current = _parent / _entry.cFileName;
+            return _current;
         } while (FindNextFileW(_directory, &_entry) != 0);
 
         if (GetLastError() != ERROR_NO_MORE_FILES)
@@ -116,19 +121,22 @@ public:
                 continue;
             if (std::strncmp(pentry->d_name, "..", sizeof(pentry->d_name)) == 0)
                 continue;
-            return _parent / pentry->d_name;
+            _current = _parent / pentry->d_name;
+            return _current;
         }
 
         if (result != 0)
             throwex FileSystemException("Cannot read directory entries!").Attach(_parent);
 #endif
         _end = true;
-        return Path();
+        _current = Path();
+        return _current;
     }
 
     void Move(SimpleImpl& instance)
     {
         _parent = instance._parent;
+        _current = instance._current;
         _directory = instance._directory;
         _entry = instance._entry;
         _next = instance._next;
@@ -145,6 +153,7 @@ public:
     {
         using std::swap;
         swap(_parent, instance._parent);
+        swap(_current, instance._current);
         swap(_directory, instance._directory);
         swap(_entry, instance._entry);
         swap(_next, instance._next);
@@ -184,10 +193,10 @@ public:
             if (_stack.empty())
                 return result;
 
-            // If the stack has any iterators pop one and call its Next() method
+            // If the stack has any iterators pop one and return its current path
             _current.Swap(_stack.top());
             _stack.pop();
-            return Next();
+            return _current.current();
         }
 
         // Special check for symbolic link
@@ -202,8 +211,11 @@ public:
             _stack.push(_current);
 
             // Switch the current iterator to the target sub-directory
-            SimpleImpl subdir = SimpleImpl(target);
+            SimpleImpl subdir = SimpleImpl(result);
             _current.Move(subdir);
+
+            // Call Next() method for the new iterator
+            return Next();
         }
 
         return result;
