@@ -948,7 +948,7 @@ Path Path::Remove(const Path& path)
     struct stat st;
     int result = stat(path.native().c_str(), &st);
     if (result != 0)
-        throwex FileSystemException("Cannot get the status of the removed path!").Attach(*this);
+        throwex FileSystemException("Cannot get the status of the removed path!").Attach(path);
 
     if (S_ISDIR(st.st_mode))
     {
@@ -981,7 +981,7 @@ Path Path::RemoveAll(const Path& path)
     struct stat st;
     int result = stat(path.native().c_str(), &st);
     if (result != 0)
-        throwex FileSystemException("Cannot get the status of the removed path!").Attach(*this);
+        throwex FileSystemException("Cannot get the status of the removed path!").Attach(path);
 
     if (S_ISDIR(st.st_mode))
         is_directory = true;
