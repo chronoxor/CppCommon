@@ -37,12 +37,12 @@ public:
     typedef std::forward_iterator_tag iterator_category;
 
     DirectoryIterator();
-    DirectoryIterator(DirectoryIterator&) = default;
-    DirectoryIterator(DirectoryIterator&&) noexcept = default;
+    DirectoryIterator(DirectoryIterator& it);
+    DirectoryIterator(DirectoryIterator&& it) noexcept;
     ~DirectoryIterator();
 
-    DirectoryIterator& operator=(const DirectoryIterator&) = default;
-    DirectoryIterator& operator=(DirectoryIterator&&) noexcept = default;
+    DirectoryIterator& operator=(DirectoryIterator& it);
+    DirectoryIterator& operator=(DirectoryIterator&& it) noexcept;
 
     friend bool operator==(const DirectoryIterator& it1, const DirectoryIterator& it2);
     friend bool operator!=(const DirectoryIterator& it1, const DirectoryIterator& it2);

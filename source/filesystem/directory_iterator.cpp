@@ -38,7 +38,7 @@ public:
     Impl& operator=(const Impl&) = default;
     Impl& operator=(Impl&&) noexcept = default;
 
-    virtual Path Next() { return Path(); }
+    virtual Path Next() = 0;
 
 protected:
     Path _parent;
@@ -220,7 +220,6 @@ DirectoryIterator::DirectoryIterator() : _pimpl(nullptr), _current()
 
 DirectoryIterator::DirectoryIterator(const Path& current) : _pimpl(nullptr), _current(current)
 {
-
 }
 
 DirectoryIterator::DirectoryIterator(const Path& parent, bool recurse) : _pimpl(recurse ? (Impl*)std::make_unique<RecurseImpl>(parent).release() : (Impl*)std::make_unique<SimpleImpl>(parent).release())
@@ -228,8 +227,30 @@ DirectoryIterator::DirectoryIterator(const Path& parent, bool recurse) : _pimpl(
     _current = _pimpl->Next();
 }
 
+DirectoryIterator::DirectoryIterator(DirectoryIterator& it) : _pimpl(it._pimpl.release()), _current(it._current)
+{
+}
+
+DirectoryIterator::DirectoryIterator(DirectoryIterator&& it) noexcept : _pimpl(std::move(it._pimpl)), _current(std::move(it._current))
+{
+}
+
 DirectoryIterator::~DirectoryIterator()
 {
+}
+
+DirectoryIterator& DirectoryIterator::operator=(DirectoryIterator& it)
+{
+    _pimpl.reset(it._pimpl.release());
+    _current = it._current;
+    return *this;
+}
+
+DirectoryIterator& DirectoryIterator::operator=(DirectoryIterator&& it) noexcept
+{
+    _pimpl = std::move(it._pimpl);
+    _current = std::move(it._current);
+    return *this;
 }
 
 DirectoryIterator& DirectoryIterator::operator++()
