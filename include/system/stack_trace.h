@@ -40,7 +40,7 @@ public:
         int line;               //!< Frame line number
 
         //! Get string from the current stack trace frame
-        std::string to_string() const
+        std::string string() const
         { std::stringstream ss; ss << *this; return ss.str(); }
 
         //! Output stack trace frame into the given output stream
@@ -64,7 +64,7 @@ public:
     const std::vector<Frame>& frames() const noexcept { return _frames; }
 
     //! Get string from the current stack trace snapshot
-    std::string to_string() const
+    std::string string() const
     { std::stringstream ss; ss << *this; return ss.str(); }
 
     //! Output stack trace into the given output stream

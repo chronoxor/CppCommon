@@ -154,7 +154,7 @@ private:
 #endif
 };
 
-NamedMutex::NamedMutex(const std::string& name) : _pimpl(new Impl(name))
+NamedMutex::NamedMutex(const std::string& name) : _pimpl(std::make_unique<Impl>(name))
 {
 }
 

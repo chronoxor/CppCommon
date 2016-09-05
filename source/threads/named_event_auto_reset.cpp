@@ -210,7 +210,7 @@ private:
 #endif
 };
 
-NamedEventAutoReset::NamedEventAutoReset(const std::string& name, bool signaled) : _pimpl(new Impl(name, signaled))
+NamedEventAutoReset::NamedEventAutoReset(const std::string& name, bool signaled) : _pimpl(std::make_unique<Impl>(name, signaled))
 {
 }
 

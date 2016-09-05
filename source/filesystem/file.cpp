@@ -84,7 +84,7 @@ public:
         else
         {
             WIN32_FILE_ATTRIBUTE_DATA fad;
-            if (!GetFileAttributesExW(_path.to_wstring().c_str(), GetFileExInfoStandard, &fad))
+            if (!GetFileAttributesExW(_path.wstring().c_str(), GetFileExInfoStandard, &fad))
                 throwex FileSystemException("Cannot get the current file size!").Attach(_path);
 
             LARGE_INTEGER result;
@@ -146,7 +146,7 @@ public:
         if (attributes & FileAttributes::TEMPORARY)
             dwFlagsAndAttributes |= FILE_ATTRIBUTE_TEMPORARY;
 
-        _file = CreateFileW(_path.to_wstring().c_str(), (read ? GENERIC_READ : 0) | (write ? GENERIC_WRITE : 0), FILE_SHARE_READ, nullptr, CREATE_NEW, dwFlagsAndAttributes, nullptr);
+        _file = CreateFileW(_path.wstring().c_str(), (read ? GENERIC_READ : 0) | (write ? GENERIC_WRITE : 0), FILE_SHARE_READ, nullptr, CREATE_NEW, dwFlagsAndAttributes, nullptr);
         if (_file == INVALID_HANDLE_VALUE)
             throwex FileSystemException("Cannot create a new file!").Attach(_path);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
@@ -207,7 +207,7 @@ public:
         if (attributes & FileAttributes::TEMPORARY)
             dwFlagsAndAttributes |= FILE_ATTRIBUTE_TEMPORARY;
 
-        _file = CreateFileW(_path.to_wstring().c_str(), (read ? GENERIC_READ : 0) | (write ? GENERIC_WRITE : 0), FILE_SHARE_READ, nullptr, (truncate ? TRUNCATE_EXISTING : OPEN_EXISTING), dwFlagsAndAttributes, nullptr);
+        _file = CreateFileW(_path.wstring().c_str(), (read ? GENERIC_READ : 0) | (write ? GENERIC_WRITE : 0), FILE_SHARE_READ, nullptr, (truncate ? TRUNCATE_EXISTING : OPEN_EXISTING), dwFlagsAndAttributes, nullptr);
         if (_file == INVALID_HANDLE_VALUE)
             throwex FileSystemException("Cannot open existing file!").Attach(_path);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
@@ -268,7 +268,7 @@ public:
         if (attributes & FileAttributes::TEMPORARY)
             dwFlagsAndAttributes |= FILE_ATTRIBUTE_TEMPORARY;
 
-        _file = CreateFileW(_path.to_wstring().c_str(), (read ? GENERIC_READ : 0) | (write ? GENERIC_WRITE : 0), FILE_SHARE_READ, nullptr, (truncate ? CREATE_ALWAYS : OPEN_ALWAYS), dwFlagsAndAttributes, nullptr);
+        _file = CreateFileW(_path.wstring().c_str(), (read ? GENERIC_READ : 0) | (write ? GENERIC_WRITE : 0), FILE_SHARE_READ, nullptr, (truncate ? CREATE_ALWAYS : OPEN_ALWAYS), dwFlagsAndAttributes, nullptr);
         if (_file == INVALID_HANDLE_VALUE)
             throwex FileSystemException("Cannot open existing file!").Attach(_path);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
@@ -439,7 +439,7 @@ File::File() : Path(), _pimpl(new Impl(*this))
 {
 }
 
-File::File(const Path& path) : Path(path), _pimpl(new Impl(*this))
+File::File(const Path& path) : Path(path), _pimpl(std::make_unique<Impl>(*this))
 {
 }
 
@@ -464,7 +464,7 @@ uint64_t File::size() const
 bool File::IsFileExists() const
 {
 #if defined(_WIN32) || defined(_WIN64)
-    DWORD attributes = GetFileAttributesW(to_wstring().c_str());
+    DWORD attributes = GetFileAttributesW(wstring().c_str());
     if (attributes == INVALID_FILE_ATTRIBUTES)
         return false;
 

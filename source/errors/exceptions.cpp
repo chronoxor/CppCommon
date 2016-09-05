@@ -17,7 +17,7 @@ const char* Exception::what() const noexcept
     try
     {
         if (_cache.empty())
-            to_string();
+            string();
         return _cache.c_str();
     }
     catch (...)
@@ -26,13 +26,13 @@ const char* Exception::what() const noexcept
     }
 }
 
-std::string Exception::to_string() const
+std::string Exception::string() const
 {
     if (_cache.empty())
     {
         std::stringstream stream;
         stream << "Exception: " << _message << std::endl;
-        std::string location = _location.to_string();
+        std::string location = _location.string();
         if (!location.empty())
             stream << "Source location: " << location << std::endl;
         _cache = stream.str();
@@ -40,7 +40,7 @@ std::string Exception::to_string() const
     return _cache;
 }
 
-std::string SystemException::to_string() const
+std::string SystemException::string() const
 {
     if (_cache.empty())
     {
@@ -48,7 +48,7 @@ std::string SystemException::to_string() const
         stream << "System exception: " << _message << std::endl;
         stream << "System error: " << _system_error << std::endl;
         stream << "System message: " << _system_message << std::endl;
-        std::string location = _location.to_string();
+        std::string location = _location.string();
         if (!location.empty())
             stream << "Source location: " << location << std::endl;
         _cache = stream.str();

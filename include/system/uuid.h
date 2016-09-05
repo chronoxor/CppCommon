@@ -68,14 +68,14 @@ public:
     const std::array<uint8_t, 16>& data() const noexcept { return _data; }
 
     //! Get string from the current UUID in format "00000000-0000-0000-0000-000000000000"
-    std::string to_string() const;
+    std::string string() const;
 
     //! Generate a new UUID value
     static UUID Generate();
 
     //! Output instance into the given output stream
     friend std::ostream& operator<<(std::ostream& os, const UUID& instance)
-    { os << instance.to_string(); return os; }
+    { os << instance.string(); return os; }
 
     //! Swap two instances
     void swap(UUID& uuid) noexcept;

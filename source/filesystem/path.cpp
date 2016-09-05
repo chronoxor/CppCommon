@@ -306,11 +306,11 @@ Path Path::absolute() const
 #if defined(_WIN32) || defined(_WIN64)
     std::vector<wchar_t> buffer(MAX_PATH);
 
-    DWORD size = GetFullPathNameW(to_wstring().c_str(), (DWORD)buffer.size(), buffer.data(), nullptr);
+    DWORD size = GetFullPathNameW(wstring().c_str(), (DWORD)buffer.size(), buffer.data(), nullptr);
     if (size > buffer.size())
     {
         buffer.resize(size);
-        size = GetFullPathNameW(to_wstring().c_str(), (DWORD)buffer.size(), buffer.data(), nullptr);
+        size = GetFullPathNameW(wstring().c_str(), (DWORD)buffer.size(), buffer.data(), nullptr);
     }
 
     if (size == 0)
@@ -406,7 +406,7 @@ Path Path::canonical() const
 FileType Path::type() const
 {
 #if defined(_WIN32) || defined(_WIN64)
-    DWORD attributes = GetFileAttributesW(to_wstring().c_str());
+    DWORD attributes = GetFileAttributesW(wstring().c_str());
     if (attributes == INVALID_FILE_ATTRIBUTES)
         return FileType::NONE;
 
@@ -456,7 +456,7 @@ Flags<FileAttributes> Path::attributes() const
 {
     Flags<FileAttributes> result;
 #if defined(_WIN32) || defined(_WIN64)
-    DWORD attributes = GetFileAttributesW(to_wstring().c_str());
+    DWORD attributes = GetFileAttributesW(wstring().c_str());
     if (attributes == INVALID_FILE_ATTRIBUTES)
         return FileAttributes::NONE;
     if (attributes & FILE_ATTRIBUTE_NORMAL)
@@ -524,7 +524,7 @@ Flags<FilePermissions> Path::permissions() const
 UtcTimestamp Path::created() const
 {
 #if defined(_WIN32) || defined(_WIN64)
-    HANDLE hFile = CreateFileW(to_wstring().c_str(), 0, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
+    HANDLE hFile = CreateFileW(wstring().c_str(), 0, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
     if (hFile == INVALID_HANDLE_VALUE)
         throwex FileSystemException("Cannot open the path for getting create time!").Attach(*this);
 
@@ -553,7 +553,7 @@ UtcTimestamp Path::created() const
 UtcTimestamp Path::modified() const
 {
 #if defined(_WIN32) || defined(_WIN64)
-    HANDLE hFile = CreateFileW(to_wstring().c_str(), 0, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
+    HANDLE hFile = CreateFileW(wstring().c_str(), 0, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
     if (hFile == INVALID_HANDLE_VALUE)
         throwex FileSystemException("Cannot open the path for getting modified time!").Attach(*this);
 
@@ -582,7 +582,7 @@ UtcTimestamp Path::modified() const
 size_t Path::hardlinks() const
 {
 #if defined(_WIN32) || defined(_WIN64)
-    HANDLE hFile = CreateFileW(to_wstring().c_str(), 0, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
+    HANDLE hFile = CreateFileW(wstring().c_str(), 0, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
     if (hFile == INVALID_HANDLE_VALUE)
         throwex FileSystemException("Cannot open the path for getting hard links count!").Attach(*this);
 
@@ -609,7 +609,7 @@ bool Path::IsEquivalent(const Path& path) const
 {
 #if defined(_WIN32) || defined(_WIN64)
     // Access to the file meta information
-    HANDLE hFile1 = CreateFileW(to_wstring().c_str(), 0, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
+    HANDLE hFile1 = CreateFileW(wstring().c_str(), 0, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
     if (hFile1 == INVALID_HANDLE_VALUE)
         throwex FileSystemException("Cannot open the path for getting meta information!").Attach(*this);
 
@@ -622,7 +622,7 @@ bool Path::IsEquivalent(const Path& path) const
         throwex FileSystemException("Cannot get the file meta information!").Attach(*this);
 
     // Access to the file meta information
-    HANDLE hFile2 = CreateFileW(path.to_wstring().c_str(), 0, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
+    HANDLE hFile2 = CreateFileW(path.wstring().c_str(), 0, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
     if (hFile2 == INVALID_HANDLE_VALUE)
         throwex FileSystemException("Cannot open the path for getting meta information!").Attach(path);
 
@@ -905,13 +905,13 @@ Path Path::temp()
 
 Path Path::unique()
 {
-    return Path(UUID::Generate().to_string());
+    return Path(UUID::Generate().string());
 }
 
 Path Path::Rename(const Path& src, const Path& dst)
 {
 #if defined(_WIN32) || defined(_WIN64)
-    if (!MoveFileW(src.to_wstring().c_str(), dst.to_wstring().c_str()))
+    if (!MoveFileW(src.wstring().c_str(), dst.wstring().c_str()))
         throwex FileSystemException("Cannot move the path!").Attach(src, dst);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     int result = rename(src.native().c_str(), dst.native().c_str());
@@ -924,7 +924,7 @@ Path Path::Rename(const Path& src, const Path& dst)
 Path Path::Remove(const Path& path)
 {
 #if defined(_WIN32) || defined(_WIN64)
-    std::wstring wpath = path.to_wstring();
+    std::wstring wpath = path.wstring();
     DWORD attributes = GetFileAttributesW(wpath.c_str());
     if (attributes == INVALID_FILE_ATTRIBUTES)
         throwex FileSystemException("Cannot get file attributes of the deleted path!").Attach(path);
@@ -963,7 +963,7 @@ Path Path::Remove(const Path& path)
 void Path::SetAttributes(const Path& path, const Flags<FileAttributes>& attributes)
 {
 #if defined(_WIN32) || defined(_WIN64)
-    std::wstring wpath = path.to_wstring();
+    std::wstring wpath = path.wstring();
     DWORD result = GetFileAttributesW(wpath.c_str());
     if (result == INVALID_FILE_ATTRIBUTES)
         throwex FileSystemException("Cannot get file attributes of the path!").Attach(path);
@@ -1044,7 +1044,7 @@ void Path::SetPermissions(const Path& path, const Flags<FilePermissions>& permis
 void Path::SetCreated(const Path& path, const UtcTimestamp& timestamp)
 {
 #if defined(_WIN32) || defined(_WIN64)
-    HANDLE hFile = CreateFileW(path.to_wstring().c_str(), FILE_WRITE_ATTRIBUTES, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
+    HANDLE hFile = CreateFileW(path.wstring().c_str(), FILE_WRITE_ATTRIBUTES, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
     if (hFile == INVALID_HANDLE_VALUE)
         throwex FileSystemException("Cannot open the path for writing created time!").Attach(path);
 
@@ -1080,7 +1080,7 @@ void Path::SetCreated(const Path& path, const UtcTimestamp& timestamp)
 void Path::SetModified(const Path& path, const UtcTimestamp& timestamp)
 {
 #if defined(_WIN32) || defined(_WIN64)
-    HANDLE hFile = CreateFileW(path.to_wstring().c_str(), FILE_WRITE_ATTRIBUTES, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
+    HANDLE hFile = CreateFileW(path.wstring().c_str(), FILE_WRITE_ATTRIBUTES, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
     if (hFile == INVALID_HANDLE_VALUE)
         throwex FileSystemException("Cannot open the path for writing modified time!").Attach(path);
 
@@ -1117,7 +1117,7 @@ void Path::SetCurrent(const Path& path)
 {
 #if defined(_WIN32) || defined(_WIN64)
     Path temp(path / "");
-    if (!SetCurrentDirectoryW(temp.to_wstring().c_str()))
+    if (!SetCurrentDirectoryW(temp.wstring().c_str()))
         throwex FileSystemException("Cannot set the current path of the current process!").Attach(temp);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     int result = chdir(path.native().c_str());

@@ -119,7 +119,7 @@ private:
 #endif
 };
 
-Mutex::Mutex() : _pimpl(new Impl())
+Mutex::Mutex() : _pimpl(std::make_unique<Impl>())
 {
 }
 

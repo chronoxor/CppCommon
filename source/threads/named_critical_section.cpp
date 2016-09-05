@@ -171,7 +171,7 @@ private:
     uint32_t _spin;
 };
 
-NamedCriticalSection::NamedCriticalSection(const std::string& name) : _pimpl(new Impl(name, 4000))
+NamedCriticalSection::NamedCriticalSection(const std::string& name) : _pimpl(std::make_unique<Impl>(name, 4000))
 {
 }
 

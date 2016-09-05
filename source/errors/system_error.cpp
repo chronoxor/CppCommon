@@ -42,7 +42,7 @@ void SystemError::ClearLast() noexcept
     SetLast(0);
 }
 
-std::string SystemError::to_string(int error)
+std::string SystemError::Description(int error)
 {
     const int capacity = 1024;
 #if defined(_WIN32) || defined(_WIN64)

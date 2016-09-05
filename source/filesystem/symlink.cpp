@@ -67,7 +67,7 @@ namespace CppCommon {
 Path Symlink::target() const
 {
 #if defined(_WIN32) || defined(_WIN64)
-    HANDLE hFile = CreateFileW(to_wstring().c_str(), GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OPEN_REPARSE_POINT, nullptr);
+    HANDLE hFile = CreateFileW(wstring().c_str(), GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OPEN_REPARSE_POINT, nullptr);
     if (hFile == INVALID_HANDLE_VALUE)
         throwex FileSystemException("Cannot open the symlink path for reading!").Attach(*this);
 
@@ -108,7 +108,7 @@ Path Symlink::target() const
 bool Symlink::IsSymlinkExists() const
 {
 #if defined(_WIN32) || defined(_WIN64)
-    DWORD attributes = GetFileAttributesW(to_wstring().c_str());
+    DWORD attributes = GetFileAttributesW(wstring().c_str());
     if (attributes == INVALID_FILE_ATTRIBUTES)
         return false;
 
@@ -137,19 +137,19 @@ bool Symlink::IsSymlinkExists() const
 Symlink Symlink::CreateSymlink(const Path& src, const Path& dst)
 {
 #if defined(_WIN32) || defined(_WIN64)
-    std::wstring source = src.to_wstring();
+    std::wstring source = src.wstring();
     DWORD attributes = GetFileAttributesW(source.c_str());
     if (attributes == INVALID_FILE_ATTRIBUTES)
         throwex FileSystemException("Cannot get file attributes of the source path!").Attach(src);
 
     if (attributes & FILE_ATTRIBUTE_DIRECTORY)
     {
-        if (!CreateSymbolicLinkW(dst.to_wstring().c_str(), source.c_str(), SYMBOLIC_LINK_FLAG_DIRECTORY))
+        if (!CreateSymbolicLinkW(dst.wstring().c_str(), source.c_str(), SYMBOLIC_LINK_FLAG_DIRECTORY))
             throwex FileSystemException("Cannot create symbolic link for the directory!").Attach(src, dst);
     }
     else
     {
-        if (!CreateSymbolicLinkW(dst.to_wstring().c_str(), source.c_str(), 0))
+        if (!CreateSymbolicLinkW(dst.wstring().c_str(), source.c_str(), 0))
             throwex FileSystemException("Cannot create symbolic link for the file!").Attach(src, dst);
     }
 #elif defined(unix) || defined(__unix) || defined(__unix__)
@@ -163,7 +163,7 @@ Symlink Symlink::CreateSymlink(const Path& src, const Path& dst)
 Path Symlink::CreateHardlink(const Path& src, const Path& dst)
 {
 #if defined(_WIN32) || defined(_WIN64)
-    if (!CreateHardLinkW(dst.to_wstring().c_str(), src.to_wstring().c_str(), nullptr))
+    if (!CreateHardLinkW(dst.wstring().c_str(), src.wstring().c_str(), nullptr))
         throwex FileSystemException("Cannot create hard link!").Attach(src, dst);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     int result = link(src.native().c_str(), dst.native().c_str());

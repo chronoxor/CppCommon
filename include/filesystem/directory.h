@@ -9,7 +9,7 @@
 #ifndef CPPCOMMON_FILESYSTEM_DIRECTORY_H
 #define CPPCOMMON_FILESYSTEM_DIRECTORY_H
 
-#include "filesystem/path.h"
+#include "filesystem/directory_iterator.h"
 
 namespace CppCommon {
 
@@ -43,6 +43,20 @@ public:
     bool IsDirectoryExists() const;
     //! Is directory empty?
     bool IsDirectoryEmpty() const;
+
+    //! Get the directory begin iterator
+    DirectoryIterator begin() const
+    { return DirectoryIterator(*this, false); }
+    //! Get the directory end iterator
+    DirectoryIterator end() const
+    { return DirectoryIterator(); }
+
+    //! Get the directory recursive begin iterator
+    DirectoryIterator rbegin() const
+    { return DirectoryIterator(*this, true); }
+    //! Get the directory recursive end iterator
+    DirectoryIterator rend() const
+    { return DirectoryIterator(); }
 
     //! Create directory from the given path
     /*!

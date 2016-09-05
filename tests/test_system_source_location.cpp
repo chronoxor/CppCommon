@@ -16,5 +16,5 @@ TEST_CASE("Source location wrapper", "[CppCommon][System]")
     REQUIRE(location.filename() == std::string(__FILE__));
     REQUIRE(location.line() == 13);
 
-    REQUIRE(__LOCATION__.to_string() == (std::string(__FILE__) + ':' + std::to_string(__LINE__)));
+    REQUIRE(__LOCATION__.string() == (std::string(__FILE__) + ':' + std::to_string(__LINE__)));
 }

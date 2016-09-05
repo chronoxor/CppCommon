@@ -8,6 +8,26 @@
 
 namespace CppCommon {
 
+inline bool operator==(const DirectoryIterator& it1, const DirectoryIterator& it2)
+{
+    return it1._current == it2._current;
+}
+
+inline bool operator!=(const DirectoryIterator& it1, const DirectoryIterator& it2)
+{
+    return it1._current != it2._current;
+}
+
+inline const Path& DirectoryIterator::operator*() const
+{
+    return _current;
+}
+
+inline const Path* DirectoryIterator::operator->() const
+{
+    return &_current;
+}
+
 inline void Directory::swap(Directory& directory) noexcept
 {
     using std::swap;

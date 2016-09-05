@@ -69,7 +69,7 @@ private:
 #endif
 };
 
-Barrier::Barrier(int threads) : _pimpl(new Impl(threads)), _threads(threads)
+Barrier::Barrier(int threads) : _pimpl(std::make_unique<Impl>(threads)), _threads(threads)
 {
 }
 

@@ -170,7 +170,7 @@ private:
     bool _owner;
 };
 
-SharedMemory::SharedMemory(const std::string& name, size_t size) : _pimpl(new Impl(name, size)), _name(name), _size(size)
+SharedMemory::SharedMemory(const std::string& name, size_t size) : _pimpl(std::make_unique<Impl>(name, size)), _name(name), _size(size)
 {
 }
 

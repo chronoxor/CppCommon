@@ -13,6 +13,6 @@
 int main(int argc, char** argv)
 {
     std::cout << "Last system error: " << CppCommon::SystemError::GetLast() << std::endl;
-    std::cout << "Last system message: " << CppCommon::SystemError::to_string() << std::endl;
+    std::cout << "Last system description: " << CppCommon::SystemError::Description() << std::endl;
     return 0;
 }

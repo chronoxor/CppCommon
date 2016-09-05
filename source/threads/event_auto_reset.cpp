@@ -163,7 +163,7 @@ private:
 #endif
 };
 
-EventAutoReset::EventAutoReset(bool signaled) : _pimpl(new Impl(signaled))
+EventAutoReset::EventAutoReset(bool signaled) : _pimpl(std::make_unique<Impl>(signaled))
 {
 }
 

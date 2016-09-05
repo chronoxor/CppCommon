@@ -71,7 +71,7 @@ private:
     bool _initialized;
 };
 
-StackTraceManager::StackTraceManager() : _pimpl(new Impl())
+StackTraceManager::StackTraceManager() : _pimpl(std::make_unique<Impl>())
 {
 }
 

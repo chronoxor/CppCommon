@@ -67,7 +67,7 @@ UUID::UUID(const std::string& uuid)
     }
 }
 
-std::string UUID::to_string() const
+std::string UUID::string() const
 {
     std::string result(36, '0');
 

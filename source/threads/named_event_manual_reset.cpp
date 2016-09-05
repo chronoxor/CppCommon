@@ -223,7 +223,7 @@ private:
 #endif
 };
 
-NamedEventManualReset::NamedEventManualReset(const std::string& name, bool signaled) : _pimpl(new Impl(name, signaled))
+NamedEventManualReset::NamedEventManualReset(const std::string& name, bool signaled) : _pimpl(std::make_unique<Impl>(name, signaled))
 {
 }
 

@@ -123,7 +123,7 @@ private:
 #endif
 };
 
-Semaphore::Semaphore(int resources) : _pimpl(new Impl(resources)), _resources(resources)
+Semaphore::Semaphore(int resources) : _pimpl(std::make_unique<Impl>(resources)), _resources(resources)
 {
 }
 

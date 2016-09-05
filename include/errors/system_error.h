@@ -45,17 +45,17 @@ public:
     //! Clear the last system error code
     static void ClearLast() noexcept;
 
-    //! Convert the last system error code to the system error message
+    //! Convert the last system error code to the system error description
     /*!
-        \return Last system error message
+        \return Last system error description
     */
-    static std::string to_string() { return to_string(GetLast()); }
-    //! Convert the given system error code to the system error message
+    static std::string Description() { return Description(GetLast()); }
+    //! Convert the given system error code to the system error description
     /*!
         \param error - System error code
-        \return System error message
+        \return System error description
     */
-    static std::string to_string(int error);
+    static std::string Description(int error);
 };
 
 /*! \example errors_system_error.cpp System error wrapper example */

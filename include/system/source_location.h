@@ -50,7 +50,7 @@ public:
     int line() const noexcept { return _line; }
 
     //! Get the string from the current source location
-    std::string to_string() const
+    std::string string() const
     { std::stringstream ss; ss << *this; return ss.str(); }
 
     //! Output source location into the given output stream

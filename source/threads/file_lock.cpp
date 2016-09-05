@@ -27,7 +27,7 @@ public:
     Impl(const Path& path) : _path(path)
     {
 #if defined(_WIN32) || defined(_WIN64)
-        std::wstring wpath = _path.to_wstring();
+        std::wstring wpath = _path.wstring();
 
         // Retries in CreateFile, see http://support.microsoft.com/kb/316609
         const int attempts = 5;
@@ -101,7 +101,7 @@ public:
         // Remove the file-lock file (owner only)
         if (_owner)
         {
-            if (!DeleteFileW(_path.to_wstring().c_str()))
+            if (!DeleteFileW(_path.wstring().c_str()))
                 fatality(FileSystemException("Cannot delete the file-lock file!").Attach(_path));
         }
 #elif defined(unix) || defined(__unix) || defined(__unix__)
@@ -301,7 +301,7 @@ private:
     bool _owner;
 };
 
-FileLock::FileLock(const Path& path) : _pimpl(new Impl(path))
+FileLock::FileLock(const Path& path) : _pimpl(std::make_unique<Impl>(path))
 {
 }
 

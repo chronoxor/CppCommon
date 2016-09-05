@@ -25,7 +25,7 @@ public:
     const Path& path() const noexcept { return _path; }
 
     //! Get string from the current exception
-    std::string to_string() const override;
+    std::string string() const override;
 
     //! Attach the given path to the exception
     /*!

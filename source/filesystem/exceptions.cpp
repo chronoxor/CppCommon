@@ -10,7 +10,7 @@
 
 namespace CppCommon {
 
-std::string FileSystemException::to_string() const
+std::string FileSystemException::string() const
 {
     if (_cache.empty())
     {
@@ -24,7 +24,7 @@ std::string FileSystemException::to_string() const
             stream << "File system destination path: " << _dst << std::endl;
         stream << "System error: " << _system_error << std::endl;
         stream << "System message: " << _system_message << std::endl;
-        std::string location = _location.to_string();
+        std::string location = _location.string();
         if (!location.empty())
             stream << "Source location: " << location << std::endl;
         _cache = stream.str();

@@ -52,11 +52,11 @@ public:
     const char* what() const noexcept override;
 
     //! Get string from the current exception
-    virtual std::string to_string() const;
+    virtual std::string string() const;
 
     //! Output exception into the given output stream
     friend std::ostream& operator<<(std::ostream& os, const Exception& instance)
-    { os << instance.to_string(); return os; }
+    { os << instance.string(); return os; }
 
     //! Link exception with source location
     template<class T>
@@ -96,7 +96,7 @@ public:
         \param error - System error code
     */
     SystemException(int error)
-        : SystemException(SystemError::to_string(error), error)
+        : SystemException(SystemError::Description(error), error)
     {}
     //! Create system exception based on the given exception message
     /*!
@@ -113,7 +113,7 @@ public:
     SystemException(const std::string& message, int error)
         : Exception(message),
           _system_error(error),
-          _system_message(SystemError::to_string(error))
+          _system_message(SystemError::Description(error))
     {}
 
     //! Get system error code
@@ -122,7 +122,7 @@ public:
     const std::string& system_message() const noexcept { return _system_message; }
 
     //! Get string from the current system exception
-    std::string to_string() const override;
+    std::string string() const override;
 
 protected:
     int _system_error;

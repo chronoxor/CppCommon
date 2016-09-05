@@ -31,7 +31,7 @@ const Flags<FilePermissions> Directory::DEFAULT_PERMISSIONS = FilePermissions::I
 bool Directory::IsDirectoryExists() const
 {
 #if defined(_WIN32) || defined(_WIN64)
-    DWORD attributes = GetFileAttributesW(to_wstring().c_str());
+    DWORD attributes = GetFileAttributesW(wstring().c_str());
     if (attributes == INVALID_FILE_ATTRIBUTES)
         return false;
 
@@ -61,7 +61,7 @@ bool Directory::IsDirectoryEmpty() const
 {
 #if defined(_WIN32) || defined(_WIN64)
     WIN32_FIND_DATAW fd;
-    HANDLE hDirectory = FindFirstFileW((*this / "*").to_wstring().c_str(), &fd);
+    HANDLE hDirectory = FindFirstFileW((*this / "*").wstring().c_str(), &fd);
     if (hDirectory == INVALID_HANDLE_VALUE)
         throwex FileSystemException("Cannot open a directory!").Attach(*this);
 
@@ -77,6 +77,9 @@ bool Directory::IsDirectoryEmpty() const
             continue;
         return false;
     } while (FindNextFileW(hDirectory, &fd) != 0);
+
+    if (GetLastError() != ERROR_NO_MORE_FILES)
+        throwex FileSystemException("Cannot read directory entries!").Attach(*this);
 
     return true;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
@@ -114,7 +117,7 @@ Directory Directory::Create(const Path& path, const Flags<FileAttributes>& attri
     if (directory.IsDirectoryExists())
         return directory;
 #if defined(_WIN32) || defined(_WIN64)
-    if (!CreateDirectoryW(path.to_wstring().c_str(), nullptr))
+    if (!CreateDirectoryW(path.wstring().c_str(), nullptr))
         throwex FileSystemException("Cannot create directory!").Attach(path);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     mode_t mode = 0;

@@ -96,7 +96,7 @@ private:
 #endif
 };
 
-CriticalSection::CriticalSection() : _pimpl(new Impl())
+CriticalSection::CriticalSection() : _pimpl(std::make_unique<Impl>())
 {
 }
 

@@ -81,7 +81,6 @@ enum class FilePermissions
 class Path
 {
 public:
-    //! Default constructor
     Path() : _path() {}
     Path(const char* path) : _path(path) {}
     Path(const std::string& path) : _path(path) {}
@@ -124,9 +123,9 @@ public:
     const std::string& native() const noexcept { return _path; }
 
     //! Get the pah value in UTF-8 format
-    std::string to_string() const { return std::string(_path); }
+    std::string string() const { return std::string(_path); }
     //! Get the path value in UTF-16 format
-    std::wstring to_wstring() const { return Encoding::FromUTF8(_path); }
+    std::wstring wstring() const { return Encoding::FromUTF8(_path); }
 
     //! Decompose root path from the current path
     Path root() const;

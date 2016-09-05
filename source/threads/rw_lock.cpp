@@ -120,7 +120,7 @@ private:
 #endif
 };
 
-RWLock::RWLock() : _pimpl(new Impl())
+RWLock::RWLock() : _pimpl(std::make_unique<Impl>())
 {
 }
 

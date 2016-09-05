@@ -30,7 +30,6 @@ public:
     //! Default file permissions (IRUSR | IWUSR | IRGRP | IROTH)
     static const Flags<FilePermissions> DEFAULT_PERMISSIONS;
 
-    //! Default constructor
     File();
     File(const Path& path);
     File(const File& instance);

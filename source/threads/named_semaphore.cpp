@@ -152,7 +152,7 @@ private:
 #endif
 };
 
-NamedSemaphore::NamedSemaphore(const std::string& name, int resources) : _pimpl(new Impl(name, resources))
+NamedSemaphore::NamedSemaphore(const std::string& name, int resources) : _pimpl(std::make_unique<Impl>(name, resources))
 {
 }
 

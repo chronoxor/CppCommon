@@ -17,9 +17,9 @@ void fatal(const SourceLocation& location, const StackTrace& trace, const std::s
 {
     std::cerr << "Fatal error: " << message << std::endl;
     std::cerr << "System error: " << error << std::endl;
-    std::cerr << "System message: " << SystemError::to_string(error) << std::endl;
-    std::cerr << "Source location: " << location.to_string() << std::endl;
-    std::cerr << "Stack trace: " << std::endl << trace.to_string() << std::endl;
+    std::cerr << "System message: " << SystemError::Description(error) << std::endl;
+    std::cerr << "Source location: " << location.string() << std::endl;
+    std::cerr << "Stack trace: " << std::endl << trace.string() << std::endl;
     std::abort();
 }
 
