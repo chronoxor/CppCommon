@@ -10,6 +10,7 @@
 #define CPPCOMMON_THREADS_CRITICAL_SECTION_H
 
 #include "threads/locker.h"
+#include "time/timestamp.h"
 
 #include <memory>
 
@@ -43,6 +44,24 @@ public:
         \return 'true' if the critical section was successfully acquired, 'false' if the critical section is busy
     */
     bool TryLock();
+
+    //! Try to acquire critical section for the given timespan
+    /*!
+        Will block for the given timespan in the worst case.
+
+        \param timespan - Timespan to wait for the critical section
+        \return 'true' if the critical section was successfully acquired, 'false' if the critical section is busy
+    */
+    bool TryLockFor(const Timespan& timespan);
+    //! Try to acquire critical section until the given timestamp
+    /*!
+        Will block until the given timestamp in the worst case.
+
+        \param timestamp - Timestamp to stop wait for the critical section
+        \return 'true' if the critical section was successfully acquired, 'false' if the critical section is busy
+    */
+    bool TryLockUntil(const UtcTimestamp& timestamp)
+    { return TryLockFor(timestamp - UtcTimestamp()); }
 
     //! Acquire critical section with block
     /*!

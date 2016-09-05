@@ -199,6 +199,30 @@ bool NamedCriticalSection::TryLock()
     return _pimpl->TryLock();
 }
 
+bool NamedCriticalSection::TryLockFor(const Timespan& timespan)
+{
+    // Calculate a finish timestamp
+    Timestamp finish = NanoTimestamp() + timespan;
+
+    // Try to acquire named critical section at least one time
+    if (TryLock())
+        return true;
+    else
+    {
+        // Try lock or yield for the given timespan
+        while (NanoTimestamp() < finish)
+        {
+            if (TryLock())
+                return true;
+            else
+                Thread::Yield();
+        }
+
+        // Failed to acquire named critical section
+        return false;
+    }
+}
+
 void NamedCriticalSection::Lock()
 {
     _pimpl->Lock();

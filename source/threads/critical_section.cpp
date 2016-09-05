@@ -9,9 +9,11 @@
 #include "threads/critical_section.h"
 
 #include "errors/fatal.h"
+#include "threads/thread.h"
 
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
+#undef Yield
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 #include "errors/exceptions.h"
 #include <pthread.h>
@@ -117,6 +119,30 @@ CriticalSection& CriticalSection::operator=(CriticalSection&& cs) noexcept
 bool CriticalSection::TryLock()
 {
     return _pimpl->TryLock();
+}
+
+bool CriticalSection::TryLockFor(const Timespan& timespan)
+{
+    // Calculate a finish timestamp
+    Timestamp finish = NanoTimestamp() + timespan;
+
+    // Try to acquire critical section at least one time
+    if (TryLock())
+        return true;
+    else
+    {
+        // Try lock or yield for the given timespan
+        while (NanoTimestamp() < finish)
+        {
+            if (TryLock())
+                return true;
+            else
+                Thread::Yield();
+        }
+
+        // Failed to acquire critical section
+        return false;
+    }
 }
 
 void CriticalSection::Lock()

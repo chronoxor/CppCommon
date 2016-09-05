@@ -56,57 +56,57 @@ public:
     //! Get the directory recursive end iterator
     DirectoryIterator rend() const;
 
-    //! Get all entries (directories, filters, symbolic links) in the current directory
+    //! Get all entries (directories, files, symbolic links) in the current directory
     /*!
-        \param filter - Filter regular expression (default is "")
+        \param pattern - Regular expression pattern (default is "")
         \return Entries collection
     */
-    std::vector<Path> GetEntries(const std::string& filter = "");
-    //! Recursively get all entries (directories, filters, symbolic links) in the current directory
+    std::vector<Path> GetEntries(const std::string& pattern = "");
+    //! Recursively get all entries (directories, files, symbolic links) in the current directory
     /*!
-        \param filter - Filter regular expression (default is "")
+        \param pattern - Regular expression pattern (default is "")
         \return Entries collection
     */
-    std::vector<Path> GetEntriesRecurse(const std::string& filter = "");
+    std::vector<Path> GetEntriesRecurse(const std::string& pattern = "");
 
     //! Get all directories (including symbolic link directories) in the current directory
     /*!
-        \param filter - Filter regular expression (default is "")
+        \param pattern - Regular expression pattern (default is "")
         \return Directories collection
     */
-    std::vector<Directory> GetDirectories(const std::string& filter = "");
+    std::vector<Directory> GetDirectories(const std::string& pattern = "");
     //! Recursively get all directories (including symbolic link directories) in the current directory
     /*!
-        \param filter - Filter regular expression (default is "")
+        \param pattern - Regular expression pattern (default is "")
         \return Directories collection
     */
-    std::vector<Directory> GetDirectoriesRecurse(const std::string& filter = "");
+    std::vector<Directory> GetDirectoriesRecurse(const std::string& pattern = "");
 
     //! Get all files (including symbolic link files) in the current directory
     /*!
-        \param filter - Filter regular expression (default is "")
+        \param pattern - Regular expression pattern (default is "")
         \return Files collection
     */
-    std::vector<File> GetFiles(const std::string& filter = "");
+    std::vector<File> GetFiles(const std::string& pattern = "");
     //! Recursively get all files (including symbolic link files) in the current directory
     /*!
-        \param filter - Filter regular expression (default is "")
+        \param pattern - Regular expression pattern (default is "")
         \return Files collection
     */
-    std::vector<File> GetFilesRecurse(const std::string& filter = "");
+    std::vector<File> GetFilesRecurse(const std::string& pattern = "");
 
     //! Get all symbolic links (including symbolic link directories) in the current directory
     /*!
-        \param filter - Filter regular expression (default is "")
+        \param pattern - Regular expression pattern (default is "")
         \return Symbolic links collection
     */
-    std::vector<Symlink> GetSymlinks(const std::string& filter = "");
+    std::vector<Symlink> GetSymlinks(const std::string& pattern = "");
     //! Recursively get all symbolic links (including symbolic link directories) in the current directory
     /*!
-        \param filter - Filter regular expression (default is "")
+        \param pattern - Regular expression pattern (default is "")
         \return Symbolic links collection
     */
-    std::vector<Symlink> GetSymlinksRecurse(const std::string& filter = "");
+    std::vector<Symlink> GetSymlinksRecurse(const std::string& pattern = "");
 
     //! Create directory from the given path
     /*!

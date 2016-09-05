@@ -9,9 +9,11 @@
 #include "threads/rw_lock.h"
 
 #include "errors/fatal.h"
+#include "threads/thread.h"
 
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
+#undef Yield
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 #include "errors/exceptions.h"
 #include <pthread.h>
@@ -146,6 +148,54 @@ bool RWLock::TryLockRead()
 bool RWLock::TryLockWrite()
 {
     return _pimpl->TryLockWrite();
+}
+
+bool RWLock::TryLockReadFor(const Timespan& timespan)
+{
+    // Calculate a finish timestamp
+    Timestamp finish = NanoTimestamp() + timespan;
+
+    // Try to acquire read lock at least one time
+    if (TryLockRead())
+        return true;
+    else
+    {
+        // Try lock or yield for the given timespan
+        while (NanoTimestamp() < finish)
+        {
+            if (TryLockRead())
+                return true;
+            else
+                Thread::Yield();
+        }
+
+        // Failed to acquire read lock
+        return false;
+    }
+}
+
+bool RWLock::TryLockWriteFor(const Timespan& timespan)
+{
+    // Calculate a finish timestamp
+    Timestamp finish = NanoTimestamp() + timespan;
+
+    // Try to acquire write lock at least one time
+    if (TryLockWrite())
+        return true;
+    else
+    {
+        // Try lock or yield for the given timespan
+        while (NanoTimestamp() < finish)
+        {
+            if (TryLockWrite())
+                return true;
+            else
+                Thread::Yield();
+        }
+
+        // Failed to acquire write lock
+        return false;
+    }
 }
 
 void RWLock::LockRead()

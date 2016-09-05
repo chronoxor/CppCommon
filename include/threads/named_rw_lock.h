@@ -10,6 +10,7 @@
 #define CPPCOMMON_THREADS_NAMED_RW_LOCK_H
 
 #include "threads/locker.h"
+#include "time/timestamp.h"
 
 #include <memory>
 #include <string>
@@ -53,7 +54,6 @@ public:
         \return 'true' if the read lock was successfully acquired, 'false' if the read lock is busy
     */
     bool TryLockRead();
-
     //! Try to acquire write lock without block
     /*!
         Will not block.
@@ -61,7 +61,6 @@ public:
         \return 'true' if the write lock was successfully acquired, 'false' if the write lock is busy
     */
     bool TryLockWrite();
-
     //! Try to convert write lock to read lock without block
     /*!
         Will not block.
@@ -69,6 +68,58 @@ public:
         \return 'true' if the write lock was successfully converted to the read one, 'false' if the write lock is busy
     */
     bool TryConvertWriteToRead();
+
+    //! Try to acquire read lock for the given timespan
+    /*!
+        Will block for the given timespan in the worst case.
+
+        \param timespan - Timespan to wait for the read lock
+        \return 'true' if the read lock was successfully acquired, 'false' if the read lock is busy
+    */
+    bool TryLockReadFor(const Timespan& timespan);
+    //! Try to acquire write lock for the given timespan
+    /*!
+        Will block for the given timespan in the worst case.
+
+        \param timespan - Timespan to wait for the write lock
+        \return 'true' if the write lock was successfully acquired, 'false' if the write lock is busy
+    */
+    bool TryLockWriteFor(const Timespan& timespan);
+    //! Try to convert write lock to read lock for the given timespan
+    /*!
+        Will block for the given timespan in the worst case.
+
+        \param timespan - Timespan to wait for the write lock to read lock conversion
+        \return 'true' if the write lock was successfully converted to the read one, 'false' if the write lock is busy
+    */
+    bool TryConvertWriteToReadFor(const Timespan& timespan);
+    //! Try to acquire read lock until the given timestamp
+    /*!
+        Will block until the given timestamp in the worst case.
+
+        \param timestamp - Timestamp to stop wait for the read lock
+        \return 'true' if the read lock was successfully acquired, 'false' if the read lock is busy
+    */
+    bool TryLockReadUntil(const UtcTimestamp& timestamp)
+    { return TryLockReadFor(timestamp - UtcTimestamp()); }
+    //! Try to acquire write lock until the given timestamp
+    /*!
+        Will block until the given timestamp in the worst case.
+
+        \param timestamp - Timestamp to stop wait for the write lock
+        \return 'true' if the write lock was successfully acquired, 'false' if the write lock is busy
+    */
+    bool TryLockWriteUntil(const UtcTimestamp& timestamp)
+    { return TryLockWriteFor(timestamp - UtcTimestamp()); }
+    //! Try to convert write lock to read lock until the given timestamp
+    /*!
+        Will block until the given timestamp in the worst case.
+
+        \param timestamp - Timestamp to stop wait for the write lock to read lock conversion
+        \return 'true' if the write lock was successfully converted to the read one, 'false' if the write lock is busy
+    */
+    bool TryConvertWriteToReadUntil(const UtcTimestamp& timestamp)
+    { return TryConvertWriteToReadFor(timestamp - UtcTimestamp()); }
 
     //! Acquire read lock with block
     /*!
