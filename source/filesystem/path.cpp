@@ -25,8 +25,8 @@
 #include <windows.h>
 #include <userenv.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__)
+#include <sys/sendfile.h>
 #include <sys/stat.h>
-#include <sys/syscall.h>
 #include <sys/time.h>
 #include <fcntl.h>
 #include <limits.h>
@@ -963,18 +963,26 @@ Path Path::Copy(const Path& src, const Path& dst, bool overwrite)
         }
 
         // Transfer data between source and destination file descriptors
+        off_t offset = 0;
         size_t cur = 0;
         size_t tot = status.st_size;
         while (cur < tot)
         {
-            ssize_t copied;
-            if ((copied = copy_file_range(source, nullptr, destination, nullptr, tot - cur, 0)) < 0)
+            ssize_t sent;
+            if ((sent = sendfile(destination, source, &offset, tot - cur)) <= 0)
             {
+                if ((errno == EINTR) || (errno == EAGAIN))
+                {
+                    // Interrupted system call/try again
+                    // Just skip to the top of the loop and try again
+                    continue;
+                }
+
                 close(source);
                 close(destination);
                 throwex FileSystemException("Cannot send the source file to the destination file!").Attach(src, dst);
             }
-            cur += copied;
+            cur += sent;
         }
 
         // Close files
