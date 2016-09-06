@@ -964,12 +964,25 @@ Path Path::Copy(const Path& src, const Path& dst, bool overwrite)
 
         // Transfer data between source and destination file descriptors
         off_t offset = 0;
-        result = sendfile(destination, source, &offset, status.st_size);
-        if (result != 0)
+        size_t current = 0;
+        size_t total = status.st_size;
+        while (current < total)
         {
-            close(source);
-            close(destination);
-            throwex FileSystemException("Cannot send the source file to the destination file!").Attach(src, dst);
+            ssize_t sent;
+            if ((sent = sendfile(destination, source, &offset, total - current)) <= 0)
+            {
+                if ((errno == EINTR) || (errno == EAGAIN))
+                {
+                    // Interrupted system call/try again
+                    // Just skip to the top of the loop and try again
+                    continue;
+                }
+
+                close(source);
+                close(destination);
+                throwex FileSystemException("Cannot send the source file to the destination file!").Attach(src, dst);
+            }
+            current += sent;
         }
 
         // Close files
