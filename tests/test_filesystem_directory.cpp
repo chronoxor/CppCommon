@@ -4,9 +4,7 @@
 
 #include "catch.hpp"
 
-#include "filesystem/directory.h"
-#include <filesystem/file.h>
-#include "filesystem/symlink.h"
+#include "filesystem/filesystem.h"
 
 using namespace CppCommon;
 

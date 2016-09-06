@@ -5,5 +5,4 @@ General
   * Release
 
 Filesystem
-  * Copy (notifications)
   * Devices (enumeration, capacity, free, available)

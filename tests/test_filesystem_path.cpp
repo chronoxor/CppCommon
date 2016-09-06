@@ -4,7 +4,7 @@
 
 #include "catch.hpp"
 
-#include "filesystem/path.h"
+#include "filesystem/filesystem.h"
 
 using namespace CppCommon;
 
@@ -466,6 +466,95 @@ TEST_CASE("Path hardlinks", "[CppCommon][FileSystem]")
     REQUIRE(executable.hardlinks() > 0);
 }
 
+TEST_CASE("Path copy & remove", "[CppCommon][FileSystem]")
+{
+    std::string text("test");
+
+    // Create complex directory structure
+    Directory test = Directory::Create(Path::current() / "test");
+    File test1tmp = test / "test1.tmp";
+    REQUIRE(File::WriteAllText(test1tmp, text) == text.size());
+    File test2tmp = test / "test2.tmp";
+    REQUIRE(File::WriteAllText(test2tmp, text) == text.size());
+    File test3tmp = test / "test3.tmp";
+    REQUIRE(File::WriteAllText(test3tmp, text) == text.size());
+
+    Directory test1 = Directory::Create(test / "test1");
+    File test11tmp = test1 / "test11.tmp";
+    REQUIRE(File::WriteAllText(test11tmp, text) == text.size());
+    Directory test11 = Directory::Create(test1 / "test11");
+    File test111tmp = test11 / "test111.tmp";
+    REQUIRE(File::WriteAllText(test111tmp, text) == text.size());
+    Directory test111 = Directory::Create(test11 / "test111");
+    File test1111tmp = test111 / "test1111.tmp";
+    REQUIRE(File::WriteAllText(test1111tmp, text) == text.size());
+    File test2222tmp = test111 / "test2222.tmp";
+    REQUIRE(File::WriteAllText(test2222tmp, text) == text.size());
+
+    Directory test2 = Directory::Create(test / "test2");
+    File test22tmp = test2 / "test22.tmp";
+    REQUIRE(File::WriteAllText(test22tmp, text) == text.size());
+    Directory test22 = Directory::Create(test2 / "test22");
+    File test222tmp = test22 / "test222.tmp";
+    REQUIRE(File::WriteAllText(test222tmp, text) == text.size());
+
+    Directory test3 = Directory::Create(test / "test3");
+    File test33tmp = test3 / "test33.tmp";
+    REQUIRE(File::WriteAllText(test33tmp, text) == text.size());
+
+    Directory test4 = Directory::Create(test / "test4");
+    Symlink test44tmp = Symlink::CreateSymlink(test1tmp, test4 / "test44.tmp");
+
+    Symlink test5 = Symlink::CreateSymlink(test2, test / "test5");
+
+    // Copy file
+    File copy1 = Path::Copy(test1tmp, Path::current() / "test1.copy");
+    REQUIRE(copy1.IsFileExists());
+    REQUIRE(Path::Remove(copy1) == Path::current());
+
+    // Copy directory
+    Directory copy2 = Path::Copy(test2, Path::current() / "test2.copy");
+    REQUIRE(copy2.IsDirectoryExists());
+    REQUIRE(Path::Remove(copy2) == Path::current());
+
+    // Copy symbolic link file
+    Symlink copy3 = Path::Copy(test44tmp, Path::current() / "test3.copy");
+    REQUIRE(copy3.IsSymlinkExists());
+	REQUIRE(copy3.IsTargetExists());
+    REQUIRE(Path::Remove(copy3) == Path::current());
+
+    // Copy symbolic link directory
+    Symlink copy4 = Path::Copy(test5, Path::current() / "test4.copy");
+	REQUIRE(copy4.IsSymlinkExists());
+	REQUIRE(copy4.IsTargetExists());
+    REQUIRE(Path::Remove(copy4) == Path::current());
+
+    // Copy complex directory structure
+    Directory copy = Path::CopyAll(test, Path::current() / "copy");
+
+    // Check copy directory entries
+    REQUIRE(copy.GetEntries().size() == 8);
+    REQUIRE(copy.GetEntries("test1.*").size() == 2);
+    REQUIRE(copy.GetEntriesRecurse().size() == 22);
+    REQUIRE(copy.GetEntriesRecurse("test2.*").size() == 9);
+    REQUIRE(copy.GetDirectories().size() == 5);
+    REQUIRE(copy.GetDirectories("test1.*").size() == 1);
+    REQUIRE(copy.GetDirectoriesRecurse().size() == 9);
+    REQUIRE(copy.GetDirectoriesRecurse("test2.*").size() == 3);
+    REQUIRE(copy.GetFiles().size() == 3);
+    REQUIRE(copy.GetFiles("test1.*").size() == 1);
+    REQUIRE(copy.GetFilesRecurse().size() == 13);
+    REQUIRE(copy.GetFilesRecurse("test2.*").size() == 6);
+    REQUIRE(copy.GetSymlinks().size() == 1);
+    REQUIRE(copy.GetSymlinks("test5.*").size() == 1);
+    REQUIRE(copy.GetSymlinksRecurse().size() == 2);
+    REQUIRE(copy.GetSymlinksRecurse("test4.*").size() == 1);
+
+    // Remove complex directory structure
+    REQUIRE(Path::RemoveAll(copy) == Path::current());
+    REQUIRE(Path::RemoveAll(test) == Path::current());
+}
+
 TEST_CASE("Path constants of the current process", "[CppCommon][FileSystem]")
 {
     Path initial = Path::initial();
@@ -501,7 +590,7 @@ TEST_CASE("Path constants of the current process", "[CppCommon][FileSystem]")
     REQUIRE(Path("..").absolute() == current.parent());
 
     REQUIRE(!current.IsEquivalent(executable));
-	REQUIRE(current.IsEquivalent(current));
+    REQUIRE(current.IsEquivalent(current));
     REQUIRE(executable.IsEquivalent(executable));
 
     Path parent = current.parent();

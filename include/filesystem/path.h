@@ -241,6 +241,14 @@ public:
         \return Copied path
     */
     static Path Copy(const Path& src, const Path& dst, bool overwrite = false);
+    //! Recursively ñopy the given source path to destination path (file, empty directory, symlink, etc)
+    /*!
+        \param src - Source path
+        \param dst - Destination path
+        \param overwrite - Overwrite destination path (default is false)
+        \return Copied path
+    */
+    static Path CopyAll(const Path& src, const Path& dst, bool overwrite = false);
     //! Rename the given source path to destination path (file, empty directory, symlink, etc)
     /*!
         \param src - Source path

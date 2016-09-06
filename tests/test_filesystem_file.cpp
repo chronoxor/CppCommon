@@ -4,8 +4,7 @@
 
 #include "catch.hpp"
 
-#include "filesystem/exceptions.h"
-#include "filesystem/file.h"
+#include "filesystem/filesystem.h"
 #include "utility/countof.h"
 
 using namespace CppCommon;

@@ -17,6 +17,8 @@
 
 #include <algorithm>
 #include <memory>
+#include <stack>
+#include <tuple>
 #include <vector>
 
 #if defined(_WIN32) || defined(_WIN64)
@@ -976,6 +978,46 @@ Path Path::Copy(const Path& src, const Path& dst, bool overwrite)
 #endif
         return dst;
     }
+}
+
+Path Path::CopyAll(const Path& src, const Path& dst, bool overwrite)
+{
+    // Check if the destination path exists
+    bool exists = dst.IsExists();
+    if (exists && !overwrite)
+        return Path();
+
+    // Copy symbolic link or regular file
+    if (src.IsSymlink() || !src.IsDirectory())
+        return Copy(src, dst, overwrite);
+
+    // Add directory to copy stack
+    std::stack<std::tuple<Path, Path>> dirs;
+    dirs.push(std::make_tuple(src, dst));
+
+    // Do we have anything to copy in stack?
+    while (!dirs.empty())
+    {
+        // Get the top directory
+        std::tuple<Path, Path> current = dirs.top();
+        Directory srcdir(std::get<0>(current));
+        Directory dstdir(std::get<1>(current));
+        dirs.pop();
+
+        // Create destination directory
+        Directory::Create(dstdir, srcdir.attributes(), srcdir.permissions());
+
+        // Copy all directory entries
+        for (auto it = srcdir.begin(); it != srcdir.end(); ++it)
+        {
+            // Copy symbolic link or regular file
+            if (it->IsSymlink() || !it->IsDirectory())
+                Copy(srcdir / it->filename(), dstdir / it->filename(), overwrite);
+            else
+                dirs.push(std::make_tuple(srcdir / it->filename(), dstdir / it->filename()));
+        }
+    }
+    return dst;
 }
 
 Path Path::Rename(const Path& src, const Path& dst)
