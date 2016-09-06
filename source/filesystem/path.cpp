@@ -10,6 +10,8 @@
 
 #include "filesystem/directory.h"
 #include "filesystem/exceptions.h"
+#include "filesystem/file.h"
+#include "filesystem/symlink.h"
 #include "system/environment.h"
 #include "system/uuid.h"
 
@@ -21,6 +23,7 @@
 #include <windows.h>
 #include <userenv.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__)
+#include <sys/sendfile.h>
 #include <sys/stat.h>
 #include <sys/time.h>
 #include <limits.h>
@@ -419,13 +422,13 @@ FileType Path::type() const
         return FileType::REGULAR;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     // Special check for symlink
-    struct stat lst;
-    int lresult = lstat(native().c_str(), &lst);
-    if ((lresult == 0) && S_ISLNK(lst.st_mode))
+    struct stat lstatus;
+    int lresult = lstat(native().c_str(), &lstatus);
+    if ((lresult == 0) && S_ISLNK(lstatus.st_mode))
         return FileType::SYMLINK;
 
-    struct stat st;
-    int result = stat(native().c_str(), &st);
+    struct stat status;
+    int result = stat(native().c_str(), &status);
     if (result != 0)
     {
         if ((errno == ENOENT) || (errno == ENOTDIR))
@@ -434,19 +437,19 @@ FileType Path::type() const
             throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
     }
 
-    if (S_ISLNK(st.st_mode))
+    if (S_ISLNK(status.st_mode))
         return FileType::SYMLINK;
-    else if (S_ISDIR(st.st_mode))
+    else if (S_ISDIR(status.st_mode))
         return FileType::DIRECTORY;
-    else if (S_ISREG(st.st_mode))
+    else if (S_ISREG(status.st_mode))
         return FileType::REGULAR;
-    else if (S_ISBLK(st.st_mode))
+    else if (S_ISBLK(status.st_mode))
         return FileType::BLOCK;
-    else if (S_ISCHR(st.st_mode))
+    else if (S_ISCHR(status.st_mode))
         return FileType::CHARACTER;
-    else if (S_ISFIFO(st.st_mode))
+    else if (S_ISFIFO(status.st_mode))
         return FileType::FIFO;
-    else if (S_ISSOCK(st.st_mode))
+    else if (S_ISSOCK(status.st_mode))
         return FileType::SOCKET;
     else
         return FileType::UNKNOWN;
@@ -484,8 +487,8 @@ Flags<FilePermissions> Path::permissions() const
 {
     Flags<FilePermissions> permissions;
 #if defined(unix) || defined(__unix) || defined(__unix__)
-    struct stat st;
-    int result = stat(native().c_str(), &st);
+    struct stat status;
+    int result = stat(native().c_str(), &status);
     if (result != 0)
     {
         if ((errno == ENOENT) || (errno == ENOTDIR))
@@ -494,29 +497,29 @@ Flags<FilePermissions> Path::permissions() const
             throwex FileSystemException("Cannot get file permissions of the path!").Attach(*this);
     }
 
-    if (st.st_mode & S_IRUSR)
+    if (status.st_mode & S_IRUSR)
         permissions |= FilePermissions::IRUSR;
-    if (st.st_mode & S_IWUSR)
+    if (status.st_mode & S_IWUSR)
         permissions |= FilePermissions::IWUSR;
-    if (st.st_mode & S_IXUSR)
+    if (status.st_mode & S_IXUSR)
         permissions |= FilePermissions::IXUSR;
-    if (st.st_mode & S_IRGRP)
+    if (status.st_mode & S_IRGRP)
         permissions |= FilePermissions::IRGRP;
-    if (st.st_mode & S_IWGRP)
+    if (status.st_mode & S_IWGRP)
         permissions |= FilePermissions::IWGRP;
-    if (st.st_mode & S_IXGRP)
+    if (status.st_mode & S_IXGRP)
         permissions |= FilePermissions::IXGRP;
-    if (st.st_mode & S_IROTH)
+    if (status.st_mode & S_IROTH)
         permissions |= FilePermissions::IROTH;
-    if (st.st_mode & S_IWOTH)
+    if (status.st_mode & S_IWOTH)
         permissions |= FilePermissions::IWOTH;
-    if (st.st_mode & S_IXOTH)
+    if (status.st_mode & S_IXOTH)
         permissions |= FilePermissions::IXOTH;
-    if (st.st_mode & S_ISUID)
+    if (status.st_mode & S_ISUID)
         permissions |= FilePermissions::ISUID;
-    if (st.st_mode & S_ISGID)
+    if (status.st_mode & S_ISGID)
         permissions |= FilePermissions::ISGID;
-    if (st.st_mode & S_ISVTX)
+    if (status.st_mode & S_ISVTX)
         permissions |= FilePermissions::ISVTX;
 #endif
     return permissions;
@@ -542,12 +545,12 @@ UtcTimestamp Path::created() const
     result.HighPart = created.dwHighDateTime;
     return UtcTimestamp(Timestamp((result.QuadPart - 116444736000000000ull) * 100));
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-    struct stat st;
-    int result = stat(native().c_str(), &st);
+    struct stat status;
+    int result = stat(native().c_str(), &status);
     if (result != 0)
         throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
 
-    return UtcTimestamp(Timestamp((st.st_mtim.tv_sec * 1000 * 1000 * 1000) + st.st_mtim.tv_nsec));
+    return UtcTimestamp(Timestamp((status.st_mtim.tv_sec * 1000 * 1000 * 1000) + status.st_mtim.tv_nsec));
 #endif
 }
 
@@ -571,12 +574,12 @@ UtcTimestamp Path::modified() const
     result.HighPart = write.dwHighDateTime;
     return UtcTimestamp(Timestamp((result.QuadPart - 116444736000000000ull) * 100));
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-    struct stat st;
-    int result = stat(native().c_str(), &st);
+    struct stat status;
+    int result = stat(native().c_str(), &status);
     if (result != 0)
         throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
 
-    return UtcTimestamp(Timestamp((st.st_mtim.tv_sec * 1000 * 1000 * 1000) + st.st_mtim.tv_nsec));
+    return UtcTimestamp(Timestamp((status.st_mtim.tv_sec * 1000 * 1000 * 1000) + status.st_mtim.tv_nsec));
 #endif
 }
 
@@ -597,12 +600,12 @@ size_t Path::hardlinks() const
 
     return (size_t)bhfi.nNumberOfLinks;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-    struct stat st;
-    int result = stat(native().c_str(), &st);
+    struct stat status;
+    int result = stat(native().c_str(), &status);
     if (result != 0)
         throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
 
-    return (size_t)st.st_nlink;
+    return (size_t)status.st_nlink;
 #endif
 }
 
@@ -909,6 +912,59 @@ Path Path::unique()
     return Path(UUID::Generate().string());
 }
 
+Path Path::Copy(const Path& src, const Path& dst, bool overwrite)
+{
+    // Check if the destination path exists
+    bool exists = dst.IsExists();
+    if (exists && !overwrite)
+        return Path();
+
+    if (src.IsSymlink())
+    {
+        if (exists)
+            Path::Remove(dst);
+        return Symlink::CopySymlink(src, dst);
+    }
+    else if (src.IsDirectory())
+    {
+        if (exists)
+            Path::Remove(dst);
+        return Directory::Create(dst, src.attributes(), src.permissions());
+    }
+    else
+    {
+#if defined(_WIN32) || defined(_WIN64)
+        if (!CopyFileW(src.wstring().c_str(), dst.wstring().c_str(), FALSE))
+            throwex FileSystemException("Cannot copy the file!").Attach(src, dst);
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+        // Open the source file for reading
+        File source(src);
+        source.Open(true, false);
+
+        // Open the destination file for writing
+        File destination(dst);
+        destination.OpenOrCreate(false, true, true, src.attributes(), src.permissions());
+
+        // Get the source file status
+        struct stat status;
+        int result = fstat(source._file, &status);
+        if (result != 0)
+            throwex FileSystemException("Cannot get the source file size for copy operation!").Attach(src);
+
+        // Transfer data between source and destination file descriptors
+        off_t offset = 0;
+        int result = sendfile(destination._file, source._file, &offset, status.st_size);
+        if (result != 0)
+            throwex FileSystemException("Cannot rename the path!").Attach(src, dst);
+
+        // Close files
+        source.Close();
+        destination.Close();
+#endif
+        return dst;
+    }
+}
+
 Path Path::Rename(const Path& src, const Path& dst)
 {
 #if defined(_WIN32) || defined(_WIN64)
@@ -1088,13 +1144,13 @@ void Path::SetCreated(const Path& path, const UtcTimestamp& timestamp)
     if (!SetFileTime(file.get(), &created, nullptr, nullptr))
         throwex FileSystemException("Cannot set file created time of the path!").Attach(path);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-    struct stat st;
-    int result = stat(path.native().c_str(), &st);
+    struct stat status;
+    int result = stat(path.native().c_str(), &status);
     if (result != 0)
         throwex FileSystemException("Cannot get the status of the path!").Attach(path);
 
     struct timeval times[2];
-    TIMESPEC_TO_TIMEVAL(&times[0], &st.st_atim);
+    TIMESPEC_TO_TIMEVAL(&times[0], &status.st_atim);
     times[1].tv_sec = timestamp.seconds();
     times[1].tv_usec = timestamp.microseconds() % 1000000;
 
@@ -1124,13 +1180,13 @@ void Path::SetModified(const Path& path, const UtcTimestamp& timestamp)
     if (!SetFileTime(file.get(), nullptr, nullptr, &write))
         throwex FileSystemException("Cannot set file modified time of the path!").Attach(path);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-    struct stat st;
-    int result = stat(path.native().c_str(), &st);
+    struct stat status;
+    int result = stat(path.native().c_str(), &status);
     if (result != 0)
         throwex FileSystemException("Cannot get the status of the path!").Attach(path);
 
     struct timeval times[2];
-    TIMESPEC_TO_TIMEVAL(&times[0], &st.st_atim);
+    TIMESPEC_TO_TIMEVAL(&times[0], &status.st_atim);
     times[1].tv_sec = timestamp.seconds();
     times[1].tv_usec = timestamp.microseconds() % 1000000;
 

@@ -41,8 +41,8 @@ bool Directory::IsDirectoryExists() const
     else
         return false;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-    struct stat st;
-    int result = stat(native().c_str(), &st);
+    struct stat status;
+    int result = stat(native().c_str(), &status);
     if (result != 0)
     {
         if ((errno == ENOENT) || (errno == ENOTDIR))
@@ -51,7 +51,7 @@ bool Directory::IsDirectoryExists() const
             throwex FileSystemException("Cannot get the status of the directory!").Attach(*this);
     }
 
-    if (S_ISDIR(st.st_mode))
+    if (S_ISDIR(status.st_mode))
         return true;
     else
         return false;

@@ -233,6 +233,14 @@ public:
     //! Get the unique filename in UUID format "00000000-0000-0000-0000-000000000000"
     static Path unique();
 
+    //! Copy the given source path to destination path (file, empty directory, symlink, etc)
+    /*!
+        \param src - Source path
+        \param dst - Destination path
+        \param overwrite - Overwrite destination path (default is false)
+        \return Copied path
+    */
+    static Path Copy(const Path& src, const Path& dst, bool overwrite = false);
     //! Rename the given source path to destination path (file, empty directory, symlink, etc)
     /*!
         \param src - Source path

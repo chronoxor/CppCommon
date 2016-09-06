@@ -117,8 +117,8 @@ bool Symlink::IsSymlinkExists() const
     else
         return false;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-    struct stat st;
-    int result = lstat(native().c_str(), &st);
+    struct stat lstatus;
+    int result = lstat(native().c_str(), &lstatus);
     if (result != 0)
     {
         if ((errno == ENOENT) || (errno == ENOTDIR))
@@ -127,7 +127,7 @@ bool Symlink::IsSymlinkExists() const
             throwex FileSystemException("Cannot get the status of the symbolic link!").Attach(*this);
     }
 
-    if (S_ISLNK(st.st_mode))
+    if (S_ISLNK(lstatus.st_mode))
         return true;
     else
         return false;

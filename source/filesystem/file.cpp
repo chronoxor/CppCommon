@@ -95,19 +95,19 @@ public:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         if (IsFileOpened())
         {
-            struct stat st;
-            int result = fstat(_file, &st);
+            struct stat status;
+            int result = fstat(_file, &status);
             if (result != 0)
                 throwex FileSystemException("Cannot get the current file size!").Attach(_path);
-            return (uint64_t)st.st_size;
+            return (uint64_t)status.st_size;
         }
         else
         {
-            struct stat st;
-            int result = stat(_path.native().c_str(), &st);
+            struct stat status;
+            int result = stat(_path.native().c_str(), &status);
             if (result != 0)
                 throwex FileSystemException("Cannot get the current file size!").Attach(_path);
-            return (uint64_t)st.st_size;
+            return (uint64_t)status.st_size;
         }
 #endif
     }
@@ -491,8 +491,8 @@ bool File::IsFileExists() const
     else
         return true;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-    struct stat st;
-    int result = stat(native().c_str(), &st);
+    struct stat status;
+    int result = stat(native().c_str(), &status);
     if (result != 0)
     {
         if ((errno == ENOENT) || (errno == ENOTDIR))
@@ -501,17 +501,17 @@ bool File::IsFileExists() const
             throwex FileSystemException("Cannot get the status of the file!").Attach(*this);
     }
 
-    if (S_ISDIR(st.st_mode))
+    if (S_ISDIR(status.st_mode))
         return false;
-    else if (S_ISREG(st.st_mode))
+    else if (S_ISREG(status.st_mode))
         return true;
-    else if (S_ISBLK(st.st_mode))
+    else if (S_ISBLK(status.st_mode))
         return true;
-    else if (S_ISCHR(st.st_mode))
+    else if (S_ISCHR(status.st_mode))
         return true;
-    else if (S_ISFIFO(st.st_mode))
+    else if (S_ISFIFO(status.st_mode))
         return true;
-    else if (S_ISSOCK(st.st_mode))
+    else if (S_ISSOCK(status.st_mode))
         return true;
     else
         return true;
