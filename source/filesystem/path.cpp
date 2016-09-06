@@ -26,6 +26,7 @@
 #include <sys/sendfile.h>
 #include <sys/stat.h>
 #include <sys/time.h>
+#include <fcntl.h>
 #include <limits.h>
 #include <pwd.h>
 #include <stdlib.h>
