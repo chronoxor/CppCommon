@@ -25,8 +25,8 @@
 #include <windows.h>
 #include <userenv.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-#include <sys/fs.h>
 #include <sys/stat.h>
+#include <sys/syscall.h>
 #include <sys/time.h>
 #include <fcntl.h>
 #include <limits.h>
