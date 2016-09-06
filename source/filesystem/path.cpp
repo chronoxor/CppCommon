@@ -962,7 +962,7 @@ Path Path::Copy(const Path& src, const Path& dst, bool overwrite)
 
         // Transfer data between source and destination file descriptors
         off_t offset = 0;
-        int result = sendfile(destination, source, &offset, status.st_size);
+        result = sendfile(destination, source, &offset, status.st_size);
         if (result != 0)
         {
             close(source);
