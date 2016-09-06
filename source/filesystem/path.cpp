@@ -938,28 +938,40 @@ Path Path::Copy(const Path& src, const Path& dst, bool overwrite)
             throwex FileSystemException("Cannot copy the file!").Attach(src, dst);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         // Open the source file for reading
-        File source(src);
-        source.Open(true, false);
-
-        // Open the destination file for writing
-        File destination(dst);
-        destination.OpenOrCreate(false, true, true, src.attributes(), src.permissions());
+        int source = open(src.native().c_str(), O_CREAT | O_EXCL | O_RDONLY, 0);
+        if (source < 0)
+            throwex FileSystemException("Cannot open source file for copy!").Attach(src);
 
         // Get the source file status
         struct stat status;
-        int result = fstat(source._file, &status);
+        int result = fstat(source, &status);
         if (result != 0)
-            throwex FileSystemException("Cannot get the source file size for copy operation!").Attach(src);
+        {
+            close(source);
+            throwex FileSystemException("Cannot get the source file status for copy!").Attach(src);
+        }
+
+        // Open the destination file for writing
+        int destination = open(dst.native().c_str(), O_CREAT | O_WRONLY | O_TRUNC, status.st_mode);
+        if (destination < 0)
+        {
+            close(source);
+            throwex FileSystemException("Cannot open destination file for copy!").Attach(dst);
+        }
 
         // Transfer data between source and destination file descriptors
         off_t offset = 0;
-        int result = sendfile(destination._file, source._file, &offset, status.st_size);
+        int result = sendfile(destination, source, &offset, status.st_size);
         if (result != 0)
-            throwex FileSystemException("Cannot rename the path!").Attach(src, dst);
+        {
+            close(source);
+            close(destination);
+            throwex FileSystemException("Cannot send the source file to the destination file!").Attach(src, dst);
+        }
 
         // Close files
-        source.Close();
-        destination.Close();
+        close(source);
+        close(destination);
 #endif
         return dst;
     }
