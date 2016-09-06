@@ -67,6 +67,14 @@ enum class FilePermissions
     ISVTX     = 01000   //!< This is the sticky bit
 };
 
+//! Filesystem space information
+struct SpaceInfo
+{
+    uint64_t capacity;  //!< Total size of the filesystem, in bytes
+    uint64_t free;      //!< Free space on the filesystem, in bytes
+    uint64_t available; //!< Free space available to a non-privileged process (may be equal or less than free)
+};
+
 //! Filesystem path
 /*!
     Filesystem path wraps string directory, filename, symlink and other path types
@@ -157,6 +165,8 @@ public:
     UtcTimestamp modified() const;
     //! Get the path count of hardlinks
     size_t hardlinks() const;
+    //! Get the path space information
+    SpaceInfo space() const;
 
     //! Is path empty?
     bool empty() const noexcept { return _path.empty(); }

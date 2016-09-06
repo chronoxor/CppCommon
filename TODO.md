@@ -3,6 +3,3 @@
 General
   * Documentation
   * Release
-
-Filesystem
-  * Devices (enumeration, capacity, free, available)

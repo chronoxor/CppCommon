@@ -19,5 +19,12 @@ int main(int argc, char** argv)
     std::cout << "Home path: " << CppCommon::Path::home() << std::endl;
     std::cout << "Temporary path: " << CppCommon::Path::temp() << std::endl;
     std::cout << "Unique filename: " << CppCommon::Path::unique() << std::endl;
+
+    std::cout << std::endl;
+
+    std::cout << "Filesystem capacity: " << CppCommon::Path::current().space().capacity << std::endl;
+    std::cout << "Filesystem free: " << CppCommon::Path::current().space().free << std::endl;
+    std::cout << "Filesystem available: " << CppCommon::Path::current().space().available << std::endl;
+
     return 0;
 }

@@ -612,6 +612,38 @@ size_t Path::hardlinks() const
 #endif
 }
 
+SpaceInfo Path::space() const
+{
+#if defined(_WIN32) || defined(_WIN64)
+    ULARGE_INTEGER uiFreeBytesAvailable;
+    ULARGE_INTEGER uiTotalNumberOfBytes;
+    ULARGE_INTEGER uiTotalNumberOfFreeBytes;
+    if (!GetDiskFreeSpaceExW(wstring().c_str(), &uiFreeBytesAvailable, &uiTotalNumberOfBytes, &uiTotalNumberOfFreeBytes))
+        throwex FileSystemException("Cannot get the filesystem statistics of the path!").Attach(*this);
+
+    // Calculate filesystem space information
+    return SpaceInfo
+    {
+        (((uint64_t)uiTotalNumberOfBytes.HighPart) << 32) + uiTotalNumberOfBytes.LowPart,
+        (((uint64_t)uiTotalNumberOfFreeBytes.HighPart) << 32) + uiTotalNumberOfFreeBytes.LowPart,
+        (((uint64_t)uiFreeBytesAvailable.HighPart) << 32) + uiFreeBytesAvailable.LowPart
+    };
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    struct statvfs statusvfs;
+    int result = statvfs(native().c_str(), &statusvfs);
+    if (result != 0)
+        throwex FileSystemException("Cannot get the filesystem statistics of the path!").Attach(*this);
+
+    // Calculate filesystem space information
+    return SpaceInfo
+    {
+        statusvfs.f_blocks * statusvfs.f_frsize,
+        statusvfs.f_bfree * statusvfs.f_frsize,
+        statusvfs.f_bavail * statusvfs.f_frsize
+    };
+#endif
+}
+
 bool Path::IsEquivalent(const Path& path) const
 {
 #if defined(_WIN32) || defined(_WIN64)

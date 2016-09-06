@@ -466,6 +466,14 @@ TEST_CASE("Path hardlinks", "[CppCommon][FileSystem]")
     REQUIRE(executable.hardlinks() > 0);
 }
 
+TEST_CASE("Path space", "[CppCommon][FileSystem]")
+{
+    Path current = Path::current();
+    REQUIRE(current.space().capacity > 0);
+    REQUIRE(current.space().free > 0);
+    REQUIRE(current.space().available > 0);
+}
+
 TEST_CASE("Path copy & remove", "[CppCommon][FileSystem]")
 {
     std::string text("test");
@@ -520,13 +528,13 @@ TEST_CASE("Path copy & remove", "[CppCommon][FileSystem]")
     // Copy symbolic link file
     Symlink copy3 = Path::Copy(test44tmp, Path::current() / "test3.copy");
     REQUIRE(copy3.IsSymlinkExists());
-	REQUIRE(copy3.IsTargetExists());
+    REQUIRE(copy3.IsTargetExists());
     REQUIRE(Path::Remove(copy3) == Path::current());
 
     // Copy symbolic link directory
     Symlink copy4 = Path::Copy(test5, Path::current() / "test4.copy");
-	REQUIRE(copy4.IsSymlinkExists());
-	REQUIRE(copy4.IsTargetExists());
+    REQUIRE(copy4.IsSymlinkExists());
+    REQUIRE(copy4.IsTargetExists());
     REQUIRE(Path::Remove(copy4) == Path::current());
 
     // Copy complex directory structure
