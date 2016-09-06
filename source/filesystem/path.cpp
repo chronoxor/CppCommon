@@ -941,7 +941,7 @@ Path Path::Copy(const Path& src, const Path& dst, bool overwrite)
             throwex FileSystemException("Cannot copy the file!").Attach(src, dst);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         // Open the source file for reading
-        int source = open(src.native().c_str(), O_CREAT | O_EXCL | O_RDONLY, 0);
+        int source = open(src.native().c_str(), O_RDONLY, 0);
         if (source < 0)
             throwex FileSystemException("Cannot open source file for copy!").Attach(src);
 
