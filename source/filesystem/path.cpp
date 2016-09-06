@@ -26,6 +26,7 @@
 #include <userenv.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 #include <sys/sendfile.h>
+#include <sys/statvfs.h>
 #include <sys/stat.h>
 #include <sys/time.h>
 #include <fcntl.h>
@@ -629,17 +630,17 @@ SpaceInfo Path::space() const
         (((uint64_t)uiFreeBytesAvailable.HighPart) << 32) + uiFreeBytesAvailable.LowPart
     };
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-    struct statvfs statusvfs;
-    int result = statvfs(native().c_str(), &statusvfs);
+    struct statvfs stvfs;
+    int result = statvfs(native().c_str(), &stvfs);
     if (result != 0)
         throwex FileSystemException("Cannot get the filesystem statistics of the path!").Attach(*this);
 
     // Calculate filesystem space information
     return SpaceInfo
     {
-        statusvfs.f_blocks * statusvfs.f_frsize,
-        statusvfs.f_bfree * statusvfs.f_frsize,
-        statusvfs.f_bavail * statusvfs.f_frsize
+        stvfs.f_blocks * stvfs.f_frsize,
+        stvfs.f_bfree * stvfs.f_frsize,
+        stvfs.f_bavail * stvfs.f_frsize
     };
 #endif
 }
