@@ -126,7 +126,7 @@ public:
         return _read;
     }
 
-    bool File::IsFileWriteOpened() const
+    bool IsFileWriteOpened() const
     {
         return _write;
     }
