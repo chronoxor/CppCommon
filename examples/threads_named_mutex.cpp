@@ -40,7 +40,7 @@ int main(int argc, char** argv)
                 mutex.Unlock();
                 std::cout << "Mutex successfully unlocked!" << std::endl;
             }
-            catch (CppCommon::SystemException)
+            catch (CppCommon::SystemException&)
             {
                 std::cout << "Failed to unlock mutex!" << std::endl;
             }

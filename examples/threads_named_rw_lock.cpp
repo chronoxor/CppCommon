@@ -47,7 +47,7 @@ int main(int argc, char** argv)
                 lock.UnlockRead();
                 std::cout << "Successfully unlocked reader!" << std::endl;
             }
-            catch (CppCommon::SystemException)
+            catch (CppCommon::SystemException&)
             {
                 std::cout << "Failed to unlock reader!" << std::endl;
             }
@@ -59,7 +59,7 @@ int main(int argc, char** argv)
                 lock.UnlockWrite();
                 std::cout << "Successfully unlocked writer!" << std::endl;
             }
-            catch (CppCommon::SystemException)
+            catch (CppCommon::SystemException&)
             {
                 std::cout << "Failed to unlock writer!" << std::endl;
             }

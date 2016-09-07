@@ -310,7 +310,7 @@ Directory Directory::CreateTree(const Path& path, const Flags<FileAttributes>& a
         Create(tree);
         return tree;
     }
-    catch (FileSystemException) {}
+    catch (FileSystemException&) {}
 
     // Failed, try to get the parent path and retry
     Directory parent = tree.parent();
