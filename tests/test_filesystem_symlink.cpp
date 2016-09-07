@@ -48,5 +48,5 @@ TEST_CASE("Symlink", "[CppCommon][FileSystem]")
     REQUIRE(hardlink3.hardlinks() == 2);
 
     // Remove complex directory structure
-    REQUIRE(Path::RemoveAll(test) == Path::current());
+    REQUIRE(Directory::RemoveAll(test) == Path::current());
 }

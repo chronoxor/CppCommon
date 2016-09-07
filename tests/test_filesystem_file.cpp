@@ -92,7 +92,7 @@ TEST_CASE("File common", "[CppCommon][FileSystem]")
 
     // Remove the file
     REQUIRE(test.IsFileExists());
-    Path parent = Path::Remove(test);
+    Path parent = File::Remove(test);
     REQUIRE(parent == test.parent());
     REQUIRE(!test.IsFileExists());
 }
@@ -102,7 +102,7 @@ TEST_CASE("File read/write static methods", "[CppCommon][FileSystem]")
     char buffer[] = "The quick brown fox jumps over the lazy dog";
     REQUIRE(File::WriteAllBytes("test.tmp", (uint8_t*)buffer, countof(buffer)) == countof(buffer));
     REQUIRE(File::ReadAllBytes("test.tmp").size() == countof(buffer));
-    Path::Remove("test.tmp");
+    File::Remove("test.tmp");
 
     std::vector<std::string> lines = { "one", "two", "three", "four", "five" };
     REQUIRE(File::WriteAllLines("test.tmp", lines) == 5);
@@ -113,10 +113,10 @@ TEST_CASE("File read/write static methods", "[CppCommon][FileSystem]")
     REQUIRE(lines[2] == "three");
     REQUIRE(lines[3] == "four");
     REQUIRE(lines[4] == "five");
-    Path::Remove("test.tmp");
+    File::Remove("test.tmp");
 
     std::string text(buffer);
     REQUIRE(File::WriteAllText("test.tmp", text) == text.size());
     REQUIRE(File::ReadAllText("test.tmp") == text);
-    Path::Remove("test.tmp");
+    File::Remove("test.tmp");
 }

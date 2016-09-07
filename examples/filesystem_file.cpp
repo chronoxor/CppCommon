@@ -36,7 +36,7 @@ int main(int argc, char** argv)
     std::cout << "File content: " << text << std::endl;
 
     // Remove file
-    CppCommon::Path::Remove(file);
+    CppCommon::File::Remove(file);
 
     return 0;
 }

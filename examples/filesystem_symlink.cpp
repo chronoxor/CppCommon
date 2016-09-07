@@ -21,7 +21,7 @@ int main(int argc, char** argv)
     std::cout << "Symbolic link target: " << symlink.target() << std::endl;
 
     // Remove symbolic link
-    CppCommon::Path::Remove(symlink);
+    CppCommon::Symlink::Remove(symlink);
 
     return 0;
 }
