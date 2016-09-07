@@ -53,6 +53,10 @@ public:
     { return (size() == 0); }
     //! Is file opened?
     bool IsFileOpened() const;
+    //! Is file opened for reading?
+    bool IsFileReadOpened() const;
+    //! Is file opened for writing?
+    bool IsFileWriteOpened() const;
 
     //! Create a new file
     /*!

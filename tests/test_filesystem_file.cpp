@@ -21,6 +21,8 @@ TEST_CASE("File common", "[CppCommon][FileSystem]")
     test.Create(false, true);
     REQUIRE(test.IsFileExists());
     REQUIRE(test.IsFileOpened());
+    REQUIRE(!test.IsFileReadOpened());
+    REQUIRE(test.IsFileWriteOpened());
     REQUIRE(test.offset() == 0);
     REQUIRE(test.size() == 0);
     test.Write(buffer.data(), buffer.size());
@@ -37,6 +39,8 @@ TEST_CASE("File common", "[CppCommon][FileSystem]")
     test.Open(true, false);
     REQUIRE(test.IsFileExists());
     REQUIRE(test.IsFileOpened());
+    REQUIRE(test.IsFileReadOpened());
+    REQUIRE(!test.IsFileWriteOpened());
     REQUIRE(test.offset() == 0);
     REQUIRE(test.size() == 4);
     test.Read(read.data(), read.size());
@@ -51,6 +55,8 @@ TEST_CASE("File common", "[CppCommon][FileSystem]")
     test.Open(true, true);
     REQUIRE(test.IsFileExists());
     REQUIRE(test.IsFileOpened());
+    REQUIRE(test.IsFileReadOpened());
+    REQUIRE(test.IsFileWriteOpened());
     REQUIRE(test.offset() == 0);
     REQUIRE(test.size() == 4);
     test.Seek(4);

@@ -27,7 +27,7 @@ namespace CppCommon {
 class File::Impl
 {
 public:
-    Impl(const Path& path) : _path(path)
+    Impl(const Path& path) : _path(path), _read(false), _write(false)
     {
 #if defined(_WIN32) || defined(_WIN64)
         _file = INVALID_HANDLE_VALUE;
@@ -121,6 +121,16 @@ public:
 #endif
     }
 
+    bool IsFileReadOpened() const
+    {
+        return _read;
+    }
+
+    bool File::IsFileWriteOpened() const
+    {
+        return _write;
+    }
+
     void Create(bool read, bool write, bool truncate = false, const Flags<FileAttributes>& attributes = File::DEFAULT_ATTRIBUTES, const Flags<FilePermissions>& permissions = File::DEFAULT_PERMISSIONS)
     {
         // Close previously opened file
@@ -180,6 +190,8 @@ public:
         if (_file < 0)
             throwex FileSystemException("Cannot create a new file!").Attach(_path);
 #endif
+        _read = read;
+        _write = write;
     }
 
     void Open(bool read, bool write, bool truncate = false, const Flags<FileAttributes>& attributes = File::DEFAULT_ATTRIBUTES, const Flags<FilePermissions>& permissions = File::DEFAULT_PERMISSIONS)
@@ -241,6 +253,8 @@ public:
         if (_file < 0)
             throwex FileSystemException("Cannot create a new file!").Attach(_path);
 #endif
+        _read = read;
+        _write = write;
     }
 
     void OpenOrCreate(bool read, bool write, bool truncate = false, const Flags<FileAttributes>& attributes = File::DEFAULT_ATTRIBUTES, const Flags<FilePermissions>& permissions = File::DEFAULT_PERMISSIONS)
@@ -302,13 +316,15 @@ public:
         if (_file < 0)
             throwex FileSystemException("Cannot create a new file!").Attach(_path);
 #endif
+        _read = read;
+        _write = write;
     }
 
     size_t Read(uint8_t* buffer, size_t size)
     {
-        assert(IsFileOpened() && "File is not opened!");
-        if (!IsFileOpened())
-            throwex FileSystemException("File is not opened!").Attach(_path);
+        assert(IsFileReadOpened() && "File is not opened for reading!");
+        if (!IsFileReadOpened())
+            throwex FileSystemException("File is not opened for reading!").Attach(_path);
 #if defined(_WIN32) || defined(_WIN64)
         DWORD result;
         if (!ReadFile(_file, buffer, (DWORD)size, &result, nullptr))
@@ -324,9 +340,9 @@ public:
 
     size_t Write(const uint8_t* buffer, size_t size)
     {
-        assert(IsFileOpened() && "File is not opened!");
-        if (!IsFileOpened())
-            throwex FileSystemException("File is not opened!").Attach(_path);
+        assert(IsFileWriteOpened() && "File is not opened for writing!");
+        if (!IsFileWriteOpened())
+            throwex FileSystemException("File is not opened for writing!").Attach(_path);
 #if defined(_WIN32) || defined(_WIN64)
         DWORD result;
         if (!WriteFile(_file, buffer, (DWORD)size, &result, nullptr))
@@ -393,9 +409,9 @@ public:
 
     void Flush()
     {
-        assert(IsFileOpened() && "File is not opened!");
-        if (!IsFileOpened())
-            throwex FileSystemException("File is not opened!").Attach(_path);
+        assert(IsFileWriteOpened() && "File is not opened for writing!");
+        if (!IsFileWriteOpened())
+            throwex FileSystemException("File is not opened for writing!").Attach(_path);
 #if defined(_WIN32) || defined(_WIN64)
         if (!FlushFileBuffers(_file))
             throwex FileSystemException("Cannot flush the file buffers!").Attach(_path);
@@ -430,6 +446,8 @@ private:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     int _file;
 #endif
+    bool _read;
+    bool _write;
 };
 
 const Flags<FileAttributes> File::DEFAULT_ATTRIBUTES = FileAttributes::NORMAL;
@@ -521,6 +539,16 @@ bool File::IsFileExists() const
 bool File::IsFileOpened() const
 {
     return _pimpl->IsFileOpened();
+}
+
+bool File::IsFileReadOpened() const
+{
+    return _pimpl->IsFileReadOpened();
+}
+
+bool File::IsFileWriteOpened() const
+{
+    return _pimpl->IsFileWriteOpened();
 }
 
 void File::Create(bool read, bool write, bool truncate, const Flags<FileAttributes>& attributes, const Flags<FilePermissions>& permissions)
