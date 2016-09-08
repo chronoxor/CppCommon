@@ -164,7 +164,6 @@
       <sourceFolder url="file://$MODULE_DIR$/examples/threads_mpsc_linked_queue.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/examples/utility_singleton.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/examples/math_math.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/examples/time_time.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/examples/system_console.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/examples/system_memory.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/examples/system_environment.cpp" isTestSource="false" />
@@ -186,7 +185,7 @@
       <sourceFolder url="file://$MODULE_DIR$/examples/threads_mutex.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/examples/threads_spin_barrier.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/examples/threads_named_rw_lock.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/examples/filesystem_directoryr.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/examples/time_time.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/examples/system_stack_trace.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/examples/threads_mpsc_ring_queue.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/examples/filesystem_directory.cpp" isTestSource="false" />
