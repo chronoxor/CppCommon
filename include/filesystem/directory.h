@@ -30,7 +30,12 @@ public:
     //! Default directory permissions (IRUSR | IWUSR | IXUSR | IRGRP | IXGRP | IROTH | IXOTH)
     static const Flags<FilePermissions> DEFAULT_PERMISSIONS;
 
+    //! Initialize directory with an empty path
     Directory() : Path() {}
+    //! Initialize directory with a given path
+    /*!
+        \param path - Directory path
+    */
     Directory(const Path& path) : Path(path) {}
     Directory(const Directory&) = default;
     Directory(Directory&&) noexcept = default;

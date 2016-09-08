@@ -27,7 +27,7 @@ namespace CppCommon {
 class File::Impl
 {
 public:
-    Impl(const Path& path) : _path(path), _read(false), _write(false)
+    Impl(const Path& path) : _path(path), _buffer(), _index(0), _size(0), _read(false), _write(false)
     {
 #if defined(_WIN32) || defined(_WIN64)
         _file = INVALID_HANDLE_VALUE;
@@ -131,7 +131,7 @@ public:
         return _write;
     }
 
-    void Create(bool read, bool write, bool truncate = false, const Flags<FileAttributes>& attributes = File::DEFAULT_ATTRIBUTES, const Flags<FilePermissions>& permissions = File::DEFAULT_PERMISSIONS)
+    void Create(bool read, bool write, bool truncate = false, const Flags<FileAttributes>& attributes = File::DEFAULT_ATTRIBUTES, const Flags<FilePermissions>& permissions = File::DEFAULT_PERMISSIONS, size_t buffer = File::DEFAULT_BUFFER)
     {
         // Close previously opened file
         assert(!IsFileOpened() && "File is already opened!");
@@ -190,11 +190,14 @@ public:
         if (_file < 0)
             throwex FileSystemException("Cannot create a new file!").Attach(_path);
 #endif
+        _buffer.resize(buffer);
+        _index = 0;
+        _size = 0;
         _read = read;
         _write = write;
     }
 
-    void Open(bool read, bool write, bool truncate = false, const Flags<FileAttributes>& attributes = File::DEFAULT_ATTRIBUTES, const Flags<FilePermissions>& permissions = File::DEFAULT_PERMISSIONS)
+    void Open(bool read, bool write, bool truncate = false, const Flags<FileAttributes>& attributes = File::DEFAULT_ATTRIBUTES, const Flags<FilePermissions>& permissions = File::DEFAULT_PERMISSIONS, size_t buffer = File::DEFAULT_BUFFER)
     {
         // Close previously opened file
         assert(!IsFileOpened() && "File is already opened!");
@@ -253,11 +256,14 @@ public:
         if (_file < 0)
             throwex FileSystemException("Cannot create a new file!").Attach(_path);
 #endif
+        _buffer.resize(buffer);
+        _index = 0;
+        _size = 0;
         _read = read;
         _write = write;
     }
 
-    void OpenOrCreate(bool read, bool write, bool truncate = false, const Flags<FileAttributes>& attributes = File::DEFAULT_ATTRIBUTES, const Flags<FilePermissions>& permissions = File::DEFAULT_PERMISSIONS)
+    void OpenOrCreate(bool read, bool write, bool truncate = false, const Flags<FileAttributes>& attributes = File::DEFAULT_ATTRIBUTES, const Flags<FilePermissions>& permissions = File::DEFAULT_PERMISSIONS, size_t buffer = File::DEFAULT_BUFFER)
     {
         // Close previously opened file
         assert(!IsFileOpened() && "File is already opened!");
@@ -316,6 +322,9 @@ public:
         if (_file < 0)
             throwex FileSystemException("Cannot create a new file!").Attach(_path);
 #endif
+        _buffer.resize(buffer);
+        _index = 0;
+        _size = 0;
         _read = read;
         _write = write;
     }
@@ -325,17 +334,58 @@ public:
         assert(IsFileReadOpened() && "File is not opened for reading!");
         if (!IsFileReadOpened())
             throwex FileSystemException("File is not opened for reading!").Attach(_path);
+
+        // Read file with zero buffer
+        if (_buffer.empty())
+        {
 #if defined(_WIN32) || defined(_WIN64)
-        DWORD result;
-        if (!ReadFile(_file, buffer, (DWORD)size, &result, nullptr))
-            throwex FileSystemException("Cannot read from the file!").Attach(_path);
-        return (size_t)result;
+            DWORD result;
+            if (!ReadFile(_file, buffer, (DWORD)size, &result, nullptr))
+                throwex FileSystemException("Cannot read from the file!").Attach(_path);
+            return (size_t)result;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        ssize_t result = read(_file, buffer, size);
-        if (result < 0)
-            throwex FileSystemException("Cannot read from the file!").Attach(_path);
-        return (size_t)result;
+            ssize_t result = read(_file, buffer, size);
+            if (result < 0)
+                throwex FileSystemException("Cannot read from the file!").Attach(_path);
+            return (size_t)result;
 #endif
+        }
+
+        size_t counter = 0;
+
+        while (size > 0)
+        {
+            // Update the local read buffer from the file
+            if (_index == _size)
+            {
+                _index = 0;
+#if defined(_WIN32) || defined(_WIN64)
+                DWORD result;
+                if (!ReadFile(_file, _buffer.data(), (DWORD)_buffer.size(), &result, nullptr))
+                    throwex FileSystemException("Cannot read from the file!").Attach(_path);
+                _size = (size_t)result;
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+                ssize_t result = read(_file, _buffer.data(), _buffer.size());
+                if (result < 0)
+                    throwex FileSystemException("Cannot read from the file!").Attach(_path);
+                _size = (size_t)result;
+#endif
+                // Stop if the end of file was met
+                if (_size == 0)
+                    break;
+            }
+
+            // Read remaining data form the local read buffer
+            size_t remain = _size - _index;
+            size_t num = (size < remain) ? size : remain;
+            std::memcpy(buffer, _buffer.data(), num);
+            counter += num;
+            _index += num;
+            buffer += num;
+            size -= num;
+        }
+
+        return counter;
     }
 
     size_t Write(const uint8_t* buffer, size_t size)
@@ -343,17 +393,61 @@ public:
         assert(IsFileWriteOpened() && "File is not opened for writing!");
         if (!IsFileWriteOpened())
             throwex FileSystemException("File is not opened for writing!").Attach(_path);
+
+        // Write file with zero buffer
+        if (_buffer.empty())
+        {
 #if defined(_WIN32) || defined(_WIN64)
-        DWORD result;
-        if (!WriteFile(_file, buffer, (DWORD)size, &result, nullptr))
-            throwex FileSystemException("Cannot write into the file!").Attach(_path);
-        return (size_t)result;
+            DWORD result;
+            if (!WriteFile(_file, buffer, (DWORD)size, &result, nullptr))
+                throwex FileSystemException("Cannot write into the file!").Attach(_path);
+            return (size_t)result;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-        ssize_t result = write(_file, buffer, size);
-        if (result < 0)
-            throwex FileSystemException("Cannot write into the file!").Attach(_path);
-        return (size_t)result;
+            ssize_t result = write(_file, buffer, size);
+            if (result < 0)
+                throwex FileSystemException("Cannot write into the file!").Attach(_path);
+            return (size_t)result;
 #endif
+        }
+
+        size_t counter = 0;
+
+        while (size > 0)
+        {
+            // Update the local read buffer from the file
+            if (_size == _buffer.size())
+            {
+#if defined(_WIN32) || defined(_WIN64)
+                DWORD result;
+                if (!WriteFile(_file, _buffer.data() + _index, (DWORD)(_size - _index), &result, nullptr))
+                    throwex FileSystemException("Cannot write into the file!").Attach(_path);
+                _index += (size_t)result;
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+                ssize_t result = write(_file, _buffer.data() + _index, (_size - _index));
+                if (result < 0)
+                    throwex FileSystemException("Cannot write into the file!").Attach(_path);
+                _index += (size_t)result;
+#endif
+                // Stop if the buffer was not written completely
+                if (_index != _size)
+                    break;
+
+                // Reset the buffer cursor
+                _index = 0;
+                _size = 0;
+            }
+
+            // Write remaining data into the local write buffer
+            size_t remain = _buffer.size() - _size;
+            size_t num = (size < remain) ? size : remain;
+            std::memcpy(_buffer.data() + _size, buffer, num);
+            counter += num;
+            _size += num;
+            buffer += num;
+            size -= num;
+        }
+
+        return counter;
     }
 
     void Seek(uint64_t offset)
@@ -407,11 +501,49 @@ public:
 #endif
     }
 
-    void Flush()
+    void FlushBuffer()
     {
         assert(IsFileWriteOpened() && "File is not opened for writing!");
         if (!IsFileWriteOpened())
             throwex FileSystemException("File is not opened for writing!").Attach(_path);
+#if defined(_WIN32) || defined(_WIN64)
+        // Force to write all buffered data
+        size_t remain = _size - _index;
+        if (remain > 0)
+        {
+            DWORD result;
+            if (!WriteFile(_file, _buffer.data() + _index, (DWORD)(_size - _index), &result, nullptr))
+                throwex FileSystemException("Cannot write into the file during the flush operation!").Attach(_path);
+            _index += (size_t)result;
+            if (_index != _size)
+                throwex FileSystemException("Cannot write all remaining data into the file during the flush operation!").Attach(_path);
+
+            // Reset the buffer cursor
+            _index = 0;
+            _size = 0;
+        }
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+        // Force to write all buffered data
+        size_t remain = _size - _index;
+        if (remain > 0)
+        {
+            ssize_t result = write(_file, _buffer.data() + _index, (_size - _index));
+            if (result < 0)
+                throwex FileSystemException("Cannot write into the file during the flush operation!").Attach(_path);
+            _index += (size_t)result;
+            if (_index != _size)
+                throwex FileSystemException("Cannot write all remaining data into the file during the flush operation!").Attach(_path);
+
+            // Reset the buffer cursor
+            _index = 0;
+            _size = 0;
+        }
+#endif
+    }
+
+    void Flush()
+    {
+        FlushBuffer();
 #if defined(_WIN32) || defined(_WIN64)
         if (!FlushFileBuffers(_file))
             throwex FileSystemException("Cannot flush the file buffers!").Attach(_path);
@@ -427,6 +559,9 @@ public:
         assert(IsFileOpened() && "File is not opened!");
         if (!IsFileOpened())
             throwex FileSystemException("File is not opened!").Attach(_path);
+        // Flush buffer if the file is opened for writing
+        if (IsFileWriteOpened())
+            FlushBuffer();
 #if defined(_WIN32) || defined(_WIN64)
         if (!CloseHandle(_file))
             throwex FileSystemException("Cannot close the file handle!").Attach(_path);
@@ -437,6 +572,9 @@ public:
             throwex FileSystemException("Cannot close the file descriptor!").Attach(_path);
         _file = -1;
 #endif
+        _buffer.clear();
+        _index = 0;
+        _size = 0;
     }
 
 private:
@@ -446,12 +584,16 @@ private:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     int _file;
 #endif
+    std::vector<uint8_t> _buffer;
+    size_t _index;
+    size_t _size;
     bool _read;
     bool _write;
 };
 
 const Flags<FileAttributes> File::DEFAULT_ATTRIBUTES = FileAttributes::NORMAL;
 const Flags<FilePermissions> File::DEFAULT_PERMISSIONS = FilePermissions::IRUSR | FilePermissions::IWUSR | FilePermissions::IRGRP | FilePermissions::IROTH;
+const size_t File::DEFAULT_BUFFER = 8192;
 
 File::File() : Path(), _pimpl(new Impl(*this))
 {
@@ -551,19 +693,19 @@ bool File::IsFileWriteOpened() const
     return _pimpl->IsFileWriteOpened();
 }
 
-void File::Create(bool read, bool write, bool truncate, const Flags<FileAttributes>& attributes, const Flags<FilePermissions>& permissions)
+void File::Create(bool read, bool write, bool truncate, const Flags<FileAttributes>& attributes, const Flags<FilePermissions>& permissions, size_t buffer)
 {
-    return _pimpl->Create(read, write, truncate, attributes, permissions);
+    return _pimpl->Create(read, write, truncate, attributes, permissions, buffer);
 }
 
-void File::Open(bool read, bool write, bool truncate, const Flags<FileAttributes>& attributes, const Flags<FilePermissions>& permissions)
+void File::Open(bool read, bool write, bool truncate, const Flags<FileAttributes>& attributes, const Flags<FilePermissions>& permissions, size_t buffer)
 {
-    _pimpl->Open(read, write, truncate, attributes, permissions);
+    _pimpl->Open(read, write, truncate, attributes, permissions, buffer);
 }
 
-void File::OpenOrCreate(bool read, bool write, bool truncate, const Flags<FileAttributes>& attributes, const Flags<FilePermissions>& permissions)
+void File::OpenOrCreate(bool read, bool write, bool truncate, const Flags<FileAttributes>& attributes, const Flags<FilePermissions>& permissions, size_t buffer)
 {
-    _pimpl->OpenOrCreate(read, write, truncate, attributes, permissions);
+    _pimpl->OpenOrCreate(read, write, truncate, attributes, permissions, buffer);
 }
 
 size_t File::Read(uint8_t* buffer, size_t size)

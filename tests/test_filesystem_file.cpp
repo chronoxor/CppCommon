@@ -18,7 +18,7 @@ TEST_CASE("File common", "[CppCommon][FileSystem]")
     File test("test.tmp");
     REQUIRE(!test.IsFileExists());
     REQUIRE(!test.IsFileOpened());
-    test.Create(false, true);
+    test.Create(false, true, false, File::DEFAULT_ATTRIBUTES, File::DEFAULT_PERMISSIONS, 0);
     REQUIRE(test.IsFileExists());
     REQUIRE(test.IsFileOpened());
     REQUIRE(!test.IsFileReadOpened());
@@ -36,7 +36,7 @@ TEST_CASE("File common", "[CppCommon][FileSystem]")
     std::vector<uint8_t> read(buffer.size());
 
     // Open file for reading
-    test.Open(true, false);
+    test.Open(true, false, false, File::DEFAULT_ATTRIBUTES, File::DEFAULT_PERMISSIONS, 0);
     REQUIRE(test.IsFileExists());
     REQUIRE(test.IsFileOpened());
     REQUIRE(test.IsFileReadOpened());
@@ -52,7 +52,7 @@ TEST_CASE("File common", "[CppCommon][FileSystem]")
     REQUIRE(test.size() == 4);
 
     // Open file for append
-    test.Open(true, true);
+    test.Open(true, true, false, File::DEFAULT_ATTRIBUTES, File::DEFAULT_PERMISSIONS, 0);
     REQUIRE(test.IsFileExists());
     REQUIRE(test.IsFileOpened());
     REQUIRE(test.IsFileReadOpened());

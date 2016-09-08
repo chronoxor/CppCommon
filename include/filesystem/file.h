@@ -29,8 +29,15 @@ public:
     static const Flags<FileAttributes> DEFAULT_ATTRIBUTES;
     //! Default file permissions (IRUSR | IWUSR | IRGRP | IROTH)
     static const Flags<FilePermissions> DEFAULT_PERMISSIONS;
+    //! Default file buffer size (8192)
+    static const size_t DEFAULT_BUFFER;
 
+    //! Initialize file with an empty path
     File();
+    //! Initialize file with a given path
+    /*!
+        \param path - File path
+    */
     File(const Path& path);
     File(const File& file);
     File(File&& file) noexcept;
@@ -68,8 +75,9 @@ public:
         \param truncate - Truncate file (default is false)
         \param attributes - File attributes (default is File::DEFAULT_ATTRIBUTES)
         \param permissions - File permissions (default is File::DEFAULT_PERMISSIONS)
+        \param buffer - File buffer size (default is File::DEFAULT_BUFFER)
     */
-    void Create(bool read, bool write, bool truncate = false, const Flags<FileAttributes>& attributes = File::DEFAULT_ATTRIBUTES, const Flags<FilePermissions>& permissions = File::DEFAULT_PERMISSIONS);
+    void Create(bool read, bool write, bool truncate = false, const Flags<FileAttributes>& attributes = File::DEFAULT_ATTRIBUTES, const Flags<FilePermissions>& permissions = File::DEFAULT_PERMISSIONS, size_t buffer = File::DEFAULT_BUFFER);
     //! Open an existing file
     /*!
         If the file with the same name is not exist the method will raise
@@ -80,8 +88,9 @@ public:
         \param truncate - Truncate file (default is false)
         \param attributes - File attributes (default is File::DEFAULT_ATTRIBUTES)
         \param permissions - File permissions (default is File::DEFAULT_PERMISSIONS)
+        \param buffer - File buffer size (default is File::DEFAULT_BUFFER)
     */
-    void Open(bool read, bool write, bool truncate = false, const Flags<FileAttributes>& attributes = File::DEFAULT_ATTRIBUTES, const Flags<FilePermissions>& permissions = File::DEFAULT_PERMISSIONS);
+    void Open(bool read, bool write, bool truncate = false, const Flags<FileAttributes>& attributes = File::DEFAULT_ATTRIBUTES, const Flags<FilePermissions>& permissions = File::DEFAULT_PERMISSIONS, size_t buffer = File::DEFAULT_BUFFER);
     //! Open or create file
     /*!
         \param read - Read mode
@@ -89,9 +98,9 @@ public:
         \param truncate - Truncate file (default is false)
         \param attributes - File attributes (default is File::DEFAULT_ATTRIBUTES)
         \param permissions - File permissions (default is File::DEFAULT_PERMISSIONS)
-        \return The current file instance (opened or created)
+        \param buffer - File buffer size (default is File::DEFAULT_BUFFER)
     */
-    void OpenOrCreate(bool read, bool write, bool truncate = false, const Flags<FileAttributes>& attributes = File::DEFAULT_ATTRIBUTES, const Flags<FilePermissions>& permissions = File::DEFAULT_PERMISSIONS);
+    void OpenOrCreate(bool read, bool write, bool truncate = false, const Flags<FileAttributes>& attributes = File::DEFAULT_ATTRIBUTES, const Flags<FilePermissions>& permissions = File::DEFAULT_PERMISSIONS, size_t buffer = File::DEFAULT_BUFFER);
 
     //! Read from the opened file
     /*!

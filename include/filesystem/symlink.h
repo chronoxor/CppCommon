@@ -23,7 +23,12 @@ namespace CppCommon {
 class Symlink : public Path
 {
 public:
+    //! Initialize symbolic link with an empty path
     Symlink() : Path() {}
+    //! Initialize symbolic link with a given path
+    /*!
+        \param path - Symbolic link path
+    */
     Symlink(const Path& path) : Path(path) {}
     Symlink(const Symlink&) = default;
     Symlink(Symlink&&) noexcept = default;

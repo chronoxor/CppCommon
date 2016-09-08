@@ -20,7 +20,7 @@ int main(int argc, char** argv)
     file.Create(false, true);
 
     // Write buffer into the file
-    file.Write((uint8_t*)buffer, CppCommon::countof(buffer));
+    file.Write((uint8_t*)buffer, CppCommon::countof(buffer) - 1);
 
     // Flush the file
     file.Flush();

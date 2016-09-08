@@ -89,10 +89,27 @@ struct SpaceInfo
 class Path
 {
 public:
+    //! Initialize path with an empty value
     Path() : _path() {}
+    //! Initialize path with a given C-string value
+    /*!
+        \param path - Path value as C-string
+    */
     Path(const char* path) : _path(path) {}
+    //! Initialize path with a given string value
+    /*!
+        \param path - Path value as string
+    */
     Path(const std::string& path) : _path(path) {}
+    //! Initialize path with a given wide C-string value
+    /*!
+        \param path - Path value as wide C-string
+    */
     Path(const wchar_t* path) : _path(Encoding::ToUTF8(path)) {}
+    //! Initialize path with a given wide string value
+    /*!
+        \param path - Path value as wide string
+    */
     Path(const std::wstring& path) : _path(Encoding::ToUTF8(path)) {}
     Path(const Path&) = default;
     Path(Path&&) noexcept = default;
