@@ -2,122 +2,122 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" assignedExecutableTargets="true" buildAllGenerated="true">
     <generated>
-      <config projectName="cppcommon" targetName="cppbenchmark-example-sort" />
-      <config projectName="cppcommon" targetName="cppcommon-example-filesystem_file" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_event_manual_reset" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_file_lock" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-system_stack_trace" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-time_timezone" />
-      <config projectName="cppcommon" targetName="cppcommon-example-system_uuid" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-timers" />
-      <config projectName="cppcommon" targetName="cppbenchmark" />
-      <config projectName="cppcommon" targetName="cppcommon-example-filesystem_directoryr" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_latch_single" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_barrier" />
-      <config projectName="cppcommon" targetName="cppcommon-example-system_console" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpsc_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-example-time_timezone" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-mpmc_ring_queue_ex" />
-      <config projectName="cppcommon" targetName="cppcommon-example-mpmc_ring_queue" />
-      <config projectName="cppcommon" targetName="cpp-optparse" />
-      <config projectName="cppcommon" targetName="cppcommon-example-system_timestamp" />
-      <config projectName="cppcommon" targetName="cppcommon-example-errors_exceptions_handler" />
-      <config projectName="cppcommon" targetName="cppcommon-example-errors_fatal" />
-      <config projectName="cppcommon" targetName="cppcommon-example-string_encoding" />
-      <config projectName="cppcommon" targetName="cppcommon-example-filesystem_directory" />
-      <config projectName="cppcommon" targetName="cppcommon-example-benchmark-ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_mpsc_ring_buffer" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_critical_section" />
       <config projectName="cppcommon" targetName="cppcommon-perf-mpsc_ring_queue" />
-      <config projectName="cppcommon" targetName="cppbenchmark-tests" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_named_critical_section" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_spin_lock" />
-      <config projectName="cppcommon" targetName="cppcommon-example-mpsc_linked_queue" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-atomic" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-threads" />
-      <config projectName="cppcommon" targetName="cppcommon-example-spsc_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_rw_lock" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-spsc" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_spinlock" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-mpsc_linked_batcher" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-mpmc_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_named_rw_lock" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_mpmc_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpsc_ring_buffer" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-system_rdts" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-mpmc" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-spsc_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_named_mutex" />
-      <config projectName="cppcommon" targetName="cppcommon-example-errors_system_error" />
-      <config projectName="cppcommon" targetName="cppcommon-benchmark-wf_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_named_mutex" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-iterators" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_event_auto_reset" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpmc_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-example-system_stack_trace" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_mpsc_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_critical_section" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_spin_barrier" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_named_critical_section" />
-      <config projectName="cppcommon" targetName="cppcommon-example-spsc_ring_buffer" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_spsc_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_thread" />
       <config projectName="cppcommon" targetName="cppcommon-example-types_flags" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_named_event_auto_reset" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_spsc_ring_buffer" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_spsc_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-benchmark-wf_ring_buffer" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mutex" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-mpsc" />
-      <config projectName="cppcommon" targetName="cppcommon-example-system_rdts" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_mutex" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-fpu" />
-      <config projectName="cppcommon" targetName="cppcommon-example-system_shared_type" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_named_semaphore" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-time_timestamp" />
-      <config projectName="cppcommon" targetName="cppcommon-example-time_timestamp" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-fwrite" />
-      <config projectName="cppcommon" targetName="cppcommon-example-wf_ring_buffer" />
-      <config projectName="cppcommon" targetName="cppcommon-tests" />
-      <config projectName="cppcommon" targetName="cppcommon" />
-      <config projectName="cppcommon" targetName="cppcommon-example-filesystem_symlink" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_rw_lock" />
-      <config projectName="cppcommon" targetName="cppcommon-example-math_math" />
-      <config projectName="cppcommon" targetName="cppcommon-example-system_environment" />
-      <config projectName="cppcommon" targetName="cppcommon-example-time_timespan" />
-      <config projectName="cppcommon" targetName="cppcommon-example-system_cpu" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_semaphore" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_mpsc_linked_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_semaphore" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-spsc_ring_buffer" />
-      <config projectName="cppcommon" targetName="cppcommon-example-utility_singleton" />
-      <config projectName="cppcommon" targetName="cppcommon-example-utility_static_constructor" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-time_time" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_spsc_ring_buffer" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-mpsc_linked_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_named_semaphore" />
-      <config projectName="cppcommon" targetName="doxygen" />
-      <config projectName="cppcommon" targetName="cppcommon-example-time_time" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-filesystem_file" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-executor" />
-      <config projectName="cppcommon" targetName="cppcommon-example-utility_flags" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpsc_linked_batcher" />
-      <config projectName="cppcommon" targetName="cppcommon-example-filesystem_path" />
-      <config projectName="cppcommon" targetName="cppcommon-example-wf_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpsc_linked_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-system_timestamp" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_spin_lock" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-containers" />
-      <config projectName="cppcommon" targetName="cppcommon-example-system_memory" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_named_event_manual_reset" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_file_lock" />
-      <config projectName="cppcommon" targetName="cppcommon-example-system_source_location" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_thread" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-system_uuid" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_named_rw_lock" />
+      <config projectName="cppcommon" targetName="cppcommon-example-filesystem_directoryr" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_named_mutex" />
       <config projectName="cppcommon" targetName="cppcommon-example-system_shared_memory" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_latch_multi" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-spsc_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppcommon-example-spsc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_latch_single" />
+      <config projectName="cppcommon" targetName="cppcommon-benchmark-wf_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppcommon-example-mpmc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpsc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_mpsc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_file_lock" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_named_critical_section" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_spin_barrier" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_console" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-containers" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_event_manual_reset" />
+      <config projectName="cppcommon" targetName="cppcommon-example-errors_fatal" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-executor" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_rdts" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-system_rdts" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-time_time" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mutex" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-atomic" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-mpsc_linked_batcher" />
+      <config projectName="cppcommon" targetName="cppcommon-example-math_math" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_spinlock" />
+      <config projectName="cppcommon" targetName="cppcommon-example-filesystem_symlink" />
+      <config projectName="cppcommon" targetName="cppcommon-example-utility_static_constructor" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpsc_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-mpmc_ring_queue_ex" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-time_timestamp" />
+      <config projectName="cppcommon" targetName="cppcommon-example-string_encoding" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-mpmc" />
+      <config projectName="cppcommon" targetName="cppcommon-example-time_timestamp" />
+      <config projectName="cppcommon" targetName="cppbenchmark-tests" />
+      <config projectName="cppcommon" targetName="cppcommon-example-filesystem_directory" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_critical_section" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_named_mutex" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_semaphore" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_named_critical_section" />
+      <config projectName="cppcommon" targetName="cppcommon-example-time_timezone" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_thread" />
+      <config projectName="cppcommon" targetName="cppbenchmark" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_rw_lock" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-system_stack_trace" />
+      <config projectName="cppcommon" targetName="cppcommon-benchmark-wf_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-example-time_time" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_mpsc_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_named_event_auto_reset" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_spsc_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_event_auto_reset" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_mpmc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_environment" />
       <config projectName="cppcommon" targetName="cppbenchmark-example-random" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_source_location" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_spsc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-example-benchmark-ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_memory" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-iterators" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-sort" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_named_semaphore" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-spsc" />
+      <config projectName="cppcommon" targetName="cppcommon" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-fwrite" />
+      <config projectName="cppcommon" targetName="doxygen" />
+      <config projectName="cppcommon" targetName="cppcommon-example-filesystem_path" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpsc_linked_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_cpu" />
+      <config projectName="cppcommon" targetName="cpp-optparse" />
+      <config projectName="cppcommon" targetName="cppcommon-example-utility_flags" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-timers" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-time_timezone" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-spsc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_thread" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-mpmc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-example-errors_system_error" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_named_rw_lock" />
+      <config projectName="cppcommon" targetName="cppcommon-example-filesystem_file" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-filesystem_file" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_named_event_manual_reset" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_semaphore" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_named_rw_lock" />
+      <config projectName="cppcommon" targetName="cppcommon-example-errors_exceptions_handler" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_spsc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpmc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_spsc_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_mutex" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_critical_section" />
+      <config projectName="cppcommon" targetName="cppcommon-example-time_timespan" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_timestamp" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-fpu" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_barrier" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-system_timestamp" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_latch_multi" />
+      <config projectName="cppcommon" targetName="cppcommon-example-wf_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_uuid" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_shared_type" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_file_lock" />
+      <config projectName="cppcommon" targetName="cppcommon-example-mpsc_linked_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_spin_lock" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_rw_lock" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-mpsc" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_named_semaphore" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_mpsc_linked_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpsc_linked_batcher" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_spin_lock" />
+      <config projectName="cppcommon" targetName="cppcommon-example-utility_singleton" />
+      <config projectName="cppcommon" targetName="cppcommon-example-spsc_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-system_uuid" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_stack_trace" />
+      <config projectName="cppcommon" targetName="cppcommon-tests" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-mpsc_linked_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-example-wf_ring_queue" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-threads" />
     </generated>
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="false" GENERATION_PASS_SYSTEM_ENVIRONMENT="true">
@@ -126,10 +126,7 @@
     </ADDITIONAL_GENERATION_ENVIRONMENT>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="559410a7-8ec3-4eef-81f5-f9dd5eddd0fc" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/CppCommon.iml" afterPath="$PROJECT_DIR$/.idea/CppCommon.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="559410a7-8ec3-4eef-81f5-f9dd5eddd0fc" name="Default" comment="" />
     <ignored path="CppCommon.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -151,8 +148,8 @@
       <file leaf-file-name="test_filesystem_path.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/test_filesystem_path.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="510" column="0" selection-start-line="510" selection-start-column="0" selection-end-line="510" selection-end-column="0" />
+            <state relative-caret-position="7770">
+              <caret line="518" column="0" selection-start-line="518" selection-start-column="0" selection-end-line="518" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -161,7 +158,7 @@
       <file leaf-file-name="file_lock.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/threads/file_lock.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
+            <state relative-caret-position="2835">
               <caret line="189" column="37" selection-start-line="189" selection-start-column="37" selection-end-line="189" selection-end-column="37" />
               <folding>
                 <element signature="e#4778#5078#0" expanded="true" />
@@ -174,7 +171,7 @@
         <entry file="file://$PROJECT_DIR$/source/filesystem/path.cpp">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="230">
-              <caret line="969" column="0" selection-start-line="969" selection-start-column="0" selection-end-line="969" selection-end-column="0" />
+              <caret line="1015" column="0" selection-start-line="1015" selection-start-column="0" selection-end-line="1015" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -1105,34 +1102,35 @@
       <workItem from="1473037166650" duration="841000" />
       <workItem from="1473199131981" duration="251000" />
       <workItem from="1473199537024" duration="220000" />
+      <workItem from="1473290155156" duration="4000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4358000" />
+    <option name="totallyTimeSpent" value="4362000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1615" height="1026" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32963988" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -1151,7 +1149,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/tests/test_filesystem_path.cpp</url>
-          <line>510</line>
+          <line>518</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
@@ -1179,7 +1177,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1208,7 +1205,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="117750">
           <caret line="7850" column="0" selection-start-line="7850" selection-start-column="0" selection-end-line="7850" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1230,7 +1226,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="117750">
           <caret line="7850" column="0" selection-start-line="7850" selection-start-column="0" selection-end-line="7850" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1422,7 +1417,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="123405">
           <caret line="8227" column="0" selection-start-line="8227" selection-start-column="0" selection-end-line="8227" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1430,7 +1424,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1457,7 +1450,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/source/threads/file_lock.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
+        <state relative-caret-position="2835">
           <caret line="189" column="37" selection-start-line="189" selection-start-column="37" selection-end-line="189" selection-end-column="37" />
           <folding>
             <element signature="e#4778#5078#0" expanded="true" />
@@ -1467,8 +1460,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_filesystem_path.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="510" column="0" selection-start-line="510" selection-start-column="0" selection-end-line="510" selection-end-column="0" />
+        <state relative-caret-position="7770">
+          <caret line="518" column="0" selection-start-line="518" selection-start-column="0" selection-end-line="518" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1476,7 +1469,7 @@
     <entry file="file://$PROJECT_DIR$/source/filesystem/path.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="230">
-          <caret line="969" column="0" selection-start-line="969" selection-start-column="0" selection-end-line="969" selection-end-column="0" />
+          <caret line="1015" column="0" selection-start-line="1015" selection-start-column="0" selection-end-line="1015" selection-end-column="0" />
           <folding />
         </state>
       </provider>
