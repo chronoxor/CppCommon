@@ -28,7 +28,7 @@ namespace CppCommon {
 class File::Impl
 {
 public:
-    Impl(const Path& path) : _path(path), _buffer(), _index(0), _size(0), _read(false), _write(false)
+    Impl(const Path& path) : _path(path), _read(false), _write(false), _index(0), _size(0), _buffer()
     {
 #if defined(_WIN32) || defined(_WIN64)
         _file = INVALID_HANDLE_VALUE;
@@ -191,11 +191,11 @@ public:
         if (_file < 0)
             throwex FileSystemException("Cannot create a new file!").Attach(_path);
 #endif
-        _buffer.resize(buffer);
-        _index = 0;
-        _size = 0;
         _read = read;
         _write = write;
+        _index = 0;
+        _size = 0;
+        _buffer.resize(buffer);
     }
 
     void Open(bool read, bool write, bool truncate = false, const Flags<FileAttributes>& attributes = File::DEFAULT_ATTRIBUTES, const Flags<FilePermissions>& permissions = File::DEFAULT_PERMISSIONS, size_t buffer = File::DEFAULT_BUFFER)
@@ -257,11 +257,11 @@ public:
         if (_file < 0)
             throwex FileSystemException("Cannot create a new file!").Attach(_path);
 #endif
-        _buffer.resize(buffer);
-        _index = 0;
-        _size = 0;
         _read = read;
         _write = write;
+        _index = 0;
+        _size = 0;
+        _buffer.resize(buffer);
     }
 
     void OpenOrCreate(bool read, bool write, bool truncate = false, const Flags<FileAttributes>& attributes = File::DEFAULT_ATTRIBUTES, const Flags<FilePermissions>& permissions = File::DEFAULT_PERMISSIONS, size_t buffer = File::DEFAULT_BUFFER)
@@ -323,11 +323,11 @@ public:
         if (_file < 0)
             throwex FileSystemException("Cannot create a new file!").Attach(_path);
 #endif
-        _buffer.resize(buffer);
-        _index = 0;
-        _size = 0;
         _read = read;
         _write = write;
+        _index = 0;
+        _size = 0;
+        _buffer.resize(buffer);
     }
 
     size_t Read(uint8_t* buffer, size_t size)
@@ -573,9 +573,11 @@ public:
             throwex FileSystemException("Cannot close the file descriptor!").Attach(_path);
         _file = -1;
 #endif
-        _buffer.clear();
+        _read = false;
+        _write = false;
         _index = 0;
         _size = 0;
+        _buffer.clear();
     }
 
 private:
@@ -585,11 +587,11 @@ private:
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     int _file;
 #endif
-    std::vector<uint8_t> _buffer;
-    size_t _index;
-    size_t _size;
     bool _read;
     bool _write;
+    size_t _index;
+    size_t _size;
+    std::vector<uint8_t> _buffer;
 };
 
 const Flags<FileAttributes> File::DEFAULT_ATTRIBUTES = FileAttributes::NORMAL;
