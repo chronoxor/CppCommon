@@ -10,8 +10,8 @@
 
 using namespace CppCommon;
 
-const uint64_t iterations = 1000000;
-const int chunk = 1024;
+const uint64_t iterations = 100000;
+const int chunk = 8192;
 
 class FileWriteFixture : public virtual CppBenchmark::Fixture
 {
