@@ -13,6 +13,7 @@
 #include "system/environment.h"
 
 #include <cassert>
+#include <cstring>
 
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
