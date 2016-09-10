@@ -34,12 +34,13 @@ management, networking, threading and others.
 ## Clone repository with submodules
 ```
 git clone git@github.com:chronoxor/CppCommon.git
+cd CppCommon
 git submodule update --init --recursive
 ```
 
 ## Windows (Visaul Studio 2015)
 ```
-cd CppCommon\scripts
+cd scripts
 01-generate-VisualStudio-x64.bat
 02-build-VisualStudio.bat
 03-tests.bat
@@ -50,7 +51,7 @@ If you want 32-bit version use '01-generate-VisualStudio-x32.bat' to generate pr
 
 ## Windows (MinGW with MSYS)
 ```
-cd CppCommon\scripts
+cd scripts
 01-generate-MSYS.bat
 02-build-MSYS.bat
 03-tests.bat
@@ -60,7 +61,7 @@ cd CppCommon\scripts
 
 ## Linux
 ```
-cd CppCommon\scripts
+cd scripts
 01-generate-Unix.sh
 02-build-Unix.sh
 03-tests.sh
