@@ -10,6 +10,8 @@
 
 #include "errors/exceptions.h"
 
+#include <cassert>
+
 #include <time.h>
 
 namespace CppCommon {
@@ -40,28 +42,38 @@ Time::Time(int year, int month, int day, int hour, int minute, int second, int m
 {
     if (sizeof(time_t) == 4)
     {
+        assert(((year >= 1970) && (year <= 2038)) && "Year value is limited in range from 1970 to 2038!");
         if ((year < 1970) || (year > 2038))
             throwex ArgumentException("Year value is limited in range from 1970 to 2038!");
     }
     else
     {
+        assert(((year >= 1970) && (year <= 3000)) && "Year value is limited in range from 1970 to 3000!");
         if ((year < 1970) || (year > 3000))
             throwex ArgumentException("Year value is limited in range from 1970 to 3000!");
     }
+    assert(((month >= 1) && (month <= 12)) && "Month value is limited in range from 1 to 12!");
     if ((month < 1) || (month > 12))
         throwex ArgumentException("Month value is limited in range from 1 to 12!");
+    assert(((day >= 1) && (day <= 31)) && "Day value is limited in range from 1 to 31!");
     if ((day < 1) || (day > 31))
         throwex ArgumentException("Day value is limited in range from 1 to 31!");
+    assert(((hour >= 0) && (hour <= 23)) && "Hour value is limited in range from 0 to 23!");
     if ((hour < 0) || (hour > 23))
         throwex ArgumentException("Hour value is limited in range from 0 to 23!");
+    assert(((minute >= 0) && (minute <= 59)) && "Minute value is limited in range from 0 to 59!");
     if ((minute < 0) || (minute > 59))
         throwex ArgumentException("Minute value is limited in range from 0 to 59!");
+    assert(((second >= 0) && (second <= 59)) && "Second value is limited in range from 0 to 59!");
     if ((second < 0) || (second > 59))
         throwex ArgumentException("Second value is limited in range from 0 to 59!");
+    assert(((millisecond >= 0) && (millisecond <= 999)) && "Millisecond value is limited in range from 0 to 999!");
     if ((millisecond < 0) || (millisecond > 999))
         throwex ArgumentException("Millisecond value is limited in range from 0 to 999!");
+    assert(((microsecond >= 0) && (microsecond <= 999)) && "Microsecond value is limited in range from 0 to 999!");
     if ((microsecond < 0) || (microsecond > 999))
         throwex ArgumentException("Microsecond value is limited in range from 0 to 999!");
+    assert(((nanosecond >= 0) && (nanosecond <= 999)) && "Nanosecond value is limited in range from 0 to 999!");
     if ((nanosecond < 0) || (nanosecond > 999))
         throwex ArgumentException("Nanosecond value is limited in range from 0 to 999!");
 
