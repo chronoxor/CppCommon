@@ -25,7 +25,7 @@
 #include <DbgHelp.h>
 #endif
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-#include "utility\countof.h"
+#include "utility/countof.h"
 #include <signal.h>
 #include <unistd.h>
 #endif
