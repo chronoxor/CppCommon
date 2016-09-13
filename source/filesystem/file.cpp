@@ -41,14 +41,14 @@ public:
     {
         if (IsFileOpened())
         {
-#if defined(_WIN32) || defined(_WIN64)
-            if (!CloseHandle(_file))
-                fatality(FileSystemException("Cannot close the file handle!").Attach(_path));
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-            int result = close(_file);
-            if (result != 0)
-                fatality(FileSystemException("Cannot close the file descriptor!").Attach(_path));
-#endif
+            try
+            {
+                Close();
+            }
+            catch (CppCommon::FileSystemException& ex)
+            {
+                fatality(FileSystemException(ex.string()).Attach(_path));
+            }
         }
     }
 
@@ -560,9 +560,9 @@ public:
         assert(IsFileOpened() && "File is not opened!");
         if (!IsFileOpened())
             throwex FileSystemException("File is not opened!").Attach(_path);
-        // Flush the file if the file is opened for writing
+        // Flush the file buffer if the file is opened for writing
         if (IsFileWriteOpened())
-            Flush();
+            FlushBuffer();
 #if defined(_WIN32) || defined(_WIN64)
         if (!CloseHandle(_file))
             throwex FileSystemException("Cannot close the file handle!").Attach(_path);
