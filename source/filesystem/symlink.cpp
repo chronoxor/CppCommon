@@ -59,6 +59,7 @@ typedef struct _REPARSE_DATA_BUFFER
 #include <fcntl.h>
 #include <limits.h>
 #include <unistd.h>
+#include <vector>
 #endif
 
 namespace CppCommon {
