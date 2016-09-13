@@ -560,9 +560,9 @@ public:
         assert(IsFileOpened() && "File is not opened!");
         if (!IsFileOpened())
             throwex FileSystemException("File is not opened!").Attach(_path);
-        // Flush buffer if the file is opened for writing
+        // Flush the file if the file is opened for writing
         if (IsFileWriteOpened())
-            FlushBuffer();
+            Flush();
 #if defined(_WIN32) || defined(_WIN64)
         if (!CloseHandle(_file))
             throwex FileSystemException("Cannot close the file handle!").Attach(_path);
