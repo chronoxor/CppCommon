@@ -10,9 +10,7 @@
 
 #include "filesystem/directory.h"
 #include "filesystem/exceptions.h"
-#include "filesystem/file.h"
 #include "filesystem/symlink.h"
-#include "system/environment.h"
 #include "system/uuid.h"
 
 #include <algorithm>
@@ -51,7 +49,6 @@ std::pair<Path, size_t> root(const std::string& path)
     // Unix case 1: "/" or "/foo"
     if (((path.size() == 1) && ((path[0] == '\\') || (path[0] == '/'))) || ((path.size() > 1) && ((path[0] == '\\') || (path[0] == '/')) && ((path[1] != '\\') && (path[1] != '/'))))
     {
-        root_found = true;
         root_length = 1;
 
         return std::make_pair(Path("/"), root_length);
@@ -60,7 +57,6 @@ std::pair<Path, size_t> root(const std::string& path)
     // Unix case 2: "///foo"
     if ((path.size() > 2) && ((path[0] == '\\') || (path[0] == '/')) && ((path[1] == '\\') || (path[1] == '/')) && ((path[2] == '\\') || (path[2] == '/')))
     {
-        root_found = true;
         root_length = 3;
 
         // Find root position
@@ -77,7 +73,6 @@ std::pair<Path, size_t> root(const std::string& path)
     // Windows case 1: "\\net" or "//net"
     if ((path.size() > 2) && ((path[0] == '\\') || (path[0] == '/')) && ((path[1] == '\\') || (path[1] == '/')) && ((path[2] != '\\') && (path[2] != '/') && (path[2] != '?')))
     {
-        root_found = true;
         root_length = 3;
 
         // Find root position
@@ -190,8 +185,6 @@ Path Path::parent() const
             // Unix case 1: "/foo" -> "/", but "/" -> ""
             if ((parent_length == 0) && (_path.size() > 1))
                 ++parent_length;
-
-            filepart = false;
 
             break;
         }
@@ -537,7 +530,7 @@ UtcTimestamp Path::created() const
         throwex FileSystemException("Cannot open the path for getting create time!").Attach(*this);
 
     // Smart resource deleter pattern
-    auto clear = [](HANDLE hFile) { CloseHandle(hFile); };
+    auto clear = [](HANDLE hObject) { CloseHandle(hObject); };
     auto file = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear)>(hFile, clear);
 
     FILETIME created;
@@ -566,7 +559,7 @@ UtcTimestamp Path::modified() const
         throwex FileSystemException("Cannot open the path for getting modified time!").Attach(*this);
 
     // Smart resource deleter pattern
-    auto clear = [](HANDLE hFile) { CloseHandle(hFile); };
+    auto clear = [](HANDLE hObject) { CloseHandle(hObject); };
     auto file = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear)>(hFile, clear);
 
     FILETIME write;
@@ -595,7 +588,7 @@ size_t Path::hardlinks() const
         throwex FileSystemException("Cannot open the path for getting hard links count!").Attach(*this);
 
     // Smart resource deleter pattern
-    auto clear = [](HANDLE hFile) { CloseHandle(hFile); };
+    auto clear = [](HANDLE hObject) { CloseHandle(hObject); };
     auto file = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear)>(hFile, clear);
 
     BY_HANDLE_FILE_INFORMATION bhfi;
@@ -781,11 +774,7 @@ Path& Path::ReplaceExtension(const Path& extension)
                 break;
             }
             if ((_path[index] == '\\') || (_path[index] == '/') || (_path[index] == ':'))
-            {
-                if (!extension.empty())
-                    ++index;
                 break;
-            }
         }
 
         _path.resize(dot);
@@ -965,7 +954,7 @@ Path Path::Copy(const Path& src, const Path& dst, bool overwrite)
     {
         if (exists)
             Path::Remove(dst);
-        return Directory::Create(dst, src.attributes(), src.permissions());
+        return (Path)Directory::Create(dst, src.attributes(), src.permissions());
     }
     else
     {
@@ -1233,7 +1222,7 @@ void Path::SetCreated(const Path& path, const UtcTimestamp& timestamp)
         throwex FileSystemException("Cannot open the path for writing created time!").Attach(path);
 
     // Smart resource deleter pattern
-    auto clear = [](HANDLE hFile) { CloseHandle(hFile); };
+    auto clear = [](HANDLE hObject) { CloseHandle(hObject); };
     auto file = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear)>(hFile, clear);
 
     ULARGE_INTEGER result;
@@ -1269,7 +1258,7 @@ void Path::SetModified(const Path& path, const UtcTimestamp& timestamp)
         throwex FileSystemException("Cannot open the path for writing modified time!").Attach(path);
 
     // Smart resource deleter pattern
-    auto clear = [](HANDLE hFile) { CloseHandle(hFile); };
+    auto clear = [](HANDLE hObject) { CloseHandle(hObject); };
     auto file = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear)>(hFile, clear);
 
     ULARGE_INTEGER result;

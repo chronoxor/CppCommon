@@ -18,7 +18,7 @@ int main(int argc, char** argv)
 {
     std::cout << "Press Enter to stop..." << std::endl;
 
-    CppCommon::FileLock lock(".lock");
+    CppCommon::FileLock lock_master(".lock");
 
     int current = 0;
     std::atomic<bool> stop(false);
@@ -29,13 +29,13 @@ int main(int argc, char** argv)
     {
         producers.push_back(std::thread([&stop, &current, producer]()
         {
-            CppCommon::FileLock lock(".lock");
+            CppCommon::FileLock lock_slave(".lock");
 
             while (!stop)
             {
                 // Use a write locker to produce the item
                 {
-                    CppCommon::WriteLocker<CppCommon::FileLock> locker(lock);
+                    CppCommon::WriteLocker<CppCommon::FileLock> locker(lock_slave);
 
                     current = rand();
                     std::cout << "Produce value from thread " << producer << ": " << current << std::endl;
@@ -53,13 +53,13 @@ int main(int argc, char** argv)
     {
         consumers.push_back(std::thread([&stop, &current, consumer]()
         {
-            CppCommon::FileLock lock(".lock");
+            CppCommon::FileLock lock_slave(".lock");
 
             while (!stop)
             {
                 // Use a read locker to consume the item
                 {
-                    CppCommon::ReadLocker<CppCommon::FileLock> locker(lock);
+                    CppCommon::ReadLocker<CppCommon::FileLock> locker(lock_slave);
 
                     std::cout << "Consume value in thread " << consumer << ": " << current << std::endl;
                 }

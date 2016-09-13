@@ -67,7 +67,7 @@ bool Directory::IsDirectoryEmpty() const
         throwex FileSystemException("Cannot open a directory!").Attach(*this);
 
     // Smart resource deleter pattern
-    auto clear = [](HANDLE hDirectory) { FindClose(hDirectory); };
+    auto clear = [](HANDLE hFindFile) { FindClose(hFindFile); };
     auto directory = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear)>(hDirectory, clear);
 
     do

@@ -9,13 +9,13 @@
 #include "threads/barrier.h"
 
 #include "errors/exceptions.h"
-#include "errors/fatal.h"
 
 #include <cassert>
 
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__)
+#include "errors/fatal.h"
 #include <pthread.h>
 #endif
 

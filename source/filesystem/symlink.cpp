@@ -11,7 +11,6 @@
 #include "filesystem/exceptions.h"
 
 #include <memory>
-#include <vector>
 
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
@@ -67,13 +66,13 @@ namespace CppCommon {
 Path Symlink::target() const
 {
 #if defined(_WIN32) || defined(_WIN64)
-    HANDLE hFile = CreateFileW(wstring().c_str(), GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OPEN_REPARSE_POINT, nullptr);
-    if (hFile == INVALID_HANDLE_VALUE)
+    HANDLE hSymlink = CreateFileW(wstring().c_str(), GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OPEN_REPARSE_POINT, nullptr);
+    if (hSymlink == INVALID_HANDLE_VALUE)
         throwex FileSystemException("Cannot open the symlink path for reading!").Attach(*this);
 
     // Smart resource deleter pattern
     auto clear = [](HANDLE hFile) { CloseHandle(hFile); };
-    auto file = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear)>(hFile, clear);
+    auto file = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear)>(hSymlink, clear);
 
     union info_t
     {
@@ -83,7 +82,7 @@ Path Symlink::target() const
 
     DWORD size;
     info_t info;
-    if (!DeviceIoControl(file.get(), FSCTL_GET_REPARSE_POINT, 0, 0, info.buffer, sizeof(info), &size, 0))
+    if (!DeviceIoControl(file.get(), FSCTL_GET_REPARSE_POINT, nullptr, 0, info.buffer, sizeof(info), &size, nullptr))
         throwex FileSystemException("Cannot read symlink target of the path!").Attach(*this);
 
     return Path(std::string((wchar_t*)info.rdb.SymbolicLinkReparseBuffer.PathBuffer +

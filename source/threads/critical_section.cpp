@@ -8,7 +8,6 @@
 
 #include "threads/critical_section.h"
 
-#include "errors/fatal.h"
 #include "threads/thread.h"
 
 #if defined(_WIN32) || defined(_WIN64)
@@ -16,6 +15,7 @@
 #undef Yield
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 #include "errors/exceptions.h"
+#include "errors/fatal.h"
 #include <pthread.h>
 #endif
 

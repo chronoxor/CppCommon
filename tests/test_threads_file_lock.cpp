@@ -15,7 +15,7 @@ using namespace CppCommon;
 TEST_CASE("File-lock", "[CppCommon][Threads]")
 {
     FileLock lock1(".lock");
-	FileLock lock2(".lock");
+    FileLock lock2(".lock");
 
     // Test TryLockRead() method
     REQUIRE(lock1.TryLockRead());
@@ -46,7 +46,7 @@ TEST_CASE("File-locker", "[CppCommon][Threads]")
     std::vector<int> crcs;
     int current = 0;
 
-    FileLock lock(".lock");
+    FileLock lock_master(".lock");
 
     // Reset consumers' results
     for (int i = 0; i < consumers_count; ++i)
@@ -60,13 +60,13 @@ TEST_CASE("File-locker", "[CppCommon][Threads]")
     // Start producer thread
     std::thread producer = std::thread([&crc, &current, items_to_produce]()
     {
-        FileLock lock(".lock");
+        FileLock lock_slave(".lock");
 
         for (int i = 0; i < items_to_produce; ++i)
         {
             // Use a write locker to produce the item
             {
-                WriteLocker<FileLock> locker(lock);
+                WriteLocker<FileLock> locker(lock_slave);
 
                 // Update the current produced item and produced crc
                 current = i;
@@ -84,14 +84,14 @@ TEST_CASE("File-locker", "[CppCommon][Threads]")
     {
         consumers.push_back(std::thread([&crcs, &current, consumer, items_to_produce]()
         {
-            FileLock lock(".lock");
+            FileLock lock_slave(".lock");
 
             int item = 0;
             while (item < (items_to_produce - 1))
             {
                 // Use a read locker to consume the item
                 {
-                    ReadLocker<FileLock> locker(lock);
+                    ReadLocker<FileLock> locker(lock_slave);
 
                     // Check for the current item changed
                     if (item != current)

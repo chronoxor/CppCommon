@@ -12,7 +12,6 @@
 #include "filesystem/path.h"
 #include "system/stack_trace.h"
 #include "time/timestamp.h"
-#include "utility/countof.h"
 
 #include <cstring>
 #include <exception>
@@ -496,13 +495,13 @@ private:
         Path dump = Path::executable().parent() / "crash-" + std::to_string(Timestamp::utc()) + ".dmp";
 
         // Create the dump file
-        HANDLE hFile = CreateFileW(dump.wstring().c_str(), GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
-        if (hFile == INVALID_HANDLE_VALUE)
+        HANDLE hDumpFile = CreateFileW(dump.wstring().c_str(), GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
+        if (hDumpFile == INVALID_HANDLE_VALUE)
             throwex SystemException("Cannot create a dump file - " + dump.native());
 
         // Smart resource deleter pattern
         auto clear = [](HANDLE hFile) { CloseHandle(hFile); };
-        auto file = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear)>(hFile, clear);
+        auto file = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear)>(hDumpFile, clear);
 
         MINIDUMP_EXCEPTION_INFORMATION mei;
         MINIDUMP_CALLBACK_INFORMATION mci;

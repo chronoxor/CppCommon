@@ -27,7 +27,7 @@ void produce(CppBenchmark::Context& context)
     uint64_t writers_crc = 0;
 
     // Create file-lock synchronization primitive
-    FileLock lock(".lock");
+    FileLock lock_master(".lock");
 
     // Start readers threads
     std::vector<std::thread> readers;
@@ -35,12 +35,12 @@ void produce(CppBenchmark::Context& context)
     {
         readers.push_back(std::thread([&readers_crc, reader, readers_count]()
         {
-            FileLock lock(".lock");
+            FileLock lock_slave(".lock");
 
             uint64_t items = (items_to_produce / readers_count);
             for (uint64_t i = 0; i < items; ++i)
             {
-                ReadLocker<FileLock> locker(lock);
+                ReadLocker<FileLock> locker(lock_slave);
                 readers_crc += (reader * items) + i;
             }
         }));
@@ -52,12 +52,12 @@ void produce(CppBenchmark::Context& context)
     {
         writers.push_back(std::thread([&writers_crc, writer, writers_count]()
         {
-            FileLock lock(".lock");
+            FileLock lock_slave(".lock");
 
             uint64_t items = (items_to_produce / writers_count);
             for (uint64_t i = 0; i < items; ++i)
             {
-                WriteLocker<FileLock> locker(lock);
+                WriteLocker<FileLock> locker(lock_slave);
                 writers_crc += (writer * items) + i;
             }
         }));
