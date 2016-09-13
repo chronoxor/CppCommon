@@ -21,15 +21,15 @@ namespace CppCommon {
 //! File types
 enum class FileType
 {
-    NONE      = 0,      //!< None (file not found)
-    REGULAR   = 1,      //!< Regular file
-    DIRECTORY = 2,      //!< Directory
-    SYMLINK   = 3,      //!< Symbolic link
-    BLOCK     = 4,      //!< Block device
-    CHARACTER = 5,      //!< Character device
-    FIFO      = 6,      //!< FIFO (named pipe)
-    SOCKET    = 7,      //!< Socket
-    UNKNOWN   = 8       //!< Unknown
+    NONE,               //!< None (file not found)
+    REGULAR,            //!< Regular file
+    DIRECTORY,          //!< Directory
+    SYMLINK,            //!< Symbolic link
+    BLOCK,              //!< Block device
+    CHARACTER,          //!< Character device
+    FIFO,               //!< FIFO (named pipe)
+    SOCKET,             //!< Socket
+    UNKNOWN             //!< Unknown
 };
 
 //! File attributes (Windows specific)
