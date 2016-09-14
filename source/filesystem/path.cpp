@@ -15,6 +15,7 @@
 
 #include <algorithm>
 #include <memory>
+#include <regex>
 #include <stack>
 #include <tuple>
 #include <vector>
@@ -1015,6 +1016,45 @@ Path Path::Copy(const Path& src, const Path& dst, bool overwrite)
     }
 }
 
+Path Path::CopyIf(const Path& src, const Path& dst, const std::string& pattern, bool overwrite)
+{
+    std::regex matcher(pattern);
+
+    // Check if the destination path exists
+    bool exists = dst.IsExists();
+    if (exists && !overwrite)
+        return Path();
+
+    // Copy symbolic link or regular file
+    if (src.IsSymlink() || !src.IsDirectory())
+    {
+        if (pattern.empty() || std::regex_match(src.filename().string(), matcher))
+            return Copy(src, dst, overwrite);
+        else
+            return Path();
+    }
+
+    // Create destination directory
+    if (!dst.IsExists() || !dst.IsDirectory())
+        Directory::Create(dst, src.attributes(), src.permissions());
+
+    // Copy all directory entries
+    Directory directory(src);
+    for (auto it = directory.begin(); it != directory.end(); ++it)
+    {
+        if (pattern.empty() || std::regex_match(it->filename().string(), matcher))
+        {
+            // Copy symbolic link or regular file
+            if (it->IsSymlink() || !it->IsDirectory())
+                Copy(src / it->filename(), dst / it->filename(), overwrite);
+            else
+                CopyAll(src / it->filename(), dst / it->filename(), overwrite);
+        }
+    }
+
+    return dst;
+}
+
 Path Path::CopyAll(const Path& src, const Path& dst, bool overwrite)
 {
     // Check if the destination path exists
@@ -1107,6 +1147,39 @@ Path Path::Remove(const Path& path)
     return path.parent();
 }
 
+Path Path::RemoveIf(const Path& path, const std::string& pattern)
+{
+    std::regex matcher(pattern);
+
+    bool is_directory = false;
+#if defined(_WIN32) || defined(_WIN64)
+    std::wstring wpath = path.wstring();
+    DWORD attributes = GetFileAttributesW(wpath.c_str());
+    if (attributes == INVALID_FILE_ATTRIBUTES)
+        throwex FileSystemException("Cannot get file attributes of the removed path!").Attach(path);
+
+    if (attributes & FILE_ATTRIBUTE_DIRECTORY)
+        is_directory = true;
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    if (path.IsDirectory())
+        is_directory = true;
+#endif
+    if (is_directory)
+    {
+        // Remove all directory entries
+        Directory directory(path);
+        for (auto it = directory.begin(); it != directory.end(); ++it)
+            if (pattern.empty() || std::regex_match(it->filename().string(), matcher))
+                Remove(*it);
+    }
+
+    // Remove the path
+    if (pattern.empty() || std::regex_match(path.filename().string(), matcher))
+        return Remove(path);
+    else
+        return Path();
+}
+
 Path Path::RemoveAll(const Path& path)
 {
     bool is_directory = false;
@@ -1129,6 +1202,7 @@ Path Path::RemoveAll(const Path& path)
         for (auto it = directory.rbegin(); it != directory.rend(); ++it)
             Remove(*it);
     }
+
     // Remove the path
     return Remove(path);
 }

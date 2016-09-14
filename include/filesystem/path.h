@@ -268,7 +268,16 @@ public:
         \return Copied path
     */
     static Path Copy(const Path& src, const Path& dst, bool overwrite = false);
-    //! Recursively ñopy the given source path to destination path (file, empty directory, symlink, etc)
+    //! Copy all matched files from the the given source path to destination path (files, directories, symlinks, etc)
+    /*!
+        \param src - Source path
+        \param dst - Destination path
+        \param pattern - Regular expression pattern (default is "")
+        \param overwrite - Overwrite destination path (default is false)
+        \return Copied path
+    */
+    static Path CopyIf(const Path& src, const Path& dst, const std::string& pattern = "", bool overwrite = false);
+    //! Recursively ñopy the given source path to destination path (files, directories, symlinks, etc)
     /*!
         \param src - Source path
         \param dst - Destination path
@@ -295,6 +304,15 @@ public:
         \return Parent path
     */
     static Path RemoveAll(const Path& path);
+    //! Recursively remove the given path matched to the given pattern (file, empty directory, symlink, etc) from the filesystem
+    /*!
+        All files/symlinks will be matched to the given pattern!
+
+        \param path - Path to remove
+        \param pattern - Regular expression pattern (default is "")
+        \return Parent path
+    */
+    static Path RemoveIf(const Path& path, const std::string& pattern = "");
 
     //! Set file attributes for the given path
     /*!
