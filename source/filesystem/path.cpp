@@ -1051,7 +1051,6 @@ Path Path::CopyIf(const Path& src, const Path& dst, const std::string& pattern, 
                 CopyAll(src / it->filename(), dst / it->filename(), overwrite);
         }
     }
-
     return dst;
 }
 
@@ -1171,6 +1170,7 @@ Path Path::RemoveIf(const Path& path, const std::string& pattern)
         for (auto it = directory.begin(); it != directory.end(); ++it)
             if (pattern.empty() || std::regex_match(it->filename().string(), matcher))
                 Remove(*it);
+        return path;
     }
 
     // Remove the path
