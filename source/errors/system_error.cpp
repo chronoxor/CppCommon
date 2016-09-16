@@ -54,7 +54,7 @@ std::string SystemError::Description(int error)
     char buffer[capacity];
     char* result = strerror_r(error, buffer, capacity);
     if (result == nullptr)
-        return format("Cannot convert the given system error code to the system message - {}", error);
+        return "Cannot convert the given system error code to the system message - {}"_format(error);
     else
         return std::string(result);
 #endif
