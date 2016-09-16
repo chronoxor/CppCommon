@@ -51,12 +51,13 @@ add_subdirectory("modules")
 # Includes
 include_directories("include")
 include_directories("modules/catch/single_include")
+include_directories("modules/fmt")
 include_directories("modules/CppBenchmark/include")
 
 # Library
 file(GLOB_RECURSE SOURCE_FILES "source/*.cpp")
 add_library(cppcommon ${SOURCE_FILES})
-target_link_libraries(cppcommon)
+target_link_libraries(cppcommon fmt)
 list(APPEND INSTALL_TARGETS cppcommon)
 
 # Full module components: examples, tests and install

@@ -14,3 +14,6 @@
 	path = modules/CppBenchmark
 	url = git@github.com:chronoxor/CppBenchmark.git
 	branch = master
+[submodule "modules/fmt"]
+	path = modules/fmt
+	url = git@github.com:fmtlib/fmt.git

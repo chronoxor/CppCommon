@@ -9,6 +9,7 @@
 #include "time/time.h"
 
 #include "errors/exceptions.h"
+#include "string/format.h"
 
 #include <cassert>
 
@@ -22,10 +23,10 @@ Time::Time(const Timestamp& timestamp)
     time_t seconds = timestamp.seconds();
 #if defined(_WIN32) || defined(_WIN64)
     if (gmtime_s(&result, &seconds))
-        throwex SystemException("Cannot convert the given timestamp (" + std::to_string(timestamp.total()) + ") to date & time structure!");
+        throwex SystemException(format("Cannot convert the given timestamp ({}) to date & time structure!", timestamp.total()));
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     if (gmtime_r(&seconds, &result) != &result)
-        throwex SystemException("Cannot convert the given timestamp (" + std::to_string(timestamp.total()) + ") to date & time structure!");
+        throwex SystemException(format("Cannot convert the given timestamp ({}) to date & time structure!", timestamp.total()));
 #endif
     _year = result.tm_year + 1900;
     _month = result.tm_mon + 1;
@@ -134,10 +135,10 @@ UtcTime::UtcTime(const Timestamp& timestamp)
     time_t seconds = timestamp.seconds();
 #if defined(_WIN32) || defined(_WIN64)
     if (gmtime_s(&result, &seconds))
-        throwex SystemException("Cannot convert the given timestamp (" + std::to_string(timestamp.total()) + ") to UTC date & time structure!");
+        throwex SystemException(format("Cannot convert the given timestamp ({}) to UTC date & time structure!", timestamp.total()));
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     if (gmtime_r(&seconds, &result) != &result)
-        throwex SystemException("Cannot convert the given timestamp (" + std::to_string(timestamp.total()) + ") to UTC date & time structure!");
+        throwex SystemException(format("Cannot convert the given timestamp ({}) to UTC date & time structure!", timestamp.total()));
 #endif
     _year = result.tm_year + 1900;
     _month = result.tm_mon + 1;
@@ -156,10 +157,10 @@ LocalTime::LocalTime(const Timestamp& timestamp)
     time_t seconds = timestamp.seconds();
 #if defined(_WIN32) || defined(_WIN64)
     if (localtime_s(&result, &seconds))
-        throwex SystemException("Cannot convert the given timestamp (" + std::to_string(timestamp.total()) + ") to local date & time structure!");
+        throwex SystemException(format("Cannot convert the given timestamp ({}) to local date & time structure!", timestamp.total()));
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     if (localtime_r(&seconds, &result) != &result)
-        throwex SystemException("Cannot convert the given timestamp (" + std::to_string(timestamp.total()) + ") to local date & time structure!");
+        throwex SystemException(format("Cannot convert the given timestamp ({}) to local date & time structure!", timestamp.total()));
 #endif
     _year = result.tm_year + 1900;
     _month = result.tm_mon + 1;
