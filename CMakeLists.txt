@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.2)
 project(cppcommon)
 
+# Modules
+add_subdirectory("modules")
+
 # Doxygen
 find_package(Doxygen)
 if(DOXYGEN_FOUND)
@@ -44,9 +47,6 @@ if(WIN32)
   list(APPEND SYSTEM ${DBGHELP_LIBRARIES})
   list(APPEND SYSTEM ${USERENV_LIBRARIES})
 endif()
-
-# Modules
-add_subdirectory("modules")
 
 # Includes
 include_directories("include")
