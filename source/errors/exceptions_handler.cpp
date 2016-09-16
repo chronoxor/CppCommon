@@ -499,7 +499,7 @@ private:
         // Create the dump file
         HANDLE hDumpFile = CreateFileW(dump.wstring().c_str(), GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
         if (hDumpFile == INVALID_HANDLE_VALUE)
-            throwex SystemException(format("Cannot create a dump file - {}", dump.native()));
+            throwex SystemException("Cannot create a dump file - " + dump.native());
 
         // Smart resource deleter pattern
         auto clear = [](HANDLE hFile) { CloseHandle(hFile); };

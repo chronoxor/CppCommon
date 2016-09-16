@@ -8,7 +8,6 @@
 
 #include "errors/exceptions.h"
 
-#include <cstring>
 #include <sstream>
 
 namespace CppCommon {
