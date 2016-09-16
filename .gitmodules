@@ -17,3 +17,4 @@
 [submodule "modules/fmt"]
 	path = modules/fmt
 	url = git@github.com:fmtlib/fmt.git
+	branch = master
