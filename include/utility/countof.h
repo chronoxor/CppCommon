@@ -13,7 +13,7 @@ namespace CppCommon {
 
 //! Count of elements in static array
 template <typename T, std::size_t N>
-constexpr std::size_t countof(T const (&)[N]) noexcept
+constexpr std::size_t countof(const T (&)[N]) noexcept
 {
     return N;
 }
