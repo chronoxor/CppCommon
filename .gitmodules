@@ -10,10 +10,6 @@
 	path = modules/catch
 	url = git@github.com:philsquared/Catch.git
 	branch = master
-[submodule "modules/fmt"]
-	path = modules/fmt
-	url = git@github.com:chronoxor/fmt.git
-	branch = master
 [submodule "modules/CppBenchmark"]
 	path = modules/CppBenchmark
 	url = git@github.com:chronoxor/CppBenchmark.git
