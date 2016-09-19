@@ -26,7 +26,7 @@ private:
 
 int main(int argc, char** argv)
 {
-    SHOW(CppCommon::format("argc = {}, argv = {}", argc, (void*)argv));
+    SHOW(CppCommon::format("argc: {}, argv: {}", argc, (void*)argv));
     SHOW(CppCommon::format("{0}, {1}, {2}", -1, 0, 1));
     SHOW(CppCommon::format("{0}, {1}, {2}", 'a', 'b', 'c'));
     SHOW(CppCommon::format("{}, {}, {}", 'a', 'b', 'c'));
