@@ -35,7 +35,7 @@ management, networking, threading and others.
 ```
 git clone git@github.com:chronoxor/CppCommon.git
 cd CppCommon
-git submodule update --init --recursive
+git submodule update --init --recursive --remote
 ```
 
 ## Windows (Visaul Studio 2015)
