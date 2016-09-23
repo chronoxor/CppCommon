@@ -8,13 +8,15 @@
 
 #include "system/cpu.h"
 
-#if defined(_WIN32) || defined(_WIN64)
-#include <windows.h>
-#include <memory>
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(__APPLE__)
+#include <sys/sysctl.h>
+#elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
 #include <unistd.h>
 #include <fstream>
 #include <regex>
+#elif defined(_WIN32) || defined(_WIN64)
+#include <windows.h>
+#include <memory>
 #endif
 
 namespace CppCommon {
@@ -45,7 +47,27 @@ DWORD CountSetBits(ULONG_PTR pBitMask)
 
 std::string CPU::Architecture()
 {
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(__APPLE__)
+    char result[1024];
+    size_t size = sizeof(result);
+    if (sysctlbyname("machdep.cpu.brand_string", result, &size, nullptr, 0) == 0)
+        return result;
+
+    return "<unknown>";
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    static std::regex pattern("model name(.*): (.*)");
+
+    std::string line;
+    std::ifstream stream("/proc/cpuinfo");
+    while (getline(stream, line))
+    {
+        std::smatch matches;
+        if (std::regex_match(line, matches, pattern))
+            return matches[2];
+    }
+
+    return "<unknown>";
+#elif defined(_WIN32) || defined(_WIN64)
     HKEY hKeyProcessor;
     LONG lError = RegOpenKeyExA(HKEY_LOCAL_MACHINE, "HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0", 0, KEY_READ, &hKeyProcessor);
     if (lError != ERROR_SUCCESS)
@@ -62,30 +84,29 @@ std::string CPU::Architecture()
         return "<unknown>";
 
     return std::string(pBuffer);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    static std::regex pattern("model name(.*): (.*)");
-
-    std::string line;
-    std::ifstream stream("/proc/cpuinfo");
-    while (getline(stream, line))
-    {
-        std::smatch matches;
-        if (std::regex_match(line, matches, pattern))
-            return matches[2];
-    }
-
-    return "<unknown>";
+#else
+    #error Unsupported platform
 #endif
 }
 
 int CPU::Affinity()
 {
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(__APPLE__)
+    int logical = 0;
+    size_t logical_size = sizeof(logical);
+    if (sysctlbyname("hw.logicalcpu", &logical, &logical_size, nullptr, 0) != 0)
+        logical = -1;
+
+    return logical;
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    long processors = sysconf(_SC_NPROCESSORS_ONLN);
+    return processors;
+#elif defined(_WIN32) || defined(_WIN64)
     SYSTEM_INFO si;
     GetSystemInfo(&si);
     return si.dwNumberOfProcessors;
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    return sysconf(_SC_NPROCESSORS_ONLN);
+#else
+    #error Unsupported platform
 #endif
 }
 
@@ -101,7 +122,22 @@ int CPU::PhysicalCores()
 
 std::pair<int, int> CPU::TotalCores()
 {
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(__APPLE__)
+    int logical = 0;
+    size_t logical_size = sizeof(logical);
+    if (sysctlbyname("hw.logicalcpu", &logical, &logical_size, nullptr, 0) != 0)
+        logical = -1;
+
+    int physical = 0;
+    size_t physical_size = sizeof(physical);
+    if (sysctlbyname("hw.physicalcpu", &physical, &physical_size, nullptr, 0) != 0)
+        physical = -1;
+
+    return std::make_pair(logical, physical);
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    long processors = sysconf(_SC_NPROCESSORS_ONLN);
+    return std::make_pair(processors, processors);
+#elif defined(_WIN32) || defined(_WIN64)
     BOOL allocated = FALSE;
     PSYSTEM_LOGICAL_PROCESSOR_INFORMATION pBuffer = nullptr;
     DWORD dwLength = 0;
@@ -152,16 +188,34 @@ std::pair<int, int> CPU::TotalCores()
     free(pBuffer);
 
     return result;
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    long processors = sysconf(_SC_NPROCESSORS_ONLN);
-    std::pair<int, int> result(processors, processors);
-    return result;
+#else
+    #error Unsupported platform
 #endif
 }
 
 int64_t CPU::ClockSpeed()
 {
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(__APPLE__)
+    uint64_t frequency = 0;
+    size_t size = sizeof(frequency);
+    if (sysctlbyname("hw.cpufrequency", &frequency, &size, nullptr, 0) == 0)
+        return frequency;
+
+    return -1;
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    static std::regex pattern("cpu MHz(.*): (.*)");
+
+    std::string line;
+    std::ifstream stream("/proc/cpuinfo");
+    while (getline(stream, line))
+    {
+        std::smatch matches;
+        if (std::regex_match(line, matches, pattern))
+            return (int64_t)(atof(matches[2].str().c_str()) * 1000 * 1000);
+    }
+
+    return -1;
+#elif defined(_WIN32) || defined(_WIN64)
     HKEY hKeyProcessor;
     long lError = RegOpenKeyExA(HKEY_LOCAL_MACHINE, "HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0", 0, KEY_READ, &hKeyProcessor);
     if (lError != ERROR_SUCCESS)
@@ -178,19 +232,8 @@ int64_t CPU::ClockSpeed()
         return -1;
 
     return dwMHz * 1000 * 1000;
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    static std::regex pattern("cpu MHz(.*): (.*)");
-
-    std::string line;
-    std::ifstream stream("/proc/cpuinfo");
-    while (getline(stream, line))
-    {
-        std::smatch matches;
-        if (std::regex_match(line, matches, pattern))
-            return (int64_t)(atof(matches[2].str().c_str()) * 1000 * 1000);
-    }
-
-    return -1;
+#else
+    #error Unsupported platform
 #endif
 }
 

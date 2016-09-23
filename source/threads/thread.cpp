@@ -12,16 +12,18 @@
 #include "system/cpu.h"
 #include "time/timestamp.h"
 
-#if defined(_WIN32) || defined(_WIN64)
-#include <windows.h>
-#include <winternl.h>
-#undef Yield
-#define STATUS_SUCCESS 0x00000000
+#if defined(__APPLE__)
+#include <pthread.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 #include <errno.h>
 #include <pthread.h>
 #include <sched.h>
 #include <time.h>
+#elif defined(_WIN32) || defined(_WIN64)
+#include <windows.h>
+#include <winternl.h>
+#undef Yield
+#define STATUS_SUCCESS 0x00000000
 #endif
 
 namespace CppCommon {
@@ -56,10 +58,12 @@ uint64_t SetMinimumTimerResolution()
 
 uint64_t Thread::CurrentThreadId() noexcept
 {
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+    return (uint64_t)pthread_self();
+#elif defined(_WIN32) || defined(_WIN64)
     return GetCurrentThreadId();
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    return pthread_self();
+#else
+    #error Unsupported platform
 #endif
 }
 

@@ -13,17 +13,17 @@
 
 #include <sstream>
 
-#if defined(_WIN32) || defined(_WIN64)
-#include <windows.h>
-#include <memory>
-#include <vector>
-#elif defined(linux) || defined(__linux) || defined(__linux__)
+#if defined(linux) || defined(__linux) || defined(__linux__)
 #include <sys/stat.h>
 #include <stdlib.h>
 #include <cstring>
 #include <fstream>
 #include <regex>
 extern char **environ;
+#elif defined(_WIN32) || defined(_WIN64)
+#include <windows.h>
+#include <memory>
+#include <vector>
 #endif
 
 namespace CppCommon {
@@ -35,16 +35,20 @@ bool Environment::Is32BitOS()
 
 bool Environment::Is64BitOS()
 {
-#if defined(_WIN32) || defined(_WIN64)
-#if defined(_WIN64)
+#if defined(__APPLE__)
     return true;
-#elif defined(_WIN32)
-    BOOL bWow64Process = FALSE;
-    return IsWow64Process(GetCurrentProcess(), &bWow64Process) && bWow64Process;
-#endif
 #elif defined(linux) || defined(__linux) || defined(__linux__)
     struct stat buffer;
     return (stat("/lib64/ld-linux-x86-64.so.2", &buffer) == 0);
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
+#if defined(_WIN64)
+    return true;
+#elif defined(_WIN32) || defined(__CYGWIN__)
+    BOOL bWow64Process = FALSE;
+    return IsWow64Process(GetCurrentProcess(), &bWow64Process) && bWow64Process;
+#endif
+#else
+    #error Unsupported platform
 #endif
 }
 
@@ -55,18 +59,20 @@ bool Environment::Is32BitProcess()
 
 bool Environment::Is64BitProcess()
 {
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if defined(__x86_64__) || defined(__amd64__) || defined(__aarch64__) || defined(__ia64__) || defined(__ppc64__)
+    return true;
+#else
+    return false;
+#endif
+#elif defined(_WIN32) || defined(_WIN64)
 #if defined(_WIN64)
     return true;
 #elif defined(_WIN32)
     return false;
 #endif
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-#if defined(__x86_64__) || defined(__ppc64__)
-    return true;
 #else
-    return false;
-#endif
+    #error Unsupported platform
 #endif
 }
 
@@ -98,7 +104,40 @@ bool Environment::IsLittleEndian()
 
 std::string Environment::OSVersion()
 {
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(__APPLE__)
+    char result[1024];
+    size_t size = sizeof(result);
+    if (sysctlbyname("kern.osrelease", result, &size, nullptr, 0) == 0)
+        return result;
+
+    return "<apple>";
+#elif defined(__CYGWIN__)
+    struct utsname name;
+    if (uname(&name) == 0)
+    {
+        std::string result(name.sysname);
+        result.append(" ");
+        result.append(name.release);
+        result.append(" ");
+        result.append(name.version);
+        return result;
+    }
+
+    return "<cygwin>";
+#elif defined(linux) || defined(__linux) || defined(__linux__)
+    static std::regex pattern("DISTRIB_DESCRIPTION=\"(.*)\"");
+
+    std::string line;
+    std::ifstream stream("/etc/lsb-release");
+    while (getline(stream, line))
+    {
+        std::smatch matches;
+        if (std::regex_match(line, matches, pattern))
+            return matches[1];
+    }
+
+    return "<linux>";
+#elif defined(_WIN32) || defined(_WIN64)
     static void(__stdcall *GetNativeSystemInfo)(OUT LPSYSTEM_INFO lpSystemInfo) = (void(__stdcall*)(LPSYSTEM_INFO))GetProcAddress(GetModuleHandle("kernel32.dll"), "GetNativeSystemInfo");
     static BOOL(__stdcall *GetProductInfo)(IN DWORD dwOSMajorVersion, IN DWORD dwOSMinorVersion, IN DWORD dwSpMajorVersion, IN DWORD dwSpMinorVersion, OUT PDWORD pdwReturnedProductType) = (BOOL(__stdcall*)(DWORD, DWORD, DWORD, DWORD, PDWORD))GetProcAddress(GetModuleHandle("kernel32.dll"), "GetProductInfo");
 
@@ -319,37 +358,39 @@ std::string Environment::OSVersion()
     }
 
     return os.str();
-#elif defined(linux) || defined(__linux) || defined(__linux__)
-    static std::regex pattern("DISTRIB_DESCRIPTION=\"(.*)\"");
-
-    std::string line;
-    std::ifstream stream("/etc/lsb-release");
-    while (getline(stream, line))
-    {
-        std::smatch matches;
-        if (std::regex_match(line, matches, pattern))
-            return matches[1];
-    }
-
-    return "<linux>";
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    return "<unix>";
+#else
+    #error Unsupported platform
 #endif
 }
 
 std::string Environment::EndLine()
 {
-#if defined(_WIN32) || defined(_WIN64)
-    return "\r\n";
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     return "\n";
+#elif defined(_WIN32) || defined(_WIN64)
+    return "\r\n";
+#else
+    #error Unsupported platform
 #endif
 }
 
 std::map<std::string, std::string> Environment::envars()
 {
     std::map<std::string, std::string> result;
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+    for (char** envars = environ; *envars; ++envars)
+    {
+        char* envar = *envars;
+        int offset = (envar[0] == '=') ? 1 : 0;
+        char* separator = std::strchr(envar + offset, '=');
+        std::string key(envar, separator - envar);
+
+        char* pvalue = separator + 1;
+        std::string value(pvalue);
+
+        result[key] = value;
+    }
+#elif defined(_WIN32) || defined(_WIN64)
     // Smart resource deleter pattern
     auto clear = [](wchar_t* envars) { FreeEnvironmentStringsW(envars); };
     auto envars = std::unique_ptr<wchar_t, decltype(clear)>(GetEnvironmentStringsW(), clear);
@@ -367,26 +408,16 @@ std::map<std::string, std::string> Environment::envars()
 
         envar = pvalue + value.size() + 1;
     }
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    for (char** envars = environ; *envars; ++envars)
-    {
-        char* envar = *envars;
-        int offset = (envar[0] == '=') ? 1 : 0;
-        char* separator = std::strchr(envar + offset, '=');
-        std::string key(envar, separator - envar);
-
-        char* pvalue = separator + 1;
-        std::string value(pvalue);
-
-        result[key] = value;
-    }
 #endif
     return result;
 }
 
 std::string Environment::GetEnvar(const std::string name)
 {
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+    char* envar = getenv(name.c_str());
+    return (envar != nullptr) ? std::string(envar) : std::string();
+#elif defined(_WIN32) || defined(_WIN64)
     std::wstring wname = Encoding::FromUTF8(name);
     std::vector<wchar_t> buffer(MAX_PATH);
 
@@ -398,30 +429,27 @@ std::string Environment::GetEnvar(const std::string name)
     }
 
     return (size > 0) ? Encoding::ToUTF8(std::wstring(buffer.data(), size)) : std::string();
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    char* envar = getenv(name.c_str());
-    return (envar != nullptr) ? std::string(envar) : std::string();
 #endif
 }
 
 void Environment::SetEnvar(const std::string name, const std::string value)
 {
-#if defined(_WIN32) || defined(_WIN64)
-    if (!SetEnvironmentVariableW(Encoding::FromUTF8(name).c_str(), Encoding::FromUTF8(value).c_str()))
-        throwex SystemException("Cannot set environment variable - " + name);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     if (setenv(name.c_str(), value.c_str(), 1) != 0)
+        throwex SystemException("Cannot set environment variable - " + name);
+#elif defined(_WIN32) || defined(_WIN64)
+    if (!SetEnvironmentVariableW(Encoding::FromUTF8(name).c_str(), Encoding::FromUTF8(value).c_str()))
         throwex SystemException("Cannot set environment variable - " + name);
 #endif
 }
 
 void Environment::ClearEnvar(const std::string name)
 {
-#if defined(_WIN32) || defined(_WIN64)
-    if (!SetEnvironmentVariableW(Encoding::FromUTF8(name).c_str(), nullptr))
-        throwex SystemException("Cannot clear environment variable - " + name);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     if (unsetenv(name.c_str()) != 0)
+        throwex SystemException("Cannot clear environment variable - " + name);
+#elif defined(_WIN32) || defined(_WIN64)
+    if (!SetEnvironmentVariableW(Encoding::FromUTF8(name).c_str(), nullptr))
         throwex SystemException("Cannot clear environment variable - " + name);
 #endif
 }
