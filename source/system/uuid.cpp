@@ -10,10 +10,10 @@
 
 #include "errors/exceptions.h"
 
-#if defined(_WIN32) || defined(_WIN64)
-#include <windows.h>
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
 #include <uuid/uuid.h>
+#elif defined(_WIN32) || defined(_WIN64)
+#include <windows.h>
 #endif
 
 namespace CppCommon {
@@ -85,7 +85,31 @@ std::string UUID::string() const
 UUID UUID::Generate()
 {
     UUID result;
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+    uuid_t uuid;
+    uuid_generate_time(uuid);
+
+    result._data[0] = uuid[0];
+    result._data[1] = uuid[1];
+    result._data[2] = uuid[2];
+    result._data[3] = uuid[3];
+
+    result._data[4] = uuid[4];
+    result._data[5] = uuid[5];
+
+    result._data[6] = uuid[6];
+    result._data[7] = uuid[7];
+
+    result._data[8] = uuid[8];
+    result._data[9] = uuid[9];
+
+    result._data[10] = uuid[10];
+    result._data[11] = uuid[11];
+    result._data[12] = uuid[12];
+    result._data[13] = uuid[13];
+    result._data[14] = uuid[14];
+    result._data[15] = uuid[15];
+#elif defined(_WIN32) || defined(_WIN64)
     GUID guid;
     if (CoCreateGuid(&guid) != S_OK)
         throwex SystemException("Cannot generate UUID using CoCreateGuid() function!");
@@ -110,30 +134,6 @@ UUID UUID::Generate()
     result._data[13] = guid.Data4[5];
     result._data[14] = guid.Data4[6];
     result._data[15] = guid.Data4[7];
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    uuid_t uuid;
-    uuid_generate_time(uuid);
-
-    result._data[0] = uuid[0];
-    result._data[1] = uuid[1];
-    result._data[2] = uuid[2];
-    result._data[3] = uuid[3];
-
-    result._data[4] = uuid[4];
-    result._data[5] = uuid[5];
-
-    result._data[6] = uuid[6];
-    result._data[7] = uuid[7];
-
-    result._data[8] = uuid[8];
-    result._data[9] = uuid[9];
-
-    result._data[10] = uuid[10];
-    result._data[11] = uuid[11];
-    result._data[12] = uuid[12];
-    result._data[13] = uuid[13];
-    result._data[14] = uuid[14];
-    result._data[15] = uuid[15];
 #endif
     return result;
 }

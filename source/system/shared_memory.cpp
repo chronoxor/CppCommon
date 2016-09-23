@@ -14,12 +14,12 @@
 #include <cassert>
 #include <cstring>
 
-#if defined(_WIN32) || defined(_WIN64)
-#include <windows.h>
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
 #include <sys/mman.h>
 #include <fcntl.h>
 #include <unistd.h>
+#elif defined(_WIN32) || defined(_WIN64)
+#include <windows.h>
 #endif
 
 namespace CppCommon {
@@ -33,28 +33,7 @@ public:
         assert((size > 0) && "Shared memory buffer size must be greater than zero!");
 
         size_t total = SHARED_MEMORY_HEADER_SIZE + size;
-#if defined(_WIN32) || defined(_WIN64)
-        _name = "Global\\" + name;
-        _owner = false;
-        // Try to open a shared memory handler
-        _shared = OpenFileMappingA(FILE_MAP_ALL_ACCESS, FALSE, _name.c_str());
-        if (_shared == nullptr)
-        {
-            // Try to create a shared memory handler
-            _shared = CreateFileMappingA(INVALID_HANDLE_VALUE, nullptr, PAGE_READWRITE, 0, (DWORD)total, _name.c_str());
-            if (_shared == nullptr)
-                throwex SystemException("Failed to create or open a shared memory handler!");
-            else
-                _owner = true;
-        }
-        // Map a shared memory buffer
-        _ptr = MapViewOfFile(_shared, FILE_MAP_ALL_ACCESS, 0, 0, total);
-        if (_ptr == nullptr)
-        {
-            CloseHandle(_shared);
-            throwex SystemException("Failed to map a shared memory buffer!");
-        }
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         _name = "/" + name;
         _owner = true;
         // Try to create a shared memory handler
@@ -80,6 +59,27 @@ public:
             shm_unlink(_name.c_str());
             throwex SystemException("Failed to map a shared memory buffer!");
         }
+#elif defined(_WIN32) || defined(_WIN64)
+        _name = "Global\\" + name;
+        _owner = false;
+        // Try to open a shared memory handler
+        _shared = OpenFileMappingA(FILE_MAP_ALL_ACCESS, FALSE, _name.c_str());
+        if (_shared == nullptr)
+        {
+            // Try to create a shared memory handler
+            _shared = CreateFileMappingA(INVALID_HANDLE_VALUE, nullptr, PAGE_READWRITE, 0, (DWORD)total, _name.c_str());
+            if (_shared == nullptr)
+                throwex SystemException("Failed to create or open a shared memory handler!");
+            else
+                _owner = true;
+        }
+        // Map a shared memory buffer
+        _ptr = MapViewOfFile(_shared, FILE_MAP_ALL_ACCESS, 0, 0, total);
+        if (_ptr == nullptr)
+        {
+            CloseHandle(_shared);
+            throwex SystemException("Failed to map a shared memory buffer!");
+        }
 #endif
         static const char* SHARED_MEMORY_HEADER_PREFIX = "SHMM";
 
@@ -97,12 +97,12 @@ public:
             bool is_valid_size = (((SharedMemoryHeader*)_ptr)->size == size);
             if (!is_valid_prefix || !is_valid_size)
             {
-#if defined(_WIN32) || defined(_WIN64)
-                UnmapViewOfFile(_ptr);
-                CloseHandle(_shared);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
                 munmap(_ptr, total);
                 close(_shared);
+#elif defined(_WIN32) || defined(_WIN64)
+                UnmapViewOfFile(_ptr);
+                CloseHandle(_shared);
 #endif
                 if (!is_valid_prefix)
                     throwex SystemException("Invalid shared memory buffer prefix!");
@@ -114,14 +114,7 @@ public:
 
     ~Impl()
     {
-#if defined(_WIN32) || defined(_WIN64)
-        // Unmap the shared memory buffer
-        if (!UnmapViewOfFile(_ptr))
-            fatality(SystemException("Failed to unmap a shared memory buffer!"));
-        // Close the shared memory handler
-        if (!CloseHandle(_shared))
-            fatality(SystemException("Failed to close a shared memory handler!"));
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         // Unmap the shared memory buffer
         size_t total = ((SharedMemoryHeader*)_ptr)->size + SHARED_MEMORY_HEADER_SIZE;
         int result = munmap(_ptr, total);
@@ -138,6 +131,13 @@ public:
             if (result != 0)
                 fatality(SystemException("Failed to unlink a shared memory handler!"));
         }
+#elif defined(_WIN32) || defined(_WIN64)
+        // Unmap the shared memory buffer
+        if (!UnmapViewOfFile(_ptr))
+            fatality(SystemException("Failed to unmap a shared memory buffer!"));
+        // Close the shared memory handler
+        if (!CloseHandle(_shared))
+            fatality(SystemException("Failed to close a shared memory handler!"));
 #endif
     }
 
@@ -161,10 +161,10 @@ private:
     };
 
     std::string _name;
-#if defined(_WIN32) || defined(_WIN64)
-    HANDLE _shared;
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     int _shared;
+#elif defined(_WIN32) || defined(_WIN64)
+    HANDLE _shared;
 #endif
     void* _ptr;
     bool _owner;

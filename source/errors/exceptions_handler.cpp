@@ -56,6 +56,7 @@ public:
         // Install top-level SEH handler
         SetUnhandledExceptionFilter(SehHandler);
 
+#if defined(_MSC_VER)
         // Catch pure virtual function calls
         // Because there is one _purecall_handler for the whole process,
         // calling this function immediately impacts all threads. The last
@@ -71,6 +72,7 @@ public:
 
         // Set up C++ signal handlers
         _set_abort_behavior(_CALL_REPORTFAULT, _CALL_REPORTFAULT);
+#endif
 
         // Catch an abnormal program termination
         signal(SIGABRT, SigabrtHandler);

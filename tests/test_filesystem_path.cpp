@@ -425,19 +425,6 @@ TEST_CASE("Path manipulations", "[CppCommon][FileSystem]")
     REQUIRE(Path("/foo/bar///").RemoveTrailingSeparators().MakePreferred() == Path("/foo/bar").MakePreferred());
 }
 
-#if defined(_WIN32) || defined(_WIN64)
-TEST_CASE("Path attributes", "[CppCommon][FileSystem]")
-{
-    Path current = Path::current();
-    auto old_attributes = current.attributes();
-    auto new_attributes = old_attributes | FileAttributes::ARCHIVED | FileAttributes::READONLY;
-    Path::SetAttributes(current, new_attributes);
-    REQUIRE(current.attributes() == new_attributes);
-    Path::SetAttributes(current, old_attributes);
-    REQUIRE(current.attributes() == old_attributes);
-}
-#endif
-
 #if defined(unix) || defined(__unix) || defined(__unix__)
 TEST_CASE("Path permissions", "[CppCommon][FileSystem]")
 {
@@ -448,6 +435,19 @@ TEST_CASE("Path permissions", "[CppCommon][FileSystem]")
     REQUIRE(current.permissions() == new_permissions);
     Path::SetPermissions(current, old_permissions);
     REQUIRE(current.permissions() == old_permissions);
+}
+#endif
+
+#if defined(_WIN32) || defined(_WIN64)
+TEST_CASE("Path attributes", "[CppCommon][FileSystem]")
+{
+    Path current = Path::current();
+    auto old_attributes = current.attributes();
+    auto new_attributes = old_attributes | FileAttributes::ARCHIVED | FileAttributes::READONLY;
+    Path::SetAttributes(current, new_attributes);
+    REQUIRE(current.attributes() == new_attributes);
+    Path::SetAttributes(current, old_attributes);
+    REQUIRE(current.attributes() == old_attributes);
 }
 #endif
 

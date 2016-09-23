@@ -8,10 +8,10 @@
 
 #include "system/console.h"
 
-#if defined(_WIN32) || defined(_WIN64)
-#include <windows.h>
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
 #include <cstdio>
+#elif defined(_WIN32) || defined(_WIN64)
+#include <windows.h>
 #endif
 
 namespace CppCommon {
@@ -30,10 +30,7 @@ std::ostream& operator<<(std::ostream& stream, std::pair<Color, Color> colors)
 
 void Console::SetColor(Color color, Color background)
 {
-#if defined(_WIN32) || defined(_WIN64)
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(hConsole, (((WORD)color) & 0x0F) + ((((WORD)background) & 0x0F) << 4));
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     const char* colors[] =
     {
         "\033[22;30m",  // Black color
@@ -74,6 +71,9 @@ void Console::SetColor(Color color, Color background)
     };
     std::fwrite(backgrounds[(int)background - (int)Color::BLACK], 1, 8, stdout);
     std::fwrite(colors[(int)color - (int)Color::BLACK], 1, 8, stdout);
+#elif defined(_WIN32) || defined(_WIN64)
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, (((WORD)color) & 0x0F) + ((((WORD)background) & 0x0F) << 4));
 #endif
 }
 

@@ -29,7 +29,7 @@ void GenerateSIGFPE()
 {
     // Code taken from http://www.devx.com/cplus/Article/34993/1954
 
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(_MSC_VER)
     // Set the x86 floating-point control word according to what
     // exceptions you want to trap. Always call _clearfp before
     // setting the control word
@@ -110,16 +110,20 @@ void GenerateInvalidParameter()
     printf(format);
 }
 
+#if defined(_MSC_VER)
 #pragma warning(push)
 // VS 4717: 'function' : recursive on all control paths, function will cause runtime stack overflow
 #pragma warning(disable: 4717)
+#endif
 void GenerateRecurseAlloc()
 {
     uint8_t* buffer = new uint8_t[0x1FFFFFFF];
-    buffer;
+    (void)buffer;
     GenerateRecurseAlloc();
 }
+#if defined(_MSC_VER)
 #pragma warning(pop)
+#endif
 
 class Base;
 
@@ -151,11 +155,15 @@ void GeneratePureVirtualMethodCall()
 void GenerateSEH()
 {
     int* p = nullptr;
+#if defined(_MSC_VER)
 #pragma warning(push)
 // VS 6011: dereferencing NULL pointer <name>
 #pragma warning(disable: 6011)
+#endif
     *p = 0;
+#if defined(_MSC_VER)
 #pragma warning(pop)
+#endif
 }
 
 void GenerateRaiseException()
