@@ -1,8 +1,12 @@
 # CppCommon
-C++ Common Library contains reusable components and patterns for memory
-management, networking, threading and others.
+C++ Common Library contains reusable components and patterns for error and
+exceptions handling, filesystem manipulations, math, string format and
+encoding, shared memory, threading, time management and others.
 
 [CppCommon API reference](http://chronoxor.github.io/CppCommon/index.html)
+
+[![Build status](https://travis-ci.org/chronoxor/CppBenchmark.svg?branch=master)](https://travis-ci.org/chronoxor/CppBenchmark)
+[![Build status](https://ci.appveyor.com/api/projects/status/5xr4pimatmjtxtqq?svg=true)](https://ci.appveyor.com/project/chronoxor/CppBenchmark)
 
 # Contents
   * [Features](#features)
@@ -14,20 +18,34 @@ management, networking, threading and others.
     * [Linux](#linux)
 
 # Features
-* Memory management
-* Networking
-* Threading
+* Exception handling model
+* Filesystem manipulations
+* String encoding converters
+* String format
+* CPU, memory, environment
+* Shared memory
+* Stack trace
+* UUID generator
+* Thread extensions (priority, affinity, yield)
+* Thread barrier, latch
+* Synchronization primitives
+* Named synchronization primitives
+* Producer/consumer queues
+* Time management
+* Utilities
 
 # Requirements
 * Windows 7 / Windows 10
 * Linux
+* [CMake](http://www.cmake.org/download/)
 * [GIT](https://git-scm.com/)
+* [GCC](https://gcc.gnu.org/)
+
+Optional:
 * [Visual Studio 2015](https://www.visualstudio.com/)
-* [Clion 1.0.5](https://www.jetbrains.com/clion/)
-* [MinGW 4.0](http://mingw-w64.org/doku.php)
-* [MSYS2](http://msys2.github.io/)
-* GCC 5.0.0
-* [CMake 3.5.0](http://www.cmake.org/download/)
+* [Clion](https://www.jetbrains.com/clion/)
+* [MinGW](http://mingw-w64.org/doku.php)
+* [MSYS](http://www.mingw.org/wiki/msys)
 
 #How to build?
 
@@ -41,13 +59,12 @@ git submodule update --init --recursive --remote
 ## Windows (Visaul Studio 2015)
 ```
 cd scripts
-01-generate-VisualStudio-x32.bat or 01-generate-VisualStudio-x64.bat
+01-generate-VisualStudio.bat
 02-build-VisualStudio.bat
 03-tests.bat
 04-install-VisualStudio.bat
 05-doxygen-VisualStudio.bat
 ```
-If you want 32-bit version use '01-generate-VisualStudio-x32.bat' to generate project files.
 
 ## Windows (MinGW with MSYS)
 ```
