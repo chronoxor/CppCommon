@@ -11,30 +11,30 @@
 #include "string/encoding.h"
 #include "string/format.h"
 
-#if defined(_WIN32) || defined(_WIN64)
-#include <windows.h>
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
 #include <errno.h>
 #include <string.h>
+#elif defined(_WIN32) || defined(_WIN64)
+#include <windows.h>
 #endif
 
 namespace CppCommon {
 
 int SystemError::GetLast() noexcept
 {
-#if defined(_WIN32) || defined(_WIN64)
-    return GetLastError();
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     return errno;
+#elif defined(_WIN32) || defined(_WIN64)
+    return GetLastError();
 #endif
 }
 
 void SystemError::SetLast(int error) noexcept
 {
-#if defined(_WIN32) || defined(_WIN64)
-    return SetLastError(error);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     errno = error;
+#elif defined(_WIN32) || defined(_WIN64)
+    return SetLastError(error);
 #endif
 }
 
@@ -46,17 +46,17 @@ void SystemError::ClearLast() noexcept
 std::string SystemError::Description(int error)
 {
     const int capacity = 1024;
-#if defined(_WIN32) || defined(_WIN64)
-    WCHAR buffer[capacity];
-    DWORD size = FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, nullptr, error, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), buffer, capacity, nullptr);
-    return Encoding::ToUTF8(std::wstring(buffer, (size - 2)));
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     char buffer[capacity];
     char* result = strerror_r(error, buffer, capacity);
     if (result == nullptr)
         return "Cannot convert the given system error code to the system message - {}"_format(error);
     else
         return std::string(result);
+#elif defined(_WIN32) || defined(_WIN64)
+    WCHAR buffer[capacity];
+    DWORD size = FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, nullptr, error, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), buffer, capacity, nullptr);
+    return Encoding::ToUTF8(std::wstring(buffer, (size - 2)));
 #endif
 }
 

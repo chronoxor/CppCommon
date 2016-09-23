@@ -6,13 +6,23 @@
     \copyright MIT License
 */
 
+#if (__MINGW32__)
+#define _WIN32_WINNT 0x601
+#endif
+
 #include "filesystem/symlink.h"
 
 #include "filesystem/exceptions.h"
 
 #include <memory>
 
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <limits.h>
+#include <unistd.h>
+#include <vector>
+#elif defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
 //  REPARSE_DATA_BUFFER related definitions are found in ntifs.h, which is part of the
 //  Windows Device Driver Kit. Since that's inconvenient, the definitions are provided
@@ -54,19 +64,24 @@ typedef struct _REPARSE_DATA_BUFFER
 #ifndef MAXIMUM_REPARSE_DATA_BUFFER_SIZE
 #define MAXIMUM_REPARSE_DATA_BUFFER_SIZE (16 * 1024)
 #endif
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <limits.h>
-#include <unistd.h>
-#include <vector>
 #endif
 
 namespace CppCommon {
 
 Path Symlink::target() const
 {
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+    std::vector<char> buffer(PATH_MAX);
+    ssize_t size;
+
+    while ((size = readlink(native().c_str(), buffer.data(), buffer.size())) == (ssize_t)buffer.size())
+        buffer.resize(buffer.size() * 2);
+
+    if (size < 0)
+        throwex FileSystemException("Cannot read symlink target of the path!").Attach(*this);
+
+    return Path(std::string(buffer.data(), size));
+#elif defined(_WIN32) || defined(_WIN64)
     HANDLE hSymlink = CreateFileW(wstring().c_str(), GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OPEN_REPARSE_POINT, nullptr);
     if (hSymlink == INVALID_HANDLE_VALUE)
         throwex FileSystemException("Cannot open the symlink path for reading!").Attach(*this);
@@ -91,32 +106,12 @@ Path Symlink::target() const
                             (wchar_t*)info.rdb.SymbolicLinkReparseBuffer.PathBuffer +
                                      (info.rdb.SymbolicLinkReparseBuffer.PrintNameOffset / sizeof(WCHAR)) +
                                      (info.rdb.SymbolicLinkReparseBuffer.PrintNameLength / sizeof(WCHAR))));
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    std::vector<char> buffer(PATH_MAX);
-    ssize_t size;
-
-    while ((size = readlink(native().c_str(), buffer.data(), buffer.size())) == (ssize_t)buffer.size())
-        buffer.resize(buffer.size() * 2);
-
-    if (size < 0)
-        throwex FileSystemException("Cannot read symlink target of the path!").Attach(*this);
-
-    return Path(std::string(buffer.data(), size));
 #endif
 }
 
 bool Symlink::IsSymlinkExists() const
 {
-#if defined(_WIN32) || defined(_WIN64)
-    DWORD attributes = GetFileAttributesW(wstring().c_str());
-    if (attributes == INVALID_FILE_ATTRIBUTES)
-        return false;
-
-    if (attributes & FILE_ATTRIBUTE_REPARSE_POINT)
-        return true;
-    else
-        return false;
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     struct stat lstatus;
     int result = lstat(native().c_str(), &lstatus);
     if (result != 0)
@@ -131,12 +126,25 @@ bool Symlink::IsSymlinkExists() const
         return true;
     else
         return false;
+#elif defined(_WIN32) || defined(_WIN64)
+    DWORD attributes = GetFileAttributesW(wstring().c_str());
+    if (attributes == INVALID_FILE_ATTRIBUTES)
+        return false;
+
+    if (attributes & FILE_ATTRIBUTE_REPARSE_POINT)
+        return true;
+    else
+        return false;
 #endif
 }
 
 Symlink Symlink::CreateSymlink(const Path& src, const Path& dst)
 {
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+    int result = symlink(src.native().c_str(), dst.native().c_str());
+    if (result != 0)
+        throwex FileSystemException("Cannot create symbolic link!").Attach(src, dst);
+#elif defined(_WIN32) || defined(_WIN64)
     std::wstring source = src.wstring();
     DWORD attributes = GetFileAttributesW(source.c_str());
     if (attributes == INVALID_FILE_ATTRIBUTES)
@@ -152,22 +160,18 @@ Symlink Symlink::CreateSymlink(const Path& src, const Path& dst)
         if (!CreateSymbolicLinkW(dst.wstring().c_str(), source.c_str(), 0))
             throwex FileSystemException("Cannot create symbolic link for the file!").Attach(src, dst);
     }
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    int result = symlink(src.native().c_str(), dst.native().c_str());
-    if (result != 0)
-        throwex FileSystemException("Cannot create symbolic link!").Attach(src, dst);
 #endif
     return dst;
 }
 
 Path Symlink::CreateHardlink(const Path& src, const Path& dst)
 {
-#if defined(_WIN32) || defined(_WIN64)
-    if (!CreateHardLinkW(dst.wstring().c_str(), src.wstring().c_str(), nullptr))
-        throwex FileSystemException("Cannot create hard link!").Attach(src, dst);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     int result = link(src.native().c_str(), dst.native().c_str());
     if (result != 0)
+        throwex FileSystemException("Cannot create hard link!").Attach(src, dst);
+#elif defined(_WIN32) || defined(_WIN64)
+    if (!CreateHardLinkW(dst.wstring().c_str(), src.wstring().c_str(), nullptr))
         throwex FileSystemException("Cannot create hard link!").Attach(src, dst);
 #endif
     return dst;

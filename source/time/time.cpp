@@ -21,11 +21,11 @@ Time::Time(const Timestamp& timestamp)
 {
     struct tm result;
     time_t seconds = timestamp.seconds();
-#if defined(_WIN32) || defined(_WIN64)
-    if (gmtime_s(&result, &seconds))
-        throwex SystemException("Cannot convert the given timestamp ({}) to date & time structure!"_format(timestamp.total()));
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     if (gmtime_r(&seconds, &result) != &result)
+        throwex SystemException("Cannot convert the given timestamp ({}) to date & time structure!"_format(timestamp.total()));
+#elif defined(_WIN32) || defined(_WIN64)
+    if (gmtime_s(&result, &seconds))
         throwex SystemException("Cannot convert the given timestamp ({}) to date & time structure!"_format(timestamp.total()));
 #endif
     _year = result.tm_year + 1900;
@@ -100,10 +100,10 @@ UtcTimestamp Time::utcstamp() const
     result.tm_sec = _second;
     result.tm_isdst = -1;
 
-#if defined(_WIN32) || defined(_WIN64)
-    time_t seconds = _mkgmtime(&result);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     time_t seconds = timegm(&result);
+#elif defined(_WIN32) || defined(_WIN64)
+    time_t seconds = _mkgmtime(&result);
 #endif
     if (seconds == -1)
         throwex SystemException("Cannot convert date & time to UTC timestamp!");
@@ -133,11 +133,11 @@ UtcTime::UtcTime(const Timestamp& timestamp)
 {
     struct tm result;
     time_t seconds = timestamp.seconds();
-#if defined(_WIN32) || defined(_WIN64)
-    if (gmtime_s(&result, &seconds))
-        throwex SystemException("Cannot convert the given timestamp ({}) to UTC date & time structure!"_format(timestamp.total()));
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     if (gmtime_r(&seconds, &result) != &result)
+        throwex SystemException("Cannot convert the given timestamp ({}) to UTC date & time structure!"_format(timestamp.total()));
+#elif defined(_WIN32) || defined(_WIN64)
+    if (gmtime_s(&result, &seconds))
         throwex SystemException("Cannot convert the given timestamp ({}) to UTC date & time structure!"_format(timestamp.total()));
 #endif
     _year = result.tm_year + 1900;
@@ -155,11 +155,11 @@ LocalTime::LocalTime(const Timestamp& timestamp)
 {
     struct tm result;
     time_t seconds = timestamp.seconds();
-#if defined(_WIN32) || defined(_WIN64)
-    if (localtime_s(&result, &seconds))
-        throwex SystemException("Cannot convert the given timestamp ({}) to local date & time structure!"_format(timestamp.total()));
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     if (localtime_r(&seconds, &result) != &result)
+        throwex SystemException("Cannot convert the given timestamp ({}) to local date & time structure!"_format(timestamp.total()));
+#elif defined(_WIN32) || defined(_WIN64)
+    if (localtime_s(&result, &seconds))
         throwex SystemException("Cannot convert the given timestamp ({}) to local date & time structure!"_format(timestamp.total()));
 #endif
     _year = result.tm_year + 1900;

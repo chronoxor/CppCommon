@@ -11,6 +11,7 @@
 #include "errors/exceptions.h"
 #include "string/encoding.h"
 
+#include <cstring>
 #include <sstream>
 
 #if defined(linux) || defined(__linux) || defined(__linux__)

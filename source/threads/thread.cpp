@@ -14,7 +14,7 @@
 
 #if defined(__APPLE__)
 #include <pthread.h>
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
 #include <errno.h>
 #include <pthread.h>
 #include <sched.h>
@@ -45,7 +45,7 @@ uint64_t SetMinimumTimerResolution()
     NTSTATUS ns = NtQueryTimerResolution(&MinimumResolution, &MaximumResolution, &ActualResolution);
     if (ns == STATUS_SUCCESS)
     {
-        ns = NtSetTimerResolution(min(MinimumResolution, MaximumResolution), TRUE, &ActualResolution);
+        ns = NtSetTimerResolution(std::min(MinimumResolution, MaximumResolution), TRUE, &ActualResolution);
         if (ns == STATUS_SUCCESS)
             return (ActualResolution * 100);
     }
@@ -69,11 +69,11 @@ uint64_t Thread::CurrentThreadId() noexcept
 
 uint32_t Thread::CurrentThreadAffinity() noexcept
 {
-#if defined(_WIN32) || defined(_WIN64)
-    return GetCurrentProcessorNumber();
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     int affinity = sched_getcpu();
     return (affinity < 0) ? 0 : affinity;
+#elif defined(_WIN32) || defined(_WIN64)
+    return GetCurrentProcessorNumber();
 #endif
 }
 
@@ -83,7 +83,20 @@ void Thread::SleepFor(const Timespan& timespan) noexcept
         return;
     if (timespan == 0)
         return Yield();
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+    struct timespec req, rem;
+    req.tv_sec = timespan.seconds();
+    req.tv_nsec = timespan.nanoseconds() % 1000000000;
+
+    // Call nanosleep() in loop until we have remaining time to sleep
+    while (nanosleep(&req, &rem) != 0)
+    {
+        if (errno == EINTR)
+            req = rem;
+        else
+            break;
+    }
+#elif defined(_WIN32) || defined(_WIN64)
     static NTSTATUS(__stdcall *NtDelayExecution)(IN BOOLEAN Alertable, IN PLARGE_INTEGER DelayInterval) = (NTSTATUS(__stdcall*)(BOOLEAN, PLARGE_INTEGER))GetProcAddress(GetModuleHandle("ntdll.dll"), "NtDelayExecution");
 
     // Update once and get Windows Timer resolution
@@ -121,34 +134,32 @@ void Thread::SleepFor(const Timespan& timespan) noexcept
             Sleep(sleep / 1000000);
         }
     }
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    struct timespec req, rem;
-    req.tv_sec = timespan.seconds();
-    req.tv_nsec = timespan.nanoseconds() % 1000000000;
-
-    // Call nanosleep() in loop until we have remaining time to sleep
-    while (nanosleep(&req, &rem) != 0)
-    {
-        if (errno == EINTR)
-            req = rem;
-        else
-            break;
-    }
 #endif
 }
 
 void Thread::Yield() noexcept
 {
-#if defined(_WIN32) || defined(_WIN64)
-    SwitchToThread();
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     pthread_yield();
+#elif defined(_WIN32) || defined(_WIN64)
+    SwitchToThread();
 #endif
 }
 
 std::bitset<64> Thread::GetAffinity()
 {
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+    cpu_set_t cpuset;
+    CPU_ZERO(&cpuset);
+    int result = pthread_getaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpuset);
+    if (result != 0)
+        throwex SystemException("Failed to get the current thread CPU affinity!");
+    std::bitset<64> affinity;
+    for (int i = 0; i < std::min(CPU_SETSIZE, 64); ++i)
+        if (CPU_ISSET(i, &cpuset))
+            affinity.set(i);
+    return affinity;
+#elif defined(_WIN32) || defined(_WIN64)
     typedef struct
     {
         HANDLE UniqueProcess;
@@ -165,7 +176,7 @@ std::bitset<64> Thread::GetAffinity()
         ULONG_PTR AffinityMask;
         KPRIORITY Priority;
         LONG BasePriority;
-    } THREAD_BASIC_INFORMATION, *PTHREAD_BASIC_INFORMATION;
+    } THREAD_BASIC_INFORMATION;
 
     static NTSTATUS(__stdcall *NtQueryInformationThread)(IN HANDLE ThreadHandle, IN THREADINFOCLASS ThreadInformationClass, OUT PVOID ThreadInformation, IN ULONG ThreadInformationLength, OUT PULONG ReturnLength) = (NTSTATUS(__stdcall*)(HANDLE, THREADINFOCLASS, PVOID, ULONG, PULONG))GetProcAddress(GetModuleHandle("ntdll.dll"), "NtQueryInformationThread");
 
@@ -181,10 +192,15 @@ std::bitset<64> Thread::GetAffinity()
     }
 
     return std::bitset<64>(0xFFFFFFFFFFFFFFFFull >> (64 - CPU::Affinity()));
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#endif
+}
+
+std::bitset<64> Thread::GetAffinity(std::thread& thread)
+{
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     cpu_set_t cpuset;
     CPU_ZERO(&cpuset);
-    int result = pthread_getaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpuset);
+    int result = pthread_getaffinity_np(thread.native_handle(), sizeof(cpu_set_t), &cpuset);
     if (result != 0)
         throwex SystemException("Failed to get the current thread CPU affinity!");
     std::bitset<64> affinity;
@@ -192,12 +208,7 @@ std::bitset<64> Thread::GetAffinity()
         if (CPU_ISSET(i, &cpuset))
             affinity.set(i);
     return affinity;
-#endif
-}
-
-std::bitset<64> Thread::GetAffinity(std::thread& thread)
-{
-#if defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64)
     typedef struct
     {
         HANDLE UniqueProcess;
@@ -214,7 +225,7 @@ std::bitset<64> Thread::GetAffinity(std::thread& thread)
         ULONG_PTR AffinityMask;
         KPRIORITY Priority;
         LONG BasePriority;
-    } THREAD_BASIC_INFORMATION, *PTHREAD_BASIC_INFORMATION;
+    } THREAD_BASIC_INFORMATION;
 
     static NTSTATUS(__stdcall *NtQueryInformationThread)(IN HANDLE ThreadHandle, IN THREADINFOCLASS ThreadInformationClass, OUT PVOID ThreadInformation, IN ULONG ThreadInformationLength, OUT PULONG ReturnLength) = (NTSTATUS(__stdcall*)(HANDLE, THREADINFOCLASS, PVOID, ULONG, PULONG))GetProcAddress(GetModuleHandle("ntdll.dll"), "NtQueryInformationThread");
 
@@ -222,7 +233,7 @@ std::bitset<64> Thread::GetAffinity(std::thread& thread)
     {
         THREAD_BASIC_INFORMATION tbi;
         ZeroMemory(&tbi, sizeof(tbi));
-        NTSTATUS ns = NtQueryInformationThread(thread.native_handle(), (THREADINFOCLASS)0, &tbi, sizeof(tbi), nullptr);
+        NTSTATUS ns = NtQueryInformationThread((HANDLE)thread.native_handle(), (THREADINFOCLASS)0, &tbi, sizeof(tbi), nullptr);
         if (ns == STATUS_SUCCESS)
             return std::bitset<64>(tbi.AffinityMask);
         else
@@ -230,27 +241,12 @@ std::bitset<64> Thread::GetAffinity(std::thread& thread)
     }
 
     return std::bitset<64>(0xFFFFFFFFFFFFFFFFull >> (64 - CPU::Affinity()));
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    cpu_set_t cpuset;
-    CPU_ZERO(&cpuset);
-    int result = pthread_getaffinity_np(thread.native_handle(), sizeof(cpu_set_t), &cpuset);
-    if (result != 0)
-        throwex SystemException("Failed to get the current thread CPU affinity!");
-    std::bitset<64> affinity;
-    for (int i = 0; i < std::min(CPU_SETSIZE, 64); ++i)
-        if (CPU_ISSET(i, &cpuset))
-            affinity.set(i);
-    return affinity;
 #endif
 }
 
 void Thread::SetAffinity(const std::bitset<64>& affinity)
 {
-#if defined(_WIN32) || defined(_WIN64)
-    DWORD_PTR dwThreadAffinityMask = (DWORD_PTR)affinity.to_ullong();
-    if (!SetThreadAffinityMask(GetCurrentThread(), dwThreadAffinityMask))
-        throwex SystemException("Failed to set the current thread CPU affinity!");
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     cpu_set_t cpuset;
     CPU_ZERO(&cpuset);
     for (int i = 0; i < std::min(CPU_SETSIZE, 64); ++i)
@@ -259,16 +255,16 @@ void Thread::SetAffinity(const std::bitset<64>& affinity)
     int result = pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpuset);
     if (result != 0)
         throwex SystemException("Failed to set the current thread CPU affinity!");
+#elif defined(_WIN32) || defined(_WIN64)
+    DWORD_PTR dwThreadAffinityMask = (DWORD_PTR)affinity.to_ullong();
+    if (!SetThreadAffinityMask(GetCurrentThread(), dwThreadAffinityMask))
+        throwex SystemException("Failed to set the current thread CPU affinity!");
 #endif
 }
 
 void Thread::SetAffinity(std::thread& thread, const std::bitset<64>& affinity)
 {
-#if defined(_WIN32) || defined(_WIN64)
-    DWORD_PTR dwThreadAffinityMask = (DWORD_PTR)affinity.to_ullong();
-    if (!SetThreadAffinityMask(thread.native_handle(), dwThreadAffinityMask))
-        throwex SystemException("Failed to set the current thread CPU affinity!");
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     cpu_set_t cpuset;
     CPU_ZERO(&cpuset);
     for (int i = 0; i < std::min(CPU_SETSIZE, 64); ++i)
@@ -277,30 +273,16 @@ void Thread::SetAffinity(std::thread& thread, const std::bitset<64>& affinity)
     int result = pthread_setaffinity_np(thread.native_handle(), sizeof(cpu_set_t), &cpuset);
     if (result != 0)
         throwex SystemException("Failed to set the current thread CPU affinity!");
+#elif defined(_WIN32) || defined(_WIN64)
+    DWORD_PTR dwThreadAffinityMask = (DWORD_PTR)affinity.to_ullong();
+    if (!SetThreadAffinityMask((HANDLE)thread.native_handle(), dwThreadAffinityMask))
+        throwex SystemException("Failed to set the current thread CPU affinity!");
 #endif
 }
 
 Thread::Priority Thread::GetPriority()
 {
-#if defined(_WIN32) || defined(_WIN64)
-    int priority = GetThreadPriority(GetCurrentThread());
-    if (priority == THREAD_PRIORITY_ERROR_RETURN)
-        throwex SystemException("Failed to get the current thread priority!");
-    if (priority < THREAD_PRIORITY_LOWEST)
-        return Priority::IDLE;
-    else if (priority < THREAD_PRIORITY_BELOW_NORMAL)
-        return Priority::LOWEST;
-    else if (priority < THREAD_PRIORITY_NORMAL)
-        return Priority::LOW;
-    else if (priority < THREAD_PRIORITY_ABOVE_NORMAL)
-        return Priority::NORMAL;
-    else if (priority < THREAD_PRIORITY_HIGHEST)
-        return Priority::HIGH;
-    else if (priority < THREAD_PRIORITY_TIME_CRITICAL)
-        return Priority::HIGHEST;
-    else
-        return Priority::REALTIME;
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     int policy;
     struct sched_param sched;
     int result = pthread_getschedparam(pthread_self(), &policy, &sched);
@@ -325,15 +307,10 @@ Thread::Priority Thread::GetPriority()
     }
     else
         return Priority::NORMAL;
-#endif
-}
-
-Thread::Priority Thread::GetPriority(std::thread& thread)
-{
-#if defined(_WIN32) || defined(_WIN64)
-    int priority = GetThreadPriority(thread.native_handle());
+#elif defined(_WIN32) || defined(_WIN64)
+    int priority = GetThreadPriority(GetCurrentThread());
     if (priority == THREAD_PRIORITY_ERROR_RETURN)
-        throwex SystemException("Failed to get the given thread priority!");
+        throwex SystemException("Failed to get the current thread priority!");
     if (priority < THREAD_PRIORITY_LOWEST)
         return Priority::IDLE;
     else if (priority < THREAD_PRIORITY_BELOW_NORMAL)
@@ -348,7 +325,12 @@ Thread::Priority Thread::GetPriority(std::thread& thread)
         return Priority::HIGHEST;
     else
         return Priority::REALTIME;
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#endif
+}
+
+Thread::Priority Thread::GetPriority(std::thread& thread)
+{
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     int policy;
     struct sched_param sched;
     int result = pthread_getschedparam(thread.native_handle(), &policy, &sched);
@@ -373,41 +355,30 @@ Thread::Priority Thread::GetPriority(std::thread& thread)
     }
     else
         return Priority::NORMAL;
+#elif defined(_WIN32) || defined(_WIN64)
+    int priority = GetThreadPriority((HANDLE)thread.native_handle());
+    if (priority == THREAD_PRIORITY_ERROR_RETURN)
+        throwex SystemException("Failed to get the given thread priority!");
+    if (priority < THREAD_PRIORITY_LOWEST)
+        return Priority::IDLE;
+    else if (priority < THREAD_PRIORITY_BELOW_NORMAL)
+        return Priority::LOWEST;
+    else if (priority < THREAD_PRIORITY_NORMAL)
+        return Priority::LOW;
+    else if (priority < THREAD_PRIORITY_ABOVE_NORMAL)
+        return Priority::NORMAL;
+    else if (priority < THREAD_PRIORITY_HIGHEST)
+        return Priority::HIGH;
+    else if (priority < THREAD_PRIORITY_TIME_CRITICAL)
+        return Priority::HIGHEST;
+    else
+        return Priority::REALTIME;
 #endif
 }
 
 void Thread::SetPriority(Priority priority)
 {
-#if defined(_WIN32) || defined(_WIN64)
-    int nPriority = THREAD_PRIORITY_NORMAL;
-    switch (priority)
-    {
-        case Priority::IDLE:
-            nPriority = THREAD_PRIORITY_IDLE;
-            break;
-        case Priority::LOWEST:
-            nPriority = THREAD_PRIORITY_LOWEST;
-            break;
-        case Priority::LOW:
-            nPriority = THREAD_PRIORITY_BELOW_NORMAL;
-            break;
-        case Priority::NORMAL:
-            nPriority = THREAD_PRIORITY_NORMAL;
-            break;
-        case Priority::HIGH:
-            nPriority = THREAD_PRIORITY_ABOVE_NORMAL;
-            break;
-        case Priority::HIGHEST:
-            nPriority = THREAD_PRIORITY_HIGHEST;
-            break;
-        case Priority::REALTIME:
-            nPriority = THREAD_PRIORITY_TIME_CRITICAL;
-            break;
-    }
-
-    if (!SetThreadPriority(GetCurrentThread(), nPriority))
-        throwex SystemException("Failed to set the current thread priority!");
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     int policy = SCHED_RR;
     struct sched_param sched;
     sched.sched_priority = 50;
@@ -439,12 +410,7 @@ void Thread::SetPriority(Priority priority)
     int result = pthread_setschedparam(pthread_self(), policy, &sched);
     if (result != 0)
         throwex SystemException("Failed to set the current thread priority!");
-#endif
-}
-
-void Thread::SetPriority(std::thread& thread, Priority priority)
-{
-#if defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64)
     int nPriority = THREAD_PRIORITY_NORMAL;
     switch (priority)
     {
@@ -471,9 +437,14 @@ void Thread::SetPriority(std::thread& thread, Priority priority)
             break;
     }
 
-    if (!SetThreadPriority(thread.native_handle(), nPriority))
-        throwex SystemException("Failed to set the given thread priority!");
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+    if (!SetThreadPriority(GetCurrentThread(), nPriority))
+        throwex SystemException("Failed to set the current thread priority!");
+#endif
+}
+
+void Thread::SetPriority(std::thread& thread, Priority priority)
+{
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     int policy = SCHED_RR;
     struct sched_param sched;
     sched.sched_priority = 50;
@@ -504,6 +475,35 @@ void Thread::SetPriority(std::thread& thread, Priority priority)
 
     int result = pthread_setschedparam(thread.native_handle(), policy, &sched);
     if (result != 0)
+        throwex SystemException("Failed to set the given thread priority!");
+#elif defined(_WIN32) || defined(_WIN64)
+    int nPriority = THREAD_PRIORITY_NORMAL;
+    switch (priority)
+    {
+        case Priority::IDLE:
+            nPriority = THREAD_PRIORITY_IDLE;
+            break;
+        case Priority::LOWEST:
+            nPriority = THREAD_PRIORITY_LOWEST;
+            break;
+        case Priority::LOW:
+            nPriority = THREAD_PRIORITY_BELOW_NORMAL;
+            break;
+        case Priority::NORMAL:
+            nPriority = THREAD_PRIORITY_NORMAL;
+            break;
+        case Priority::HIGH:
+            nPriority = THREAD_PRIORITY_ABOVE_NORMAL;
+            break;
+        case Priority::HIGHEST:
+            nPriority = THREAD_PRIORITY_HIGHEST;
+            break;
+        case Priority::REALTIME:
+            nPriority = THREAD_PRIORITY_TIME_CRITICAL;
+            break;
+    }
+
+    if (!SetThreadPriority((HANDLE)thread.native_handle(), nPriority))
         throwex SystemException("Failed to set the given thread priority!");
 #endif
 }

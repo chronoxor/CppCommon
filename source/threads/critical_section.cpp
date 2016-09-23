@@ -10,13 +10,13 @@
 
 #include "threads/thread.h"
 
-#if defined(_WIN32) || defined(_WIN64)
-#include <windows.h>
-#undef Yield
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
 #include "errors/exceptions.h"
 #include "errors/fatal.h"
 #include <pthread.h>
+#elif defined(_WIN32) || defined(_WIN64)
+#include <windows.h>
+#undef Yield
 #endif
 
 namespace CppCommon {
@@ -26,9 +26,7 @@ class CriticalSection::Impl
 public:
     Impl()
     {
-#if defined(_WIN32) || defined(_WIN64)
-        InitializeCriticalSection(&_lock);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         pthread_mutexattr_t mutex_attribute;
         int result = pthread_mutexattr_init(&mutex_attribute);
         if (result != 0)
@@ -42,59 +40,61 @@ public:
         result = pthread_mutexattr_destroy(&mutex_attribute);
         if (result != 0)
             throwex SystemException("Failed to destroy a mutex attribute!", result);
+#elif defined(_WIN32) || defined(_WIN64)
+        InitializeCriticalSection(&_lock);
 #endif
     }
 
     ~Impl()
     {
-#if defined(_WIN32) || defined(_WIN64)
-        DeleteCriticalSection(&_lock);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         int result = pthread_mutex_destroy(&_lock);
         if (result != 0)
             fatality(SystemException("Failed to destroy a mutex!", result));
+#elif defined(_WIN32) || defined(_WIN64)
+        DeleteCriticalSection(&_lock);
 #endif
     }
 
     bool TryLock()
     {
-#if defined(_WIN32) || defined(_WIN64)
-        return (TryEnterCriticalSection(&_lock) != 0);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         int result = pthread_mutex_trylock(&_lock);
         if ((result != 0) && (result != EBUSY))
             throwex SystemException("Failed to try lock a mutex!", result);
         return (result == 0);
+#elif defined(_WIN32) || defined(_WIN64)
+        return (TryEnterCriticalSection(&_lock) != 0);
 #endif
     }
 
     void Lock()
     {
-#if defined(_WIN32) || defined(_WIN64)
-        EnterCriticalSection(&_lock);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         int result = pthread_mutex_lock(&_lock);
         if (result != 0)
             throwex SystemException("Failed to lock a mutex!", result);
+#elif defined(_WIN32) || defined(_WIN64)
+        EnterCriticalSection(&_lock);
 #endif
     }
 
     void Unlock()
     {
-#if defined(_WIN32) || defined(_WIN64)
-        LeaveCriticalSection(&_lock);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         int result = pthread_mutex_unlock(&_lock);
         if (result != 0)
             throwex SystemException("Failed to unlock a mutex!", result);
+#elif defined(_WIN32) || defined(_WIN64)
+        LeaveCriticalSection(&_lock);
 #endif
     }
 
 private:
-#if defined(_WIN32) || defined(_WIN64)
-    CRITICAL_SECTION _lock;
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     pthread_mutex_t _lock;
+#elif defined(_WIN32) || defined(_WIN64)
+    CRITICAL_SECTION _lock;
 #endif
 };
 

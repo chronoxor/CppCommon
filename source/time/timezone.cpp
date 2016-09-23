@@ -6,21 +6,41 @@
     \copyright MIT License
 */
 
+#if (__MINGW32__)
+#define _WIN32_WINNT 0x601
+#endif
+
 #include "time/timezone.h"
 
 #include "errors/exceptions.h"
 
-#if defined(_WIN32) || defined(_WIN64)
-#include <windows.h>
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
 #include <time.h>
+#elif defined(_WIN32) || defined(_WIN64)
+#include <windows.h>
 #endif
 
 namespace CppCommon {
 
 Timezone::Timezone() : _name(), _offset(Timespan::zero()), _dstoffset(Timespan::zero())
 {
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+    struct tm local;
+    time_t seconds = time(nullptr);
+    if (localtime_r(&seconds, &local) != &local)
+        throwex SystemException("Cannot convert current time to local date & time structure!");
+    _name = local.tm_zone;
+    if (local.tm_isdst > 0)
+    {
+        _offset = Timespan::seconds(local.tm_gmtoff - 3600);
+        _dstoffset = Timespan::seconds(3600);
+    }
+    else
+    {
+        _offset = Timespan::seconds(local.tm_gmtoff);
+        _dstoffset = Timespan::zero();
+    }
+#elif defined(_WIN32) || defined(_WIN64)
     WCHAR* name;
     char buffer[1024];
     DYNAMIC_TIME_ZONE_INFORMATION dtzi;
@@ -49,22 +69,6 @@ Timezone::Timezone() : _name(), _offset(Timespan::zero()), _dstoffset(Timespan::
     if (!WideCharToMultiByte(CP_UTF8, WC_ERR_INVALID_CHARS, name, -1, buffer, 1024, nullptr, nullptr))
         throwex SystemException("Cannot get dynamic time zone key name!");
     _name = buffer;
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    struct tm local;
-    time_t seconds = time(nullptr);
-    if (localtime_r(&seconds, &local) != &local)
-        throwex SystemException("Cannot convert current time to local date & time structure!");
-    _name = local.tm_zone;
-    if (local.tm_isdst > 0)
-    {
-        _offset = Timespan::seconds(local.tm_gmtoff - 3600);
-        _dstoffset = Timespan::seconds(3600);
-    }
-    else
-    {
-        _offset = Timespan::seconds(local.tm_gmtoff);
-        _dstoffset = Timespan::zero();
-    }
 #endif
 }
 

@@ -15,22 +15,22 @@ namespace CppCommon {
 
 std::string Encoding::ToUTF8(const std::wstring& wstr)
 {
-#if defined(_WIN32) || defined(_WIN64)
-    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> convert;
-    return convert.to_bytes(wstr);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     std::wstring_convert<std::codecvt_utf8<wchar_t>> convert;
+    return convert.to_bytes(wstr);
+#elif defined(_WIN32) || defined(_WIN64)
+    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> convert;
     return convert.to_bytes(wstr);
 #endif
 }
 
 std::wstring Encoding::FromUTF8(const std::string& str)
 {
-#if defined(_WIN32) || defined(_WIN64)
-    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> convert;
-    return convert.from_bytes(str);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     std::wstring_convert<std::codecvt_utf8<wchar_t>> convert;
+    return convert.from_bytes(str);
+#elif defined(_WIN32) || defined(_WIN64)
+    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> convert;
     return convert.from_bytes(str);
 #endif
 }

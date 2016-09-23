@@ -15,13 +15,13 @@
 #include <memory>
 #include <regex>
 
-#if defined(_WIN32) || defined(_WIN64)
-#include <windows.h>
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
 #include <sys/stat.h>
 #include <dirent.h>
 #include <fcntl.h>
 #include <unistd.h>
+#elif defined(_WIN32) || defined(_WIN64)
+#include <windows.h>
 #endif
 
 namespace CppCommon {
@@ -31,16 +31,7 @@ const Flags<FilePermissions> Directory::DEFAULT_PERMISSIONS = FilePermissions::I
 
 bool Directory::IsDirectoryExists() const
 {
-#if defined(_WIN32) || defined(_WIN64)
-    DWORD attributes = GetFileAttributesW(wstring().c_str());
-    if (attributes == INVALID_FILE_ATTRIBUTES)
-        return false;
-
-    if (attributes & FILE_ATTRIBUTE_DIRECTORY)
-        return true;
-    else
-        return false;
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     struct stat status;
     int result = stat(native().c_str(), &status);
     if (result != 0)
@@ -55,35 +46,21 @@ bool Directory::IsDirectoryExists() const
         return true;
     else
         return false;
+#elif defined(_WIN32) || defined(_WIN64)
+    DWORD attributes = GetFileAttributesW(wstring().c_str());
+    if (attributes == INVALID_FILE_ATTRIBUTES)
+        return false;
+
+    if (attributes & FILE_ATTRIBUTE_DIRECTORY)
+        return true;
+    else
+        return false;
 #endif
 }
 
 bool Directory::IsDirectoryEmpty() const
 {
-#if defined(_WIN32) || defined(_WIN64)
-    WIN32_FIND_DATAW fd;
-    HANDLE hDirectory = FindFirstFileW((*this / "*").wstring().c_str(), &fd);
-    if (hDirectory == INVALID_HANDLE_VALUE)
-        throwex FileSystemException("Cannot open a directory!").Attach(*this);
-
-    // Smart resource deleter pattern
-    auto clear = [](HANDLE hFindFile) { FindClose(hFindFile); };
-    auto directory = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear)>(hDirectory, clear);
-
-    do
-    {
-        if (std::wcsncmp(fd.cFileName, L".", countof(fd.cFileName)) == 0)
-            continue;
-        if (std::wcsncmp(fd.cFileName, L"..", countof(fd.cFileName)) == 0)
-            continue;
-        return false;
-    } while (FindNextFileW(hDirectory, &fd) != 0);
-
-    if (GetLastError() != ERROR_NO_MORE_FILES)
-        throwex FileSystemException("Cannot read directory entries!").Attach(*this);
-
-    return true;
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     DIR* dir = opendir(native().c_str());
     if (dir == nullptr)
         throwex FileSystemException("Cannot open a directory!").Attach(*this);
@@ -106,6 +83,29 @@ bool Directory::IsDirectoryEmpty() const
     }
 
     if (result != 0)
+        throwex FileSystemException("Cannot read directory entries!").Attach(*this);
+
+    return true;
+#elif defined(_WIN32) || defined(_WIN64)
+    WIN32_FIND_DATAW fd;
+    HANDLE hDirectory = FindFirstFileW((*this / "*").wstring().c_str(), &fd);
+    if (hDirectory == INVALID_HANDLE_VALUE)
+        throwex FileSystemException("Cannot open a directory!").Attach(*this);
+
+    // Smart resource deleter pattern
+    auto clear = [](HANDLE hFindFile) { FindClose(hFindFile); };
+    auto directory = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear)>(hDirectory, clear);
+
+    do
+    {
+        if (std::wcsncmp(fd.cFileName, L".", countof(fd.cFileName)) == 0)
+            continue;
+        if (std::wcsncmp(fd.cFileName, L"..", countof(fd.cFileName)) == 0)
+            continue;
+        return false;
+    } while (FindNextFileW(hDirectory, &fd) != 0);
+
+    if (GetLastError() != ERROR_NO_MORE_FILES)
         throwex FileSystemException("Cannot read directory entries!").Attach(*this);
 
     return true;
@@ -261,10 +261,7 @@ Directory Directory::Create(const Path& path, const Flags<FileAttributes>& attri
     Directory directory(path);
     if (directory.IsDirectoryExists())
         return directory;
-#if defined(_WIN32) || defined(_WIN64)
-    if (!CreateDirectoryW(path.wstring().c_str(), nullptr))
-        throwex FileSystemException("Cannot create directory!").Attach(path);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     mode_t mode = 0;
     if (permissions & FilePermissions::IRUSR)
         mode |= S_IRUSR;
@@ -293,6 +290,9 @@ Directory Directory::Create(const Path& path, const Flags<FileAttributes>& attri
 
     int result = mkdir(path.native().c_str(), mode);
     if (result != 0)
+        throwex FileSystemException("Cannot create directory!").Attach(path);
+#elif defined(_WIN32) || defined(_WIN64)
+    if (!CreateDirectoryW(path.wstring().c_str(), nullptr))
         throwex FileSystemException("Cannot create directory!").Attach(path);
 #endif
     return directory;

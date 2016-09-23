@@ -18,17 +18,17 @@
 #include <exception>
 #include <iostream>
 
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#include "utility/countof.h"
+#include <signal.h>
+#include <unistd.h>
+#elif defined(_WIN32) || defined(_WIN64)
 #include <new.h>
 #include <signal.h>
 #include <windows.h>
 #if defined(DBGHELP_SUPPORT)
 #include <DbgHelp.h>
 #endif
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-#include "utility/countof.h"
-#include <signal.h>
-#include <unistd.h>
 #endif
 
 namespace CppCommon {
@@ -80,7 +80,7 @@ public:
 
         // Catch a termination request
         signal(SIGTERM, SigtermHandler);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         // Prepare signal action structure
         struct sigaction sa;
         memset(&sa, 0, sizeof(sa));
@@ -123,6 +123,7 @@ public:
     static void SetupThread()
     {
 #if defined(_WIN32) || defined(_WIN64)
+#if defined(_MSC_VER)
         // Catch terminate() calls
         // In a multithreaded environment, terminate functions are maintained
         // separately for each thread. Each new thread needs to install its own
@@ -136,6 +137,7 @@ public:
         // unexpected function. Thus, each thread is in charge of its own unexpected handling.
         // http://msdn.microsoft.com/en-us/library/h46t5b69.aspx
         set_unexpected(UnexpectedHandler);
+#endif
 
         // Catch a floating point exception
         typedef void (*sigh)(int);
@@ -181,6 +183,7 @@ private:
         return EXCEPTION_EXECUTE_HANDLER;
     }
 
+#if defined(_MSC_VER)
     // CRT terminate() call handler
     static void __cdecl TerminateHandler()
     {
@@ -220,6 +223,7 @@ private:
         // Terminate process
         TerminateProcess(GetCurrentProcess(), 1);
     }
+#endif
 
     // CRT Pure virtual method call handler
     static void __cdecl PureCallHandler()
@@ -463,14 +467,24 @@ private:
         if (FunctionEntry != nullptr)
             RtlVirtualUnwind(UNW_FLAG_NHANDLER, ImageBase, ControlPc, FunctionEntry, &ContextRecord, &HandlerData, &EstablisherFrame, nullptr);
 
+#if defined(__GNUC__)
+        void* return_address = __builtin_return_address(0);
+        ContextRecord.Rip = (ULONGLONG)return_address;
+        ContextRecord.Rsp = (ULONGLONG)__builtin_extract_return_addr(return_address) + 8;
+#elif defined(_MSC_VER)
         ContextRecord.Rip = (ULONGLONG)_ReturnAddress();
         ContextRecord.Rsp = (ULONGLONG)_AddressOfReturnAddress() + 8;
+#endif
         ExceptionRecord.ExceptionAddress = (PVOID)ContextRecord.Rip;
 #else
         #error Unsupported architecture
 #endif
         ExceptionRecord.ExceptionCode = dwExceptionCode;
+#if defined(__GNUC__)
+        ExceptionRecord.ExceptionAddress = __builtin_return_address(0);
+#elif defined(_MSC_VER)
         ExceptionRecord.ExceptionAddress = _ReturnAddress();
+#endif
 
         CONTEXT* pContextRecord = new CONTEXT;
         memcpy(pContextRecord, &ContextRecord, sizeof(CONTEXT));
@@ -521,7 +535,7 @@ private:
 #endif
     }
 
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
 
     // Signal handler
     static void SignalHanlder(int signo, siginfo_t* info, void* context)

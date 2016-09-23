@@ -20,10 +20,7 @@
 #include <tuple>
 #include <vector>
 
-#if defined(_WIN32) || defined(_WIN64)
-#include <windows.h>
-#include <userenv.h>
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
 #include <sys/sendfile.h>
 #include <sys/statvfs.h>
 #include <sys/stat.h>
@@ -33,6 +30,9 @@
 #include <pwd.h>
 #include <stdlib.h>
 #include <unistd.h>
+#elif defined(_WIN32) || defined(_WIN64)
+#include <windows.h>
+#include <userenv.h>
 #endif
 
 namespace CppCommon {
@@ -305,7 +305,15 @@ Path Path::extension() const
 
 Path Path::absolute() const
 {
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+    char buffer[PATH_MAX];
+
+    char* result = realpath(native().c_str(), buffer);
+    if (result == nullptr)
+        throwex FileSystemException("Cannot get the real path of the current path!").Attach(*this);
+
+    return Path(std::string(result));
+#elif defined(_WIN32) || defined(_WIN64)
     std::vector<wchar_t> buffer(MAX_PATH);
 
     DWORD size = GetFullPathNameW(wstring().c_str(), (DWORD)buffer.size(), buffer.data(), nullptr);
@@ -331,14 +339,6 @@ Path Path::absolute() const
         throwex FileSystemException("Cannot get the long path name of the current path!").Attach(*this);
 
     return Path(std::wstring(buffer.data(), size));
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    char buffer[PATH_MAX];
-
-    char* result = realpath(native().c_str(), buffer);
-    if (result == nullptr)
-        throwex FileSystemException("Cannot get the real path of the current path!").Attach(*this);
-
-    return Path(std::string(result));
 #endif
 }
 
@@ -407,18 +407,7 @@ Path Path::canonical() const
 
 FileType Path::type() const
 {
-#if defined(_WIN32) || defined(_WIN64)
-    DWORD attributes = GetFileAttributesW(wstring().c_str());
-    if (attributes == INVALID_FILE_ATTRIBUTES)
-        return FileType::NONE;
-
-    if (attributes & FILE_ATTRIBUTE_REPARSE_POINT)
-        return FileType::SYMLINK;
-    else if (attributes & FILE_ATTRIBUTE_DIRECTORY)
-        return FileType::DIRECTORY;
-    else
-        return FileType::REGULAR;
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     // Special check for symlink
     struct stat lstatus;
     int lresult = lstat(native().c_str(), &lstatus);
@@ -451,6 +440,17 @@ FileType Path::type() const
         return FileType::SOCKET;
     else
         return FileType::UNKNOWN;
+#elif defined(_WIN32) || defined(_WIN64)
+    DWORD attributes = GetFileAttributesW(wstring().c_str());
+    if (attributes == INVALID_FILE_ATTRIBUTES)
+        return FileType::NONE;
+
+    if (attributes & FILE_ATTRIBUTE_REPARSE_POINT)
+        return FileType::SYMLINK;
+    else if (attributes & FILE_ATTRIBUTE_DIRECTORY)
+        return FileType::DIRECTORY;
+    else
+        return FileType::REGULAR;
 #endif
 }
 
@@ -484,7 +484,7 @@ Flags<FileAttributes> Path::attributes() const
 Flags<FilePermissions> Path::permissions() const
 {
     Flags<FilePermissions> permissions;
-#if defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     struct stat status;
     int result = stat(native().c_str(), &status);
     if (result != 0)
@@ -525,7 +525,14 @@ Flags<FilePermissions> Path::permissions() const
 
 UtcTimestamp Path::created() const
 {
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+    struct stat status;
+    int result = stat(native().c_str(), &status);
+    if (result != 0)
+        throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
+
+    return UtcTimestamp(Timestamp((status.st_mtim.tv_sec * 1000 * 1000 * 1000) + status.st_mtim.tv_nsec));
+#elif defined(_WIN32) || defined(_WIN64)
     HANDLE hFile = CreateFileW(wstring().c_str(), 0, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
     if (hFile == INVALID_HANDLE_VALUE)
         throwex FileSystemException("Cannot open the path for getting create time!").Attach(*this);
@@ -542,19 +549,19 @@ UtcTimestamp Path::created() const
     result.LowPart = created.dwLowDateTime;
     result.HighPart = created.dwHighDateTime;
     return UtcTimestamp(Timestamp((result.QuadPart - 116444736000000000ull) * 100));
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#endif
+}
+
+UtcTimestamp Path::modified() const
+{
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     struct stat status;
     int result = stat(native().c_str(), &status);
     if (result != 0)
         throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
 
     return UtcTimestamp(Timestamp((status.st_mtim.tv_sec * 1000 * 1000 * 1000) + status.st_mtim.tv_nsec));
-#endif
-}
-
-UtcTimestamp Path::modified() const
-{
-#if defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64)
     HANDLE hFile = CreateFileW(wstring().c_str(), 0, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
     if (hFile == INVALID_HANDLE_VALUE)
         throwex FileSystemException("Cannot open the path for getting modified time!").Attach(*this);
@@ -571,19 +578,19 @@ UtcTimestamp Path::modified() const
     result.LowPart = write.dwLowDateTime;
     result.HighPart = write.dwHighDateTime;
     return UtcTimestamp(Timestamp((result.QuadPart - 116444736000000000ull) * 100));
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    struct stat status;
-    int result = stat(native().c_str(), &status);
-    if (result != 0)
-        throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
-
-    return UtcTimestamp(Timestamp((status.st_mtim.tv_sec * 1000 * 1000 * 1000) + status.st_mtim.tv_nsec));
 #endif
 }
 
 size_t Path::hardlinks() const
 {
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+    struct stat status;
+    int result = stat(native().c_str(), &status);
+    if (result != 0)
+        throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
+
+    return (size_t)status.st_nlink;
+#elif defined(_WIN32) || defined(_WIN64)
     HANDLE hFile = CreateFileW(wstring().c_str(), 0, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
     if (hFile == INVALID_HANDLE_VALUE)
         throwex FileSystemException("Cannot open the path for getting hard links count!").Attach(*this);
@@ -597,19 +604,25 @@ size_t Path::hardlinks() const
         throwex FileSystemException("Cannot get file information of the path!").Attach(*this);
 
     return (size_t)bhfi.nNumberOfLinks;
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    struct stat status;
-    int result = stat(native().c_str(), &status);
-    if (result != 0)
-        throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
-
-    return (size_t)status.st_nlink;
 #endif
 }
 
 SpaceInfo Path::space() const
 {
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+    struct statvfs stvfs;
+    int result = statvfs(native().c_str(), &stvfs);
+    if (result != 0)
+        throwex FileSystemException("Cannot get the filesystem statistics of the path!").Attach(*this);
+
+    // Calculate filesystem space information
+    return SpaceInfo
+    {
+        stvfs.f_blocks * stvfs.f_frsize,
+        stvfs.f_bfree * stvfs.f_frsize,
+        stvfs.f_bavail * stvfs.f_frsize
+    };
+#elif defined(_WIN32) || defined(_WIN64)
     ULARGE_INTEGER uiFreeBytesAvailable;
     ULARGE_INTEGER uiTotalNumberOfBytes;
     ULARGE_INTEGER uiTotalNumberOfFreeBytes;
@@ -623,25 +636,25 @@ SpaceInfo Path::space() const
         (((uint64_t)uiTotalNumberOfFreeBytes.HighPart) << 32) + uiTotalNumberOfFreeBytes.LowPart,
         (((uint64_t)uiFreeBytesAvailable.HighPart) << 32) + uiFreeBytesAvailable.LowPart
     };
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    struct statvfs stvfs;
-    int result = statvfs(native().c_str(), &stvfs);
-    if (result != 0)
-        throwex FileSystemException("Cannot get the filesystem statistics of the path!").Attach(*this);
-
-    // Calculate filesystem space information
-    return SpaceInfo
-    {
-        stvfs.f_blocks * stvfs.f_frsize,
-        stvfs.f_bfree * stvfs.f_frsize,
-        stvfs.f_bavail * stvfs.f_frsize
-    };
 #endif
 }
 
 bool Path::IsEquivalent(const Path& path) const
 {
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+    struct stat st1;
+    int result = stat(native().c_str(), &st1);
+    if (result != 0)
+        throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
+
+    struct stat st2;
+    result = stat(path.native().c_str(), &st2);
+    if (result != 0)
+        throwex FileSystemException("Cannot get the status of the path!").Attach(path);
+
+    // Compare the file meta information to detect if two path point to the same node on a filesystem
+    return ((st1.st_dev == st2.st_dev) && (st1.st_ino == st2.st_ino) && (st1.st_size == st2.st_size) && (st1.st_mtime == st2.st_mtime));
+#elif defined(_WIN32) || defined(_WIN64)
     // Access to the file meta information
     HANDLE hFile1 = CreateFileW(wstring().c_str(), 0, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
     if (hFile1 == INVALID_HANDLE_VALUE)
@@ -676,19 +689,6 @@ bool Path::IsEquivalent(const Path& path) const
             (info1.nFileSizeLow == info2.nFileSizeLow) &&
             (info1.ftLastWriteTime.dwLowDateTime == info2.ftLastWriteTime.dwLowDateTime) &&
             (info1.ftLastWriteTime.dwHighDateTime == info2.ftLastWriteTime.dwHighDateTime));
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    struct stat st1;
-    int result = stat(native().c_str(), &st1);
-    if (result != 0)
-        throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
-
-    struct stat st2;
-    result = stat(path.native().c_str(), &st2);
-    if (result != 0)
-        throwex FileSystemException("Cannot get the status of the path!").Attach(path);
-
-    // Compare the file meta information to detect if two path point to the same node on a filesystem
-    return ((st1.st_dev == st2.st_dev) && (st1.st_ino == st2.st_ino) && (st1.st_size == st2.st_size) && (st1.st_mtime == st2.st_mtime));
 #endif
 }
 
@@ -713,10 +713,10 @@ Path& Path::Append(const Path& path)
 
 Path& Path::MakePreferred()
 {
-#if defined(_WIN32) || defined(_WIN64)
-    std::replace(_path.begin(), _path.end(), '/', '\\');
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     std::replace(_path.begin(), _path.end(), '\\', '/');
+#elif defined(_WIN32) || defined(_WIN64)
+    std::replace(_path.begin(), _path.end(), '/', '\\');
 #endif
     return *this;
 }
@@ -804,6 +804,15 @@ Path& Path::RemoveTrailingSeparators()
     return *this;
 }
 
+char Path::separator() noexcept
+{
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__) || defined(__APPLE__)
+    return '/';
+#elif defined(_WIN32) || defined(_WIN64)
+    return '\\';
+#endif
+}
+
 Path Path::initial()
 {
     return Internals::initial;
@@ -811,7 +820,18 @@ Path Path::initial()
 
 Path Path::current()
 {
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+    std::vector<char> buffer(PATH_MAX);
+    char* result;
+
+    while (((result = getcwd(buffer.data(), buffer.size())) == nullptr) && (errno == ERANGE))
+        buffer.resize(buffer.size() * 2);
+
+    if (result == nullptr)
+        throwex FileSystemException("Cannot get the current path of the current process!");
+
+    return Path(std::string(buffer.data()));
+#elif defined(_WIN32) || defined(_WIN64)
     std::vector<wchar_t> buffer(MAX_PATH);
 
     DWORD size = GetCurrentDirectoryW((DWORD)buffer.size(), buffer.data());
@@ -825,34 +845,12 @@ Path Path::current()
         throwex FileSystemException("Cannot get the current path of the current process!");
 
     return Path(std::wstring(buffer.data(), size));
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    std::vector<char> buffer(PATH_MAX);
-    char* result;
-
-    while (((result = getcwd(buffer.data(), buffer.size())) == nullptr) && (errno == ERANGE))
-        buffer.resize(buffer.size() * 2);
-
-    if (result == nullptr)
-        throwex FileSystemException("Cannot get the current path of the current process!");
-
-    return Path(std::string(buffer.data()));
 #endif
 }
 
 Path Path::executable()
 {
-#if defined(_WIN32) || defined(_WIN64)
-    std::vector<wchar_t> buffer(MAX_PATH);
-    DWORD size;
-
-    while ((size = GetModuleFileNameW(nullptr, buffer.data(), (DWORD)buffer.size())) == buffer.size())
-        buffer.resize(buffer.size() * 2);
-
-    if (size == 0)
-        throwex FileSystemException("Cannot get the executable path of the current process!");
-
-    return Path(std::wstring(buffer.data(), size));
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     std::vector<char> buffer(PATH_MAX);
     ssize_t size;
 
@@ -863,12 +861,38 @@ Path Path::executable()
         throwex FileSystemException("Cannot get the executable path of the current process!");
 
     return Path(std::string(buffer.data(), size));
+#elif defined(_WIN32) || defined(_WIN64)
+    std::vector<wchar_t> buffer(MAX_PATH);
+    DWORD size;
+
+    while ((size = GetModuleFileNameW(nullptr, buffer.data(), (DWORD)buffer.size())) == buffer.size())
+        buffer.resize(buffer.size() * 2);
+
+    if (size == 0)
+        throwex FileSystemException("Cannot get the executable path of the current process!");
+
+    return Path(std::wstring(buffer.data(), size));
 #endif
 }
 
 Path Path::home()
 {
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+    std::vector<char> buffer(PATH_MAX);
+    uid_t uid = getuid();
+    int result;
+
+    struct passwd pwd;
+    struct passwd* ppwd;
+
+    while (((result = getpwuid_r(uid, &pwd, buffer.data(), buffer.size(), &ppwd)) != 0) && (result == ERANGE))
+        buffer.resize(buffer.size() * 2);
+
+    if ((result != 0) || (ppwd == nullptr))
+        throwex FileSystemException("Cannot get the home path of the current process!");
+
+    return Path(std::string(pwd.pw_dir));
+#elif defined(_WIN32) || defined(_WIN64)
     std::vector<wchar_t> buffer(MAX_PATH);
 
     HANDLE hToken;
@@ -890,27 +914,18 @@ Path Path::home()
         throwex FileSystemException("Cannot close the current process token!");
 
     return Path(std::wstring(buffer.data(), size));
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    std::vector<char> buffer(PATH_MAX);
-    uid_t uid = getuid();
-    int result;
-
-    struct passwd pwd;
-    struct passwd* ppwd;
-
-    while (((result = getpwuid_r(uid, &pwd, buffer.data(), buffer.size(), &ppwd)) != 0) && (result == ERANGE))
-        buffer.resize(buffer.size() * 2);
-
-    if ((result != 0) || (ppwd == nullptr))
-        throwex FileSystemException("Cannot get the home path of the current process!");
-
-    return Path(std::string(pwd.pw_dir));
 #endif
 }
 
 Path Path::temp()
 {
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+    char* temp;
+    if (((temp = getenv("TMPDIR")) != nullptr) || ((temp = getenv("TMP")) != nullptr) || ((temp = getenv("TEMP")) != nullptr) || ((temp = getenv("TEMPDIR")) != nullptr))
+        return Path(std::string(temp));
+    else
+        return Path(std::string("/tmp"));
+#elif defined(_WIN32) || defined(_WIN64)
     std::vector<wchar_t> buffer(MAX_PATH);
 
     DWORD size = GetTempPathW((DWORD)buffer.size(), buffer.data());
@@ -924,12 +939,6 @@ Path Path::temp()
         throwex FileSystemException("Cannot get the temporary path of the current process!");
 
     return Path(std::wstring(buffer.data(), size));
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    char* temp;
-    if (((temp = getenv("TMPDIR")) != nullptr) || ((temp = getenv("TMP")) != nullptr) || ((temp = getenv("TEMP")) != nullptr) || ((temp = getenv("TEMPDIR")) != nullptr))
-        return Path(std::string(temp));
-    else
-        return Path(std::string("/tmp"));
 #endif
 }
 
@@ -959,10 +968,7 @@ Path Path::Copy(const Path& src, const Path& dst, bool overwrite)
     }
     else
     {
-#if defined(_WIN32) || defined(_WIN64)
-        if (!CopyFileW(src.wstring().c_str(), dst.wstring().c_str(), FALSE))
-            throwex FileSystemException("Cannot copy the file!").Attach(src, dst);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         // Open the source file for reading
         int source = open(src.native().c_str(), O_RDONLY, 0);
         if (source < 0)
@@ -1011,6 +1017,9 @@ Path Path::Copy(const Path& src, const Path& dst, bool overwrite)
         // Close files
         close(source);
         close(destination);
+#elif defined(_WIN32) || defined(_WIN64)
+        if (!CopyFileW(src.wstring().c_str(), dst.wstring().c_str(), FALSE))
+            throwex FileSystemException("Cannot copy the file!").Attach(src, dst);
 #endif
         return dst;
     }
@@ -1096,20 +1105,33 @@ Path Path::CopyAll(const Path& src, const Path& dst, bool overwrite)
 
 Path Path::Rename(const Path& src, const Path& dst)
 {
-#if defined(_WIN32) || defined(_WIN64)
-    if (!MoveFileW(src.wstring().c_str(), dst.wstring().c_str()))
-        throwex FileSystemException("Cannot move the path!").Attach(src, dst);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     int result = rename(src.native().c_str(), dst.native().c_str());
     if (result != 0)
         throwex FileSystemException("Cannot rename the path!").Attach(src, dst);
+#elif defined(_WIN32) || defined(_WIN64)
+    if (!MoveFileW(src.wstring().c_str(), dst.wstring().c_str()))
+        throwex FileSystemException("Cannot move the path!").Attach(src, dst);
 #endif
     return dst;
 }
 
 Path Path::Remove(const Path& path)
 {
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+    if (path.IsDirectory())
+    {
+        int result = rmdir(path.native().c_str());
+        if (result != 0)
+            throwex FileSystemException("Cannot remove the path directory!").Attach(path);
+    }
+    else
+    {
+        int result = unlink(path.native().c_str());
+        if (result != 0)
+            throwex FileSystemException("Cannot unlink the path file!").Attach(path);
+    }
+#elif defined(_WIN32) || defined(_WIN64)
     std::wstring wpath = path.wstring();
     DWORD attributes = GetFileAttributesW(wpath.c_str());
     if (attributes == INVALID_FILE_ATTRIBUTES)
@@ -1129,19 +1151,6 @@ Path Path::Remove(const Path& path)
         if (!DeleteFileW(wpath.c_str()))
             throwex FileSystemException("Cannot delete the path file!").Attach(path);
     }
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    if (path.IsDirectory())
-    {
-        int result = rmdir(path.native().c_str());
-        if (result != 0)
-            throwex FileSystemException("Cannot remove the path directory!").Attach(path);
-    }
-    else
-    {
-        int result = unlink(path.native().c_str());
-        if (result != 0)
-            throwex FileSystemException("Cannot unlink the path file!").Attach(path);
-    }
 #endif
     return path.parent();
 }
@@ -1151,16 +1160,16 @@ Path Path::RemoveIf(const Path& path, const std::string& pattern)
     std::regex matcher(pattern);
 
     bool is_directory = false;
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+    if (path.IsDirectory())
+        is_directory = true;
+#elif defined(_WIN32) || defined(_WIN64)
     std::wstring wpath = path.wstring();
     DWORD attributes = GetFileAttributesW(wpath.c_str());
     if (attributes == INVALID_FILE_ATTRIBUTES)
         throwex FileSystemException("Cannot get file attributes of the removed path!").Attach(path);
 
     if (attributes & FILE_ATTRIBUTE_DIRECTORY)
-        is_directory = true;
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    if (path.IsDirectory())
         is_directory = true;
 #endif
     if (is_directory)
@@ -1183,16 +1192,16 @@ Path Path::RemoveIf(const Path& path, const std::string& pattern)
 Path Path::RemoveAll(const Path& path)
 {
     bool is_directory = false;
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+    if (path.IsDirectory())
+        is_directory = true;
+#elif defined(_WIN32) || defined(_WIN64)
     std::wstring wpath = path.wstring();
     DWORD attributes = GetFileAttributesW(wpath.c_str());
     if (attributes == INVALID_FILE_ATTRIBUTES)
         throwex FileSystemException("Cannot get file attributes of the removed path!").Attach(path);
 
     if (attributes & FILE_ATTRIBUTE_DIRECTORY)
-        is_directory = true;
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    if (path.IsDirectory())
         is_directory = true;
 #endif
     if (is_directory)
@@ -1255,7 +1264,7 @@ void Path::SetAttributes(const Path& path, const Flags<FileAttributes>& attribut
 
 void Path::SetPermissions(const Path& path, const Flags<FilePermissions>& permissions)
 {
-#if defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     mode_t mode = 0;
     if (permissions & FilePermissions::IRUSR)
         mode |= S_IRUSR;
@@ -1290,7 +1299,21 @@ void Path::SetPermissions(const Path& path, const Flags<FilePermissions>& permis
 
 void Path::SetCreated(const Path& path, const UtcTimestamp& timestamp)
 {
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+    struct stat status;
+    int result = stat(path.native().c_str(), &status);
+    if (result != 0)
+        throwex FileSystemException("Cannot get the status of the path!").Attach(path);
+
+    struct timeval times[2];
+    TIMESPEC_TO_TIMEVAL(&times[0], &status.st_atim);
+    times[1].tv_sec = timestamp.seconds();
+    times[1].tv_usec = timestamp.microseconds() % 1000000;
+
+    result = utimes(path.native().c_str(), times);
+    if (result != 0)
+        throwex FileSystemException("Cannot set file created time of the path!").Attach(path);
+#elif defined(_WIN32) || defined(_WIN64)
     HANDLE hFile = CreateFileW(path.wstring().c_str(), FILE_WRITE_ATTRIBUTES, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
     if (hFile == INVALID_HANDLE_VALUE)
         throwex FileSystemException("Cannot open the path for writing created time!").Attach(path);
@@ -1307,7 +1330,12 @@ void Path::SetCreated(const Path& path, const UtcTimestamp& timestamp)
     created.dwHighDateTime = result.HighPart;
     if (!SetFileTime(file.get(), &created, nullptr, nullptr))
         throwex FileSystemException("Cannot set file created time of the path!").Attach(path);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#endif
+}
+
+void Path::SetModified(const Path& path, const UtcTimestamp& timestamp)
+{
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     struct stat status;
     int result = stat(path.native().c_str(), &status);
     if (result != 0)
@@ -1320,13 +1348,8 @@ void Path::SetCreated(const Path& path, const UtcTimestamp& timestamp)
 
     result = utimes(path.native().c_str(), times);
     if (result != 0)
-        throwex FileSystemException("Cannot set file created time of the path!").Attach(path);
-#endif
-}
-
-void Path::SetModified(const Path& path, const UtcTimestamp& timestamp)
-{
-#if defined(_WIN32) || defined(_WIN64)
+        throwex FileSystemException("Cannot set file modified time of the path!").Attach(path);
+#elif defined(_WIN32) || defined(_WIN64)
     HANDLE hFile = CreateFileW(path.wstring().c_str(), FILE_WRITE_ATTRIBUTES, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
     if (hFile == INVALID_HANDLE_VALUE)
         throwex FileSystemException("Cannot open the path for writing modified time!").Attach(path);
@@ -1343,33 +1366,19 @@ void Path::SetModified(const Path& path, const UtcTimestamp& timestamp)
     write.dwHighDateTime = result.HighPart;
     if (!SetFileTime(file.get(), nullptr, nullptr, &write))
         throwex FileSystemException("Cannot set file modified time of the path!").Attach(path);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    struct stat status;
-    int result = stat(path.native().c_str(), &status);
-    if (result != 0)
-        throwex FileSystemException("Cannot get the status of the path!").Attach(path);
-
-    struct timeval times[2];
-    TIMESPEC_TO_TIMEVAL(&times[0], &status.st_atim);
-    times[1].tv_sec = timestamp.seconds();
-    times[1].tv_usec = timestamp.microseconds() % 1000000;
-
-    result = utimes(path.native().c_str(), times);
-    if (result != 0)
-        throwex FileSystemException("Cannot set file modified time of the path!").Attach(path);
 #endif
 }
 
 void Path::SetCurrent(const Path& path)
 {
-#if defined(_WIN32) || defined(_WIN64)
-    Path temp(path / "");
-    if (!SetCurrentDirectoryW(temp.wstring().c_str()))
-        throwex FileSystemException("Cannot set the current path of the current process!").Attach(temp);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     int result = chdir(path.native().c_str());
     if (result != 0)
         throwex FileSystemException("Cannot set the current path of the current process!").Attach(path);
+#elif defined(_WIN32) || defined(_WIN64)
+    Path temp(path / "");
+    if (!SetCurrentDirectoryW(temp.wstring().c_str()))
+        throwex FileSystemException("Cannot set the current path of the current process!").Attach(temp);
 #endif
 }
 

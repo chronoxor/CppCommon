@@ -29,15 +29,6 @@ inline Path& Path::Concat(const Path& path)
     return *this;
 }
 
-inline char Path::separator() noexcept
-{
-#if defined(_WIN32) || defined(_WIN64)
-    return '\\';
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    return '/';
-#endif
-}
-
 inline void Path::swap(Path& path) noexcept
 {
     using std::swap;

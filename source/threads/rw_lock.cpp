@@ -6,17 +6,21 @@
     \copyright MIT License
 */
 
+#if (__MINGW32__)
+#define _WIN32_WINNT 0x601
+#endif
+
 #include "threads/rw_lock.h"
 
 #include "threads/thread.h"
 
-#if defined(_WIN32) || defined(_WIN64)
-#include <windows.h>
-#undef Yield
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
 #include "errors/exceptions.h"
 #include "errors/fatal.h"
 #include <pthread.h>
+#elif defined(_WIN32) || defined(_WIN64)
+#include <windows.h>
+#undef Yield
 #endif
 
 namespace CppCommon {
@@ -26,99 +30,99 @@ class RWLock::Impl
 public:
     Impl()
     {
-#if defined(_WIN32) || defined(_WIN64)
-        InitializeSRWLock(&_rwlock);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         int result = pthread_rwlock_init(&_rwlock, nullptr);
         if (result != 0)
             throwex SystemException("Failed to initialize a read/write lock!", result);
+#elif defined(_WIN32) || defined(_WIN64)
+        InitializeSRWLock(&_rwlock);
 #endif
     }
 
     ~Impl()
     {
-#if defined(_WIN32) || defined(_WIN64)
-        // SRW locks do not need to be explicitly destroyed.
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         int result = pthread_rwlock_destroy(&_rwlock);
         if (result != 0)
             fatality(SystemException("Failed to destroy a read/write lock!", result));
+#elif defined(_WIN32) || defined(_WIN64)
+        // SRW locks do not need to be explicitly destroyed.
 #endif
     }
 
     bool TryLockRead()
     {
-#if defined(_WIN32) || defined(_WIN64)
-        return (TryAcquireSRWLockShared(&_rwlock) != 0);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         int result = pthread_rwlock_tryrdlock(&_rwlock);
         if ((result != 0) && (result != EBUSY))
             throwex SystemException("Failed to try lock for read!", result);
         return (result == 0);
+#elif defined(_WIN32) || defined(_WIN64)
+        return (TryAcquireSRWLockShared(&_rwlock) != 0);
 #endif
     }
 
     bool TryLockWrite()
     {
-#if defined(_WIN32) || defined(_WIN64)
-        return (TryAcquireSRWLockExclusive(&_rwlock) != 0);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         int result = pthread_rwlock_trywrlock(&_rwlock);
         if ((result != 0) && (result != EBUSY))
             throwex SystemException("Failed to try lock for write!", result);
         return (result == 0);
+#elif defined(_WIN32) || defined(_WIN64)
+        return (TryAcquireSRWLockExclusive(&_rwlock) != 0);
 #endif
     }
 
     void LockRead()
     {
-#if defined(_WIN32) || defined(_WIN64)
-        AcquireSRWLockShared(&_rwlock);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         int result = pthread_rwlock_rdlock(&_rwlock);
         if (result != 0)
             throwex SystemException("Failed to lock for read!", result);
+#elif defined(_WIN32) || defined(_WIN64)
+        AcquireSRWLockShared(&_rwlock);
 #endif
     }
 
     void LockWrite()
     {
-#if defined(_WIN32) || defined(_WIN64)
-        AcquireSRWLockExclusive(&_rwlock);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         int result = pthread_rwlock_wrlock(&_rwlock);
         if (result != 0)
             throwex SystemException("Failed to lock for write!", result);
+#elif defined(_WIN32) || defined(_WIN64)
+        AcquireSRWLockExclusive(&_rwlock);
 #endif
     }
 
     void UnlockRead()
     {
-#if defined(_WIN32) || defined(_WIN64)
-        ReleaseSRWLockShared(&_rwlock);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         int result = pthread_rwlock_unlock(&_rwlock);
         if (result != 0)
             throwex SystemException("Failed to unlock read lock!", result);
+#elif defined(_WIN32) || defined(_WIN64)
+        ReleaseSRWLockShared(&_rwlock);
 #endif
     }
 
     void UnlockWrite()
     {
-#if defined(_WIN32) || defined(_WIN64)
-        ReleaseSRWLockExclusive(&_rwlock);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         int result = pthread_rwlock_unlock(&_rwlock);
         if (result != 0)
             throwex SystemException("Failed to unlock write lock!", result);
+#elif defined(_WIN32) || defined(_WIN64)
+        ReleaseSRWLockExclusive(&_rwlock);
 #endif
     }
 
 private:
-#if defined(_WIN32) || defined(_WIN64)
-    SRWLOCK _rwlock;
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     pthread_rwlock_t _rwlock;
+#elif defined(_WIN32) || defined(_WIN64)
+    SRWLOCK _rwlock;
 #endif
 };
 

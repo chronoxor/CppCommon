@@ -14,13 +14,13 @@
 #include <algorithm>
 #include <cassert>
 
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#include <fcntl.h>
+#include <semaphore.h>
+#elif defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
 #undef max
 #undef min
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-#include <fcntl.h>
-#include <semaphore.h>
 #endif
 
 namespace CppCommon {
@@ -32,26 +32,26 @@ public:
     {
         assert((resources > 0) && "Semaphore resources counter must be greater than zero!");
 
-#if defined(_WIN32) || defined(_WIN64)
-        _semaphore = CreateSemaphore(nullptr, resources, resources, nullptr);
-        if (_semaphore == nullptr)
-            throwex SystemException("Failed to create a semaphore!");
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         int result = sem_init(&_semaphore, 0, resources);
         if (result != 0)
             throwex SystemException("Failed to initialize a semaphore!");
+#elif defined(_WIN32) || defined(_WIN64)
+        _semaphore = CreateSemaphore(nullptr, resources, resources, nullptr);
+        if (_semaphore == nullptr)
+            throwex SystemException("Failed to create a semaphore!");
 #endif
     }
 
     ~Impl()
     {
-#if defined(_WIN32) || defined(_WIN64)
-        if (!CloseHandle(_semaphore))
-            fatality(SystemException("Failed to close a semaphore!"));
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         int result = sem_destroy(&_semaphore);
         if (result != 0)
             fatality(SystemException("Failed to destroy a semaphore!"));
+#elif defined(_WIN32) || defined(_WIN64)
+        if (!CloseHandle(_semaphore))
+            fatality(SystemException("Failed to close a semaphore!"));
 #endif
     }
 
@@ -62,16 +62,16 @@ public:
 
     bool TryLock()
     {
-#if defined(_WIN32) || defined(_WIN64)
-        DWORD result = WaitForSingleObject(_semaphore, 0);
-        if ((result != WAIT_OBJECT_0) && (result != WAIT_TIMEOUT))
-            throwex SystemException("Failed to try lock a semaphore!");
-        return (result == WAIT_OBJECT_0);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         int result = sem_trywait(&_semaphore);
         if ((result != 0) && (errno != EAGAIN))
             throwex SystemException("Failed to try lock a semaphore!");
         return (result == 0);
+#elif defined(_WIN32) || defined(_WIN64)
+        DWORD result = WaitForSingleObject(_semaphore, 0);
+        if ((result != WAIT_OBJECT_0) && (result != WAIT_TIMEOUT))
+            throwex SystemException("Failed to try lock a semaphore!");
+        return (result == WAIT_OBJECT_0);
 #endif
     }
 
@@ -79,12 +79,7 @@ public:
     {
         if (timespan < 0)
             return TryLock();
-#if defined(_WIN32) || defined(_WIN64)
-        DWORD result = WaitForSingleObject(_semaphore, (DWORD)std::max(1ll, timespan.milliseconds()));
-        if ((result != WAIT_OBJECT_0) && (result != WAIT_TIMEOUT))
-            throwex SystemException("Failed to try lock a semaphore for the given timeout!");
-        return (result == WAIT_OBJECT_0);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         struct timespec timeout;
         timeout.tv_sec = timespan.seconds();
         timeout.tv_nsec = timespan.nanoseconds() % 1000000000;
@@ -92,40 +87,45 @@ public:
         if ((result != 0) && (errno != ETIMEDOUT))
             throwex SystemException("Failed to try lock a semaphore for the given timeout!");
         return (result == 0);
+#elif defined(_WIN32) || defined(_WIN64)
+        DWORD result = WaitForSingleObject(_semaphore, (DWORD)std::max(1ll, timespan.milliseconds()));
+        if ((result != WAIT_OBJECT_0) && (result != WAIT_TIMEOUT))
+            throwex SystemException("Failed to try lock a semaphore for the given timeout!");
+        return (result == WAIT_OBJECT_0);
 #endif
     }
 
     void Lock()
     {
-#if defined(_WIN32) || defined(_WIN64)
-        DWORD result = WaitForSingleObject(_semaphore, INFINITE);
-        if (result != WAIT_OBJECT_0)
-            throwex SystemException("Failed to lock a semaphore!");
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         int result = sem_wait(&_semaphore);
         if (result != 0)
+            throwex SystemException("Failed to lock a semaphore!");
+#elif defined(_WIN32) || defined(_WIN64)
+        DWORD result = WaitForSingleObject(_semaphore, INFINITE);
+        if (result != WAIT_OBJECT_0)
             throwex SystemException("Failed to lock a semaphore!");
 #endif
     }
 
     void Unlock()
     {
-#if defined(_WIN32) || defined(_WIN64)
-        if (!ReleaseSemaphore(_semaphore, 1, nullptr))
-            throwex SystemException("Failed to unlock a semaphore!");
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         int result = sem_post(&_semaphore);
         if (result != 0)
+            throwex SystemException("Failed to unlock a semaphore!");
+#elif defined(_WIN32) || defined(_WIN64)
+        if (!ReleaseSemaphore(_semaphore, 1, nullptr))
             throwex SystemException("Failed to unlock a semaphore!");
 #endif
     }
 
 private:
     int _resources;
-#if defined(_WIN32) || defined(_WIN64)
-    HANDLE _semaphore;
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     sem_t _semaphore;
+#elif defined(_WIN32) || defined(_WIN64)
+    HANDLE _semaphore;
 #endif
 };
 

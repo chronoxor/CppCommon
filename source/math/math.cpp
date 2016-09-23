@@ -16,7 +16,13 @@ namespace CppCommon {
 
 uint64_t Math::MulDiv64(uint64_t operant, uint64_t multiplier, uint64_t divider)
 {
-#if defined(_MSC_VER)
+#if defined(__GNUC__)
+    __uint128_t a = operant;
+    __uint128_t b = multiplier;
+    __uint128_t c = divider;
+
+    return (uint64_t)(a * b / c);
+#elif defined(_MSC_VER)
 #if defined(_M_IX86)
     // Declare 128bit storage
     struct
@@ -300,12 +306,6 @@ done:
     return ((uint64_t)q1 << 32) | q0;
 #pragma warning(pop)
 #endif
-#elif defined(__GNUC__)
-    __uint128_t a = operant;
-    __uint128_t b = multiplier;
-    __uint128_t c = divider;
-
-    return (uint64_t)(a * b / c);
 #else
     #error MulDiv64 is no supported!
 #endif

@@ -13,12 +13,12 @@
 #include "system/shared_type.h"
 #include "threads/thread.h"
 
-#if defined(_WIN32) || defined(_WIN64)
-#include <windows.h>
-#undef Yield
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
 #include <fcntl.h>
 #include <semaphore.h>
+#elif defined(_WIN32) || defined(_WIN64)
+#include <windows.h>
+#undef Yield
 #endif
 
 namespace CppCommon {
@@ -102,14 +102,7 @@ public:
         // Owner of the read/write lock should initialize its value
         if (_value.owner())
             *_value = 0;
-#if defined(_WIN32) || defined(_WIN64)
-        _exclusive_wake = CreateSemaphoreA(nullptr, 0, MAXLONG, (this->name() + "_exclusive").c_str());
-        if (_exclusive_wake == nullptr)
-            throwex SystemException("Failed to create or open an exclusive wake semaphore for the named read/write lock!");
-        _shared_wake = CreateSemaphoreA(nullptr, 0, MAXLONG, (this->name() + "_shared").c_str());
-        if (_shared_wake == nullptr)
-            throwex SystemException("Failed to create or open a shared wake semaphore for the named read/write lock!");
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         if (_value.owner())
         {
             _exclusive_wake = sem_open((this->name() + "_exclusive").c_str(), (O_CREAT | O_EXCL), 0666, 0);
@@ -128,17 +121,19 @@ public:
             if (_shared_wake == SEM_FAILED)
                 throwex SystemException("Failed to open an shared wake semaphore for the named read/write lock!");
         }
+#elif defined(_WIN32) || defined(_WIN64)
+        _exclusive_wake = CreateSemaphoreA(nullptr, 0, MAXLONG, (this->name() + "_exclusive").c_str());
+        if (_exclusive_wake == nullptr)
+            throwex SystemException("Failed to create or open an exclusive wake semaphore for the named read/write lock!");
+        _shared_wake = CreateSemaphoreA(nullptr, 0, MAXLONG, (this->name() + "_shared").c_str());
+        if (_shared_wake == nullptr)
+            throwex SystemException("Failed to create or open a shared wake semaphore for the named read/write lock!");
 #endif
     }
 
     ~Impl()
     {
-#if defined(_WIN32) || defined(_WIN64)
-        if (!CloseHandle(_exclusive_wake))
-            fatality(SystemException("Failed to close an exclusive wake semaphore for the named read/write lock!"));
-        if (!CloseHandle(_shared_wake))
-            fatality(SystemException("Failed to close a shared wake semaphore for the named read/write lock!"));
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         int result = sem_close(_exclusive_wake);
         if (result != 0)
             fatality(SystemException("Failed to close an exclusive wake semaphore for the named read/write lock"));
@@ -155,6 +150,11 @@ public:
             if (result != 0)
                 fatality(SystemException("Failed to unlink an shared wake semaphore for the named read/write lock!"));
         }
+#elif defined(_WIN32) || defined(_WIN64)
+        if (!CloseHandle(_exclusive_wake))
+            fatality(SystemException("Failed to close an exclusive wake semaphore for the named read/write lock!"));
+        if (!CloseHandle(_shared_wake))
+            fatality(SystemException("Failed to close a shared wake semaphore for the named read/write lock!"));
 #endif
     }
 
@@ -172,18 +172,18 @@ public:
 
         if (!(value & LOCK_OWNED))
         {
-#if defined(_WIN32) || defined(_WIN64)
-            return (InterlockedCompareExchange(_value.ptr(), value + LOCK_OWNED + LOCK_SHARED_OWNERS_INC, value) == value);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
             return __sync_bool_compare_and_swap(_value.ptr(), value, value + LOCK_OWNED + LOCK_SHARED_OWNERS_INC);
+#elif defined(_WIN32) || defined(_WIN64)
+            return (InterlockedCompareExchange(_value.ptr(), value + LOCK_OWNED + LOCK_SHARED_OWNERS_INC, value) == value);
 #endif
         }
         else if ((value >> LOCK_SHARED_OWNERS_SHIFT) & LOCK_SHARED_OWNERS_MASK)
         {
-#if defined(_WIN32) || defined(_WIN64)
-            return (InterlockedCompareExchange(_value.ptr(), value + LOCK_SHARED_OWNERS_INC, value) == value);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
             return __sync_bool_compare_and_swap(_value.ptr(), value, value + LOCK_SHARED_OWNERS_INC);
+#elif defined(_WIN32) || defined(_WIN64)
+            return (InterlockedCompareExchange(_value.ptr(), value + LOCK_SHARED_OWNERS_INC, value) == value);
 #endif
         }
         else
@@ -197,10 +197,10 @@ public:
         if (value & (LOCK_OWNED | LOCK_EXCLUSIVE_WAKING))
             return false;
 
-#if defined(_WIN32) || defined(_WIN64)
-        return (InterlockedCompareExchange(_value.ptr(), value + LOCK_OWNED, value) == value);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         return __sync_bool_compare_and_swap(_value.ptr(), value, value + LOCK_OWNED);
+#elif defined(_WIN32) || defined(_WIN64)
+        return (InterlockedCompareExchange(_value.ptr(), value + LOCK_OWNED, value) == value);
 #endif
     }
 
@@ -214,10 +214,10 @@ public:
             if (((value >> LOCK_SHARED_OWNERS_SHIFT) & LOCK_SHARED_OWNERS_MASK) != 1)
                 return false;
 
-#if defined(_WIN32) || defined(_WIN64)
-            if (InterlockedCompareExchange(_value.ptr(), value - LOCK_SHARED_OWNERS_INC, value) == value)
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
             if (__sync_bool_compare_and_swap(_value.ptr(), value, value - LOCK_SHARED_OWNERS_INC))
+#elif defined(_WIN32) || defined(_WIN64)
+            if (InterlockedCompareExchange(_value.ptr(), value - LOCK_SHARED_OWNERS_INC, value) == value)
 #endif
                 return true;
         }
@@ -235,10 +235,10 @@ public:
             // there are no shared owners AND there are no exclusive waiters
             if (!(value & (LOCK_OWNED | (LOCK_SHARED_OWNERS_MASK << LOCK_SHARED_OWNERS_SHIFT) | LOCK_EXCLUSIVE_MASK)))
             {
-#if defined(_WIN32) || defined(_WIN64)
-                if (InterlockedCompareExchange(_value.ptr(), value + LOCK_OWNED + LOCK_SHARED_OWNERS_INC, value) == value)
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
                 if (__sync_bool_compare_and_swap(_value.ptr(), value, value + LOCK_OWNED + LOCK_SHARED_OWNERS_INC))
+#elif defined(_WIN32) || defined(_WIN64)
+                if (InterlockedCompareExchange(_value.ptr(), value + LOCK_OWNED + LOCK_SHARED_OWNERS_INC, value) == value)
 #endif
                     break;
             }
@@ -246,30 +246,30 @@ public:
             // there are shared owners AND there are no exclusive waiters
             else if ((value & LOCK_OWNED) && ((value >> LOCK_SHARED_OWNERS_SHIFT) & LOCK_SHARED_OWNERS_MASK) > 0 && !(value & LOCK_EXCLUSIVE_MASK))
             {
-#if defined(_WIN32) || defined(_WIN64)
-                if (InterlockedCompareExchange(_value.ptr(), value + LOCK_SHARED_OWNERS_INC, value) == value)
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
                 if (__sync_bool_compare_and_swap(_value.ptr(), value, value + LOCK_SHARED_OWNERS_INC))
+#elif defined(_WIN32) || defined(_WIN64)
+                if (InterlockedCompareExchange(_value.ptr(), value + LOCK_SHARED_OWNERS_INC, value) == value)
 #endif
                     break;
             }
             // Other cases
             else if (iteration++ >= _spin)
             {
-#if defined(_WIN32) || defined(_WIN64)
-                if (InterlockedCompareExchange(_value.ptr(), value + LOCK_SHARED_WAITERS_INC, value) == value)
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
                 if (__sync_bool_compare_and_swap(_value.ptr(), value, value + LOCK_SHARED_WAITERS_INC))
+#elif defined(_WIN32) || defined(_WIN64)
+                if (InterlockedCompareExchange(_value.ptr(), value + LOCK_SHARED_WAITERS_INC, value) == value)
 #endif
                 {
                     // Go to sleep
-#if defined(_WIN32) || defined(_WIN64)
-                    DWORD result = WaitForSingleObject(_shared_wake, INFINITE);
-                    if (result != WAIT_OBJECT_0)
-                        throwex SystemException("Failed to wait for a shared wake semaphore for the named read/write lock!");
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
                     int result = sem_wait(_shared_wake);
                     if (result != 0)
+                        throwex SystemException("Failed to wait for a shared wake semaphore for the named read/write lock!");
+#elif defined(_WIN32) || defined(_WIN64)
+                    DWORD result = WaitForSingleObject(_shared_wake, INFINITE);
+                    if (result != WAIT_OBJECT_0)
                         throwex SystemException("Failed to wait for a shared wake semaphore for the named read/write lock!");
 #endif
                     // Go back and try again
@@ -295,10 +295,10 @@ public:
             // if there are the lock would be owned, and we are checking that anyway.
             if (!(value & (LOCK_OWNED | LOCK_EXCLUSIVE_WAKING)))
             {
-#if defined(_WIN32) || defined(_WIN64)
-                if (InterlockedCompareExchange(_value.ptr(), value + LOCK_OWNED, value) == value)
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
                 if (__sync_bool_compare_and_swap(_value.ptr(), value, value + LOCK_OWNED))
+#elif defined(_WIN32) || defined(_WIN64)
+                if (InterlockedCompareExchange(_value.ptr(), value + LOCK_OWNED, value) == value)
 #endif
                     break;
             }
@@ -308,19 +308,19 @@ public:
             // steal the lock.
             else if (iteration++ >= _spin)
             {
-#if defined(_WIN32) || defined(_WIN64)
-                if (InterlockedCompareExchange(_value.ptr(), value + LOCK_EXCLUSIVE_WAITERS_INC, value) == value)
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
                 if (__sync_bool_compare_and_swap(_value.ptr(), value, value + LOCK_EXCLUSIVE_WAITERS_INC))
+#elif defined(_WIN32) || defined(_WIN64)
+                if (InterlockedCompareExchange(_value.ptr(), value + LOCK_EXCLUSIVE_WAITERS_INC, value) == value)
 #endif
                 {
-#if defined(_WIN32) || defined(_WIN64)
-                    DWORD result = WaitForSingleObject(_exclusive_wake, INFINITE);
-                    if (result != WAIT_OBJECT_0)
-                        throwex SystemException("Failed to wait for an exclusive wake semaphore for the named read/write lock!");
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
                     int result = sem_wait(_exclusive_wake);
                     if (result != 0)
+                        throwex SystemException("Failed to wait for an exclusive wake semaphore for the named read/write lock!");
+#elif defined(_WIN32) || defined(_WIN64)
+                    DWORD result = WaitForSingleObject(_exclusive_wake, INFINITE);
+                    if (result != WAIT_OBJECT_0)
                         throwex SystemException("Failed to wait for an exclusive wake semaphore for the named read/write lock!");
 #endif
                     // Acquire the lock.
@@ -328,10 +328,10 @@ public:
                     do
                     {
                         value = *_value;
-#if defined(_WIN32) || defined(_WIN64)
-                    } while (InterlockedCompareExchange(_value.ptr(), value + LOCK_OWNED - LOCK_EXCLUSIVE_WAKING, value) != value);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
                     } while (!__sync_bool_compare_and_swap(_value.ptr(), value, value + LOCK_OWNED - LOCK_EXCLUSIVE_WAKING));
+#elif defined(_WIN32) || defined(_WIN64)
+                    } while (InterlockedCompareExchange(_value.ptr(), value + LOCK_OWNED - LOCK_EXCLUSIVE_WAKING, value) != value);
 #endif
                     break;
                 }
@@ -351,28 +351,28 @@ public:
             // Case 1: there are multiple shared owners
             if (((value >> LOCK_SHARED_OWNERS_SHIFT) & LOCK_SHARED_OWNERS_MASK) > 1)
             {
-#if defined(_WIN32) || defined(_WIN64)
-                if (InterlockedCompareExchange(_value.ptr(), value - LOCK_SHARED_OWNERS_INC, value) == value)
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
                 if (__sync_bool_compare_and_swap(_value.ptr(), value, value - LOCK_SHARED_OWNERS_INC))
+#elif defined(_WIN32) || defined(_WIN64)
+                if (InterlockedCompareExchange(_value.ptr(), value - LOCK_SHARED_OWNERS_INC, value) == value)
 #endif
                     break;
             }
             // Case 2: we are the last shared owner AND there are exclusive waiters
             else if ((value >> LOCK_EXCLUSIVE_WAITERS_SHIFT) & LOCK_EXCLUSIVE_WAITERS_MASK)
             {
-#if defined(_WIN32) || defined(_WIN64)
-                if (InterlockedCompareExchange(_value.ptr(), value - LOCK_OWNED + LOCK_EXCLUSIVE_WAKING - LOCK_SHARED_OWNERS_INC - LOCK_EXCLUSIVE_WAITERS_INC, value) == value)
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
                 if (__sync_bool_compare_and_swap(_value.ptr(), value, value - LOCK_OWNED + LOCK_EXCLUSIVE_WAKING - LOCK_SHARED_OWNERS_INC - LOCK_EXCLUSIVE_WAITERS_INC))
+#elif defined(_WIN32) || defined(_WIN64)
+                if (InterlockedCompareExchange(_value.ptr(), value - LOCK_OWNED + LOCK_EXCLUSIVE_WAKING - LOCK_SHARED_OWNERS_INC - LOCK_EXCLUSIVE_WAITERS_INC, value) == value)
 #endif
                 {
-#if defined(_WIN32) || defined(_WIN64)
-                    if (!ReleaseSemaphore(_exclusive_wake, 1, nullptr))
-                        throwex SystemException("Failed to release an exclusive wake semaphore for the named read/write lock!");
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
                     int result = sem_post(_exclusive_wake);
                     if (result != 0)
+                        throwex SystemException("Failed to release an exclusive wake semaphore for the named read/write lock!");
+#elif defined(_WIN32) || defined(_WIN64)
+                    if (!ReleaseSemaphore(_exclusive_wake, 1, nullptr))
                         throwex SystemException("Failed to release an exclusive wake semaphore for the named read/write lock!");
 #endif
                     break;
@@ -381,10 +381,10 @@ public:
             // Case 3: we are the last shared owner AND there are no exclusive waiters
             else
             {
-#if defined(_WIN32) || defined(_WIN64)
-                if (InterlockedCompareExchange(_value.ptr(), value - LOCK_OWNED - LOCK_SHARED_OWNERS_INC, value) == value)
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
                 if (__sync_bool_compare_and_swap(_value.ptr(), value, value - LOCK_OWNED - LOCK_SHARED_OWNERS_INC))
+#elif defined(_WIN32) || defined(_WIN64)
+                if (InterlockedCompareExchange(_value.ptr(), value - LOCK_OWNED - LOCK_SHARED_OWNERS_INC, value) == value)
 #endif
                     break;
             }
@@ -403,18 +403,18 @@ public:
             // Case 1: if we have exclusive waiters, release one
             if ((value >> LOCK_EXCLUSIVE_WAITERS_SHIFT) & LOCK_EXCLUSIVE_WAITERS_MASK)
             {
-#if defined(_WIN32) || defined(_WIN64)
-                if (InterlockedCompareExchange(_value.ptr(), value - LOCK_OWNED + LOCK_EXCLUSIVE_WAKING - LOCK_EXCLUSIVE_WAITERS_INC, value) == value)
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
                 if (__sync_bool_compare_and_swap(_value.ptr(), value, value - LOCK_OWNED + LOCK_EXCLUSIVE_WAKING - LOCK_EXCLUSIVE_WAITERS_INC))
+#elif defined(_WIN32) || defined(_WIN64)
+                if (InterlockedCompareExchange(_value.ptr(), value - LOCK_OWNED + LOCK_EXCLUSIVE_WAKING - LOCK_EXCLUSIVE_WAITERS_INC, value) == value)
 #endif
                 {
-#if defined(_WIN32) || defined(_WIN64)
-                    if (!ReleaseSemaphore(_exclusive_wake, 1, nullptr))
-                        throwex SystemException("Failed to release an exclusive wake semaphore for the named read/write lock!");
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
                     int result = sem_post(_exclusive_wake);
                     if (result != 0)
+                        throwex SystemException("Failed to release an exclusive wake semaphore for the named read/write lock!");
+#elif defined(_WIN32) || defined(_WIN64)
+                    if (!ReleaseSemaphore(_exclusive_wake, 1, nullptr))
                         throwex SystemException("Failed to release an exclusive wake semaphore for the named read/write lock!");
 #endif
                     break;
@@ -425,24 +425,24 @@ public:
             {
                 uint32_t shared_waiters = (value >> LOCK_SHARED_WAITERS_SHIFT) & LOCK_SHARED_WAITERS_MASK;
 
-#if defined(_WIN32) || defined(_WIN64)
-                if (InterlockedCompareExchange(_value.ptr(), value & ~(LOCK_OWNED | (LOCK_SHARED_WAITERS_MASK << LOCK_SHARED_WAITERS_SHIFT)), value) == value)
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
                 if (__sync_bool_compare_and_swap(_value.ptr(), value, value & ~(LOCK_OWNED | (LOCK_SHARED_WAITERS_MASK << LOCK_SHARED_WAITERS_SHIFT))))
+#elif defined(_WIN32) || defined(_WIN64)
+                if (InterlockedCompareExchange(_value.ptr(), value & ~(LOCK_OWNED | (LOCK_SHARED_WAITERS_MASK << LOCK_SHARED_WAITERS_SHIFT)), value) == value)
 #endif
                 {
                     if (shared_waiters > 0)
                     {
-#if defined(_WIN32) || defined(_WIN64)
-                        if (!ReleaseSemaphore(_shared_wake, shared_waiters, nullptr))
-                            throwex SystemException("Failed to release a shared wake semaphore for the named read/write lock!");
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
                         while (shared_waiters-- > 0)
                         {
                             int result = sem_post(_shared_wake);
                             if (result != 0)
                                 throwex SystemException("Failed to release a shared wake semaphore for the named read/write lock!");
                         }
+#elif defined(_WIN32) || defined(_WIN64)
+                        if (!ReleaseSemaphore(_shared_wake, shared_waiters, nullptr))
+                            throwex SystemException("Failed to release a shared wake semaphore for the named read/write lock!");
 #endif
                     }
                     break;
@@ -462,24 +462,24 @@ public:
 
             uint32_t shared_waiters = (value >> LOCK_SHARED_WAITERS_SHIFT) & LOCK_SHARED_WAITERS_MASK;
 
-#if defined(_WIN32) || defined(_WIN64)
-            if (InterlockedCompareExchange(_value.ptr(), (value + LOCK_SHARED_OWNERS_INC) & ~(LOCK_SHARED_WAITERS_MASK << LOCK_SHARED_WAITERS_SHIFT), value) == value)
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
             if (__sync_bool_compare_and_swap(_value.ptr(), value, (value + LOCK_SHARED_OWNERS_INC) & ~(LOCK_SHARED_WAITERS_MASK << LOCK_SHARED_WAITERS_SHIFT)))
+#elif defined(_WIN32) || defined(_WIN64)
+            if (InterlockedCompareExchange(_value.ptr(), (value + LOCK_SHARED_OWNERS_INC) & ~(LOCK_SHARED_WAITERS_MASK << LOCK_SHARED_WAITERS_SHIFT), value) == value)
 #endif
             {
                 if (shared_waiters > 0)
                 {
-#if defined(_WIN32) || defined(_WIN64)
-                    if (!ReleaseSemaphore(_shared_wake, shared_waiters, nullptr))
-                        throwex SystemException("Failed to release a shared wake semaphore for the named read/write lock!");
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
                     while (shared_waiters-- > 0)
                     {
                         int result = sem_post(_shared_wake);
                         if (result != 0)
                             throwex SystemException("Failed to release a shared wake semaphore for the named read/write lock!");
                     }
+#elif defined(_WIN32) || defined(_WIN64)
+                    if (!ReleaseSemaphore(_shared_wake, shared_waiters, nullptr))
+                        throwex SystemException("Failed to release a shared wake semaphore for the named read/write lock!");
 #endif
                 }
 
@@ -490,12 +490,12 @@ public:
 
 private:
     SharedType<volatile uint32_t> _value;
-#if defined(_WIN32) || defined(_WIN64)
-    HANDLE _exclusive_wake;
-    HANDLE _shared_wake;
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     sem_t* _exclusive_wake;
     sem_t* _shared_wake;
+#elif defined(_WIN32) || defined(_WIN64)
+    HANDLE _exclusive_wake;
+    HANDLE _shared_wake;
 #endif
     uint32_t _spin;
 };

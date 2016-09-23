@@ -16,10 +16,10 @@
 #include <cstring>
 #include <stack>
 
-#if defined(_WIN32) || defined(_WIN64)
-#include <windows.h>
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
 #include <dirent.h>
+#elif defined(_WIN32) || defined(_WIN64)
+#include <windows.h>
 #endif
 
 namespace CppCommon {
@@ -53,13 +53,13 @@ class DirectoryIterator::SimpleImpl : public DirectoryIterator::Impl
 public:
     SimpleImpl(const Path& parent) : DirectoryIterator::Impl(parent), _next(false), _end(false)
     {
-#if defined(_WIN32) || defined(_WIN64)
-        _directory = FindFirstFileW((_parent / "*").wstring().c_str(), &_entry);
-        if (_directory == INVALID_HANDLE_VALUE)
-            throwex FileSystemException("Cannot open a directory!").Attach(_parent);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         _directory = opendir(_parent.native().c_str());
         if (_directory == nullptr)
+            throwex FileSystemException("Cannot open a directory!").Attach(_parent);
+#elif defined(_WIN32) || defined(_WIN64)
+        _directory = FindFirstFileW((_parent / "*").wstring().c_str(), &_entry);
+        if (_directory == INVALID_HANDLE_VALUE)
             throwex FileSystemException("Cannot open a directory!").Attach(_parent);
 #endif
     }
@@ -69,18 +69,18 @@ public:
 
     ~SimpleImpl()
     {
-#if defined(_WIN32) || defined(_WIN64)
-        if (_directory != INVALID_HANDLE_VALUE)
-        {
-            if (!FindClose(_directory))
-                fatality(FileSystemException("Cannot close the directory handle!").Attach(_parent));
-        }
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         if (_directory != nullptr)
         {
             int result = closedir(_directory);
             if (result != 0)
                 fatality(FileSystemException("Cannot close the directory descriptor!").Attach(_parent));
+        }
+#elif defined(_WIN32) || defined(_WIN64)
+        if (_directory != INVALID_HANDLE_VALUE)
+        {
+            if (!FindClose(_directory))
+                fatality(FileSystemException("Cannot close the directory handle!").Attach(_parent));
         }
 #endif
     }
@@ -92,7 +92,23 @@ public:
     {
         if (_end)
             return _current;
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+        struct dirent* pentry;
+
+        int result;
+        while (((result = readdir_r(_directory, &_entry, &pentry)) == 0) && (pentry != nullptr))
+        {
+            if (std::strncmp(pentry->d_name, ".", sizeof(pentry->d_name)) == 0)
+                continue;
+            if (std::strncmp(pentry->d_name, "..", sizeof(pentry->d_name)) == 0)
+                continue;
+            _current = _parent / pentry->d_name;
+            return _current;
+        }
+
+        if (result != 0)
+            throwex FileSystemException("Cannot read directory entries!").Attach(_parent);
+#elif defined(_WIN32) || defined(_WIN64)
         do
         {
             if (_next)
@@ -111,22 +127,6 @@ public:
 
         if (GetLastError() != ERROR_NO_MORE_FILES)
             throwex FileSystemException("Cannot read directory entries!").Attach(_parent);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-        struct dirent* pentry;
-
-        int result;
-        while (((result = readdir_r(_directory, &_entry, &pentry)) == 0) && (pentry != nullptr))
-        {
-            if (std::strncmp(pentry->d_name, ".", sizeof(pentry->d_name)) == 0)
-                continue;
-            if (std::strncmp(pentry->d_name, "..", sizeof(pentry->d_name)) == 0)
-                continue;
-            _current = _parent / pentry->d_name;
-            return _current;
-        }
-
-        if (result != 0)
-            throwex FileSystemException("Cannot read directory entries!").Attach(_parent);
 #endif
         _end = true;
         _current = Path();
@@ -142,10 +142,10 @@ public:
         _next = instance._next;
         _end = instance._end;
 
-#if defined(_WIN32) || defined(_WIN64)
-        instance._directory = INVALID_HANDLE_VALUE;
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         instance._directory = nullptr;
+#elif defined(_WIN32) || defined(_WIN64)
+        instance._directory = INVALID_HANDLE_VALUE;
 #endif
     }
 
@@ -161,12 +161,12 @@ public:
     }
 
 private:
-#if defined(_WIN32) || defined(_WIN64)
-    HANDLE _directory;
-    WIN32_FIND_DATAW _entry;
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     DIR* _directory;
     struct dirent _entry;
+#elif defined(_WIN32) || defined(_WIN64)
+    HANDLE _directory;
+    WIN32_FIND_DATAW _entry;
 #endif
     bool _next;
     bool _end;
