@@ -6,10 +6,6 @@
     \copyright MIT License
 */
 
-#if (__MINGW32__)
-#define _WIN32_WINNT 0x601
-#endif
-
 #include "threads/rw_lock.h"
 
 #include "threads/thread.h"
