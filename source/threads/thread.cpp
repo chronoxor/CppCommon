@@ -12,6 +12,8 @@
 #include "system/cpu.h"
 #include "time/timestamp.h"
 
+#include <algorithm>
+
 #if defined(__APPLE__)
 #include <pthread.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
@@ -142,14 +144,11 @@ void Thread::SleepFor(const Timespan& timespan) noexcept
 void Thread::Yield() noexcept
 {
 #if defined(__CYGWIN__)
-    if (sched_yield() != 0)
-        throwex SystemException("Failed yield to other threads!");
+    sched_yield();
 #elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-    if (pthread_yield() != 0)
-        throwex SystemException("Failed yield to other threads!");
+    pthread_yield();
 #elif defined(_WIN32) || defined(_WIN64)
-    if (!SwitchToThread())
-        throwex SystemException("Failed yield to other threads!");
+    SwitchToThread();
 #endif
 }
 
