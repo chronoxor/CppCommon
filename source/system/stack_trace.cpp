@@ -195,9 +195,6 @@ cleanup:
     static CriticalSection cs;
     Locker<CriticalSection> locker(cs);
 
-    // Get the current process handle
-    HANDLE hProcess = GetCurrentProcess();
-
     // Fill all captured frames with symbol information
     for (int i = 0; i < captured; ++i)
     {
@@ -207,6 +204,9 @@ cleanup:
         frame.address = frames[i];
 
 #if defined(DBGHELP_SUPPORT)
+        // Get the current process handle
+        HANDLE hProcess = GetCurrentProcess();
+
         // Get the frame module
         IMAGEHLP_MODULE64 module;
         ZeroMemory(&module, sizeof(module));
