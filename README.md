@@ -5,8 +5,8 @@ encoding, shared memory, threading, time management and others.
 
 [CppCommon API reference](http://chronoxor.github.io/CppCommon/index.html)
 
-[![Build status](https://travis-ci.org/chronoxor/CppBenchmark.svg?branch=master)](https://travis-ci.org/chronoxor/CppBenchmark)
-[![Build status](https://ci.appveyor.com/api/projects/status/5xr4pimatmjtxtqq?svg=true)](https://ci.appveyor.com/project/chronoxor/CppBenchmark)
+[![Build status](https://travis-ci.org/chronoxor/CppCommon.svg?branch=master)](https://travis-ci.org/chronoxor/CppCommon)
+[![Build status](https://ci.appveyor.com/api/projects/status/6cgcwr1uu0re1o5p?svg=true)](https://ci.appveyor.com/project/chronoxor/CppCommon)
 
 # Contents
   * [Features](#features)
