@@ -12,6 +12,7 @@
 #include "filesystem/exceptions.h"
 #include "filesystem/symlink.h"
 #include "system/uuid.h"
+#include "utility/countof.h"
 
 #include <algorithm>
 #include <memory>
@@ -991,6 +992,7 @@ Path Path::Copy(const Path& src, const Path& dst, bool overwrite)
             throwex FileSystemException("Cannot open destination file for copy!").Attach(dst);
         }
 
+#if defined(linux) || defined(__linux) || defined(__linux__)
         // Transfer data between source and destination file descriptors
         off_t offset = 0;
         size_t cur = 0;
@@ -1013,6 +1015,20 @@ Path Path::Copy(const Path& src, const Path& dst, bool overwrite)
             }
             cur += sent;
         }
+#else
+        char buffer[BUFSIZ];
+        ssize_t result;
+
+        do
+        {
+            result = read(source, buffer, countof(buffer));
+            if (result < 0)
+                throwex FileSystemException("Cannot read from the file!").Attach(src);
+            result = write(source, buffer, countof(buffer));
+            if (result < 0)
+                throwex FileSystemException("Cannot write into the file!").Attach(dst);
+        } while (result > 0);
+#endif
 
         // Close files
         close(source);
