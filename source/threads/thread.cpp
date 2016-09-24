@@ -69,7 +69,9 @@ uint64_t Thread::CurrentThreadId() noexcept
 
 uint32_t Thread::CurrentThreadAffinity() noexcept
 {
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if defined(__CYGWIN__)
+    return 0;
+#elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     int affinity = sched_getcpu();
     return (affinity < 0) ? 0 : affinity;
 #elif defined(_WIN32) || defined(_WIN64)
@@ -139,16 +141,23 @@ void Thread::SleepFor(const Timespan& timespan) noexcept
 
 void Thread::Yield() noexcept
 {
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-    pthread_yield();
+#if defined(__CYGWIN__)
+    if (sched_yield() != 0)
+        throwex SystemException("Failed yield to other threads!");
+#elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+    if (pthread_yield() != 0)
+        throwex SystemException("Failed yield to other threads!");
 #elif defined(_WIN32) || defined(_WIN64)
-    SwitchToThread();
+    if (!SwitchToThread())
+        throwex SystemException("Failed yield to other threads!");
 #endif
 }
 
 std::bitset<64> Thread::GetAffinity()
 {
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if defined(__CYGWIN__)
+    return std::bitset<64>(0xFFFFFFFFFFFFFFFFull >> (64 - CPU::Affinity()));
+#elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     cpu_set_t cpuset;
     CPU_ZERO(&cpuset);
     int result = pthread_getaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpuset);
@@ -197,12 +206,14 @@ std::bitset<64> Thread::GetAffinity()
 
 std::bitset<64> Thread::GetAffinity(std::thread& thread)
 {
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if defined(__CYGWIN__)
+    return std::bitset<64>(0xFFFFFFFFFFFFFFFFull >> (64 - CPU::Affinity()));
+#elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     cpu_set_t cpuset;
     CPU_ZERO(&cpuset);
     int result = pthread_getaffinity_np(thread.native_handle(), sizeof(cpu_set_t), &cpuset);
     if (result != 0)
-        throwex SystemException("Failed to get the current thread CPU affinity!");
+        throwex SystemException("Failed to get the given thread CPU affinity!");
     std::bitset<64> affinity;
     for (int i = 0; i < std::min(CPU_SETSIZE, 64); ++i)
         if (CPU_ISSET(i, &cpuset))
@@ -237,7 +248,7 @@ std::bitset<64> Thread::GetAffinity(std::thread& thread)
         if (ns == STATUS_SUCCESS)
             return std::bitset<64>(tbi.AffinityMask);
         else
-            throwex SystemException("Failed to get the current thread CPU affinity!");
+            throwex SystemException("Failed to get the given thread CPU affinity!");
     }
 
     return std::bitset<64>(0xFFFFFFFFFFFFFFFFull >> (64 - CPU::Affinity()));
@@ -246,7 +257,9 @@ std::bitset<64> Thread::GetAffinity(std::thread& thread)
 
 void Thread::SetAffinity(const std::bitset<64>& affinity)
 {
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if defined(__CYGWIN__)
+    throwex SystemException("Cygwin platform does not allow to set the current thread CPU affinity!");
+#elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     cpu_set_t cpuset;
     CPU_ZERO(&cpuset);
     for (int i = 0; i < std::min(CPU_SETSIZE, 64); ++i)
@@ -264,7 +277,9 @@ void Thread::SetAffinity(const std::bitset<64>& affinity)
 
 void Thread::SetAffinity(std::thread& thread, const std::bitset<64>& affinity)
 {
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if defined(__CYGWIN__)
+    throwex SystemException("Cygwin platform does not allow to set the given thread CPU affinity!");
+#elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     cpu_set_t cpuset;
     CPU_ZERO(&cpuset);
     for (int i = 0; i < std::min(CPU_SETSIZE, 64); ++i)
@@ -272,11 +287,11 @@ void Thread::SetAffinity(std::thread& thread, const std::bitset<64>& affinity)
             CPU_SET(i, &cpuset);
     int result = pthread_setaffinity_np(thread.native_handle(), sizeof(cpu_set_t), &cpuset);
     if (result != 0)
-        throwex SystemException("Failed to set the current thread CPU affinity!");
+        throwex SystemException("Failed to set the given thread CPU affinity!");
 #elif defined(_WIN32) || defined(_WIN64)
     DWORD_PTR dwThreadAffinityMask = (DWORD_PTR)affinity.to_ullong();
     if (!SetThreadAffinityMask((HANDLE)thread.native_handle(), dwThreadAffinityMask))
-        throwex SystemException("Failed to set the current thread CPU affinity!");
+        throwex SystemException("Failed to set the given thread CPU affinity!");
 #endif
 }
 
