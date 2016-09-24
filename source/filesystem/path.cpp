@@ -1019,7 +1019,7 @@ Path Path::Copy(const Path& src, const Path& dst, bool overwrite)
         }
 #else
         char buffer[BUFSIZ];
-        ssize_t result;
+        int result;
 
         do
         {
