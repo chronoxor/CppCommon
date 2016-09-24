@@ -15,7 +15,7 @@
 #include <iomanip>
 #include <sstream>
 
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__) || !defined(__CYGWIN__)
 #include <execinfo.h>
 #if defined(LIBBFD_SUPPORT)
 #include <bfd.h>
@@ -24,7 +24,7 @@
 #include <cxxabi.h>
 #include <dlfcn.h>
 #endif
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
 #include <windows.h>
 #if defined(DBGHELP_SUPPORT)
 #include <DbgHelp.h>
@@ -181,7 +181,7 @@ cleanup:
             bfd_close(abfd);
 #endif
     }
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
     const int capacity = 1024;
     void* frames[capacity];
 
