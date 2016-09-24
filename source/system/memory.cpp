@@ -6,6 +6,10 @@
     \copyright MIT License
 */
 
+#if defined(__CYGWIN__)
+#define _WIN32_WINNT 0x601
+#endif
+
 #include "system/memory.h"
 
 #if defined(__APPLE__)
