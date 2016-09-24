@@ -50,7 +50,7 @@ std::ostream& operator<<(std::ostream& os, const StackTrace::Frame& instance)
 
 StackTrace::StackTrace(int skip)
 {
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
     const int capacity = 1024;
     void* frames[capacity];
 
