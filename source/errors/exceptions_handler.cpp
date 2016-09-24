@@ -6,6 +6,10 @@
     \copyright MIT License
 */
 
+#if defined(__CYGWIN__)
+#define _GNU_SOURCE
+#endif
+
 #include "errors/exceptions_handler.h"
 
 #include "errors/exceptions.h"
