@@ -15,7 +15,7 @@
 #include <iomanip>
 #include <sstream>
 
-#if !defined(__CYGWIN__) && defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
 #include <execinfo.h>
 #if defined(LIBBFD_SUPPORT)
 #include <bfd.h>
