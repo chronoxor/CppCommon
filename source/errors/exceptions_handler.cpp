@@ -27,7 +27,10 @@
 #include <signal.h>
 #include <windows.h>
 #if defined(DBGHELP_SUPPORT)
-#include <DbgHelp.h>
+#pragma warning (push)
+#pragma warning (disable:4091)
+#include <dbghelp.h>
+#pragma warning (pop)
 #endif
 #endif
 
