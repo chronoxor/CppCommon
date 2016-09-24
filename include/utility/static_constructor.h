@@ -11,6 +11,11 @@
 
 namespace CppCommon {
 
+#if defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Waddress"
+#endif
+
 //! Static constructor pattern
 /*!
     Static constructor pattern is used to emulate static constructor and
@@ -58,6 +63,10 @@ struct StaticConstructor
 
     static constructor instance;
 };
+
+#if defined(__GNUC__)
+#pragma GCC diagnostic pop
+#endif
 
 /*! \example utility_static_constructor.cpp Static constructor pattern example */
 
