@@ -1019,17 +1019,17 @@ Path Path::Copy(const Path& src, const Path& dst, bool overwrite)
         }
 #else
         char buffer[BUFSIZ];
-        int result;
+        int size;
 
         do
         {
-            result = read(source, buffer, countof(buffer));
-            if (result < 0)
+            size = read(source, buffer, countof(buffer));
+            if (size < 0)
                 throwex FileSystemException("Cannot read from the file!").Attach(src);
-            result = write(source, buffer, countof(buffer));
-            if (result < 0)
+            size = write(source, buffer, countof(buffer));
+            if (size < 0)
                 throwex FileSystemException("Cannot write into the file!").Attach(dst);
-        } while (result > 0);
+        } while (size > 0);
 #endif
 
         // Close files
