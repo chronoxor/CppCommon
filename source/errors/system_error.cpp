@@ -57,7 +57,7 @@ std::string SystemError::Description(int error)
 #endif
         return "Cannot convert the given system error code to the system message - {}"_format(error);
     else
-        return std::string(result);
+        return std::string(buffer);
 #elif defined(_WIN32) || defined(_WIN64)
     WCHAR buffer[capacity];
     DWORD size = FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, nullptr, error, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), buffer, capacity, nullptr);

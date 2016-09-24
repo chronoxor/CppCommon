@@ -16,10 +16,10 @@
 
 #if defined(__APPLE__)
 #include <sys/sysctl.h>
-#elif defined(__CYGWIN__)
-#include <sys/utsname.h>
+extern char **environ;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 #include <sys/stat.h>
+#include <sys/utsname.h>
 #include <stdlib.h>
 #include <cstring>
 #include <fstream>
