@@ -46,5 +46,6 @@ var searchData=
   ['current',['current',['../class_cpp_common_1_1_path.html#af217fe1faf49f0c58f2a3bc7bc29f05a',1,'CppCommon::Path::current()'],['../class_cpp_common_1_1_directory_iterator_1_1_impl.html#a7bf16900f59952e9874ebb4a642a681a',1,'CppCommon::DirectoryIterator::Impl::current()']]],
   ['currentthreadaffinity',['CurrentThreadAffinity',['../class_cpp_common_1_1_thread.html#aac55ead24adfed0a4b2a95503c3b1bfe',1,'CppCommon::Thread']]],
   ['currentthreadid',['CurrentThreadId',['../class_cpp_common_1_1_thread.html#a44c850298683e640ab5b261dffb27e8d',1,'CppCommon::Thread']]],
-  ['cyan',['CYAN',['../namespace_cpp_common.html#ac1ca6affe95577c60f18950cd8682db4a344dd8cd533280795b9db82ef0c92749',1,'CppCommon']]]
+  ['cyan',['CYAN',['../namespace_cpp_common.html#ac1ca6affe95577c60f18950cd8682db4a344dd8cd533280795b9db82ef0c92749',1,'CppCommon']]],
+  ['c_2b_2b_20common_20library',['C++ Common Library',['../index.html',1,'']]]
 ];

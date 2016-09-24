@@ -17,7 +17,8 @@ var indexSectionsWithContent =
   7: "cfp",
   8: "abcdfghilmnorstuwy",
   9: "deors",
-  10: "_eft"
+  10: "_eft",
+  11: "c"
 };
 
 var indexSectionNames =
@@ -32,7 +33,8 @@ var indexSectionNames =
   7: "enums",
   8: "enumvalues",
   9: "related",
-  10: "defines"
+  10: "defines",
+  11: "pages"
 };
 
 function convertToId(search)
