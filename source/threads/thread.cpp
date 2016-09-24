@@ -24,6 +24,8 @@
 #elif defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
 #include <winternl.h>
+#undef max
+#undef min
 #undef Yield
 #define STATUS_SUCCESS 0x00000000
 #endif

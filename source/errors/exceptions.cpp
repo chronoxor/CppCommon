@@ -1,5 +1,5 @@
 /*!
-    \file exceptions.cpp
+    \file errors/exceptions.cpp
     \brief Exceptions implementation
     \author Ivan Shynkarenka
     \date 09.02.2016

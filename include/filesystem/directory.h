@@ -135,7 +135,7 @@ public:
     friend void swap(Directory& directory1, Directory& directory2) noexcept;
 };
 
-/*! \example filesystem_symlink.cpp Filesystem symlink wrapper example */
+/*! \example filesystem_directory.cpp Filesystem directory wrapper example */
 
 } // namespace CppCommon
 

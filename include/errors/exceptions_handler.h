@@ -30,7 +30,7 @@ namespace CppCommon {
 */
 class ExceptionsHandler : public CppCommon::Singleton<ExceptionsHandler>
 {
-   friend CppCommon::Singleton<ExceptionsHandler>;
+   friend Singleton<ExceptionsHandler>;
 
 public:
     ExceptionsHandler(const ExceptionsHandler&) = delete;

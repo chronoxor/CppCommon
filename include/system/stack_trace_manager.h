@@ -23,7 +23,7 @@ namespace CppCommon {
 */
 class StackTraceManager : public CppCommon::Singleton<StackTraceManager>
 {
-   friend CppCommon::Singleton<StackTraceManager>;
+   friend Singleton<StackTraceManager>;
 
 public:
     StackTraceManager(const StackTraceManager&) = delete;
