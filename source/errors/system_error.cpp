@@ -6,10 +6,6 @@
     \copyright MIT License
 */
 
-#if defined(__CYGWIN__)
-#define _GNU_SOURCE
-#endif
-
 #include "errors/system_error.h"
 
 #include "string/encoding.h"
