@@ -13,7 +13,7 @@
 #include <sys/sysctl.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
 #include <sys/sysinfo.h>
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
 #include <windows.h>
 #endif
 

@@ -21,7 +21,7 @@
 #include <fstream>
 #include <regex>
 extern char **environ;
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
 #include <windows.h>
 #include <memory>
 #include <vector>
