@@ -14,15 +14,21 @@
 #include <cstring>
 #include <sstream>
 
-#if defined(linux) || defined(__linux) || defined(__linux__)
+#if defined(__APPLE__)
+#include <sys/sysctl.h>
+#elif defined(__CYGWIN__)
+#include <sys/utsname.h>
+#elif defined(unix) || defined(__unix) || defined(__unix__)
 #include <sys/stat.h>
 #include <stdlib.h>
 #include <cstring>
 #include <fstream>
 #include <regex>
 extern char **environ;
-#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
+#endif
+#if defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
 #include <windows.h>
+#include <map>
 #include <memory>
 #include <vector>
 #endif

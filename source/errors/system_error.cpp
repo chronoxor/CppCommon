@@ -48,8 +48,13 @@ std::string SystemError::Description(int error)
     const int capacity = 1024;
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     char buffer[capacity];
+#if defined(__CYGWIN__)
+    int result = strerror_r(error, buffer, capacity);
+    if (result != 0)
+#else
     char* result = strerror_r(error, buffer, capacity);
     if (result == nullptr)
+#endif
         return "Cannot convert the given system error code to the system message - {}"_format(error);
     else
         return std::string(result);
