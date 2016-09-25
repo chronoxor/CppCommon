@@ -16,6 +16,8 @@ dist: trusty
 # Add-ons and packages
 addons:
   apt:
+    sources:
+      - ubuntu-toolchain-r-test
     packages:
       - gcc-5
       - g++-5
