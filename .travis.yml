@@ -24,6 +24,8 @@ addons:
       - cmake
       - doxygen
       - graphviz
+      - libbfd-dev
+      - uuid-dev
 
 # Branches to build
 branches:
