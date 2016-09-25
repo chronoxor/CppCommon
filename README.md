@@ -51,7 +51,7 @@ Optional:
 
 ## Clone repository with submodules
 ```
-git clone git@github.com:chronoxor/CppCommon.git
+git clone https://github.com/chronoxor/CppCommon.git CppCommon
 cd CppCommon
 git submodule update --init --recursive --remote
 ```
