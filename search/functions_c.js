@@ -1,10 +1,10 @@
 var searchData=
 [
-  ['offset',['offset',['../class_cpp_common_1_1_file.html#a044f9a385aa8f22b6c02717839e02003',1,'CppCommon::File::offset()'],['../class_cpp_common_1_1_timezone.html#ac3826d6395912171f5d8c7e35fb54bbc',1,'CppCommon::Timezone::offset()'],['../class_cpp_common_1_1_file_1_1_impl.html#a142e14bc47de482bd49ddc84613d32a9',1,'CppCommon::File::Impl::offset()']]],
+  ['offset',['offset',['../class_cpp_common_1_1_file.html#a044f9a385aa8f22b6c02717839e02003',1,'CppCommon::File::offset()'],['../class_cpp_common_1_1_timezone.html#ae10dc79d1b94d3676b05b451c07609c1',1,'CppCommon::Timezone::offset()'],['../class_cpp_common_1_1_file_1_1_impl.html#a142e14bc47de482bd49ddc84613d32a9',1,'CppCommon::File::Impl::offset()']]],
   ['open',['Open',['../class_cpp_common_1_1_file.html#a98e6ccba84cae5d651d1865e46cd937f',1,'CppCommon::File::Open()'],['../class_cpp_common_1_1_file_1_1_impl.html#a0bee597b908d6d3c45ab43732125458b',1,'CppCommon::File::Impl::Open()']]],
   ['openorcreate',['OpenOrCreate',['../class_cpp_common_1_1_file.html#a40282f4e35e3f08263f433f41c91f90d',1,'CppCommon::File::OpenOrCreate()'],['../class_cpp_common_1_1_file_1_1_impl.html#a1d79250ea30729e554554cdc99f18f0c',1,'CppCommon::File::Impl::OpenOrCreate()']]],
-  ['operator_20bool',['operator bool',['../class_cpp_common_1_1_shared_memory.html#a52ed683382f09f6f516680b06aa1cb30',1,'CppCommon::SharedMemory::operator bool()'],['../class_cpp_common_1_1_shared_type.html#a0c3aa0e793c910b428bffe93fe912616',1,'CppCommon::SharedType::operator bool()'],['../class_cpp_common_1_1_flags.html#ac39d4bfa9fffc71959a01d92188ee7e6',1,'CppCommon::Flags::operator bool()']]],
-  ['operator_21',['operator!',['../class_cpp_common_1_1_flags.html#a860635ec92e5b009d1758d52791dc38c',1,'CppCommon::Flags']]],
+  ['operator_20bool',['operator bool',['../class_cpp_common_1_1_shared_memory.html#a52ed683382f09f6f516680b06aa1cb30',1,'CppCommon::SharedMemory::operator bool()'],['../class_cpp_common_1_1_shared_type.html#a0c3aa0e793c910b428bffe93fe912616',1,'CppCommon::SharedType::operator bool()'],['../class_cpp_common_1_1_flags.html#a4f8a3e46a015c8313042104b76302e6d',1,'CppCommon::Flags::operator bool()']]],
+  ['operator_21',['operator!',['../class_cpp_common_1_1_flags.html#ae979ec163bc2e26f94eac4d0214f2b90',1,'CppCommon::Flags']]],
   ['operator_21_3d',['operator!=',['../namespace_cpp_common.html#a5e677971dba2aa4c01fc29801d79f84a',1,'CppCommon::operator!=(const DirectoryIterator &amp;it1, const DirectoryIterator &amp;it2)'],['../namespace_cpp_common.html#afe4fd3d24f1561115b2b49e980bb8aaf',1,'CppCommon::operator!=(const Time &amp;time1, const Time &amp;time2) noexcept']]],
   ['operator_22_22_5fa',['operator&quot;&quot;_a',['../format_8inl.html#af3273a143b5d606a29f08941d957a402',1,'operator&quot;&quot;_a(const char *str, std::size_t):&#160;format.inl'],['../format_8inl.html#a04ad79d1bdff7101d794c31eb827a48b',1,'operator&quot;&quot;_a(const wchar_t *str, std::size_t):&#160;format.inl']]],
   ['operator_22_22_5fformat',['operator&quot;&quot;_format',['../format_8inl.html#a9f46ae6e8b8342dc0e86b1bc73e478a2',1,'operator&quot;&quot;_format(const char *str, std::size_t):&#160;format.inl'],['../format_8inl.html#a8f0f406d3012620d9f671040f9dd0003',1,'operator&quot;&quot;_format(const wchar_t *str, std::size_t):&#160;format.inl']]],
@@ -30,7 +30,7 @@ var searchData=
   ['operator_5e_3d',['operator^=',['../class_cpp_common_1_1_flags.html#a2487a858579a3f6c0f037008098e5884',1,'CppCommon::Flags']]],
   ['operator_7c',['operator|',['../namespace_cpp_common.html#a5496108dd334d83dbe5486534f9f1003',1,'CppCommon']]],
   ['operator_7c_3d',['operator|=',['../class_cpp_common_1_1_flags.html#a2b93cda03205a1f6d073f4365a39f3cc',1,'CppCommon::Flags']]],
-  ['operator_7e',['operator~',['../class_cpp_common_1_1_flags.html#afa8a705727ccc6043cb3d0465523795b',1,'CppCommon::Flags']]],
+  ['operator_7e',['operator~',['../class_cpp_common_1_1_flags.html#a921d2cb9741663683a027b446195cf22',1,'CppCommon::Flags']]],
   ['osversion',['OSVersion',['../class_cpp_common_1_1_environment.html#ac82d59bf922a0f52c156cb6aadcea282',1,'CppCommon::Environment']]],
   ['owner',['owner',['../class_cpp_common_1_1_shared_memory.html#a324eee1da2754f9d7600fb00d0b80794',1,'CppCommon::SharedMemory::owner()'],['../class_cpp_common_1_1_shared_type.html#aac0f1c37fc8ace47a7236e8c3d11f604',1,'CppCommon::SharedType::owner()'],['../class_cpp_common_1_1_shared_memory_1_1_impl.html#abd8198653f490cf00484b4e77282cbea',1,'CppCommon::SharedMemory::Impl::owner()']]]
 ];
