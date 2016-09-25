@@ -29,7 +29,7 @@ std::string format(const std::string& pattern, const Args&... args);
 
 //! Format wide string
 /*!
-    Format wide string with the help of {fmt} library (http://fmtlib.net/)
+    Format wide string with the help of {fmt} library (http://fmtlib.net)
 
     Thread-safe.
 
