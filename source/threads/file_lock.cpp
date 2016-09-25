@@ -13,6 +13,7 @@
 #include "threads/thread.h"
 
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#include <sys/fcntl.h>
 #include <sys/file.h>
 #include <fcntl.h>
 #include <unistd.h>
