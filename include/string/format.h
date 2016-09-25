@@ -16,7 +16,7 @@ namespace CppCommon {
 
 //! Format string
 /*!
-    Format string with the help of {fmt} library (http://fmtlib.net/)
+    Format string with the help of {fmt} library (http://fmtlib.net)
 
     Thread-safe.
 
