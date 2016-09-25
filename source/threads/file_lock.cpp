@@ -21,6 +21,13 @@
 #undef Yield
 #endif
 
+// In case we are on a system with glibc version earlier than 2.20
+#ifndef F_OFD_GETLK
+#define F_OFD_GETLK  36
+#define F_OFD_SETLK  37
+#define F_OFD_SETLKW 38
+#endif
+
 namespace CppCommon {
 
 class FileLock::Impl
