@@ -17,6 +17,8 @@ dist: trusty
 addons:
   apt:
     packages:
+      - gcc-5
+      - g++-5
       - cmake
       - doxygen
       - graphviz
