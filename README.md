@@ -21,7 +21,7 @@ encoding, shared memory, threading, time management and others.
 * Exception handling model
 * Filesystem manipulations
 * String encoding converters
-* String format using [fmt library](https://github.com/fmtlib/fmt)
+* String format using [{fmt} library](https://github.com/fmtlib/fmt)
 * CPU, memory, environment
 * Shared memory
 * Stack trace
