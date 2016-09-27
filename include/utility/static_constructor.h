@@ -42,8 +42,15 @@ namespace CppCommon {
     \endcode
 */
 template <void (*construct)(), void (*destruct)() = nullptr>
-struct StaticConstructor
+class StaticConstructor
 {
+    struct constructor;
+
+public:
+    //! Static constructor instance
+    static constructor instance;
+
+private:
     struct constructor
     {
         constructor()
@@ -60,8 +67,6 @@ struct StaticConstructor
 
         void operator()() {}
     };
-
-    static constructor instance;
 };
 
 #if defined(__GNUC__)
