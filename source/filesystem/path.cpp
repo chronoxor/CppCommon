@@ -40,7 +40,7 @@
 
 namespace CppCommon {
 
-//! @cond
+//! @cond INTERNALS
 namespace Internals {
 
 Path initial = Path::current();

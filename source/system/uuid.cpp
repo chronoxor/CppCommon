@@ -18,7 +18,7 @@
 
 namespace CppCommon {
 
-//! @cond
+//! @cond INTERNALS
 namespace Internals {
 
 uint8_t unhex(char ch)

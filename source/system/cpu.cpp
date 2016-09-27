@@ -21,7 +21,7 @@
 
 namespace CppCommon {
 
-//! @cond
+//! @cond INTERNALS
 namespace Internals {
 
 #if defined(_WIN32) || defined(_WIN64)

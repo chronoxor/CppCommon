@@ -22,7 +22,7 @@
 
 namespace CppCommon {
 
-//! @cond
+//! @cond INTERNALS
 namespace Internals {
 
 #if defined(__APPLE__)
