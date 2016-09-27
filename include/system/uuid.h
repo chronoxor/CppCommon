@@ -81,7 +81,7 @@ public:
     void swap(UUID& uuid) noexcept;
     friend void swap(UUID& uuid1, UUID& uuid2) noexcept;
 
-protected:
+private:
     std::array<uint8_t, 16> _data;
 };
 

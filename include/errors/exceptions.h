@@ -64,8 +64,11 @@ public:
     { instance._location = location; return std::forward<T>(instance); }
 
 protected:
+    //! Cached exception string
     mutable std::string _cache;
+    //! Exception message
     std::string _message;
+    //! Exception location
     SourceLocation _location;
 };
 
@@ -125,7 +128,9 @@ public:
     std::string string() const override;
 
 protected:
+    //! System error code
     int _system_error;
+    //! System error message
     std::string _system_message;
 };
 

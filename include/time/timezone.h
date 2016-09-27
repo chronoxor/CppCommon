@@ -100,8 +100,11 @@ public:
     { return Timezone(); }
 
 protected:
+    //! Time zone name
     std::string _name;
+    //! Time zone offset
     Timespan _offset;
+    //! Time zone daylight saving time offset
     Timespan _dstoffset;
 };
 

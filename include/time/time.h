@@ -143,14 +143,23 @@ public:
     { return Time(1970, 1, 1); }
 
 protected:
+    //! Year value
     int _year;
+    //! Month value
     int _month;
+    //! Day value
     int _day;
+    //! Hour value
     int _hour;
+    //! Minute value
     int _minute;
+    //! Second value
     int _second;
+    //! Millisecond value
     int _millisecond;
+    //! Microsecond value
     int _microsecond;
+    //! Nanosecond value
     int _nanosecond;
 
     //! Protected default constructor

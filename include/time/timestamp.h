@@ -216,6 +216,7 @@ public:
     static uint64_t rdts();
 
 protected:
+    //! Timestamp value
     uint64_t _timestamp;
 };
 

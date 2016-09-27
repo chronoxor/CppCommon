@@ -42,8 +42,11 @@ public:
     { _src = src; _dst = dst; return *this; }
 
 protected:
+    //! Filesystem exception path
     Path _path;
+    //! Filesystem exception source path
     Path _src;
+    //! Filesystem exception destination path
     Path _dst;
 };
 

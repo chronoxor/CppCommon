@@ -363,6 +363,7 @@ public:
     friend void swap(Path& path1, Path& path2) noexcept;
 
 protected:
+    //! Path string
     std::string _path;
 };
 
