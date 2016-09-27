@@ -25,6 +25,8 @@
 
 namespace CppCommon {
 
+//! @cond INTERNALS
+
 class NamedMutex::Impl
 {
 public:
@@ -175,6 +177,8 @@ private:
     HANDLE _mutex;
 #endif
 };
+
+//! @endcond
 
 NamedMutex::NamedMutex(const std::string& name) : _pimpl(std::make_unique<Impl>(name))
 {

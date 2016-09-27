@@ -24,6 +24,8 @@
 
 namespace CppCommon {
 
+//! @cond INTERNALS
+
 class Mutex::Impl
 {
 public:
@@ -140,6 +142,8 @@ private:
     HANDLE _mutex;
 #endif
 };
+
+//! @endcond
 
 Mutex::Mutex() : _pimpl(std::make_unique<Impl>())
 {

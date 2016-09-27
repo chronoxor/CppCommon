@@ -24,6 +24,8 @@
 
 namespace CppCommon {
 
+//! @cond INTERNALS
+
 class NamedEventAutoReset::Impl
 {
 public:
@@ -209,6 +211,8 @@ private:
     HANDLE _event;
 #endif
 };
+
+//! @endcond
 
 NamedEventAutoReset::NamedEventAutoReset(const std::string& name, bool signaled) : _pimpl(std::make_unique<Impl>(name, signaled))
 {

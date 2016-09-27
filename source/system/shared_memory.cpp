@@ -24,6 +24,8 @@
 
 namespace CppCommon {
 
+//! @cond INTERNALS
+
 class SharedMemory::Impl
 {
 public:
@@ -169,6 +171,8 @@ private:
     void* _ptr;
     bool _owner;
 };
+
+//! @endcond
 
 SharedMemory::SharedMemory(const std::string& name, size_t size) : _pimpl(std::make_unique<Impl>(name, size)), _name(name), _size(size)
 {

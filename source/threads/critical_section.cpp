@@ -21,6 +21,8 @@
 
 namespace CppCommon {
 
+//! @cond INTERNALS
+
 class CriticalSection::Impl
 {
 public:
@@ -97,6 +99,8 @@ private:
     CRITICAL_SECTION _lock;
 #endif
 };
+
+//! @endcond
 
 CriticalSection::CriticalSection() : _pimpl(std::make_unique<Impl>())
 {

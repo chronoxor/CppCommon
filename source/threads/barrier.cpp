@@ -21,6 +21,8 @@
 
 namespace CppCommon {
 
+//! @cond INTERNALS
+
 class Barrier::Impl
 {
 public:
@@ -74,6 +76,8 @@ private:
     SYNCHRONIZATION_BARRIER _barrier;
 #endif
 };
+
+//! @endcond
 
 Barrier::Barrier(int threads) : _pimpl(std::make_unique<Impl>(threads))
 {

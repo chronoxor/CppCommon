@@ -24,6 +24,8 @@
 
 namespace CppCommon {
 
+//! @cond INTERNALS
+
 class DirectoryIterator::Impl
 {
     friend class SimpleImpl;
@@ -225,6 +227,8 @@ private:
     SimpleImpl _current;
     std::stack<SimpleImpl> _stack;
 };
+
+//! @endcond
 
 DirectoryIterator::DirectoryIterator() : _pimpl(nullptr), _current()
 {

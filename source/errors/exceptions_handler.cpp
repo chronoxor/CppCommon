@@ -33,6 +33,8 @@
 
 namespace CppCommon {
 
+//! @cond INTERNALS
+
 class ExceptionsHandler::Impl
 {
 public:
@@ -613,6 +615,8 @@ private:
 
 #endif
 };
+
+//! @endcond
 
 ExceptionsHandler::ExceptionsHandler() : _pimpl(std::make_unique<Impl>())
 {

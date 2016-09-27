@@ -25,6 +25,8 @@
 
 namespace CppCommon {
 
+//! @cond INTERNALS
+
 class NamedSemaphore::Impl
 {
 public:
@@ -151,6 +153,8 @@ private:
     HANDLE _semaphore;
 #endif
 };
+
+//! @endcond
 
 NamedSemaphore::NamedSemaphore(const std::string& name, int resources) : _pimpl(std::make_unique<Impl>(name, resources))
 {

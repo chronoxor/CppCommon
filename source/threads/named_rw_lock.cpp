@@ -23,6 +23,8 @@
 
 namespace CppCommon {
 
+//! @cond INTERNALS
+
 //! Named read/write lock synchronization primitive implementation
 /*!
     Resource lock value width: 32 bits.
@@ -499,6 +501,8 @@ private:
 #endif
     uint32_t _spin;
 };
+
+//! @endcond
 
 NamedRWLock::NamedRWLock(const std::string& name) : _pimpl(std::make_unique<Impl>(name, 4000))
 {

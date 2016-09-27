@@ -25,6 +25,8 @@
 
 namespace CppCommon {
 
+//! @cond INTERNALS
+
 class File::Impl
 {
 public:
@@ -593,6 +595,8 @@ private:
     size_t _size;
     std::vector<uint8_t> _buffer;
 };
+
+//! @endcond
 
 const Flags<FileAttributes> File::DEFAULT_ATTRIBUTES = FileAttributes::NORMAL;
 const Flags<FilePermissions> File::DEFAULT_PERMISSIONS = FilePermissions::IRUSR | FilePermissions::IWUSR | FilePermissions::IRGRP | FilePermissions::IROTH;

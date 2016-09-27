@@ -23,6 +23,8 @@
 
 namespace CppCommon {
 
+//! @cond INTERNALS
+
 class EventManualReset::Impl
 {
 public:
@@ -175,6 +177,8 @@ private:
     HANDLE _event;
 #endif
 };
+
+//! @endcond
 
 EventManualReset::EventManualReset(bool signaled) : _pimpl(std::make_unique<Impl>(signaled))
 {

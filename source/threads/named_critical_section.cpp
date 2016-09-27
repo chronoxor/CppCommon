@@ -23,6 +23,8 @@
 
 namespace CppCommon {
 
+//! @cond INTERNALS
+
 class NamedCriticalSection::Impl
 {
 public:
@@ -170,6 +172,8 @@ private:
     NamedEventAutoReset _event;
     uint32_t _spin;
 };
+
+//! @endcond
 
 NamedCriticalSection::NamedCriticalSection(const std::string& name) : _pimpl(std::make_unique<Impl>(name, 4000))
 {

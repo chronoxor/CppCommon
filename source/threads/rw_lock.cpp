@@ -21,6 +21,8 @@
 
 namespace CppCommon {
 
+//! @cond INTERNALS
+
 class RWLock::Impl
 {
 public:
@@ -121,6 +123,8 @@ private:
     SRWLOCK _rwlock;
 #endif
 };
+
+//! @endcond
 
 RWLock::RWLock() : _pimpl(std::make_unique<Impl>())
 {

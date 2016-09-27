@@ -19,6 +19,8 @@
 
 namespace CppCommon {
 
+//! @cond INTERNALS
+
 class StackTraceManager::Impl
 {
 public:
@@ -70,6 +72,8 @@ public:
 private:
     bool _initialized;
 };
+
+//! @endcond
 
 StackTraceManager::StackTraceManager() : _pimpl(std::make_unique<Impl>())
 {
