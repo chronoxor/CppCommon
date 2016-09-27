@@ -9,7 +9,7 @@ var searchData=
   ['getenvar',['GetEnvar',['../class_cpp_common_1_1_environment.html#ae52929144f084bef95c4ae795fee0360',1,'CppCommon::Environment']]],
   ['getfiles',['GetFiles',['../class_cpp_common_1_1_directory.html#ac981d9e2e93344c9df21d041424713d3',1,'CppCommon::Directory']]],
   ['getfilesrecurse',['GetFilesRecurse',['../class_cpp_common_1_1_directory.html#ae3695fd5241b5b783f3a7d51feb63334',1,'CppCommon::Directory']]],
-  ['getinstance',['GetInstance',['../class_cpp_common_1_1_singleton.html#acfecc233c21d850f458c38d5609945cf',1,'CppCommon::Singleton::GetInstance()'],['../class_cpp_common_1_1_exceptions_handler_1_1_impl.html#a50c36c29a7705235a3736bce709b06c1',1,'CppCommon::ExceptionsHandler::Impl::GetInstance()']]],
+  ['getinstance',['GetInstance',['../class_cpp_common_1_1_singleton.html#acfecc233c21d850f458c38d5609945cf',1,'CppCommon::Singleton']]],
   ['getlast',['GetLast',['../class_cpp_common_1_1_system_error.html#a85e68087778f7aeb1a8416ce99609099',1,'CppCommon::SystemError']]],
   ['getpriority',['GetPriority',['../class_cpp_common_1_1_thread.html#ae26c4ec41df1dde992051f5d66b2665c',1,'CppCommon::Thread::GetPriority()'],['../class_cpp_common_1_1_thread.html#a7518ea1383661870390daeb9942ca9e0',1,'CppCommon::Thread::GetPriority(std::thread &amp;thread)']]],
   ['getsymlinks',['GetSymlinks',['../class_cpp_common_1_1_directory.html#a8aec0333c537ef37954a909368dc930d',1,'CppCommon::Directory']]],

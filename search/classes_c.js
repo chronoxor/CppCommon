@@ -3,8 +3,6 @@ var searchData=
   ['semaphore',['Semaphore',['../class_cpp_common_1_1_semaphore.html',1,'CppCommon']]],
   ['sharedmemory',['SharedMemory',['../class_cpp_common_1_1_shared_memory.html',1,'CppCommon']]],
   ['sharedtype',['SharedType',['../class_cpp_common_1_1_shared_type.html',1,'CppCommon']]],
-  ['sharedtype_3c_20criticalsectionheader_20_3e',['SharedType&lt; CriticalSectionHeader &gt;',['../class_cpp_common_1_1_shared_type.html',1,'CppCommon']]],
-  ['simpleimpl',['SimpleImpl',['../class_cpp_common_1_1_directory_iterator_1_1_simple_impl.html',1,'CppCommon::DirectoryIterator']]],
   ['singleton',['Singleton',['../class_cpp_common_1_1_singleton.html',1,'CppCommon']]],
   ['singleton_3c_20exceptionshandler_20_3e',['Singleton&lt; ExceptionsHandler &gt;',['../class_cpp_common_1_1_singleton.html',1,'CppCommon']]],
   ['singleton_3c_20stacktracemanager_20_3e',['Singleton&lt; StackTraceManager &gt;',['../class_cpp_common_1_1_singleton.html',1,'CppCommon']]],

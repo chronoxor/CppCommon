@@ -1,7 +1,6 @@
 var searchData=
 [
   ['_5fcache',['_cache',['../class_cpp_common_1_1_exception.html#a684495151e7ee6020cd18a8cbbd6a9f1',1,'CppCommon::Exception']]],
-  ['_5fcurrent',['_current',['../class_cpp_common_1_1_directory_iterator_1_1_impl.html#a73839c5bdbfd165022415ead4e7a0f53',1,'CppCommon::DirectoryIterator::Impl']]],
   ['_5fdata',['_data',['../class_cpp_common_1_1_u_u_i_d.html#ae9dfd05aa1dcf741c0b8aac409093208',1,'CppCommon::UUID']]],
   ['_5fday',['_day',['../class_cpp_common_1_1_time.html#ad7458bf82844f11f011320a5aa1df9e1',1,'CppCommon::Time']]],
   ['_5fdst',['_dst',['../class_cpp_common_1_1_file_system_exception.html#af73e0845c1eaa0d52c7e3c12d5a27e82',1,'CppCommon::FileSystemException']]],
@@ -16,7 +15,6 @@ var searchData=
   ['_5fname',['_name',['../class_cpp_common_1_1_timezone.html#a21a68886296d90c7277811f93560fa97',1,'CppCommon::Timezone']]],
   ['_5fnanosecond',['_nanosecond',['../class_cpp_common_1_1_time.html#ae01732533b3e0ee1426000faa9a9ff6e',1,'CppCommon::Time']]],
   ['_5foffset',['_offset',['../class_cpp_common_1_1_timezone.html#a9fac26860fde96a1d73fe66592ac2a4d',1,'CppCommon::Timezone']]],
-  ['_5fparent',['_parent',['../class_cpp_common_1_1_directory_iterator_1_1_impl.html#a5c716ef5abbbc06c7cfdacb72497919f',1,'CppCommon::DirectoryIterator::Impl']]],
   ['_5fpath',['_path',['../class_cpp_common_1_1_file_system_exception.html#af849819a30af491c79578b7ab86c4a56',1,'CppCommon::FileSystemException::_path()'],['../class_cpp_common_1_1_path.html#af796311bfb91d9e26fd9b87b83b67efd',1,'CppCommon::Path::_path()']]],
   ['_5fsecond',['_second',['../class_cpp_common_1_1_time.html#af4c0f9549b8ebf8d50746d395f96bffe',1,'CppCommon::Time']]],
   ['_5fsrc',['_src',['../class_cpp_common_1_1_file_system_exception.html#a92694cb547399fecb0ad6e559c321294',1,'CppCommon::FileSystemException']]],

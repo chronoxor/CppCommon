@@ -1,8 +1,5 @@
 var searchData=
 [
-  ['f_5fofd_5fgetlk',['F_OFD_GETLK',['../file__lock_8cpp.html#a1564b73f59286bbf0999706304f87c6c',1,'file_lock.cpp']]],
-  ['f_5fofd_5fsetlk',['F_OFD_SETLK',['../file__lock_8cpp.html#a4fc21528a6ce28d77a755f391568e1b4',1,'file_lock.cpp']]],
-  ['f_5fofd_5fsetlkw',['F_OFD_SETLKW',['../file__lock_8cpp.html#a1538d86465f1f7057703c9c5e7a0f5b5',1,'file_lock.cpp']]],
   ['fatal',['fatal',['../namespace_cpp_common.html#a673af4dcd77867787a1647f58bd8b64e',1,'CppCommon::fatal(const SourceLocation &amp;location, const StackTrace &amp;trace, const std::string &amp;message, int error=SystemError::GetLast()) noexcept'],['../namespace_cpp_common.html#ab164306257935a4c8ace3b32e2fde861',1,'CppCommon::fatal(const SourceLocation &amp;location, const StackTrace &amp;trace, const std::exception &amp;fatal) noexcept']]],
   ['fatal_2ecpp',['fatal.cpp',['../fatal_8cpp.html',1,'']]],
   ['fatal_2eh',['fatal.h',['../fatal_8h.html',1,'']]],
@@ -16,8 +13,8 @@ var searchData=
   ['file_5flock_2ecpp',['file_lock.cpp',['../file__lock_8cpp.html',1,'']]],
   ['file_5flock_2eh',['file_lock.h',['../file__lock_8h.html',1,'']]],
   ['fileattributes',['FileAttributes',['../namespace_cpp_common.html#af3227fe73424d43d02a24275b3177a6d',1,'CppCommon']]],
-  ['filelock',['FileLock',['../class_cpp_common_1_1_file_lock.html#a1d8835dad82c6dee13d9bd33c5e2f11f',1,'CppCommon::FileLock::FileLock(const Path &amp;path)'],['../class_cpp_common_1_1_file_lock.html#a023de1caa3305230f559bd724e5e7910',1,'CppCommon::FileLock::FileLock(const FileLock &amp;)=delete'],['../class_cpp_common_1_1_file_lock.html#ab9d2f4495f78b9a7d4833cad1230f6b9',1,'CppCommon::FileLock::FileLock(FileLock &amp;&amp;lock) noexcept']]],
   ['filelock',['FileLock',['../class_cpp_common_1_1_file_lock.html',1,'CppCommon']]],
+  ['filelock',['FileLock',['../class_cpp_common_1_1_file_lock.html#a1d8835dad82c6dee13d9bd33c5e2f11f',1,'CppCommon::FileLock::FileLock(const Path &amp;path)'],['../class_cpp_common_1_1_file_lock.html#a023de1caa3305230f559bd724e5e7910',1,'CppCommon::FileLock::FileLock(const FileLock &amp;)=delete'],['../class_cpp_common_1_1_file_lock.html#ab9d2f4495f78b9a7d4833cad1230f6b9',1,'CppCommon::FileLock::FileLock(FileLock &amp;&amp;lock) noexcept']]],
   ['filename',['filename',['../struct_cpp_common_1_1_stack_trace_1_1_frame.html#a42eb7f81c0576ee19e31f89f8bfd4b98',1,'CppCommon::StackTrace::Frame::filename()'],['../class_cpp_common_1_1_path.html#a5248af579abeb9460a270d56fac160a0',1,'CppCommon::Path::filename()'],['../class_cpp_common_1_1_source_location.html#aee2fbfbb90ba5e4a0b90931ced46d7b1',1,'CppCommon::SourceLocation::filename()']]],
   ['filepermissions',['FilePermissions',['../namespace_cpp_common.html#ae065c40f4f0d3419423d85bc31a58b24',1,'CppCommon']]],
   ['filesystem_2eh',['filesystem.h',['../filesystem_8h.html',1,'']]],
@@ -29,8 +26,7 @@ var searchData=
   ['flags_2einl',['flags.inl',['../flags_8inl.html',1,'']]],
   ['flags_3c_20fileattributes_20_3e',['Flags&lt; FileAttributes &gt;',['../class_cpp_common_1_1_flags.html',1,'CppCommon']]],
   ['flags_3c_20filepermissions_20_3e',['Flags&lt; FilePermissions &gt;',['../class_cpp_common_1_1_flags.html',1,'CppCommon']]],
-  ['flush',['Flush',['../class_cpp_common_1_1_file.html#a99a7122aec6546b6d04caba565ebcf4c',1,'CppCommon::File::Flush()'],['../class_cpp_common_1_1_file_1_1_impl.html#a44130cbcef43c72d3f8d691708fab0f9',1,'CppCommon::File::Impl::Flush()']]],
-  ['flushbuffer',['FlushBuffer',['../class_cpp_common_1_1_file_1_1_impl.html#adb6f5e64836188d6d4c7e12cbaee9cf5',1,'CppCommon::File::Impl']]],
+  ['flush',['Flush',['../class_cpp_common_1_1_file.html#a99a7122aec6546b6d04caba565ebcf4c',1,'CppCommon::File']]],
   ['format',['format',['../namespace_cpp_common.html#a127ff809bdea0812048fa3602baabd1b',1,'CppCommon::format(const std::string &amp;pattern, const Args &amp;...args)'],['../namespace_cpp_common.html#afb3fea1d18ae5c1165aca0e26370fa57',1,'CppCommon::format(const std::wstring &amp;pattern, const Args &amp;...args)']]],
   ['format_2eh',['format.h',['../format_8h.html',1,'']]],
   ['format_2einl',['format.inl',['../format_8inl.html',1,'']]],
