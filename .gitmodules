@@ -12,7 +12,7 @@
 	branch = master
 [submodule "modules/fmt"]
 	path = modules/fmt
-	url = https://github.com/chronoxor/fmt.git
+	url = https://github.com/fmtlib/fmt.git
 	branch = master
 [submodule "modules/CppBenchmark"]
 	path = modules/CppBenchmark
