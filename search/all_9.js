@@ -4,7 +4,7 @@ var searchData=
   ['indexed',['INDEXED',['../namespace_cpp_common.html#af3227fe73424d43d02a24275b3177a6da7480c2820154d14ec47fdf08bb008aeb',1,'CppCommon']]],
   ['initial',['initial',['../class_cpp_common_1_1_path.html#a75b30d283db76f2056a94039b7ae3af8',1,'CppCommon::Path']]],
   ['initialize',['Initialize',['../class_cpp_common_1_1_stack_trace_manager.html#ac37469fa9bf687d0a1ba951968d51e6c',1,'CppCommon::StackTraceManager']]],
-  ['instance',['instance',['../struct_cpp_common_1_1_static_constructor.html#a5df441b027141def1da2db34112f12f3',1,'CppCommon::StaticConstructor']]],
+  ['instance',['instance',['../class_cpp_common_1_1_static_constructor.html#a5df441b027141def1da2db34112f12f3',1,'CppCommon::StaticConstructor']]],
   ['irgrp',['IRGRP',['../namespace_cpp_common.html#ae065c40f4f0d3419423d85bc31a58b24a6fd7b7b2b6c0d7056f3d89ded09fb2e0',1,'CppCommon']]],
   ['iroth',['IROTH',['../namespace_cpp_common.html#ae065c40f4f0d3419423d85bc31a58b24adccb54ec595afcc2508e5627056fe2d1',1,'CppCommon']]],
   ['irusr',['IRUSR',['../namespace_cpp_common.html#ae065c40f4f0d3419423d85bc31a58b24a6fdfcf997d53f5b69f22fdb6f9ae8333',1,'CppCommon']]],

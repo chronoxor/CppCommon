@@ -14,7 +14,7 @@ var searchData=
   ['spscringqueue',['SPSCRingQueue',['../class_cpp_common_1_1_s_p_s_c_ring_queue.html',1,'CppCommon']]],
   ['stacktrace',['StackTrace',['../class_cpp_common_1_1_stack_trace.html',1,'CppCommon']]],
   ['stacktracemanager',['StackTraceManager',['../class_cpp_common_1_1_stack_trace_manager.html',1,'CppCommon']]],
-  ['staticconstructor',['StaticConstructor',['../struct_cpp_common_1_1_static_constructor.html',1,'CppCommon']]],
+  ['staticconstructor',['StaticConstructor',['../class_cpp_common_1_1_static_constructor.html',1,'CppCommon']]],
   ['symlink',['Symlink',['../class_cpp_common_1_1_symlink.html',1,'CppCommon']]],
   ['systemerror',['SystemError',['../class_cpp_common_1_1_system_error.html',1,'CppCommon']]],
   ['systemexception',['SystemException',['../class_cpp_common_1_1_system_exception.html',1,'CppCommon']]]

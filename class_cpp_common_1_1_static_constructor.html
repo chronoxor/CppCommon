@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>CppCommon: utility_static_constructor.cpp</title>
+<title>CppCommon: CppCommon::StaticConstructor&lt; construct, destruct &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -40,7 +40,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
-      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li><a href="examples.html"><span>Examples</span></a></li>
       <li>
@@ -61,7 +61,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       </li>
     </ul>
   </div>
-</div><!-- top -->
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
+      <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
+      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
+    </ul>
+  </div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -76,52 +83,89 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="namespace_cpp_common.html">CppCommon</a></li><li class="navelem"><a class="el" href="class_cpp_common_1_1_static_constructor.html">StaticConstructor</a></li>  </ul>
+</div>
+</div><!-- top -->
 <div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
+<a href="class_cpp_common_1_1_static_constructor-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">utility_static_constructor.cpp</div>  </div>
+<div class="title">CppCommon::StaticConstructor&lt; construct, destruct &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<p>Static constructor pattern example</p>
-<div class="fragment"><div class="line"></div>
-<div class="line"><span class="preprocessor">#include &quot;<a class="code" href="static__constructor_8h.html">utility/static_constructor.h</a>&quot;</span></div>
-<div class="line"></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"></div>
-<div class="line"><span class="keyword">class </span>MyClass</div>
+
+<p>Static constructor pattern.  
+ <a href="class_cpp_common_1_1_static_constructor.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="static__constructor_8h_source.html">static_constructor.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a5df441b027141def1da2db34112f12f3"><td class="memItemLeft" align="right" valign="top">static constructor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_static_constructor.html#a5df441b027141def1da2db34112f12f3">instance</a></td></tr>
+<tr class="memdesc:a5df441b027141def1da2db34112f12f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Static constructor instance.  <a href="#a5df441b027141def1da2db34112f12f3">More...</a><br/></td></tr>
+<tr class="separator:a5df441b027141def1da2db34112f12f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><h3>template&lt;void(*)() construct, void(*)() destruct = nullptr&gt;<br/>
+class CppCommon::StaticConstructor&lt; construct, destruct &gt;</h3>
+
+<p>Static constructor pattern. </p>
+<p>Static constructor pattern is used to emulate static constructor and destructor for C++ class.</p>
+<p>Thread-safe.</p>
+<p>Example: </p>
+<div class="fragment"><div class="line"><span class="keyword">class </span>MyClass</div>
 <div class="line">{</div>
-<div class="line"><span class="keyword">public</span>:</div>
-<div class="line">    MyClass() { std::cout &lt;&lt; <span class="stringliteral">&quot;MyClass::MyClass() - MyClass::value = &quot;</span> &lt;&lt; value &lt;&lt; std::endl; }</div>
-<div class="line">    ~MyClass() { std::cout &lt;&lt; <span class="stringliteral">&quot;MyClass::~MyClass() - MyClass::value = &quot;</span> &lt;&lt; value &lt;&lt; std::endl; }</div>
-<div class="line"></div>
-<div class="line">    <span class="keywordtype">void</span> Test() { std::cout &lt;&lt; <span class="stringliteral">&quot;MyClass::Test() - MyClass::value = &quot;</span> &lt;&lt; value &lt;&lt; std::endl; }</div>
-<div class="line"></div>
 <div class="line"><span class="keyword">private</span>:</div>
-<div class="line">    <span class="keyword">static</span> <span class="keywordtype">int</span> value;</div>
-<div class="line"></div>
 <div class="line">    <span class="keyword">static</span> <span class="keywordtype">void</span> StaticConstructor()</div>
 <div class="line">    {</div>
-<div class="line">        <a name="a0"></a><a class="code" href="class_cpp_common_1_1_static_constructor.html#a5df441b027141def1da2db34112f12f3">CppCommon::StaticConstructor&lt;&amp;MyClass::StaticConstructor, &amp;MyClass::StaticDestructor&gt;::instance</a>();</div>
-<div class="line"></div>
-<div class="line">        value = 123;</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;MyClass::StaticConstructor() - MyClass::value = &quot;</span> &lt;&lt; value &lt;&lt; std::endl;</div>
+<div class="line">        <a class="code" href="class_cpp_common_1_1_static_constructor.html#a5df441b027141def1da2db34112f12f3">CppCommon::StaticConstructor&lt;&amp;MyClass::StaticConstructor, &amp;MyClass::StaticDestructor&gt;::instance</a>();</div>
+<div class="line">        ...</div>
 <div class="line">    }</div>
 <div class="line"></div>
 <div class="line">    <span class="keyword">static</span> <span class="keywordtype">void</span> StaticDestructor()</div>
 <div class="line">    {</div>
-<div class="line">        value = 0;</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;MyClass::StaticDestructor() - MyClass::value = &quot;</span> &lt;&lt; value &lt;&lt; std::endl;</div>
+<div class="line">        ...</div>
 <div class="line">    }</div>
 <div class="line">};</div>
-<div class="line"></div>
-<div class="line"><span class="keywordtype">int</span> MyClass::value = 0;</div>
-<div class="line"></div>
-<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv)</div>
-<div class="line">{</div>
-<div class="line">    MyClass instance;</div>
-<div class="line">    instance.Test();</div>
-<div class="line">    <span class="keywordflow">return</span> 0;</div>
-<div class="line">}</div>
-</div><!-- fragment --> </div><!-- contents -->
+</div><!-- fragment --> 
+<p>Definition at line <a class="el" href="static__constructor_8h_source.html#l00045">45</a> of file <a class="el" href="static__constructor_8h_source.html">static_constructor.h</a>.</p>
+</div><h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a5df441b027141def1da2db34112f12f3"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;void(*)() construct, void(*)() destruct = nullptr&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_cpp_common_1_1_static_constructor.html">StaticConstructor</a>&lt; construct, destruct &gt;::constructor <a class="el" href="class_cpp_common_1_1_static_constructor.html">CppCommon::StaticConstructor</a>&lt; construct, destruct &gt;::instance</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Static constructor instance. </p>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="utility_static_constructor_8cpp-example.html#a0">utility_static_constructor.cpp</a>.</dd>
+</dl>
+<p>Definition at line <a class="el" href="static__constructor_8h_source.html#l00047">47</a> of file <a class="el" href="static__constructor_8h_source.html">static_constructor.h</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li>include/utility/<a class="el" href="static__constructor_8h_source.html">static_constructor.h</a></li>
+<li>include/utility/<a class="el" href="static__constructor_8inl_source.html">static_constructor.inl</a></li>
+</ul>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
