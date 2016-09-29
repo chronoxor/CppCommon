@@ -41,6 +41,10 @@ Time::Time(const Timestamp& timestamp)
 
 Time::Time(int year, int month, int day, int hour, int minute, int second, int millisecond, int microsecond, int nanosecond)
 {
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable: 4127) // C4127: conditional expression is constant
+#endif
     if (sizeof(time_t) == 4)
     {
         assert(((year >= 1970) && (year <= 2038)) && "Year value is limited in range from 1970 to 2038!");
@@ -53,6 +57,9 @@ Time::Time(int year, int month, int day, int hour, int minute, int second, int m
         if ((year < 1970) || (year > 3000))
             throwex ArgumentException("Year value is limited in range from 1970 to 3000!");
     }
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif
     assert(((month >= 1) && (month <= 12)) && "Month value is limited in range from 1 to 12!");
     if ((month < 1) || (month > 12))
         throwex ArgumentException("Month value is limited in range from 1 to 12!");

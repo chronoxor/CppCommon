@@ -35,6 +35,11 @@ inline bool MPMCRingQueue<T>::Enqueue(const T& item)
     return Enqueue(std::forward<T>(temp));
 }
 
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable: 4702) // C4702: unreachable code
+#endif
+
 template<typename T>
 inline bool MPMCRingQueue<T>::Enqueue(T&& item)
 {
@@ -123,5 +128,9 @@ inline bool MPMCRingQueue<T>::Dequeue(T& item)
     // Never taken
     return false;
 }
+
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif
 
 } // namespace CppCommon

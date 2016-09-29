@@ -14,6 +14,9 @@ namespace CppCommon {
 #if defined(__GNUC__)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Waddress" // GCC: warning: the address of 'expression', will always evaluate as 'true'
+#elif defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable: 4127) // C4127: conditional expression is constant
 #endif
 
 //! Static constructor pattern
@@ -71,6 +74,8 @@ private:
 
 #if defined(__GNUC__)
 #pragma GCC diagnostic pop
+#elif defined(_MSC_VER)
+#pragma warning(pop)
 #endif
 
 /*! \example utility_static_constructor.cpp Static constructor pattern example */
