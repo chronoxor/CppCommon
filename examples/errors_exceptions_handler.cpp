@@ -112,8 +112,7 @@ void GenerateInvalidParameter()
 
 #if defined(_MSC_VER)
 #pragma warning(push)
-// VS 4717: 'function' : recursive on all control paths, function will cause runtime stack overflow
-#pragma warning(disable: 4717)
+#pragma warning(disable: 4717) // C4717: 'function' : recursive on all control paths, function will cause runtime stack overflow
 #endif
 void GenerateRecurseAlloc()
 {
@@ -157,8 +156,7 @@ void GenerateSEH()
     int* p = nullptr;
 #if defined(_MSC_VER)
 #pragma warning(push)
-// VS 6011: dereferencing NULL pointer <name>
-#pragma warning(disable: 6011)
+#pragma warning(disable: 6011) // C6011: dereferencing NULL pointer <name>
 #endif
     *p = 0;
 #if defined(_MSC_VER)

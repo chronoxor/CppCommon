@@ -13,7 +13,7 @@ namespace CppCommon {
 
 #if defined(__GNUC__)
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Waddress"
+#pragma GCC diagnostic ignored "-Waddress" // GCC: warning: the address of 'expression', will always evaluate as 'true'
 #endif
 
 //! Static constructor pattern
