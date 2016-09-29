@@ -10,11 +10,11 @@
 	path = modules/catch
 	url = https://github.com/philsquared/Catch.git
 	branch = master
-[submodule "modules/fmt"]
-	path = modules/fmt
-	url = https://github.com/fmtlib/fmt.git
-	branch = master
 [submodule "modules/CppBenchmark"]
 	path = modules/CppBenchmark
 	url = https://github.com/chronoxor/CppBenchmark.git
+	branch = master
+[submodule "modules/fmt"]
+	path = modules/fmt
+	url = https://github.com/fmtlib/fmt.git
 	branch = master
