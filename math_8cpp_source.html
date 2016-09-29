@@ -323,9 +323,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    <span class="comment">// result is returned in edx:eax</span></div>
 <div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;<span class="preprocessor">#elif defined (_M_X64 )</span></div>
 <div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#pragma warning(push)</span></div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#pragma warning(disable: 4018)</span></div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#pragma warning(disable: 4244)</span></div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#pragma warning(disable: 4389)</span></div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#pragma warning(disable: 4018) // C4018: &#39;expression&#39; : signed/unsigned mismatch</span></div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#pragma warning(disable: 4244) // C4244: &#39;conversion&#39; conversion from &#39;type1&#39; to &#39;type2&#39;, possible loss of data</span></div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#pragma warning(disable: 4389) // C4389: &#39;operator&#39; : signed/unsigned mismatch</span></div>
 <div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;<span class="preprocessor"></span>    uint64_t a = operant;</div>
 <div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    uint64_t b = multiplier;</div>
 <div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;    uint64_t c = divider;</div>
