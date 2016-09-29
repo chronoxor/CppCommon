@@ -1,4 +1,5 @@
 if(NOT TARGET cppbenchmark)
   set(CPPBENCHMARK_MODULE Y)
   add_subdirectory("CppBenchmark")
+  set_target_properties(cppbenchmark PROPERTIES FOLDER modules/CppBenchmark)
 endif()

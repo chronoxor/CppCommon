@@ -1,4 +1,9 @@
 cmake_minimum_required(VERSION 2.8)
+
+# Global properties
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+# Project name
 project(cppcommon)
 
 # Doxygen
@@ -8,6 +13,7 @@ if(DOXYGEN_FOUND)
   if(NOT TARGET ${DOXYGEN})
     add_custom_command(OUTPUT "Doxyfile" COMMAND ${DOXYGEN_EXECUTABLE} "Doxyfile" WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}/documents")
     add_custom_target(${DOXYGEN} DEPENDS "Doxyfile")
+    set_target_properties(${DOXYGEN} PROPERTIES FOLDER doxygen)
   endif()
 endif()
 
@@ -59,6 +65,7 @@ include_directories("modules/CppBenchmark/include")
 file(GLOB_RECURSE SOURCE_FILES "source/*.cpp")
 add_library(cppcommon ${SOURCE_FILES})
 target_link_libraries(cppcommon fmt)
+set_target_properties(cppcommon PROPERTIES FOLDER libraries)
 list(APPEND INSTALL_TARGETS cppcommon)
 
 # Full module components: examples, tests and install
@@ -71,17 +78,19 @@ if(NOT CPPCOMMON_MODULE)
     set(EXAMPLE_TARGET "cppcommon-example-${EXAMPLE_NAME}")
     add_executable(${EXAMPLE_TARGET} examples/${EXAMPLE_FILE})
     target_link_libraries(${EXAMPLE_TARGET} cppcommon ${SYSTEM})
+    set_target_properties(${EXAMPLE_TARGET} PROPERTIES FOLDER examples)
     list(APPEND INSTALL_TARGETS ${EXAMPLE_TARGET})
     list(APPEND INSTALL_TARGETS_PDB ${EXAMPLE_TARGET})
   endforeach()
 
-  # Performance
-  file(GLOB BENCHMARK_FILES RELATIVE "${PROJECT_SOURCE_DIR}/perf" "perf/*.cpp")
+  # Performance benchmarks
+  file(GLOB BENCHMARK_FILES RELATIVE "${PROJECT_SOURCE_DIR}/performance" "performance/*.cpp")
   foreach(BENCHMARK_FILE ${BENCHMARK_FILES})
     string(REGEX REPLACE "(.*)\\.cpp" "\\1" BENCHMARK_NAME ${BENCHMARK_FILE})
-    set(BENCHMARK_TARGET "cppcommon-perf-${BENCHMARK_NAME}")
-    add_executable(${BENCHMARK_TARGET} perf/${BENCHMARK_FILE})
+    set(BENCHMARK_TARGET "cppcommon-benchmark-${BENCHMARK_NAME}")
+    add_executable(${BENCHMARK_TARGET} performance/${BENCHMARK_FILE})
     target_link_libraries(${BENCHMARK_TARGET} cppcommon cppbenchmark ${SYSTEM})
+    set_target_properties(${BENCHMARK_TARGET} PROPERTIES FOLDER performance)
     list(APPEND INSTALL_TARGETS ${BENCHMARK_TARGET})
     list(APPEND INSTALL_TARGETS_PDB ${BENCHMARK_TARGET})
   endforeach()
@@ -90,6 +99,7 @@ if(NOT CPPCOMMON_MODULE)
   file(GLOB TESTS_SOURCE_FILES "tests/*.cpp")
   add_executable(cppcommon-tests ${CATCH_HEADER} ${TESTS_SOURCE_FILES})
   target_link_libraries(cppcommon-tests cppcommon ${SYSTEM})
+  set_target_properties(cppcommon-tests PROPERTIES FOLDER tests)
   list(APPEND INSTALL_TARGETS cppcommon-tests)
   list(APPEND INSTALL_TARGETS_PDB cppcommon-tests)
 
