@@ -6,6 +6,11 @@
     \copyright MIT License
 */
 
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable: 4702) // C4702: unreachable code
+#endif
+
 namespace CppCommon {
 
 template<typename T>
@@ -34,11 +39,6 @@ inline bool MPMCRingQueue<T>::Enqueue(const T& item)
     T temp = item;
     return Enqueue(std::forward<T>(temp));
 }
-
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable: 4702) // C4702: unreachable code
-#endif
 
 template<typename T>
 inline bool MPMCRingQueue<T>::Enqueue(T&& item)
@@ -129,8 +129,8 @@ inline bool MPMCRingQueue<T>::Dequeue(T& item)
     return false;
 }
 
+} // namespace CppCommon
+
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif
-
-} // namespace CppCommon
