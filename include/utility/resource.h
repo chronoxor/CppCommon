@@ -42,7 +42,7 @@ namespace CppCommon {
 template <typename T, typename TCleaner>
 auto resource(T handle, TCleaner cleaner)
 {
-    return std::unique_ptr<std::remove_pointer<T>::type, TCleaner>(handle, cleaner);
+    return std::unique_ptr<typename std::remove_pointer<T>::type, TCleaner>(handle, cleaner);
 }
 
 //! Resource smart cleaner pattern (void* specialization)
