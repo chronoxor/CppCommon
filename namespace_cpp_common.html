@@ -450,12 +450,16 @@ Functions</h2></td></tr>
 <tr class="separator:ae544635efff54f0fb84e15cf64cc3ab7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a551f50579f87df9152013786f9167aa4"><td class="memTemplParams" colspan="2">template&lt;typename T , typename TCleaner &gt; </td></tr>
 <tr class="memitem:a551f50579f87df9152013786f9167aa4"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_cpp_common.html#a551f50579f87df9152013786f9167aa4">resource</a> (T handle, TCleaner cleaner)</td></tr>
-<tr class="memdesc:a551f50579f87df9152013786f9167aa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resource smart deleter pattern.  <a href="#a551f50579f87df9152013786f9167aa4">More...</a><br/></td></tr>
+<tr class="memdesc:a551f50579f87df9152013786f9167aa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resource smart cleaner pattern.  <a href="#a551f50579f87df9152013786f9167aa4">More...</a><br/></td></tr>
 <tr class="separator:a551f50579f87df9152013786f9167aa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a95421fc0faf43b224c4224f13eb06ff1"><td class="memTemplParams" colspan="2">template&lt;typename TCleaner &gt; </td></tr>
 <tr class="memitem:a95421fc0faf43b224c4224f13eb06ff1"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_cpp_common.html#a95421fc0faf43b224c4224f13eb06ff1">resource</a> (void *handle, TCleaner cleaner)</td></tr>
-<tr class="memdesc:a95421fc0faf43b224c4224f13eb06ff1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resource smart deleter pattern (void* specialization)  <a href="#a95421fc0faf43b224c4224f13eb06ff1">More...</a><br/></td></tr>
+<tr class="memdesc:a95421fc0faf43b224c4224f13eb06ff1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resource smart cleaner pattern (void* specialization)  <a href="#a95421fc0faf43b224c4224f13eb06ff1">More...</a><br/></td></tr>
 <tr class="separator:a95421fc0faf43b224c4224f13eb06ff1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00e682e08f57d4de63bd3c7ee49d80a5"><td class="memTemplParams" colspan="2">template&lt;typename TCleaner &gt; </td></tr>
+<tr class="memitem:a00e682e08f57d4de63bd3c7ee49d80a5"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_cpp_common.html#a00e682e08f57d4de63bd3c7ee49d80a5">resource</a> (TCleaner cleaner)</td></tr>
+<tr class="memdesc:a00e682e08f57d4de63bd3c7ee49d80a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resource smart cleaner pattern for empty resource handle.  <a href="#a00e682e08f57d4de63bd3c7ee49d80a5">More...</a><br/></td></tr>
+<tr class="separator:a00e682e08f57d4de63bd3c7ee49d80a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a869387adfbab223de4e23393453d898a"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_cpp_common.html#a869387adfbab223de4e23393453d898a">operator&lt;&lt;</a> (std::ostream &amp;os, const <a class="el" href="struct_cpp_common_1_1_stack_trace_1_1_frame.html">StackTrace::Frame</a> &amp;instance)</td></tr>
 <tr class="separator:a869387adfbab223de4e23393453d898a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2466c53fbd2e6bfb2991e173a08bed09"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_cpp_common.html#a2466c53fbd2e6bfb2991e173a08bed09">operator&lt;&lt;</a> (std::ostream &amp;os, const <a class="el" href="class_cpp_common_1_1_stack_trace.html">StackTrace</a> &amp;instance)</td></tr>
@@ -1556,8 +1560,8 @@ template&lt;typename T , typename TCleaner &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Resource smart deleter pattern. </p>
-<p>Resource smart deleter pattern allows to create unique smart pointer with a given resource and cleaner delegate which is used to automatic resource clean when it goes out of scope.</p>
+<p>Resource smart cleaner pattern. </p>
+<p>Resource smart cleaner pattern allows to create unique smart pointer with a given resource and cleaner delegate which is used to automatic resource clean when it goes out of scope.</p>
 <p>Thread-safe.</p>
 <p>Example: </p>
 <div class="fragment"><div class="line"><span class="keywordtype">int</span> test()</div>
@@ -1609,7 +1613,7 @@ template&lt;typename TCleaner &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Resource smart deleter pattern (void* specialization) </p>
+<p>Resource smart cleaner pattern (void* specialization) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">handle</td><td>- Resource handle </td></tr>
@@ -1622,7 +1626,35 @@ template&lt;typename TCleaner &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a76c0ba7d01f131ca440b9ed1733dd022"></a>
+<a class="anchor" id="a00e682e08f57d4de63bd3c7ee49d80a5"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TCleaner &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">auto CppCommon::resource </td>
+          <td>(</td>
+          <td class="paramtype">TCleaner&#160;</td>
+          <td class="paramname"><em>cleaner</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Resource smart cleaner pattern for empty resource handle. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cleaner</td><td>- Cleaner function </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="resource_8h_source.html#l00064">64</a> of file <a class="el" href="resource_8h_source.html">resource.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0b5dfa7bbf966e3d6c3af601f99aa2af"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1632,14 +1664,14 @@ template&lt;typename TCleaner &gt; </div>
         <tr>
           <td class="memname">void CppCommon::swap </td>
           <td>(</td>
-          <td class="paramtype">UUID &amp;&#160;</td>
-          <td class="paramname"><em>uuid1</em>, </td>
+          <td class="paramtype">DirectoryIterator &amp;&#160;</td>
+          <td class="paramname"><em>it1</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">UUID &amp;&#160;</td>
-          <td class="paramname"><em>uuid2</em>&#160;</td>
+          <td class="paramtype">DirectoryIterator &amp;&#160;</td>
+          <td class="paramname"><em>it2</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1654,7 +1686,7 @@ template&lt;typename TCleaner &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="uuid_8inl_source.html#l00017">17</a> of file <a class="el" href="uuid_8inl_source.html">uuid.inl</a>.</p>
+<p>Definition at line <a class="el" href="directory__iterator_8inl_source.html#l00017">17</a> of file <a class="el" href="directory__iterator_8inl_source.html">directory_iterator.inl</a>.</p>
 
 </div>
 </div>
@@ -1694,7 +1726,7 @@ template&lt;typename TCleaner &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a0b5dfa7bbf966e3d6c3af601f99aa2af"></a>
+<a class="anchor" id="a76c0ba7d01f131ca440b9ed1733dd022"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1704,14 +1736,14 @@ template&lt;typename TCleaner &gt; </div>
         <tr>
           <td class="memname">void CppCommon::swap </td>
           <td>(</td>
-          <td class="paramtype">DirectoryIterator &amp;&#160;</td>
-          <td class="paramname"><em>it1</em>, </td>
+          <td class="paramtype">UUID &amp;&#160;</td>
+          <td class="paramname"><em>uuid1</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">DirectoryIterator &amp;&#160;</td>
-          <td class="paramname"><em>it2</em>&#160;</td>
+          <td class="paramtype">UUID &amp;&#160;</td>
+          <td class="paramname"><em>uuid2</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1726,7 +1758,7 @@ template&lt;typename TCleaner &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="directory__iterator_8inl_source.html#l00017">17</a> of file <a class="el" href="directory__iterator_8inl_source.html">directory_iterator.inl</a>.</p>
+<p>Definition at line <a class="el" href="uuid_8inl_source.html#l00017">17</a> of file <a class="el" href="uuid_8inl_source.html">uuid.inl</a>.</p>
 
 </div>
 </div>

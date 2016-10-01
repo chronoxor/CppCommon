@@ -113,10 +113,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordflow">return</span> std::unique_ptr&lt;void, TCleaner&gt;(handle, cleaner);</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;}</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;} <span class="comment">// namespace CppCommon</span></div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#endif // CPPCOMMON_UTILITY_RESOURCE_H</span></div>
-<div class="ttc" id="namespace_cpp_common_html_a551f50579f87df9152013786f9167aa4"><div class="ttname"><a href="namespace_cpp_common.html#a551f50579f87df9152013786f9167aa4">CppCommon::resource</a></div><div class="ttdeci">auto resource(T handle, TCleaner cleaner)</div><div class="ttdoc">Resource smart deleter pattern. </div><div class="ttdef"><b>Definition:</b> <a href="resource_8h_source.html#l00043">resource.h:43</a></div></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> TCleaner&gt;</div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="namespace_cpp_common.html#a00e682e08f57d4de63bd3c7ee49d80a5">   64</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="namespace_cpp_common.html#a551f50579f87df9152013786f9167aa4">resource</a>(TCleaner cleaner)</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;{</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordflow">return</span> std::unique_ptr&lt;void, TCleaner&gt;(&amp;cleaner, cleaner);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;}</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;} <span class="comment">// namespace CppCommon</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">#endif // CPPCOMMON_UTILITY_RESOURCE_H</span></div>
+<div class="ttc" id="namespace_cpp_common_html_a551f50579f87df9152013786f9167aa4"><div class="ttname"><a href="namespace_cpp_common.html#a551f50579f87df9152013786f9167aa4">CppCommon::resource</a></div><div class="ttdeci">auto resource(T handle, TCleaner cleaner)</div><div class="ttdoc">Resource smart cleaner pattern. </div><div class="ttdef"><b>Definition:</b> <a href="resource_8h_source.html#l00043">resource.h:43</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

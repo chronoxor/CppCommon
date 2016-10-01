@@ -95,7 +95,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
-<p>Resource smart deleter pattern definition.  
+<p>Resource smart cleaner pattern definition.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;memory&gt;</code><br/>
 </div>
@@ -111,15 +111,19 @@ Namespaces</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:a551f50579f87df9152013786f9167aa4"><td class="memTemplParams" colspan="2">template&lt;typename T , typename TCleaner &gt; </td></tr>
 <tr class="memitem:a551f50579f87df9152013786f9167aa4"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_cpp_common.html#a551f50579f87df9152013786f9167aa4">CppCommon::resource</a> (T handle, TCleaner cleaner)</td></tr>
-<tr class="memdesc:a551f50579f87df9152013786f9167aa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resource smart deleter pattern.  <a href="#a551f50579f87df9152013786f9167aa4">More...</a><br/></td></tr>
+<tr class="memdesc:a551f50579f87df9152013786f9167aa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resource smart cleaner pattern.  <a href="#a551f50579f87df9152013786f9167aa4">More...</a><br/></td></tr>
 <tr class="separator:a551f50579f87df9152013786f9167aa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a95421fc0faf43b224c4224f13eb06ff1"><td class="memTemplParams" colspan="2">template&lt;typename TCleaner &gt; </td></tr>
 <tr class="memitem:a95421fc0faf43b224c4224f13eb06ff1"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_cpp_common.html#a95421fc0faf43b224c4224f13eb06ff1">CppCommon::resource</a> (void *handle, TCleaner cleaner)</td></tr>
-<tr class="memdesc:a95421fc0faf43b224c4224f13eb06ff1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resource smart deleter pattern (void* specialization)  <a href="#a95421fc0faf43b224c4224f13eb06ff1">More...</a><br/></td></tr>
+<tr class="memdesc:a95421fc0faf43b224c4224f13eb06ff1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resource smart cleaner pattern (void* specialization)  <a href="#a95421fc0faf43b224c4224f13eb06ff1">More...</a><br/></td></tr>
 <tr class="separator:a95421fc0faf43b224c4224f13eb06ff1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00e682e08f57d4de63bd3c7ee49d80a5"><td class="memTemplParams" colspan="2">template&lt;typename TCleaner &gt; </td></tr>
+<tr class="memitem:a00e682e08f57d4de63bd3c7ee49d80a5"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_cpp_common.html#a00e682e08f57d4de63bd3c7ee49d80a5">CppCommon::resource</a> (TCleaner cleaner)</td></tr>
+<tr class="memdesc:a00e682e08f57d4de63bd3c7ee49d80a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resource smart cleaner pattern for empty resource handle.  <a href="#a00e682e08f57d4de63bd3c7ee49d80a5">More...</a><br/></td></tr>
+<tr class="separator:a00e682e08f57d4de63bd3c7ee49d80a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Resource smart deleter pattern definition. </p>
+<div class="textblock"><p>Resource smart cleaner pattern definition. </p>
 <dl class="section author"><dt>Author</dt><dd>Ivan Shynkarenka </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>01.10.2016 </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>MIT License </dd></dl>

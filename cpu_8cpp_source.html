@@ -158,7 +158,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordflow">if</span> (lError != ERROR_SUCCESS)</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="keywordflow">return</span> <span class="stringliteral">&quot;&lt;unknown&gt;&quot;</span>;</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="comment">// Smart resource deleter pattern</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="comment">// Smart resource cleaner pattern</span></div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keyword">auto</span> key = <a class="code" href="namespace_cpp_common.html#a551f50579f87df9152013786f9167aa4">resource</a>(hKeyProcessor, [](HKEY hKey) { RegCloseKey(hKey); });</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    CHAR pBuffer[_MAX_PATH] = { 0 };</div>
@@ -305,7 +305,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;    <span class="keywordflow">if</span> (lError != ERROR_SUCCESS)</div>
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;        <span class="keywordflow">return</span> -1;</div>
 <div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    <span class="comment">// Smart resource deleter pattern</span></div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    <span class="comment">// Smart resource cleaner pattern</span></div>
 <div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    <span class="keyword">auto</span> key = <a class="code" href="namespace_cpp_common.html#a551f50579f87df9152013786f9167aa4">resource</a>(hKeyProcessor, [](HKEY hKey) { RegCloseKey(hKey); });</div>
 <div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;</div>
 <div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    DWORD dwMHz = 0;</div>
@@ -333,10 +333,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="class_cpp_common_1_1_c_p_u_html_a8d911cc03197f9702c3339f84db84863"><div class="ttname"><a href="class_cpp_common_1_1_c_p_u.html#a8d911cc03197f9702c3339f84db84863">CppCommon::CPU::TotalCores</a></div><div class="ttdeci">static std::pair&lt; int, int &gt; TotalCores()</div><div class="ttdoc">CPU total cores count. </div><div class="ttdef"><b>Definition:</b> <a href="cpu_8cpp_source.html#l00123">cpu.cpp:123</a></div></div>
 <div class="ttc" id="class_cpp_common_1_1_c_p_u_html_adc7e54851a87689ea3aa1f0191dffb8b"><div class="ttname"><a href="class_cpp_common_1_1_c_p_u.html#adc7e54851a87689ea3aa1f0191dffb8b">CppCommon::CPU::ClockSpeed</a></div><div class="ttdeci">static int64_t ClockSpeed()</div><div class="ttdoc">CPU clock speed in Hz. </div><div class="ttdef"><b>Definition:</b> <a href="cpu_8cpp_source.html#l00196">cpu.cpp:196</a></div></div>
 <div class="ttc" id="class_cpp_common_1_1_c_p_u_html_a4191ea4a31c5e56245a0843acb12ffa0"><div class="ttname"><a href="class_cpp_common_1_1_c_p_u.html#a4191ea4a31c5e56245a0843acb12ffa0">CppCommon::CPU::Affinity</a></div><div class="ttdeci">static int Affinity()</div><div class="ttdoc">CPU affinity count. </div><div class="ttdef"><b>Definition:</b> <a href="cpu_8cpp_source.html#l00092">cpu.cpp:92</a></div></div>
-<div class="ttc" id="resource_8h_html"><div class="ttname"><a href="resource_8h.html">resource.h</a></div><div class="ttdoc">Resource smart deleter pattern definition. </div></div>
+<div class="ttc" id="resource_8h_html"><div class="ttname"><a href="resource_8h.html">resource.h</a></div><div class="ttdoc">Resource smart cleaner pattern definition. </div></div>
 <div class="ttc" id="cpu_8h_html"><div class="ttname"><a href="cpu_8h.html">cpu.h</a></div><div class="ttdoc">CPU management definition. </div></div>
 <div class="ttc" id="class_cpp_common_1_1_c_p_u_html_a27cacc71999419f0bc0c720d6ec60520"><div class="ttname"><a href="class_cpp_common_1_1_c_p_u.html#a27cacc71999419f0bc0c720d6ec60520">CppCommon::CPU::HyperThreading</a></div><div class="ttdeci">static bool HyperThreading()</div><div class="ttdoc">Is CPU Hyper-Threading enabled? </div><div class="ttdef"><b>Definition:</b> <a href="cpu_8cpp_source.html#l00239">cpu.cpp:239</a></div></div>
-<div class="ttc" id="namespace_cpp_common_html_a551f50579f87df9152013786f9167aa4"><div class="ttname"><a href="namespace_cpp_common.html#a551f50579f87df9152013786f9167aa4">CppCommon::resource</a></div><div class="ttdeci">auto resource(T handle, TCleaner cleaner)</div><div class="ttdoc">Resource smart deleter pattern. </div><div class="ttdef"><b>Definition:</b> <a href="resource_8h_source.html#l00043">resource.h:43</a></div></div>
+<div class="ttc" id="namespace_cpp_common_html_a551f50579f87df9152013786f9167aa4"><div class="ttname"><a href="namespace_cpp_common.html#a551f50579f87df9152013786f9167aa4">CppCommon::resource</a></div><div class="ttdeci">auto resource(T handle, TCleaner cleaner)</div><div class="ttdoc">Resource smart cleaner pattern. </div><div class="ttdef"><b>Definition:</b> <a href="resource_8h_source.html#l00043">resource.h:43</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
