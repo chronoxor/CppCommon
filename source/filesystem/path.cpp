@@ -548,6 +548,11 @@ UtcTimestamp Path::created() const
     if (!GetFileTime(file.get(), &created, nullptr, nullptr))
         throwex FileSystemException("Cannot get file created time of the path!").Attach(*this);
 
+    // Release the resource manually
+    if (!CloseHandle(hFile))
+        throwex FileSystemException("Cannot close a path!").Attach(*this);
+    file.release();
+
     ULARGE_INTEGER result;
     result.LowPart = created.dwLowDateTime;
     result.HighPart = created.dwHighDateTime;
@@ -576,6 +581,11 @@ UtcTimestamp Path::modified() const
     if (!GetFileTime(file.get(), nullptr, nullptr, &write))
         throwex FileSystemException("Cannot get file modified time of the path!").Attach(*this);
 
+    // Release the resource manually
+    if (!CloseHandle(hFile))
+        throwex FileSystemException("Cannot close a path!").Attach(*this);
+    file.release();
+
     ULARGE_INTEGER result;
     result.LowPart = write.dwLowDateTime;
     result.HighPart = write.dwHighDateTime;
@@ -603,6 +613,11 @@ size_t Path::hardlinks() const
     BY_HANDLE_FILE_INFORMATION bhfi;
     if (!GetFileInformationByHandle(file.get(), &bhfi))
         throwex FileSystemException("Cannot get file information of the path!").Attach(*this);
+
+    // Release the resource manually
+    if (!CloseHandle(hFile))
+        throwex FileSystemException("Cannot close a path!").Attach(*this);
+    file.release();
 
     return (size_t)bhfi.nNumberOfLinks;
 #endif
@@ -668,6 +683,11 @@ bool Path::IsEquivalent(const Path& path) const
     if (!GetFileInformationByHandle(file1.get(), &info1))
         throwex FileSystemException("Cannot get the file meta information!").Attach(*this);
 
+    // Release the resource manually
+    if (!CloseHandle(hFile1))
+        throwex FileSystemException("Cannot close a path!").Attach(*this);
+    file1.release();
+
     // Access to the file meta information
     HANDLE hFile2 = CreateFileW(path.wstring().c_str(), 0, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
     if (hFile2 == INVALID_HANDLE_VALUE)
@@ -679,6 +699,11 @@ bool Path::IsEquivalent(const Path& path) const
     BY_HANDLE_FILE_INFORMATION info2;
     if (!GetFileInformationByHandle(file2.get(), &info2))
         throwex FileSystemException("Cannot get the file meta information!").Attach(path);
+
+    // Release the resource manually
+    if (!CloseHandle(hFile2))
+        throwex FileSystemException("Cannot close a path!").Attach(path);
+    file2.release();
 
     // Compare the file meta information to detect if two path point to the same node on a filesystem
     return ((info1.dwVolumeSerialNumber == info2.dwVolumeSerialNumber) &&
@@ -1343,6 +1368,11 @@ void Path::SetCreated(const Path& path, const UtcTimestamp& timestamp)
     created.dwHighDateTime = result.HighPart;
     if (!SetFileTime(file.get(), &created, nullptr, nullptr))
         throwex FileSystemException("Cannot set file created time of the path!").Attach(path);
+
+    // Release the resource manually
+    if (!CloseHandle(hFile))
+        throwex FileSystemException("Cannot close a path!").Attach(*this);
+    file.release();
 #endif
 }
 
@@ -1378,6 +1408,11 @@ void Path::SetModified(const Path& path, const UtcTimestamp& timestamp)
     write.dwHighDateTime = result.HighPart;
     if (!SetFileTime(file.get(), nullptr, nullptr, &write))
         throwex FileSystemException("Cannot set file modified time of the path!").Attach(path);
+
+    // Release the resource manually
+    if (!CloseHandle(hFile))
+        throwex FileSystemException("Cannot close a path!").Attach(*this);
+    file.release();
 #endif
 }
 

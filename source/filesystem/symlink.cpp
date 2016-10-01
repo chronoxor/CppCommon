@@ -81,7 +81,7 @@ Path Symlink::target() const
 #elif defined(_WIN32) || defined(_WIN64)
     HANDLE hSymlink = CreateFileW(wstring().c_str(), GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OPEN_REPARSE_POINT, nullptr);
     if (hSymlink == INVALID_HANDLE_VALUE)
-        throwex FileSystemException("Cannot open the symlink path for reading!").Attach(*this);
+        throwex FileSystemException("Cannot open a symlink path for reading!").Attach(*this);
 
     // Smart resource cleaner pattern
     auto file = resource(hSymlink, [](HANDLE hObject) { CloseHandle(hObject); });
@@ -96,6 +96,11 @@ Path Symlink::target() const
     info_t info;
     if (!DeviceIoControl(file.get(), FSCTL_GET_REPARSE_POINT, nullptr, 0, info.buffer, sizeof(info), &size, nullptr))
         throwex FileSystemException("Cannot read symlink target of the path!").Attach(*this);
+
+    // Release the resource manually
+    if (!CloseHandle(hSymlink))
+        throwex FileSystemException("Cannot close a symlink!").Attach(*this);
+    file.release();
 
     return Path(std::string((wchar_t*)info.rdb.SymbolicLinkReparseBuffer.PathBuffer +
                                      (info.rdb.SymbolicLinkReparseBuffer.PrintNameOffset / sizeof(WCHAR)),

@@ -525,7 +525,7 @@ private:
         // Create the dump file
         HANDLE hDumpFile = CreateFileW(dump.wstring().c_str(), GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
         if (hDumpFile == INVALID_HANDLE_VALUE)
-            throwex SystemException("Cannot create a dump file - " + dump.native());
+            throwex FileSystemException("Cannot create a dump file!".Attach(dump);
 
         // Smart resource cleaner pattern
         auto file = resource(hDumpFile, [](HANDLE hObject) { CloseHandle(hObject); });
@@ -542,7 +542,12 @@ private:
 
         // Write dump file information
         if (!MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), file.get(), MiniDumpNormal, &mei, nullptr, &mci))
-            throwex SystemException("Cannot write a dump file - " + dump.native());
+            throwex FileSystemException("Cannot write a dump file!".Attach(dump);
+
+        // Release the resource manually
+        if (!CloseHandle(hDumpFile))
+            throwex FileSystemException("Cannot close a dump file!".Attach(dump);
+        file.release();
 #endif
     }
 

@@ -85,6 +85,12 @@ bool Directory::IsDirectoryEmpty() const
     if (result != 0)
         throwex FileSystemException("Cannot read directory entries!").Attach(*this);
 
+    // Release the resource manually
+    result = closedir(dir);
+    if (result != 0)
+        throwex FileSystemException("Cannot close a directory!").Attach(*this);
+    directory.release();
+
     return true;
 #elif defined(_WIN32) || defined(_WIN64)
     WIN32_FIND_DATAW fd;
@@ -106,6 +112,11 @@ bool Directory::IsDirectoryEmpty() const
 
     if (GetLastError() != ERROR_NO_MORE_FILES)
         throwex FileSystemException("Cannot read directory entries!").Attach(*this);
+
+    // Release the resource manually
+    if (!FindClose(hDirectory))
+        throwex FileSystemException("Cannot close a directory!").Attach(*this);
+    directory.release();
 
     return true;
 #endif
