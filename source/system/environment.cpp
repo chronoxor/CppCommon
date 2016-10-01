@@ -10,6 +10,7 @@
 
 #include "errors/exceptions.h"
 #include "string/encoding.h"
+#include "utility/resource.h"
 
 #include <cstring>
 #include <sstream>
@@ -406,8 +407,7 @@ std::map<std::string, std::string> Environment::envars()
     }
 #elif defined(_WIN32) || defined(_WIN64)
     // Smart resource deleter pattern
-    auto clear = [](wchar_t* envars) { FreeEnvironmentStringsW(envars); };
-    auto envars = std::unique_ptr<wchar_t, decltype(clear)>(GetEnvironmentStringsW(), clear);
+    auto envars = resource(GetEnvironmentStringsW(), [](wchar_t* envars) { FreeEnvironmentStringsW(envars); });
 
     for (const wchar_t* envar = envars.get(); *envar != L'\0'; )
     {

@@ -7,6 +7,7 @@
 */
 
 #include "system/cpu.h"
+#include "utility/resource.h"
 
 #if defined(__APPLE__)
 #include <sys/sysctl.h>
@@ -74,8 +75,7 @@ std::string CPU::Architecture()
         return "<unknown>";
 
     // Smart resource deleter pattern
-    auto clear = [](HKEY hKey) { RegCloseKey(hKey); };
-    auto key = std::unique_ptr<std::remove_pointer<HKEY>::type, decltype(clear)>(hKeyProcessor, clear);
+    auto key = resource(hKeyProcessor, [](HKEY hKey) { RegCloseKey(hKey); });
 
     CHAR pBuffer[_MAX_PATH] = { 0 };
     DWORD dwBufferSize = sizeof(pBuffer);
@@ -222,8 +222,7 @@ int64_t CPU::ClockSpeed()
         return -1;
 
     // Smart resource deleter pattern
-    auto clear = [](HKEY hKey) { RegCloseKey(hKey); };
-    auto key = std::unique_ptr<std::remove_pointer<HKEY>::type, decltype(clear)>(hKeyProcessor, clear);
+    auto key = resource(hKeyProcessor, [](HKEY hKey) { RegCloseKey(hKey); });
 
     DWORD dwMHz = 0;
     DWORD dwBufferSize = sizeof(DWORD);

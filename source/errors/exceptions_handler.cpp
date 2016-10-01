@@ -13,6 +13,7 @@
 #include "string/format.h"
 #include "system/stack_trace.h"
 #include "time/timestamp.h"
+#include "utility/resource.h"
 
 #include <cstring>
 #include <exception>
@@ -527,8 +528,7 @@ private:
             throwex SystemException("Cannot create a dump file - " + dump.native());
 
         // Smart resource deleter pattern
-        auto clear = [](HANDLE hFile) { CloseHandle(hFile); };
-        auto file = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear)>(hDumpFile, clear);
+        auto file = resource(hDumpFile, [](HANDLE hObject) { CloseHandle(hObject); });
 
         MINIDUMP_EXCEPTION_INFORMATION mei;
         MINIDUMP_CALLBACK_INFORMATION mci;

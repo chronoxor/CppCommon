@@ -13,6 +13,7 @@
 #include "filesystem/symlink.h"
 #include "system/uuid.h"
 #include "utility/countof.h"
+#include "utility/resource.h"
 
 #include <algorithm>
 #include <memory>
@@ -541,8 +542,7 @@ UtcTimestamp Path::created() const
         throwex FileSystemException("Cannot open the path for getting create time!").Attach(*this);
 
     // Smart resource deleter pattern
-    auto clear = [](HANDLE hObject) { CloseHandle(hObject); };
-    auto file = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear)>(hFile, clear);
+    auto file = resource(hFile, [](HANDLE hObject) { CloseHandle(hObject); });
 
     FILETIME created;
     if (!GetFileTime(file.get(), &created, nullptr, nullptr))
@@ -570,8 +570,7 @@ UtcTimestamp Path::modified() const
         throwex FileSystemException("Cannot open the path for getting modified time!").Attach(*this);
 
     // Smart resource deleter pattern
-    auto clear = [](HANDLE hObject) { CloseHandle(hObject); };
-    auto file = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear)>(hFile, clear);
+    auto file = resource(hFile, [](HANDLE hObject) { CloseHandle(hObject); });
 
     FILETIME write;
     if (!GetFileTime(file.get(), nullptr, nullptr, &write))
@@ -599,8 +598,7 @@ size_t Path::hardlinks() const
         throwex FileSystemException("Cannot open the path for getting hard links count!").Attach(*this);
 
     // Smart resource deleter pattern
-    auto clear = [](HANDLE hObject) { CloseHandle(hObject); };
-    auto file = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear)>(hFile, clear);
+    auto file = resource(hFile, [](HANDLE hObject) { CloseHandle(hObject); });
 
     BY_HANDLE_FILE_INFORMATION bhfi;
     if (!GetFileInformationByHandle(file.get(), &bhfi))
@@ -664,8 +662,7 @@ bool Path::IsEquivalent(const Path& path) const
         throwex FileSystemException("Cannot open the path for getting meta information!").Attach(*this);
 
     // Smart resource deleter pattern
-    auto clear1 = [](HANDLE hFile) { CloseHandle(hFile); };
-    auto file1 = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear1)>(hFile1, clear1);
+    auto file1 = resource(hFile1, [](HANDLE hObject) { CloseHandle(hObject); });
 
     BY_HANDLE_FILE_INFORMATION info1;
     if (!GetFileInformationByHandle(file1.get(), &info1))
@@ -677,8 +674,7 @@ bool Path::IsEquivalent(const Path& path) const
         throwex FileSystemException("Cannot open the path for getting meta information!").Attach(path);
 
     // Smart resource deleter pattern
-    auto clear2 = [](HANDLE hFile) { CloseHandle(hFile); };
-    auto file2 = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear2)>(hFile2, clear2);
+    auto file2 = resource(hFile2, [](HANDLE hObject) { CloseHandle(hObject); });
 
     BY_HANDLE_FILE_INFORMATION info2;
     if (!GetFileInformationByHandle(file2.get(), &info2))
@@ -1337,8 +1333,7 @@ void Path::SetCreated(const Path& path, const UtcTimestamp& timestamp)
         throwex FileSystemException("Cannot open the path for writing created time!").Attach(path);
 
     // Smart resource deleter pattern
-    auto clear = [](HANDLE hObject) { CloseHandle(hObject); };
-    auto file = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear)>(hFile, clear);
+    auto file = resource(hFile, [](HANDLE hObject) { CloseHandle(hObject); });
 
     ULARGE_INTEGER result;
     result.QuadPart = (timestamp.total() / 100) + 116444736000000000ull;
@@ -1373,8 +1368,7 @@ void Path::SetModified(const Path& path, const UtcTimestamp& timestamp)
         throwex FileSystemException("Cannot open the path for writing modified time!").Attach(path);
 
     // Smart resource deleter pattern
-    auto clear = [](HANDLE hObject) { CloseHandle(hObject); };
-    auto file = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear)>(hFile, clear);
+    auto file = resource(hFile, [](HANDLE hObject) { CloseHandle(hObject); });
 
     ULARGE_INTEGER result;
     result.QuadPart = (timestamp.total() / 100) + 116444736000000000ull;

@@ -9,6 +9,7 @@
 #include "filesystem/symlink.h"
 
 #include "filesystem/exceptions.h"
+#include "utility/resource.h"
 
 #include <memory>
 
@@ -83,8 +84,7 @@ Path Symlink::target() const
         throwex FileSystemException("Cannot open the symlink path for reading!").Attach(*this);
 
     // Smart resource deleter pattern
-    auto clear = [](HANDLE hFile) { CloseHandle(hFile); };
-    auto file = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear)>(hSymlink, clear);
+    auto file = resource(hSymlink, [](HANDLE hObject) { CloseHandle(hObject); });
 
     union info_t
     {

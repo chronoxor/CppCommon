@@ -10,6 +10,7 @@
 
 #include "filesystem/exceptions.h"
 #include "utility/countof.h"
+#include "utility/resource.h"
 
 #include <cstring>
 #include <memory>
@@ -66,8 +67,7 @@ bool Directory::IsDirectoryEmpty() const
         throwex FileSystemException("Cannot open a directory!").Attach(*this);
 
     // Smart resource deleter pattern
-    auto clear = [](DIR* dir) { closedir(dir); };
-    auto directory = std::unique_ptr<DIR, decltype(clear)>(dir, clear);
+    auto directory = resource(dir, [](DIR* dirp) { closedir(dirp); });
 
     struct dirent entry;
     struct dirent* pentry;
@@ -93,8 +93,7 @@ bool Directory::IsDirectoryEmpty() const
         throwex FileSystemException("Cannot open a directory!").Attach(*this);
 
     // Smart resource deleter pattern
-    auto clear = [](HANDLE hFindFile) { FindClose(hFindFile); };
-    auto directory = std::unique_ptr<std::remove_pointer<HANDLE>::type, decltype(clear)>(hDirectory, clear);
+    auto directory = resource(hDirectory, [](HANDLE hFindFile) { FindClose(hFindFile); });
 
     do
     {
