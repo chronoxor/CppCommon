@@ -93,73 +93,73 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <a href="cpu_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="cpu_8h.html">system/cpu.h</a>&quot;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#if defined(__APPLE__)</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;sys/sysctl.h&gt;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;unistd.h&gt;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;fstream&gt;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;regex&gt;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;windows.h&gt;</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">namespace </span>CppCommon {</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">namespace </span>Internals {</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#if defined(_WIN32) || defined(_WIN64)</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor"></span><span class="comment">// Helper function to count set bits in the processor mask</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;DWORD CountSetBits(ULONG_PTR pBitMask)</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;{</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    DWORD dwLeftShift = <span class="keyword">sizeof</span>(ULONG_PTR) * 8 - 1;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    DWORD dwBitSetCount = 0;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    ULONG_PTR pBitTest = (ULONG_PTR)1 &lt;&lt; dwLeftShift;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordflow">for</span> (DWORD i = 0; i &lt;= dwLeftShift; ++i)</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    {</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        dwBitSetCount += ((pBitMask &amp; pBitTest) ? 1 : 0);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        pBitTest /= 2;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    }</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordflow">return</span> dwBitSetCount;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;}</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;} <span class="comment">// namespace Internals</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_c_p_u.html#a4d6550e237149de526828651008d4dc5">   48</a></span>&#160;std::string <a class="code" href="class_cpp_common_1_1_c_p_u.html#a4d6550e237149de526828651008d4dc5">CPU::Architecture</a>()</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;{</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#if defined(__APPLE__)</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor"></span>    <span class="keywordtype">char</span> result[1024];</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordtype">size_t</span> size = <span class="keyword">sizeof</span>(result);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordflow">if</span> (sysctlbyname(<span class="stringliteral">&quot;machdep.cpu.brand_string&quot;</span>, result, &amp;size, <span class="keyword">nullptr</span>, 0) == 0)</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordflow">return</span> result;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordflow">return</span> <span class="stringliteral">&quot;&lt;unknown&gt;&quot;</span>;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">#elif defined(unix) || defined(__unix) || defined(__unix__)</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor"></span>    <span class="keyword">static</span> std::regex pattern(<span class="stringliteral">&quot;model name(.*): (.*)&quot;</span>);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    std::string line;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    std::ifstream stream(<span class="stringliteral">&quot;/proc/cpuinfo&quot;</span>);</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordflow">while</span> (getline(stream, line))</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    {</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        std::smatch matches;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keywordflow">if</span> (std::regex_match(line, matches, pattern))</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            <span class="keywordflow">return</span> matches[2];</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    }</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordflow">return</span> <span class="stringliteral">&quot;&lt;unknown&gt;&quot;</span>;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor"></span>    HKEY hKeyProcessor;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    LONG lError = RegOpenKeyExA(HKEY_LOCAL_MACHINE, <span class="stringliteral">&quot;HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0&quot;</span>, 0, KEY_READ, &amp;hKeyProcessor);</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordflow">if</span> (lError != ERROR_SUCCESS)</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="keywordflow">return</span> <span class="stringliteral">&quot;&lt;unknown&gt;&quot;</span>;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="comment">// Smart resource deleter pattern</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keyword">auto</span> clear = [](HKEY hKey) { RegCloseKey(hKey); };</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keyword">auto</span> key = std::unique_ptr&lt;std::remove_pointer&lt;HKEY&gt;::type, decltype(clear)&gt;(hKeyProcessor, clear);</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="resource_8h.html">utility/resource.h</a>&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#if defined(__APPLE__)</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;sys/sysctl.h&gt;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;unistd.h&gt;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;fstream&gt;</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;regex&gt;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;windows.h&gt;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">namespace </span>CppCommon {</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">namespace </span>Internals {</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#if defined(_WIN32) || defined(_WIN64)</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor"></span><span class="comment">// Helper function to count set bits in the processor mask</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;DWORD CountSetBits(ULONG_PTR pBitMask)</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;{</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    DWORD dwLeftShift = <span class="keyword">sizeof</span>(ULONG_PTR) * 8 - 1;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    DWORD dwBitSetCount = 0;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    ULONG_PTR pBitTest = (ULONG_PTR)1 &lt;&lt; dwLeftShift;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordflow">for</span> (DWORD i = 0; i &lt;= dwLeftShift; ++i)</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    {</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        dwBitSetCount += ((pBitMask &amp; pBitTest) ? 1 : 0);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        pBitTest /= 2;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    }</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordflow">return</span> dwBitSetCount;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;}</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;} <span class="comment">// namespace Internals</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_c_p_u.html#a4d6550e237149de526828651008d4dc5">   49</a></span>&#160;std::string <a class="code" href="class_cpp_common_1_1_c_p_u.html#a4d6550e237149de526828651008d4dc5">CPU::Architecture</a>()</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;{</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#if defined(__APPLE__)</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor"></span>    <span class="keywordtype">char</span> result[1024];</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordtype">size_t</span> size = <span class="keyword">sizeof</span>(result);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordflow">if</span> (sysctlbyname(<span class="stringliteral">&quot;machdep.cpu.brand_string&quot;</span>, result, &amp;size, <span class="keyword">nullptr</span>, 0) == 0)</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="keywordflow">return</span> result;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordflow">return</span> <span class="stringliteral">&quot;&lt;unknown&gt;&quot;</span>;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#elif defined(unix) || defined(__unix) || defined(__unix__)</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor"></span>    <span class="keyword">static</span> std::regex pattern(<span class="stringliteral">&quot;model name(.*): (.*)&quot;</span>);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    std::string line;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    std::ifstream stream(<span class="stringliteral">&quot;/proc/cpuinfo&quot;</span>);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordflow">while</span> (getline(stream, line))</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    {</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        std::smatch matches;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keywordflow">if</span> (std::regex_match(line, matches, pattern))</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            <span class="keywordflow">return</span> matches[2];</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    }</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keywordflow">return</span> <span class="stringliteral">&quot;&lt;unknown&gt;&quot;</span>;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor"></span>    HKEY hKeyProcessor;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    LONG lError = RegOpenKeyExA(HKEY_LOCAL_MACHINE, <span class="stringliteral">&quot;HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0&quot;</span>, 0, KEY_READ, &amp;hKeyProcessor);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordflow">if</span> (lError != ERROR_SUCCESS)</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="keywordflow">return</span> <span class="stringliteral">&quot;&lt;unknown&gt;&quot;</span>;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="comment">// Smart resource deleter pattern</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keyword">auto</span> key = <a class="code" href="namespace_cpp_common.html#a551f50579f87df9152013786f9167aa4">resource</a>(hKeyProcessor, [](HKEY hKey) { RegCloseKey(hKey); });</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    CHAR pBuffer[_MAX_PATH] = { 0 };</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    DWORD dwBufferSize = <span class="keyword">sizeof</span>(pBuffer);</div>
@@ -306,36 +306,37 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;        <span class="keywordflow">return</span> -1;</div>
 <div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;</div>
 <div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    <span class="comment">// Smart resource deleter pattern</span></div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    <span class="keyword">auto</span> clear = [](HKEY hKey) { RegCloseKey(hKey); };</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    <span class="keyword">auto</span> key = std::unique_ptr&lt;std::remove_pointer&lt;HKEY&gt;::type, decltype(clear)&gt;(hKeyProcessor, clear);</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    DWORD dwMHz = 0;</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    DWORD dwBufferSize = <span class="keyword">sizeof</span>(DWORD);</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    lError = RegQueryValueExA(key.get(), <span class="stringliteral">&quot;~MHz&quot;</span>, <span class="keyword">nullptr</span>, <span class="keyword">nullptr</span>, (LPBYTE)&amp;dwMHz, &amp;dwBufferSize);</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    <span class="keywordflow">if</span> (lError != ERROR_SUCCESS)</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;        <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    <span class="keywordflow">return</span> dwMHz * 1000 * 1000;</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #error Unsupported platform</span></div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;<span class="preprocessor"></span>}</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;</div>
-<div class="line"><a name="l00240"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_c_p_u.html#a27cacc71999419f0bc0c720d6ec60520">  240</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_cpp_common_1_1_c_p_u.html#a27cacc71999419f0bc0c720d6ec60520">CPU::HyperThreading</a>()</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;{</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;    std::pair&lt;int, int&gt; cores = <a class="code" href="class_cpp_common_1_1_c_p_u.html#a8d911cc03197f9702c3339f84db84863">TotalCores</a>();</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;    <span class="keywordflow">return</span> (cores.first != cores.second);</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;}</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;} <span class="comment">// namespace CppCommon</span></div>
-<div class="ttc" id="class_cpp_common_1_1_c_p_u_html_a4d6550e237149de526828651008d4dc5"><div class="ttname"><a href="class_cpp_common_1_1_c_p_u.html#a4d6550e237149de526828651008d4dc5">CppCommon::CPU::Architecture</a></div><div class="ttdeci">static std::string Architecture()</div><div class="ttdoc">CPU architecture string. </div><div class="ttdef"><b>Definition:</b> <a href="cpu_8cpp_source.html#l00048">cpu.cpp:48</a></div></div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    <span class="keyword">auto</span> key = <a class="code" href="namespace_cpp_common.html#a551f50579f87df9152013786f9167aa4">resource</a>(hKeyProcessor, [](HKEY hKey) { RegCloseKey(hKey); });</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    DWORD dwMHz = 0;</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    DWORD dwBufferSize = <span class="keyword">sizeof</span>(DWORD);</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    lError = RegQueryValueExA(key.get(), <span class="stringliteral">&quot;~MHz&quot;</span>, <span class="keyword">nullptr</span>, <span class="keyword">nullptr</span>, (LPBYTE)&amp;dwMHz, &amp;dwBufferSize);</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    <span class="keywordflow">if</span> (lError != ERROR_SUCCESS)</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;        <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    <span class="keywordflow">return</span> dwMHz * 1000 * 1000;</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #error Unsupported platform</span></div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;<span class="preprocessor"></span>}</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;</div>
+<div class="line"><a name="l00239"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_c_p_u.html#a27cacc71999419f0bc0c720d6ec60520">  239</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_cpp_common_1_1_c_p_u.html#a27cacc71999419f0bc0c720d6ec60520">CPU::HyperThreading</a>()</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;{</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    std::pair&lt;int, int&gt; cores = <a class="code" href="class_cpp_common_1_1_c_p_u.html#a8d911cc03197f9702c3339f84db84863">TotalCores</a>();</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;    <span class="keywordflow">return</span> (cores.first != cores.second);</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;}</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;} <span class="comment">// namespace CppCommon</span></div>
+<div class="ttc" id="class_cpp_common_1_1_c_p_u_html_a4d6550e237149de526828651008d4dc5"><div class="ttname"><a href="class_cpp_common_1_1_c_p_u.html#a4d6550e237149de526828651008d4dc5">CppCommon::CPU::Architecture</a></div><div class="ttdeci">static std::string Architecture()</div><div class="ttdoc">CPU architecture string. </div><div class="ttdef"><b>Definition:</b> <a href="cpu_8cpp_source.html#l00049">cpu.cpp:49</a></div></div>
 <div class="ttc" id="class_cpp_common_1_1_c_p_u_html_a0b2d46ef232378c30f0e4e412c35a17e"><div class="ttname"><a href="class_cpp_common_1_1_c_p_u.html#a0b2d46ef232378c30f0e4e412c35a17e">CppCommon::CPU::LogicalCores</a></div><div class="ttdeci">static int LogicalCores()</div><div class="ttdoc">CPU logical cores count. </div><div class="ttdef"><b>Definition:</b> <a href="cpu_8cpp_source.html#l00113">cpu.cpp:113</a></div></div>
 <div class="ttc" id="class_cpp_common_1_1_c_p_u_html_ab6bd1087cae56276876026e25dfe716c"><div class="ttname"><a href="class_cpp_common_1_1_c_p_u.html#ab6bd1087cae56276876026e25dfe716c">CppCommon::CPU::PhysicalCores</a></div><div class="ttdeci">static int PhysicalCores()</div><div class="ttdoc">CPU physical cores count. </div><div class="ttdef"><b>Definition:</b> <a href="cpu_8cpp_source.html#l00118">cpu.cpp:118</a></div></div>
 <div class="ttc" id="class_cpp_common_1_1_c_p_u_html_a8d911cc03197f9702c3339f84db84863"><div class="ttname"><a href="class_cpp_common_1_1_c_p_u.html#a8d911cc03197f9702c3339f84db84863">CppCommon::CPU::TotalCores</a></div><div class="ttdeci">static std::pair&lt; int, int &gt; TotalCores()</div><div class="ttdoc">CPU total cores count. </div><div class="ttdef"><b>Definition:</b> <a href="cpu_8cpp_source.html#l00123">cpu.cpp:123</a></div></div>
 <div class="ttc" id="class_cpp_common_1_1_c_p_u_html_adc7e54851a87689ea3aa1f0191dffb8b"><div class="ttname"><a href="class_cpp_common_1_1_c_p_u.html#adc7e54851a87689ea3aa1f0191dffb8b">CppCommon::CPU::ClockSpeed</a></div><div class="ttdeci">static int64_t ClockSpeed()</div><div class="ttdoc">CPU clock speed in Hz. </div><div class="ttdef"><b>Definition:</b> <a href="cpu_8cpp_source.html#l00196">cpu.cpp:196</a></div></div>
 <div class="ttc" id="class_cpp_common_1_1_c_p_u_html_a4191ea4a31c5e56245a0843acb12ffa0"><div class="ttname"><a href="class_cpp_common_1_1_c_p_u.html#a4191ea4a31c5e56245a0843acb12ffa0">CppCommon::CPU::Affinity</a></div><div class="ttdeci">static int Affinity()</div><div class="ttdoc">CPU affinity count. </div><div class="ttdef"><b>Definition:</b> <a href="cpu_8cpp_source.html#l00092">cpu.cpp:92</a></div></div>
+<div class="ttc" id="resource_8h_html"><div class="ttname"><a href="resource_8h.html">resource.h</a></div><div class="ttdoc">Resource smart deleter pattern definition. </div></div>
 <div class="ttc" id="cpu_8h_html"><div class="ttname"><a href="cpu_8h.html">cpu.h</a></div><div class="ttdoc">CPU management definition. </div></div>
-<div class="ttc" id="class_cpp_common_1_1_c_p_u_html_a27cacc71999419f0bc0c720d6ec60520"><div class="ttname"><a href="class_cpp_common_1_1_c_p_u.html#a27cacc71999419f0bc0c720d6ec60520">CppCommon::CPU::HyperThreading</a></div><div class="ttdeci">static bool HyperThreading()</div><div class="ttdoc">Is CPU Hyper-Threading enabled? </div><div class="ttdef"><b>Definition:</b> <a href="cpu_8cpp_source.html#l00240">cpu.cpp:240</a></div></div>
+<div class="ttc" id="class_cpp_common_1_1_c_p_u_html_a27cacc71999419f0bc0c720d6ec60520"><div class="ttname"><a href="class_cpp_common_1_1_c_p_u.html#a27cacc71999419f0bc0c720d6ec60520">CppCommon::CPU::HyperThreading</a></div><div class="ttdeci">static bool HyperThreading()</div><div class="ttdoc">Is CPU Hyper-Threading enabled? </div><div class="ttdef"><b>Definition:</b> <a href="cpu_8cpp_source.html#l00239">cpu.cpp:239</a></div></div>
+<div class="ttc" id="namespace_cpp_common_html_a551f50579f87df9152013786f9167aa4"><div class="ttname"><a href="namespace_cpp_common.html#a551f50579f87df9152013786f9167aa4">CppCommon::resource</a></div><div class="ttdeci">auto resource(T handle, TCleaner cleaner)</div><div class="ttdoc">Resource smart deleter pattern. </div><div class="ttdef"><b>Definition:</b> <a href="resource_8h_source.html#l00043">resource.h:43</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

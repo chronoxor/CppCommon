@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>CppCommon: source/system/cpu.cpp File Reference</title>
+<title>CppCommon: include/utility/resource.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -83,38 +83,41 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_b2f33c71d4aa5e7af42a1ca61ff5af1b.html">source</a></li><li class="navelem"><a class="el" href="dir_770ba6fa46f3bfe7608bb8b841a04fae.html">system</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_3a4d35156996fb70540e167b84a39bd1.html">utility</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
-  <div class="summary">
-<a href="#namespaces">Namespaces</a>  </div>
   <div class="headertitle">
-<div class="title">cpu.cpp File Reference</div>  </div>
+<div class="title">resource.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>CPU management implementation.  
-<a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="cpu_8h_source.html">system/cpu.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="resource_8h_source.html">utility/resource.h</a>&quot;</code><br/>
-</div>
-<p><a href="cpu_8cpp_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:namespace_cpp_common"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_cpp_common.html">CppCommon</a></td></tr>
-<tr class="memdesc:namespace_cpp_common"><td class="mdescLeft">&#160;</td><td class="mdescRight">C++ common project definitions. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CPU management implementation. </p>
-<dl class="section author"><dt>Author</dt><dd>Ivan Shynkarenka </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>27.07.2016 </dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>MIT License </dd></dl>
-
-<p>Definition in file <a class="el" href="cpu_8cpp_source.html">cpu.cpp</a>.</p>
-</div></div><!-- contents -->
+<a href="resource_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#ifndef CPPCOMMON_UTILITY_RESOURCE_H</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define CPPCOMMON_UTILITY_RESOURCE_H</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">namespace </span>CppCommon {</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> TCleaner&gt;</div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="namespace_cpp_common.html#a551f50579f87df9152013786f9167aa4">   43</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="namespace_cpp_common.html#a551f50579f87df9152013786f9167aa4">resource</a>(T handle, TCleaner cleaner)</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;{</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordflow">return</span> std::unique_ptr&lt;std::remove_pointer&lt;T&gt;::type, TCleaner&gt;(handle, cleaner);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;}</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> TCleaner&gt;</div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="namespace_cpp_common.html#a95421fc0faf43b224c4224f13eb06ff1">   54</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="namespace_cpp_common.html#a551f50579f87df9152013786f9167aa4">resource</a>(<span class="keywordtype">void</span>* handle, TCleaner cleaner)</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;{</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordflow">return</span> std::unique_ptr&lt;void, TCleaner&gt;(handle, cleaner);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;}</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;} <span class="comment">// namespace CppCommon</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#endif // CPPCOMMON_UTILITY_RESOURCE_H</span></div>
+<div class="ttc" id="namespace_cpp_common_html_a551f50579f87df9152013786f9167aa4"><div class="ttname"><a href="namespace_cpp_common.html#a551f50579f87df9152013786f9167aa4">CppCommon::resource</a></div><div class="ttdeci">auto resource(T handle, TCleaner cleaner)</div><div class="ttdoc">Resource smart deleter pattern. </div><div class="ttdef"><b>Definition:</b> <a href="resource_8h_source.html#l00043">resource.h:43</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

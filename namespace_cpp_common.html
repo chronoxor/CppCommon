@@ -448,6 +448,14 @@ Functions</h2></td></tr>
 <tr class="memitem:ae544635efff54f0fb84e15cf64cc3ab7"><td class="memTemplParams" colspan="2">template&lt;typename TEnum &gt; </td></tr>
 <tr class="memitem:ae544635efff54f0fb84e15cf64cc3ab7"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_cpp_common.html#ae544635efff54f0fb84e15cf64cc3ab7">operator^</a> (TEnum value1, TEnum value2) noexcept-&gt; typename std::enable_if&lt; <a class="el" href="struct_cpp_common_1_1_is_enum_flags.html">IsEnumFlags</a>&lt; TEnum &gt;::value, <a class="el" href="class_cpp_common_1_1_flags.html">Flags</a>&lt; TEnum &gt;&gt;::type</td></tr>
 <tr class="separator:ae544635efff54f0fb84e15cf64cc3ab7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a551f50579f87df9152013786f9167aa4"><td class="memTemplParams" colspan="2">template&lt;typename T , typename TCleaner &gt; </td></tr>
+<tr class="memitem:a551f50579f87df9152013786f9167aa4"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_cpp_common.html#a551f50579f87df9152013786f9167aa4">resource</a> (T handle, TCleaner cleaner)</td></tr>
+<tr class="memdesc:a551f50579f87df9152013786f9167aa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resource smart deleter pattern.  <a href="#a551f50579f87df9152013786f9167aa4">More...</a><br/></td></tr>
+<tr class="separator:a551f50579f87df9152013786f9167aa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95421fc0faf43b224c4224f13eb06ff1"><td class="memTemplParams" colspan="2">template&lt;typename TCleaner &gt; </td></tr>
+<tr class="memitem:a95421fc0faf43b224c4224f13eb06ff1"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_cpp_common.html#a95421fc0faf43b224c4224f13eb06ff1">resource</a> (void *handle, TCleaner cleaner)</td></tr>
+<tr class="memdesc:a95421fc0faf43b224c4224f13eb06ff1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resource smart deleter pattern (void* specialization)  <a href="#a95421fc0faf43b224c4224f13eb06ff1">More...</a><br/></td></tr>
+<tr class="separator:a95421fc0faf43b224c4224f13eb06ff1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a869387adfbab223de4e23393453d898a"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_cpp_common.html#a869387adfbab223de4e23393453d898a">operator&lt;&lt;</a> (std::ostream &amp;os, const <a class="el" href="struct_cpp_common_1_1_stack_trace_1_1_frame.html">StackTrace::Frame</a> &amp;instance)</td></tr>
 <tr class="separator:a869387adfbab223de4e23393453d898a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2466c53fbd2e6bfb2991e173a08bed09"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_cpp_common.html#a2466c53fbd2e6bfb2991e173a08bed09">operator&lt;&lt;</a> (std::ostream &amp;os, const <a class="el" href="class_cpp_common_1_1_stack_trace.html">StackTrace</a> &amp;instance)</td></tr>
@@ -1131,34 +1139,6 @@ template&lt;typename TEnum &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a869387adfbab223de4e23393453d898a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::ostream&amp; CppCommon::operator&lt;&lt; </td>
-          <td>(</td>
-          <td class="paramtype">std::ostream &amp;&#160;</td>
-          <td class="paramname"><em>os</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const StackTrace::Frame &amp;&#160;</td>
-          <td class="paramname"><em>instance</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="stack__trace_8cpp_source.html#l00043">43</a> of file <a class="el" href="stack__trace_8cpp_source.html">stack_trace.cpp</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="a63bb02c10c7e680ed66c8fd63fa99fce"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1195,6 +1175,34 @@ template&lt;typename TEnum &gt; </div>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="string_format_8cpp-example.html#a0">string_format.cpp</a>.</dd>
 </dl>
 <p>Definition at line <a class="el" href="console_8cpp_source.html#l00019">19</a> of file <a class="el" href="console_8cpp_source.html">console.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a869387adfbab223de4e23393453d898a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream&amp; CppCommon::operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>os</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const StackTrace::Frame &amp;&#160;</td>
+          <td class="paramname"><em>instance</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="stack__trace_8cpp_source.html#l00043">43</a> of file <a class="el" href="stack__trace_8cpp_source.html">stack_trace.cpp</a>.</p>
 
 </div>
 </div>
@@ -1522,6 +1530,134 @@ template&lt;typename TEnum &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="a551f50579f87df9152013786f9167aa4"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename TCleaner &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">auto CppCommon::resource </td>
+          <td>(</td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TCleaner&#160;</td>
+          <td class="paramname"><em>cleaner</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Resource smart deleter pattern. </p>
+<p>Resource smart deleter pattern allows to create unique smart pointer with a given resource and cleaner delegate which is used to automatic resource clean when it goes out of scope.</p>
+<p>Thread-safe.</p>
+<p>Example: </p>
+<div class="fragment"><div class="line"><span class="keywordtype">int</span> test()</div>
+<div class="line">{</div>
+<div class="line">    <span class="comment">// Create a file resource</span></div>
+<div class="line">    <span class="keyword">auto</span> file = <a class="code" href="namespace_cpp_common.html#a551f50579f87df9152013786f9167aa4">resource</a>(fopen(<span class="stringliteral">&quot;test&quot;</span>, <span class="stringliteral">&quot;rb&quot;</span>), [](FILE* file) { fclose(file); });</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Work with the file resource</span></div>
+<div class="line">    <span class="keywordtype">int</span> result = fgetc(file.get());</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// File resource will be cleaned automatically when we go out of scope</span></div>
+<div class="line">    <span class="keywordflow">return</span> result;</div>
+<div class="line">}</div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>- Resource handle </td></tr>
+    <tr><td class="paramname">cleaner</td><td>- Cleaner function </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="resource_8h_source.html#l00043">43</a> of file <a class="el" href="resource_8h_source.html">resource.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a95421fc0faf43b224c4224f13eb06ff1"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TCleaner &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">auto CppCommon::resource </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TCleaner&#160;</td>
+          <td class="paramname"><em>cleaner</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Resource smart deleter pattern (void* specialization) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>- Resource handle </td></tr>
+    <tr><td class="paramname">cleaner</td><td>- Cleaner function </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="resource_8h_source.html#l00054">54</a> of file <a class="el" href="resource_8h_source.html">resource.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a76c0ba7d01f131ca440b9ed1733dd022"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CppCommon::swap </td>
+          <td>(</td>
+          <td class="paramtype">UUID &amp;&#160;</td>
+          <td class="paramname"><em>uuid1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">UUID &amp;&#160;</td>
+          <td class="paramname"><em>uuid2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="uuid_8inl_source.html#l00017">17</a> of file <a class="el" href="uuid_8inl_source.html">uuid.inl</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="acf4c6a35d7fbf6d97fe67ba3216f1ac9"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1591,42 +1727,6 @@ template&lt;typename TEnum &gt; </div>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="directory__iterator_8inl_source.html#l00017">17</a> of file <a class="el" href="directory__iterator_8inl_source.html">directory_iterator.inl</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a76c0ba7d01f131ca440b9ed1733dd022"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CppCommon::swap </td>
-          <td>(</td>
-          <td class="paramtype">UUID &amp;&#160;</td>
-          <td class="paramname"><em>uuid1</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">UUID &amp;&#160;</td>
-          <td class="paramname"><em>uuid2</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="uuid_8inl_source.html#l00017">17</a> of file <a class="el" href="uuid_8inl_source.html">uuid.inl</a>.</p>
 
 </div>
 </div>

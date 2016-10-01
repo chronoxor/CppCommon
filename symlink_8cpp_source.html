@@ -95,82 +95,82 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="symlink_8h.html">filesystem/symlink.h</a>&quot;</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="filesystem_2exceptions_8h.html">filesystem/exceptions.h</a>&quot;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;sys/stat.h&gt;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;fcntl.h&gt;</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;limits.h&gt;</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;unistd.h&gt;</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;windows.h&gt;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">//  REPARSE_DATA_BUFFER related definitions are found in ntifs.h, which is part of the</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">//  Windows Device Driver Kit. Since that&#39;s inconvenient, the definitions are provided</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">//  here. See http://msdn.microsoft.com/en-us/library/ms791514.aspx</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#if !defined(REPARSE_DATA_BUFFER_HEADER_SIZE)</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define SYMLINK_FLAG_RELATIVE 1</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor"></span><span class="keyword">typedef</span> <span class="keyword">struct </span>_REPARSE_DATA_BUFFER</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;{</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    ULONG ReparseTag;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    USHORT ReparseDataLength;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    USHORT Reserved;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keyword">union</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    {</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keyword">struct</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        {</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            USHORT SubstituteNameOffset;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            USHORT SubstituteNameLength;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            USHORT PrintNameOffset;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            USHORT PrintNameLength;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            ULONG Flags;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            WCHAR PathBuffer[1];</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        } SymbolicLinkReparseBuffer;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keyword">struct</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        {</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            USHORT SubstituteNameOffset;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            USHORT SubstituteNameLength;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            USHORT PrintNameOffset;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            USHORT PrintNameLength;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            WCHAR PathBuffer[1];</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        } MountPointReparseBuffer;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keyword">struct</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        {</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            UCHAR DataBuffer[1];</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        } GenericReparseBuffer;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    };</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;} REPARSE_DATA_BUFFER, *PREPARSE_DATA_BUFFER;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#define REPARSE_DATA_BUFFER_HEADER_SIZE FIELD_OFFSET(REPARSE_DATA_BUFFER, GenericReparseBuffer)</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#ifndef MAXIMUM_REPARSE_DATA_BUFFER_SIZE</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define MAXIMUM_REPARSE_DATA_BUFFER_SIZE (16 * 1024)</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="resource_8h.html">utility/resource.h</a>&quot;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;sys/stat.h&gt;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;fcntl.h&gt;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;limits.h&gt;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;unistd.h&gt;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;windows.h&gt;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">//  REPARSE_DATA_BUFFER related definitions are found in ntifs.h, which is part of the</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">//  Windows Device Driver Kit. Since that&#39;s inconvenient, the definitions are provided</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//  here. See http://msdn.microsoft.com/en-us/library/ms791514.aspx</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#if !defined(REPARSE_DATA_BUFFER_HEADER_SIZE)</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define SYMLINK_FLAG_RELATIVE 1</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor"></span><span class="keyword">typedef</span> <span class="keyword">struct </span>_REPARSE_DATA_BUFFER</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;{</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    ULONG ReparseTag;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    USHORT ReparseDataLength;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    USHORT Reserved;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keyword">union</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keyword">struct</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        {</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            USHORT SubstituteNameOffset;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            USHORT SubstituteNameLength;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            USHORT PrintNameOffset;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            USHORT PrintNameLength;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            ULONG Flags;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            WCHAR PathBuffer[1];</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        } SymbolicLinkReparseBuffer;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keyword">struct</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        {</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            USHORT SubstituteNameOffset;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            USHORT SubstituteNameLength;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            USHORT PrintNameOffset;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            USHORT PrintNameLength;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            WCHAR PathBuffer[1];</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        } MountPointReparseBuffer;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keyword">struct</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        {</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            UCHAR DataBuffer[1];</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        } GenericReparseBuffer;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    };</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;} REPARSE_DATA_BUFFER, *PREPARSE_DATA_BUFFER;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#define REPARSE_DATA_BUFFER_HEADER_SIZE FIELD_OFFSET(REPARSE_DATA_BUFFER, GenericReparseBuffer)</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#ifndef MAXIMUM_REPARSE_DATA_BUFFER_SIZE</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define MAXIMUM_REPARSE_DATA_BUFFER_SIZE (16 * 1024)</span></div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keyword">namespace </span>CppCommon {</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
-<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_symlink.html#aabcac6197162d96586c13e2b0b07cbe5">   67</a></span>&#160;<a class="code" href="class_cpp_common_1_1_path.html">Path</a> <a class="code" href="class_cpp_common_1_1_symlink.html#aabcac6197162d96586c13e2b0b07cbe5">Symlink::target</a>()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor"></span>    std::vector&lt;char&gt; buffer(PATH_MAX);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    ssize_t size;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordflow">while</span> ((size = readlink(<a class="code" href="class_cpp_common_1_1_path.html#a11492c273b93f6b9d37875617f64668a">native</a>().c_str(), buffer.data(), buffer.size())) == (ssize_t)buffer.size())</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        buffer.resize(buffer.size() * 2);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keywordflow">if</span> (size &lt; 0)</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> <a class="code" href="class_cpp_common_1_1_file_system_exception.html">FileSystemException</a>(<span class="stringliteral">&quot;Cannot read symlink target of the path!&quot;</span>).<a class="code" href="class_cpp_common_1_1_file_system_exception.html#aa608a23acd04d571929bf20e674bef76">Attach</a>(*<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="class_cpp_common_1_1_path.html#a4cffe7acd91e27e1fd132dd1be1f2195">Path</a>(std::string(buffer.data(), size));</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor"></span>    HANDLE hSymlink = CreateFileW(<a class="code" href="class_cpp_common_1_1_path.html#a3d6d799bd82f62c847227174a861ef54">wstring</a>().c_str(), GENERIC_READ, 0, <span class="keyword">nullptr</span>, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OPEN_REPARSE_POINT, <span class="keyword">nullptr</span>);</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keywordflow">if</span> (hSymlink == INVALID_HANDLE_VALUE)</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> <a class="code" href="class_cpp_common_1_1_file_system_exception.html">FileSystemException</a>(<span class="stringliteral">&quot;Cannot open the symlink path for reading!&quot;</span>).<a class="code" href="class_cpp_common_1_1_file_system_exception.html#aa608a23acd04d571929bf20e674bef76">Attach</a>(*<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="comment">// Smart resource deleter pattern</span></div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keyword">auto</span> clear = [](HANDLE hFile) { CloseHandle(hFile); };</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keyword">auto</span> file = std::unique_ptr&lt;std::remove_pointer&lt;HANDLE&gt;::type, decltype(clear)&gt;(hSymlink, clear);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keyword">namespace </span>CppCommon {</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_symlink.html#aabcac6197162d96586c13e2b0b07cbe5">   68</a></span>&#160;<a class="code" href="class_cpp_common_1_1_path.html">Path</a> <a class="code" href="class_cpp_common_1_1_symlink.html#aabcac6197162d96586c13e2b0b07cbe5">Symlink::target</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor"></span>    std::vector&lt;char&gt; buffer(PATH_MAX);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    ssize_t size;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordflow">while</span> ((size = readlink(<a class="code" href="class_cpp_common_1_1_path.html#a11492c273b93f6b9d37875617f64668a">native</a>().c_str(), buffer.data(), buffer.size())) == (ssize_t)buffer.size())</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        buffer.resize(buffer.size() * 2);</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keywordflow">if</span> (size &lt; 0)</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> <a class="code" href="class_cpp_common_1_1_file_system_exception.html">FileSystemException</a>(<span class="stringliteral">&quot;Cannot read symlink target of the path!&quot;</span>).<a class="code" href="class_cpp_common_1_1_file_system_exception.html#aa608a23acd04d571929bf20e674bef76">Attach</a>(*<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="class_cpp_common_1_1_path.html#a4cffe7acd91e27e1fd132dd1be1f2195">Path</a>(std::string(buffer.data(), size));</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor"></span>    HANDLE hSymlink = CreateFileW(<a class="code" href="class_cpp_common_1_1_path.html#a3d6d799bd82f62c847227174a861ef54">wstring</a>().c_str(), GENERIC_READ, 0, <span class="keyword">nullptr</span>, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OPEN_REPARSE_POINT, <span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordflow">if</span> (hSymlink == INVALID_HANDLE_VALUE)</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> <a class="code" href="class_cpp_common_1_1_file_system_exception.html">FileSystemException</a>(<span class="stringliteral">&quot;Cannot open the symlink path for reading!&quot;</span>).<a class="code" href="class_cpp_common_1_1_file_system_exception.html#aa608a23acd04d571929bf20e674bef76">Attach</a>(*<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="comment">// Smart resource deleter pattern</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keyword">auto</span> file = <a class="code" href="namespace_cpp_common.html#a551f50579f87df9152013786f9167aa4">resource</a>(hSymlink, [](HANDLE hObject) { CloseHandle(hObject); });</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keyword">union </span>info_t</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    {</div>
@@ -261,11 +261,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;</div>
 <div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;} <span class="comment">// namespace CppCommon</span></div>
 <div class="ttc" id="class_cpp_common_1_1_symlink_html_a9aafe163809c95f632b75c8b182ebe10"><div class="ttname"><a href="class_cpp_common_1_1_symlink.html#a9aafe163809c95f632b75c8b182ebe10">CppCommon::Symlink::CreateSymlink</a></div><div class="ttdeci">static Symlink CreateSymlink(const Path &amp;src, const Path &amp;dst)</div><div class="ttdoc">Create a new symlink. </div><div class="ttdef"><b>Definition:</b> <a href="symlink_8cpp_source.html#l00137">symlink.cpp:137</a></div></div>
-<div class="ttc" id="class_cpp_common_1_1_path_html_a59dbb579db744e294517a00512c1780d"><div class="ttname"><a href="class_cpp_common_1_1_path.html#a59dbb579db744e294517a00512c1780d">CppCommon::Path::attributes</a></div><div class="ttdeci">Flags&lt; FileAttributes &gt; attributes() const </div><div class="ttdoc">Get the path file attributes. </div><div class="ttdef"><b>Definition:</b> <a href="path_8cpp_source.html#l00460">path.cpp:460</a></div></div>
+<div class="ttc" id="class_cpp_common_1_1_path_html_a59dbb579db744e294517a00512c1780d"><div class="ttname"><a href="class_cpp_common_1_1_path.html#a59dbb579db744e294517a00512c1780d">CppCommon::Path::attributes</a></div><div class="ttdeci">Flags&lt; FileAttributes &gt; attributes() const </div><div class="ttdoc">Get the path file attributes. </div><div class="ttdef"><b>Definition:</b> <a href="path_8cpp_source.html#l00461">path.cpp:461</a></div></div>
 <div class="ttc" id="filesystem_2exceptions_8h_html"><div class="ttname"><a href="filesystem_2exceptions_8h.html">exceptions.h</a></div><div class="ttdoc">File system exceptions definition. </div></div>
 <div class="ttc" id="errors_2exceptions_8h_html_a86823b8c75aa8f6c4c988c8c57e36b0d"><div class="ttname"><a href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a></div><div class="ttdeci">#define throwex</div><div class="ttdoc">Throw extended exception macro. </div><div class="ttdef"><b>Definition:</b> <a href="errors_2exceptions_8h_source.html#l00023">exceptions.h:23</a></div></div>
-<div class="ttc" id="class_cpp_common_1_1_symlink_html_aabcac6197162d96586c13e2b0b07cbe5"><div class="ttname"><a href="class_cpp_common_1_1_symlink.html#aabcac6197162d96586c13e2b0b07cbe5">CppCommon::Symlink::target</a></div><div class="ttdeci">Path target() const </div><div class="ttdoc">Read symlink target path. </div><div class="ttdef"><b>Definition:</b> <a href="symlink_8cpp_source.html#l00067">symlink.cpp:67</a></div></div>
+<div class="ttc" id="class_cpp_common_1_1_symlink_html_aabcac6197162d96586c13e2b0b07cbe5"><div class="ttname"><a href="class_cpp_common_1_1_symlink.html#aabcac6197162d96586c13e2b0b07cbe5">CppCommon::Symlink::target</a></div><div class="ttdeci">Path target() const </div><div class="ttdoc">Read symlink target path. </div><div class="ttdef"><b>Definition:</b> <a href="symlink_8cpp_source.html#l00068">symlink.cpp:68</a></div></div>
 <div class="ttc" id="class_cpp_common_1_1_path_html_a4cffe7acd91e27e1fd132dd1be1f2195"><div class="ttname"><a href="class_cpp_common_1_1_path.html#a4cffe7acd91e27e1fd132dd1be1f2195">CppCommon::Path::Path</a></div><div class="ttdeci">Path()</div><div class="ttdoc">Initialize path with an empty value. </div><div class="ttdef"><b>Definition:</b> <a href="path_8h_source.html#l00093">path.h:93</a></div></div>
+<div class="ttc" id="resource_8h_html"><div class="ttname"><a href="resource_8h.html">resource.h</a></div><div class="ttdoc">Resource smart deleter pattern definition. </div></div>
 <div class="ttc" id="class_cpp_common_1_1_symlink_html_afa3711102a20c7d03861add855a16307"><div class="ttname"><a href="class_cpp_common_1_1_symlink.html#afa3711102a20c7d03861add855a16307">CppCommon::Symlink::IsSymlinkExists</a></div><div class="ttdeci">bool IsSymlinkExists() const </div><div class="ttdoc">Is symlink exists? </div><div class="ttdef"><b>Definition:</b> <a href="symlink_8cpp_source.html#l00108">symlink.cpp:108</a></div></div>
 <div class="ttc" id="class_cpp_common_1_1_symlink_html"><div class="ttname"><a href="class_cpp_common_1_1_symlink.html">CppCommon::Symlink</a></div><div class="ttdoc">Filesystem symlink. </div><div class="ttdef"><b>Definition:</b> <a href="symlink_8h_source.html#l00023">symlink.h:23</a></div></div>
 <div class="ttc" id="symlink_8h_html"><div class="ttname"><a href="symlink_8h.html">symlink.h</a></div><div class="ttdoc">Filesystem symlink wrapper definition. </div></div>
@@ -274,6 +275,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="class_cpp_common_1_1_path_html_a11492c273b93f6b9d37875617f64668a"><div class="ttname"><a href="class_cpp_common_1_1_path.html#a11492c273b93f6b9d37875617f64668a">CppCommon::Path::native</a></div><div class="ttdeci">const std::string &amp; native() const noexcept</div><div class="ttdoc">Get the native path value. </div><div class="ttdef"><b>Definition:</b> <a href="path_8h_source.html#l00148">path.h:148</a></div></div>
 <div class="ttc" id="class_cpp_common_1_1_symlink_html_a453328a41674306c0538c5dbde2812a2"><div class="ttname"><a href="class_cpp_common_1_1_symlink.html#a453328a41674306c0538c5dbde2812a2">CppCommon::Symlink::CreateHardlink</a></div><div class="ttdeci">static Path CreateHardlink(const Path &amp;src, const Path &amp;dst)</div><div class="ttdoc">Create a new hardlink. </div><div class="ttdef"><b>Definition:</b> <a href="symlink_8cpp_source.html#l00163">symlink.cpp:163</a></div></div>
 <div class="ttc" id="class_cpp_common_1_1_file_system_exception_html_aa608a23acd04d571929bf20e674bef76"><div class="ttname"><a href="class_cpp_common_1_1_file_system_exception.html#aa608a23acd04d571929bf20e674bef76">CppCommon::FileSystemException::Attach</a></div><div class="ttdeci">FileSystemException &amp; Attach(const Path &amp;path)</div><div class="ttdoc">Attach the given path to the exception. </div><div class="ttdef"><b>Definition:</b> <a href="filesystem_2exceptions_8h_source.html#l00034">exceptions.h:34</a></div></div>
+<div class="ttc" id="namespace_cpp_common_html_a551f50579f87df9152013786f9167aa4"><div class="ttname"><a href="namespace_cpp_common.html#a551f50579f87df9152013786f9167aa4">CppCommon::resource</a></div><div class="ttdeci">auto resource(T handle, TCleaner cleaner)</div><div class="ttdoc">Resource smart deleter pattern. </div><div class="ttdef"><b>Definition:</b> <a href="resource_8h_source.html#l00043">resource.h:43</a></div></div>
 <div class="ttc" id="class_cpp_common_1_1_path_html_a3d6d799bd82f62c847227174a861ef54"><div class="ttname"><a href="class_cpp_common_1_1_path.html#a3d6d799bd82f62c847227174a861ef54">CppCommon::Path::wstring</a></div><div class="ttdeci">std::wstring wstring() const </div><div class="ttdoc">Get the path value in UTF-16 format. </div><div class="ttdef"><b>Definition:</b> <a href="path_8h_source.html#l00153">path.h:153</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

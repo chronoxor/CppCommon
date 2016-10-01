@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>CppCommon: source/system/cpu.cpp File Reference</title>
+<title>CppCommon: include/utility/resource.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -83,37 +83,48 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_b2f33c71d4aa5e7af42a1ca61ff5af1b.html">source</a></li><li class="navelem"><a class="el" href="dir_770ba6fa46f3bfe7608bb8b841a04fae.html">system</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_3a4d35156996fb70540e167b84a39bd1.html">utility</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#namespaces">Namespaces</a>  </div>
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">cpu.cpp File Reference</div>  </div>
+<div class="title">resource.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>CPU management implementation.  
+<p>Resource smart deleter pattern definition.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="cpu_8h_source.html">system/cpu.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="resource_8h_source.html">utility/resource.h</a>&quot;</code><br/>
+<div class="textblock"><code>#include &lt;memory&gt;</code><br/>
 </div>
-<p><a href="cpu_8cpp_source.html">Go to the source code of this file.</a></p>
+<p><a href="resource_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespace_cpp_common"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_cpp_common.html">CppCommon</a></td></tr>
 <tr class="memdesc:namespace_cpp_common"><td class="mdescLeft">&#160;</td><td class="mdescRight">C++ common project definitions. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a551f50579f87df9152013786f9167aa4"><td class="memTemplParams" colspan="2">template&lt;typename T , typename TCleaner &gt; </td></tr>
+<tr class="memitem:a551f50579f87df9152013786f9167aa4"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_cpp_common.html#a551f50579f87df9152013786f9167aa4">CppCommon::resource</a> (T handle, TCleaner cleaner)</td></tr>
+<tr class="memdesc:a551f50579f87df9152013786f9167aa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resource smart deleter pattern.  <a href="#a551f50579f87df9152013786f9167aa4">More...</a><br/></td></tr>
+<tr class="separator:a551f50579f87df9152013786f9167aa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95421fc0faf43b224c4224f13eb06ff1"><td class="memTemplParams" colspan="2">template&lt;typename TCleaner &gt; </td></tr>
+<tr class="memitem:a95421fc0faf43b224c4224f13eb06ff1"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_cpp_common.html#a95421fc0faf43b224c4224f13eb06ff1">CppCommon::resource</a> (void *handle, TCleaner cleaner)</td></tr>
+<tr class="memdesc:a95421fc0faf43b224c4224f13eb06ff1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resource smart deleter pattern (void* specialization)  <a href="#a95421fc0faf43b224c4224f13eb06ff1">More...</a><br/></td></tr>
+<tr class="separator:a95421fc0faf43b224c4224f13eb06ff1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CPU management implementation. </p>
+<div class="textblock"><p>Resource smart deleter pattern definition. </p>
 <dl class="section author"><dt>Author</dt><dd>Ivan Shynkarenka </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>27.07.2016 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>01.10.2016 </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>MIT License </dd></dl>
 
-<p>Definition in file <a class="el" href="cpu_8cpp_source.html">cpu.cpp</a>.</p>
+<p>Definition in file <a class="el" href="resource_8h_source.html">resource.h</a>.</p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
