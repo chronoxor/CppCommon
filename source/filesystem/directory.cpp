@@ -66,7 +66,7 @@ bool Directory::IsDirectoryEmpty() const
     if (dir == nullptr)
         throwex FileSystemException("Cannot open a directory!").Attach(*this);
 
-    // Smart resource deleter pattern
+    // Smart resource cleaner pattern
     auto directory = resource(dir, [](DIR* dirp) { closedir(dirp); });
 
     struct dirent entry;
@@ -92,7 +92,7 @@ bool Directory::IsDirectoryEmpty() const
     if (hDirectory == INVALID_HANDLE_VALUE)
         throwex FileSystemException("Cannot open a directory!").Attach(*this);
 
-    // Smart resource deleter pattern
+    // Smart resource cleaner pattern
     auto directory = resource(hDirectory, [](HANDLE hFindFile) { FindClose(hFindFile); });
 
     do

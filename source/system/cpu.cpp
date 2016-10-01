@@ -74,7 +74,7 @@ std::string CPU::Architecture()
     if (lError != ERROR_SUCCESS)
         return "<unknown>";
 
-    // Smart resource deleter pattern
+    // Smart resource cleaner pattern
     auto key = resource(hKeyProcessor, [](HKEY hKey) { RegCloseKey(hKey); });
 
     CHAR pBuffer[_MAX_PATH] = { 0 };
@@ -221,7 +221,7 @@ int64_t CPU::ClockSpeed()
     if (lError != ERROR_SUCCESS)
         return -1;
 
-    // Smart resource deleter pattern
+    // Smart resource cleaner pattern
     auto key = resource(hKeyProcessor, [](HKEY hKey) { RegCloseKey(hKey); });
 
     DWORD dwMHz = 0;

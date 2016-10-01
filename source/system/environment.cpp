@@ -406,7 +406,7 @@ std::map<std::string, std::string> Environment::envars()
         result[key] = value;
     }
 #elif defined(_WIN32) || defined(_WIN64)
-    // Smart resource deleter pattern
+    // Smart resource cleaner pattern
     auto envars = resource(GetEnvironmentStringsW(), [](wchar_t* envars) { FreeEnvironmentStringsW(envars); });
 
     for (const wchar_t* envar = envars.get(); *envar != L'\0'; )

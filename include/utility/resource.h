@@ -1,6 +1,6 @@
 /*!
     \file resource.h
-    \brief Resource smart deleter pattern definition
+    \brief Resource smart cleaner pattern definition
     \author Ivan Shynkarenka
     \date 01.10.2016
     \copyright MIT License
@@ -13,9 +13,9 @@
 
 namespace CppCommon {
 
-//! Resource smart deleter pattern
+//! Resource smart cleaner pattern
 /*!
-    Resource smart deleter pattern allows to create unique smart pointer with
+    Resource smart cleaner pattern allows to create unique smart pointer with
     a given resource and cleaner delegate which is used to automatic resource
     clean when it goes out of scope.
 
@@ -45,7 +45,7 @@ auto resource(T handle, TCleaner cleaner)
     return std::unique_ptr<std::remove_pointer<T>::type, TCleaner>(handle, cleaner);
 }
 
-//! Resource smart deleter pattern (void* specialization)
+//! Resource smart cleaner pattern (void* specialization)
 /*!
     \param handle - Resource handle
     \param cleaner - Cleaner function
@@ -54,6 +54,16 @@ template <typename TCleaner>
 auto resource(void* handle, TCleaner cleaner)
 {
     return std::unique_ptr<void, TCleaner>(handle, cleaner);
+}
+
+//! Resource smart cleaner pattern for empty resource handle
+/*!
+    \param cleaner - Cleaner function
+*/
+template <typename TCleaner>
+auto resource(TCleaner cleaner)
+{
+    return std::unique_ptr<void, TCleaner>(&cleaner, cleaner);
 }
 
 } // namespace CppCommon

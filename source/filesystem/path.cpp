@@ -541,7 +541,7 @@ UtcTimestamp Path::created() const
     if (hFile == INVALID_HANDLE_VALUE)
         throwex FileSystemException("Cannot open the path for getting create time!").Attach(*this);
 
-    // Smart resource deleter pattern
+    // Smart resource cleaner pattern
     auto file = resource(hFile, [](HANDLE hObject) { CloseHandle(hObject); });
 
     FILETIME created;
@@ -569,7 +569,7 @@ UtcTimestamp Path::modified() const
     if (hFile == INVALID_HANDLE_VALUE)
         throwex FileSystemException("Cannot open the path for getting modified time!").Attach(*this);
 
-    // Smart resource deleter pattern
+    // Smart resource cleaner pattern
     auto file = resource(hFile, [](HANDLE hObject) { CloseHandle(hObject); });
 
     FILETIME write;
@@ -597,7 +597,7 @@ size_t Path::hardlinks() const
     if (hFile == INVALID_HANDLE_VALUE)
         throwex FileSystemException("Cannot open the path for getting hard links count!").Attach(*this);
 
-    // Smart resource deleter pattern
+    // Smart resource cleaner pattern
     auto file = resource(hFile, [](HANDLE hObject) { CloseHandle(hObject); });
 
     BY_HANDLE_FILE_INFORMATION bhfi;
@@ -661,7 +661,7 @@ bool Path::IsEquivalent(const Path& path) const
     if (hFile1 == INVALID_HANDLE_VALUE)
         throwex FileSystemException("Cannot open the path for getting meta information!").Attach(*this);
 
-    // Smart resource deleter pattern
+    // Smart resource cleaner pattern
     auto file1 = resource(hFile1, [](HANDLE hObject) { CloseHandle(hObject); });
 
     BY_HANDLE_FILE_INFORMATION info1;
@@ -673,7 +673,7 @@ bool Path::IsEquivalent(const Path& path) const
     if (hFile2 == INVALID_HANDLE_VALUE)
         throwex FileSystemException("Cannot open the path for getting meta information!").Attach(path);
 
-    // Smart resource deleter pattern
+    // Smart resource cleaner pattern
     auto file2 = resource(hFile2, [](HANDLE hObject) { CloseHandle(hObject); });
 
     BY_HANDLE_FILE_INFORMATION info2;
@@ -1332,7 +1332,7 @@ void Path::SetCreated(const Path& path, const UtcTimestamp& timestamp)
     if (hFile == INVALID_HANDLE_VALUE)
         throwex FileSystemException("Cannot open the path for writing created time!").Attach(path);
 
-    // Smart resource deleter pattern
+    // Smart resource cleaner pattern
     auto file = resource(hFile, [](HANDLE hObject) { CloseHandle(hObject); });
 
     ULARGE_INTEGER result;
@@ -1367,7 +1367,7 @@ void Path::SetModified(const Path& path, const UtcTimestamp& timestamp)
     if (hFile == INVALID_HANDLE_VALUE)
         throwex FileSystemException("Cannot open the path for writing modified time!").Attach(path);
 
-    // Smart resource deleter pattern
+    // Smart resource cleaner pattern
     auto file = resource(hFile, [](HANDLE hObject) { CloseHandle(hObject); });
 
     ULARGE_INTEGER result;

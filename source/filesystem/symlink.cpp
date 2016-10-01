@@ -83,7 +83,7 @@ Path Symlink::target() const
     if (hSymlink == INVALID_HANDLE_VALUE)
         throwex FileSystemException("Cannot open the symlink path for reading!").Attach(*this);
 
-    // Smart resource deleter pattern
+    // Smart resource cleaner pattern
     auto file = resource(hSymlink, [](HANDLE hObject) { CloseHandle(hObject); });
 
     union info_t

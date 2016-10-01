@@ -527,7 +527,7 @@ private:
         if (hDumpFile == INVALID_HANDLE_VALUE)
             throwex SystemException("Cannot create a dump file - " + dump.native());
 
-        // Smart resource deleter pattern
+        // Smart resource cleaner pattern
         auto file = resource(hDumpFile, [](HANDLE hObject) { CloseHandle(hObject); });
 
         MINIDUMP_EXCEPTION_INFORMATION mei;
