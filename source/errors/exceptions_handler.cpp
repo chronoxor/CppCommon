@@ -9,6 +9,7 @@
 #include "errors/exceptions_handler.h"
 
 #include "errors/exceptions.h"
+#include "filesystem/exceptions.h"
 #include "filesystem/path.h"
 #include "string/format.h"
 #include "system/stack_trace.h"
