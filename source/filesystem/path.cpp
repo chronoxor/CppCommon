@@ -1371,7 +1371,7 @@ void Path::SetCreated(const Path& path, const UtcTimestamp& timestamp)
 
     // Release the resource manually
     if (!CloseHandle(hFile))
-        throwex FileSystemException("Cannot close a path!").Attach(*this);
+        throwex FileSystemException("Cannot close a path!").Attach(path);
     file.release();
 #endif
 }
@@ -1411,7 +1411,7 @@ void Path::SetModified(const Path& path, const UtcTimestamp& timestamp)
 
     // Release the resource manually
     if (!CloseHandle(hFile))
-        throwex FileSystemException("Cannot close a path!").Attach(*this);
+        throwex FileSystemException("Cannot close a path!").Attach(path);
     file.release();
 #endif
 }
