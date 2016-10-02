@@ -610,7 +610,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;        <span class="comment">// Create the dump file</span></div>
 <div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;        HANDLE hDumpFile = CreateFileW(dump.wstring().c_str(), GENERIC_WRITE, 0, <span class="keyword">nullptr</span>, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, <span class="keyword">nullptr</span>);</div>
 <div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;        <span class="keywordflow">if</span> (hDumpFile == INVALID_HANDLE_VALUE)</div>
-<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;            <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> FileSystemException(<span class="stringliteral">&quot;Cannot create a dump file!&quot;</span>.Attach(dump);</div>
+<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;            <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> FileSystemException(<span class="stringliteral">&quot;Cannot create a dump file!&quot;</span>).Attach(dump);</div>
 <div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;</div>
 <div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;        <span class="comment">// Smart resource cleaner pattern</span></div>
 <div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;        <span class="keyword">auto</span> file = <a class="code" href="namespace_cpp_common.html#a551f50579f87df9152013786f9167aa4">resource</a>(hDumpFile, [](HANDLE hObject) { CloseHandle(hObject); });</div>
@@ -627,11 +627,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;</div>
 <div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;        <span class="comment">// Write dump file information</span></div>
 <div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;        <span class="keywordflow">if</span> (!MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), file.get(), MiniDumpNormal, &amp;mei, <span class="keyword">nullptr</span>, &amp;mci))</div>
-<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;            <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> FileSystemException(<span class="stringliteral">&quot;Cannot write a dump file!&quot;</span>.Attach(dump);</div>
+<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;            <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> FileSystemException(<span class="stringliteral">&quot;Cannot write a dump file!&quot;</span>).Attach(dump);</div>
 <div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;</div>
 <div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;        <span class="comment">// Release the resource manually</span></div>
 <div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;        <span class="keywordflow">if</span> (!CloseHandle(hDumpFile))</div>
-<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;            <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> FileSystemException(<span class="stringliteral">&quot;Cannot close a dump file!&quot;</span>.Attach(dump);</div>
+<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;            <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> FileSystemException(<span class="stringliteral">&quot;Cannot close a dump file!&quot;</span>).Attach(dump);</div>
 <div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;        file.release();</div>
 <div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;<span class="preprocessor"></span>    }</div>
