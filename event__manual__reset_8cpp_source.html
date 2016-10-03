@@ -240,7 +240,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;        <span class="keywordflow">while</span> (!_signaled)</div>
 <div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;        {</div>
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;            result = pthread_cond_wait(&amp;_cond, &amp;_mutex);</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;            <span class="keywordflow">if</span> ((result != 0) &amp;&amp; (result != ETIMEDOUT))</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;            <span class="keywordflow">if</span> (result != 0)</div>
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;                <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> SystemException(<span class="stringliteral">&quot;Failed to waiting a conditional variable for the manual-reset event!&quot;</span>, result);</div>
 <div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;        }</div>
 <div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;        result = pthread_mutex_unlock(&amp;_mutex);</div>

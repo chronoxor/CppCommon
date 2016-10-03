@@ -16,7 +16,7 @@ var indexSectionsWithContent =
   6: "diprv",
   7: "cfp",
   8: "abcdfghilmnorstuwy",
-  9: "deos",
+  9: "cdeos",
   10: "_eft",
   11: "c"
 };

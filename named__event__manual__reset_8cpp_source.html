@@ -279,7 +279,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;        <span class="keywordflow">while</span> (!_shared-&gt;signaled)</div>
 <div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;        {</div>
 <div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;            result = pthread_cond_wait(&amp;_shared-&gt;cond, &amp;_shared-&gt;mutex);</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;            <span class="keywordflow">if</span> ((result != 0) &amp;&amp; (result != ETIMEDOUT))</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;            <span class="keywordflow">if</span> (result != 0)</div>
 <div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;                <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> SystemException(<span class="stringliteral">&quot;Failed to waiting a conditional variable for the named manual-reset event!&quot;</span>, result);</div>
 <div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;        }</div>
 <div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;        result = pthread_mutex_unlock(&amp;_shared-&gt;mutex);</div>

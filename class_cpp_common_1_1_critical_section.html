@@ -91,6 +91,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="class_cpp_common_1_1_critical_section-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">CppCommon::CriticalSection Class Reference</div>  </div>
@@ -131,13 +132,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:acc50c37d18dfeca50c9c7dc49638077f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_critical_section.html#acc50c37d18dfeca50c9c7dc49638077f">Unlock</a> ()</td></tr>
 <tr class="memdesc:acc50c37d18dfeca50c9c7dc49638077f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Release critical section.  <a href="#acc50c37d18dfeca50c9c7dc49638077f">More...</a><br/></td></tr>
 <tr class="separator:acc50c37d18dfeca50c9c7dc49638077f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:ab270e49e575fdf0fe1a4f2ee911df116"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_critical_section.html#ab270e49e575fdf0fe1a4f2ee911df116">ConditionVariable</a></td></tr>
+<tr class="separator:ab270e49e575fdf0fe1a4f2ee911df116"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Critical section synchronization primitive. </p>
 <p>Critical sections prevents code fragments from access by multiple threads simultaneously. Only one thread can access the code inside the critical section. Other threads must wait for the lock! Critical sections are usually more lightweight than mutexes and don't enter kernel mode.</p>
 <p>Thread-safe.</p>
 <p><a href="https://en.wikipedia.org/wiki/Critical_section">https://en.wikipedia.org/wiki/Critical_section</a> </p>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="threads_critical_section_8cpp-example.html#_a0">threads_critical_section.cpp</a>, and <a class="el" href="threads_thread_8cpp-example.html#_a2">threads_thread.cpp</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="threads_condition_variable_8cpp-example.html#_a0">threads_condition_variable.cpp</a>, <a class="el" href="threads_critical_section_8cpp-example.html#_a0">threads_critical_section.cpp</a>, and <a class="el" href="threads_thread_8cpp-example.html#_a2">threads_thread.cpp</a>.</dd>
 </dl>
 <p>Definition at line <a class="el" href="critical__section_8h_source.html#l00029">29</a> of file <a class="el" href="critical__section_8h_source.html">critical_section.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -154,7 +160,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="critical__section_8cpp_source.html#l00105">105</a> of file <a class="el" href="critical__section_8cpp_source.html">critical_section.cpp</a>.</p>
+<p>Definition at line <a class="el" href="critical__section_8cpp_source.html#l00110">110</a> of file <a class="el" href="critical__section_8cpp_source.html">critical_section.cpp</a>.</p>
 
 </div>
 </div>
@@ -204,7 +210,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="critical__section_8cpp_source.html#l00109">109</a> of file <a class="el" href="critical__section_8cpp_source.html">critical_section.cpp</a>.</p>
+<p>Definition at line <a class="el" href="critical__section_8cpp_source.html#l00114">114</a> of file <a class="el" href="critical__section_8cpp_source.html">critical_section.cpp</a>.</p>
 
 </div>
 </div>
@@ -221,7 +227,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="critical__section_8cpp_source.html#l00113">113</a> of file <a class="el" href="critical__section_8cpp_source.html">critical_section.cpp</a>.</p>
+<p>Definition at line <a class="el" href="critical__section_8cpp_source.html#l00118">118</a> of file <a class="el" href="critical__section_8cpp_source.html">critical_section.cpp</a>.</p>
 
 </div>
 </div>
@@ -241,8 +247,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Acquire critical section with block. </p>
 <p>Will block. </p>
-
-<p>Definition at line <a class="el" href="critical__section_8cpp_source.html#l00152">152</a> of file <a class="el" href="critical__section_8cpp_source.html">critical_section.cpp</a>.</p>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="threads_condition_variable_8cpp-example.html#a4">threads_condition_variable.cpp</a>.</dd>
+</dl>
+<p>Definition at line <a class="el" href="critical__section_8cpp_source.html#l00162">162</a> of file <a class="el" href="critical__section_8cpp_source.html">critical_section.cpp</a>.</p>
 
 </div>
 </div>
@@ -292,7 +299,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="critical__section_8cpp_source.html#l00117">117</a> of file <a class="el" href="critical__section_8cpp_source.html">critical_section.cpp</a>.</p>
+<p>Definition at line <a class="el" href="critical__section_8cpp_source.html#l00122">122</a> of file <a class="el" href="critical__section_8cpp_source.html">critical_section.cpp</a>.</p>
 
 </div>
 </div>
@@ -313,7 +320,7 @@ Public Member Functions</h2></td></tr>
 <p>Will not block.</p>
 <dl class="section return"><dt>Returns</dt><dd>'true' if the critical section was successfully acquired, 'false' if the critical section is busy </dd></dl>
 
-<p>Definition at line <a class="el" href="critical__section_8cpp_source.html#l00123">123</a> of file <a class="el" href="critical__section_8cpp_source.html">critical_section.cpp</a>.</p>
+<p>Definition at line <a class="el" href="critical__section_8cpp_source.html#l00133">133</a> of file <a class="el" href="critical__section_8cpp_source.html">critical_section.cpp</a>.</p>
 
 </div>
 </div>
@@ -341,7 +348,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>'true' if the critical section was successfully acquired, 'false' if the critical section is busy </dd></dl>
 
-<p>Definition at line <a class="el" href="critical__section_8cpp_source.html#l00128">128</a> of file <a class="el" href="critical__section_8cpp_source.html">critical_section.cpp</a>.</p>
+<p>Definition at line <a class="el" href="critical__section_8cpp_source.html#l00138">138</a> of file <a class="el" href="critical__section_8cpp_source.html">critical_section.cpp</a>.</p>
 
 </div>
 </div>
@@ -377,7 +384,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>'true' if the critical section was successfully acquired, 'false' if the critical section is busy </dd></dl>
 
-<p>Definition at line <a class="el" href="critical__section_8h_source.html#l00063">63</a> of file <a class="el" href="critical__section_8h_source.html">critical_section.h</a>.</p>
+<p>Definition at line <a class="el" href="critical__section_8h_source.html#l00065">65</a> of file <a class="el" href="critical__section_8h_source.html">critical_section.h</a>.</p>
 
 </div>
 </div>
@@ -396,8 +403,32 @@ Public Member Functions</h2></td></tr>
 
 <p>Release critical section. </p>
 <p>Will not block. </p>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="threads_condition_variable_8cpp-example.html#a6">threads_condition_variable.cpp</a>.</dd>
+</dl>
+<p>Definition at line <a class="el" href="critical__section_8cpp_source.html#l00167">167</a> of file <a class="el" href="critical__section_8cpp_source.html">critical_section.cpp</a>.</p>
 
-<p>Definition at line <a class="el" href="critical__section_8cpp_source.html#l00157">157</a> of file <a class="el" href="critical__section_8cpp_source.html">critical_section.cpp</a>.</p>
+</div>
+</div>
+<h2 class="groupheader">Friends And Related Function Documentation</h2>
+<a class="anchor" id="ab270e49e575fdf0fe1a4f2ee911df116"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend class <a class="el" href="class_cpp_common_1_1_condition_variable.html">ConditionVariable</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="critical__section_8h_source.html#l00031">31</a> of file <a class="el" href="critical__section_8h_source.html">critical_section.h</a>.</p>
 
 </div>
 </div>

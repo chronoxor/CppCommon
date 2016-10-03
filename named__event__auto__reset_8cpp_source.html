@@ -265,7 +265,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;        <span class="keywordflow">while</span> (!_shared-&gt;signaled)</div>
 <div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;        {</div>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;            result = pthread_cond_wait(&amp;_shared-&gt;cond, &amp;_shared-&gt;mutex);</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;            <span class="keywordflow">if</span> ((result != 0) &amp;&amp; (result != ETIMEDOUT))</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;            <span class="keywordflow">if</span> (result != 0)</div>
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;                <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> SystemException(<span class="stringliteral">&quot;Failed to waiting a conditional variable for the named auto-reset event!&quot;</span>, result);</div>
 <div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;        }</div>
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;        _shared-&gt;signaled = (_shared-&gt;signaled &gt; 0) ? (_shared-&gt;signaled - 1) : 0;</div>
