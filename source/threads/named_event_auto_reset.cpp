@@ -180,7 +180,7 @@ public:
         while (!_shared->signaled)
         {
             result = pthread_cond_wait(&_shared->cond, &_shared->mutex);
-            if ((result != 0) && (result != ETIMEDOUT))
+            if (result != 0)
                 throwex SystemException("Failed to waiting a conditional variable for the named auto-reset event!", result);
         }
         _shared->signaled = (_shared->signaled > 0) ? (_shared->signaled - 1) : 0;

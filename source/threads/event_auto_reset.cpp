@@ -141,7 +141,7 @@ public:
         while (!_signaled)
         {
             result = pthread_cond_wait(&_cond, &_mutex);
-            if ((result != 0) && (result != ETIMEDOUT))
+            if (result != 0)
                 throwex SystemException("Failed to waiting a conditional variable for the auto-reset event!", result);
         }
         _signaled = (_signaled > 0) ? (_signaled - 1) : 0;

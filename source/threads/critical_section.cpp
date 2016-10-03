@@ -58,6 +58,11 @@ public:
 #endif
     }
 
+    void* native() noexcept
+    {
+        return &_lock;
+    }
+
     bool TryLock()
     {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
@@ -118,6 +123,11 @@ CriticalSection& CriticalSection::operator=(CriticalSection&& cs) noexcept
 {
     _pimpl = std::move(cs._pimpl);
     return *this;
+}
+
+void* CriticalSection::native() noexcept
+{
+    return _pimpl->native();
 }
 
 bool CriticalSection::TryLock()

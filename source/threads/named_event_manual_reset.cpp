@@ -194,7 +194,7 @@ public:
         while (!_shared->signaled)
         {
             result = pthread_cond_wait(&_shared->cond, &_shared->mutex);
-            if ((result != 0) && (result != ETIMEDOUT))
+            if (result != 0)
                 throwex SystemException("Failed to waiting a conditional variable for the named manual-reset event!", result);
         }
         result = pthread_mutex_unlock(&_shared->mutex);

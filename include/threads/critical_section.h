@@ -28,6 +28,8 @@ namespace CppCommon {
 */
 class CriticalSection
 {
+    friend class ConditionVariable;
+
 public:
     CriticalSection();
     CriticalSection(const CriticalSection&) = delete;
@@ -78,6 +80,9 @@ public:
 private:
     class Impl;
     std::unique_ptr<Impl> _pimpl;
+
+    //! Get the native critical section handler
+    void* native() noexcept;
 };
 
 /*! \example threads_critical_section.cpp Critical section synchronization primitive example */
