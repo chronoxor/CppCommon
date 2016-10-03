@@ -31,7 +31,7 @@ public:
     Impl()
     {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-        result = pthread_cond_init(&_cond, nullptr);
+        int result = pthread_cond_init(&_cond, nullptr);
         if (result != 0)
             throwex SystemException("Failed to initialize a condition variable!", result);
 #elif defined(_WIN32) || defined(_WIN64)
@@ -42,7 +42,7 @@ public:
     ~Impl()
     {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-        result = pthread_cond_destroy(&_cond);
+        int result = pthread_cond_destroy(&_cond);
         if (result != 0)
             fatality(SystemException("Failed to destroy a condition variable!", result));
 #elif defined(_WIN32) || defined(_WIN64)
@@ -53,7 +53,7 @@ public:
     void NotifyOne()
     {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-        result = pthread_cond_signal(&_cond);
+        int result = pthread_cond_signal(&_cond);
         if (result != 0)
             throwex SystemException("Failed to signal a condition variable!", result);
 #elif defined(_WIN32) || defined(_WIN64)
@@ -64,7 +64,7 @@ public:
     void NotifyAll()
     {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-        result = pthread_cond_broadcast(&_cond);
+        int result = pthread_cond_broadcast(&_cond);
         if (result != 0)
             throwex SystemException("Failed to broadcast a condition variable!", result);
 #elif defined(_WIN32) || defined(_WIN64)
@@ -75,7 +75,7 @@ public:
     void Wait(CriticalSection& cs)
     {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-        result = pthread_cond_wait(&_cond, (pthread_mutex_t*)cs.native());
+        int result = pthread_cond_wait(&_cond, (pthread_mutex_t*)cs.native());
         if (result != 0)
             throwex SystemException("Failed to waiting a condition variable!", result);
 #elif defined(_WIN32) || defined(_WIN64)
@@ -92,7 +92,7 @@ public:
         struct timespec timeout;
         timeout.tv_sec = timespan.seconds();
         timeout.tv_nsec = timespan.nanoseconds() % 1000000000;
-        result = pthread_cond_timedwait(&_cond, (pthread_mutex_t*)cs.native(), &timeout);
+        int result = pthread_cond_timedwait(&_cond, (pthread_mutex_t*)cs.native(), &timeout);
         if ((result != 0) && (result != ETIMEDOUT))
             throwex SystemException("Failed to waiting a condition variable for the given timeout!", result);
         return (result == 0);
