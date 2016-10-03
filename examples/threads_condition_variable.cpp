@@ -61,8 +61,11 @@ int main(int argc, char** argv)
 
     // Perform text input
     std::string line;
-    while (getline(std::cin, line))
+    while (!finish && getline(std::cin, line))
     {
+        // Lock the critical section
+        cs.Lock();
+
         if (line == "+")
         {
             std::cout << "Notify one thread!" << std::endl;
@@ -70,21 +73,17 @@ int main(int argc, char** argv)
         }
         else if (line == "*")
         {
-            // Lock the critical section
-            cs.Lock();
-
             // Safe set the finish flag under the lock
             finish = true;
 
-            // Unlock the critical section
-            cs.Unlock();
-
             std::cout << "Notify all threads!" << std::endl;
             cv.NotifyAll();
-            break;
         }
         else
             std::cout << help << std::endl;
+
+        // Unlock the critical section
+        cs.Unlock();
     }
 
     // Wait for all threads
