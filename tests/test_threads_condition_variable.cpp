@@ -13,8 +13,7 @@ using namespace CppCommon;
 TEST_CASE("Condition variable notify one", "[CppCommon][Threads]")
 {
     int concurrency = 8;
-    int result1 = concurrency;
-    int result2 = concurrency;
+    int result = 0;
 
     CriticalSection cs;
     ConditionVariable cv1;
@@ -24,22 +23,25 @@ TEST_CASE("Condition variable notify one", "[CppCommon][Threads]")
     std::vector<std::thread> threads;
     for (int thread = 0; thread < concurrency; ++thread)
     {
-        threads.push_back(std::thread([&cs, &cv1, &cv2, &result1, &result2]()
+        threads.push_back(std::thread([&cs, &cv1, &cv2, &result]()
         {
             cs.Lock();
-            --result1;
+            ++result;
             cv1.NotifyOne();
-            cv2.Wait(cs, [&result2]() { return (result2 == 0); });
+            cv2.Wait(cs);
             cs.Unlock();
         }));
     }
+
+    // Wait for all threads are started and waiting for notifications
+    cs.Lock();
+    cv1.Wait(cs, [&result, concurrency]() { return (result == concurrency); });
+    cs.Unlock();
 
     // Send one-thread notifications
     for (int i = 0; i < concurrency; ++i)
     {
         cs.Lock();
-        cv1.Wait(cs, [&result1]() { return (result1 == 0); });
-        --result2;
         cv2.NotifyOne();
         cs.Unlock();
     }
@@ -48,16 +50,14 @@ TEST_CASE("Condition variable notify one", "[CppCommon][Threads]")
     for (auto& thread : threads)
         thread.join();
 
-    // Check results
-    REQUIRE(result1 == 0);
-    REQUIRE(result2 == 0);
+    // Check result
+    REQUIRE(result == concurrency);
 }
 
 TEST_CASE("Condition variable notify all", "[CppCommon][Threads]")
 {
     int concurrency = 8;
-    int result1 = concurrency;
-    int result2 = concurrency;
+    int result = 0;
 
     CriticalSection cs;
     ConditionVariable cv1;
@@ -67,31 +67,30 @@ TEST_CASE("Condition variable notify all", "[CppCommon][Threads]")
     std::vector<std::thread> threads;
     for (int thread = 0; thread < concurrency; ++thread)
     {
-        threads.push_back(std::thread([&cs, &cv1, &cv2, &result1, &result2]()
+        threads.push_back(std::thread([&cs, &cv1, &cv2, &result]()
         {
             cs.Lock();
-            --result1;
+            ++result;
             cv1.NotifyOne();
-            cv2.Wait(cs, [&result2]() { return (result2 == 0); });
+            cv2.Wait(cs);
             cs.Unlock();
         }));
     }
 
+    // Wait for all threads are started and waiting for notifications
+    cs.Lock();
+    cv1.Wait(cs, [&result, concurrency]() { return (result == concurrency); });
+    cs.Unlock();
+
     // Send all-threads notifications
-    for (int i = 0; i < concurrency; ++i)
-    {
-        cs.Lock();
-        cv1.Wait(cs, [&result1]() { return (result1 == 0); });
-        result2 = 0;
-        cv2.NotifyAll();
-        cs.Unlock();
-    }
+    cs.Lock();
+    cv2.NotifyAll();
+    cs.Unlock();
 
     // Wait for all threads
     for (auto& thread : threads)
         thread.join();
 
-    // Check results
-    REQUIRE(result1 == 0);
-    REQUIRE(result2 == 0);
+    // Check result
+    REQUIRE(result == concurrency);
 }
