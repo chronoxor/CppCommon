@@ -33,7 +33,11 @@ TEST_CASE("Condition variable notify one", "[CppCommon][Threads]")
 
     // Send one-thread notifications
     for (int i = 0; i < concurrency; ++i)
+    {
+        cs.Lock();
         cv.NotifyOne();
+        cs.Unlock();
+    }
 
     // Wait for all threads
     for (auto& thread : threads)
@@ -65,7 +69,9 @@ TEST_CASE("Condition variable notify all", "[CppCommon][Threads]")
     }
 
     // Send all-thread notification
+    cs.Lock();
     cv.NotifyAll();
+    cs.Unlock();
 
     // Wait for all threads
     for (auto& thread : threads)
