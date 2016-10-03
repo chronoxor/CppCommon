@@ -138,8 +138,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"></div>
 <div class="line">    <span class="comment">// Perform text input</span></div>
 <div class="line">    std::string line;</div>
-<div class="line">    <span class="keywordflow">while</span> (getline(std::cin, line))</div>
+<div class="line">    <span class="keywordflow">while</span> (!finish &amp;&amp; getline(std::cin, line))</div>
 <div class="line">    {</div>
+<div class="line">        <span class="comment">// Lock the critical section</span></div>
+<div class="line">        cs.<a class="code" href="class_cpp_common_1_1_critical_section.html#a4a9da5acc36d7468599c8b49f90ff337">Lock</a>();</div>
+<div class="line"></div>
 <div class="line">        <span class="keywordflow">if</span> (line == <span class="stringliteral">&quot;+&quot;</span>)</div>
 <div class="line">        {</div>
 <div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;Notify one thread!&quot;</span> &lt;&lt; std::endl;</div>
@@ -147,21 +150,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">        }</div>
 <div class="line">        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (line == <span class="stringliteral">&quot;*&quot;</span>)</div>
 <div class="line">        {</div>
-<div class="line">            <span class="comment">// Lock the critical section</span></div>
-<div class="line">            cs.<a class="code" href="class_cpp_common_1_1_critical_section.html#a4a9da5acc36d7468599c8b49f90ff337">Lock</a>();</div>
-<div class="line"></div>
 <div class="line">            <span class="comment">// Safe set the finish flag under the lock</span></div>
 <div class="line">            finish = <span class="keyword">true</span>;</div>
 <div class="line"></div>
-<div class="line">            <span class="comment">// Unlock the critical section</span></div>
-<div class="line">            cs.<a class="code" href="class_cpp_common_1_1_critical_section.html#acc50c37d18dfeca50c9c7dc49638077f">Unlock</a>();</div>
-<div class="line"></div>
 <div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;Notify all threads!&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line">            cv.<a name="a8"></a><a class="code" href="class_cpp_common_1_1_condition_variable.html#ad41b2c3ef5e2f7da52dfae108916de48">NotifyAll</a>();</div>
-<div class="line">            <span class="keywordflow">break</span>;</div>
 <div class="line">        }</div>
 <div class="line">        <span class="keywordflow">else</span></div>
 <div class="line">            std::cout &lt;&lt; help &lt;&lt; std::endl;</div>
+<div class="line"></div>
+<div class="line">        <span class="comment">// Unlock the critical section</span></div>
+<div class="line">        cs.<a class="code" href="class_cpp_common_1_1_critical_section.html#acc50c37d18dfeca50c9c7dc49638077f">Unlock</a>();</div>
 <div class="line">    }</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">// Wait for all threads</span></div>
