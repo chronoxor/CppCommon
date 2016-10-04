@@ -271,6 +271,7 @@ template&lt;typename T &gt; </div>
 
 <p>Dequeue all items from the linked queue (single consumer thread method) </p>
 <p>All items in the batcher will be processed by the given handler.</p>
+<p>Will not block.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">handler</td><td>- Batch handler </td></tr>
@@ -309,6 +310,7 @@ template&lt;typename T &gt; </div>
 
 <p>Enqueue an item into the linked batcher (multiple producers threads method) </p>
 <p>The item will be copied into the linked batcher.</p>
+<p>Will not block.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">item</td><td>- Item to enqueue </td></tr>
@@ -347,6 +349,7 @@ template&lt;typename T &gt; </div>
 
 <p>Enqueue an item into the linked batcher (multiple producers threads method) </p>
 <p>The item will be moved into the linked batcher.</p>
+<p>Will not block.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">item</td><td>- Item to enqueue </td></tr>

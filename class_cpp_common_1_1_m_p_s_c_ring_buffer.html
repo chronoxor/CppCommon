@@ -118,6 +118,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a119feb0653dd70a601fb79b2efeb6a17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9eddcee271aaea37bee799a7fbc748cd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cpp_common_1_1_m_p_s_c_ring_buffer.html">MPSCRingBuffer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_m_p_s_c_ring_buffer.html#a9eddcee271aaea37bee799a7fbc748cd">operator=</a> (<a class="el" href="class_cpp_common_1_1_m_p_s_c_ring_buffer.html">MPSCRingBuffer</a> &amp;&amp;) noexcept=default</td></tr>
 <tr class="separator:a9eddcee271aaea37bee799a7fbc748cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ec3fd99f1163f6a1835d8786fac53c9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_m_p_s_c_ring_buffer.html#a0ec3fd99f1163f6a1835d8786fac53c9">empty</a> () const noexcept</td></tr>
+<tr class="memdesc:a0ec3fd99f1163f6a1835d8786fac53c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is ring buffer empty?  <a href="#a0ec3fd99f1163f6a1835d8786fac53c9">More...</a><br/></td></tr>
+<tr class="separator:a0ec3fd99f1163f6a1835d8786fac53c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ba529914858ef9dbe35f84068b608a1"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_m_p_s_c_ring_buffer.html#a2ba529914858ef9dbe35f84068b608a1">capacity</a> () const noexcept</td></tr>
 <tr class="memdesc:a2ba529914858ef9dbe35f84068b608a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get ring buffer capacity.  <a href="#a2ba529914858ef9dbe35f84068b608a1">More...</a><br/></td></tr>
 <tr class="separator:a2ba529914858ef9dbe35f84068b608a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -282,7 +285,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Get ring buffer capacity. </p>
 
-<p>Definition at line <a class="el" href="mpsc__ring__buffer_8h_source.html#l00050">50</a> of file <a class="el" href="mpsc__ring__buffer_8h_source.html">mpsc_ring_buffer.h</a>.</p>
+<p>Definition at line <a class="el" href="mpsc__ring__buffer_8h_source.html#l00052">52</a> of file <a class="el" href="mpsc__ring__buffer_8h_source.html">mpsc_ring_buffer.h</a>.</p>
 
 </div>
 </div>
@@ -309,7 +312,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Get ring buffer concurrency. </p>
 
-<p>Definition at line <a class="el" href="mpsc__ring__buffer_8h_source.html#l00052">52</a> of file <a class="el" href="mpsc__ring__buffer_8h_source.html">mpsc_ring_buffer.h</a>.</p>
+<p>Definition at line <a class="el" href="mpsc__ring__buffer_8h_source.html#l00054">54</a> of file <a class="el" href="mpsc__ring__buffer_8h_source.html">mpsc_ring_buffer.h</a>.</p>
 
 </div>
 </div>
@@ -347,6 +350,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Dequeue a chunk of bytes from the ring buffer (single consumer thread method) </p>
 <p>The chunk of bytes will be copied from the ring buffer using 'memcpy()' function.</p>
+<p>Will not block.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">chunk</td><td>- Chunk buffer to dequeue </td></tr>
@@ -358,6 +362,33 @@ Public Member Functions</h2></td></tr>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="threads_mpsc_ring_buffer_8cpp-example.html#a1">threads_mpsc_ring_buffer.cpp</a>.</dd>
 </dl>
 <p>Definition at line <a class="el" href="mpsc__ring__buffer_8inl_source.html#l00038">38</a> of file <a class="el" href="mpsc__ring__buffer_8inl_source.html">mpsc_ring_buffer.inl</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0ec3fd99f1163f6a1835d8786fac53c9"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CppCommon::MPSCRingBuffer::empty </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Is ring buffer empty? </p>
+
+<p>Definition at line <a class="el" href="mpsc__ring__buffer_8h_source.html#l00050">50</a> of file <a class="el" href="mpsc__ring__buffer_8h_source.html">mpsc_ring_buffer.h</a>.</p>
 
 </div>
 </div>
@@ -395,6 +426,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Enqueue a chunk of bytes into the ring buffer (single producer thread method) </p>
 <p>The chunk of bytes will be copied into the ring buffer using 'memcpy()' function. Chunk size should not be greater than ring buffer capacity!</p>
+<p>Will not block.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">chunk</td><td>- Chunk buffer to enqueue </td></tr>

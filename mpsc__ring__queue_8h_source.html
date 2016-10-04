@@ -121,42 +121,44 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <a class="code" href="class_cpp_common_1_1_m_p_s_c_ring_queue.html">MPSCRingQueue</a>&amp; <a class="code" href="class_cpp_common_1_1_m_p_s_c_ring_queue.html#a3106be86dccf6724fa09d480d692302e">operator=</a>(<span class="keyword">const</span> <a class="code" href="class_cpp_common_1_1_m_p_s_c_ring_queue.html">MPSCRingQueue</a>&amp;) = <span class="keyword">delete</span>;</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <a class="code" href="class_cpp_common_1_1_m_p_s_c_ring_queue.html">MPSCRingQueue</a>&amp; <a class="code" href="class_cpp_common_1_1_m_p_s_c_ring_queue.html#a3106be86dccf6724fa09d480d692302e">operator=</a>(<a class="code" href="class_cpp_common_1_1_m_p_s_c_ring_queue.html">MPSCRingQueue</a>&amp;&amp;) noexcept = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_m_p_s_c_ring_queue.html#ab6ec4aa59ceaf084accdc9c527c82d83">   52</a></span>&#160;    <span class="keywordtype">size_t</span> <a class="code" href="class_cpp_common_1_1_m_p_s_c_ring_queue.html#ab6ec4aa59ceaf084accdc9c527c82d83">capacity</a>() const noexcept { <span class="keywordflow">return</span> _capacity; }</div>
-<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_m_p_s_c_ring_queue.html#ae579679ab71d6009ffafed1b48e37943">   54</a></span>&#160;    <span class="keywordtype">size_t</span> <a class="code" href="class_cpp_common_1_1_m_p_s_c_ring_queue.html#ae579679ab71d6009ffafed1b48e37943">concurrency</a>() const noexcept { <span class="keywordflow">return</span> _concurrency; }</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordtype">size_t</span> <a class="code" href="class_cpp_common_1_1_m_p_s_c_ring_queue.html#a23fc7a636ebcf36b645e59111ad3b2c7">size</a>() const noexcept;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_m_p_s_c_ring_queue.html#ac81af27ac04a309416a4b9fe824905e6">   52</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_cpp_common_1_1_m_p_s_c_ring_queue.html#ac81af27ac04a309416a4b9fe824905e6">empty</a>() const noexcept { <span class="keywordflow">return</span> (<a class="code" href="class_cpp_common_1_1_m_p_s_c_ring_queue.html#a23fc7a636ebcf36b645e59111ad3b2c7">size</a>() == 0); }</div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_m_p_s_c_ring_queue.html#ab6ec4aa59ceaf084accdc9c527c82d83">   54</a></span>&#160;    <span class="keywordtype">size_t</span> <a class="code" href="class_cpp_common_1_1_m_p_s_c_ring_queue.html#ab6ec4aa59ceaf084accdc9c527c82d83">capacity</a>() const noexcept { <span class="keywordflow">return</span> _capacity; }</div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_m_p_s_c_ring_queue.html#ae579679ab71d6009ffafed1b48e37943">   56</a></span>&#160;    <span class="keywordtype">size_t</span> <a class="code" href="class_cpp_common_1_1_m_p_s_c_ring_queue.html#ae579679ab71d6009ffafed1b48e37943">concurrency</a>() const noexcept { <span class="keywordflow">return</span> _concurrency; }</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordtype">size_t</span> <a class="code" href="class_cpp_common_1_1_m_p_s_c_ring_queue.html#a23fc7a636ebcf36b645e59111ad3b2c7">size</a>() const noexcept;</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_cpp_common_1_1_m_p_s_c_ring_queue.html#a6909d82380935d5faa37ac03f854e409">Enqueue</a>(const T&amp; item);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_cpp_common_1_1_m_p_s_c_ring_queue.html#a6909d82380935d5faa37ac03f854e409">Enqueue</a>(T&amp;&amp; item);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_cpp_common_1_1_m_p_s_c_ring_queue.html#a1f9ccc104970eb4331245c3b8d4a3d0a">Dequeue</a>(T&amp; item);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_cpp_common_1_1_m_p_s_c_ring_queue.html#a1f9ccc104970eb4331245c3b8d4a3d0a">Dequeue</a>(const std::function&lt;<span class="keywordtype">void</span>(const T&amp;)&gt;&amp; handler);</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;private:</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    struct Producer</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    {</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <a class="code" href="class_cpp_common_1_1_spin_lock.html">SpinLock</a> lock;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <a class="code" href="class_cpp_common_1_1_s_p_s_c_ring_queue.html">SPSCRingQueue&lt;T&gt;</a> queue;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        Producer(<span class="keywordtype">size_t</span> capacity) : queue(capacity) {}</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    };</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="keywordtype">size_t</span> _capacity;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keywordtype">size_t</span> _concurrency;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    std::vector&lt;std::shared_ptr&lt;Producer&gt;&gt; _producers;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="keywordtype">size_t</span> _consumer;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;};</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;} <span class="comment">// namespace CppCommon</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_cpp_common_1_1_m_p_s_c_ring_queue.html#a6909d82380935d5faa37ac03f854e409">Enqueue</a>(const T&amp; item);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_cpp_common_1_1_m_p_s_c_ring_queue.html#a6909d82380935d5faa37ac03f854e409">Enqueue</a>(T&amp;&amp; item);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_cpp_common_1_1_m_p_s_c_ring_queue.html#a1f9ccc104970eb4331245c3b8d4a3d0a">Dequeue</a>(T&amp; item);</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_cpp_common_1_1_m_p_s_c_ring_queue.html#a1f9ccc104970eb4331245c3b8d4a3d0a">Dequeue</a>(const std::function&lt;<span class="keywordtype">void</span>(const T&amp;)&gt;&amp; handler);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;private:</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    struct Producer</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    {</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <a class="code" href="class_cpp_common_1_1_spin_lock.html">SpinLock</a> lock;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <a class="code" href="class_cpp_common_1_1_s_p_s_c_ring_queue.html">SPSCRingQueue&lt;T&gt;</a> queue;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        Producer(<span class="keywordtype">size_t</span> capacity) : queue(capacity) {}</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    };</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mpsc__ring__queue_8inl.html">mpsc_ring_queue.inl</a>&quot;</span></div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="preprocessor">#endif // CPPCOMMON_THREADS_MPSC_RING_QUEUE_H</span></div>
-<div class="ttc" id="class_cpp_common_1_1_m_p_s_c_ring_queue_html_ae579679ab71d6009ffafed1b48e37943"><div class="ttname"><a href="class_cpp_common_1_1_m_p_s_c_ring_queue.html#ae579679ab71d6009ffafed1b48e37943">CppCommon::MPSCRingQueue::concurrency</a></div><div class="ttdeci">size_t concurrency() const noexcept</div><div class="ttdoc">Get ring queue concurrency. </div><div class="ttdef"><b>Definition:</b> <a href="mpsc__ring__queue_8h_source.html#l00054">mpsc_ring_queue.h:54</a></div></div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <span class="keywordtype">size_t</span> _capacity;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keywordtype">size_t</span> _concurrency;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    std::vector&lt;std::shared_ptr&lt;Producer&gt;&gt; _producers;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="keywordtype">size_t</span> _consumer;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;};</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;} <span class="comment">// namespace CppCommon</span></div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mpsc__ring__queue_8inl.html">mpsc_ring_queue.inl</a>&quot;</span></div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="preprocessor">#endif // CPPCOMMON_THREADS_MPSC_RING_QUEUE_H</span></div>
+<div class="ttc" id="class_cpp_common_1_1_m_p_s_c_ring_queue_html_ac81af27ac04a309416a4b9fe824905e6"><div class="ttname"><a href="class_cpp_common_1_1_m_p_s_c_ring_queue.html#ac81af27ac04a309416a4b9fe824905e6">CppCommon::MPSCRingQueue::empty</a></div><div class="ttdeci">bool empty() const noexcept</div><div class="ttdoc">Is ring queue empty? </div><div class="ttdef"><b>Definition:</b> <a href="mpsc__ring__queue_8h_source.html#l00052">mpsc_ring_queue.h:52</a></div></div>
+<div class="ttc" id="class_cpp_common_1_1_m_p_s_c_ring_queue_html_ae579679ab71d6009ffafed1b48e37943"><div class="ttname"><a href="class_cpp_common_1_1_m_p_s_c_ring_queue.html#ae579679ab71d6009ffafed1b48e37943">CppCommon::MPSCRingQueue::concurrency</a></div><div class="ttdeci">size_t concurrency() const noexcept</div><div class="ttdoc">Get ring queue concurrency. </div><div class="ttdef"><b>Definition:</b> <a href="mpsc__ring__queue_8h_source.html#l00056">mpsc_ring_queue.h:56</a></div></div>
 <div class="ttc" id="mpsc__ring__queue_8inl_html"><div class="ttname"><a href="mpsc__ring__queue_8inl.html">mpsc_ring_queue.inl</a></div><div class="ttdoc">Multiple producers / single consumer wait-free ring queue class inline implementation. </div></div>
 <div class="ttc" id="class_cpp_common_1_1_m_p_s_c_ring_queue_html"><div class="ttname"><a href="class_cpp_common_1_1_m_p_s_c_ring_queue.html">CppCommon::MPSCRingQueue</a></div><div class="ttdoc">Multiple producers / single consumer wait-free ring queue. </div><div class="ttdef"><b>Definition:</b> <a href="mpsc__ring__queue_8h_source.html#l00035">mpsc_ring_queue.h:35</a></div></div>
 <div class="ttc" id="class_cpp_common_1_1_s_p_s_c_ring_queue_html"><div class="ttname"><a href="class_cpp_common_1_1_s_p_s_c_ring_queue.html">CppCommon::SPSCRingQueue</a></div><div class="ttdoc">Single producer / single consumer wait-free ring queue. </div><div class="ttdef"><b>Definition:</b> <a href="spsc__ring__queue_8h_source.html#l00031">spsc_ring_queue.h:31</a></div></div>
@@ -169,7 +171,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="class_cpp_common_1_1_spin_lock_html"><div class="ttname"><a href="class_cpp_common_1_1_spin_lock.html">CppCommon::SpinLock</a></div><div class="ttdoc">Spin-lock synchronization primitive. </div><div class="ttdef"><b>Definition:</b> <a href="spin__lock_8h_source.html#l00029">spin_lock.h:29</a></div></div>
 <div class="ttc" id="class_cpp_common_1_1_m_p_s_c_ring_queue_html_a23fc7a636ebcf36b645e59111ad3b2c7"><div class="ttname"><a href="class_cpp_common_1_1_m_p_s_c_ring_queue.html#a23fc7a636ebcf36b645e59111ad3b2c7">CppCommon::MPSCRingQueue::size</a></div><div class="ttdeci">size_t size() const noexcept</div><div class="ttdoc">Get ring queue size. </div><div class="ttdef"><b>Definition:</b> <a href="mpsc__ring__queue_8inl_source.html#l00020">mpsc_ring_queue.inl:20</a></div></div>
 <div class="ttc" id="class_cpp_common_1_1_m_p_s_c_ring_queue_html_a22363c7ff6499aedcfaf12ce36866ab4"><div class="ttname"><a href="class_cpp_common_1_1_m_p_s_c_ring_queue.html#a22363c7ff6499aedcfaf12ce36866ab4">CppCommon::MPSCRingQueue::MPSCRingQueue</a></div><div class="ttdeci">MPSCRingQueue(size_t capacity, size_t concurrency=std::thread::hardware_concurrency())</div><div class="ttdoc">Default class constructor. </div><div class="ttdef"><b>Definition:</b> <a href="mpsc__ring__queue_8inl_source.html#l00012">mpsc_ring_queue.inl:12</a></div></div>
-<div class="ttc" id="class_cpp_common_1_1_m_p_s_c_ring_queue_html_ab6ec4aa59ceaf084accdc9c527c82d83"><div class="ttname"><a href="class_cpp_common_1_1_m_p_s_c_ring_queue.html#ab6ec4aa59ceaf084accdc9c527c82d83">CppCommon::MPSCRingQueue::capacity</a></div><div class="ttdeci">size_t capacity() const noexcept</div><div class="ttdoc">Get ring queue capacity. </div><div class="ttdef"><b>Definition:</b> <a href="mpsc__ring__queue_8h_source.html#l00052">mpsc_ring_queue.h:52</a></div></div>
+<div class="ttc" id="class_cpp_common_1_1_m_p_s_c_ring_queue_html_ab6ec4aa59ceaf084accdc9c527c82d83"><div class="ttname"><a href="class_cpp_common_1_1_m_p_s_c_ring_queue.html#ab6ec4aa59ceaf084accdc9c527c82d83">CppCommon::MPSCRingQueue::capacity</a></div><div class="ttdeci">size_t capacity() const noexcept</div><div class="ttdoc">Get ring queue capacity. </div><div class="ttdef"><b>Definition:</b> <a href="mpsc__ring__queue_8h_source.html#l00054">mpsc_ring_queue.h:54</a></div></div>
 <div class="ttc" id="spsc__ring__queue_8h_html"><div class="ttname"><a href="spsc__ring__queue_8h.html">spsc_ring_queue.h</a></div><div class="ttdoc">Single producer / single consumer wait-free ring queue definition. </div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

@@ -272,6 +272,7 @@ template&lt;typename T &gt; </div>
 
 <p>Dequeue an item from the linked queue (single consumer thread method) </p>
 <p>The item will be moved from the linked queue.</p>
+<p>Will not block.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">item</td><td>- Item to dequeue </td></tr>
@@ -310,6 +311,7 @@ template&lt;typename T &gt; </div>
 
 <p>Enqueue an item into the linked queue (multiple producers threads method) </p>
 <p>The item will be copied into the linked queue.</p>
+<p>Will not block.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">item</td><td>- Item to enqueue </td></tr>
@@ -348,6 +350,7 @@ template&lt;typename T &gt; </div>
 
 <p>Enqueue an item into the linked queue (multiple producers threads method) </p>
 <p>The item will be moved into the linked queue.</p>
+<p>Will not block.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">item</td><td>- Item to enqueue </td></tr>

@@ -114,34 +114,34 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <a class="code" href="class_cpp_common_1_1_m_p_s_c_linked_queue.html">MPSCLinkedQueue</a>&amp; <a class="code" href="class_cpp_common_1_1_m_p_s_c_linked_queue.html#abc134d69d35120c35d72263d88e0a48b">operator=</a>(<a class="code" href="class_cpp_common_1_1_m_p_s_c_linked_queue.html">MPSCLinkedQueue</a>&amp;&amp;) noexcept = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_cpp_common_1_1_m_p_s_c_linked_queue.html#a55d0fae98bbb242ce7a09fa4aee626c5">Enqueue</a>(<span class="keyword">const</span> T&amp; item);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_cpp_common_1_1_m_p_s_c_linked_queue.html#a55d0fae98bbb242ce7a09fa4aee626c5">Enqueue</a>(T&amp;&amp; item);</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_cpp_common_1_1_m_p_s_c_linked_queue.html#a64a97d3ba2e7adfc72aa842a62469333">Dequeue</a>(T&amp; item);</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keyword">struct </span>Node</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    {</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        T value;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        std::atomic&lt;Node*&gt; next;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    };</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keyword">typedef</span> <span class="keywordtype">char</span> cache_line_pad[64];</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    cache_line_pad _pad0;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    std::atomic&lt;Node*&gt; _head;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    cache_line_pad _pad1;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    std::atomic&lt;Node*&gt; _tail;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;};</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;} <span class="comment">// namespace CppCommon</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mpsc__linked__queue_8inl.html">mpsc_linked_queue.inl</a>&quot;</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_cpp_common_1_1_m_p_s_c_linked_queue.html#a55d0fae98bbb242ce7a09fa4aee626c5">Enqueue</a>(<span class="keyword">const</span> T&amp; item);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_cpp_common_1_1_m_p_s_c_linked_queue.html#a55d0fae98bbb242ce7a09fa4aee626c5">Enqueue</a>(T&amp;&amp; item);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_cpp_common_1_1_m_p_s_c_linked_queue.html#a64a97d3ba2e7adfc72aa842a62469333">Dequeue</a>(T&amp; item);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keyword">struct </span>Node</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    {</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        T value;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        std::atomic&lt;Node*&gt; next;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    };</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keyword">typedef</span> <span class="keywordtype">char</span> cache_line_pad[64];</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    cache_line_pad _pad0;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    std::atomic&lt;Node*&gt; _head;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    cache_line_pad _pad1;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    std::atomic&lt;Node*&gt; _tail;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;};</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="preprocessor">#endif // CPPCOMMON_THREADS_MPSC_LINKED_QUEUE_H</span></div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;} <span class="comment">// namespace CppCommon</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mpsc__linked__queue_8inl.html">mpsc_linked_queue.inl</a>&quot;</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="preprocessor">#endif // CPPCOMMON_THREADS_MPSC_LINKED_QUEUE_H</span></div>
 <div class="ttc" id="class_cpp_common_1_1_m_p_s_c_linked_queue_html_a55d0fae98bbb242ce7a09fa4aee626c5"><div class="ttname"><a href="class_cpp_common_1_1_m_p_s_c_linked_queue.html#a55d0fae98bbb242ce7a09fa4aee626c5">CppCommon::MPSCLinkedQueue::Enqueue</a></div><div class="ttdeci">bool Enqueue(const T &amp;item)</div><div class="ttdoc">Enqueue an item into the linked queue (multiple producers threads method) </div><div class="ttdef"><b>Definition:</b> <a href="mpsc__linked__queue_8inl_source.html#l00032">mpsc_linked_queue.inl:32</a></div></div>
 <div class="ttc" id="class_cpp_common_1_1_m_p_s_c_linked_queue_html_abc0583e61e27dc6e419039f81d2b9298"><div class="ttname"><a href="class_cpp_common_1_1_m_p_s_c_linked_queue.html#abc0583e61e27dc6e419039f81d2b9298">CppCommon::MPSCLinkedQueue::~MPSCLinkedQueue</a></div><div class="ttdeci">~MPSCLinkedQueue()</div><div class="ttdef"><b>Definition:</b> <a href="mpsc__linked__queue_8inl_source.html#l00020">mpsc_linked_queue.inl:20</a></div></div>
 <div class="ttc" id="mpsc__linked__queue_8inl_html"><div class="ttname"><a href="mpsc__linked__queue_8inl.html">mpsc_linked_queue.inl</a></div><div class="ttdoc">Multiple producers / single consumer wait-free linked queue inline implementation. </div></div>

@@ -117,6 +117,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a93d7cd172405364228846230878958af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6187f84e81873bfc7bcba38a203839e7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cpp_common_1_1_s_p_s_c_ring_queue.html">SPSCRingQueue</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_s_p_s_c_ring_queue.html#a6187f84e81873bfc7bcba38a203839e7">operator=</a> (<a class="el" href="class_cpp_common_1_1_s_p_s_c_ring_queue.html">SPSCRingQueue</a> &amp;&amp;) noexcept=default</td></tr>
 <tr class="separator:a6187f84e81873bfc7bcba38a203839e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7021f44d3cc44ace4fdd49570185948e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_s_p_s_c_ring_queue.html#a7021f44d3cc44ace4fdd49570185948e">empty</a> () const noexcept</td></tr>
+<tr class="memdesc:a7021f44d3cc44ace4fdd49570185948e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is ring queue empty?  <a href="#a7021f44d3cc44ace4fdd49570185948e">More...</a><br/></td></tr>
+<tr class="separator:a7021f44d3cc44ace4fdd49570185948e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a827d09be3fa8eb6888126cd23f69cb95"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_s_p_s_c_ring_queue.html#a827d09be3fa8eb6888126cd23f69cb95">capacity</a> () const noexcept</td></tr>
 <tr class="memdesc:a827d09be3fa8eb6888126cd23f69cb95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get ring queue capacity.  <a href="#a827d09be3fa8eb6888126cd23f69cb95">More...</a><br/></td></tr>
 <tr class="separator:a827d09be3fa8eb6888126cd23f69cb95"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -286,7 +289,7 @@ template&lt;typename T&gt; </div>
 
 <p>Get ring queue capacity. </p>
 
-<p>Definition at line <a class="el" href="spsc__ring__queue_8h_source.html#l00047">47</a> of file <a class="el" href="spsc__ring__queue_8h_source.html">spsc_ring_queue.h</a>.</p>
+<p>Definition at line <a class="el" href="spsc__ring__queue_8h_source.html#l00049">49</a> of file <a class="el" href="spsc__ring__queue_8h_source.html">spsc_ring_queue.h</a>.</p>
 
 </div>
 </div>
@@ -316,6 +319,7 @@ template&lt;typename T &gt; </div>
 
 <p>Dequeue an item from the ring queue (single consumer thread method) </p>
 <p>The item will be moved from the ring queue.</p>
+<p>Will not block.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">item</td><td>- Item to dequeue </td></tr>
@@ -325,6 +329,35 @@ template&lt;typename T &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>'true' if the item was successfully dequeue, 'false' if the ring queue is empty </dd></dl>
 
 <p>Definition at line <a class="el" href="spsc__ring__queue_8inl_source.html#l00054">54</a> of file <a class="el" href="spsc__ring__queue_8inl_source.html">spsc_ring_queue.inl</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7021f44d3cc44ace4fdd49570185948e"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_cpp_common_1_1_s_p_s_c_ring_queue.html">CppCommon::SPSCRingQueue</a>&lt; T &gt;::empty </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Is ring queue empty? </p>
+
+<p>Definition at line <a class="el" href="spsc__ring__queue_8h_source.html#l00047">47</a> of file <a class="el" href="spsc__ring__queue_8h_source.html">spsc_ring_queue.h</a>.</p>
 
 </div>
 </div>
@@ -354,6 +387,7 @@ template&lt;typename T &gt; </div>
 
 <p>Enqueue an item into the ring queue (single producer thread method) </p>
 <p>The item will be copied into the ring queue.</p>
+<p>Will not block.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">item</td><td>- Item to enqueue </td></tr>
@@ -392,6 +426,7 @@ template&lt;typename T &gt; </div>
 
 <p>Enqueue an item into the ring queue (single producer thread method) </p>
 <p>The item will be moved into the ring queue.</p>
+<p>Will not block.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">item</td><td>- Item to enqueue </td></tr>
