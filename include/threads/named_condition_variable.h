@@ -1,44 +1,45 @@
 /*!
-    \file condition_variable.h
-    \brief Condition variable synchronization primitive definition
+    \file named_condition_variable.h
+    \brief Named condition variable synchronization primitive definition
     \author Ivan Shynkarenka
-    \date 03.10.2016
+    \date 04.10.2016
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_THREADS_CONDITION_VARIABLE_H
-#define CPPCOMMON_THREADS_CONDITION_VARIABLE_H
+#ifndef CPPCOMMON_THREADS_NAMED_CONDITION_VARIABLE_H
+#define CPPCOMMON_THREADS_NAMED_CONDITION_VARIABLE_H
 
-#include "threads/critical_section.h"
+#include "time/timestamp.h"
+
+#include <memory>
+#include <string>
 
 namespace CppCommon {
 
-//! Condition variable synchronization primitive
+//! Named condition variable synchronization primitive
 /*!
-    Condition variable is a synchronization primitive that enable threads to wait
-    until a particular condition occurs. Condition variables are user-mode objects
-    that cannot be shared across processes.
-
-    Condition variables enable threads to atomically release a lock and enter the
-    sleeping state. They can be used with critical sections. Condition variables
-    support operations that "notify one" or "notify all" waiting threads. After
-    a thread is woken, it re-acquires the lock it released when the thread entered
-    the sleeping state.
+    Named condition variable behaves as a simple condition variable but could be shared
+    between processes on the same machine.
 
     Thread-safe.
-
-    https://en.wikipedia.org/wiki/Monitor_(synchronization)
 */
-class ConditionVariable
+class NamedConditionVariable
 {
 public:
-    ConditionVariable();
-    ConditionVariable(const ConditionVariable&) = delete;
-    ConditionVariable(ConditionVariable&& cv) noexcept;
-    ~ConditionVariable();
+    //! Default class constructor
+    /*!
+        \param name - Condition variable name
+    */
+    explicit NamedConditionVariable(const std::string& name);
+    NamedConditionVariable(const NamedConditionVariable&) = delete;
+    NamedConditionVariable(NamedConditionVariable&& cv) noexcept;
+    ~NamedConditionVariable();
 
-    ConditionVariable& operator=(const ConditionVariable&) = delete;
-    ConditionVariable& operator=(ConditionVariable&& cv) noexcept;
+    NamedConditionVariable& operator=(const NamedConditionVariable&) = delete;
+    NamedConditionVariable& operator=(NamedConditionVariable&& cv) noexcept;
+
+    //! Get the condition variable name
+    const std::string& name() const;
 
     //! Notify one of waiting thread about event occurred
     /*!
@@ -60,14 +61,11 @@ public:
 
     //! Wait until condition variable is notified
     /*!
-        The execution of the current thread (which shall have locked critical
-        section) is blocked until notified.
+        The execution of the current thread is blocked until notified.
 
         Will block.
-
-        \param cs - Critical section (must be locked)
     */
-    void Wait(CriticalSection& cs);
+    void Wait();
     //! Wait until condition variable is notified using the given predicate
     /*!
         This method is equivalent to:
@@ -77,84 +75,78 @@ public:
 
         Will block.
 
-        \param cs - Critical section (must be locked)
         \param predicate - Predicate to check
     */
     template <typename TPredicate>
-    void Wait(CriticalSection& cs, TPredicate predicate);
+    void Wait(TPredicate predicate);
 
     //! Try to wait for the given timespan until condition variable is notified
     /*!
-        The execution of the current thread (which shall have locked critical
-        section) is blocked during timespan, or until notified (if the latter
-        happens first).
+        The execution of the current thread is blocked during timespan, or until
+        notified (if the latter happens first).
 
         Will block for the given timespan in the worst case.
 
-        \param cs - Critical section (must be locked)
         \param timespan - Timespan to wait for the condition variable notification
         \return 'true' if the condition variable was successfully notified, 'false' if the timeout was occurred
     */
-    bool TryWaitFor(CriticalSection& cs, const Timespan& timespan);
+    bool TryWaitFor(const Timespan& timespan);
     //! Try to wait for the given timespan until condition variable is notified using the given predicate
     /*!
         This method is equivalent to:
         \code{.cpp}
         Timestamp timeout = UtcTimestamp() + timespan;
         while (!predicate())
-            if (!TryWaitFor(cs, timeout - UtcTimestamp()))
+            if (!TryWaitFor(timeout - UtcTimestamp()))
                 return predicate();
         return true;
         \endcode
 
         Will block for the given timespan in the worst case.
 
-        \param cs - Critical section (must be locked)
         \param timespan - Timespan to wait for the condition variable notification
         \return 'true' if the condition variable was successfully notified, 'false' if the timeout was occurred
     */
     template <typename TPredicate>
-    bool TryWaitFor(CriticalSection& cs, const Timespan& timespan, TPredicate predicate);
+    bool TryWaitFor(const Timespan& timespan, TPredicate predicate);
 
     //! Try to wait until the given timestamp until condition variable is notified
     /*!
-        The execution of the current thread (which shall have locked critical section)
-        is blocked either until notified or until timestamp, whichever happens first.
+        The execution of the current thread is blocked either until notified or until
+        timestamp, whichever happens first.
 
         Will block until the given timestamp in the worst case.
 
-        \param cs - Critical section (must be locked)
         \param timestamp - Timestamp to stop wait for the condition variable notification
         \return 'true' if the condition variable was successfully notified, 'false' if the timeout was occurred
     */
-    bool TryWaitUntil(CriticalSection& cs, const UtcTimestamp& timestamp)
-    { return TryWaitFor(cs, timestamp - UtcTimestamp()); }
+    bool TryWaitUntil(const UtcTimestamp& timestamp)
+    { return TryWaitFor(timestamp - UtcTimestamp()); }
     //! Try to wait until the given timestamp until condition variable is notified using the given predicate
     /*!
         This method is equivalent to:
         \code{.cpp}
-        return TryWaitFor(cs, timestamp - UtcTimestamp(), predicate);
+        return TryWaitFor(timestamp - UtcTimestamp(), predicate);
         \endcode
 
         Will block until the given timestamp in the worst case.
 
-        \param cs - Critical section (must be locked)
         \param timestamp - Timestamp to stop wait for the condition variable notification
         \return 'true' if the condition variable was successfully notified, 'false' if the timeout was occurred
     */
     template <typename TPredicate>
-    bool TryWaitUntil(CriticalSection& cs, const UtcTimestamp& timestamp, TPredicate predicate)
-    { return TryWaitFor(cs, timestamp - UtcTimestamp(), predicate); }
+    bool TryWaitUntil(const UtcTimestamp& timestamp, TPredicate predicate)
+    { return TryWaitFor(timestamp - UtcTimestamp(), predicate); }
 
 private:
     class Impl;
     std::unique_ptr<Impl> _pimpl;
 };
 
-/*! \example threads_condition_variable.cpp Condition variable synchronization primitive example */
+/*! \example threads_named_condition_variable.cpp Named condition variable synchronization primitive example */
 
 } // namespace CppCommon
 
-#include "condition_variable.inl"
+#include "named_condition_variable.inl"
 
-#endif // CPPCOMMON_THREADS_CONDITION_VARIABLE_H
+#endif // CPPCOMMON_THREADS_NAMED_CONDITION_VARIABLE_H

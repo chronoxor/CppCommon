@@ -82,7 +82,7 @@ TEST_CASE("Condition variable notify all", "[CppCommon][Threads]")
     cv1.Wait(cs, [&result, concurrency]() { return (result == concurrency); });
     cs.Unlock();
 
-    // Send all-threads notifications
+    // Send all-threads notification
     cs.Lock();
     cv2.NotifyAll();
     cs.Unlock();

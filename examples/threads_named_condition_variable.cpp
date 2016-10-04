@@ -1,14 +1,15 @@
 /*!
-    \file threads_condition_variable.cpp
-    \brief Condition variable synchronization primitive example
+    \file threads_named_condition_variable.cpp
+    \brief Named condition variable synchronization primitive example
     \author Ivan Shynkarenka
-    \date 03.10.2016
+    \date 04.10.2016
     \copyright MIT License
 */
 
-#include "threads/condition_variable.h"
+#include "threads/named_condition_variable.h"
 #include "threads/thread.h"
 
+#include <atomic>
 #include <iostream>
 #include <thread>
 #include <vector>
@@ -21,18 +22,20 @@ int main(int argc, char** argv)
     std::cout << help << std::endl;
 
     int concurrency = 8;
-    bool finish = false;
+    std::atomic<bool> finish = false;
 
-    // Condition variable sample
-    CppCommon::CriticalSection cs;
-    CppCommon::ConditionVariable cv;
+    // Named condition variable master
+    CppCommon::NamedConditionVariable cv_master("named_condition_variable_example");
 
     // Start some threads
     std::vector<std::thread> threads;
     for (int thread = 0; thread < concurrency; ++thread)
     {
-        threads.push_back(std::thread([&cs, &cv, &finish, thread]()
+        threads.push_back(std::thread([&finish, thread]()
         {
+            // Named condition variable slave
+            CppCommon::NamedConditionVariable cv_slave("named_condition_variable_example");
+
             std::cout << "Thread " << thread << " initialized!" << std::endl;
 
             // Sleep for a while...
@@ -40,20 +43,14 @@ int main(int argc, char** argv)
 
             std::cout << "Thread " << thread << " waiting for the notification!" << std::endl;
 
-            // Lock the critical section
-            cs.Lock();
-
-            // Safe check for the finish flag under the lock
+            // Safe atomic check for the finish flag
             while (!finish)
             {
                 // Wait for the notification
-                cv.Wait(cs);
+                cv_slave.Wait();
 
                 std::cout << "Thread " << thread << " notified!" << std::endl;
             }
-
-            // Unlock the critical section
-            cs.Unlock();
 
             std::cout << "Thread " << thread << " finished!" << std::endl;
         }));
@@ -63,13 +60,10 @@ int main(int argc, char** argv)
     std::string line;
     while (!finish && getline(std::cin, line))
     {
-        // Lock the critical section
-        cs.Lock();
-
         if (line == "+")
         {
             std::cout << "Notify one thread!" << std::endl;
-            cv.NotifyOne();
+            cv_master.NotifyOne();
         }
         else if (line == "*")
         {
@@ -77,13 +71,10 @@ int main(int argc, char** argv)
             finish = true;
 
             std::cout << "Notify all threads!" << std::endl;
-            cv.NotifyAll();
+            cv_master.NotifyAll();
         }
         else
             std::cout << help << std::endl;
-
-        // Unlock the critical section
-        cs.Unlock();
     }
 
     // Wait for all threads
