@@ -105,6 +105,7 @@ public:
         Will block for the given timespan in the worst case.
 
         \param timespan - Timespan to wait for the condition variable notification
+        \param predicate - Predicate to check
         \return 'true' if the condition variable was successfully notified, 'false' if the timeout was occurred
     */
     template <typename TPredicate>
@@ -132,6 +133,7 @@ public:
         Will block until the given timestamp in the worst case.
 
         \param timestamp - Timestamp to stop wait for the condition variable notification
+        \param predicate - Predicate to check
         \return 'true' if the condition variable was successfully notified, 'false' if the timeout was occurred
     */
     template <typename TPredicate>

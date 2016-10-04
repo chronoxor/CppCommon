@@ -111,6 +111,7 @@ public:
 
         \param cs - Critical section (must be locked)
         \param timespan - Timespan to wait for the condition variable notification
+        \param predicate - Predicate to check
         \return 'true' if the condition variable was successfully notified, 'false' if the timeout was occurred
     */
     template <typename TPredicate>
@@ -140,6 +141,7 @@ public:
 
         \param cs - Critical section (must be locked)
         \param timestamp - Timestamp to stop wait for the condition variable notification
+        \param predicate - Predicate to check
         \return 'true' if the condition variable was successfully notified, 'false' if the timeout was occurred
     */
     template <typename TPredicate>
