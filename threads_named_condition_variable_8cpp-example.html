@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>CppCommon: threads_condition_variable.cpp</title>
+<title>CppCommon: threads_named_condition_variable.cpp</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -78,14 +78,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div class="header">
   <div class="headertitle">
-<div class="title">threads_condition_variable.cpp</div>  </div>
+<div class="title">threads_named_condition_variable.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<p>Condition variable synchronization primitive example</p>
+<p>Named condition variable synchronization primitive example</p>
 <div class="fragment"><div class="line"></div>
-<div class="line"><span class="preprocessor">#include &quot;<a class="code" href="condition__variable_8h.html">threads/condition_variable.h</a>&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;<a class="code" href="named__condition__variable_8h.html">threads/named_condition_variable.h</a>&quot;</span></div>
 <div class="line"><span class="preprocessor">#include &quot;<a class="code" href="thread_8h.html">threads/thread.h</a>&quot;</span></div>
 <div class="line"></div>
+<div class="line"><span class="preprocessor">#include &lt;atomic&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;thread&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
@@ -98,39 +99,35 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">    std::cout &lt;&lt; help &lt;&lt; std::endl;</div>
 <div class="line"></div>
 <div class="line">    <span class="keywordtype">int</span> concurrency = 8;</div>
-<div class="line">    <span class="keywordtype">bool</span> finish = <span class="keyword">false</span>;</div>
+<div class="line">    std::atomic&lt;bool&gt; finish = <span class="keyword">false</span>;</div>
 <div class="line"></div>
-<div class="line">    <span class="comment">// Condition variable sample</span></div>
-<div class="line">    <a name="_a0"></a><a class="code" href="class_cpp_common_1_1_critical_section.html">CppCommon::CriticalSection</a> cs;</div>
-<div class="line">    <a name="_a1"></a><a class="code" href="class_cpp_common_1_1_condition_variable.html">CppCommon::ConditionVariable</a> cv;</div>
+<div class="line">    <span class="comment">// Named condition variable master</span></div>
+<div class="line">    <a name="_a0"></a><a class="code" href="class_cpp_common_1_1_named_condition_variable.html">CppCommon::NamedConditionVariable</a> cv_master(<span class="stringliteral">&quot;named_condition_variable_example&quot;</span>);</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">// Start some threads</span></div>
 <div class="line">    std::vector&lt;std::thread&gt; threads;</div>
 <div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> thread = 0; thread &lt; concurrency; ++thread)</div>
 <div class="line">    {</div>
-<div class="line">        threads.push_back(std::thread([&amp;cs, &amp;cv, &amp;finish, thread]()</div>
+<div class="line">        threads.push_back(std::thread([&amp;finish, thread]()</div>
 <div class="line">        {</div>
+<div class="line">            <span class="comment">// Named condition variable slave</span></div>
+<div class="line">            <a class="code" href="class_cpp_common_1_1_named_condition_variable.html">CppCommon::NamedConditionVariable</a> cv_slave(<span class="stringliteral">&quot;named_condition_variable_example&quot;</span>);</div>
+<div class="line"></div>
 <div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;Thread &quot;</span> &lt;&lt; thread &lt;&lt; <span class="stringliteral">&quot; initialized!&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line"></div>
 <div class="line">            <span class="comment">// Sleep for a while...</span></div>
-<div class="line">            <a name="a2"></a><a class="code" href="class_cpp_common_1_1_thread.html#a5eb92ba966bf088ee5d3609ed06c1296">CppCommon::Thread::SleepFor</a>(<a name="a3"></a><a class="code" href="class_cpp_common_1_1_timespan.html#a98db92c00187d33f0233bc41b7f32328">CppCommon::Timespan::milliseconds</a>(thread * 10));</div>
+<div class="line">            <a name="a1"></a><a class="code" href="class_cpp_common_1_1_thread.html#a5eb92ba966bf088ee5d3609ed06c1296">CppCommon::Thread::SleepFor</a>(<a name="a2"></a><a class="code" href="class_cpp_common_1_1_timespan.html#a98db92c00187d33f0233bc41b7f32328">CppCommon::Timespan::milliseconds</a>(thread * 10));</div>
 <div class="line"></div>
 <div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;Thread &quot;</span> &lt;&lt; thread &lt;&lt; <span class="stringliteral">&quot; waiting for the notification!&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line"></div>
-<div class="line">            <span class="comment">// Lock the critical section</span></div>
-<div class="line">            cs.<a name="a4"></a><a class="code" href="class_cpp_common_1_1_critical_section.html#a4a9da5acc36d7468599c8b49f90ff337">Lock</a>();</div>
-<div class="line"></div>
-<div class="line">            <span class="comment">// Safe check for the finish flag under the lock</span></div>
+<div class="line">            <span class="comment">// Safe atomic check for the finish flag</span></div>
 <div class="line">            <span class="keywordflow">while</span> (!finish)</div>
 <div class="line">            {</div>
 <div class="line">                <span class="comment">// Wait for the notification</span></div>
-<div class="line">                cv.<a name="a5"></a><a class="code" href="class_cpp_common_1_1_condition_variable.html#aa5ed2dd966182f14109813b144593486">Wait</a>(cs);</div>
+<div class="line">                cv_slave.<a name="a3"></a><a class="code" href="class_cpp_common_1_1_named_condition_variable.html#a88563d09345460052e9b7823d13f1fa0">Wait</a>();</div>
 <div class="line"></div>
 <div class="line">                std::cout &lt;&lt; <span class="stringliteral">&quot;Thread &quot;</span> &lt;&lt; thread &lt;&lt; <span class="stringliteral">&quot; notified!&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line">            }</div>
-<div class="line"></div>
-<div class="line">            <span class="comment">// Unlock the critical section</span></div>
-<div class="line">            cs.<a name="a6"></a><a class="code" href="class_cpp_common_1_1_critical_section.html#acc50c37d18dfeca50c9c7dc49638077f">Unlock</a>();</div>
 <div class="line"></div>
 <div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;Thread &quot;</span> &lt;&lt; thread &lt;&lt; <span class="stringliteral">&quot; finished!&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line">        }));</div>
@@ -140,13 +137,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">    std::string line;</div>
 <div class="line">    <span class="keywordflow">while</span> (!finish &amp;&amp; getline(std::cin, line))</div>
 <div class="line">    {</div>
-<div class="line">        <span class="comment">// Lock the critical section</span></div>
-<div class="line">        cs.<a class="code" href="class_cpp_common_1_1_critical_section.html#a4a9da5acc36d7468599c8b49f90ff337">Lock</a>();</div>
-<div class="line"></div>
 <div class="line">        <span class="keywordflow">if</span> (line == <span class="stringliteral">&quot;+&quot;</span>)</div>
 <div class="line">        {</div>
 <div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;Notify one thread!&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line">            cv.<a name="a7"></a><a class="code" href="class_cpp_common_1_1_condition_variable.html#aaabdb592862244d895ac52a8a81057a0">NotifyOne</a>();</div>
+<div class="line">            cv_master.<a name="a4"></a><a class="code" href="class_cpp_common_1_1_named_condition_variable.html#a0dfde759fbbbd13e0572fb31f27d0a50">NotifyOne</a>();</div>
 <div class="line">        }</div>
 <div class="line">        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (line == <span class="stringliteral">&quot;*&quot;</span>)</div>
 <div class="line">        {</div>
@@ -154,13 +148,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">            finish = <span class="keyword">true</span>;</div>
 <div class="line"></div>
 <div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;Notify all threads!&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line">            cv.<a name="a8"></a><a class="code" href="class_cpp_common_1_1_condition_variable.html#ad41b2c3ef5e2f7da52dfae108916de48">NotifyAll</a>();</div>
+<div class="line">            cv_master.<a name="a5"></a><a class="code" href="class_cpp_common_1_1_named_condition_variable.html#a3f07726b74c0a28fff6a9db2aaf85629">NotifyAll</a>();</div>
 <div class="line">        }</div>
 <div class="line">        <span class="keywordflow">else</span></div>
 <div class="line">            std::cout &lt;&lt; help &lt;&lt; std::endl;</div>
-<div class="line"></div>
-<div class="line">        <span class="comment">// Unlock the critical section</span></div>
-<div class="line">        cs.<a class="code" href="class_cpp_common_1_1_critical_section.html#acc50c37d18dfeca50c9c7dc49638077f">Unlock</a>();</div>
 <div class="line">    }</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">// Wait for all threads</span></div>

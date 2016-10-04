@@ -26,6 +26,7 @@ var searchData=
   ['_7empscringbuffer',['~MPSCRingBuffer',['../class_cpp_common_1_1_m_p_s_c_ring_buffer.html#a82e8ccf5345ceebef1c38d7b9bf1bc1e',1,'CppCommon::MPSCRingBuffer']]],
   ['_7empscringqueue',['~MPSCRingQueue',['../class_cpp_common_1_1_m_p_s_c_ring_queue.html#aeb9c342aa8574570573463569dbc0f6a',1,'CppCommon::MPSCRingQueue']]],
   ['_7emutex',['~Mutex',['../class_cpp_common_1_1_mutex.html#a153dcda160e137c70b1acf260a405cb8',1,'CppCommon::Mutex']]],
+  ['_7enamedconditionvariable',['~NamedConditionVariable',['../class_cpp_common_1_1_named_condition_variable.html#a25edf026cc2cf2935fc924a35de1c1d3',1,'CppCommon::NamedConditionVariable']]],
   ['_7enamedcriticalsection',['~NamedCriticalSection',['../class_cpp_common_1_1_named_critical_section.html#a0ab87007f7b619e8f56b28581a6f93d1',1,'CppCommon::NamedCriticalSection']]],
   ['_7enamedeventautoreset',['~NamedEventAutoReset',['../class_cpp_common_1_1_named_event_auto_reset.html#ac5bbd9e1c232f22cc8ec5bc97eea64f2',1,'CppCommon::NamedEventAutoReset']]],
   ['_7enamedeventmanualreset',['~NamedEventManualReset',['../class_cpp_common_1_1_named_event_manual_reset.html#a44fca2952d963fc47905db518400d8de',1,'CppCommon::NamedEventManualReset']]],

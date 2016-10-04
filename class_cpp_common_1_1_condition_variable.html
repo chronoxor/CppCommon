@@ -516,7 +516,7 @@ template&lt;typename TPredicate &gt; </div>
 
 <p>Try to wait until the given timestamp until condition variable is notified using the given predicate. </p>
 <p>This method is equivalent to: </p>
-<div class="fragment"><div class="line"><span class="keywordflow">return</span> <a class="code" href="class_cpp_common_1_1_condition_variable.html#a9d75e9fb38384223061d3b8c87b0d424">TryWaitFor</a>(timestamp - UtcTimestamp(), predicate);</div>
+<div class="fragment"><div class="line"><span class="keywordflow">return</span> <a class="code" href="class_cpp_common_1_1_condition_variable.html#a9d75e9fb38384223061d3b8c87b0d424">TryWaitFor</a>(cs, timestamp - UtcTimestamp(), predicate);</div>
 </div><!-- fragment --><p>Will block until the given timestamp in the worst case.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
