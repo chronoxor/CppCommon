@@ -42,6 +42,8 @@ public:
     /*!
         The item will be copied into the linked batcher.
 
+        Will not block.
+
         \param item - Item to enqueue
         \return 'true' if the item was successfully enqueue, 'false' if there is no enough memory for the batcher node
     */
@@ -49,6 +51,8 @@ public:
     //! Enqueue an item into the linked batcher (multiple producers threads method)
     /*!
         The item will be moved into the linked batcher.
+
+        Will not block.
 
         \param item - Item to enqueue
         \return 'true' if the item was successfully enqueue, 'false' if there is no enough memory for the batcher node
@@ -58,6 +62,8 @@ public:
     //! Dequeue all items from the linked queue (single consumer thread method)
     /*!
         All items in the batcher will be processed by the given handler.
+
+        Will not block.
 
         \param handler - Batch handler
         \return 'true' if all items were successfully handled, 'false' if the linked batcher is empty

@@ -41,6 +41,8 @@ public:
     /*!
         The item will be copied into the linked queue.
 
+        Will not block.
+
         \param item - Item to enqueue
         \return 'true' if the item was successfully enqueue, 'false' if there is no enough memory for the queue node
     */
@@ -48,6 +50,8 @@ public:
     //! Enqueue an item into the linked queue (multiple producers threads method)
     /*!
         The item will be moved into the linked queue.
+
+        Will not block.
 
         \param item - Item to enqueue
         \return 'true' if the item was successfully enqueue, 'false' if there is no enough memory for the queue node
@@ -57,6 +61,8 @@ public:
     //! Dequeue an item from the linked queue (single consumer thread method)
     /*!
         The item will be moved from the linked queue.
+
+        Will not block.
 
         \param item - Item to dequeue
         \return 'true' if the item was successfully dequeue, 'false' if the linked queue is empty

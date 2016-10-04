@@ -42,6 +42,8 @@ public:
     MPMCRingQueue& operator=(const MPMCRingQueue&) = delete;
     MPMCRingQueue& operator=(MPMCRingQueue&&) noexcept = default;
 
+    //! Is ring queue empty?
+    bool empty() const noexcept { return (size() == 0); }
     //! Get ring queue capacity
     size_t capacity() const noexcept { return _capacity; }
     //! Get ring queue size
@@ -51,6 +53,8 @@ public:
     /*!
         The item will be copied into the ring queue.
 
+        Will not block.
+
         \param item - Item to enqueue
         \return 'true' if the item was successfully enqueue, 'false' if the ring queue is full
     */
@@ -58,6 +62,8 @@ public:
     //! Enqueue an item into the ring queue (multiple producers threads method)
     /*!
         The item will be moved into the ring queue.
+
+        Will not block.
 
         \param item - Item to enqueue
         \return 'true' if the item was successfully enqueue, 'false' if the ring queue is full
@@ -67,6 +73,8 @@ public:
     //! Dequeue an item from the ring queue (multiple consumers threads method)
     /*!
         The item will be moved from the ring queue.
+
+        Will not block.
 
         \param item - Item to dequeue
         \return 'true' if the item was successfully dequeue, 'false' if the ring queue is empty

@@ -42,6 +42,8 @@ public:
     SPSCRingBuffer& operator=(const SPSCRingBuffer&) = delete;
     SPSCRingBuffer& operator=(SPSCRingBuffer&&) noexcept = default;
 
+    //! Is ring buffer empty?
+    bool empty() const noexcept { return (size() == 0); }
     //! Get ring buffer capacity in bytes
     size_t capacity() const noexcept { return _capacity; }
     //! Get ring buffer size in bytes
@@ -52,6 +54,8 @@ public:
         The chunk of bytes will be copied into the ring buffer using 'memcpy()' function.
         Chunk size should not be greater than ring buffer capacity!
 
+        Will not block.
+
         \param chunk - Chunk buffer to enqueue
         \param size - Chunk buffer size
         \return 'true' if the chunk of bytes was successfully enqueue, 'false' if the ring buffer is full
@@ -61,6 +65,8 @@ public:
     //! Dequeue a chunk of bytes from the ring buffer (single consumer thread method)
     /*!
         The chunk of bytes will be copied from the ring buffer using 'memcpy()' function.
+
+        Will not block.
 
         \param chunk - Chunk buffer to dequeue
         \param size - Chunk buffer size
