@@ -4,6 +4,7 @@
 
 #include "catch.hpp"
 
+#include "threads/condition_variable.h"
 #include "threads/named_condition_variable.h"
 
 #include <atomic>
@@ -14,34 +15,39 @@ using namespace CppCommon;
 TEST_CASE("Named condition variable notify one", "[CppCommon][Threads]")
 {
     int concurrency = 8;
-    std::atomic<int> result(0);
+    int result = 0;
 
-    // Named condition variable masters
-    NamedConditionVariable cv1_master("named_condition_variable_test1");
-    NamedConditionVariable cv2_master("named_condition_variable_test2");
+    CriticalSection cs;
+    ConditionVariable cv;
+
+    // Named condition variable master
+    NamedConditionVariable cv_master("named_condition_variable_test");
 
     // Start threads
     std::vector<std::thread> threads;
     for (int thread = 0; thread < concurrency; ++thread)
     {
-        threads.push_back(std::thread([&result]()
+        threads.push_back(std::thread([&cs, &cv, &result]()
         {
-            // Named condition variable slaves
-            NamedConditionVariable cv1_slave("named_condition_variable_test1");
-            NamedConditionVariable cv2_slave("named_condition_variable_test2");
+            // Named condition variable slave
+            NamedConditionVariable cv_slave("named_condition_variable_test");
 
+            cs.Lock();
             ++result;
-            cv1_slave.NotifyOne();
-            cv2_slave.Wait();
+            cv.NotifyOne();
+            cs.Unlock();
+            cv_slave.Wait();
         }));
     }
 
     // Wait for all threads are started and waiting for notifications
-    cv1_master.Wait([&result, concurrency]() { return (result == concurrency); });
+    cs.Lock();
+    cv.Wait(cs, [&result, concurrency]() { return (result == concurrency); });
+    cs.Unlock();
 
     // Send one-thread notifications
     for (int i = 0; i < concurrency; ++i)
-        cv2_master.NotifyOne();
+        cv_master.NotifyOne();
 
     // Wait for all threads
     for (auto& thread : threads)
@@ -54,33 +60,38 @@ TEST_CASE("Named condition variable notify one", "[CppCommon][Threads]")
 TEST_CASE("Named condition variable notify all", "[CppCommon][Threads]")
 {
     int concurrency = 8;
-    std::atomic<int> result(0);
+    int result = 0;
 
-    // Named condition variable masters
-    NamedConditionVariable cv1_master("named_condition_variable_test1");
-    NamedConditionVariable cv2_master("named_condition_variable_test2");
+    CriticalSection cs;
+    ConditionVariable cv;
+
+    // Named condition variable master
+    NamedConditionVariable cv_master("named_condition_variable_test");
 
     // Start threads
     std::vector<std::thread> threads;
     for (int thread = 0; thread < concurrency; ++thread)
     {
-        threads.push_back(std::thread([&result]()
+        threads.push_back(std::thread([&cs, &cv, &result]()
         {
-            // Named condition variable slaves
-            NamedConditionVariable cv1_slave("named_condition_variable_test1");
-            NamedConditionVariable cv2_slave("named_condition_variable_test2");
+            // Named condition variable slave
+            NamedConditionVariable cv_slave("named_condition_variable_test");
 
+            cs.Lock();
             ++result;
-            cv1_slave.NotifyOne();
-            cv2_slave.Wait();
+            cv.NotifyOne();
+            cs.Unlock();
+            cv_slave.Wait();
         }));
     }
 
     // Wait for all threads are started and waiting for notifications
-    cv1_master.Wait([&result, concurrency]() { return (result == concurrency); });
+    cs.Lock();
+    cv.Wait(cs, [&result, concurrency]() { return (result == concurrency); });
+    cs.Unlock();
 
     // Send all-threads notification
-    cv2_master.NotifyAll();
+    cv_master.NotifyAll();
 
     // Wait for all threads
     for (auto& thread : threads)
