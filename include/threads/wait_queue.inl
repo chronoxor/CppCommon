@@ -55,29 +55,22 @@ inline bool WaitQueue<T>::Dequeue(T& item)
 {
     Locker<CriticalSection> locker(_cs);
 
-    if (!_queue.empty())
-    {
-        item = _queue.front();
-        _queue.pop();
-        return true;
-    }
-
     if (_destroyed)
         return false;
 
-    _cv.Wait(_cs, [this]() { return (_destroyed || !_queue.empty()); });
-
-    if (!_queue.empty())
+    do
     {
-        item = _queue.front();
-        _queue.pop();
-        return true;
-    }
+        if (!_queue.empty())
+        {
+            item = _queue.front();
+            _queue.pop();
+            return true;
+        }
 
-    if (_destroyed)
-        return false;
+        _cv.Wait(_cs, [this]() { return (_destroyed || !_queue.empty()); });
 
-    // Never occurred...
+    } while (!_destroyed);
+
     return false;
 }
 

@@ -17,8 +17,9 @@ namespace CppCommon {
 
 //! Multiple producers / multiple consumers wait queue
 /*!
-    Multiple producers / multiple consumers wait queue provides a classic solution of
-    producer-consumer problem using monitors (mutex with condition variable).
+    Multiple producers / multiple consumers wait queue provides a classic solution
+    for producer-consumer problem using queue and monitor synchronization primitive
+    (mutex with condition variable).
 
     FIFO order is guaranteed!
 
@@ -75,7 +76,7 @@ public:
 
 private:
     bool _destroyed;
-    CriticalSection _cs;
+    mutable CriticalSection _cs;
     ConditionVariable _cv;
     std::queue<T> _queue;
 };

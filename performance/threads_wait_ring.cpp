@@ -4,7 +4,7 @@
 
 #include "benchmark/cppbenchmark.h"
 
-#include "threads/wait_queue.h"
+#include "threads/wait_ring.h"
 
 #include <functional>
 #include <thread>
@@ -17,23 +17,23 @@ const int producers_from = 1;
 const int producers_to = 8;
 const auto settings = CppBenchmark::Settings().ParamRange(producers_from, producers_to, [](int from, int to, int& result) { int r = result; result *= 2; return r; });
 
-template<typename T>
+template<typename T, uint64_t N>
 void produce_consume(CppBenchmark::Context& context)
 {
     const int producers_count = context.x();
     uint64_t crc = 0;
 
-    // Create multiple producers / multiple consumers wait queue
-    WaitQueue<T> queue;
+    // Create multiple producers / multiple consumers wait ring
+    WaitRing<T> ring(N);
 
     // Start consumer thread
-    auto consumer = std::thread([&queue, &crc]()
+    auto consumer = std::thread([&ring, &crc]()
     {
         for (uint64_t i = 0; i < items_to_produce; ++i)
         {
             // Dequeue the item or end consume
             T item;
-            if (!queue.Dequeue(item))
+            if (!ring.Dequeue(item))
                 break;
 
             // Consume the item
@@ -45,13 +45,13 @@ void produce_consume(CppBenchmark::Context& context)
     std::vector<std::thread> producers;
     for (int producer = 0; producer < producers_count; ++producer)
     {
-        producers.push_back(std::thread([&queue, producer, producers_count]()
+        producers.push_back(std::thread([&ring, producer, producers_count]()
         {
             uint64_t items = (items_to_produce / producers_count);
             for (uint64_t i = 0; i < items; ++i)
             {
                 // Enqueue the item or end produce
-                if (!queue.Enqueue((T)(items * producer + i)))
+                if (!ring.Enqueue((T)(items * producer + i)))
                     break;
             }
         }));
@@ -68,12 +68,13 @@ void produce_consume(CppBenchmark::Context& context)
     context.metrics().AddIterations(items_to_produce - 1);
     context.metrics().AddItems(items_to_produce);
     context.metrics().AddBytes(items_to_produce * sizeof(T));
+    context.metrics().SetCustom("WaitRing.capacity", N);
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK("WaitQueue-producers", settings)
+BENCHMARK("WaitRing-producers", settings)
 {
-    produce_consume<int>(context);
+    produce_consume<int, 1048576>(context);
 }
 
 BENCHMARK_MAIN()
