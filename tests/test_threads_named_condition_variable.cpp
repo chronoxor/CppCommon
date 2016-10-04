@@ -14,7 +14,7 @@ using namespace CppCommon;
 TEST_CASE("Named condition variable notify one", "[CppCommon][Threads]")
 {
     int concurrency = 8;
-    std::atomic<int> result = 0;
+    std::atomic<int> result(0);
 
     // Named condition variable masters
     NamedConditionVariable cv1_master("named_condition_variable_test1");
@@ -54,7 +54,7 @@ TEST_CASE("Named condition variable notify one", "[CppCommon][Threads]")
 TEST_CASE("Named condition variable notify all", "[CppCommon][Threads]")
 {
     int concurrency = 8;
-    std::atomic<int> result = 0;
+    std::atomic<int> result(0);
 
     // Named condition variable masters
     NamedConditionVariable cv1_master("named_condition_variable_test1");

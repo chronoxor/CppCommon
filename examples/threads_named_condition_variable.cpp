@@ -22,7 +22,7 @@ int main(int argc, char** argv)
     std::cout << help << std::endl;
 
     int concurrency = 8;
-    std::atomic<bool> finish = false;
+    std::atomic<bool> finish(false);
 
     // Named condition variable master
     CppCommon::NamedConditionVariable cv_master("named_condition_variable_example");
