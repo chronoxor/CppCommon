@@ -20,6 +20,7 @@
 #include <iostream>
 
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#include "string/format.h"
 #include "utility/countof.h"
 #include <signal.h>
 #include <unistd.h>
