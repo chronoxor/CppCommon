@@ -26,7 +26,7 @@ namespace CppCommon {
     int test()
     {
         // Create a file resource
-        auto file = resource(fopen("test", "rb"), [](FILE* file) { fclose(file); });
+        auto file = CppCommon::resource(fopen("test", "rb"), [](FILE* file) { fclose(file); });
 
         // Work with the file resource
         int result = fgetc(file.get());
