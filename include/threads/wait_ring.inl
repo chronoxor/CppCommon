@@ -71,7 +71,7 @@ inline bool WaitRing<T>::Dequeue(T& item)
 {
     Locker<CriticalSection> locker(_cs);
 
-    if (_closed)
+    if (_closed && (((_head - _tail) & _mask) == 0))
         return false;
 
     do
@@ -85,7 +85,7 @@ inline bool WaitRing<T>::Dequeue(T& item)
 
         _cv1.Wait(_cs, [this]() { return (_closed || (((_head - _tail) & _mask) != 0)); });
 
-    } while (!_closed);
+    } while (!_closed || (((_head - _tail) & _mask) != 0));
 
     return false;
 }

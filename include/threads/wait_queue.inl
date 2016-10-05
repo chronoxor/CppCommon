@@ -60,7 +60,7 @@ inline bool WaitQueue<T>::Dequeue(T& item)
 {
     Locker<CriticalSection> locker(_cs);
 
-    if (_closed)
+    if (_closed && _queue.empty())
         return false;
 
     do
@@ -74,7 +74,7 @@ inline bool WaitQueue<T>::Dequeue(T& item)
 
         _cv.Wait(_cs, [this]() { return (_closed || !_queue.empty()); });
 
-    } while (!_closed);
+    } while (!_closed || !_queue.empty());
 
     return false;
 }
