@@ -37,6 +37,9 @@ public:
     WaitQueue& operator=(const WaitQueue&) = delete;
     WaitQueue& operator=(WaitQueue&&) noexcept = default;
 
+    //! Is queue closed?
+    bool closed() const;
+
     //! Is queue empty?
     bool empty() const { return (size() == 0); }
     //! Get queue size
@@ -49,7 +52,7 @@ public:
         Will block.
 
         \param item - Item to enqueue
-        \return 'true' if the item was successfully enqueue, 'false' if the wait queue is destroyed
+        \return 'true' if the item was successfully enqueue, 'false' if the wait queue is closed
     */
     bool Enqueue(const T& item);
     //! Enqueue an item into the wait queue
@@ -59,7 +62,7 @@ public:
         Will block.
 
         \param item - Item to enqueue
-        \return 'true' if the item was successfully enqueue, 'false' if the wait queue is destroyed
+        \return 'true' if the item was successfully enqueue, 'false' if the wait queue is closed
     */
     bool Enqueue(T&& item);
 
@@ -70,12 +73,18 @@ public:
         Will block.
 
         \param item - Item to dequeue
-        \return 'true' if the item was successfully dequeue, 'false' if the wait queue is destroyed
+        \return 'true' if the item was successfully dequeue, 'false' if the wait queue is closed
     */
     bool Dequeue(T& item);
 
+    //! Close the wait queue
+    /*!
+        Will block.
+    */
+    void Close();
+
 private:
-    bool _destroyed;
+    bool _closed;
     mutable CriticalSection _cs;
     ConditionVariable _cv;
     std::queue<T> _queue;

@@ -9,7 +9,7 @@
 namespace CppCommon {
 
 template<typename T>
-inline WaitRing<T>::WaitRing(size_t capacity) : _destroyed(false), _capacity(capacity - 1), _mask(capacity - 1), _head(0), _tail(0), _ring(capacity)
+inline WaitRing<T>::WaitRing(size_t capacity) : _closed(false), _capacity(capacity - 1), _mask(capacity - 1), _head(0), _tail(0), _ring(capacity)
 {
     assert((capacity > 1) && "Ring capacity must be greater than one!");
     assert(((capacity & (capacity - 1)) == 0) && "Ring capacity must be a power of two!");
@@ -18,10 +18,14 @@ inline WaitRing<T>::WaitRing(size_t capacity) : _destroyed(false), _capacity(cap
 template<typename T>
 inline WaitRing<T>::~WaitRing()
 {
+    Close();
+}
+
+template<typename T>
+inline bool WaitRing<T>::closed() const
+{
     Locker<CriticalSection> locker(_cs);
-    _destroyed = true;
-    _cv1.NotifyAll();
-    _cv2.NotifyAll();
+    return _closed;
 }
 
 template<typename T>
@@ -43,7 +47,7 @@ inline bool WaitRing<T>::Enqueue(T&& item)
 {
     Locker<CriticalSection> locker(_cs);
 
-    if (_destroyed)
+    if (_closed)
         return false;
 
     do
@@ -55,9 +59,9 @@ inline bool WaitRing<T>::Enqueue(T&& item)
             return true;
         }
 
-        _cv2.Wait(_cs, [this]() { return (_destroyed || (((_head - _tail + 1) & _mask) != 0)); });
+        _cv2.Wait(_cs, [this]() { return (_closed || (((_head - _tail + 1) & _mask) != 0)); });
 
-    } while (!_destroyed);
+    } while (!_closed);
 
     return false;
 }
@@ -67,7 +71,7 @@ inline bool WaitRing<T>::Dequeue(T& item)
 {
     Locker<CriticalSection> locker(_cs);
 
-    if (_destroyed)
+    if (_closed)
         return false;
 
     do
@@ -79,11 +83,20 @@ inline bool WaitRing<T>::Dequeue(T& item)
             return true;
         }
 
-        _cv1.Wait(_cs, [this]() { return (_destroyed || (((_head - _tail) & _mask) != 0)); });
+        _cv1.Wait(_cs, [this]() { return (_closed || (((_head - _tail) & _mask) != 0)); });
 
-    } while (!_destroyed);
+    } while (!_closed);
 
     return false;
+}
+
+template<typename T>
+inline void WaitRing<T>::Close()
+{
+    Locker<CriticalSection> locker(_cs);
+    _closed = true;
+    _cv1.NotifyAll();
+    _cv2.NotifyAll();
 }
 
 } // namespace CppCommon

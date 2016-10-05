@@ -14,6 +14,7 @@ TEST_CASE("Multiple producers / multiple consumers wait queue", "[CppCommon][Thr
 {
     WaitQueue<int> queue;
 
+    REQUIRE(!queue.closed());
     REQUIRE(queue.size() == 0);
 
     int v = -1;
@@ -36,6 +37,9 @@ TEST_CASE("Multiple producers / multiple consumers wait queue", "[CppCommon][Thr
 
     REQUIRE(((queue.Dequeue(v) && (v == 5)) && (queue.size() == 0)));
 
+    queue.Close();
+
+    REQUIRE(queue.closed());
     REQUIRE(queue.size() == 0);
 }
 

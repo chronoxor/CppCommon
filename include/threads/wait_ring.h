@@ -42,6 +42,9 @@ public:
     WaitRing& operator=(const WaitRing&) = delete;
     WaitRing& operator=(WaitRing&&) noexcept = default;
 
+    //! Is ring closed?
+    bool closed() const;
+
     //! Is ring empty?
     bool empty() const { return (size() == 0); }
     //! Get ring capacity
@@ -56,7 +59,7 @@ public:
         Will block.
 
         \param item - Item to enqueue
-        \return 'true' if the item was successfully enqueue, 'false' if the wait ring is destroyed
+        \return 'true' if the item was successfully enqueue, 'false' if the wait ring is closed
     */
     bool Enqueue(const T& item);
     //! Enqueue an item into the wait ring
@@ -66,7 +69,7 @@ public:
         Will block.
 
         \param item - Item to enqueue
-        \return 'true' if the item was successfully enqueue, 'false' if the wait ring is destroyed
+        \return 'true' if the item was successfully enqueue, 'false' if the wait ring is closed
     */
     bool Enqueue(T&& item);
 
@@ -77,12 +80,18 @@ public:
         Will block.
 
         \param item - Item to dequeue
-        \return 'true' if the item was successfully dequeue, 'false' if the wait ring is destroyed
+        \return 'true' if the item was successfully dequeue, 'false' if the wait ring is closed
     */
     bool Dequeue(T& item);
 
+    //! Close the wait ring
+    /*!
+        Will block.
+    */
+    void Close();
+
 private:
-    bool _destroyed;
+    bool _closed;
     mutable CriticalSection _cs;
     ConditionVariable _cv1;
     ConditionVariable _cv2;

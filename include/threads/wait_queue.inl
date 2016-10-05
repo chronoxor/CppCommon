@@ -9,16 +9,21 @@
 namespace CppCommon {
 
 template<typename T>
-inline WaitQueue<T>::WaitQueue() : _destroyed(false)
+inline WaitQueue<T>::WaitQueue() : _closed(false)
 {
 }
 
 template<typename T>
 inline WaitQueue<T>::~WaitQueue()
 {
+    Close();
+}
+
+template<typename T>
+inline bool WaitQueue<T>::closed() const
+{
     Locker<CriticalSection> locker(_cs);
-    _destroyed = true;
-    _cv.NotifyAll();
+    return _closed;
 }
 
 template<typename T>
@@ -32,7 +37,7 @@ template<typename T>
 inline bool WaitQueue<T>::Enqueue(const T& item)
 {
     Locker<CriticalSection> locker(_cs);
-    if (_destroyed)
+    if (_closed)
         return false;
     _queue.push(item);
     _cv.NotifyOne();
@@ -43,7 +48,7 @@ template<typename T>
 inline bool WaitQueue<T>::Enqueue(T&& item)
 {
     Locker<CriticalSection> locker(_cs);
-    if (_destroyed)
+    if (_closed)
         return false;
     _queue.emplace(item);
     _cv.NotifyOne();
@@ -55,7 +60,7 @@ inline bool WaitQueue<T>::Dequeue(T& item)
 {
     Locker<CriticalSection> locker(_cs);
 
-    if (_destroyed)
+    if (_closed)
         return false;
 
     do
@@ -67,11 +72,19 @@ inline bool WaitQueue<T>::Dequeue(T& item)
             return true;
         }
 
-        _cv.Wait(_cs, [this]() { return (_destroyed || !_queue.empty()); });
+        _cv.Wait(_cs, [this]() { return (_closed || !_queue.empty()); });
 
-    } while (!_destroyed);
+    } while (!_closed);
 
     return false;
+}
+
+template<typename T>
+inline void WaitQueue<T>::Close()
+{
+    Locker<CriticalSection> locker(_cs);
+    _closed = true;
+    _cv.NotifyAll();
 }
 
 } // namespace CppCommon

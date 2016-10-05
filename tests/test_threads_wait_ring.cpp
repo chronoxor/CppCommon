@@ -14,6 +14,7 @@ TEST_CASE("Multiple producers / multiple consumers wait ring", "[CppCommon][Thre
 {
     WaitRing<int> ring(4);
 
+    REQUIRE(!ring.closed());
     REQUIRE(ring.capacity() == 3);
     REQUIRE(ring.size() == 0);
 
@@ -37,6 +38,9 @@ TEST_CASE("Multiple producers / multiple consumers wait ring", "[CppCommon][Thre
 
     REQUIRE(((ring.Dequeue(v) && (v == 5)) && (ring.size() == 0)));
 
+    ring.Close();
+
+    REQUIRE(ring.closed());
     REQUIRE(ring.capacity() == 3);
     REQUIRE(ring.size() == 0);
 }
