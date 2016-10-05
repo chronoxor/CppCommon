@@ -1579,7 +1579,7 @@ template&lt;typename T , typename TCleaner &gt; </div>
 <div class="fragment"><div class="line"><span class="keywordtype">int</span> test()</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">// Create a file resource</span></div>
-<div class="line">    <span class="keyword">auto</span> file = <a class="code" href="namespace_cpp_common.html#a551f50579f87df9152013786f9167aa4">resource</a>(fopen(<span class="stringliteral">&quot;test&quot;</span>, <span class="stringliteral">&quot;rb&quot;</span>), [](FILE* file) { fclose(file); });</div>
+<div class="line">    <span class="keyword">auto</span> file = <a class="code" href="namespace_cpp_common.html#a551f50579f87df9152013786f9167aa4">CppCommon::resource</a>(fopen(<span class="stringliteral">&quot;test&quot;</span>, <span class="stringliteral">&quot;rb&quot;</span>), [](FILE* file) { fclose(file); });</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">// Work with the file resource</span></div>
 <div class="line">    <span class="keywordtype">int</span> result = fgetc(file.get());</div>
