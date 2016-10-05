@@ -11,8 +11,6 @@
 #include "filesystem/exceptions.h"
 #include "utility/resource.h"
 
-#include <memory>
-
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
 #include <sys/stat.h>
 #include <fcntl.h>

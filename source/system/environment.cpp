@@ -30,7 +30,6 @@ extern char **environ;
 #if defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
 #include <windows.h>
 #include <map>
-#include <memory>
 #include <vector>
 #endif
 
@@ -407,7 +406,7 @@ std::map<std::string, std::string> Environment::envars()
     }
 #elif defined(_WIN32) || defined(_WIN64)
     // Smart resource cleaner pattern
-    auto envars = resource(GetEnvironmentStringsW(), [](wchar_t* envars) { FreeEnvironmentStringsW(envars); });
+    auto envars = resource(GetEnvironmentStringsW(), [](wchar_t* penv) { FreeEnvironmentStringsW(penv); });
 
     for (const wchar_t* envar = envars.get(); *envar != L'\0'; )
     {

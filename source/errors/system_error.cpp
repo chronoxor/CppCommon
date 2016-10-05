@@ -9,9 +9,9 @@
 #include "errors/system_error.h"
 
 #include "string/encoding.h"
-#include "string/format.h"
 
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#include "string/format.h"
 #include <errno.h>
 #include <string.h>
 #elif defined(_WIN32) || defined(_WIN64)

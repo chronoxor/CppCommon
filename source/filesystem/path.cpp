@@ -12,11 +12,9 @@
 #include "filesystem/exceptions.h"
 #include "filesystem/symlink.h"
 #include "system/uuid.h"
-#include "utility/countof.h"
 #include "utility/resource.h"
 
 #include <algorithm>
-#include <memory>
 #include <regex>
 #include <stack>
 #include <tuple>

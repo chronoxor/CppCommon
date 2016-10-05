@@ -11,7 +11,6 @@
 #include "errors/exceptions.h"
 #include "filesystem/exceptions.h"
 #include "filesystem/path.h"
-#include "string/format.h"
 #include "system/stack_trace.h"
 #include "time/timestamp.h"
 #include "utility/resource.h"
@@ -29,6 +28,7 @@
 #include <signal.h>
 #include <windows.h>
 #if defined(DBGHELP_SUPPORT)
+#include "string/format.h"
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable: 4091) // C4091: 'keyword' : ignored on left of 'type' when no variable is declared

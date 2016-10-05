@@ -9,11 +9,11 @@
 #include "threads/condition_variable.h"
 
 #include "errors/exceptions.h"
-#include "errors/fatal.h"
 
 #include <algorithm>
 
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#include "errors/fatal.h"
 #include <pthread.h>
 #elif defined(_WIN32) || defined(_WIN64)
 #include <windows.h>

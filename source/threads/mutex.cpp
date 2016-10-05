@@ -10,7 +10,6 @@
 
 #include "errors/exceptions.h"
 #include "errors/fatal.h"
-#include "threads/thread.h"
 
 #include <algorithm>
 

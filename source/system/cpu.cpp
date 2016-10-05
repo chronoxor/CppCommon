@@ -17,7 +17,6 @@
 #include <regex>
 #elif defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
-#include <memory>
 #endif
 
 namespace CppCommon {

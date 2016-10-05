@@ -13,7 +13,6 @@
 #include "utility/resource.h"
 
 #include <cstring>
-#include <memory>
 #include <regex>
 
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
