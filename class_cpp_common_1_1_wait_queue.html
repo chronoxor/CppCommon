@@ -116,6 +116,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aec57f650b7ce9031796a51f477a0fcc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ade47118fa74032c01c49ed5d63a820da"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cpp_common_1_1_wait_queue.html">WaitQueue</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_wait_queue.html#ade47118fa74032c01c49ed5d63a820da">operator=</a> (<a class="el" href="class_cpp_common_1_1_wait_queue.html">WaitQueue</a> &amp;&amp;) noexcept=default</td></tr>
 <tr class="separator:ade47118fa74032c01c49ed5d63a820da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1efd8e195b2ffa92663b10f4f85b7c8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_wait_queue.html#aa1efd8e195b2ffa92663b10f4f85b7c8">closed</a> () const </td></tr>
+<tr class="memdesc:aa1efd8e195b2ffa92663b10f4f85b7c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is queue closed?  <a href="#aa1efd8e195b2ffa92663b10f4f85b7c8">More...</a><br/></td></tr>
+<tr class="separator:aa1efd8e195b2ffa92663b10f4f85b7c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a96680020df153aec5c6f003d54233380"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_wait_queue.html#a96680020df153aec5c6f003d54233380">empty</a> () const </td></tr>
 <tr class="memdesc:a96680020df153aec5c6f003d54233380"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is queue empty?  <a href="#a96680020df153aec5c6f003d54233380">More...</a><br/></td></tr>
 <tr class="separator:a96680020df153aec5c6f003d54233380"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -131,6 +134,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a21d549d0247987e3c171660be7ed09a6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_wait_queue.html#a21d549d0247987e3c171660be7ed09a6">Dequeue</a> (T &amp;item)</td></tr>
 <tr class="memdesc:a21d549d0247987e3c171660be7ed09a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dequeue an item from the wait queue.  <a href="#a21d549d0247987e3c171660be7ed09a6">More...</a><br/></td></tr>
 <tr class="separator:a21d549d0247987e3c171660be7ed09a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a317792042c0202eb05e5258f45929d64"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_wait_queue.html#a317792042c0202eb05e5258f45929d64">Close</a> ()</td></tr>
+<tr class="memdesc:a317792042c0202eb05e5258f45929d64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Close the wait queue.  <a href="#a317792042c0202eb05e5258f45929d64">More...</a><br/></td></tr>
+<tr class="separator:a317792042c0202eb05e5258f45929d64"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename T&gt;<br/>
@@ -251,6 +257,65 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a317792042c0202eb05e5258f45929d64"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_cpp_common_1_1_wait_queue.html">CppCommon::WaitQueue</a>&lt; T &gt;::Close </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Close the wait queue. </p>
+<p>Will block. </p>
+
+<p>Definition at line <a class="el" href="wait__queue_8inl_source.html#l00083">83</a> of file <a class="el" href="wait__queue_8inl_source.html">wait_queue.inl</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa1efd8e195b2ffa92663b10f4f85b7c8"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_cpp_common_1_1_wait_queue.html">CppCommon::WaitQueue</a>&lt; T &gt;::closed </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Is queue closed? </p>
+
+<p>Definition at line <a class="el" href="wait__queue_8inl_source.html#l00023">23</a> of file <a class="el" href="wait__queue_8inl_source.html">wait_queue.inl</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a21d549d0247987e3c171660be7ed09a6"></a>
 <div class="memitem">
 <div class="memproto">
@@ -284,9 +349,9 @@ template&lt;typename T &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>'true' if the item was successfully dequeue, 'false' if the wait queue is destroyed </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>'true' if the item was successfully dequeue, 'false' if the wait queue is closed </dd></dl>
 
-<p>Definition at line <a class="el" href="wait__queue_8inl_source.html#l00054">54</a> of file <a class="el" href="wait__queue_8inl_source.html">wait_queue.inl</a>.</p>
+<p>Definition at line <a class="el" href="wait__queue_8inl_source.html#l00059">59</a> of file <a class="el" href="wait__queue_8inl_source.html">wait_queue.inl</a>.</p>
 
 </div>
 </div>
@@ -315,7 +380,7 @@ template&lt;typename T&gt; </div>
 
 <p>Is queue empty? </p>
 
-<p>Definition at line <a class="el" href="wait__queue_8h_source.html#l00041">41</a> of file <a class="el" href="wait__queue_8h_source.html">wait_queue.h</a>.</p>
+<p>Definition at line <a class="el" href="wait__queue_8h_source.html#l00044">44</a> of file <a class="el" href="wait__queue_8h_source.html">wait_queue.h</a>.</p>
 
 </div>
 </div>
@@ -352,9 +417,9 @@ template&lt;typename T &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>'true' if the item was successfully enqueue, 'false' if the wait queue is destroyed </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>'true' if the item was successfully enqueue, 'false' if the wait queue is closed </dd></dl>
 
-<p>Definition at line <a class="el" href="wait__queue_8inl_source.html#l00032">32</a> of file <a class="el" href="wait__queue_8inl_source.html">wait_queue.inl</a>.</p>
+<p>Definition at line <a class="el" href="wait__queue_8inl_source.html#l00037">37</a> of file <a class="el" href="wait__queue_8inl_source.html">wait_queue.inl</a>.</p>
 
 </div>
 </div>
@@ -391,9 +456,9 @@ template&lt;typename T &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>'true' if the item was successfully enqueue, 'false' if the wait queue is destroyed </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>'true' if the item was successfully enqueue, 'false' if the wait queue is closed </dd></dl>
 
-<p>Definition at line <a class="el" href="wait__queue_8inl_source.html#l00043">43</a> of file <a class="el" href="wait__queue_8inl_source.html">wait_queue.inl</a>.</p>
+<p>Definition at line <a class="el" href="wait__queue_8inl_source.html#l00048">48</a> of file <a class="el" href="wait__queue_8inl_source.html">wait_queue.inl</a>.</p>
 
 </div>
 </div>
@@ -474,7 +539,7 @@ template&lt;typename T &gt; </div>
 
 <p>Get queue size. </p>
 
-<p>Definition at line <a class="el" href="wait__queue_8inl_source.html#l00025">25</a> of file <a class="el" href="wait__queue_8inl_source.html">wait_queue.inl</a>.</p>
+<p>Definition at line <a class="el" href="wait__queue_8inl_source.html#l00030">30</a> of file <a class="el" href="wait__queue_8inl_source.html">wait_queue.inl</a>.</p>
 
 </div>
 </div>
