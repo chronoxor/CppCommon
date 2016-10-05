@@ -55,5 +55,6 @@ var searchData=
   ['_7etimezone',['~Timezone',['../class_cpp_common_1_1_timezone.html#ad12be2173ee58fac2dfe3844f24f42f9',1,'CppCommon::Timezone']]],
   ['_7euuid',['~UUID',['../class_cpp_common_1_1_u_u_i_d.html#ae289d7b1bf0569ddce2c514de02b4b77',1,'CppCommon::UUID']]],
   ['_7ewaitqueue',['~WaitQueue',['../class_cpp_common_1_1_wait_queue.html#a11e794d823a5f45214135da0a4df7c71',1,'CppCommon::WaitQueue']]],
+  ['_7ewaitring',['~WaitRing',['../class_cpp_common_1_1_wait_ring.html#a7ce2d74779a9c2222aa47aae5fc9a11e',1,'CppCommon::WaitRing']]],
   ['_7ewritelocker',['~WriteLocker',['../class_cpp_common_1_1_write_locker.html#aa65a3ecd2e9b81ed0616f128cfaef789',1,'CppCommon::WriteLocker']]]
 ];
