@@ -9,7 +9,7 @@ var searchData=
   ['waitqueue',['WaitQueue',['../class_cpp_common_1_1_wait_queue.html',1,'CppCommon']]],
   ['waitring',['WaitRing',['../class_cpp_common_1_1_wait_ring.html',1,'CppCommon']]],
   ['waitring',['WaitRing',['../class_cpp_common_1_1_wait_ring.html#a4332d92cfbb6220f169f017986ea77fd',1,'CppCommon::WaitRing::WaitRing(size_t capacity)'],['../class_cpp_common_1_1_wait_ring.html#ae9bba2552f2d215b59ca10e2974d070d',1,'CppCommon::WaitRing::WaitRing(const WaitRing &amp;)=delete'],['../class_cpp_common_1_1_wait_ring.html#a5e25ac1bb1c9bfd07adc76620d9466cb',1,'CppCommon::WaitRing::WaitRing(WaitRing &amp;&amp;) noexcept=default']]],
-  ['what',['what',['../class_cpp_common_1_1_exception.html#aa050971385438783268d9c984e3782c3',1,'CppCommon::Exception']]],
+  ['what',['what',['../class_cpp_common_1_1_exception.html#aebb89cc7bd3da6a049b5536d40d84e94',1,'CppCommon::Exception']]],
   ['white',['WHITE',['../namespace_cpp_common.html#ac1ca6affe95577c60f18950cd8682db4ab5bf627e448384cf3a4c35121ca6008d',1,'CppCommon']]],
   ['write',['Write',['../class_cpp_common_1_1_file.html#a889d0ff2feb7b614fbf8bdda9eec82bc',1,'CppCommon::File']]],
   ['writeallbytes',['WriteAllBytes',['../class_cpp_common_1_1_file.html#abf4db6626545a31e1e97e2a1f790b560',1,'CppCommon::File']]],
