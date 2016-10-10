@@ -1,12 +1,12 @@
 if(NOT TARGET cppbenchmark)
 
-  # Set module flag
+  # Module flag
   set(CPPBENCHMARK_MODULE Y)
 
-  # Add module subdirectory
+  # Module subdirectory
   add_subdirectory("CppBenchmark")
 
-  # Set module folder
+  # Module folder
   set_target_properties(cppbenchmark PROPERTIES FOLDER modules/CppBenchmark)
 
 endif()
