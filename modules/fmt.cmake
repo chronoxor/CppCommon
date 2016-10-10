@@ -1,5 +1,8 @@
 if(NOT TARGET fmt)
 
+  # Module includes
+  include_directories("fmt")
+
   # Module library
   file(GLOB SOURCE_FILES "fmt/fmt/*.cc")
   if(CMAKE_MAKE_PROGRAM MATCHES "(MSBuild|devenv|msdev|nmake)")
