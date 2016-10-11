@@ -9,8 +9,8 @@
 #ifndef CPPCOMMON_STRING_FORMAT_H
 #define CPPCOMMON_STRING_FORMAT_H
 
-#include <fmt/format.h>
-#include <fmt/ostream.h>
+#include "../../modules/fmt/fmt/format.h"
+#include "../../modules/fmt/fmt/ostream.h"
 
 namespace CppCommon {
 
