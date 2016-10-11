@@ -1,12 +1,13 @@
 # CppCommon
+
+[![Linux build status](https://img.shields.io/travis/chronoxor/CppCommon/master.svg?label=Linux)](https://travis-ci.org/chronoxor/CppCommon)
+[![Windows build status](https://img.shields.io/appveyor/ci/chronoxor/CppCommon/master.svg?label=Windows)](https://ci.appveyor.com/project/chronoxor/CppCommon)
+
 C++ Common Library contains reusable components and patterns for error and
 exceptions handling, filesystem manipulations, math, string format and
 encoding, shared memory, threading, time management and others.
 
 [CppCommon API reference](http://chronoxor.github.io/CppCommon/index.html)
-
-[![Build status](https://travis-ci.org/chronoxor/CppCommon.svg?branch=master)](https://travis-ci.org/chronoxor/CppCommon)
-[![Build status](https://ci.appveyor.com/api/projects/status/6cgcwr1uu0re1o5p?svg=true)](https://ci.appveyor.com/project/chronoxor/CppCommon)
 
 # Contents
   * [Features](#features)
