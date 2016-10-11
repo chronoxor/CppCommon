@@ -12,6 +12,7 @@
 #include "filesystem/exceptions.h"
 #include "filesystem/symlink.h"
 #include "system/uuid.h"
+#include "utility/countof.h"
 #include "utility/resource.h"
 
 #include <algorithm>
@@ -403,6 +404,17 @@ Path Path::canonical() const
     std::string temp(_path.data() + index, length - index);
     if (!temp.empty())
         result /= temp;
+
+    return result;
+}
+
+Path Path::validate(char placeholder) const
+{
+    Path result(*this);
+
+    for (auto& ch : result._path)
+        if ((ch != '\\') && (ch != '/') && deprecated(ch))
+            ch = placeholder;
 
     return result;
 }
@@ -824,6 +836,23 @@ Path& Path::RemoveTrailingSeparators()
 
     _path.resize(index);
     return *this;
+}
+
+bool Path::deprecated(char character) noexcept
+{
+    char deprecated[] = "\\/?%*:|\"<>";
+    return (std::find(deprecated, deprecated + countof(deprecated), character) != (deprecated + countof(deprecated)));
+}
+
+bool Path::deprecated(wchar_t character) noexcept
+{
+    wchar_t deprecated[] = L"\\/?%*:|\"<>";
+    return (std::find(deprecated, deprecated + countof(deprecated), character) != (deprecated + countof(deprecated)));
+}
+
+std::string Path::deprecated()
+{
+    return "\\/?%*:|\"<>";
 }
 
 char Path::separator() noexcept

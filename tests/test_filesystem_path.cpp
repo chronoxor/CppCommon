@@ -11,6 +11,24 @@ using namespace CppCommon;
 TEST_CASE("Path common", "[CppCommon][FileSystem]")
 {
     // Test other methods
+    std::string deprecated = Path::deprecated();
+    REQUIRE(deprecated.size() > 0);
+    REQUIRE(!Path::deprecated('.'));
+    REQUIRE(!Path::deprecated(','));
+    REQUIRE(!Path::deprecated('-'));
+    REQUIRE(!Path::deprecated('0'));
+    REQUIRE(!Path::deprecated('a'));
+    REQUIRE(!Path::deprecated('Z'));
+    REQUIRE(Path::deprecated('\\'));
+    REQUIRE(Path::deprecated(L'/'));
+    REQUIRE(Path::deprecated('?'));
+    REQUIRE(Path::deprecated(L'%'));
+    REQUIRE(Path::deprecated('*'));
+    REQUIRE(Path::deprecated(L':'));
+    REQUIRE(Path::deprecated('|'));
+    REQUIRE(Path::deprecated(L'\"'));
+    REQUIRE(Path::deprecated('<'));
+    REQUIRE(Path::deprecated(L'>'));
     char separator = Path::separator();
     REQUIRE(((separator == '\\') || (separator == '/')));
 
@@ -307,6 +325,13 @@ TEST_CASE("Path canonization", "[CppCommon][FileSystem]")
     REQUIRE(Path("///foo/").canonical().MakePreferred() == Path("/foo").MakePreferred());
     REQUIRE(Path("///foo///").canonical().MakePreferred() == Path("/foo").MakePreferred());
     REQUIRE(Path("///foo///bar").canonical().MakePreferred() == Path("/foo/bar").MakePreferred());
+}
+
+TEST_CASE("Path validation", "[CppCommon][FileSystem]")
+{
+    // Test path validation method
+    REQUIRE(Path("foo:bar").validate().MakePreferred() == Path("foo_bar").MakePreferred());
+    REQUIRE(Path("test/foo<bar/test%test").validate('-').MakePreferred() == Path("test/foo-bar/test-test").MakePreferred());
 }
 
 TEST_CASE("Path manipulations", "[CppCommon][FileSystem]")

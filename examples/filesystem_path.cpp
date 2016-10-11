@@ -12,6 +12,7 @@
 
 int main(int argc, char** argv)
 {
+    std::cout << "Path deprecated: " << CppCommon::Path::deprecated() << std::endl;
     std::cout << "Path separator: " << CppCommon::Path::separator() << std::endl;
     std::cout << "Initial path: " << CppCommon::Path::initial() << std::endl;
     std::cout << "Current path: " << CppCommon::Path::current() << std::endl;

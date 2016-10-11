@@ -169,6 +169,8 @@ public:
     Path absolute() const;
     //! Transform the current path and replace all '.' and '..' properly
     Path canonical() const;
+    //! Transform the current path and replace all deprecated characters with a given placeholder (default is '_')
+    Path validate(char placeholder = '_') const;
 
     //! Get the path file type
     FileType type() const;
@@ -243,6 +245,13 @@ public:
     Path& RemoveExtension() { return ReplaceExtension(""); }
     //! Remove all trailing separators form the current path
     Path& RemoveTrailingSeparators();
+
+    //! Is the given character is deprecated by the filesystem?
+    static bool deprecated(char character) noexcept;
+    //! Is the given wide character is deprecated by the filesystem?
+    static bool deprecated(wchar_t character) noexcept;
+    //! Get filesystem deprecated characters ('\', '/', '?', '%', '*', ':', '|', '"', '<', '>')
+    static std::string deprecated();
 
     //! Get the system path separator character ('\' for Windows or '/' for Unix)
     static char separator() noexcept;
