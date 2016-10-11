@@ -14,9 +14,7 @@
 
 #include <algorithm>
 
-#if defined(__APPLE__)
-#include <pthread.h>
-#elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
 #include <errno.h>
 #include <pthread.h>
 #include <sched.h>
