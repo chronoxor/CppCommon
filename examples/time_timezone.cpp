@@ -10,11 +10,11 @@
 
 #include <iostream>
 
-void show(const CppCommon::Timezone& timezone)
+void show(const CppCommon::Timezone& time_zone)
 {
-    std::cout << "Time.name() = " << timezone.name() << std::endl;
-    std::cout << "Time.offset() = " << timezone.offset().seconds() << std::endl;
-    std::cout << "Time.daylight() = " << timezone.daylight().seconds() << std::endl;
+    std::cout << "Time.name() = " << time_zone.name() << std::endl;
+    std::cout << "Time.offset() = " << time_zone.offset().seconds() << std::endl;
+    std::cout << "Time.daylight() = " << time_zone.daylight().seconds() << std::endl;
     std::cout << std::endl;
 }
 
