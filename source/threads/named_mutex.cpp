@@ -132,7 +132,7 @@ public:
             throwex SystemException("Failed to try lock a named mutex for the given timeout!", result);
         return (result == 0);
 #elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
-        DWORD result = WaitForSingleObject(_mutex, (DWORD)std::max(1ll, timespan.milliseconds()));
+        DWORD result = WaitForSingleObject(_mutex, std::max(1, (DWORD)timespan.milliseconds()));
         if ((result != WAIT_OBJECT_0) && (result != WAIT_TIMEOUT))
             throwex SystemException("Failed to try lock a named mutex for the given timeout!");
         return (result == WAIT_OBJECT_0);

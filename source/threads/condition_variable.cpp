@@ -97,7 +97,7 @@ public:
             throwex SystemException("Failed to waiting a condition variable for the given timeout!", result);
         return (result == 0);
 #elif defined(_WIN32) || defined(_WIN64)
-        if (!SleepConditionVariableCS(&_cond, (CRITICAL_SECTION*)cs.native(), (DWORD)std::max(0ll, timespan.milliseconds())))
+        if (!SleepConditionVariableCS(&_cond, (CRITICAL_SECTION*)cs.native(), std::max(0, (DWORD)timespan.milliseconds())))
         {
             if (GetLastError() != ERROR_TIMEOUT)
                 throwex SystemException("Failed to waiting a condition variable for the given timeout!");

@@ -164,7 +164,7 @@ public:
             throwex SystemException("Failed to unlock a mutex for the named auto-reset event!", result);
         return signaled;
 #elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
-        DWORD result = WaitForSingleObject(_event, (DWORD)std::max(1ll, timespan.milliseconds()));
+        DWORD result = WaitForSingleObject(_event, std::max(1, (DWORD)timespan.milliseconds()));
         if ((result != WAIT_OBJECT_0) && (result != WAIT_TIMEOUT))
             throwex SystemException("Failed to try lock a named auto-reset event for the given timeout!");
         return (result == WAIT_OBJECT_0);
