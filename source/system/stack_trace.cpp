@@ -120,7 +120,7 @@ StackTrace::StackTrace(int skip)
 
         void* symsptr;
         asymbol** syms;
-        unsigned int size;
+        unsigned int symsize;
         long symcount;
 
         const char* filename;
@@ -146,9 +146,9 @@ StackTrace::StackTrace(int skip)
         if ((bfd_get_file_flags(abfd) & HAS_SYMS) == 0)
             goto cleanup;
 
-        symcount = bfd_read_minisymbols(abfd, FALSE, &symsptr, &size);
+        symcount = bfd_read_minisymbols(abfd, FALSE, &symsptr, &symsize);
         if (symcount == 0)
-            symcount = bfd_read_minisymbols(abfd, TRUE, &symsptr, &size);
+            symcount = bfd_read_minisymbols(abfd, TRUE, &symsptr, &symsize);
         if (symcount < 0)
             goto cleanup;
         syms = (asymbol**)symsptr;
@@ -166,8 +166,8 @@ StackTrace::StackTrace(int skip)
             if (pc < vma)
                 continue;
 
-            bfd_size_type size = bfd_get_section_size(section);
-            if (pc >= vma + size)
+            bfd_size_type secsize = bfd_get_section_size(section);
+            if (pc >= vma + secsize)
                 continue;
 
             found = bfd_find_nearest_line(abfd, section, syms, pc - vma, &filename, &functionname, &line);
