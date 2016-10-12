@@ -59,8 +59,8 @@ before_install:
   - git config --global user.name "Travis CI"
   - git config --global user.email "travis@travis-ci.org"
   - git config --global push.default simple
-  - if [[ -n "$GCC_VERSION" ]]; then sudo unlink /usr/bin/gcc && sudo ln -s /usr/bin/gcc-$GCC_VERSION /usr/bin/gcc; fi
-  - if [[ -n "$GCC_VERSION" ]]; then sudo unlink /usr/bin/g++ && sudo ln -s /usr/bin/g++-$GCC_VERSION /usr/bin/g++; fi
+  - if [[ -n "$GCC_VERSION" ]]; then sudo unlink /usr/bin/gcc && sudo ln -s /usr/bin/gcc-${GCC_VERSION} /usr/bin/gcc; fi
+  - if [[ -n "$GCC_VERSION" ]]; then sudo unlink /usr/bin/g++ && sudo ln -s /usr/bin/g++-${GCC_VERSION} /usr/bin/g++; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install doxygen; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install graphviz; fi
 
