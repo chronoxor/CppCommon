@@ -200,7 +200,7 @@ public:
             throwex SystemException("Failed to unlock a named mutex for the named condition variable!");
 
         // Wait for the named condition variable
-        result = WaitForSingleObject(_semaphore, (DWORD)std::max(0ll, timespan.milliseconds()));
+        result = WaitForSingleObject(_semaphore, (DWORD)std::max(0, timespan.milliseconds()));
         if ((result != WAIT_OBJECT_0) && (result != WAIT_TIMEOUT))
             throwex SystemException("Failed to try lock a named condition variable for the given timeout!");
         return (result == WAIT_OBJECT_0);
