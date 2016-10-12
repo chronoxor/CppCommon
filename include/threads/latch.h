@@ -38,7 +38,7 @@ public:
     ~Latch() = default;
 
     Latch& operator=(const Latch&) = delete;
-    Latch& operator=(Latch&&) noexcept = default;
+    Latch& operator=(Latch&&) = default;
 
     //! Get the count of threads to wait for the latch
     int threads() const noexcept { return _threads; }
