@@ -51,7 +51,7 @@ TEST_CASE("Read/Write locker", "[CppCommon][Threads]")
     for (int i = 0; i < consumers_count; ++i)
         crcs.push_back(0);
 
-    // Caclulate result value
+    // Calculate result value
     int result = 0;
     for (int i = 0; i < items_to_produce; ++i)
         result += i;

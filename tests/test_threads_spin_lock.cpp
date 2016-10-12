@@ -71,7 +71,7 @@ TEST_CASE("Spin-lock locker", "[CppCommon][Threads]")
 
     REQUIRE(!lock.IsLocked());
 
-    // Caclulate result value
+    // Calculate result value
     int result = 0;
     for (int i = 0; i < items_to_produce; ++i)
         result += i;

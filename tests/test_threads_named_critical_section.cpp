@@ -43,7 +43,7 @@ TEST_CASE("Named critical section locker", "[CppCommon][Threads]")
     // Named critical section master
     NamedCriticalSection lock_master("named_critical_section_test");
 
-    // Caclulate result value
+    // Calculate result value
     int result = 0;
     for (int i = 0; i < items_to_produce; ++i)
         result += i;

@@ -51,7 +51,7 @@ TEST_CASE("Multiple producers / multiple consumers wait queue threads", "[CppCom
 
     WaitQueue<int> queue;
 
-    // Caclulate result value
+    // Calculate result value
     int result = 0;
     for (int i = 0; i < items_to_produce; ++i)
         result += i;

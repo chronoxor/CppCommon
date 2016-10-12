@@ -31,7 +31,7 @@ TEST_CASE("Mutex locker", "[CppCommon][Threads]")
 
     Mutex lock;
 
-    // Caclulate result value
+    // Calculate result value
     int result = 0;
     for (int i = 0; i < items_to_produce; ++i)
         result += i;

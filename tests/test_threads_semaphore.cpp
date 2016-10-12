@@ -48,7 +48,7 @@ TEST_CASE("Semaphore locker", "[CppCommon][Threads]")
 
     Semaphore lock(4);
 
-    // Caclulate result value
+    // Calculate result value
     int result = 0;
     for (int i = 0; i < items_to_produce; ++i)
         result += i;

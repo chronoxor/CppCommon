@@ -16,7 +16,7 @@ TEST_CASE("Named mutex locker", "[CppCommon][Threads]")
     int producers_count = 4;
     int crc = 0;
 
-    // Caclulate result value
+    // Calculate result value
     int result = 0;
     for (int i = 0; i < items_to_produce; ++i)
         result += i;
