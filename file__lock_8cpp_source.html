@@ -123,12 +123,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    Impl(<span class="keyword">const</span> Path&amp; <a class="code" href="class_cpp_common_1_1_file_lock.html#a7a7cbfb9ef164a8e30776773e3632e2d">path</a>) : _path(path)</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    {</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor"></span>        _file = open(_path.native().c_str(), O_CREAT | O_EXCL | O_RDWR, 0644);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor"></span>        _file = open(_path.string().c_str(), O_CREAT | O_EXCL | O_RDWR, 0644);</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keywordflow">if</span> (_file &lt; 0)</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        {</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            <span class="keywordflow">if</span> (errno == EEXIST)</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            {</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;                _file = open(_path.native().c_str(), O_CREAT | O_RDWR, 0644);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;                _file = open(_path.string().c_str(), O_CREAT | O_RDWR, 0644);</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;                <span class="keywordflow">if</span> (_file &gt;= 0)</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;                {</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                    _owner = <span class="keyword">false</span>;</div>
@@ -198,7 +198,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        <span class="comment">// Remove the file-lock file (owner only)</span></div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        <span class="keywordflow">if</span> (_owner)</div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        {</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;            result = unlink(_path.native().c_str());</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;            result = unlink(_path.string().c_str());</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;            <span class="keywordflow">if</span> (result != 0)</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;                <a class="code" href="fatal_8h.html#a58f99c4783afc0f169f7b232d1659577">fatality</a>(FileSystemException(<span class="stringliteral">&quot;Cannot unlink the file-lock file!&quot;</span>).Attach(_path));</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        }</div>

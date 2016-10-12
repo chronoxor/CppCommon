@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['u16string',['u16string',['../class_cpp_common_1_1_path.html#aef512b60fe2a679dd02581fd32974673',1,'CppCommon::Path']]],
+  ['u32string',['u32string',['../class_cpp_common_1_1_path.html#a6acb799967f8c07082434b5f3d6b0ac5',1,'CppCommon::Path']]],
   ['underlying',['underlying',['../class_cpp_common_1_1_flags.html#a6296cb2592bc7f480573a6fe08f41ccf',1,'CppCommon::Flags']]],
   ['unique',['unique',['../class_cpp_common_1_1_path.html#a0f2755af4de30d913f7919a4f1286849',1,'CppCommon::Path']]],
   ['unknown',['UNKNOWN',['../namespace_cpp_common.html#a3566e27bae7f971c3c1547098a74a12fa696b031073e74bf2cb98e5ef201d4aa3',1,'CppCommon']]],
@@ -8,10 +10,10 @@ var searchData=
   ['unlockwrite',['UnlockWrite',['../class_cpp_common_1_1_file_lock.html#a8b8a19a7bef234bb7c782941f9c3dc23',1,'CppCommon::FileLock::UnlockWrite()'],['../class_cpp_common_1_1_named_r_w_lock.html#a12253a82abc35c91e64afae507b8f94d',1,'CppCommon::NamedRWLock::UnlockWrite()'],['../class_cpp_common_1_1_r_w_lock.html#a77fe5c33da945416fbd6ba7a6e9c985b',1,'CppCommon::RWLock::UnlockWrite()']]],
   ['utc',['utc',['../class_cpp_common_1_1_timestamp.html#a82184734b92c0bc8fe85e5c54e262f4b',1,'CppCommon::Timestamp::utc()'],['../class_cpp_common_1_1_timezone.html#a1816069e97139439b139539543af3115',1,'CppCommon::Timezone::utc()']]],
   ['utcstamp',['utcstamp',['../class_cpp_common_1_1_time.html#af83292718da863ce840b18cb90db54da',1,'CppCommon::Time']]],
-  ['utctime',['UtcTime',['../class_cpp_common_1_1_utc_time.html',1,'CppCommon']]],
   ['utctime',['UtcTime',['../class_cpp_common_1_1_utc_time.html#af757fd773a0cc93c2fd07528d2cc11ee',1,'CppCommon::UtcTime::UtcTime()'],['../class_cpp_common_1_1_utc_time.html#a757c128d56ac89b2c2e5a13255b2cd87',1,'CppCommon::UtcTime::UtcTime(const Timestamp &amp;timestamp)'],['../class_cpp_common_1_1_utc_time.html#a754577312eb83620a01aa12a115d6e19',1,'CppCommon::UtcTime::UtcTime(const Time &amp;time)'],['../class_cpp_common_1_1_utc_time.html#a85cd27542631dcef1a1cbb62a85c03d5',1,'CppCommon::UtcTime::UtcTime(const LocalTime &amp;time)']]],
-  ['utctimestamp',['UtcTimestamp',['../class_cpp_common_1_1_utc_timestamp.html',1,'CppCommon']]],
+  ['utctime',['UtcTime',['../class_cpp_common_1_1_utc_time.html',1,'CppCommon']]],
   ['utctimestamp',['UtcTimestamp',['../class_cpp_common_1_1_utc_timestamp.html#a5b22cfd39076e83b45f8e602dc30b3f8',1,'CppCommon::UtcTimestamp::UtcTimestamp()'],['../class_cpp_common_1_1_utc_timestamp.html#a0e7a0d81e14dee51a27a8f5092876d77',1,'CppCommon::UtcTimestamp::UtcTimestamp(const Timestamp &amp;timestamp)']]],
+  ['utctimestamp',['UtcTimestamp',['../class_cpp_common_1_1_utc_timestamp.html',1,'CppCommon']]],
   ['utf16toutf32',['UTF16toUTF32',['../class_cpp_common_1_1_encoding.html#a2dea81ef30b81c3a1370ba714f9efcd7',1,'CppCommon::Encoding']]],
   ['utf16toutf8',['UTF16toUTF8',['../class_cpp_common_1_1_encoding.html#a214a89a16e870756292dffc99cba1113',1,'CppCommon::Encoding']]],
   ['utf32toutf16',['UTF32toUTF16',['../class_cpp_common_1_1_encoding.html#ae965e41ce4a57b65510dc00fcd82ce92',1,'CppCommon::Encoding']]],

@@ -141,7 +141,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    SimpleImpl(<span class="keyword">const</span> Path&amp; parent) : <a class="code" href="class_cpp_common_1_1_directory_iterator.html#a9861f44890a06c41ba777989b40d1d5b">DirectoryIterator</a>::Impl(parent), _next(false), _end(false)</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    {</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor"></span>        _directory = opendir(_parent.native().c_str());</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor"></span>        _directory = opendir(_parent.string().c_str());</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keywordflow">if</span> (_directory == <span class="keyword">nullptr</span>)</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> FileSystemException(<span class="stringliteral">&quot;Cannot open a directory!&quot;</span>).Attach(_parent);</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
