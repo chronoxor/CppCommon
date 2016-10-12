@@ -116,15 +116,15 @@ StackTrace::StackTrace(int skip)
 #endif
 #if defined(LIBBFD_SUPPORT)
         bfd* abfd = nullptr;
-        char** matching;
+        char** matching = nullptr;
 
-        void* symsptr;
-        asymbol** syms;
+        void* symsptr = nullptr;
+        asymbol** syms = nullptr;
         unsigned int symsize;
         long symcount;
 
-        const char* filename;
-        const char* functionname;
+        const char* filename = nullptr;
+        const char* functionname = nullptr;
         unsigned int line;
 
         bfd_boolean found = false;
