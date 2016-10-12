@@ -13,10 +13,10 @@
 
 #include <algorithm>
 
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
 #include "system/shared_type.h"
 #include <pthread.h>
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
 #include "system/shared_type.h"
 #include <windows.h>
 #undef max
@@ -31,13 +31,13 @@ class NamedConditionVariable::Impl
 {
 public:
     Impl(const std::string& name) : _name(name)
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
         , _shared(name)
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         , _shared(name)
 #endif
     {
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
         // Only the owner should initializate a named condition variable
         if (_shared.owner())
         {
@@ -69,7 +69,7 @@ public:
             if (result != 0)
                 throwex SystemException("Failed to destroy a conditional variable attribute for the named condition variable!", result);
         }
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         // Owner of the condition variable should initialize its value
         if (_shared.owner())
             *_shared = 0;
@@ -84,7 +84,7 @@ public:
 
     ~Impl()
     {
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
         // Only the owner should destroy a named condition variable
         if (_shared.owner())
         {
@@ -95,7 +95,7 @@ public:
             if (result != 0)
                 fatality(SystemException("Failed to destroy a conditional variable for the named condition variable!", result));
         }
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         if (!CloseHandle(_mutex))
             fatality(SystemException("Failed to close a named mutex for the named condition variable!"));
         if (!CloseHandle(_semaphore))
@@ -110,11 +110,11 @@ public:
 
     void NotifyOne()
     {
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
         int result = pthread_cond_signal(&_shared->cond);
         if (result != 0)
             throwex SystemException("Failed to signal a named condition variable!", result);
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         // Lock the named mutex
         DWORD result = WaitForSingleObject(_mutex, INFINITE);
         if (result != WAIT_OBJECT_0)
@@ -132,11 +132,11 @@ public:
 
     void NotifyAll()
     {
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
         int result = pthread_cond_broadcast(&_shared->cond);
         if (result != 0)
             throwex SystemException("Failed to broadcast a named condition variable!", result);
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         // Lock the named mutex
         DWORD result = WaitForSingleObject(_mutex, INFINITE);
         if (result != WAIT_OBJECT_0)
@@ -154,11 +154,11 @@ public:
 
     void Wait()
     {
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
         int result = pthread_cond_wait(&_shared->cond, &_shared->mutex);
         if (result != 0)
             throwex SystemException("Failed to waiting a named condition variable!", result);
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         // Lock the named mutex
         DWORD result = WaitForSingleObject(_mutex, INFINITE);
         if (result != WAIT_OBJECT_0)
@@ -180,7 +180,7 @@ public:
     {
         if (timespan < 0)
             return false;
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
         struct timespec timeout;
         timeout.tv_sec = timespan.seconds();
         timeout.tv_nsec = timespan.nanoseconds() % 1000000000;
@@ -188,7 +188,7 @@ public:
         if ((result != 0) && (result != ETIMEDOUT))
             throwex SystemException("Failed to waiting a named condition variable for the given timeout!", result);
         return (result == 0);
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         // Lock the named mutex
         DWORD result = WaitForSingleObject(_mutex, INFINITE);
         if (result != WAIT_OBJECT_0)
@@ -209,7 +209,7 @@ public:
 
 private:
     std::string _name;
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
     // Shared condition variable structure
     struct CondVar
     {
@@ -219,7 +219,7 @@ private:
 
     // Shared condition variable structure wrapper
     SharedType<CondVar> _shared;
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
     HANDLE _mutex;
     HANDLE _semaphore;
     SharedType<LONG> _shared;
