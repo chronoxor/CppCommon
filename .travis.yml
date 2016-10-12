@@ -21,21 +21,21 @@ matrix:
             - uuid-dev
     - os: linux
       compiler: clang
-      env: CLANG_VERSION=3.6
+      env: CLANG_VERSION=3.8
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.6
+            - llvm-toolchain-precise-3.8
           packages:
-            - clang-3.6
+            - clang-3.8
             - cmake
             - doxygen
             - graphviz
             - libbfd-dev
             - uuid-dev
-    - os: osx
-      compiler: clang
+#    - os: osx
+#      compiler: clang
 
 # Using Trusty environment
 sudo: required
