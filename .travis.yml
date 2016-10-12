@@ -34,10 +34,8 @@ matrix:
             - graphviz
             - libbfd-dev
             - uuid-dev
-# Temporary disable OSX build
-#    - os: osx
-#      osx_image: xcode8
-#      compiler: clang
+    - os: osx
+      compiler: clang
 
 # Using Trusty environment
 sudo: required
