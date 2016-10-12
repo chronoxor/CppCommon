@@ -16,10 +16,10 @@
 #if defined(__CYGWIN__)
 #include "threads/thread.h"
 #endif
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
 #include "system/shared_type.h"
 #include <pthread.h>
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
 #include <windows.h>
 #undef max
 #undef min
@@ -33,11 +33,11 @@ class NamedMutex::Impl
 {
 public:
     Impl(const std::string& name) : _name(name)
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
         , _shared(name)
 #endif
     {
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
         // Only the owner should initializate a named mutex
         if (_shared.owner())
         {
@@ -55,7 +55,7 @@ public:
             if (result != 0)
                 throwex SystemException("Failed to destroy a named mutex attribute!", result);
         }
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         _mutex = CreateMutexA(nullptr, FALSE, name.c_str());
         if (_mutex == nullptr)
             throwex SystemException("Failed to create or open a named mutex!");
@@ -64,7 +64,7 @@ public:
 
     ~Impl()
     {
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
         // Only the owner should destroy a named mutex
         if (_shared.owner())
         {
@@ -72,7 +72,7 @@ public:
             if (result != 0)
                 fatality(SystemException("Failed to destroy a named mutex!", result));
         }
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         if (!CloseHandle(_mutex))
             fatality(SystemException("Failed to close a named mutex!"));
 #endif
@@ -85,12 +85,12 @@ public:
 
     bool TryLock()
     {
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
         int result = pthread_mutex_trylock(&_shared->mutex);
         if ((result != 0) && (result != EBUSY))
             throwex SystemException("Failed to try lock a named mutex!", result);
         return (result == 0);
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         DWORD result = WaitForSingleObject(_mutex, 0);
         if ((result != WAIT_OBJECT_0) && (result != WAIT_TIMEOUT))
             throwex SystemException("Failed to try lock a named mutex!");
@@ -123,7 +123,7 @@ public:
             // Failed to acquire lock
             return false;
         }
-#elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#elif (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
         struct timespec timeout;
         timeout.tv_sec = timespan.seconds();
         timeout.tv_nsec = timespan.nanoseconds() % 1000000000;
@@ -131,7 +131,7 @@ public:
         if ((result != 0) && (result != ETIMEDOUT))
             throwex SystemException("Failed to try lock a named mutex for the given timeout!", result);
         return (result == 0);
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         DWORD result = WaitForSingleObject(_mutex, (DWORD)std::max(1ll, timespan.milliseconds()));
         if ((result != WAIT_OBJECT_0) && (result != WAIT_TIMEOUT))
             throwex SystemException("Failed to try lock a named mutex for the given timeout!");
@@ -141,11 +141,11 @@ public:
 
     void Lock()
     {
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
         int result = pthread_mutex_lock(&_shared->mutex);
         if (result != 0)
             throwex SystemException("Failed to lock a named mutex!", result);
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         DWORD result = WaitForSingleObject(_mutex, INFINITE);
         if (result != WAIT_OBJECT_0)
             throwex SystemException("Failed to lock a named mutex!");
@@ -154,11 +154,11 @@ public:
 
     void Unlock()
     {
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
         int result = pthread_mutex_unlock(&_shared->mutex);
         if (result != 0)
             throwex SystemException("Failed to unlock a named mutex!", result);
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         if (!ReleaseMutex(_mutex))
             throwex SystemException("Failed to unlock a named mutex!");
 #endif
@@ -166,7 +166,7 @@ public:
 
 private:
     std::string _name;
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
     // Shared mutex structure
     struct MutexHeader
     {
@@ -175,7 +175,7 @@ private:
 
     // Shared mutex structure wrapper
     SharedType<MutexHeader> _shared;
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
     HANDLE _mutex;
 #endif
 };

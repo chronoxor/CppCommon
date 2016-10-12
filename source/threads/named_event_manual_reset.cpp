@@ -13,10 +13,10 @@
 
 #include <algorithm>
 
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
 #include "system/shared_type.h"
 #include <pthread.h>
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
 #include <windows.h>
 #undef max
 #undef min
@@ -30,11 +30,11 @@ class NamedEventManualReset::Impl
 {
 public:
     Impl(const std::string& name, bool signaled) : _name(name)
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
         , _shared(name)
 #endif
     {
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
         // Only the owner should initializate a named manual-reset event
         if (_shared.owner())
         {
@@ -68,7 +68,7 @@ public:
 
             _shared->signaled = signaled;
         }
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         _event = CreateEventA(nullptr, TRUE, signaled ? TRUE : FALSE, name.c_str());
         if (_event == nullptr)
             throwex SystemException("Failed to create or open a named manual-reset event!");
@@ -77,7 +77,7 @@ public:
 
     ~Impl()
     {
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
         // Only the owner should destroy a named manual-reset event
         if (_shared.owner())
         {
@@ -88,7 +88,7 @@ public:
             if (result != 0)
                 fatality(SystemException("Failed to destroy a conditional variable for the named manual-reset event!", result));
         }
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         if (!CloseHandle(_event))
             fatality(SystemException("Failed to close a named manual-reset event!"));
 #endif
@@ -101,7 +101,7 @@ public:
 
     void Reset()
     {
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
         int result = pthread_mutex_lock(&_shared->mutex);
         if (result != 0)
             throwex SystemException("Failed to lock a mutex for the named manual-reset event!", result);
@@ -109,7 +109,7 @@ public:
         result = pthread_mutex_unlock(&_shared->mutex);
         if (result != 0)
             throwex SystemException("Failed to unlock a mutex for the named manual-reset event!", result);
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         if (!ResetEvent(_event))
             throwex SystemException("Failed to reset a named manual-reset event!");
 #endif
@@ -117,7 +117,7 @@ public:
 
     void Signal()
     {
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
         int result = pthread_mutex_lock(&_shared->mutex);
         if (result != 0)
             throwex SystemException("Failed to lock a mutex for the named manual-reset event!", result);
@@ -128,7 +128,7 @@ public:
         result = pthread_cond_broadcast(&_shared->cond);
         if (result != 0)
             throwex SystemException("Failed to signal an named manual-reset event!", result);
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         if (!SetEvent(_event))
             throwex SystemException("Failed to signal a named manual-reset event!");
 #endif
@@ -136,7 +136,7 @@ public:
 
     bool TryWait()
     {
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
         int result = pthread_mutex_lock(&_shared->mutex);
         if (result != 0)
             throwex SystemException("Failed to lock a mutex for the named manual-reset event!", result);
@@ -145,7 +145,7 @@ public:
         if (result != 0)
             throwex SystemException("Failed to unlock a mutex for the named manual-reset event!", result);
         return signaled;
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         DWORD result = WaitForSingleObject(_event, 0);
         if ((result != WAIT_OBJECT_0) && (result != WAIT_TIMEOUT))
             throwex SystemException("Failed to try lock a named manual-reset event!");
@@ -157,7 +157,7 @@ public:
     {
         if (timespan < 0)
             return TryWait();
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
         struct timespec timeout;
         timeout.tv_sec = timespan.seconds();
         timeout.tv_nsec = timespan.nanoseconds() % 1000000000;
@@ -177,7 +177,7 @@ public:
         if (result != 0)
             throwex SystemException("Failed to unlock a mutex for the named manual-reset event!", result);
         return signaled;
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         DWORD result = WaitForSingleObject(_event, (DWORD)std::max(1ll, timespan.milliseconds()));
         if ((result != WAIT_OBJECT_0) && (result != WAIT_TIMEOUT))
             throwex SystemException("Failed to try lock a named manual-reset event for the given timeout!");
@@ -187,7 +187,7 @@ public:
 
     void Wait()
     {
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
         int result = pthread_mutex_lock(&_shared->mutex);
         if (result != 0)
             throwex SystemException("Failed to lock a mutex for the named manual-reset event!", result);
@@ -200,7 +200,7 @@ public:
         result = pthread_mutex_unlock(&_shared->mutex);
         if (result != 0)
             throwex SystemException("Failed to unlock a mutex for the named manual-reset event!", result);
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         DWORD result = WaitForSingleObject(_event, INFINITE);
         if (result != WAIT_OBJECT_0)
             throwex SystemException("Failed to lock a named manual-reset event!");
@@ -209,7 +209,7 @@ public:
 
 private:
     std::string _name;
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
     // Shared manual-reset event structure
     struct EventHeader
     {
@@ -220,7 +220,7 @@ private:
 
     // Shared manual-reset event structure wrapper
     SharedType<EventHeader> _shared;
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
     HANDLE _event;
 #endif
 };

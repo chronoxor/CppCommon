@@ -14,9 +14,9 @@
 #include "threads/named_event_auto_reset.h"
 #include "threads/thread.h"
 
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
 #include <pthread.h>
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
 #include <windows.h>
 #undef Yield
 #endif
@@ -54,9 +54,9 @@ public:
         while (true)
         {
             // If lock count = 0, the named critical section is unowned, we can own it
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
             if (__sync_bool_compare_and_swap(&_shared->lock_count, 0, 1))
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
             if (InterlockedCompareExchange(&_shared->lock_count, 1, 0) == 0)
 #endif
             {
@@ -68,9 +68,9 @@ public:
             else if (_shared->thread_id == thread_id)
             {
                 // If the named critical section is owned by this thread, own it again
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
                 __sync_add_and_fetch(&_shared->lock_count, 1);
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
                 InterlockedIncrement(&_shared->lock_count);
 #endif
                 _shared->recurse_count++;
@@ -95,9 +95,9 @@ public:
         // We couldn't get the the named critical section, wait for it
         uint64_t thread_id = Thread::CurrentThreadId();
 
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
         if (__sync_add_and_fetch(&_shared->lock_count, 1) == 1)
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         if (InterlockedIncrement(&_shared->lock_count) == 1)
 #endif
         {
@@ -133,9 +133,9 @@ public:
         if (--_shared->recurse_count > 0)
         {
             // We still own the named critical section
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
             __sync_sub_and_fetch(&_shared->lock_count, 1);
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
             InterlockedDecrement(&_shared->lock_count);
 #endif
         }
@@ -144,9 +144,9 @@ public:
             // We don't own the named critical section anymore
             _shared->thread_id = 0;
 
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
             if (__sync_sub_and_fetch(&_shared->lock_count, 1) > 0)
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
             if (InterlockedDecrement(&_shared->lock_count) > 0)
 #endif
             {
