@@ -12,8 +12,6 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - gcc-5
-            - g++-5
             - cmake
             - doxygen
             - graphviz
@@ -26,9 +24,7 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.7
           packages:
-            - clang-3.7
             - cmake
             - doxygen
             - graphviz
