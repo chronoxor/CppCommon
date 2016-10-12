@@ -69,7 +69,7 @@ Path Symlink::target() const
     std::vector<char> buffer(PATH_MAX);
     ssize_t size;
 
-    while ((size = readlink(native().c_str(), buffer.data(), buffer.size())) == (ssize_t)buffer.size())
+    while ((size = readlink(string().c_str(), buffer.data(), buffer.size())) == (ssize_t)buffer.size())
         buffer.resize(buffer.size() * 2);
 
     if (size < 0)
@@ -112,7 +112,7 @@ bool Symlink::IsSymlinkExists() const
 {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     struct stat lstatus;
-    int result = lstat(native().c_str(), &lstatus);
+    int result = lstat(string().c_str(), &lstatus);
     if (result != 0)
     {
         if ((errno == ENOENT) || (errno == ENOTDIR))
@@ -140,7 +140,7 @@ bool Symlink::IsSymlinkExists() const
 Symlink Symlink::CreateSymlink(const Path& src, const Path& dst)
 {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-    int result = symlink(src.native().c_str(), dst.native().c_str());
+    int result = symlink(src.string().c_str(), dst.string().c_str());
     if (result != 0)
         throwex FileSystemException("Cannot create symbolic link!").Attach(src, dst);
 #elif defined(_WIN32) || defined(_WIN64)
@@ -166,7 +166,7 @@ Symlink Symlink::CreateSymlink(const Path& src, const Path& dst)
 Path Symlink::CreateHardlink(const Path& src, const Path& dst)
 {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-    int result = link(src.native().c_str(), dst.native().c_str());
+    int result = link(src.string().c_str(), dst.string().c_str());
     if (result != 0)
         throwex FileSystemException("Cannot create hard link!").Attach(src, dst);
 #elif defined(_WIN32) || defined(_WIN64)

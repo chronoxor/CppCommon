@@ -33,7 +33,7 @@ bool Directory::IsDirectoryExists() const
 {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     struct stat status;
-    int result = stat(native().c_str(), &status);
+    int result = stat(string().c_str(), &status);
     if (result != 0)
     {
         if ((errno == ENOENT) || (errno == ENOTDIR))
@@ -61,7 +61,7 @@ bool Directory::IsDirectoryExists() const
 bool Directory::IsDirectoryEmpty() const
 {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-    DIR* dir = opendir(native().c_str());
+    DIR* dir = opendir(string().c_str());
     if (dir == nullptr)
         throwex FileSystemException("Cannot open a directory!").Attach(*this);
 
@@ -297,7 +297,7 @@ Directory Directory::Create(const Path& path, const Flags<FileAttributes>& attri
     if (permissions & FilePermissions::ISVTX)
         mode |= S_ISVTX;
 
-    int result = mkdir(path.native().c_str(), mode);
+    int result = mkdir(path.string().c_str(), mode);
     if (result != 0)
         throwex FileSystemException("Cannot create directory!").Attach(path);
 #elif defined(_WIN32) || defined(_WIN64)

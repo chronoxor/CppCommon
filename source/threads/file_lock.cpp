@@ -38,12 +38,12 @@ public:
     Impl(const Path& path) : _path(path)
     {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-        _file = open(_path.native().c_str(), O_CREAT | O_EXCL | O_RDWR, 0644);
+        _file = open(_path.string().c_str(), O_CREAT | O_EXCL | O_RDWR, 0644);
         if (_file < 0)
         {
             if (errno == EEXIST)
             {
-                _file = open(_path.native().c_str(), O_CREAT | O_RDWR, 0644);
+                _file = open(_path.string().c_str(), O_CREAT | O_RDWR, 0644);
                 if (_file >= 0)
                 {
                     _owner = false;
@@ -113,7 +113,7 @@ public:
         // Remove the file-lock file (owner only)
         if (_owner)
         {
-            result = unlink(_path.native().c_str());
+            result = unlink(_path.string().c_str());
             if (result != 0)
                 fatality(FileSystemException("Cannot unlink the file-lock file!").Attach(_path));
         }

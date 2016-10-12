@@ -88,7 +88,7 @@ public:
         else
         {
             struct stat status;
-            int result = stat(_path.native().c_str(), &status);
+            int result = stat(_path.string().c_str(), &status);
             if (result != 0)
                 throwex FileSystemException("Cannot get the current file size!").Attach(_path);
             return (uint64_t)status.st_size;
@@ -167,7 +167,7 @@ public:
         if (permissions & FilePermissions::ISVTX)
             mode |= S_ISVTX;
 
-        _file = open(_path.native().c_str(), O_CREAT | O_EXCL | ((read && write) ? O_RDWR : (read ? O_RDONLY : (write ? O_WRONLY : 0))) | (truncate ? O_TRUNC : 0), mode);
+        _file = open(_path.string().c_str(), O_CREAT | O_EXCL | ((read && write) ? O_RDWR : (read ? O_RDONLY : (write ? O_WRONLY : 0))) | (truncate ? O_TRUNC : 0), mode);
         if (_file < 0)
             throwex FileSystemException("Cannot create a new file!").Attach(_path);
 #elif defined(_WIN32) || defined(_WIN64)
@@ -233,7 +233,7 @@ public:
         if (permissions & FilePermissions::ISVTX)
             mode |= S_ISVTX;
 
-        _file = open(_path.native().c_str(), ((read && write) ? O_RDWR : (read ? O_RDONLY : (write ? O_WRONLY : 0))) | (truncate ? O_TRUNC : 0), mode);
+        _file = open(_path.string().c_str(), ((read && write) ? O_RDWR : (read ? O_RDONLY : (write ? O_WRONLY : 0))) | (truncate ? O_TRUNC : 0), mode);
         if (_file < 0)
             throwex FileSystemException("Cannot create a new file!").Attach(_path);
 #elif defined(_WIN32) || defined(_WIN64)
@@ -299,7 +299,7 @@ public:
         if (permissions & FilePermissions::ISVTX)
             mode |= S_ISVTX;
 
-        _file = open(_path.native().c_str(), O_CREAT | ((read && write) ? O_RDWR : (read ? O_RDONLY : (write ? O_WRONLY : 0))) | (truncate ? O_TRUNC : 0), mode);
+        _file = open(_path.string().c_str(), O_CREAT | ((read && write) ? O_RDWR : (read ? O_RDONLY : (write ? O_WRONLY : 0))) | (truncate ? O_TRUNC : 0), mode);
         if (_file < 0)
             throwex FileSystemException("Cannot create a new file!").Attach(_path);
 #elif defined(_WIN32) || defined(_WIN64)
@@ -482,7 +482,7 @@ public:
         }
         else
         {
-            int result = truncate(_path.native().c_str(), (off_t)size);
+            int result = truncate(_path.string().c_str(), (off_t)size);
             if (result != 0)
                 throwex FileSystemException("Cannot resize the current file!").Attach(_path);
         }
@@ -650,7 +650,7 @@ bool File::IsFileExists() const
 {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     struct stat status;
-    int result = stat(native().c_str(), &status);
+    int result = stat(string().c_str(), &status);
     if (result != 0)
     {
         if ((errno == ENOENT) || (errno == ENOTDIR))

@@ -144,12 +144,13 @@ public:
     friend bool operator>=(const Path& path1, const Path& path2)
     { return path1._path >= path2._path; }
 
-    //! Get the native path value
-    const std::string& native() const noexcept { return _path; }
-
-    //! Get the pah value in UTF-8 format
-    std::string string() const { return std::string(_path); }
-    //! Get the path value in UTF-16 format
+    //! Get the path value as UTF-8 string
+    const std::string& string() const noexcept { return _path; }
+    //! Get the path value as UTF-16 string
+    std::u16string u16string() const { return Encoding::UTF8toUTF16(_path); }
+    //! Get the path value as UTF-32 string
+    std::u32string u32string() const { return Encoding::UTF8toUTF32(_path); }
+    //! Get the path value as a wide string
     std::wstring wstring() const { return Encoding::FromUTF8(_path); }
 
     //! Decompose root path from the current path

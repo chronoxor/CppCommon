@@ -311,7 +311,7 @@ Path Path::absolute() const
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     char buffer[PATH_MAX];
 
-    char* result = realpath(native().c_str(), buffer);
+    char* result = realpath(string().c_str(), buffer);
     if (result == nullptr)
         throwex FileSystemException("Cannot get the real path of the current path!").Attach(*this);
 
@@ -424,12 +424,12 @@ FileType Path::type() const
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     // Special check for symlink
     struct stat lstatus;
-    int lresult = lstat(native().c_str(), &lstatus);
+    int lresult = lstat(string().c_str(), &lstatus);
     if ((lresult == 0) && S_ISLNK(lstatus.st_mode))
         return FileType::SYMLINK;
 
     struct stat status;
-    int result = stat(native().c_str(), &status);
+    int result = stat(string().c_str(), &status);
     if (result != 0)
     {
         if ((errno == ENOENT) || (errno == ENOTDIR))
@@ -500,7 +500,7 @@ Flags<FilePermissions> Path::permissions() const
     Flags<FilePermissions> permissions;
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     struct stat status;
-    int result = stat(native().c_str(), &status);
+    int result = stat(string().c_str(), &status);
     if (result != 0)
     {
         if ((errno == ENOENT) || (errno == ENOTDIR))
@@ -541,7 +541,7 @@ UtcTimestamp Path::created() const
 {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     struct stat status;
-    int result = stat(native().c_str(), &status);
+    int result = stat(string().c_str(), &status);
     if (result != 0)
         throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
 
@@ -574,7 +574,7 @@ UtcTimestamp Path::modified() const
 {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     struct stat status;
-    int result = stat(native().c_str(), &status);
+    int result = stat(string().c_str(), &status);
     if (result != 0)
         throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
 
@@ -607,7 +607,7 @@ size_t Path::hardlinks() const
 {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     struct stat status;
-    int result = stat(native().c_str(), &status);
+    int result = stat(string().c_str(), &status);
     if (result != 0)
         throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
 
@@ -637,7 +637,7 @@ SpaceInfo Path::space() const
 {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     struct statvfs stvfs;
-    int result = statvfs(native().c_str(), &stvfs);
+    int result = statvfs(string().c_str(), &stvfs);
     if (result != 0)
         throwex FileSystemException("Cannot get the filesystem statistics of the path!").Attach(*this);
 
@@ -669,12 +669,12 @@ bool Path::IsEquivalent(const Path& path) const
 {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     struct stat st1;
-    int result = stat(native().c_str(), &st1);
+    int result = stat(string().c_str(), &st1);
     if (result != 0)
         throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
 
     struct stat st2;
-    result = stat(path.native().c_str(), &st2);
+    result = stat(path.string().c_str(), &st2);
     if (result != 0)
         throwex FileSystemException("Cannot get the status of the path!").Attach(path);
 
@@ -1021,7 +1021,7 @@ Path Path::Copy(const Path& src, const Path& dst, bool overwrite)
     {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         // Open the source file for reading
-        int source = open(src.native().c_str(), O_RDONLY, 0);
+        int source = open(src.string().c_str(), O_RDONLY, 0);
         if (source < 0)
             throwex FileSystemException("Cannot open source file for copy!").Attach(src);
 
@@ -1035,7 +1035,7 @@ Path Path::Copy(const Path& src, const Path& dst, bool overwrite)
         }
 
         // Open the destination file for writing
-        int destination = open(dst.native().c_str(), O_CREAT | O_WRONLY | O_TRUNC, status.st_mode);
+        int destination = open(dst.string().c_str(), O_CREAT | O_WRONLY | O_TRUNC, status.st_mode);
         if (destination < 0)
         {
             close(source);
@@ -1180,7 +1180,7 @@ Path Path::CopyAll(const Path& src, const Path& dst, bool overwrite)
 Path Path::Rename(const Path& src, const Path& dst)
 {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-    int result = rename(src.native().c_str(), dst.native().c_str());
+    int result = rename(src.string().c_str(), dst.string().c_str());
     if (result != 0)
         throwex FileSystemException("Cannot rename the path!").Attach(src, dst);
 #elif defined(_WIN32) || defined(_WIN64)
@@ -1195,13 +1195,13 @@ Path Path::Remove(const Path& path)
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     if (path.IsDirectory())
     {
-        int result = rmdir(path.native().c_str());
+        int result = rmdir(path.string().c_str());
         if (result != 0)
             throwex FileSystemException("Cannot remove the path directory!").Attach(path);
     }
     else
     {
-        int result = unlink(path.native().c_str());
+        int result = unlink(path.string().c_str());
         if (result != 0)
             throwex FileSystemException("Cannot unlink the path file!").Attach(path);
     }
@@ -1365,7 +1365,7 @@ void Path::SetPermissions(const Path& path, const Flags<FilePermissions>& permis
     if (permissions & FilePermissions::ISVTX)
         mode |= S_ISVTX;
 
-    int result = chmod(path.native().c_str(), mode);
+    int result = chmod(path.string().c_str(), mode);
     if (result != 0)
         throwex FileSystemException("Cannot set file permissions of the path!").Attach(path);
 #endif
@@ -1375,7 +1375,7 @@ void Path::SetCreated(const Path& path, const UtcTimestamp& timestamp)
 {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     struct stat status;
-    int result = stat(path.native().c_str(), &status);
+    int result = stat(path.string().c_str(), &status);
     if (result != 0)
         throwex FileSystemException("Cannot get the status of the path!").Attach(path);
 
@@ -1384,7 +1384,7 @@ void Path::SetCreated(const Path& path, const UtcTimestamp& timestamp)
     times[1].tv_sec = timestamp.seconds();
     times[1].tv_usec = timestamp.microseconds() % 1000000;
 
-    result = utimes(path.native().c_str(), times);
+    result = utimes(path.string().c_str(), times);
     if (result != 0)
         throwex FileSystemException("Cannot set file created time of the path!").Attach(path);
 #elif defined(_WIN32) || defined(_WIN64)
@@ -1415,7 +1415,7 @@ void Path::SetModified(const Path& path, const UtcTimestamp& timestamp)
 {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     struct stat status;
-    int result = stat(path.native().c_str(), &status);
+    int result = stat(path.string().c_str(), &status);
     if (result != 0)
         throwex FileSystemException("Cannot get the status of the path!").Attach(path);
 
@@ -1424,7 +1424,7 @@ void Path::SetModified(const Path& path, const UtcTimestamp& timestamp)
     times[1].tv_sec = timestamp.seconds();
     times[1].tv_usec = timestamp.microseconds() % 1000000;
 
-    result = utimes(path.native().c_str(), times);
+    result = utimes(path.string().c_str(), times);
     if (result != 0)
         throwex FileSystemException("Cannot set file modified time of the path!").Attach(path);
 #elif defined(_WIN32) || defined(_WIN64)
@@ -1454,7 +1454,7 @@ void Path::SetModified(const Path& path, const UtcTimestamp& timestamp)
 void Path::SetCurrent(const Path& path)
 {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-    int result = chdir(path.native().c_str());
+    int result = chdir(path.string().c_str());
     if (result != 0)
         throwex FileSystemException("Cannot set the current path of the current process!").Attach(path);
 #elif defined(_WIN32) || defined(_WIN64)

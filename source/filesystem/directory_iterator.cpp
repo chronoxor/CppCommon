@@ -56,7 +56,7 @@ public:
     SimpleImpl(const Path& parent) : DirectoryIterator::Impl(parent), _next(false), _end(false)
     {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-        _directory = opendir(_parent.native().c_str());
+        _directory = opendir(_parent.string().c_str());
         if (_directory == nullptr)
             throwex FileSystemException("Cannot open a directory!").Attach(_parent);
 #elif defined(_WIN32) || defined(_WIN64)
