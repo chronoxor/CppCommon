@@ -31,7 +31,7 @@ void validate(const std::vector<StackTrace::Frame>& frames)
     REQUIRE(frames.size() > 0);
     for (auto& frame : frames)
     {
-        REQUIRE(!frame.module.empty());
+        REQUIRE(frame.address != nullptr);
     }
 }
 

@@ -296,7 +296,9 @@ void Thread::SetAffinity(std::thread& thread, const std::bitset<64>& affinity)
 
 Thread::Priority Thread::GetPriority()
 {
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if defined(__CYGWIN__)
+    return Priority::NORMAL;
+#elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     int policy;
     struct sched_param sched;
     int result = pthread_getschedparam(pthread_self(), &policy, &sched);
@@ -344,7 +346,9 @@ Thread::Priority Thread::GetPriority()
 
 Thread::Priority Thread::GetPriority(std::thread& thread)
 {
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if defined(__CYGWIN__)
+    return Priority::NORMAL;
+#elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     int policy;
     struct sched_param sched;
     int result = pthread_getschedparam(thread.native_handle(), &policy, &sched);

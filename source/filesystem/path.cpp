@@ -1073,10 +1073,18 @@ Path Path::Copy(const Path& src, const Path& dst, bool overwrite)
         {
             size = read(source, buffer, countof(buffer));
             if (size < 0)
+            {
+                close(source);
+                close(destination);
                 throwex FileSystemException("Cannot read from the file!").Attach(src);
-            size = write(source, buffer, countof(buffer));
+            }
+            size = write(destination, buffer, size);
             if (size < 0)
+            {
+                close(source);
+                close(destination);
                 throwex FileSystemException("Cannot write into the file!").Attach(dst);
+            }
         } while (size > 0);
 #endif
 
