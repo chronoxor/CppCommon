@@ -90,7 +90,7 @@ public:
             throwex SystemException("Failed to try lock a semaphore for the given timeout!");
         return (result == 0);
 #elif defined(_WIN32) || defined(_WIN64)
-        DWORD result = WaitForSingleObject(_semaphore, std::max(1, (DWORD)timespan.milliseconds()));
+        DWORD result = WaitForSingleObject(_semaphore, std::max((DWORD)1, (DWORD)timespan.milliseconds()));
         if ((result != WAIT_OBJECT_0) && (result != WAIT_TIMEOUT))
             throwex SystemException("Failed to try lock a semaphore for the given timeout!");
         return (result == WAIT_OBJECT_0);
