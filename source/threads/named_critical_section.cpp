@@ -160,8 +160,8 @@ private:
     // Shared critical section structure
     struct CriticalSectionHeader
     {
-        long lock_count;
-        long recurse_count;
+        volatile uint64_t lock_count;
+        int recurse_count;
         uint64_t thread_id;
 
         CriticalSectionHeader() : lock_count(0), recurse_count(0), thread_id(0) {}

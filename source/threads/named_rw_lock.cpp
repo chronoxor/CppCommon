@@ -167,7 +167,7 @@ public:
 
     bool TryLockRead()
     {
-        uint32_t value = *_value;
+        uint32_t value = (uint32_t)*_value;
 
         if (value & LOCK_EXCLUSIVE_MASK)
             return false;
@@ -194,7 +194,7 @@ public:
 
     bool TryLockWrite()
     {
-        uint32_t value = *_value;
+        uint32_t value = (uint32_t)*_value;
 
         if (value & (LOCK_OWNED | LOCK_EXCLUSIVE_WAKING))
             return false;
@@ -210,7 +210,7 @@ public:
     {
         while (true)
         {
-            uint32_t value = *_value;
+            uint32_t value = (uint32_t)*_value;
 
             // Can't convert if there are other shared owners
             if (((value >> LOCK_SHARED_OWNERS_SHIFT) & LOCK_SHARED_OWNERS_MASK) != 1)
@@ -231,7 +231,7 @@ public:
 
         while (true)
         {
-            uint32_t value = *_value;
+            uint32_t value = (uint32_t)*_value;
 
             // Case 1: lock not owned AND no exclusive waiter is waking up AND
             // there are no shared owners AND there are no exclusive waiters
@@ -290,7 +290,7 @@ public:
 
         while (true)
         {
-            uint32_t value = *_value;
+            uint32_t value = (uint32_t)*_value;
 
             // Case 1: lock not owned AND an exclusive waiter is not waking up.
             // Here we don't have to check if there are exclusive waiters, because
@@ -329,7 +329,7 @@ public:
                     // At this point *no one* should be able to steal the lock from us.
                     do
                     {
-                        value = *_value;
+                        value = (uint32_t)*_value;
 #if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
                     } while (!__sync_bool_compare_and_swap(_value.ptr(), value, value + LOCK_OWNED - LOCK_EXCLUSIVE_WAKING));
 #elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
@@ -348,7 +348,7 @@ public:
     {
         while (true)
         {
-            uint32_t value = *_value;
+            uint32_t value = (uint32_t)*_value;
 
             // Case 1: there are multiple shared owners
             if (((value >> LOCK_SHARED_OWNERS_SHIFT) & LOCK_SHARED_OWNERS_MASK) > 1)
@@ -400,7 +400,7 @@ public:
     {
         while (true)
         {
-            uint32_t value = *_value;
+            uint32_t value = (uint32_t)*_value;
 
             // Case 1: if we have exclusive waiters, release one
             if ((value >> LOCK_EXCLUSIVE_WAITERS_SHIFT) & LOCK_EXCLUSIVE_WAITERS_MASK)
@@ -460,7 +460,7 @@ public:
     {
         while (true)
         {
-            uint32_t value = *_value;
+            uint32_t value = (uint32_t)*_value;
 
             uint32_t shared_waiters = (value >> LOCK_SHARED_WAITERS_SHIFT) & LOCK_SHARED_WAITERS_MASK;
 
@@ -491,7 +491,7 @@ public:
     }
 
 private:
-    SharedType<volatile uint32_t> _value;
+    SharedType<volatile uint64_t> _value;
 #if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
     sem_t* _exclusive_wake;
     sem_t* _shared_wake;
