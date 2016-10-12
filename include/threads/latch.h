@@ -32,9 +32,9 @@ public:
     /*!
         \param threads - Latch threads counter initial value
     */
-    explicit Latch(int threads) noexcept;
+    explicit Latch(int threads);
     Latch(const Latch&) = delete;
-    Latch(Latch&&) noexcept = default;
+    Latch(Latch&&) = default;
     ~Latch() = default;
 
     Latch& operator=(const Latch&) = delete;
