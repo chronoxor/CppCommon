@@ -21,15 +21,14 @@ matrix:
             - uuid-dev
     - os: linux
       compiler: clang
-      env: CLANG_VERSION=3.8
+      env: CLANG_VERSION=3.6
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.8
+            - llvm-toolchain-precise-3.6
           packages:
-            - clang-3.8
-            - libc++-dev
+            - clang-3.6
             - cmake
             - doxygen
             - graphviz
