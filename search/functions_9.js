@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['latch',['Latch',['../class_cpp_common_1_1_latch.html#aa8b17ab787e64a0fa3d3f6b905c6a717',1,'CppCommon::Latch::Latch(int threads)'],['../class_cpp_common_1_1_latch.html#abed87827f6fe7d8aae999e675652a86b',1,'CppCommon::Latch::Latch(const Latch &amp;)=delete'],['../class_cpp_common_1_1_latch.html#a8b7675cf1ee8e72858a4ca048ed91b3d',1,'CppCommon::Latch::Latch(Latch &amp;&amp;)=default']]],
+  ['latch',['Latch',['../class_cpp_common_1_1_latch.html#a48e79e6e10c06067af6197d0badd4ff0',1,'CppCommon::Latch::Latch(int threads) noexcept'],['../class_cpp_common_1_1_latch.html#abed87827f6fe7d8aae999e675652a86b',1,'CppCommon::Latch::Latch(const Latch &amp;)=delete'],['../class_cpp_common_1_1_latch.html#a8b7675cf1ee8e72858a4ca048ed91b3d',1,'CppCommon::Latch::Latch(Latch &amp;&amp;)=default']]],
   ['line',['line',['../class_cpp_common_1_1_source_location.html#a9ca875cf574b38a8fb42ddb8759e861b',1,'CppCommon::SourceLocation']]],
   ['local',['local',['../class_cpp_common_1_1_timestamp.html#a10d21877165e1160d060532a47fdf3fd',1,'CppCommon::Timestamp::local()'],['../class_cpp_common_1_1_timezone.html#a2329c07e980bc21ed34e8d0d8a034cd9',1,'CppCommon::Timezone::local()']]],
   ['localstamp',['localstamp',['../class_cpp_common_1_1_time.html#adbadf4983e9ebcf58d76bde585233fc7',1,'CppCommon::Time']]],
