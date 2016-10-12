@@ -6,14 +6,14 @@ matrix:
   include:
     - os: linux
       compiler: gcc
-      env: GCC_VERSION=5
+      env: GCC_VERSION=6
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - gcc-5
-            - g++-5
+            - gcc-6
+            - g++-6
             - cmake
             - doxygen
             - graphviz
@@ -21,16 +21,15 @@ matrix:
             - uuid-dev
     - os: linux
       compiler: clang
-      env: CLANG_VERSION=3.6 GCC_VERSION=5
+      env: CLANG_VERSION=3.9
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.6
+            - llvm-toolchain-precise-3.9
           packages:
-            - clang-3.6
-            - gcc-5
-            - g++-5
+            - clang-3.9
+            - libc++-dev
             - cmake
             - doxygen
             - graphviz
