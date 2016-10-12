@@ -16,6 +16,10 @@ void test(const std::string& utf8, const std::u16string& utf16, const std::u32st
     REQUIRE(Encoding::UTF16toUTF32(utf16) == utf32);
     REQUIRE(Encoding::UTF32toUTF8(utf32) == utf8);
     REQUIRE(Encoding::UTF32toUTF16(utf32) == utf16);
+
+    std::wstring wstr = Encoding::FromUTF8(utf8);
+    std::string str = Encoding::ToUTF8(wstr);
+    REQUIRE(str == utf8);
 }
 
 

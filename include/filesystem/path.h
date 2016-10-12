@@ -146,10 +146,6 @@ public:
 
     //! Get the path value as UTF-8 string
     const std::string& string() const noexcept { return _path; }
-    //! Get the path value as UTF-16 string
-    std::u16string u16string() const { return Encoding::UTF8toUTF16(_path); }
-    //! Get the path value as UTF-32 string
-    std::u32string u32string() const { return Encoding::UTF8toUTF32(_path); }
     //! Get the path value as a wide string
     std::wstring wstring() const { return Encoding::FromUTF8(_path); }
 
