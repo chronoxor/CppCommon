@@ -99,10 +99,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;algorithm&gt;</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) &amp;&amp; !defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &quot;<a class="code" href="shared__type_8h.html">system/shared_type.h</a>&quot;</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;pthread.h&gt;</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;windows.h&gt;</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#undef max</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#undef min</span></div>
@@ -115,11 +115,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;{</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    Impl(<span class="keyword">const</span> std::string&amp; <a class="code" href="class_cpp_common_1_1_named_event_auto_reset.html#aa1b83bad7b92f20d6a74157c6c4e1469">name</a>, <span class="keywordtype">bool</span> signaled) : _name(name)</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) &amp;&amp; !defined(__CYGWIN__)</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        , _shared(name)</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;#endif</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    {</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) &amp;&amp; !defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor"></span>        <span class="comment">// Only the owner should initializate a named auto-reset event</span></div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keywordflow">if</span> (_shared.owner())</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        {</div>
@@ -153,7 +153,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            _shared-&gt;signaled = signaled ? 1 : 0;</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        }</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor"></span>        _event = CreateEventA(<span class="keyword">nullptr</span>, FALSE, signaled ? TRUE : FALSE, name.c_str());</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keywordflow">if</span> (_event == <span class="keyword">nullptr</span>)</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> SystemException(<span class="stringliteral">&quot;Failed to create or open a named auto-reset event!&quot;</span>);</div>
@@ -162,7 +162,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    ~Impl()</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    {</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) &amp;&amp; !defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor"></span>        <span class="comment">// Only the owner should destroy a named auto-reset event</span></div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <span class="keywordflow">if</span> (_shared.owner())</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        {</div>
@@ -173,7 +173,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            <span class="keywordflow">if</span> (result != 0)</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;                <a class="code" href="fatal_8h.html#a58f99c4783afc0f169f7b232d1659577">fatality</a>(SystemException(<span class="stringliteral">&quot;Failed to destroy a conditional variable for the named auto-reset event!&quot;</span>, result));</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        }</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor"></span>        <span class="keywordflow">if</span> (!CloseHandle(_event))</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;            <a class="code" href="fatal_8h.html#a58f99c4783afc0f169f7b232d1659577">fatality</a>(SystemException(<span class="stringliteral">&quot;Failed to close a named auto-reset event!&quot;</span>));</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="preprocessor">#endif</span></div>
@@ -186,7 +186,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_cpp_common_1_1_named_event_auto_reset.html#aa605b78b5ed76dac90278796dbe0b705">Signal</a>()</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    {</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="preprocessor">#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)</span></div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="preprocessor">#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) &amp;&amp; !defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="preprocessor"></span>        <span class="keywordtype">int</span> result = pthread_mutex_lock(&amp;_shared-&gt;mutex);</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <span class="keywordflow">if</span> (result != 0)</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;            <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> SystemException(<span class="stringliteral">&quot;Failed to lock a mutex for the named auto-reset event!&quot;</span>, result);</div>
@@ -197,7 +197,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        result = pthread_cond_signal(&amp;_shared-&gt;cond);</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        <span class="keywordflow">if</span> (result != 0)</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> SystemException(<span class="stringliteral">&quot;Failed to signal a named auto-reset event!&quot;</span>, result);</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="preprocessor"></span>        <span class="keywordflow">if</span> (!SetEvent(_event))</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;            <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> SystemException(<span class="stringliteral">&quot;Failed to signal a named auto-reset event!&quot;</span>);</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="preprocessor">#endif</span></div>
@@ -205,7 +205,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_cpp_common_1_1_named_event_auto_reset.html#aab4e0386c79f58789753fdc4936e6339">TryWait</a>()</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    {</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="preprocessor">#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)</span></div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="preprocessor">#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) &amp;&amp; !defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="preprocessor"></span>        <span class="keywordtype">int</span> result = pthread_mutex_lock(&amp;_shared-&gt;mutex);</div>
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        <span class="keywordflow">if</span> (result != 0)</div>
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;            <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> SystemException(<span class="stringliteral">&quot;Failed to lock a mutex for the named auto-reset event!&quot;</span>, result);</div>
@@ -215,7 +215,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        <span class="keywordflow">if</span> (result != 0)</div>
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;            <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> SystemException(<span class="stringliteral">&quot;Failed to unlock a mutex for the named auto-reset event!&quot;</span>, result);</div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;        <span class="keywordflow">return</span> signaled;</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="preprocessor"></span>        DWORD result = WaitForSingleObject(_event, 0);</div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        <span class="keywordflow">if</span> ((result != WAIT_OBJECT_0) &amp;&amp; (result != WAIT_TIMEOUT))</div>
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;            <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> SystemException(<span class="stringliteral">&quot;Failed to try lock a named auto-reset event!&quot;</span>);</div>
@@ -227,7 +227,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    {</div>
 <div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;        <span class="keywordflow">if</span> (timespan &lt; 0)</div>
 <div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="class_cpp_common_1_1_named_event_auto_reset.html#aab4e0386c79f58789753fdc4936e6339">TryWait</a>();</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;<span class="preprocessor">#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)</span></div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;<span class="preprocessor">#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) &amp;&amp; !defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;<span class="preprocessor"></span>        <span class="keyword">struct </span>timespec timeout;</div>
 <div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;        timeout.tv_sec = timespan.seconds();</div>
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        timeout.tv_nsec = timespan.nanoseconds() % 1000000000;</div>
@@ -248,7 +248,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;        <span class="keywordflow">if</span> (result != 0)</div>
 <div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;            <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> SystemException(<span class="stringliteral">&quot;Failed to unlock a mutex for the named auto-reset event!&quot;</span>, result);</div>
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        <span class="keywordflow">return</span> signaled;</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<span class="preprocessor"></span>        DWORD result = WaitForSingleObject(_event, (DWORD)std::max(1ll, timespan.milliseconds()));</div>
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;        <span class="keywordflow">if</span> ((result != WAIT_OBJECT_0) &amp;&amp; (result != WAIT_TIMEOUT))</div>
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;            <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> SystemException(<span class="stringliteral">&quot;Failed to try lock a named auto-reset event for the given timeout!&quot;</span>);</div>
@@ -258,7 +258,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;</div>
 <div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_cpp_common_1_1_named_event_auto_reset.html#a250c6fd4dd41b99e135a4d221fbaa0a8">Wait</a>()</div>
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    {</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;<span class="preprocessor">#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)</span></div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;<span class="preprocessor">#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) &amp;&amp; !defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;<span class="preprocessor"></span>        <span class="keywordtype">int</span> result = pthread_mutex_lock(&amp;_shared-&gt;mutex);</div>
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;        <span class="keywordflow">if</span> (result != 0)</div>
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;            <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> SystemException(<span class="stringliteral">&quot;Failed to lock a mutex for the named auto-reset event!&quot;</span>, result);</div>
@@ -272,7 +272,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;        result = pthread_mutex_unlock(&amp;_shared-&gt;mutex);</div>
 <div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;        <span class="keywordflow">if</span> (result != 0)</div>
 <div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;            <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> SystemException(<span class="stringliteral">&quot;Failed to unlock a mutex for the named auto-reset event!&quot;</span>, result);</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;<span class="preprocessor"></span>        DWORD result = WaitForSingleObject(_event, INFINITE);</div>
 <div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;        <span class="keywordflow">if</span> (result != WAIT_OBJECT_0)</div>
 <div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;            <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> SystemException(<span class="stringliteral">&quot;Failed to lock a named auto-reset event!&quot;</span>);</div>
@@ -281,7 +281,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;</div>
 <div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;<span class="keyword">private</span>:</div>
 <div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    std::string _name;</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;<span class="preprocessor">#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)</span></div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;<span class="preprocessor">#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) &amp;&amp; !defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;<span class="preprocessor"></span>    <span class="comment">// Shared auto-reset event structure</span></div>
 <div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    <span class="keyword">struct </span>EventHeader</div>
 <div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    {</div>
@@ -292,7 +292,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;</div>
 <div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;    <span class="comment">// Shared auto-reset event structure wrapper</span></div>
 <div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;    SharedType&lt;EventHeader&gt; _shared;</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;<span class="preprocessor"></span>    HANDLE _event;</div>
 <div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;<span class="preprocessor"></span>};</div>
