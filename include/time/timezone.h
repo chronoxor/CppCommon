@@ -35,11 +35,11 @@ public:
     explicit Timezone(const std::string& name, const Timespan& offset, const Timespan& dstoffset = Timespan::zero())
         : _name(name), _offset(offset), _dstoffset(dstoffset)
     {}
-    Timezone(const Timezone&) noexcept = default;
+    Timezone(const Timezone&) = default;
     Timezone(Timezone&&) noexcept = default;
-    ~Timezone() noexcept = default;
+    ~Timezone() = default;
 
-    Timezone& operator=(const Timezone&) noexcept = default;
+    Timezone& operator=(const Timezone&) = default;
     Timezone& operator=(Timezone&&) noexcept = default;
 
     // Timezone comparison
