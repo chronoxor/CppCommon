@@ -29,13 +29,8 @@ install:
 
 # Build scripts
 build_script:
-  - cd scripts
-  - ./01-generate-VisualStudio.bat
-  - ./02-build-VisualStudio.bat
-  - ./03-tests.bat
-  - ./04-install-VisualStudio.bat
-  - ./05-doxygen-VisualStudio.bat
-  - ./06-clean.bat
+  - cd build
+  - call vs.bat
 
 # Test scripts
 test: off
