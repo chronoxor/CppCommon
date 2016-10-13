@@ -40,11 +40,11 @@ public:
     */
     explicit MPSCRingBuffer(size_t capacity, size_t concurrency = std::thread::hardware_concurrency());
     MPSCRingBuffer(const MPSCRingBuffer&) = delete;
-    MPSCRingBuffer(MPSCRingBuffer&&) noexcept = default;
+    MPSCRingBuffer(MPSCRingBuffer&&) = default;
     ~MPSCRingBuffer() = default;
 
     MPSCRingBuffer& operator=(const MPSCRingBuffer&) = delete;
-    MPSCRingBuffer& operator=(MPSCRingBuffer&&) noexcept = default;
+    MPSCRingBuffer& operator=(MPSCRingBuffer&&) = default;
 
     //! Is ring buffer empty?
     bool empty() const noexcept { return (size() == 0); }
