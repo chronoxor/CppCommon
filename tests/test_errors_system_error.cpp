@@ -16,6 +16,6 @@ TEST_CASE("System error wrapper", "[CppCommon][Errors]")
 
     REQUIRE(SystemError::GetLast() == 0);
 
-    REQUIRE(!SystemError::Description().empty());
-    REQUIRE(!SystemError::Description(SystemError::GetLast()).empty());
+    REQUIRE(SystemError::Description().size() >= 0);
+    REQUIRE(SystemError::Description(SystemError::GetLast()).size() >= 0);
 }
