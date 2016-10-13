@@ -10,6 +10,7 @@
 #define CPPCOMMON_THREADS_MPSC_LINKED_QUEUE_H
 
 #include <atomic>
+#include <cstring>
 #include <utility>
 
 namespace CppCommon {

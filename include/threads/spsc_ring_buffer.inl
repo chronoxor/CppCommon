@@ -12,6 +12,10 @@ inline SPSCRingBuffer::SPSCRingBuffer(size_t capacity) : _capacity(capacity), _m
 {
     assert((capacity > 1) && "Ring buffer capacity must be greater than one!");
     assert(((capacity & (capacity - 1)) == 0) && "Ring buffer capacity must be a power of two!");
+
+    memset(_pad0, 0, sizeof(cache_line_pad));
+    memset(_pad1, 0, sizeof(cache_line_pad));
+    memset(_pad2, 0, sizeof(cache_line_pad));
 }
 
 inline size_t SPSCRingBuffer::size() const noexcept

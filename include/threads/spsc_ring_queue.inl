@@ -13,6 +13,10 @@ inline SPSCRingQueue<T>::SPSCRingQueue(size_t capacity) : _capacity(capacity - 1
 {
     assert((capacity > 1) && "Ring queue capacity must be greater than one!");
     assert(((capacity & (capacity - 1)) == 0) && "Ring queue capacity must be a power of two!");
+
+    memset(_pad0, 0, sizeof(cache_line_pad));
+    memset(_pad1, 0, sizeof(cache_line_pad));
+    memset(_pad2, 0, sizeof(cache_line_pad));
 }
 
 template<typename T>

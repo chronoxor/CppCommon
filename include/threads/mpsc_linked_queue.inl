@@ -11,6 +11,9 @@ namespace CppCommon {
 template<typename T>
 inline MPSCLinkedQueue<T>::MPSCLinkedQueue() : _head(new Node), _tail(_head.load(std::memory_order_relaxed))
 {
+    memset(_pad0, 0, sizeof(cache_line_pad));
+    memset(_pad1, 0, sizeof(cache_line_pad));
+
     // Linked queue is initialized with a fake node as a head node
     Node* front = _head.load(std::memory_order_relaxed);
     front->next.store(nullptr, std::memory_order_relaxed);
