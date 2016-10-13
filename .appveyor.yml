@@ -13,24 +13,39 @@ clone_depth: 5
 only_commits:
   message: build
 
+# Build matrix
+environment:
+  matrix:
+    - type: Cygwin
+      build: C:\cygwin64\bin\bash -lc "cd $APPVEYOR_BUILD_FOLDER/build; exec 0</dev/null; ./cygwin.sh"
+      command: C:\cygwin64\bin\bash -lc
+    - type: VisualStudio
+      build: call vs.bat
+      command: cmd /C
+
+# Allow to fail on first error in matrix
+matrix:
+  fast_finish: true
+
 # Scripts that are called at very beginning, before repo cloning
 init:
-  - git config --global user.name "AppVeyor"
-  - git config --global user.email "team@appveyor.com"
-  - git config --global push.default simple
+  - '%command% "git config --global user.name "AppVeyor""'
+  - '%command% "git config --global user.email "team@appveyor.com""'
+  - '%command% "git config --global push.default simple"'
   - choco install doxygen.portable
   - choco install graphviz.portable
 
 # Scripts that run after cloning repository
 install:
-  - set INCLUDE=C:\Program Files (x86)\Windows Kits\10\Include\10.0.14393.0\um;%INCLUDE%
-  - set LIB=C:\Program Files (x86)\Windows Kits\10\Lib\10.0.14393.0\um\x64;%LIB%
+  - if "%type%"=="Cygwin" C:\cygwin64\setup-x86_64.exe --quiet-mode --no-shortcuts --root "C:\cygwin64" --local-package-dir "C:\cygwin64\var\cache\setup" --packages doxygen,graphviz
+  - if "%type%"=="VisualStudio" set INCLUDE=C:\Program Files (x86)\Windows Kits\10\Include\10.0.14393.0\um;%INCLUDE%
+  - if "%type%"=="VisualStudio" set LIB=C:\Program Files (x86)\Windows Kits\10\Lib\10.0.14393.0\um\x64;%LIB%
   - git submodule update --init --recursive --remote
 
 # Build scripts
 build_script:
   - cd build
-  - call vs.bat
+  - '%build%'
 
 # Test scripts
 test: off
