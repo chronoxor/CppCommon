@@ -31,11 +31,11 @@ class MPSCLinkedQueue
 public:
     MPSCLinkedQueue();
     MPSCLinkedQueue(const MPSCLinkedQueue&) = delete;
-    MPSCLinkedQueue(MPSCLinkedQueue&&) noexcept = default;
+    MPSCLinkedQueue(MPSCLinkedQueue&&) = default;
     ~MPSCLinkedQueue();
 
     MPSCLinkedQueue& operator=(const MPSCLinkedQueue&) = delete;
-    MPSCLinkedQueue& operator=(MPSCLinkedQueue&&) noexcept = default;
+    MPSCLinkedQueue& operator=(MPSCLinkedQueue&&) = default;
 
     //! Enqueue an item into the linked queue (multiple producers threads method)
     /*!
