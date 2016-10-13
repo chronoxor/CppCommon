@@ -37,7 +37,7 @@ init:
 
 # Scripts that run after cloning repository
 install:
-  - if "%type%"=="Cygwin" C:\cygwin64\setup-x86_64.exe --quiet-mode --no-shortcuts --root "C:\cygwin64" --local-package-dir "C:\cygwin64\var\cache\setup" --packages doxygen,graphviz
+  - if "%type%"=="Cygwin" C:\cygwin64\setup-x86_64.exe --quiet-mode --no-shortcuts --root "C:\cygwin64" --local-package-dir "C:\cygwin64\var\cache\setup" --packages libuuid-devel,doxygen,graphviz
   - if "%type%"=="VisualStudio" set INCLUDE=C:\Program Files (x86)\Windows Kits\10\Include\10.0.14393.0\um;%INCLUDE%
   - if "%type%"=="VisualStudio" set LIB=C:\Program Files (x86)\Windows Kits\10\Lib\10.0.14393.0\um\x64;%LIB%
   - git submodule update --init --recursive --remote
