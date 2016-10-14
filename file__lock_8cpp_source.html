@@ -98,11 +98,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="filesystem_2exceptions_8h.html">filesystem/exceptions.h</a>&quot;</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="thread_8h.html">threads/thread.h</a>&quot;</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) &amp;&amp; !defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;sys/file.h&gt;</span></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;fcntl.h&gt;</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;unistd.h&gt;</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;windows.h&gt;</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#undef Yield</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
@@ -122,7 +122,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    Impl(<span class="keyword">const</span> Path&amp; <a class="code" href="class_cpp_common_1_1_file_lock.html#a7a7cbfb9ef164a8e30776773e3632e2d">path</a>) : _path(path)</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    {</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) &amp;&amp; !defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor"></span>        _file = open(_path.string().c_str(), O_CREAT | O_EXCL | O_RDWR, 0644);</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keywordflow">if</span> (_file &lt; 0)</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        {</div>
@@ -142,7 +142,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        }</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> FileSystemException(<span class="stringliteral">&quot;Cannot create or open file-lock! file&quot;</span>).Attach(_path);</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor"></span>        std::wstring wpath = _path.wstring();</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="comment">// Retries in CreateFile, see http://support.microsoft.com/kb/316609</span></div>
@@ -190,7 +190,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    ~Impl()</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    {</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="preprocessor">#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="preprocessor">#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) &amp;&amp; !defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="preprocessor"></span>        <span class="keywordtype">int</span> result = close(_file);</div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <span class="keywordflow">if</span> (result != 0)</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            <a class="code" href="fatal_8h.html#a58f99c4783afc0f169f7b232d1659577">fatality</a>(FileSystemException(<span class="stringliteral">&quot;Cannot close the file-lock descriptor!&quot;</span>).Attach(_path));</div>
@@ -202,7 +202,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;            <span class="keywordflow">if</span> (result != 0)</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;                <a class="code" href="fatal_8h.html#a58f99c4783afc0f169f7b232d1659577">fatality</a>(FileSystemException(<span class="stringliteral">&quot;Cannot unlink the file-lock file!&quot;</span>).Attach(_path));</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        }</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="preprocessor"></span>        <span class="keywordflow">if</span> (!CloseHandle(_file))</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;            <a class="code" href="fatal_8h.html#a58f99c4783afc0f169f7b232d1659577">fatality</a>(FileSystemException(<span class="stringliteral">&quot;Cannot close the file-lock handle!&quot;</span>).Attach(_path));</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
@@ -236,7 +236,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;        }</div>
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;        <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;           <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;<span class="preprocessor">#elif defined(unix) || defined(__unix) || defined(__unix__)</span></div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;<span class="preprocessor">#elif (defined(unix) || defined(__unix) || defined(__unix__)) &amp;&amp; !defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;<span class="preprocessor"></span>        <span class="keywordtype">int</span> result = flock(_file, LOCK_SH | LOCK_NB);</div>
 <div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;        <span class="keywordflow">if</span> (result != 0)</div>
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;        {</div>
@@ -247,7 +247,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        }</div>
 <div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;        <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;           <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="preprocessor"></span>        OVERLAPPED overlapped;</div>
 <div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        ZeroMemory(&amp;overlapped, <span class="keyword">sizeof</span>(OVERLAPPED));</div>
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;        <span class="keywordflow">return</span> LockFileEx(_file, LOCKFILE_FAIL_IMMEDIATELY, 0, MAXDWORD, MAXDWORD, &amp;overlapped) ? <span class="keyword">true</span> : <span class="keyword">false</span>;</div>
@@ -273,7 +273,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;        }</div>
 <div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;        <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;           <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;<span class="preprocessor">#elif defined(unix) || defined(__unix) || defined(__unix__)</span></div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;<span class="preprocessor">#elif (defined(unix) || defined(__unix) || defined(__unix__)) &amp;&amp; !defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;<span class="preprocessor"></span>        <span class="keywordtype">int</span> result = flock(_file, LOCK_EX | LOCK_NB);</div>
 <div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;        <span class="keywordflow">if</span> (result != 0)</div>
 <div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;        {</div>
@@ -284,7 +284,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;        }</div>
 <div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;        <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;           <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;<span class="preprocessor"></span>        OVERLAPPED overlapped;</div>
 <div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;        ZeroMemory(&amp;overlapped, <span class="keyword">sizeof</span>(OVERLAPPED));</div>
 <div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;        <span class="keywordflow">return</span> LockFileEx(_file, LOCKFILE_EXCLUSIVE_LOCK | LOCKFILE_FAIL_IMMEDIATELY, 0, MAXDWORD, MAXDWORD, &amp;overlapped) ? <span class="keyword">true</span> : <span class="keyword">false</span>;</div>
@@ -303,11 +303,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;        <span class="keywordtype">int</span> result = fcntl(_file, F_OFD_SETLKW, &amp;lock);</div>
 <div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;        <span class="keywordflow">if</span> (result == -1)</div>
 <div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;            <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> FileSystemException(<span class="stringliteral">&quot;Failed to lock for read!&quot;</span>).Attach(_path);</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;<span class="preprocessor">#elif defined(unix) || defined(__unix) || defined(__unix__)</span></div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;<span class="preprocessor">#elif (defined(unix) || defined(__unix) || defined(__unix__)) &amp;&amp; !defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;<span class="preprocessor"></span>        <span class="keywordtype">int</span> result = flock(_file, LOCK_SH);</div>
 <div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;        <span class="keywordflow">if</span> (result != 0)</div>
 <div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;            <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> FileSystemException(<span class="stringliteral">&quot;Failed to lock for read!&quot;</span>).Attach(_path);</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;<span class="preprocessor"></span>        OVERLAPPED overlapped;</div>
 <div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;        ZeroMemory(&amp;overlapped, <span class="keyword">sizeof</span>(OVERLAPPED));</div>
 <div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;        <span class="keywordflow">if</span> (!LockFileEx(_file, 0, 0, MAXDWORD, MAXDWORD, &amp;overlapped))</div>
@@ -327,11 +327,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;        <span class="keywordtype">int</span> result = fcntl(_file, F_OFD_SETLKW, &amp;lock);</div>
 <div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;        <span class="keywordflow">if</span> (result == -1)</div>
 <div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;            <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> FileSystemException(<span class="stringliteral">&quot;Failed to lock for write!&quot;</span>).Attach(_path);</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;<span class="preprocessor">#elif defined(unix) || defined(__unix) || defined(__unix__)</span></div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;<span class="preprocessor">#elif (defined(unix) || defined(__unix) || defined(__unix__)) &amp;&amp; !defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;<span class="preprocessor"></span>        <span class="keywordtype">int</span> result = flock(_file, LOCK_EX);</div>
 <div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;        <span class="keywordflow">if</span> (result != 0)</div>
 <div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;            <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> FileSystemException(<span class="stringliteral">&quot;Failed to lock for write!&quot;</span>).Attach(_path);</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;<span class="preprocessor"></span>        OVERLAPPED overlapped;</div>
 <div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;        ZeroMemory(&amp;overlapped, <span class="keyword">sizeof</span>(OVERLAPPED));</div>
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;        <span class="keywordflow">if</span> (!LockFileEx(_file, LOCKFILE_EXCLUSIVE_LOCK, 0, MAXDWORD, MAXDWORD, &amp;overlapped))</div>
@@ -351,11 +351,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;        <span class="keywordtype">int</span> result = fcntl(_file, F_OFD_SETLK, &amp;lock);</div>
 <div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;        <span class="keywordflow">if</span> (result != 0)</div>
 <div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;            <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> FileSystemException(<span class="stringliteral">&quot;Failed to unlock the read lock!&quot;</span>).Attach(_path);</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;<span class="preprocessor">#elif defined(unix) || defined(__unix) || defined(__unix__)</span></div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;<span class="preprocessor">#elif (defined(unix) || defined(__unix) || defined(__unix__)) &amp;&amp; !defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;<span class="preprocessor"></span>        <span class="keywordtype">int</span> result = flock(_file, LOCK_UN);</div>
 <div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;        <span class="keywordflow">if</span> (result != 0)</div>
 <div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;            <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> FileSystemException(<span class="stringliteral">&quot;Failed to unlock the read lock!&quot;</span>).Attach(_path);</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;<span class="preprocessor"></span>        OVERLAPPED overlapped;</div>
 <div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;        ZeroMemory(&amp;overlapped, <span class="keyword">sizeof</span>(OVERLAPPED));</div>
 <div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;        <span class="keywordflow">if</span> (!UnlockFileEx(_file, 0, MAXDWORD, MAXDWORD, &amp;overlapped))</div>
@@ -375,11 +375,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;        <span class="keywordtype">int</span> result = fcntl(_file, F_OFD_SETLK, &amp;lock);</div>
 <div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;        <span class="keywordflow">if</span> (result != 0)</div>
 <div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;            <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> FileSystemException(<span class="stringliteral">&quot;Failed to unlock the write lock!&quot;</span>).Attach(_path);</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;<span class="preprocessor">#elif defined(unix) || defined(__unix) || defined(__unix__)</span></div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;<span class="preprocessor">#elif (defined(unix) || defined(__unix) || defined(__unix__)) &amp;&amp; !defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;<span class="preprocessor"></span>        <span class="keywordtype">int</span> result = flock(_file, LOCK_UN);</div>
 <div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;        <span class="keywordflow">if</span> (result != 0)</div>
 <div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;            <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> FileSystemException(<span class="stringliteral">&quot;Failed to unlock the write lock!&quot;</span>).Attach(_path);</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)  || defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;<span class="preprocessor"></span>        OVERLAPPED overlapped;</div>
 <div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;        ZeroMemory(&amp;overlapped, <span class="keyword">sizeof</span>(OVERLAPPED));</div>
 <div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;        <span class="keywordflow">if</span> (!UnlockFileEx(_file, 0, MAXDWORD, MAXDWORD, &amp;overlapped))</div>
@@ -389,9 +389,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;</div>
 <div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;<span class="keyword">private</span>:</div>
 <div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;    Path _path;</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;<span class="preprocessor">#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)</span></div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;<span class="preprocessor">#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) &amp;&amp; !defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;<span class="preprocessor"></span>    <span class="keywordtype">int</span> _file;</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;<span class="preprocessor"></span>    HANDLE _file;</div>
 <div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;<span class="preprocessor"></span>    <span class="keywordtype">bool</span> _owner;</div>
