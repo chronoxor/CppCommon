@@ -12,11 +12,11 @@
 #include "filesystem/exceptions.h"
 #include "threads/thread.h"
 
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
 #include <sys/file.h>
 #include <fcntl.h>
 #include <unistd.h>
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
 #include <windows.h>
 #undef Yield
 #endif
@@ -37,7 +37,7 @@ class FileLock::Impl
 public:
     Impl(const Path& path) : _path(path)
     {
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
         _file = open(_path.string().c_str(), O_CREAT | O_EXCL | O_RDWR, 0644);
         if (_file < 0)
         {
@@ -57,7 +57,7 @@ public:
             return;
         }
         throwex FileSystemException("Cannot create or open file-lock! file").Attach(_path);
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         std::wstring wpath = _path.wstring();
 
         // Retries in CreateFile, see http://support.microsoft.com/kb/316609
@@ -105,7 +105,7 @@ public:
 
     ~Impl()
     {
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
         int result = close(_file);
         if (result != 0)
             fatality(FileSystemException("Cannot close the file-lock descriptor!").Attach(_path));
@@ -117,7 +117,7 @@ public:
             if (result != 0)
                 fatality(FileSystemException("Cannot unlink the file-lock file!").Attach(_path));
         }
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         if (!CloseHandle(_file))
             fatality(FileSystemException("Cannot close the file-lock handle!").Attach(_path));
 
@@ -151,7 +151,7 @@ public:
         }
         else
            return true;
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#elif (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__CYGWIN__)
         int result = flock(_file, LOCK_SH | LOCK_NB);
         if (result != 0)
         {
@@ -162,7 +162,7 @@ public:
         }
         else
            return true;
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         OVERLAPPED overlapped;
         ZeroMemory(&overlapped, sizeof(OVERLAPPED));
         return LockFileEx(_file, LOCKFILE_FAIL_IMMEDIATELY, 0, MAXDWORD, MAXDWORD, &overlapped) ? true : false;
@@ -188,7 +188,7 @@ public:
         }
         else
            return true;
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#elif (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__CYGWIN__)
         int result = flock(_file, LOCK_EX | LOCK_NB);
         if (result != 0)
         {
@@ -199,7 +199,7 @@ public:
         }
         else
            return true;
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         OVERLAPPED overlapped;
         ZeroMemory(&overlapped, sizeof(OVERLAPPED));
         return LockFileEx(_file, LOCKFILE_EXCLUSIVE_LOCK | LOCKFILE_FAIL_IMMEDIATELY, 0, MAXDWORD, MAXDWORD, &overlapped) ? true : false;
@@ -218,11 +218,11 @@ public:
         int result = fcntl(_file, F_OFD_SETLKW, &lock);
         if (result == -1)
             throwex FileSystemException("Failed to lock for read!").Attach(_path);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#elif (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__CYGWIN__)
         int result = flock(_file, LOCK_SH);
         if (result != 0)
             throwex FileSystemException("Failed to lock for read!").Attach(_path);
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         OVERLAPPED overlapped;
         ZeroMemory(&overlapped, sizeof(OVERLAPPED));
         if (!LockFileEx(_file, 0, 0, MAXDWORD, MAXDWORD, &overlapped))
@@ -242,11 +242,11 @@ public:
         int result = fcntl(_file, F_OFD_SETLKW, &lock);
         if (result == -1)
             throwex FileSystemException("Failed to lock for write!").Attach(_path);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#elif (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__CYGWIN__)
         int result = flock(_file, LOCK_EX);
         if (result != 0)
             throwex FileSystemException("Failed to lock for write!").Attach(_path);
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         OVERLAPPED overlapped;
         ZeroMemory(&overlapped, sizeof(OVERLAPPED));
         if (!LockFileEx(_file, LOCKFILE_EXCLUSIVE_LOCK, 0, MAXDWORD, MAXDWORD, &overlapped))
@@ -266,11 +266,11 @@ public:
         int result = fcntl(_file, F_OFD_SETLK, &lock);
         if (result != 0)
             throwex FileSystemException("Failed to unlock the read lock!").Attach(_path);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#elif (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__CYGWIN__)
         int result = flock(_file, LOCK_UN);
         if (result != 0)
             throwex FileSystemException("Failed to unlock the read lock!").Attach(_path);
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         OVERLAPPED overlapped;
         ZeroMemory(&overlapped, sizeof(OVERLAPPED));
         if (!UnlockFileEx(_file, 0, MAXDWORD, MAXDWORD, &overlapped))
@@ -290,11 +290,11 @@ public:
         int result = fcntl(_file, F_OFD_SETLK, &lock);
         if (result != 0)
             throwex FileSystemException("Failed to unlock the write lock!").Attach(_path);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#elif (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__CYGWIN__)
         int result = flock(_file, LOCK_UN);
         if (result != 0)
             throwex FileSystemException("Failed to unlock the write lock!").Attach(_path);
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64)  || defined(__CYGWIN__)
         OVERLAPPED overlapped;
         ZeroMemory(&overlapped, sizeof(OVERLAPPED));
         if (!UnlockFileEx(_file, 0, MAXDWORD, MAXDWORD, &overlapped))
@@ -304,9 +304,9 @@ public:
 
 private:
     Path _path;
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
     int _file;
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
     HANDLE _file;
 #endif
     bool _owner;
