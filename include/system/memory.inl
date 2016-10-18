@@ -18,12 +18,11 @@ inline T* Memory::Align(const T* ptr, size_t align, bool upwards)
     assert(((align & (align - 1)) == 0) && "Align must be a power of two!");
 
     uintptr_t address = (uintptr_t)ptr;
-    size_t offset = address % align;
 
     if (upwards)
-        return (T*)(address + ((offset != 0) ? (align - offset) : 0));
+        return (T*)((address + (align - 1)) & -((int)align));
     else
-        return (T*)(address - offset);
+        return (T*)(address & -((int)align));
 }
 
 } // namespace CppCommon
