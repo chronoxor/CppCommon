@@ -9,6 +9,7 @@
 #ifndef CPPCOMMON_SYSTEM_MEMORY_H
 #define CPPCOMMON_SYSTEM_MEMORY_H
 
+#include <cassert>
 #include <cstdint>
 
 namespace CppCommon {
@@ -34,10 +35,22 @@ public:
     static int64_t RamTotal();
     //! Free RAM in bytes
     static int64_t RamFree();
+
+    //! Align pointer (upwards or downwards)
+    /*!
+        \param ptr - Pointer
+        \param align - Must be a pointer of two
+        \param upwards - Upwards flag (default is true)
+        \return Aligned pointer
+    */
+    template <typename T>
+    static T* Align(const T* ptr, size_t align, bool upwards = true);
 };
 
 /*! \example system_memory.cpp Memory management example */
 
 } // namespace CppCommon
+
+#include "memory.inl"
 
 #endif // CPPCOMMON_SYSTEM_MEMORY_H
