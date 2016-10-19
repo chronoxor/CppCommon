@@ -15,7 +15,7 @@ namespace CppCommon {
 
 std::string Encoding::ToUTF8(const std::wstring& wstr)
 {
-#if defined(__CYGWIN__)
+#if defined(__CYGWIN__) || defined(__MINGW32__) || defined(__MINGW64__)
     std::wstring_convert<std::codecvt_utf8_utf16<char16_t>, char16_t> convert;
     return convert.to_bytes((char16_t*)wstr.data(), (char16_t*)wstr.data() + wstr.size());
 #elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
@@ -29,7 +29,7 @@ std::string Encoding::ToUTF8(const std::wstring& wstr)
 
 std::wstring Encoding::FromUTF8(const std::string& str)
 {
-#if defined(__CYGWIN__)
+#if defined(__CYGWIN__) || defined(__MINGW32__) || defined(__MINGW64__)
     std::wstring_convert<std::codecvt_utf8_utf16<char16_t>, char16_t> convert;
     auto tmp = convert.from_bytes(str);
     return std::wstring(tmp.data(), tmp.data() + tmp.size());
