@@ -479,9 +479,9 @@ TEST_CASE("Path attributes", "[CppCommon][FileSystem]")
 TEST_CASE("Path timestamps", "[CppCommon][FileSystem]")
 {
     Path executable = Path::executable();
-    REQUIRE(executable.created().total() > 0);
+    REQUIRE((executable.created().total() > 0));
     REQUIRE(executable.created().total() <= UtcTimestamp());
-    REQUIRE(executable.modified().total() > 0);
+    REQUIRE((executable.modified().total() > 0));
     REQUIRE(executable.modified().total() <= UtcTimestamp());
 }
 
@@ -494,9 +494,9 @@ TEST_CASE("Path hardlinks", "[CppCommon][FileSystem]")
 TEST_CASE("Path space", "[CppCommon][FileSystem]")
 {
     Path current = Path::current();
-    REQUIRE(current.space().capacity > 0);
-    REQUIRE(current.space().free > 0);
-    REQUIRE(current.space().available > 0);
+    REQUIRE((current.space().capacity > 0));
+    REQUIRE((current.space().free > 0));
+    REQUIRE((current.space().available > 0));
 }
 
 TEST_CASE("Path copy & remove", "[CppCommon][FileSystem]")

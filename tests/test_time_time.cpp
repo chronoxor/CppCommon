@@ -22,7 +22,7 @@ TEST_CASE("Time", "[CppCommon][Time]")
     REQUIRE(time1.millisecond() == 123);
     REQUIRE(time1.microsecond() == 456);
     REQUIRE(time1.nanosecond() == 789);
-    REQUIRE(time1.utcstamp().total() == 1468408953123456789ll);
+    REQUIRE((time1.utcstamp().total() == 1468408953123456789ll));
 
     Time time2(time1);
     UtcTime time3(time2.utcstamp());

@@ -12,11 +12,11 @@ using namespace CppCommon;
 
 TEST_CASE("Timestamp", "[CppCommon][Time]")
 {
-    REQUIRE(Timestamp::epoch() == 0);
-    REQUIRE(Timestamp::utc() > 0);
-    REQUIRE(Timestamp::local() > 0);
-    REQUIRE(Timestamp::nano() > 0);
-    REQUIRE(Timestamp::rdts() > 0);
+    REQUIRE((Timestamp::epoch() == 0));
+    REQUIRE((Timestamp::utc() > 0));
+    REQUIRE((Timestamp::local() > 0));
+    REQUIRE((Timestamp::nano() > 0));
+    REQUIRE((Timestamp::rdts() > 0));
 
     uint64_t prev_utc = 0;
     uint64_t prev_local = 0;
