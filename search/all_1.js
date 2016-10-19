@@ -3,6 +3,7 @@ var searchData=
   ['absolute',['absolute',['../class_cpp_common_1_1_path.html#a0c242646e647f41da2ee404943cabf54',1,'CppCommon::Path']]],
   ['address',['address',['../struct_cpp_common_1_1_stack_trace_1_1_frame.html#ada2332e0e3540884870f01f7fe1216b6',1,'CppCommon::StackTrace::Frame']]],
   ['affinity',['Affinity',['../class_cpp_common_1_1_c_p_u.html#a4191ea4a31c5e56245a0843acb12ffa0',1,'CppCommon::CPU']]],
+  ['align',['Align',['../class_cpp_common_1_1_memory.html#a7a1c4f847d0d2ab26c7ceae8bac3c7f8',1,'CppCommon::Memory']]],
   ['append',['Append',['../class_cpp_common_1_1_path.html#ac72e9b6a58f023197e86fa37204460ee',1,'CppCommon::Path']]],
   ['architecture',['Architecture',['../class_cpp_common_1_1_c_p_u.html#a4d6550e237149de526828651008d4dc5',1,'CppCommon::CPU']]],
   ['archived',['ARCHIVED',['../namespace_cpp_common.html#af3227fe73424d43d02a24275b3177a6da75b8b0f4c0aee5b8df95a0541307c9f4',1,'CppCommon']]],
