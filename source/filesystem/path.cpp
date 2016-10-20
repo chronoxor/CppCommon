@@ -544,8 +544,11 @@ UtcTimestamp Path::created() const
     int result = stat(string().c_str(), &status);
     if (result != 0)
         throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
-
+#if defined(__APPLE__)
+    return UtcTimestamp(Timestamp(status.st_mtime * 1000 * 1000 * 1000));
+#else
     return UtcTimestamp(Timestamp((status.st_mtime.tv_sec * 1000 * 1000 * 1000) + status.st_mtime.tv_nsec));
+#endif
 #elif defined(_WIN32) || defined(_WIN64)
     HANDLE hFile = CreateFileW(wstring().c_str(), 0, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
     if (hFile == INVALID_HANDLE_VALUE)
@@ -578,7 +581,11 @@ UtcTimestamp Path::modified() const
     if (result != 0)
         throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
 
+#if defined(__APPLE__)
+    return UtcTimestamp(Timestamp(status.st_mtime.tv_sec * 1000 * 1000 * 1000));
+#else
     return UtcTimestamp(Timestamp((status.st_mtime.tv_sec * 1000 * 1000 * 1000) + status.st_mtime.tv_nsec));
+#endif
 #elif defined(_WIN32) || defined(_WIN64)
     HANDLE hFile = CreateFileW(wstring().c_str(), 0, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
     if (hFile == INVALID_HANDLE_VALUE)
