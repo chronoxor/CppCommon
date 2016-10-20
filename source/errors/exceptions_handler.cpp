@@ -112,7 +112,6 @@ public:
             SIGILL,
             SIGINT,
             SIGPIPE,
-            SIGPOLL,
             SIGPROF,
             SIGQUIT,
             SIGSEGV,
@@ -584,9 +583,6 @@ private:
                 break;
             case SIGPIPE:
                 GetInstance()._handler(__LOCATION__ + SystemException("Caught pipe write error (SIGPIPE) signal"), StackTrace(1));
-                break;
-            case SIGPOLL:
-                GetInstance()._handler(__LOCATION__ + SystemException("Caught pollable event (SIGPOLL) signal"), StackTrace(1));
                 break;
             case SIGPROF:
                 GetInstance()._handler(__LOCATION__ + SystemException("Caught profiling timer expired error (SIGPROF) signal"), StackTrace(1));

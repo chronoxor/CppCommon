@@ -48,7 +48,7 @@ std::string SystemError::Description(int error)
     const int capacity = 1024;
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     char buffer[capacity];
-#if defined(__CYGWIN__)
+#if defined(__APPLE__) || defined(__CYGWIN__)
     int result = strerror_r(error, buffer, capacity);
     if (result != 0)
 #else
