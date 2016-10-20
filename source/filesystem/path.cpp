@@ -1390,7 +1390,7 @@ void Path::SetCreated(const Path& path, const UtcTimestamp& timestamp)
 #if defined(__APPLE__)
     TIMESPEC_TO_TIMEVAL(&times[0], &status.st_atimespec);
 #else
-    TIMESPEC_TO_TIMEVAL(&times[0], &status.st_atime);
+    TIMESPEC_TO_TIMEVAL(&times[0], &status.st_atim);
 #endif
     times[1].tv_sec = timestamp.seconds();
     times[1].tv_usec = timestamp.microseconds() % 1000000;
@@ -1434,7 +1434,7 @@ void Path::SetModified(const Path& path, const UtcTimestamp& timestamp)
 #if defined(__APPLE__)
     TIMESPEC_TO_TIMEVAL(&times[0], &status.st_atimespec);
 #else
-    TIMESPEC_TO_TIMEVAL(&times[0], &status.st_atime);
+    TIMESPEC_TO_TIMEVAL(&times[0], &status.st_atim);
 #endif
     times[1].tv_sec = timestamp.seconds();
     times[1].tv_usec = timestamp.microseconds() % 1000000;
