@@ -685,13 +685,8 @@ bool Path::IsEquivalent(const Path& path) const
     if (result != 0)
         throwex FileSystemException("Cannot get the status of the path!").Attach(path);
 
-#if defined(__APPLE__)
     // Compare the file meta information to detect if two path point to the same node on a filesystem
-    return ((st1.st_dev == st2.st_dev) && (st1.st_ino == st2.st_ino) && (st1.st_size == st2.st_size) && (st1.st_mtimespec == st2.st_mtimespec));
-#else
-    // Compare the file meta information to detect if two path point to the same node on a filesystem
-    return ((st1.st_dev == st2.st_dev) && (st1.st_ino == st2.st_ino) && (st1.st_size == st2.st_size) && (st1.st_mtim == st2.st_mtim));
-#endif
+    return ((st1.st_dev == st2.st_dev) && (st1.st_ino == st2.st_ino) && (st1.st_size == st2.st_size) && (st1.st_mtime == st2.st_mtime));
 #elif defined(_WIN32) || defined(_WIN64)
     // Access to the file meta information
     HANDLE hFile1 = CreateFileW(wstring().c_str(), 0, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
