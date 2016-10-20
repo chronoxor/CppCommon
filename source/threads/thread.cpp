@@ -71,9 +71,9 @@ uint64_t Thread::CurrentThreadId() noexcept
 
 uint32_t Thread::CurrentThreadAffinity() noexcept
 {
-#if defined(__CYGWIN__)
+#if defined(__APPLE__) || defined(__CYGWIN__)
     return 0;
-#elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#elif defined(unix) || defined(__unix) || defined(__unix__)
     int affinity = sched_getcpu();
     return (affinity < 0) ? 0 : affinity;
 #elif defined(_WIN32) || defined(_WIN64)
@@ -143,9 +143,9 @@ void Thread::SleepFor(const Timespan& timespan) noexcept
 
 void Thread::Yield() noexcept
 {
-#if defined(__CYGWIN__)
+#if defined(__APPLE__) || defined(__CYGWIN__)
     sched_yield();
-#elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#elif defined(unix) || defined(__unix) || defined(__unix__)
     pthread_yield();
 #elif defined(_WIN32) || defined(_WIN64)
     SwitchToThread();
@@ -154,9 +154,9 @@ void Thread::Yield() noexcept
 
 std::bitset<64> Thread::GetAffinity()
 {
-#if defined(__CYGWIN__)
+#if defined(__APPLE__) || defined(__CYGWIN__)
     return std::bitset<64>(0xFFFFFFFFFFFFFFFFull >> (64 - CPU::Affinity()));
-#elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#elif defined(unix) || defined(__unix) || defined(__unix__)
     cpu_set_t cpuset;
     CPU_ZERO(&cpuset);
     int result = pthread_getaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpuset);
@@ -205,9 +205,9 @@ std::bitset<64> Thread::GetAffinity()
 
 std::bitset<64> Thread::GetAffinity(std::thread& thread)
 {
-#if defined(__CYGWIN__)
+#if defined(__APPLE__) || defined(__CYGWIN__)
     return std::bitset<64>(0xFFFFFFFFFFFFFFFFull >> (64 - CPU::Affinity()));
-#elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#elif defined(unix) || defined(__unix) || defined(__unix__)
     cpu_set_t cpuset;
     CPU_ZERO(&cpuset);
     int result = pthread_getaffinity_np(thread.native_handle(), sizeof(cpu_set_t), &cpuset);
@@ -256,9 +256,11 @@ std::bitset<64> Thread::GetAffinity(std::thread& thread)
 
 void Thread::SetAffinity(const std::bitset<64>& affinity)
 {
-#if defined(__CYGWIN__)
+#if defined(__APPLE__)
+    throwex SystemException("Apple platform does not allow to set the current thread CPU affinity!");
+#elif defined(__CYGWIN__)
     throwex SystemException("Cygwin platform does not allow to set the current thread CPU affinity!");
-#elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#elif defined(unix) || defined(__unix) || defined(__unix__)
     cpu_set_t cpuset;
     CPU_ZERO(&cpuset);
     for (int i = 0; i < std::min(CPU_SETSIZE, 64); ++i)
@@ -276,9 +278,11 @@ void Thread::SetAffinity(const std::bitset<64>& affinity)
 
 void Thread::SetAffinity(std::thread& thread, const std::bitset<64>& affinity)
 {
-#if defined(__CYGWIN__)
+#if defined(__APPLE__)
+    throwex SystemException("Apple platform does not allow to set the given thread CPU affinity!");
+#elif defined(__CYGWIN__)
     throwex SystemException("Cygwin platform does not allow to set the given thread CPU affinity!");
-#elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#elif defined(unix) || defined(__unix) || defined(__unix__)
     cpu_set_t cpuset;
     CPU_ZERO(&cpuset);
     for (int i = 0; i < std::min(CPU_SETSIZE, 64); ++i)

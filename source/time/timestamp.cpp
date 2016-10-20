@@ -11,6 +11,8 @@
 #include "errors/exceptions.h"
 
 #if defined(__APPLE__)
+#include <mach/clock.h>
+#include <mach/mach.h>
 #include <mach/mach_time.h>
 #include <math.h>
 #include <time.h>
@@ -102,7 +104,23 @@ uint64_t PrepareTimebaseInfo(mach_timebase_info_data_t& tb)
 
 uint64_t Timestamp::utc()
 {
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if defined(__APPLE__)
+    clock_serv_t cclock;
+    mach_timespec_t mts;
+    mach_port_t host_port = mach_host_self();
+    if (host_port == MACH_PORT_NULL)
+        throwex SystemException("Cannot get the current host port!");
+    kern_return_t result = host_get_clock_service(host_port, CALENDAR_CLOCK, &cclock);
+    if (result != KERN_SUCCESS)
+        throwex SystemException("Cannot get the current host clock service!");
+    result = clock_get_time(cclock, &mts);
+    if (result != KERN_SUCCESS)
+        throwex SystemException("Cannot get the current clock time!");
+    result = mach_port_deallocate(host_port, cclock);
+    if (result != KERN_SUCCESS)
+        throwex SystemException("Cannot release the current host clock service!");
+    return (mts.tv_sec * 1000 * 1000 * 1000) + mts.tv_nsec;
+#elif defined(unix) || defined(__unix) || defined(__unix__)
     struct timespec timestamp;
     if (clock_gettime(CLOCK_REALTIME, &timestamp) != 0)
         throwex SystemException("Cannot get value of CLOCK_REALTIME timer!");
@@ -121,18 +139,14 @@ uint64_t Timestamp::utc()
 uint64_t Timestamp::local()
 {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-    struct timespec timestamp;
-    if (clock_gettime(CLOCK_REALTIME, &timestamp) != 0)
-        throwex SystemException("Cannot get value of CLOCK_REALTIME timer!");
+    uint64_t timestamp = utc();
 
     // Adjust UTC time with local timezone offset
     struct tm local;
-    time_t seconds = timestamp.tv_sec;
+    time_t seconds = timestamp / (1000 * 1000 * 1000);
     if (localtime_r(&seconds, &local) != &local)
         throwex SystemException("Cannot convert CLOCK_REALTIME time to local date & time structure!");
-    timestamp.tv_sec += local.tm_gmtoff;
-
-    return (timestamp.tv_sec * 1000 * 1000 * 1000) + timestamp.tv_nsec;
+    return timestamp + (local.tm_gmtoff * 1000 * 1000 * 1000);
 #elif defined(_WIN32) || defined(_WIN64)
     FILETIME ft;
     GetSystemTimePreciseAsFileTime(&ft);
