@@ -75,7 +75,7 @@ public:
     {
         if (timespan < 0)
             return TryLock();
-#if defined(__CYGWIN__)
+#if defined(__APPLE__) || defined(__CYGWIN__)
         // Calculate a finish timestamp
         Timestamp finish = NanoTimestamp() + timespan;
 
@@ -96,7 +96,7 @@ public:
             // Failed to acquire lock
             return false;
         }
-#elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#elif defined(unix) || defined(__unix) || defined(__unix__)
         struct timespec timeout;
         timeout.tv_sec = timespan.seconds();
         timeout.tv_nsec = timespan.nanoseconds() % 1000000000;
