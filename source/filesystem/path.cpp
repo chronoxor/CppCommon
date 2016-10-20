@@ -545,7 +545,7 @@ UtcTimestamp Path::created() const
     if (result != 0)
         throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
 
-    return UtcTimestamp(Timestamp((status.st_mtim.tv_sec * 1000 * 1000 * 1000) + status.st_mtim.tv_nsec));
+    return UtcTimestamp(Timestamp((status.st_mtime.tv_sec * 1000 * 1000 * 1000) + status.st_mtime.tv_nsec));
 #elif defined(_WIN32) || defined(_WIN64)
     HANDLE hFile = CreateFileW(wstring().c_str(), 0, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
     if (hFile == INVALID_HANDLE_VALUE)
@@ -578,7 +578,7 @@ UtcTimestamp Path::modified() const
     if (result != 0)
         throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
 
-    return UtcTimestamp(Timestamp((status.st_mtim.tv_sec * 1000 * 1000 * 1000) + status.st_mtim.tv_nsec));
+    return UtcTimestamp(Timestamp((status.st_mtime.tv_sec * 1000 * 1000 * 1000) + status.st_mtime.tv_nsec));
 #elif defined(_WIN32) || defined(_WIN64)
     HANDLE hFile = CreateFileW(wstring().c_str(), 0, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
     if (hFile == INVALID_HANDLE_VALUE)
@@ -1380,7 +1380,7 @@ void Path::SetCreated(const Path& path, const UtcTimestamp& timestamp)
         throwex FileSystemException("Cannot get the status of the path!").Attach(path);
 
     struct timeval times[2];
-    TIMESPEC_TO_TIMEVAL(&times[0], &status.st_atim);
+    TIMESPEC_TO_TIMEVAL(&times[0], &status.st_atime);
     times[1].tv_sec = timestamp.seconds();
     times[1].tv_usec = timestamp.microseconds() % 1000000;
 
@@ -1420,7 +1420,7 @@ void Path::SetModified(const Path& path, const UtcTimestamp& timestamp)
         throwex FileSystemException("Cannot get the status of the path!").Attach(path);
 
     struct timeval times[2];
-    TIMESPEC_TO_TIMEVAL(&times[0], &status.st_atim);
+    TIMESPEC_TO_TIMEVAL(&times[0], &status.st_atime);
     times[1].tv_sec = timestamp.seconds();
     times[1].tv_usec = timestamp.microseconds() % 1000000;
 
