@@ -150,25 +150,26 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    int64_t used_mem = (vmstat.active_count + vmstat.inactive_count + vmstat.wire_count) * page_size;</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    int64_t free_mem = vmstat.free_count * page_size;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordflow">return</span> free_mem;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">#elif defined(unix) || defined(__unix) || defined(__unix__)</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor"></span>    int64_t pages = sysconf(_SC_AVPHYS_PAGES);</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    int64_t page_size = sysconf(_SC_PAGESIZE);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordflow">if</span> ((pages &gt; 0) &amp;&amp; (page_size &gt; 0))</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keywordflow">return</span> pages * page_size;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor"></span>    MEMORYSTATUSEX status;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    status.dwLength = <span class="keyword">sizeof</span>(status);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    GlobalMemoryStatusEx(&amp;status);</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keywordflow">return</span> status.ullAvailPhys;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #error Unsupported platform</span></div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor"></span>}</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;} <span class="comment">// namespace CppCommon</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    (void)used_mem;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordflow">return</span> free_mem;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">#elif defined(unix) || defined(__unix) || defined(__unix__)</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor"></span>    int64_t pages = sysconf(_SC_AVPHYS_PAGES);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    int64_t page_size = sysconf(_SC_PAGESIZE);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordflow">if</span> ((pages &gt; 0) &amp;&amp; (page_size &gt; 0))</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keywordflow">return</span> pages * page_size;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor"></span>    MEMORYSTATUSEX status;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    status.dwLength = <span class="keyword">sizeof</span>(status);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    GlobalMemoryStatusEx(&amp;status);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keywordflow">return</span> status.ullAvailPhys;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #error Unsupported platform</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="preprocessor"></span>}</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;} <span class="comment">// namespace CppCommon</span></div>
 <div class="ttc" id="memory_8h_html"><div class="ttname"><a href="memory_8h.html">memory.h</a></div><div class="ttdoc">Memory management definition. </div></div>
 <div class="ttc" id="class_cpp_common_1_1_memory_html_a3b0bcc03213873e1828f7d0f0961a4c0"><div class="ttname"><a href="class_cpp_common_1_1_memory.html#a3b0bcc03213873e1828f7d0f0961a4c0">CppCommon::Memory::RamFree</a></div><div class="ttdeci">static int64_t RamFree()</div><div class="ttdoc">Free RAM in bytes. </div><div class="ttdef"><b>Definition:</b> <a href="memory_8cpp_source.html#l00049">memory.cpp:49</a></div></div>
 <div class="ttc" id="class_cpp_common_1_1_memory_html_a96d583655a03ba59f877c86a4f70f09e"><div class="ttname"><a href="class_cpp_common_1_1_memory.html#a96d583655a03ba59f877c86a4f70f09e">CppCommon::Memory::RamTotal</a></div><div class="ttdeci">static int64_t RamTotal()</div><div class="ttdoc">Total RAM in bytes. </div><div class="ttdef"><b>Definition:</b> <a href="memory_8cpp_source.html#l00023">memory.cpp:23</a></div></div>

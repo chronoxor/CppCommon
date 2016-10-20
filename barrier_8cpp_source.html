@@ -98,10 +98,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;cassert&gt;</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#if (defined(unix) || defined(__unix) || defined(__unix__)) &amp;&amp; !defined(__APPLE__)</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &quot;<a class="code" href="fatal_8h.html">errors/fatal.h</a>&quot;</span></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;pthread.h&gt;</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#elif defined(__MINGW32__) || defined(__MINGW64__)</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#elif defined(__APPLE__) || defined(__MINGW32__) || defined(__MINGW64__)</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;condition_variable&gt;</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;mutex&gt;</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
@@ -118,11 +118,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    {</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        assert((threads &gt; 0) &amp;&amp; <span class="stringliteral">&quot;Barrier threads counter must be greater than zero!&quot;</span>);</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#if (defined(unix) || defined(__unix) || defined(__unix__)) &amp;&amp; !defined(__APPLE__)</span></div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor"></span>        <span class="keywordtype">int</span> result = pthread_barrier_init(&amp;_barrier, <span class="keyword">nullptr</span>, threads);</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keywordflow">if</span> (result != 0)</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> SystemException(<span class="stringliteral">&quot;Failed to initialize a synchronization barrier!&quot;</span>, result);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#elif defined(__MINGW32__) || defined(__MINGW64__)</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#elif defined(__APPLE__) || defined(__MINGW32__) || defined(__MINGW64__)</span></div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor"></span>        _counter = <a class="code" href="class_cpp_common_1_1_barrier.html#a4b1ac8edbd72f63342bb18bd3c8b4918">threads</a>;</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        _generation = 0;</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
@@ -133,11 +133,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    ~Impl()</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    {</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#if (defined(unix) || defined(__unix) || defined(__unix__)) &amp;&amp; !defined(__APPLE__)</span></div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor"></span>        <span class="keywordtype">int</span> result = pthread_barrier_destroy(&amp;_barrier);</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keywordflow">if</span> (result != 0)</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            <a class="code" href="fatal_8h.html#a58f99c4783afc0f169f7b232d1659577">fatality</a>(SystemException(<span class="stringliteral">&quot;Failed to destroy a synchronization barrier!&quot;</span>, result));</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#elif defined(__MINGW32__) || defined(__MINGW64__)</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#elif defined(__APPLE__) || defined(__MINGW32__) || defined(__MINGW64__)</span></div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor"></span>        <span class="comment">// Do nothing here...</span></div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor"></span>        DeleteSynchronizationBarrier(&amp;_barrier);</div>
@@ -151,12 +151,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_cpp_common_1_1_barrier.html#ae5d6c33df84832a3b7b3a2aae08ffae7">Wait</a>()</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    {</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">#if (defined(unix) || defined(__unix) || defined(__unix__)) &amp;&amp; !defined(__APPLE__)</span></div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor"></span>        <span class="keywordtype">int</span> result = pthread_barrier_wait(&amp;_barrier);</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keywordflow">if</span> ((result != PTHREAD_BARRIER_SERIAL_THREAD) &amp;&amp; (result != 0))</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> SystemException(<span class="stringliteral">&quot;Failed to wait at a synchronization barrier!&quot;</span>, result);</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keywordflow">return</span> (result == PTHREAD_BARRIER_SERIAL_THREAD);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">#elif defined(__MINGW32__) || defined(__MINGW64__)</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">#elif defined(__APPLE__) || defined(__MINGW32__) || defined(__MINGW64__)</span></div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor"></span>        std::unique_lock&lt;std::mutex&gt; lock(_mutex);</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="comment">// Remember the current barrier generation</span></div>
@@ -190,9 +190,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="keyword">private</span>:</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <span class="keywordtype">int</span> _threads;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="preprocessor">#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="preprocessor">#if (defined(unix) || defined(__unix) || defined(__unix__)) &amp;&amp; !defined(__APPLE__)</span></div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="preprocessor"></span>    pthread_barrier_t _barrier;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="preprocessor">#elif defined(__MINGW32__) || defined(__MINGW64__)</span></div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="preprocessor">#elif defined(__APPLE__) || defined(__MINGW32__) || defined(__MINGW64__)</span></div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="preprocessor"></span>    std::mutex _mutex;</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    std::condition_variable _cond;</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keywordtype">int</span> _counter;</div>
