@@ -14,6 +14,9 @@
 #include <algorithm>
 #include <cassert>
 
+#if defined(__APPLE__)
+#include "threads/thread.h"
+#endif
 #if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
 #include <fcntl.h>
 #include <semaphore.h>
@@ -102,7 +105,28 @@ public:
     {
         if (timespan < 0)
             return TryLock();
-#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
+#if defined(__APPLE__)
+        // Calculate a finish timestamp
+        Timestamp finish = NanoTimestamp() + timespan;
+
+        // Try to acquire lock at least one time
+        if (TryLock())
+            return true;
+        else
+        {
+            // Try lock or yield for the given timespan
+            while (NanoTimestamp() < finish)
+            {
+                if (TryLock())
+                    return true;
+                else
+                    Thread::Yield();
+            }
+
+            // Failed to acquire lock
+            return false;
+        }
+#elif (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__CYGWIN__)
         struct timespec timeout;
         timeout.tv_sec = timespan.seconds();
         timeout.tv_nsec = timespan.nanoseconds() % 1000000000;

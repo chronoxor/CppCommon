@@ -14,7 +14,9 @@
 #include <algorithm>
 #include <cassert>
 
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if defined(__APPLE__)
+#include <dispatch/dispatch.h>
+#elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
 #include <fcntl.h>
 #include <semaphore.h>
 #elif defined(_WIN32) || defined(_WIN64)
@@ -34,7 +36,11 @@ public:
     {
         assert((resources > 0) && "Semaphore resources counter must be greater than zero!");
 
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if defined(__APPLE__)
+        _semaphore = dispatch_semaphore_create(resources);
+        if (_semaphore != nullptr)
+            throwex SystemException("Failed to initialize a semaphore!");
+#elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = sem_init(&_semaphore, 0, resources);
         if (result != 0)
             throwex SystemException("Failed to initialize a semaphore!");
@@ -47,7 +53,10 @@ public:
 
     ~Impl()
     {
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if defined(__APPLE__)
+        if (_semaphore != nullptr)
+            dispatch_release(_semaphore);
+#elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = sem_destroy(&_semaphore);
         if (result != 0)
             fatality(SystemException("Failed to destroy a semaphore!"));
@@ -64,7 +73,9 @@ public:
 
     bool TryLock()
     {
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if defined(__APPLE__)
+        return (dispatch_semaphore_wait(_semaphore, DISPATCH_TIME_NOW) == 0);
+#elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = sem_trywait(&_semaphore);
         if ((result != 0) && (errno != EAGAIN))
             throwex SystemException("Failed to try lock a semaphore!");
@@ -81,7 +92,10 @@ public:
     {
         if (timespan < 0)
             return TryLock();
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if defined(__APPLE__)
+        dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, timespan.nanoseconds());
+        return (dispatch_semaphore_wait(_semaphore, timeout) == 0);
+#elif defined(unix) || defined(__unix) || defined(__unix__)
         struct timespec timeout;
         timeout.tv_sec = timespan.seconds();
         timeout.tv_nsec = timespan.nanoseconds() % 1000000000;
@@ -99,7 +113,9 @@ public:
 
     void Lock()
     {
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if defined(__APPLE__)
+        dispatch_semaphore_wait(_semaphore, DISPATCH_TIME_FOREVER);
+#elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = sem_wait(&_semaphore);
         if (result != 0)
             throwex SystemException("Failed to lock a semaphore!");
@@ -112,7 +128,9 @@ public:
 
     void Unlock()
     {
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if defined(__APPLE__)
+        dispatch_semaphore_signal(_semaphore);
+#elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         int result = sem_post(&_semaphore);
         if (result != 0)
             throwex SystemException("Failed to unlock a semaphore!");
@@ -124,7 +142,9 @@ public:
 
 private:
     int _resources;
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if defined(__APPLE__)
+    dispatch_semaphore_t _semaphore;
+#elif defined(unix) || defined(__unix) || defined(__unix__)
     sem_t _semaphore;
 #elif defined(_WIN32) || defined(_WIN64)
     HANDLE _semaphore;
