@@ -124,7 +124,7 @@ public:
             // Failed to acquire lock
             return false;
         }
-#if (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__CYGWIN__)
+#elif (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__CYGWIN__)
         struct timespec timeout;
         timeout.tv_sec = timespan.seconds();
         timeout.tv_nsec = timespan.nanoseconds() % 1000000000;
