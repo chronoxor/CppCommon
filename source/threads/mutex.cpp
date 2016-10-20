@@ -13,7 +13,7 @@
 
 #include <algorithm>
 
-#if defined(__CYGWIN__)
+#if defined(__APPLE__) || defined(__CYGWIN__)
 #include "threads/thread.h"
 #endif
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
