@@ -149,8 +149,7 @@ public:
            else
                throwex FileSystemException("Failed to try lock for read!").Attach(_path);
         }
-        else
-           return true;
+        return true;
 #elif (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__CYGWIN__)
         int result = flock(_file, LOCK_SH | LOCK_NB);
         if (result != 0)
@@ -160,8 +159,7 @@ public:
            else
                throwex FileSystemException("Failed to try lock for read!").Attach(_path);
         }
-        else
-           return true;
+        return true;
 #elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         OVERLAPPED overlapped;
         ZeroMemory(&overlapped, sizeof(OVERLAPPED));
@@ -186,8 +184,7 @@ public:
            else
                throwex FileSystemException("Failed to try lock for write!").Attach(_path);
         }
-        else
-           return true;
+        return true;
 #elif (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__CYGWIN__)
         int result = flock(_file, LOCK_EX | LOCK_NB);
         if (result != 0)
@@ -197,8 +194,7 @@ public:
            else
                throwex FileSystemException("Failed to try lock for write!").Attach(_path);
         }
-        else
-           return true;
+        return true;
 #elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         OVERLAPPED overlapped;
         ZeroMemory(&overlapped, sizeof(OVERLAPPED));
