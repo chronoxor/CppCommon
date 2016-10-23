@@ -4,39 +4,40 @@ language: cpp
 # Build matrix (OS, compiler)
 matrix:
   include:
-#    - os: linux
-#      compiler: gcc
-#      env: GCC_VERSION=6
-#      addons:
-#        apt:
-#          sources:
-#            - ubuntu-toolchain-r-test
-#          packages:
-#            - gcc-6
-#            - g++-6
-#            - cmake
-#            - doxygen
-#            - graphviz
-#            - libbfd-dev
-#            - uuid-dev
-#    - os: linux
-#      compiler: clang
-#      env: CLANG_VERSION=3.8
-#      addons:
-#        apt:
-#          sources:
-#            - ubuntu-toolchain-r-test
-#            - llvm-toolchain-precise-3.8
-#          packages:
-#            - clang-3.8
-#            - libc++-dev
-#            - cmake
-#            - doxygen
-#            - graphviz
-#            - libbfd-dev
-#            - uuid-dev
-    - os: osx
+    - os: linux
+      compiler: gcc
+      env: GCC_VERSION=6
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - gcc-6
+            - g++-6
+            - cmake
+            - doxygen
+            - graphviz
+            - libbfd-dev
+            - uuid-dev
+    - os: linux
       compiler: clang
+      env: CLANG_VERSION=3.8
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-3.8
+          packages:
+            - clang-3.8
+            - libc++-dev
+            - cmake
+            - doxygen
+            - graphviz
+            - libbfd-dev
+            - uuid-dev
+#    - os: osx
+#      compiler: clang
+#      osx_image: xcode8
 
 # Using Trusty environment
 sudo: required
