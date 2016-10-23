@@ -10,6 +10,8 @@
 
 #include "errors/exceptions.h"
 
+#include <iostream>
+
 #if defined(__APPLE__)
 #include <mach/clock.h>
 #include <mach/mach.h>
@@ -122,6 +124,7 @@ uint64_t Timestamp::utc()
     result = mach_port_deallocate(task_port, cclock);
     if (result != KERN_SUCCESS)
         throwex SystemException("Cannot release the current host clock service!");
+    std::cerr << "Sec: " << mts.tv_sec << " - Nano: " << mts.tv_nsec << std::endl;
     return (mts.tv_sec * 1000 * 1000 * 1000) + mts.tv_nsec;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     struct timespec timestamp;
