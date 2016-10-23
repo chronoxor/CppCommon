@@ -480,9 +480,9 @@ TEST_CASE("Path timestamps", "[CppCommon][FileSystem]")
 {
     Path executable = Path::executable();
     REQUIRE((executable.created().total() > 0));
-    REQUIRE(executable.created().total() <= UtcTimestamp());
+    REQUIRE((executable.created().total() <= UtcTimestamp()));
     REQUIRE((executable.modified().total() > 0));
-    REQUIRE(executable.modified().total() <= UtcTimestamp());
+    REQUIRE((executable.modified().total() <= UtcTimestamp()));
 }
 
 TEST_CASE("Path hardlinks", "[CppCommon][FileSystem]")

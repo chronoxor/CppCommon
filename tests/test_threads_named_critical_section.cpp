@@ -13,12 +13,12 @@ using namespace CppCommon;
 TEST_CASE("Named critical section", "[CppCommon][Threads]")
 {
     // Named critical section master
-    NamedCriticalSection master("named_critical_section_test");
+    NamedCriticalSection master("named_cs_test");
 
     // Test TryLock() method
     {
         // Named critical section slave
-        NamedCriticalSection slave("named_critical_section_test");
+        NamedCriticalSection slave("named_cs_test");
 
         REQUIRE(slave.TryLock());
         slave.Unlock();
@@ -27,7 +27,7 @@ TEST_CASE("Named critical section", "[CppCommon][Threads]")
     // Test Lock()/Unlock() methods
     {
         // Named critical section slave
-        NamedCriticalSection slave("named_critical_section_test");
+        NamedCriticalSection slave("named_cs_test");
 
         slave.Lock();
         slave.Unlock();
@@ -41,7 +41,7 @@ TEST_CASE("Named critical section locker", "[CppCommon][Threads]")
     int crc = 0;
 
     // Named critical section master
-    NamedCriticalSection lock_master("named_critical_section_test");
+    NamedCriticalSection lock_master("named_cs_test");
 
     // Calculate result value
     int result = 0;
@@ -55,7 +55,7 @@ TEST_CASE("Named critical section locker", "[CppCommon][Threads]")
         producers.push_back(std::thread([&crc, producer, items_to_produce, producers_count]()
         {
             // Named critical section slave
-            NamedCriticalSection lock_slave("named_critical_section_test");
+            NamedCriticalSection lock_slave("named_cs_test");
 
             int items = (items_to_produce / producers_count);
             for (int i = 0; i < items; ++i)
