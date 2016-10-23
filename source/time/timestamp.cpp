@@ -106,7 +106,7 @@ uint64_t Timestamp::utc()
 {
 #if defined(__APPLE__)
     clock_serv_t cclock;
-    mach_timespec_t mts;
+    mach_timespec_t mts = { 0 };
     mach_port_t host_port = mach_host_self();
     if (host_port == MACH_PORT_NULL)
         throwex SystemException("Cannot get the current host port!");
@@ -116,7 +116,10 @@ uint64_t Timestamp::utc()
     result = clock_get_time(cclock, &mts);
     if (result != KERN_SUCCESS)
         throwex SystemException("Cannot get the current clock time!");
-    result = mach_port_deallocate(host_port, cclock);
+    mach_port_t task_port = mach_task_self();
+    if (task_port == MACH_PORT_NULL)
+        throwex SystemException("Cannot get the current task port!");
+    result = mach_port_deallocate(task_port, cclock);
     if (result != KERN_SUCCESS)
         throwex SystemException("Cannot release the current host clock service!");
     return (mts.tv_sec * 1000 * 1000 * 1000) + mts.tv_nsec;

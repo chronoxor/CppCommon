@@ -134,7 +134,7 @@ public:
 
     bool TryLockRead()
     {
-#if defined(linux) || defined(__linux) || defined(__linux__) || defined(__APPLE__)
+#if defined(linux) || defined(__linux) || defined(__linux__)
         struct flock lock;
         lock.l_type = F_RDLCK;
         lock.l_whence = SEEK_SET;
@@ -171,7 +171,7 @@ public:
 
     bool TryLockWrite()
     {
-#if defined(linux) || defined(__linux) || defined(__linux__) || defined(__APPLE__)
+#if defined(linux) || defined(__linux) || defined(__linux__)
         struct flock lock;
         lock.l_type = F_WRLCK;
         lock.l_whence = SEEK_SET;
@@ -208,7 +208,7 @@ public:
 
     void LockRead()
     {
-#if defined(linux) || defined(__linux) || defined(__linux__) || defined(__APPLE__)
+#if defined(linux) || defined(__linux) || defined(__linux__)
         struct flock lock;
         lock.l_type = F_RDLCK;
         lock.l_whence = SEEK_SET;
@@ -232,7 +232,7 @@ public:
 
     void LockWrite()
     {
-#if defined(linux) || defined(__linux) || defined(__linux__) || defined(__APPLE__)
+#if defined(linux) || defined(__linux) || defined(__linux__)
         struct flock lock;
         lock.l_type = F_WRLCK;
         lock.l_whence = SEEK_SET;
@@ -256,7 +256,7 @@ public:
 
     void UnlockRead()
     {
-#if defined(linux) || defined(__linux) || defined(__linux__) || defined(__APPLE__)
+#if defined(linux) || defined(__linux) || defined(__linux__)
         struct flock lock;
         lock.l_type = F_UNLCK;
         lock.l_whence = SEEK_SET;
@@ -280,7 +280,7 @@ public:
 
     void UnlockWrite()
     {
-#if defined(linux) || defined(__linux) || defined(__linux__) || defined(__APPLE__)
+#if defined(linux) || defined(__linux) || defined(__linux__)
         struct flock lock;
         lock.l_type = F_UNLCK;
         lock.l_whence = SEEK_SET;
