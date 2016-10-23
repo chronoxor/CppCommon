@@ -22,7 +22,9 @@
 #include <vector>
 
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-#if defined(linux) || defined(__linux) || defined(__linux__)
+#if defined(__APPLE__)
+#include <libproc.h>
+#elif defined(linux) || defined(__linux) || defined(__linux__)
 #include <sys/sendfile.h>
 #endif
 #include <sys/statvfs.h>
@@ -908,7 +910,15 @@ Path Path::current()
 
 Path Path::executable()
 {
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if defined(__APPLE__)
+    char buffer[PROC_PIDPATHINFO_MAXSIZE];
+
+    int size = proc_pidpath(getpid(), buffer, countof(buffer));
+    if (size <= 0)
+        throwex FileSystemException("Cannot get the executable path of the current process!");
+
+    return Path(std::string(buffer, size));
+#elif defined(unix) || defined(__unix) || defined(__unix__)
     std::vector<char> buffer(PATH_MAX);
     ssize_t size;
 
