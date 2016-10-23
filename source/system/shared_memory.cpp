@@ -38,6 +38,7 @@ public:
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         _name = "/" + name;
         _owner = true;
+
         // Try to create a shared memory handler
         _shared = shm_open(_name.c_str(), (O_CREAT | O_EXCL | O_RDWR), (S_IRUSR | S_IWUSR));
         if (_shared == -1)
@@ -49,10 +50,14 @@ public:
             else
                 _owner = false;
         }
-        // Truncate a shared memory handler
-        int result = ftruncate(_shared, total);
-        if (result != 0)
-            throwex SystemException("Failed to truncate a shared memory handler!");
+        else
+        {
+            // Truncate a shared memory handler
+            int result = ftruncate(_shared, total);
+            if (result != 0)
+                throwex SystemException("Failed to truncate a shared memory handler!");
+        }
+
         // Map a shared memory buffer
         _ptr = mmap(nullptr, total, (PROT_READ | PROT_WRITE), MAP_SHARED, _shared, 0);
         if (_ptr == MAP_FAILED)
@@ -64,6 +69,7 @@ public:
 #elif defined(_WIN32) || defined(_WIN64)
         _name = "Global\\" + name;
         _owner = false;
+
         // Try to open a shared memory handler
         _shared = OpenFileMappingA(FILE_MAP_ALL_ACCESS, FALSE, _name.c_str());
         if (_shared == nullptr)
@@ -75,6 +81,7 @@ public:
             else
                 _owner = true;
         }
+
         // Map a shared memory buffer
         _ptr = MapViewOfFile(_shared, FILE_MAP_ALL_ACCESS, 0, 0, total);
         if (_ptr == nullptr)
@@ -122,10 +129,12 @@ public:
         int result = munmap(_ptr, total);
         if (result != 0)
             fatality(SystemException("Failed to unmap a shared memory buffer!"));
+
         // Close the shared memory handler
         result = close(_shared);
         if (result != 0)
             fatality(SystemException("Failed to close a shared memory handler!"));
+
         // Unlink the shared memory handler (owner only)
         if (_owner)
         {
@@ -137,6 +146,7 @@ public:
         // Unmap the shared memory buffer
         if (!UnmapViewOfFile(_ptr))
             fatality(SystemException("Failed to unmap a shared memory buffer!"));
+
         // Close the shared memory handler
         if (!CloseHandle(_shared))
             fatality(SystemException("Failed to close a shared memory handler!"));
