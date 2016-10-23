@@ -21,8 +21,6 @@
 #include <tuple>
 #include <vector>
 
-#include <iostream>
-
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
 #if defined(__APPLE__)
 #include <libproc.h>
@@ -549,8 +547,6 @@ UtcTimestamp Path::created() const
     if (result != 0)
         throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
 #if defined(__APPLE__)
-    uint64_t result1 = (status.st_mtimespec.tv_sec * 1000 * 1000 * 1000) + status.st_mtimespec.tv_nsec;
-    std::cerr << "Created: " << result1 << std::endl;
     return UtcTimestamp(Timestamp((status.st_mtimespec.tv_sec * 1000 * 1000 * 1000) + status.st_mtimespec.tv_nsec));
 #else
     return UtcTimestamp(Timestamp((status.st_mtim.tv_sec * 1000 * 1000 * 1000) + status.st_mtim.tv_nsec));
