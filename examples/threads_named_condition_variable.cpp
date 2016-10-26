@@ -25,7 +25,7 @@ int main(int argc, char** argv)
     std::atomic<bool> finish(false);
 
     // Named condition variable master
-    CppCommon::NamedConditionVariable cv_master("named_condition_variable_example");
+    CppCommon::NamedConditionVariable cv_master("named_cv_example");
 
     // Start some threads
     std::vector<std::thread> threads;
@@ -34,7 +34,7 @@ int main(int argc, char** argv)
         threads.push_back(std::thread([&finish, thread]()
         {
             // Named condition variable slave
-            CppCommon::NamedConditionVariable cv_slave("named_condition_variable_example");
+            CppCommon::NamedConditionVariable cv_slave("named_cv_example");
 
             std::cout << "Thread " << thread << " initialized!" << std::endl;
 

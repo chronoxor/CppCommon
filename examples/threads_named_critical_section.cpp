@@ -20,7 +20,7 @@ int main(int argc, char** argv)
     std::cout << help << std::endl;
 
     // Create named critical section
-    CppCommon::NamedCriticalSection lock("named_critical_section_example");
+    CppCommon::NamedCriticalSection lock("named_cs_example");
 
     // Perform text input
     std::string line;
