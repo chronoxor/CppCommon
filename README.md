@@ -1,6 +1,9 @@
 # CppCommon
 
 [![Linux build status](https://img.shields.io/travis/chronoxor/CppCommon/master.svg?label=Linux)](https://travis-ci.org/chronoxor/CppCommon)
+[![OSX build status](https://img.shields.io/travis/chronoxor/CppCommon/master.svg?label=OSX)](https://travis-ci.org/chronoxor/CppCommon)
+[![Cygwin build status](https://img.shields.io/appveyor/ci/chronoxor/CppCommon/master.svg?label=Cygwin)](https://ci.appveyor.com/project/chronoxor/CppCommon)
+[![MinGW build status](https://img.shields.io/appveyor/ci/chronoxor/CppCommon/master.svg?label=MinGW)](https://ci.appveyor.com/project/chronoxor/CppCommon)
 [![Windows build status](https://img.shields.io/appveyor/ci/chronoxor/CppCommon/master.svg?label=Windows)](https://ci.appveyor.com/project/chronoxor/CppCommon)
 
 C++ Common Library contains reusable components and patterns for error and
@@ -50,7 +53,6 @@ Optional:
 * [Clang](http://clang.llvm.org)
 * [Clion](https://www.jetbrains.com/clion)
 * [MinGW](http://mingw-w64.org/doku.php)
-* [MSYS](http://www.mingw.org/wiki/msys)
 * [Visual Studio 2015](https://www.visualstudio.com)
 
 #How to build?
@@ -65,13 +67,13 @@ git submodule update --init --recursive --remote
 ## Linux
 ```
 cd build
-unix.sh
+./unix.sh
 ```
 
 ## OSX
 ```
 cd build
-unix.sh
+./unix.sh
 ```
 
 ## Windows (Cygwin)
@@ -84,12 +86,6 @@ cygwin.bat
 ```
 cd build
 mingw.bat
-```
-
-## Windows (MinGW with MSYS)
-```
-cd build
-msys.bat
 ```
 
 ## Windows (Visaul Studio 2015)

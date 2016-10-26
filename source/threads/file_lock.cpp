@@ -134,7 +134,7 @@ public:
 
     bool TryLockRead()
     {
-#if defined(linux) || defined(__linux) || defined(__linux__) || defined(__APPLE__)
+#if defined(linux) || defined(__linux) || defined(__linux__)
         struct flock lock;
         lock.l_type = F_RDLCK;
         lock.l_whence = SEEK_SET;
@@ -150,8 +150,8 @@ public:
                throwex FileSystemException("Failed to try lock for read!").Attach(_path);
         }
         else
-           return true;
-#elif (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__CYGWIN__)
+            return true;
+#elif (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
         int result = flock(_file, LOCK_SH | LOCK_NB);
         if (result != 0)
         {
@@ -161,7 +161,7 @@ public:
                throwex FileSystemException("Failed to try lock for read!").Attach(_path);
         }
         else
-           return true;
+            return true;
 #elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         OVERLAPPED overlapped;
         ZeroMemory(&overlapped, sizeof(OVERLAPPED));
@@ -171,7 +171,7 @@ public:
 
     bool TryLockWrite()
     {
-#if defined(linux) || defined(__linux) || defined(__linux__) || defined(__APPLE__)
+#if defined(linux) || defined(__linux) || defined(__linux__)
         struct flock lock;
         lock.l_type = F_WRLCK;
         lock.l_whence = SEEK_SET;
@@ -187,8 +187,8 @@ public:
                throwex FileSystemException("Failed to try lock for write!").Attach(_path);
         }
         else
-           return true;
-#elif (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__CYGWIN__)
+            return true;
+#elif (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
         int result = flock(_file, LOCK_EX | LOCK_NB);
         if (result != 0)
         {
@@ -198,7 +198,7 @@ public:
                throwex FileSystemException("Failed to try lock for write!").Attach(_path);
         }
         else
-           return true;
+            return true;
 #elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         OVERLAPPED overlapped;
         ZeroMemory(&overlapped, sizeof(OVERLAPPED));
@@ -208,7 +208,7 @@ public:
 
     void LockRead()
     {
-#if defined(linux) || defined(__linux) || defined(__linux__) || defined(__APPLE__)
+#if defined(linux) || defined(__linux) || defined(__linux__)
         struct flock lock;
         lock.l_type = F_RDLCK;
         lock.l_whence = SEEK_SET;
@@ -218,7 +218,7 @@ public:
         int result = fcntl(_file, F_OFD_SETLKW, &lock);
         if (result == -1)
             throwex FileSystemException("Failed to lock for read!").Attach(_path);
-#elif (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__CYGWIN__)
+#elif (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
         int result = flock(_file, LOCK_SH);
         if (result != 0)
             throwex FileSystemException("Failed to lock for read!").Attach(_path);
@@ -232,7 +232,7 @@ public:
 
     void LockWrite()
     {
-#if defined(linux) || defined(__linux) || defined(__linux__) || defined(__APPLE__)
+#if defined(linux) || defined(__linux) || defined(__linux__)
         struct flock lock;
         lock.l_type = F_WRLCK;
         lock.l_whence = SEEK_SET;
@@ -242,7 +242,7 @@ public:
         int result = fcntl(_file, F_OFD_SETLKW, &lock);
         if (result == -1)
             throwex FileSystemException("Failed to lock for write!").Attach(_path);
-#elif (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__CYGWIN__)
+#elif (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
         int result = flock(_file, LOCK_EX);
         if (result != 0)
             throwex FileSystemException("Failed to lock for write!").Attach(_path);
@@ -256,7 +256,7 @@ public:
 
     void UnlockRead()
     {
-#if defined(linux) || defined(__linux) || defined(__linux__) || defined(__APPLE__)
+#if defined(linux) || defined(__linux) || defined(__linux__)
         struct flock lock;
         lock.l_type = F_UNLCK;
         lock.l_whence = SEEK_SET;
@@ -266,7 +266,7 @@ public:
         int result = fcntl(_file, F_OFD_SETLK, &lock);
         if (result != 0)
             throwex FileSystemException("Failed to unlock the read lock!").Attach(_path);
-#elif (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__CYGWIN__)
+#elif (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
         int result = flock(_file, LOCK_UN);
         if (result != 0)
             throwex FileSystemException("Failed to unlock the read lock!").Attach(_path);
@@ -280,7 +280,7 @@ public:
 
     void UnlockWrite()
     {
-#if defined(linux) || defined(__linux) || defined(__linux__) || defined(__APPLE__)
+#if defined(linux) || defined(__linux) || defined(__linux__)
         struct flock lock;
         lock.l_type = F_UNLCK;
         lock.l_whence = SEEK_SET;
@@ -290,7 +290,7 @@ public:
         int result = fcntl(_file, F_OFD_SETLK, &lock);
         if (result != 0)
             throwex FileSystemException("Failed to unlock the write lock!").Attach(_path);
-#elif (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__CYGWIN__)
+#elif (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
         int result = flock(_file, LOCK_UN);
         if (result != 0)
             throwex FileSystemException("Failed to unlock the write lock!").Attach(_path);
