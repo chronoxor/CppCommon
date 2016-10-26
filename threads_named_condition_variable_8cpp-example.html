@@ -102,7 +102,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">    std::atomic&lt;bool&gt; finish(<span class="keyword">false</span>);</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">// Named condition variable master</span></div>
-<div class="line">    <a name="_a0"></a><a class="code" href="class_cpp_common_1_1_named_condition_variable.html">CppCommon::NamedConditionVariable</a> cv_master(<span class="stringliteral">&quot;named_condition_variable_example&quot;</span>);</div>
+<div class="line">    <a name="_a0"></a><a class="code" href="class_cpp_common_1_1_named_condition_variable.html">CppCommon::NamedConditionVariable</a> cv_master(<span class="stringliteral">&quot;named_cv_example&quot;</span>);</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">// Start some threads</span></div>
 <div class="line">    std::vector&lt;std::thread&gt; threads;</div>
@@ -111,7 +111,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">        threads.push_back(std::thread([&amp;finish, thread]()</div>
 <div class="line">        {</div>
 <div class="line">            <span class="comment">// Named condition variable slave</span></div>
-<div class="line">            <a class="code" href="class_cpp_common_1_1_named_condition_variable.html">CppCommon::NamedConditionVariable</a> cv_slave(<span class="stringliteral">&quot;named_condition_variable_example&quot;</span>);</div>
+<div class="line">            <a class="code" href="class_cpp_common_1_1_named_condition_variable.html">CppCommon::NamedConditionVariable</a> cv_slave(<span class="stringliteral">&quot;named_cv_example&quot;</span>);</div>
 <div class="line"></div>
 <div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;Thread &quot;</span> &lt;&lt; thread &lt;&lt; <span class="stringliteral">&quot; initialized!&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line"></div>
