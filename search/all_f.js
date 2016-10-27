@@ -33,7 +33,7 @@ var searchData=
   ['resize',['Resize',['../class_cpp_common_1_1_file.html#a2a2d929967c11aa1ff4bcf0fd5fbb041',1,'CppCommon::File']]],
   ['resource',['resource',['../namespace_cpp_common.html#a551f50579f87df9152013786f9167aa4',1,'CppCommon::resource(T handle, TCleaner cleaner)'],['../namespace_cpp_common.html#a95421fc0faf43b224c4224f13eb06ff1',1,'CppCommon::resource(void *handle, TCleaner cleaner)'],['../namespace_cpp_common.html#a00e682e08f57d4de63bd3c7ee49d80a5',1,'CppCommon::resource(TCleaner cleaner)']]],
   ['resource_2eh',['resource.h',['../resource_8h.html',1,'']]],
-  ['resources',['resources',['../class_cpp_common_1_1_named_semaphore.html#aea02ebcd5440cfbe8fc3ed7816c6a52e',1,'CppCommon::NamedSemaphore::resources()'],['../class_cpp_common_1_1_semaphore.html#ad06a2baf8204945261f16eec619d4822',1,'CppCommon::Semaphore::resources()']]],
+  ['resources',['resources',['../class_cpp_common_1_1_named_semaphore.html#aa076ff361f0aeee969632bfd6b960b71',1,'CppCommon::NamedSemaphore::resources()'],['../class_cpp_common_1_1_semaphore.html#a61f39d303b706ff29fcd53accbaf9903',1,'CppCommon::Semaphore::resources()']]],
   ['root',['root',['../class_cpp_common_1_1_path.html#a2ec3cce114d4ca905ccacb18fc9ce133',1,'CppCommon::Path']]],
   ['runtimeexception',['RuntimeException',['../class_cpp_common_1_1_runtime_exception.html',1,'CppCommon']]],
   ['rw_5flock_2ecpp',['rw_lock.cpp',['../rw__lock_8cpp.html',1,'']]],
