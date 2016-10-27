@@ -23,7 +23,7 @@ int main(int argc, char** argv)
     int concurrency = 8;
 
     // Named auto-reset event master
-    CppCommon::NamedEventAutoReset event_master("named_auto_reset_event_example");
+    CppCommon::NamedEventAutoReset event_master("named_auto_event_example");
 
     // Start some threads
     std::vector<std::thread> threads;
@@ -32,7 +32,7 @@ int main(int argc, char** argv)
         threads.push_back(std::thread([thread]()
         {
             // Named auto-reset event slave
-            CppCommon::NamedEventAutoReset event_slave("named_auto_reset_event_example");
+            CppCommon::NamedEventAutoReset event_slave("named_auto_event_example");
 
             std::cout << "Thread " << thread << " initialized!" << std::endl;
 
