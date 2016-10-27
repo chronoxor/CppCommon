@@ -13,7 +13,7 @@
 
 #include <algorithm>
 
-#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
+#if (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__APPLE__) && !defined(__CYGWIN__)
 #include "system/shared_type.h"
 #include <pthread.h>
 #elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
@@ -30,11 +30,13 @@ class NamedEventAutoReset::Impl
 {
 public:
     Impl(const std::string& name, bool signaled) : _name(name)
-#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
+#if (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__APPLE__) && !defined(__CYGWIN__)
         , _shared(name)
 #endif
     {
-#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
+#if defined(__APPLE__)
+        throwex SystemException("Named auto-reset event is not supported!");
+#elif (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__CYGWIN__)
         // Only the owner should initializate a named auto-reset event
         if (_shared.owner())
         {
@@ -77,7 +79,9 @@ public:
 
     ~Impl()
     {
-#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
+#if defined(__APPLE__)
+        throwex SystemException("Named auto-reset event is not supported!");
+#elif (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__CYGWIN__)
         // Only the owner should destroy a named auto-reset event
         if (_shared.owner())
         {
@@ -101,7 +105,9 @@ public:
 
     void Signal()
     {
-#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
+#if defined(__APPLE__)
+        throwex SystemException("Named auto-reset event is not supported!");
+#elif (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__CYGWIN__)
         int result = pthread_mutex_lock(&_shared->mutex);
         if (result != 0)
             throwex SystemException("Failed to lock a mutex for the named auto-reset event!", result);
@@ -120,7 +126,9 @@ public:
 
     bool TryWait()
     {
-#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
+#if defined(__APPLE__)
+        throwex SystemException("Named auto-reset event is not supported!");
+#elif (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__CYGWIN__)
         int result = pthread_mutex_lock(&_shared->mutex);
         if (result != 0)
             throwex SystemException("Failed to lock a mutex for the named auto-reset event!", result);
@@ -142,7 +150,9 @@ public:
     {
         if (timespan < 0)
             return TryWait();
-#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
+#if defined(__APPLE__)
+        throwex SystemException("Named auto-reset event is not supported!");
+#elif (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__CYGWIN__)
         struct timespec timeout;
         timeout.tv_sec = timespan.seconds();
         timeout.tv_nsec = timespan.nanoseconds() % 1000000000;
@@ -173,7 +183,9 @@ public:
 
     void Wait()
     {
-#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
+#if defined(__APPLE__)
+        throwex SystemException("Named auto-reset event is not supported!");
+#elif (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__CYGWIN__)
         int result = pthread_mutex_lock(&_shared->mutex);
         if (result != 0)
             throwex SystemException("Failed to lock a mutex for the named auto-reset event!", result);
@@ -196,7 +208,7 @@ public:
 
 private:
     std::string _name;
-#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
+#if (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__APPLE__) && !defined(__CYGWIN__)
     // Shared auto-reset event structure
     struct EventHeader
     {

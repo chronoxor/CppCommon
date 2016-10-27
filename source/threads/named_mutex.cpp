@@ -16,7 +16,7 @@
 #if defined(__APPLE__)
 #include "threads/thread.h"
 #endif
-#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
+#if (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__APPLE__) && !defined(__CYGWIN__)
 #include "system/shared_type.h"
 #include <pthread.h>
 #elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
@@ -34,11 +34,13 @@ class NamedMutex::Impl
 {
 public:
     Impl(const std::string& name) : _name(name)
-#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
+#if (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__APPLE__) && !defined(__CYGWIN__)
         , _shared(name)
 #endif
     {
-#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
+#if defined(__APPLE__)
+        throwex SystemException("Named mutex is not supported!");
+#elif (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__CYGWIN__)
         // Only the owner should initializate a named mutex
         if (_shared.owner())
         {
@@ -65,7 +67,9 @@ public:
 
     ~Impl()
     {
-#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
+#if defined(__APPLE__)
+        throwex SystemException("Named mutex is not supported!");
+#elif (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__CYGWIN__)
         // Only the owner should destroy a named mutex
         if (_shared.owner())
         {
@@ -86,7 +90,9 @@ public:
 
     bool TryLock()
     {
-#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
+#if defined(__APPLE__)
+        throwex SystemException("Named mutex is not supported!");
+#elif (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__CYGWIN__)
         int result = pthread_mutex_trylock(&_shared->mutex);
         if ((result != 0) && (result != EBUSY))
             throwex SystemException("Failed to try lock a named mutex!", result);
@@ -104,26 +110,7 @@ public:
         if (timespan < 0)
             return TryLock();
 #if defined(__APPLE__)
-        // Calculate a finish timestamp
-        Timestamp finish = NanoTimestamp() + timespan;
-
-        // Try to acquire lock at least one time
-        if (TryLock())
-            return true;
-        else
-        {
-            // Try lock or yield for the given timespan
-            while (NanoTimestamp() < finish)
-            {
-                if (TryLock())
-                    return true;
-                else
-                    Thread::Yield();
-            }
-
-            // Failed to acquire lock
-            return false;
-        }
+        throwex SystemException("Named mutex is not supported!");
 #elif (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__CYGWIN__)
         struct timespec timeout;
         timeout.tv_sec = timespan.seconds();
@@ -142,7 +129,9 @@ public:
 
     void Lock()
     {
-#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
+#if defined(__APPLE__)
+        throwex SystemException("Named mutex is not supported!");
+#elif (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__CYGWIN__)
         int result = pthread_mutex_lock(&_shared->mutex);
         if (result != 0)
             throwex SystemException("Failed to lock a named mutex!", result);
@@ -155,7 +144,9 @@ public:
 
     void Unlock()
     {
-#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
+#if defined(__APPLE__)
+        throwex SystemException("Named mutex is not supported!");
+#elif (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__CYGWIN__)
         int result = pthread_mutex_unlock(&_shared->mutex);
         if (result != 0)
             throwex SystemException("Failed to unlock a named mutex!", result);
@@ -167,7 +158,7 @@ public:
 
 private:
     std::string _name;
-#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
+#if (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__APPLE__) && !defined(__CYGWIN__)
     // Shared mutex structure
     struct MutexHeader
     {

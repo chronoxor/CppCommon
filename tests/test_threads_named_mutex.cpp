@@ -10,6 +10,8 @@
 
 using namespace CppCommon;
 
+#if !defined(__APPLE__)
+
 TEST_CASE("Named mutex locker", "[CppCommon][Threads]")
 {
     int items_to_produce = 10000;
@@ -49,3 +51,6 @@ TEST_CASE("Named mutex locker", "[CppCommon][Threads]")
     // Check result
     REQUIRE(crc == result);
 }
+
+#endif
+
