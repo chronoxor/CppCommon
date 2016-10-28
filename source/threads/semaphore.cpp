@@ -38,7 +38,7 @@ public:
 
 #if defined(__APPLE__)
         _semaphore = dispatch_semaphore_create(resources);
-        if (_semaphore != nullptr)
+        if (_semaphore == nullptr)
             throwex SystemException("Failed to initialize a semaphore!");
 #elif defined(unix) || defined(__unix) || defined(__unix__)
         int result = sem_init(&_semaphore, 0, resources);

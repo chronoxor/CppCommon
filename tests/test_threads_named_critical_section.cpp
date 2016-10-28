@@ -10,6 +10,8 @@
 
 using namespace CppCommon;
 
+#if !defined(__APPLE__)
+
 TEST_CASE("Named critical section", "[CppCommon][Threads]")
 {
     // Named critical section master
@@ -73,3 +75,6 @@ TEST_CASE("Named critical section locker", "[CppCommon][Threads]")
     // Check result
     REQUIRE(crc == result);
 }
+
+#endif
+

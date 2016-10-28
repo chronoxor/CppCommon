@@ -35,9 +35,9 @@ matrix:
             - graphviz
             - libbfd-dev
             - uuid-dev
-#    - os: osx
-#      compiler: clang
-#      osx_image: xcode8
+    - os: osx
+      compiler: clang
+      osx_image: xcode8
 
 # Using Trusty environment
 sudo: required

@@ -12,6 +12,8 @@
 
 using namespace CppCommon;
 
+#if !defined(__APPLE__)
+
 TEST_CASE("Named auto-reset event", "[CppCommon][Threads]")
 {
     int concurrency = 8;
@@ -54,3 +56,6 @@ TEST_CASE("Named auto-reset event", "[CppCommon][Threads]")
     // Check results
     REQUIRE(count == concurrency);
 }
+
+#endif
+

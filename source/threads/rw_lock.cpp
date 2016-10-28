@@ -52,7 +52,7 @@ public:
     {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         int result = pthread_rwlock_tryrdlock(&_rwlock);
-        if ((result != 0) && (result != EBUSY))
+        if ((result != 0) && (result != EAGAIN) && (result != EBUSY) && (result != EDEADLK))
             throwex SystemException("Failed to try lock for read!", result);
         return (result == 0);
 #elif defined(_WIN32) || defined(_WIN64)
@@ -64,7 +64,7 @@ public:
     {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         int result = pthread_rwlock_trywrlock(&_rwlock);
-        if ((result != 0) && (result != EBUSY))
+        if ((result != 0) && (result != EAGAIN) && (result != EBUSY) && (result != EDEADLK))
             throwex SystemException("Failed to try lock for write!", result);
         return (result == 0);
 #elif defined(_WIN32) || defined(_WIN64)
