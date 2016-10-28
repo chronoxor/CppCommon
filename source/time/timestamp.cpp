@@ -108,7 +108,7 @@ uint64_t Timestamp::utc()
     struct timeval timestamp;
     if (gettimeofday(&timestamp, NULL) != 0)
         throwex SystemException("Cannot get time of day!");
-    return timestamp.tv_sec + timestamp.tv_nsec * 1000;
+    return timestamp.tv_sec + timestamp.tv_usec * 1000;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     struct timespec timestamp;
     if (clock_gettime(CLOCK_REALTIME, &timestamp) != 0)
