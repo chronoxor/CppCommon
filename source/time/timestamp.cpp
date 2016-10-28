@@ -11,9 +11,9 @@
 #include "errors/exceptions.h"
 
 #if defined(__APPLE__)
-#include <mach/clock.h>
 #include <mach/mach.h>
 #include <mach/mach_time.h>
+#include <sys/time.h>
 #include <math.h>
 #include <time.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__)
@@ -105,24 +105,10 @@ uint64_t PrepareTimebaseInfo(mach_timebase_info_data_t& tb)
 uint64_t Timestamp::utc()
 {
 #if defined(__APPLE__)
-    clock_serv_t cclock;
-    mach_timespec_t mts = { 0 };
-    mach_port_t host_port = mach_host_self();
-    if (host_port == MACH_PORT_NULL)
-        throwex SystemException("Cannot get the current host port!");
-    kern_return_t result = host_get_clock_service(host_port, CALENDAR_CLOCK, &cclock);
-    if (result != KERN_SUCCESS)
-        throwex SystemException("Cannot get the current host clock service!");
-    result = clock_get_time(cclock, &mts);
-    if (result != KERN_SUCCESS)
-        throwex SystemException("Cannot get the current clock time!");
-    mach_port_t task_port = mach_task_self();
-    if (task_port == MACH_PORT_NULL)
-        throwex SystemException("Cannot get the current task port!");
-    result = mach_port_deallocate(task_port, cclock);
-    if (result != KERN_SUCCESS)
-        throwex SystemException("Cannot release the current host clock service!");
-    return ((uint64_t)mts.tv_sec * 1000 * 1000 * 1000) + mts.tv_nsec;
+    struct timeval timestamp;
+    if (gettimeofday(&timestamp, NULL) != 0)
+        throwex SystemException("Cannot get time of day!");
+    return timestamp.tv_sec + timestamp.tv_nsec * 1000;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     struct timespec timestamp;
     if (clock_gettime(CLOCK_REALTIME, &timestamp) != 0)
@@ -170,7 +156,7 @@ uint64_t Timestamp::nano()
 #if defined(__APPLE__)
     static mach_timebase_info_data_t info;
     static uint64_t bias = Internals::PrepareTimebaseInfo(info);
-    return (mach_absolute_time() - bias) * info.numer / info.denom;
+    return (uint64_t)((double)(mach_absolute_time() - bias) * (double)info.numer / (double)info.denom);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     struct timespec timestamp = { 0 };
     if (clock_gettime(CLOCK_MONOTONIC, &timestamp) != 0)
