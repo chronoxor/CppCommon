@@ -108,7 +108,7 @@ uint64_t Timestamp::utc()
     struct timeval timestamp;
     if (gettimeofday(&timestamp, NULL) != 0)
         throwex SystemException("Cannot get time of day!");
-    return timestamp.tv_sec + timestamp.tv_usec * 1000;
+    return (timestamp.tv_sec * 1000 * 1000 * 1000) + (timestamp.tv_usec * 1000);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     struct timespec timestamp;
     if (clock_gettime(CLOCK_REALTIME, &timestamp) != 0)
@@ -156,7 +156,7 @@ uint64_t Timestamp::nano()
 #if defined(__APPLE__)
     static mach_timebase_info_data_t info;
     static uint64_t bias = Internals::PrepareTimebaseInfo(info);
-    return (uint64_t)((double)(mach_absolute_time() - bias) * (double)info.numer / (double)info.denom);
+    return 86400000000000ull + (uint64_t)((double)(mach_absolute_time() - bias) * (double)info.numer / (double)info.denom);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     struct timespec timestamp = { 0 };
     if (clock_gettime(CLOCK_MONOTONIC, &timestamp) != 0)
