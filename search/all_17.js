@@ -34,6 +34,7 @@ var searchData=
   ['_7enamedrwlock',['~NamedRWLock',['../class_cpp_common_1_1_named_r_w_lock.html#ad603f5fcae70bdf0e5ffe14f90a67ab6',1,'CppCommon::NamedRWLock']]],
   ['_7enamedsemaphore',['~NamedSemaphore',['../class_cpp_common_1_1_named_semaphore.html#aec5828eae8df56545f16992d40437f18',1,'CppCommon::NamedSemaphore']]],
   ['_7epath',['~Path',['../class_cpp_common_1_1_path.html#a8a21bda6651262cd6683f65c29f55f01',1,'CppCommon::Path']]],
+  ['_7epipe',['~Pipe',['../class_cpp_common_1_1_pipe.html#af4624cea555877202785dd8f07b04e13',1,'CppCommon::Pipe']]],
   ['_7ereadlocker',['~ReadLocker',['../class_cpp_common_1_1_read_locker.html#a00a07cb97513053204978ec7080ddf1f',1,'CppCommon::ReadLocker']]],
   ['_7erwlock',['~RWLock',['../class_cpp_common_1_1_r_w_lock.html#acbc0b1651a1430f775fd37c430c36530',1,'CppCommon::RWLock']]],
   ['_7esemaphore',['~Semaphore',['../class_cpp_common_1_1_semaphore.html#adab7132f60b21e0c49caeda631ecc8e0',1,'CppCommon::Semaphore']]],
