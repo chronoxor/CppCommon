@@ -28,11 +28,11 @@ class Pipe
 {
 public:
     Pipe();
-    Pipe(const Pipe& pipe);
+    Pipe(const Pipe& pipe) = delete;
     Pipe(Pipe&& pipe) noexcept;
     ~Pipe();
 
-    Pipe& operator=(const Pipe& pipe);
+    Pipe& operator=(const Pipe& pipe) = delete;
     Pipe& operator=(Pipe&& pipe) noexcept;
 
     //! Read a bytes buffer from the pipe
@@ -44,32 +44,7 @@ public:
         \param size - Buffer size
         \return Count of read bytes
     */
-    size_t Read(uint8_t* buffer, size_t size);
-
-    //! Read all bytes from the pipe
-    /*!
-        If the pipe is not opened for reading the method will raise
-        a system exception!
-
-        \return Bytes buffer
-    */
-    std::vector<uint8_t> ReadAllBytes();
-    //! Read all text from the pipe
-    /*!
-        If the pipe is not opened for reading the method will raise
-        a system exception!
-
-        \return Text string
-    */
-    std::string ReadAllText();
-    //! Read all text lines from the pipe
-    /*!
-        If the pipe is not opened for reading the method will raise
-        a system exception!
-
-        \return Text lines
-    */
-    std::vector<std::string> ReadAllLines();
+    size_t Read(void* buffer, size_t size);
 
     //! Write a byte buffer into the pipe
     /*!
@@ -80,19 +55,7 @@ public:
         \param size - Buffer size
         \return Count of written bytes
     */
-    size_t Write(const uint8_t* buffer, size_t size);
-    //! Write a text string into the pipe
-    /*!
-        \param text - Text string
-        \return Count of written characters
-    */
-    size_t Write(const std::string& text);
-    //! Write text lines into the pipe
-    /*!
-        \param lines - Text lines
-        \return Count of written lines
-    */
-    size_t Write(const std::vector<std::string>& lines);
+    size_t Write(const void* buffer, size_t size);
 
     //! Swap two instances
     void swap(Pipe& pipe) noexcept;

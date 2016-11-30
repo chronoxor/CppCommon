@@ -11,8 +11,8 @@
 #include "errors/fatal.h"
 #include "filesystem/exceptions.h"
 #include "system/environment.h"
+#include "utility/countof.h"
 
-#include <array>
 #include <cassert>
 #include <cstring>
 
@@ -333,7 +333,7 @@ public:
         _buffer.resize(buffer);
     }
 
-    size_t Read(uint8_t* buffer, size_t size)
+    size_t Read(void* buffer, size_t size)
     {
         assert(IsFileReadOpened() && "File is not opened for reading!");
         if (!IsFileReadOpened())
@@ -355,6 +355,7 @@ public:
 #endif
         }
 
+        uint8_t* bytes = (uint8_t*)buffer;
         size_t counter = 0;
 
         while (size > 0)
@@ -382,17 +383,17 @@ public:
             // Read remaining data form the local read buffer
             size_t remain = _size - _index;
             size_t num = (size < remain) ? size : remain;
-            std::memcpy(buffer, _buffer.data(), num);
+            std::memcpy(bytes, _buffer.data(), num);
             counter += num;
             _index += num;
-            buffer += num;
+            bytes += num;
             size -= num;
         }
 
         return counter;
     }
 
-    size_t Write(const uint8_t* buffer, size_t size)
+    size_t Write(const void* buffer, size_t size)
     {
         assert(IsFileWriteOpened() && "File is not opened for writing!");
         if (!IsFileWriteOpened())
@@ -414,6 +415,7 @@ public:
 #endif
         }
 
+        const uint8_t* bytes = (const uint8_t*)buffer;
         size_t counter = 0;
 
         while (size > 0)
@@ -444,10 +446,10 @@ public:
             // Write remaining data into the local write buffer
             size_t remain = _buffer.size() - _size;
             size_t num = (size < remain) ? size : remain;
-            std::memcpy(_buffer.data() + _size, buffer, num);
+            std::memcpy(_buffer.data() + _size, bytes, num);
             counter += num;
             _size += num;
-            buffer += num;
+            bytes += num;
             size -= num;
         }
 
@@ -716,7 +718,7 @@ void File::OpenOrCreate(bool read, bool write, bool truncate, const Flags<FileAt
     _pimpl->OpenOrCreate(read, write, truncate, attributes, permissions, buffer);
 }
 
-size_t File::Read(uint8_t* buffer, size_t size)
+size_t File::Read(void* buffer, size_t size)
 {
     return _pimpl->Read(buffer, size);
 }
@@ -765,14 +767,14 @@ std::vector<std::string> File::ReadAllLines()
     return result;
 }
 
-size_t File::Write(const uint8_t* buffer, size_t size)
+size_t File::Write(const void* buffer, size_t size)
 {
     return _pimpl->Write(buffer, size);
 }
 
 size_t File::Write(const std::string& text)
 {
-    return Write((const uint8_t*)text.data(), text.size());
+    return Write(text.data(), text.size());
 }
 
 size_t File::Write(const std::vector<std::string>& lines)
@@ -782,9 +784,9 @@ size_t File::Write(const std::vector<std::string>& lines)
     size_t result = 0;
     for (auto& line : lines)
     {
-        if (Write((const uint8_t*)line.data(), line.size()) != line.size())
+        if (Write(line.data(), line.size()) != line.size())
             break;
-        if (Write((const uint8_t*)endline.data(), endline.size()) != endline.size())
+        if (Write(endline.data(), endline.size()) != endline.size())
             break;
         ++result;
     }
@@ -824,7 +826,7 @@ std::string File::ReadAllText(const Path& path)
 {
     File temp(path);
     temp.Open(true, false);
-    std::vector<uint8_t> result = temp.ReadAllText();
+    std::string result = temp.ReadAllText();
     temp.Close();
     return result;
 }
@@ -833,12 +835,12 @@ std::vector<std::string> File::ReadAllLines(const Path& path)
 {
     File temp(path);
     temp.Open(true, false);
-    std::vector<uint8_t> result = temp.ReadAllLines();
+    std::vector<std::string> result = temp.ReadAllLines();
     temp.Close();
     return result;
 }
 
-size_t File::WriteAllBytes(const Path& path, const uint8_t* buffer, size_t size)
+size_t File::WriteAllBytes(const Path& path, const void* buffer, size_t size)
 {
     File temp(path);
     temp.OpenOrCreate(false, true, true);

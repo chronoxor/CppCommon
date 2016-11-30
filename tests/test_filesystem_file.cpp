@@ -100,7 +100,7 @@ TEST_CASE("File common", "[CppCommon][FileSystem]")
 TEST_CASE("File read/write static methods", "[CppCommon][FileSystem]")
 {
     char buffer[] = "The quick brown fox jumps over the lazy dog";
-    REQUIRE(File::WriteAllBytes("test.tmp", (uint8_t*)buffer, countof(buffer)) == countof(buffer));
+    REQUIRE(File::WriteAllBytes("test.tmp", buffer, countof(buffer)) == countof(buffer));
     REQUIRE(File::ReadAllBytes("test.tmp").size() == countof(buffer));
     File::Remove("test.tmp");
 

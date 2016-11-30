@@ -62,7 +62,7 @@ TEST_CASE("Multiple producers / multiple consumers wait ring threads", "[CppComm
     std::vector<std::thread> producers;
     for (int producer = 0; producer < producers_count; ++producer)
     {
-        producers.push_back(std::thread([&ring, &crc, producer, items_to_produce, producers_count]()
+        producers.push_back(std::thread([&ring, producer, items_to_produce, producers_count]()
         {
             int items = (items_to_produce / producers_count);
             for (int i = 0; i < items; ++i)

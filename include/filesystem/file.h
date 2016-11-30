@@ -111,7 +111,7 @@ public:
         \param size - Buffer size
         \return Count of read bytes
     */
-    size_t Read(uint8_t* buffer, size_t size);
+    size_t Read(void* buffer, size_t size);
 
     //! Read all bytes from the opened file
     /*!
@@ -147,7 +147,7 @@ public:
         \param size - Buffer size
         \return Count of written bytes
     */
-    size_t Write(const uint8_t* buffer, size_t size);
+    size_t Write(const void* buffer, size_t size);
     //! Write a text string into the opened file
     /*!
         \param text - Text string
@@ -223,7 +223,7 @@ public:
         \param size - Buffer size
         \return Count of written bytes
     */
-    static size_t WriteAllBytes(const Path& path, const uint8_t* buffer, size_t size);
+    static size_t WriteAllBytes(const Path& path, const void* buffer, size_t size);
     //! Write a text string into the given file
     /*!
         \param path - File path
