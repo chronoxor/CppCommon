@@ -102,7 +102,7 @@ public:
     */
     void OpenOrCreate(bool read, bool write, bool truncate = false, const Flags<FileAttributes>& attributes = File::DEFAULT_ATTRIBUTES, const Flags<FilePermissions>& permissions = File::DEFAULT_PERMISSIONS, size_t buffer = File::DEFAULT_BUFFER);
 
-    //! Read from the opened file
+    //! Read a bytes buffer from the opened file
     /*!
         If the file is not opened for reading the method will raise
         a filesystem exception!
@@ -112,7 +112,33 @@ public:
         \return Count of read bytes
     */
     size_t Read(uint8_t* buffer, size_t size);
-    //! Write into the opened file
+
+    //! Read all bytes from the opened file
+    /*!
+        If the file is not opened for reading the method will raise
+        a filesystem exception!
+
+        \return Bytes buffer
+    */
+    std::vector<uint8_t> ReadAllBytes();
+    //! Read all text from the opened file
+    /*!
+        If the file is not opened for reading the method will raise
+        a filesystem exception!
+
+        \return Text string
+    */
+    std::string ReadAllText();
+    //! Read all text lines from the opened file
+    /*!
+        If the file is not opened for reading the method will raise
+        a filesystem exception!
+
+        \return Text lines
+    */
+    std::vector<std::string> ReadAllLines();
+
+    //! Write a byte buffer into the opened file
     /*!
         If the file is not opened for writing the method will raise
         a filesystem exception!
@@ -122,6 +148,18 @@ public:
         \return Count of written bytes
     */
     size_t Write(const uint8_t* buffer, size_t size);
+    //! Write a text string into the opened file
+    /*!
+        \param text - Text string
+        \return Count of written characters
+    */
+    size_t Write(const std::string& text);
+    //! Write text lines into the opened file
+    /*!
+        \param lines - Text lines
+        \return Count of written lines
+    */
+    size_t Write(const std::vector<std::string>& lines);
 
     //! Seek into the opened file
     /*!
@@ -131,6 +169,7 @@ public:
         \param offset - Seek offset
     */
     void Seek(uint64_t offset);
+
     //! Resize the current file
     /*!
         If the current file size is greater than required size then the file
@@ -164,18 +203,18 @@ public:
         \return Bytes buffer
     */
     static std::vector<uint8_t> ReadAllBytes(const Path& path);
-    //! Read all text lines from the given file
-    /*!
-        \param path - File path
-        \return Text lines
-    */
-    static std::vector<std::string> ReadAllLines(const Path& path);
     //! Read all text from the given file
     /*!
         \param path - File path
         \return Text string
     */
     static std::string ReadAllText(const Path& path);
+    //! Read all text lines from the given file
+    /*!
+        \param path - File path
+        \return Text lines
+    */
+    static std::vector<std::string> ReadAllLines(const Path& path);
 
     //! Write a bytes buffer into the given file
     /*!
@@ -185,13 +224,6 @@ public:
         \return Count of written bytes
     */
     static size_t WriteAllBytes(const Path& path, const uint8_t* buffer, size_t size);
-    //! Write text lines into the given file
-    /*!
-        \param path - File path
-        \param lines - Text lines
-        \return Count of written lines
-    */
-    static size_t WriteAllLines(const Path& path, const std::vector<std::string>& lines);
     //! Write a text string into the given file
     /*!
         \param path - File path
@@ -199,6 +231,13 @@ public:
         \return Count of written characters
     */
     static size_t WriteAllText(const Path& path, const std::string& text);
+    //! Write text lines into the given file
+    /*!
+        \param path - File path
+        \param lines - Text lines
+        \return Count of written lines
+    */
+    static size_t WriteAllLines(const Path& path, const std::vector<std::string>& lines);
 
     //! Swap two instances
     void swap(File& file) noexcept;

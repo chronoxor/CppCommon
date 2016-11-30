@@ -12,6 +12,7 @@
 #include "filesystem/exceptions.h"
 #include "system/environment.h"
 
+#include <array>
 #include <cassert>
 #include <cstring>
 
@@ -720,9 +721,74 @@ size_t File::Read(uint8_t* buffer, size_t size)
     return _pimpl->Read(buffer, size);
 }
 
+std::vector<uint8_t> File::ReadAllBytes()
+{
+    uint8_t buffer[DEFAULT_BUFFER];
+    std::vector<uint8_t> result;
+    size_t size = 0;
+
+    do
+    {
+        size = Read(buffer, countof(buffer));
+        result.insert(result.end(), buffer, buffer + size);
+    } while (size > 0);
+
+    return result;
+}
+
+std::string File::ReadAllText()
+{
+    std::vector<uint8_t> bytes = ReadAllBytes();
+    return std::string(bytes.begin(), bytes.end());
+}
+
+std::vector<std::string> File::ReadAllLines()
+{
+    std::string temp;
+    std::vector<std::string> result;
+    std::vector<uint8_t> bytes = ReadAllBytes();
+
+    for (auto ch : bytes)
+    {
+        if ((ch == '\r') || (ch == '\n'))
+        {
+            if (!temp.empty())
+            {
+                result.push_back(temp);
+                temp.clear();
+            }
+        }
+        else
+            temp += ch;
+    }
+
+    return result;
+}
+
 size_t File::Write(const uint8_t* buffer, size_t size)
 {
     return _pimpl->Write(buffer, size);
+}
+
+size_t File::Write(const std::string& text)
+{
+    return Write((const uint8_t*)text.data(), text.size());
+}
+
+size_t File::Write(const std::vector<std::string>& lines)
+{
+    static std::string endline = Environment::EndLine();
+
+    size_t result = 0;
+    for (auto& line : lines)
+    {
+        if (Write((const uint8_t*)line.data(), line.size()) != line.size())
+            break;
+        if (Write((const uint8_t*)endline.data(), endline.size()) != endline.size())
+            break;
+        ++result;
+    }
+    return result;
 }
 
 void File::Seek(uint64_t offset)
@@ -749,39 +815,27 @@ std::vector<uint8_t> File::ReadAllBytes(const Path& path)
 {
     File temp(path);
     temp.Open(true, false);
-    std::vector<uint8_t> result(temp.size());
-    result.resize(temp.Read(result.data(), result.size()));
+    std::vector<uint8_t> result = temp.ReadAllBytes();
+    temp.Close();
+    return result;
+}
+
+std::string File::ReadAllText(const Path& path)
+{
+    File temp(path);
+    temp.Open(true, false);
+    std::vector<uint8_t> result = temp.ReadAllText();
     temp.Close();
     return result;
 }
 
 std::vector<std::string> File::ReadAllLines(const Path& path)
 {
-    std::string temp;
-    std::vector<std::string> result;
-    std::vector<uint8_t> bytes = ReadAllBytes(path);
-
-    for (auto ch : bytes)
-    {
-        if ((ch == '\r') || (ch == '\n'))
-        {
-            if (!temp.empty())
-            {
-                result.push_back(temp);
-                temp.clear();
-            }
-        }
-        else
-            temp += ch;
-    }
-
+    File temp(path);
+    temp.Open(true, false);
+    std::vector<uint8_t> result = temp.ReadAllLines();
+    temp.Close();
     return result;
-}
-
-std::string File::ReadAllText(const Path& path)
-{
-    std::vector<uint8_t> bytes = ReadAllBytes(path);
-    return std::string(bytes.begin(), bytes.end());
 }
 
 size_t File::WriteAllBytes(const Path& path, const uint8_t* buffer, size_t size)
@@ -793,28 +847,22 @@ size_t File::WriteAllBytes(const Path& path, const uint8_t* buffer, size_t size)
     return result;
 }
 
-size_t File::WriteAllLines(const Path& path, const std::vector<std::string>& lines)
+size_t File::WriteAllText(const Path& path, const std::string& text)
 {
-    static std::string endline = Environment::EndLine();
-
     File temp(path);
     temp.OpenOrCreate(false, true, true);
-    size_t result = 0;
-    for (auto& line : lines)
-    {
-        if (temp.Write((const uint8_t*)line.data(), line.size()) != line.size())
-            break;
-        if (temp.Write((const uint8_t*)endline.data(), endline.size()) != endline.size())
-            break;
-        ++result;
-    }
+    size_t result = temp.Write(text);
     temp.Close();
     return result;
 }
 
-size_t File::WriteAllText(const Path& path, const std::string& text)
+size_t File::WriteAllLines(const Path& path, const std::vector<std::string>& lines)
 {
-    return WriteAllBytes(path, (const uint8_t*)text.data(), text.size());
+    File temp(path);
+    temp.OpenOrCreate(false, true, true);
+    size_t result = temp.Write(lines);
+    temp.Close();
+    return result;
 }
 
 } // namespace CppCommon
