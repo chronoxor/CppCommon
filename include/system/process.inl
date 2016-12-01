@@ -8,6 +8,16 @@
 
 namespace CppCommon {
 
+inline Process Process::CurrentProcess()
+{
+    return Process(CurrentProcessId());
+}
+
+inline Process Process::ParentProcess()
+{
+    return Process(ParentProcessId());
+}
+
 inline void Process::swap(Process& process) noexcept
 {
     using std::swap;

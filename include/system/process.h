@@ -15,7 +15,7 @@
 /*!
     Get the current process Id.
 */
-#define __THREAD__ CppCommon::Process::CurrentProcessId()
+#define __PROCESS__ CppCommon::Process::CurrentProcessId()
 
 namespace CppCommon {
 
@@ -29,13 +29,18 @@ namespace CppCommon {
 class Process
 {
 public:
-    Process();
     Process(const Process&) = delete;
     Process(Process&&) noexcept;
     ~Process();
 
     Process& operator=(const Process&) = delete;
     Process& operator=(Process&&) noexcept;
+
+    //! Get the process Id
+    uint64_t id() noexcept;
+
+    //! Kill the process
+    void Kill();
 
     //! Get the current process Id
     /*!
@@ -48,6 +53,23 @@ public:
     */
     static uint64_t ParentProcessId() noexcept;
 
+    //! Get the current process
+    /*!
+        \return Current process
+    */
+    static Process CurrentProcess();
+    //! Get the parent process
+    /*!
+        \return Parent process
+    */
+    static Process ParentProcess();
+
+    //! Exit the current process
+    /*!
+        \param result - Result is returned to the parent
+    */
+    static void Exit(int result);
+
     //! Swap two instances
     void swap(Process& process) noexcept;
     friend void swap(Process& process1, Process& process2) noexcept;
@@ -55,6 +77,9 @@ public:
 private:
     class Impl;
     std::unique_ptr<Impl> _pimpl;
+
+    Process();
+    Process(uint64_t id);
 };
 
 /*! \example system_process.cpp Process abstraction example */
