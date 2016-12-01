@@ -1,6 +1,6 @@
 /*!
     \file thread.cpp
-    \brief Thread abstraction implementation
+    \brief Thread implementation
     \author Ivan Shynkarenka
     \date 27.01.2016
     \copyright MIT License

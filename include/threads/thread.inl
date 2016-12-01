@@ -1,6 +1,6 @@
 /*!
     \file thread.inl
-    \brief Thread abstraction inline implementation
+    \brief Thread inline implementation
     \author Ivan Shynkarenka
     \date 27.01.2016
     \copyright MIT License

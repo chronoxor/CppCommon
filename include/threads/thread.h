@@ -1,6 +1,6 @@
 /*!
     \file thread.h
-    \brief Thread abstraction definition
+    \brief Thread definition
     \author Ivan Shynkarenka
     \date 27.01.2016
     \copyright MIT License
@@ -25,8 +25,9 @@ namespace CppCommon {
 
 //! Thread abstraction
 /*!
-    Thread abstraction contains different kinds of thread manipulation functionality such as retrive the current thread
-    Id, sleep for the given time period in nanoseconds, etc.
+    Thread contains different kinds of thread manipulation  functionality  such  as
+    retrive the current thread Id, sleep for the given time period in  nanoseconds,
+    etc.
 
     Thread-safe.
 */
@@ -147,7 +148,7 @@ public:
     static void SetPriority(std::thread& thread, Priority priority);
 };
 
-/*! \example threads_thread.cpp Thread abstraction example */
+/*! \example threads_thread.cpp Thread example */
 
 } // namespace CppCommon
 

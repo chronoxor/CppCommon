@@ -1,6 +1,6 @@
 /*!
     \file threads_thread.cpp
-    \brief Thread abstraction example
+    \brief Thread example
     \author Ivan Shynkarenka
     \date 08.08.2016
     \copyright MIT License

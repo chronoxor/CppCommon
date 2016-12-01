@@ -11,8 +11,6 @@
 #include "errors/exceptions.h"
 #include "errors/fatal.h"
 
-#include <cassert>
-
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
 #include <unistd.h>
 #elif defined(_WIN32) || defined(_WIN64)
