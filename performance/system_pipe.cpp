@@ -12,39 +12,50 @@
 
 using namespace CppCommon;
 
-const uint64_t items_to_produce = 1000000;
+const uint64_t bytes_to_produce = 2097152;
+const int item_size_from = 1;
+const int item_size_to = 262144;
+const auto settings = CppBenchmark::Settings().ParamRange(item_size_from, item_size_to, [](int from, int to, int& result) { int r = result; result *= 4; return r; });
 
-template<typename T>
 void produce_consume(CppBenchmark::Context& context)
 {
+    const int item_size = context.x();
+    const uint64_t items_to_produce = bytes_to_produce / item_size;
     uint64_t crc = 0;
 
     // Create communication pipe
     Pipe pipe;
 
     // Start consumer thread
-    auto consumer = std::thread([&pipe, &crc]()
+    auto consumer = std::thread([&pipe, item_size, items_to_produce, &crc]()
     {
+        char item[item_size_to];
+
         for (uint64_t i = 0; i < items_to_produce; ++i)
         {
             // Read the item from the pipe
-            T item;
-            if (pipe.Read(&item, sizeof(item)) != sizeof(item))
+            if (pipe.Read(item, item_size) != item_size)
                 break;
 
-            // Consume the item
-            crc += item;
+            // Emulate consuming
+            for (uint64_t j = 0; j < item_size; ++j)
+                crc += item[j];
         }
     });
 
     // Start producer thread
-    auto producer = std::thread([&pipe]()
+    auto producer = std::thread([&pipe, item_size, items_to_produce]()
     {
+        char item[item_size_to];
+
         for (uint64_t i = 0; i < items_to_produce; ++i)
         {
+            // Emulate producing
+            for (int j = 0; j < item_size; ++j)
+                item[j] = (char)j;
+
             // Write the item into the pipe
-            T item = (T)i;
-            if (pipe.Write(&item, sizeof(item)) != sizeof(item))
+            if (pipe.Write(item, item_size) != item_size)
                 break;
         }
     });
@@ -58,13 +69,13 @@ void produce_consume(CppBenchmark::Context& context)
     // Update benchmark metrics
     context.metrics().AddIterations(items_to_produce - 1);
     context.metrics().AddItems(items_to_produce);
-    context.metrics().AddBytes(items_to_produce * sizeof(T));
+    context.metrics().AddBytes(bytes_to_produce);
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK("Pipe")
+BENCHMARK("Pipe", settings)
 {
-    produce_consume<int>(context);
+    produce_consume(context);
 }
 
 BENCHMARK_MAIN()
