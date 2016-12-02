@@ -19,7 +19,7 @@ const auto settings = CppBenchmark::Settings().ParamRange(item_size_from, item_s
 
 void produce_consume(CppBenchmark::Context& context)
 {
-    const int item_size = context.x();
+    const uint64_t item_size = context.x();
     const uint64_t items_to_produce = bytes_to_produce / item_size;
     uint64_t crc = 0;
 
@@ -34,7 +34,7 @@ void produce_consume(CppBenchmark::Context& context)
         for (uint64_t i = 0; i < items_to_produce; ++i)
         {
             // Read the item from the pipe
-            if (pipe.Read(item, item_size) != (size_t)item_size)
+            if (pipe.Read(item, item_size) != item_size)
                 break;
 
             // Emulate consuming
@@ -51,11 +51,11 @@ void produce_consume(CppBenchmark::Context& context)
         for (uint64_t i = 0; i < items_to_produce; ++i)
         {
             // Emulate producing
-            for (int j = 0; j < item_size; ++j)
+            for (uint64_t j = 0; j < item_size; ++j)
                 item[j] = (char)j;
 
             // Write the item into the pipe
-            if (pipe.Write(item, item_size) != (size_t)item_size)
+            if (pipe.Write(item, item_size) != item_size)
                 break;
         }
     });
