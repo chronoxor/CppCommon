@@ -34,7 +34,7 @@ void produce_consume(CppBenchmark::Context& context)
         for (uint64_t i = 0; i < items_to_produce; ++i)
         {
             // Read the item from the pipe
-            if (pipe.Read(item, item_size) != item_size)
+            if (pipe.Read(item, item_size) != (size_t)item_size)
                 break;
 
             // Emulate consuming
@@ -55,7 +55,7 @@ void produce_consume(CppBenchmark::Context& context)
                 item[j] = (char)j;
 
             // Write the item into the pipe
-            if (pipe.Write(item, item_size) != item_size)
+            if (pipe.Write(item, item_size) != (size_t)item_size)
                 break;
         }
     });
