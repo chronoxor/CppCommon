@@ -52,9 +52,29 @@ public:
     {
     }
 
-    uint64_t id() noexcept
+    uint64_t id() const noexcept
     {
         return (uint64_t)_pid;
+    }
+
+    bool IsRunning() const
+    {
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+        return (kill(_pid, 0) == 0);
+#elif defined(_WIN32) || defined(_WIN64)
+        HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION, FALSE, _pid);
+        if (hProcess == nullptr)
+            throwex SystemException("Failed to open a process with Id {}!"_format(id()));
+
+        // Smart resource cleaner pattern
+        auto process = resource(hProcess, [](HANDLE hObject) { CloseHandle(hObject); });
+
+        DWORD dwExitCode;
+        if (!GetExitCodeProcess(process.get(), &dwExitCode))
+            throwex SystemException("Failed to get exit code for a process with Id {}!"_format(id()));
+
+        return (dwExitCode == STILL_ACTIVE);
+#endif
     }
 
     void Kill()
@@ -80,7 +100,14 @@ public:
     {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         int status;
-        pid_t result = waitpid(_pid, &status, 0);
+        pid_t result;
+
+        do
+        {
+            result = waitpid(_pid, &status, 0);
+        }
+        while ((result < 0) && (errno == EINTR));
+
         if (result == -1)
             throwex SystemException("Failed to wait for a process with Id {}!"_format(id()));
 
@@ -95,7 +122,7 @@ public:
         else
             throwex SystemException("Process with Id {} has unknown wait status!"_format(id()));
 #elif defined(_WIN32) || defined(_WIN64)
-        HANDLE hProcess = OpenProcess(PROCESS_TERMINATE, FALSE, _pid);
+        HANDLE hProcess = OpenProcess(SYNCHRONIZE, FALSE, _pid);
         if (hProcess == nullptr)
             throwex SystemException("Failed to open a process with Id {}!"_format(id()));
 
@@ -195,9 +222,14 @@ Process& Process::operator=(Process&& process) noexcept
     return *this;
 }
 
-uint64_t Process::id() noexcept
+uint64_t Process::id() const noexcept
 {
     return _pimpl->id();
+}
+
+bool Process::IsRunning() const
+{
+    return _pimpl->IsRunning();
 }
 
 void Process::Kill()

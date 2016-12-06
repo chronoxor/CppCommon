@@ -37,7 +37,10 @@ public:
     Process& operator=(Process&&) noexcept;
 
     //! Get the process Id
-    uint64_t id() noexcept;
+    uint64_t id() const noexcept;
+
+    //! Is the process is running?
+    bool IsRunning() const;
 
     //! Kill the process
     void Kill();
