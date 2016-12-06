@@ -28,11 +28,11 @@ class Pipe
 {
 public:
     Pipe();
-    Pipe(const Pipe& pipe) = delete;
+    Pipe(const Pipe&) = delete;
     Pipe(Pipe&& pipe) noexcept;
     ~Pipe();
 
-    Pipe& operator=(const Pipe& pipe) = delete;
+    Pipe& operator=(const Pipe&) = delete;
     Pipe& operator=(Pipe&& pipe) noexcept;
 
     //! Read a bytes buffer from the pipe

@@ -605,7 +605,7 @@ const Flags<FileAttributes> File::DEFAULT_ATTRIBUTES = FileAttributes::NORMAL;
 const Flags<FilePermissions> File::DEFAULT_PERMISSIONS = FilePermissions::IRUSR | FilePermissions::IWUSR | FilePermissions::IRGRP | FilePermissions::IROTH;
 const size_t File::DEFAULT_BUFFER = 8192;
 
-File::File() : Path(), _pimpl(new Impl(*this))
+File::File() : Path(), _pimpl(std::make_unique<Impl>(*this))
 {
 }
 

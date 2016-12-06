@@ -89,7 +89,7 @@ private:
 
 //! @endcond
 
-Pipe::Pipe() : _pimpl(new Impl())
+Pipe::Pipe() : _pimpl(std::make_unique<Impl>())
 {
 }
 

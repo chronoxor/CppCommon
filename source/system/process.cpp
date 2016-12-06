@@ -36,6 +36,7 @@ public:
         _pid = (pid_t)-1;
 #elif defined(_WIN32) || defined(_WIN64)
         _pid = (DWORD)-1;
+        _process = nullptr;
 #endif
     }
 
@@ -45,11 +46,22 @@ public:
         _pid = (pid_t)id;
 #elif defined(_WIN32) || defined(_WIN64)
         _pid = (DWORD)id;
+        _process = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_TERMINATE | SYNCHRONIZE, FALSE, _pid);
+        if (_process == nullptr)
+            throwex SystemException("Failed to open a process with Id {}!"_format(id));
 #endif
     }
 
     ~Impl()
     {
+#if defined(_WIN32) || defined(_WIN64)
+        if (_process != nullptr)
+        {
+            if (!CloseHandle(_process))
+                fatality(SystemException("Failed to close a process with Id {}!"_format(id())));
+            _process = nullptr;
+        }
+#endif
     }
 
     uint64_t id() const noexcept
@@ -62,15 +74,11 @@ public:
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         return (kill(_pid, 0) == 0);
 #elif defined(_WIN32) || defined(_WIN64)
-        HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION, FALSE, _pid);
-        if (hProcess == nullptr)
-            throwex SystemException("Failed to open a process with Id {}!"_format(id()));
-
-        // Smart resource cleaner pattern
-        auto process = resource(hProcess, [](HANDLE hObject) { CloseHandle(hObject); });
+        if (_process == nullptr)
+            throwex SystemException("Failed to get exit code for a process with Id {}!"_format(id()));
 
         DWORD dwExitCode;
-        if (!GetExitCodeProcess(process.get(), &dwExitCode))
+        if (!GetExitCodeProcess(_process, &dwExitCode))
             throwex SystemException("Failed to get exit code for a process with Id {}!"_format(id()));
 
         return (dwExitCode == STILL_ACTIVE);
@@ -84,14 +92,10 @@ public:
         if (result != 0)
             throwex SystemException("Failed to kill a process with Id {}!"_format(id()));
 #elif defined(_WIN32) || defined(_WIN64)
-        HANDLE hProcess = OpenProcess(PROCESS_TERMINATE, FALSE, _pid);
-        if (hProcess == nullptr)
-            throwex SystemException("Failed to open a process with Id {}!"_format(id()));
+        if (_process == nullptr)
+            throwex SystemException("Failed to kill a process with Id {}!"_format(id()));
 
-        // Smart resource cleaner pattern
-        auto process = resource(hProcess, [](HANDLE hObject) { CloseHandle(hObject); });
-
-        if (!TerminateProcess(process.get(), 1))
+        if (!TerminateProcess(_process, 1))
             throwex SystemException("Failed to kill a process with Id {}!"_format(id()));
 #endif
     }
@@ -122,19 +126,15 @@ public:
         else
             throwex SystemException("Process with Id {} has unknown wait status!"_format(id()));
 #elif defined(_WIN32) || defined(_WIN64)
-        HANDLE hProcess = OpenProcess(SYNCHRONIZE, FALSE, _pid);
-        if (hProcess == nullptr)
-            throwex SystemException("Failed to open a process with Id {}!"_format(id()));
+        if (_process == nullptr)
+            throwex SystemException("Failed to wait for a process with Id {}!"_format(id()));
 
-        // Smart resource cleaner pattern
-        auto process = resource(hProcess, [](HANDLE hObject) { CloseHandle(hObject); });
-
-        DWORD result = WaitForSingleObject(process.get(), INFINITE);
+        DWORD result = WaitForSingleObject(_process, INFINITE);
         if (result != WAIT_OBJECT_0)
             throwex SystemException("Failed to wait for a process with Id {}!"_format(id()));
 
         DWORD dwExitCode;
-        if (!GetExitCodeProcess(process.get(), &dwExitCode))
+        if (!GetExitCodeProcess(_process, &dwExitCode))
             throwex SystemException("Failed to get exit code for a process with Id {}!"_format(id()));
 
         return (int)dwExitCode;
@@ -195,16 +195,21 @@ private:
     pid_t _pid;
 #elif defined(_WIN32) || defined(_WIN64)
     DWORD _pid;
+    HANDLE _process;
 #endif
 };
 
 //! @endcond
 
-Process::Process() : _pimpl(new Impl())
+Process::Process() : _pimpl(std::make_unique<Impl>())
 {
 }
 
-Process::Process(uint64_t id) : _pimpl(new Impl(id))
+Process::Process(uint64_t id) : _pimpl(std::make_unique<Impl>(id))
+{
+}
+
+Process::Process(const Process& process) : _pimpl(std::make_unique<Impl>(process._pimpl->id()))
 {
 }
 
@@ -214,6 +219,12 @@ Process::Process(Process&& process) noexcept : _pimpl(std::move(process._pimpl))
 
 Process::~Process()
 {
+}
+
+Process& Process::operator=(const Process& process)
+{
+    _pimpl = std::make_unique<Impl>(process._pimpl->id());
+    return *this;
 }
 
 Process& Process::operator=(Process&& process) noexcept

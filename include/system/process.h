@@ -29,12 +29,12 @@ namespace CppCommon {
 class Process
 {
 public:
-    Process(const Process&) = delete;
-    Process(Process&&) noexcept;
+    Process(const Process& process);
+    Process(Process&& process) noexcept;
     ~Process();
 
-    Process& operator=(const Process&) = delete;
-    Process& operator=(Process&&) noexcept;
+    Process& operator=(const Process& process);
+    Process& operator=(Process&& process) noexcept;
 
     //! Get the process Id
     uint64_t id() const noexcept;
