@@ -14,6 +14,7 @@
 #include "utility/resource.h"
 
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#include <sys/wait.h>
 #include <signal.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -61,17 +62,55 @@ public:
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         int result = kill(_pid, SIGKILL);
         if (result != 0)
-            throwex SystemException("Failed to kill a process with Id = {}!"_format(id()));
+            throwex SystemException("Failed to kill a process with Id {}!"_format(id()));
 #elif defined(_WIN32) || defined(_WIN64)
         HANDLE hProcess = OpenProcess(PROCESS_TERMINATE, FALSE, _pid);
         if (hProcess == nullptr)
-            throwex SystemException("Failed to open a process with Id = {}!"_format(id()));
+            throwex SystemException("Failed to open a process with Id {}!"_format(id()));
 
         // Smart resource cleaner pattern
         auto process = resource(hProcess, [](HANDLE hObject) { CloseHandle(hObject); });
 
         if (!TerminateProcess(process.get(), 1))
-            throwex SystemException("Failed to kill a process with Id = {}!"_format(id()));
+            throwex SystemException("Failed to kill a process with Id {}!"_format(id()));
+#endif
+    }
+
+    int Wait()
+    {
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+        int status;
+        pid_t result = waitpid(_pid, &status, 0);
+        if (result == -1)
+            throwex SystemException("Failed to wait for a process with Id {}!"_format(id()));
+
+        if (WIFEXITED(status))
+            return WEXITSTATUS(status);
+        else if (WIFSIGNALED(status))
+            throwex SystemException("Process with Id {} was killed by signal {}!"_format(id(), WTERMSIG(status)));
+        else if (WIFSTOPPED(status))
+            throwex SystemException("Process with Id {} was stopped by signal {}!"_format(id(), WSTOPSIG(status)));
+        else if (WIFCONTINUED(status))
+            throwex SystemException("Process with Id {} was continued by signal SIGCONT!"_format(id()));
+        else
+            throwex SystemException("Process with Id {} has unknown wait status!"_format(id()));
+#elif defined(_WIN32) || defined(_WIN64)
+        HANDLE hProcess = OpenProcess(PROCESS_TERMINATE, FALSE, _pid);
+        if (hProcess == nullptr)
+            throwex SystemException("Failed to open a process with Id {}!"_format(id()));
+
+        // Smart resource cleaner pattern
+        auto process = resource(hProcess, [](HANDLE hObject) { CloseHandle(hObject); });
+
+        DWORD result = WaitForSingleObject(process.get(), INFINITE);
+        if (result != WAIT_OBJECT_0)
+            throwex SystemException("Failed to wait for a process with Id {}!"_format(id()));
+
+        DWORD dwExitCode;
+        if (!GetExitCodeProcess(process.get(), &dwExitCode))
+            throwex SystemException("Failed to get exit code for a process with Id {}!"_format(id()));
+
+        return (int)dwExitCode;
 #endif
     }
 
@@ -164,6 +203,11 @@ uint64_t Process::id() noexcept
 void Process::Kill()
 {
     return _pimpl->Kill();
+}
+
+int Process::Wait()
+{
+    return _pimpl->Wait();
 }
 
 uint64_t Process::CurrentProcessId() noexcept

@@ -42,6 +42,14 @@ public:
     //! Kill the process
     void Kill();
 
+    //! Wait for the process to exit
+    /*!
+        Will block.
+
+        \return Process exit result
+    */
+    int Wait();
+
     //! Get the current process Id
     /*!
         \return Current process Id
