@@ -9,6 +9,9 @@
 #ifndef CPPCOMMON_SYSTEM_PIPE_H
 #define CPPCOMMON_SYSTEM_PIPE_H
 
+#include "utility/reader.h"
+#include "utility/writer.h"
+
 #include <memory>
 #include <vector>
 
@@ -24,16 +27,28 @@ namespace CppCommon {
 
     Not thread-safe.
 */
-class Pipe
+class Pipe : public Reader, public Writer
 {
 public:
     Pipe();
     Pipe(const Pipe&) = delete;
     Pipe(Pipe&& pipe) noexcept;
-    ~Pipe();
+    virtual ~Pipe();
 
     Pipe& operator=(const Pipe&) = delete;
     Pipe& operator=(Pipe&& pipe) noexcept;
+
+    //! Get the native read endpoint handler
+    void* reader() const noexcept;
+    //! Get the native write endpoint handler
+    void* writer() const noexcept;
+
+    //! Is pipe opened?
+    bool IsPipeOpened() const noexcept;
+    //! Is pipe opened for reading?
+    bool IsPipeReadOpened() const noexcept;
+    //! Is pipe opened for writing?
+    bool IsPipeWriteOpened() const noexcept;
 
     //! Read a bytes buffer from the pipe
     /*!
@@ -44,7 +59,11 @@ public:
         \param size - Buffer size
         \return Count of read bytes
     */
-    size_t Read(void* buffer, size_t size);
+    size_t Read(void* buffer, size_t size) override;
+
+    using Reader::ReadAllBytes;
+    using Reader::ReadAllText;
+    using Reader::ReadAllLines;
 
     //! Write a byte buffer into the pipe
     /*!
@@ -55,7 +74,17 @@ public:
         \param size - Buffer size
         \return Count of written bytes
     */
-    size_t Write(const void* buffer, size_t size);
+    size_t Write(const void* buffer, size_t size) override;
+
+    using Writer::Write;
+
+    //! Close the read pipe endpoint
+    void CloseRead();
+    //! Close the write pipe endpoint
+    void CloseWrite();
+
+    //! Close all pipe endpoints
+    void Close();
 
     //! Swap two instances
     void swap(Pipe& pipe) noexcept;

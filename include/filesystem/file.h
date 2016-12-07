@@ -10,6 +10,8 @@
 #define CPPCOMMON_FILESYSTEM_FILE_H
 
 #include "filesystem/path.h"
+#include "utility/reader.h"
+#include "utility/writer.h"
 
 #include <memory>
 #include <vector>
@@ -22,7 +24,7 @@ namespace CppCommon {
 
     Not thread-safe.
 */
-class File : public Path
+class File : public Path, public Reader, public Writer
 {
 public:
     //! Default file attributes (Normal)
@@ -41,7 +43,7 @@ public:
     File(const Path& path);
     File(const File& file);
     File(File&& file) noexcept;
-    ~File();
+    virtual ~File();
 
     File& operator=(const Path& path)
     { Assign(path); return *this; }
@@ -111,32 +113,11 @@ public:
         \param size - Buffer size
         \return Count of read bytes
     */
-    size_t Read(void* buffer, size_t size);
+    size_t Read(void* buffer, size_t size) override;
 
-    //! Read all bytes from the opened file
-    /*!
-        If the file is not opened for reading the method will raise
-        a filesystem exception!
-
-        \return Bytes buffer
-    */
-    std::vector<uint8_t> ReadAllBytes();
-    //! Read all text from the opened file
-    /*!
-        If the file is not opened for reading the method will raise
-        a filesystem exception!
-
-        \return Text string
-    */
-    std::string ReadAllText();
-    //! Read all text lines from the opened file
-    /*!
-        If the file is not opened for reading the method will raise
-        a filesystem exception!
-
-        \return Text lines
-    */
-    std::vector<std::string> ReadAllLines();
+    using Reader::ReadAllBytes;
+    using Reader::ReadAllText;
+    using Reader::ReadAllLines;
 
     //! Write a byte buffer into the opened file
     /*!
@@ -147,19 +128,9 @@ public:
         \param size - Buffer size
         \return Count of written bytes
     */
-    size_t Write(const void* buffer, size_t size);
-    //! Write a text string into the opened file
-    /*!
-        \param text - Text string
-        \return Count of written characters
-    */
-    size_t Write(const std::string& text);
-    //! Write text lines into the opened file
-    /*!
-        \param lines - Text lines
-        \return Count of written lines
-    */
-    size_t Write(const std::vector<std::string>& lines);
+    size_t Write(const void* buffer, size_t size) override;
+
+    using Writer::Write;
 
     //! Seek into the opened file
     /*!

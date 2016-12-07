@@ -9,7 +9,12 @@
 #ifndef CPPCOMMON_SYSTEM_PROCESS_H
 #define CPPCOMMON_SYSTEM_PROCESS_H
 
+#include "system/pipe.h"
+
+#include <map>
 #include <memory>
+#include <string>
+#include <vector>
 
 //! Current process Id macro
 /*!
@@ -37,7 +42,7 @@ public:
     Process& operator=(Process&& process) noexcept;
 
     //! Get the process Id
-    uint64_t id() const noexcept;
+    uint64_t pid() const noexcept;
 
     //! Is the process is running?
     bool IsRunning() const;
@@ -81,6 +86,23 @@ public:
     */
     static void Exit(int result);
 
+    //! Execute a new process
+    /*!
+        If input/output/error communication pipe is not provided then
+        new process will use equivalent standard stream of the parent
+        process.
+
+        \param command - Command to execute
+        \param arguments - Pointer to arguments vector (default is nullptr)
+        \param envars - Pointer to environment variables map (default is nullptr)
+        \param directory - Initial working directory (default is nullptr)
+        \param input - Input communication pipe (default is nullptr)
+        \param output - Output communication pipe (default is nullptr)
+        \param error - Error communication pipe (default is nullptr)
+        \return Created process
+    */
+    static Process Execute(const std::string& command, const std::vector<std::string>* arguments = nullptr, const std::map<std::string, std::string>* envars = nullptr, const std::string* directory = nullptr, Pipe* input = nullptr, Pipe* output = nullptr, Pipe* error = nullptr);
+
     //! Swap two instances
     void swap(Process& process) noexcept;
     friend void swap(Process& process1, Process& process2) noexcept;
@@ -90,10 +112,11 @@ private:
     std::unique_ptr<Impl> _pimpl;
 
     Process();
-    Process(uint64_t id);
+    Process(uint64_t pid);
 };
 
-/*! \example system_process.cpp Process abstraction example */
+/*! \example system_process.cpp Process example */
+/*! \example system_process_pipes.cpp Process pipes example */
 
 } // namespace CppCommon
 
