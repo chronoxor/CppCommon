@@ -43,12 +43,12 @@ public:
 
     void* reader() const noexcept
     {
-        return (void*)_pipe[0];
+        return (void*)(size_t)_pipe[0];
     }
 
     void* writer() const noexcept
     {
-        return (void*)_pipe[1];
+        return (void*)(size_t)_pipe[1];
     }
 
     bool IsPipeOpened() const noexcept

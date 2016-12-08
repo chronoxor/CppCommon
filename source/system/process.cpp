@@ -196,19 +196,19 @@ public:
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         // Prepare arguments
         size_t index = 0;
-        std::vector<char*> argv(1 + ((arguments != nullptr) ? arguments.size() : 0) + 1);
-        argv[index++] = command.c_str();
+        std::vector<char*> argv(1 + ((arguments != nullptr) ? arguments->size() : 0) + 1);
+        argv[index++] = (char*)command.c_str();
         if (arguments != nullptr)
         {
             for (auto& argument : *arguments)
             {
-                argv[index++] = argument.c_str();
+                argv[index++] = (char*)argument.c_str();
             }
         }
         argv[index++] = nullptr;
 
         // Prepare environment variables
-        std::vector<char> environment = PrepareEnvars(envars);
+        std::vector<char> environment = PrepareEnvars(envars, false);
 
         // Fork the current process
         pid_t pid = fork();
@@ -236,15 +236,15 @@ public:
 
             // Prepare input communication pipe
             if (input != nullptr)
-                dup2(input->reader(), STDIN_FILENO);
+                dup2((int)input->reader(), STDIN_FILENO);
 
             // Prepare output communication pipe
             if (output != nullptr)
-                dup2(output->writer(), STDOUT_FILENO);
+                dup2((int)output->writer(), STDOUT_FILENO);
 
             // Prepare error communication pipe
             if (error != nullptr)
-                dup2(error->writer(), STDERR_FILENO);
+                dup2((int)error->writer(), STDERR_FILENO);
 
             // Close pipes endpoints
             if (input != nullptr)
@@ -292,7 +292,7 @@ public:
         }
 
         // Prepare environment variables
-        std::vector<wchar_t> environment = PrepareEnvars(envars);
+        std::vector<wchar_t> environment = PrepareEnvars(envars, true);
 
         // Fill process startup information
         STARTUPINFOW si;
@@ -383,7 +383,7 @@ public:
 #endif
     }
 
-    template <class TString>
+    template <typename TString>
     static TString EscapeArgument(const TString& argument)
     {
         // For more details please follow the link
@@ -434,17 +434,18 @@ public:
         return result;
     }
 
-    static std::vector<wchar_t> PrepareEnvars(const std::map<std::string, std::string>* envars)
+    template <typename TChar, typename TString>
+    static std::vector<TChar> PrepareEnvars(const std::map<TString, TString>* envars, bool convert)
     {
-        std::vector<wchar_t> result;
+        std::vector<TChar> result;
 
         if (envars == nullptr)
             return result;
 
         for (auto& envar : *envars)
         {
-            std::wstring key = Encoding::FromUTF8(envar.first);
-            std::wstring value = Encoding::FromUTF8(envar.second);
+            TString key = convert ? Encoding::FromUTF8(envar.first) : envar.first;
+            TString value = convert ? Encoding::FromUTF8(envar.second) : envar.second;
             result.insert(result.end(), key.begin(), key.end());
             result.insert(result.end(), '=');
             result.insert(result.end(), value.begin(), value.end());
