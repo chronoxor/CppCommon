@@ -217,13 +217,16 @@ public:
         else if (pid == 0)
         {
             // Set environment variables of the new process
-            char* envar = environment.data();
-            while (*envar != '\0')
+            if (!environment.empty())
             {
-                putenv(envar);
+                char* envar = environment.data();
                 while (*envar != '\0')
+                {
+                    putenv(envar);
+                    while (*envar != '\0')
+                        ++envar;
                     ++envar;
-                ++envar;
+                }
             }
 
             // Change the current directory of the new process
