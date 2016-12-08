@@ -96,7 +96,7 @@ public:
         if (_process == nullptr)
             throwex SystemException("Failed to kill a process with Id {}!"_format(pid()));
 
-        if (!TerminateProcess(_process, 1))
+        if (!TerminateProcess(_process, 666))
             throwex SystemException("Failed to kill a process with Id {}!"_format(pid()));
 #endif
     }
@@ -194,7 +194,89 @@ public:
     static Process Execute(const std::string& command, const std::vector<std::string>* arguments, const std::map<std::string, std::string>* envars, const std::string* directory, Pipe* input, Pipe* output, Pipe* error)
     {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+        // Prepare arguments
+        size_t index = 0;
+        std::vector<char*> argv(1 + ((arguments != nullptr) ? arguments.size() : 0) + 1);
+        argv[index++] = command.c_str();
+        if (arguments != nullptr)
+        {
+            for (auto& argument : *arguments)
+            {
+                argv[index++] = argument.c_str();
+            }
+        }
+        argv[index++] = nullptr;
 
+        // Prepare environment variables
+        std::vector<char> environment = PrepareEnvars(envars);
+
+        // Fork the current process
+        pid_t pid = fork();
+        if (pid < 0)
+            throwex SystemException("Failed to fork the current process!");
+        else if (pid == 0)
+        {
+            // Set environment variables of the new process
+            char* envar = environment.data();
+            while (*envar != '\0')
+            {
+                putenv(envar);
+                while (*envar != '\0')
+                    ++envar;
+                ++envar;
+            }
+
+            // Change the current directory of the new process
+            if (directory != nullptr)
+            {
+                int result = chdir(directory->c_str());
+                if (result != 0)
+                    _exit(666);
+            }
+
+            // Prepare input communication pipe
+            if (input != nullptr)
+                dup2(input->reader(), STDIN_FILENO);
+
+            // Prepare output communication pipe
+            if (output != nullptr)
+                dup2(output->writer(), STDOUT_FILENO);
+
+            // Prepare error communication pipe
+            if (error != nullptr)
+                dup2(error->writer(), STDERR_FILENO);
+
+            // Close pipes endpoints
+            if (input != nullptr)
+                input->Close();
+            if (output != nullptr)
+                output->Close();
+            if (error != nullptr)
+                error->Close();
+
+            // Close all open file descriptors other than stdin, stdout, stderr
+            for (int i = 3; i < sysconf(_SC_OPEN_MAX); ++i)
+                close(i);
+
+            // Execute a new process image
+            execvp(argv[0], argv.data());
+
+            // Get here only if error occurred during image execution
+            _exit(666);
+        }
+
+        // Close pipes endpoints
+        if (input != nullptr)
+            input->CloseRead();
+        if (output != nullptr)
+            output->CloseWrite();
+        if (error != nullptr)
+            error->CloseWrite();
+
+        // Return result process
+        Process result;
+        result._pimpl->_pid = pid;
+        return result;
 #elif defined(_WIN32) || defined(_WIN64)
         BOOL bInheritHandles = FALSE;
 
@@ -301,27 +383,31 @@ public:
 #endif
     }
 
-    static std::wstring EscapeArgument(const std::wstring& argument)
+    template <class TString>
+    static TString EscapeArgument(const TString& argument)
     {
         // For more details please follow the link
         // https://blogs.msdn.microsoft.com/twistylittlepassagesallalike/2011/04/23/everyone-quotes-command-line-arguments-the-wrong-way/
 
         // Check for special characters for quote
-        bool required = argument.find_first_of(L" \t\n\v\"") != std::wstring::npos;
+        const char special[] = " \t\n\v\"";
+        bool required = argument.find_first_of(TString(std::begin(special), std::end(special))) != TString::npos;
         // Check if already quoted
-        bool quoted = !argument.empty() && (argument[0] == L'\"') && (argument[argument.size() - 1] == L'\"');
+        bool quoted = !argument.empty() && (argument[0] == '\"') && (argument[argument.size() - 1] == '\"');
 
         // Skip escape operation
         if (!required || quoted)
             return argument;
 
+        TString result;
+
         // Quote argument
-        std::wstring result(L"\"");
+        result.push_back('"');
         for (auto it = argument.begin(); ; ++it)
         {
             size_t backslashes = 0;
 
-            while ((it != argument.end()) && (*it == L'\\'))
+            while ((it != argument.end()) && (*it == '\\'))
             {
                 ++it;
                 ++backslashes;
@@ -329,21 +415,22 @@ public:
 
             if (it == argument.end())
             {
-                result.append(2 * backslashes, L'\\');
+                result.append(2 * backslashes, '\\');
                 break;
             }
-            else if (*it == L'"')
+            else if (*it == '"')
             {
-                result.append(2 * backslashes + 1, L'\\');
-                result.push_back(L'"');
+                result.append(2 * backslashes + 1, '\\');
+                result.push_back('"');
             }
             else
             {
-                result.append(backslashes, L'\\');
+                result.append(backslashes, '\\');
                 result.push_back(*it);
             }
         }
-        result.push_back(L'"');
+        result.push_back('"');
+
         return result;
     }
 
