@@ -208,7 +208,7 @@ public:
         argv[index++] = nullptr;
 
         // Prepare environment variables
-        std::vector<char> environment = PrepareEnvars<std::string>(envars, false);
+        std::vector<char> environment = PrepareEnvars(envars);
 
         // Fork the current process
         pid_t pid = fork();
@@ -292,7 +292,7 @@ public:
         }
 
         // Prepare environment variables
-        std::vector<wchar_t> environment = PrepareEnvars<std::wstring>(envars, true);
+        std::vector<wchar_t> environment = PrepareEnvars(envars);
 
         // Fill process startup information
         STARTUPINFOW si;
@@ -383,15 +383,14 @@ public:
 #endif
     }
 
-    template <typename TString>
-    static TString EscapeArgument(const TString& argument)
+#if defined(_WIN32) || defined(_WIN64)
+    static std::wstring EscapeArgument(const std::wstring& argument)
     {
         // For more details please follow the link
         // https://blogs.msdn.microsoft.com/twistylittlepassagesallalike/2011/04/23/everyone-quotes-command-line-arguments-the-wrong-way/
 
         // Check for special characters for quote
-        const char special[] = " \t\n\v\"";
-        bool required = argument.find_first_of(TString(std::begin(special), std::end(special))) != TString::npos;
+        bool required = argument.find_first_of(L" \t\n\v\"") != std::wstring::npos;
         // Check if already quoted
         bool quoted = !argument.empty() && (argument[0] == '\"') && (argument[argument.size() - 1] == '\"');
 
@@ -399,7 +398,7 @@ public:
         if (!required || quoted)
             return argument;
 
-        TString result;
+        std::wstring result;
 
         // Quote argument
         result.push_back('"');
@@ -433,19 +432,32 @@ public:
 
         return result;
     }
+#endif
 
-    template <typename TString>
-    static std::vector<typename TString::value_type> PrepareEnvars(const std::map<std::string, std::string>* envars, bool convert)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+    static std::vector<char> PrepareEnvars(const std::map<std::string, std::string>* envars)
+#elif defined(_WIN32) || defined(_WIN64)
+    static std::vector<wchar_t> PrepareEnvars(const std::map<std::string, std::string>* envars)
+#endif
     {
-        std::vector<typename TString::value_type> result;
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+        std::vector<char> result;
+#elif defined(_WIN32) || defined(_WIN64)
+        std::vector<wchar_t> result;
+#endif
 
         if (envars == nullptr)
             return result;
 
         for (auto& envar : *envars)
         {
-            TString key = convert ? Encoding::FromUTF8(envar.first) : TString(envar.first.begin(), envar.first.end());
-            TString value = convert ? Encoding::FromUTF8(envar.second) : TString(envar.second.begin(), envar.second.end());
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+            std::string key = envar.first;
+            std::string value = envar.second;
+#elif defined(_WIN32) || defined(_WIN64)
+            std::wstring key = Encoding::FromUTF8(envar.first);
+            std::wstring value = Encoding::FromUTF8(envar.second);
+#endif
             result.insert(result.end(), key.begin(), key.end());
             result.insert(result.end(), '=');
             result.insert(result.end(), value.begin(), value.end());
