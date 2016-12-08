@@ -208,7 +208,7 @@ public:
         argv[index++] = nullptr;
 
         // Prepare environment variables
-        std::vector<char> environment = PrepareEnvars(envars, false);
+        std::vector<char> environment = PrepareEnvars<std::string>(envars, false);
 
         // Fork the current process
         pid_t pid = fork();
@@ -236,15 +236,15 @@ public:
 
             // Prepare input communication pipe
             if (input != nullptr)
-                dup2((int)input->reader(), STDIN_FILENO);
+                dup2((int)(size_t)input->reader(), STDIN_FILENO);
 
             // Prepare output communication pipe
             if (output != nullptr)
-                dup2((int)output->writer(), STDOUT_FILENO);
+                dup2((int)(size_t)output->writer(), STDOUT_FILENO);
 
             // Prepare error communication pipe
             if (error != nullptr)
-                dup2((int)error->writer(), STDERR_FILENO);
+                dup2((int)(size_t)error->writer(), STDERR_FILENO);
 
             // Close pipes endpoints
             if (input != nullptr)
@@ -292,7 +292,7 @@ public:
         }
 
         // Prepare environment variables
-        std::vector<wchar_t> environment = PrepareEnvars(envars, true);
+        std::vector<wchar_t> environment = PrepareEnvars<std::wstring>(envars, true);
 
         // Fill process startup information
         STARTUPINFOW si;
@@ -434,18 +434,18 @@ public:
         return result;
     }
 
-    template <typename TChar, typename TString>
-    static std::vector<TChar> PrepareEnvars(const std::map<TString, TString>* envars, bool convert)
+    template <typename TString>
+    static std::vector<typename TString::value_type> PrepareEnvars(const std::map<std::string, std::string>* envars, bool convert)
     {
-        std::vector<TChar> result;
+        std::vector<typename TString::value_type> result;
 
         if (envars == nullptr)
             return result;
 
         for (auto& envar : *envars)
         {
-            TString key = convert ? Encoding::FromUTF8(envar.first) : envar.first;
-            TString value = convert ? Encoding::FromUTF8(envar.second) : envar.second;
+            TString key = convert ? Encoding::FromUTF8(envar.first) : TString(envar.first.begin(), envar.first.end());
+            TString value = convert ? Encoding::FromUTF8(envar.second) : TString(envar.second.begin(), envar.second.end());
             result.insert(result.end(), key.begin(), key.end());
             result.insert(result.end(), '=');
             result.insert(result.end(), value.begin(), value.end());
