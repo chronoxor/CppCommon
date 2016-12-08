@@ -36,6 +36,7 @@ var searchData=
   ['_7epath',['~Path',['../class_cpp_common_1_1_path.html#a8a21bda6651262cd6683f65c29f55f01',1,'CppCommon::Path']]],
   ['_7epipe',['~Pipe',['../class_cpp_common_1_1_pipe.html#af4624cea555877202785dd8f07b04e13',1,'CppCommon::Pipe']]],
   ['_7eprocess',['~Process',['../class_cpp_common_1_1_process.html#a9206d364f3f7a566c2d6d3f2a5d414f2',1,'CppCommon::Process']]],
+  ['_7ereader',['~Reader',['../class_cpp_common_1_1_reader.html#a932417672cfad23a2ef74b4ee7da4feb',1,'CppCommon::Reader']]],
   ['_7ereadlocker',['~ReadLocker',['../class_cpp_common_1_1_read_locker.html#a00a07cb97513053204978ec7080ddf1f',1,'CppCommon::ReadLocker']]],
   ['_7erwlock',['~RWLock',['../class_cpp_common_1_1_r_w_lock.html#acbc0b1651a1430f775fd37c430c36530',1,'CppCommon::RWLock']]],
   ['_7esemaphore',['~Semaphore',['../class_cpp_common_1_1_semaphore.html#adab7132f60b21e0c49caeda631ecc8e0',1,'CppCommon::Semaphore']]],
@@ -58,5 +59,6 @@ var searchData=
   ['_7euuid',['~UUID',['../class_cpp_common_1_1_u_u_i_d.html#ae289d7b1bf0569ddce2c514de02b4b77',1,'CppCommon::UUID']]],
   ['_7ewaitqueue',['~WaitQueue',['../class_cpp_common_1_1_wait_queue.html#a11e794d823a5f45214135da0a4df7c71',1,'CppCommon::WaitQueue']]],
   ['_7ewaitring',['~WaitRing',['../class_cpp_common_1_1_wait_ring.html#a7ce2d74779a9c2222aa47aae5fc9a11e',1,'CppCommon::WaitRing']]],
-  ['_7ewritelocker',['~WriteLocker',['../class_cpp_common_1_1_write_locker.html#aa65a3ecd2e9b81ed0616f128cfaef789',1,'CppCommon::WriteLocker']]]
+  ['_7ewritelocker',['~WriteLocker',['../class_cpp_common_1_1_write_locker.html#aa65a3ecd2e9b81ed0616f128cfaef789',1,'CppCommon::WriteLocker']]],
+  ['_7ewriter',['~Writer',['../class_cpp_common_1_1_writer.html#addf53e4b36a1f4b134717fd7680ea0db',1,'CppCommon::Writer']]]
 ];
