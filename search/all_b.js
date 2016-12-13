@@ -12,7 +12,7 @@ var searchData=
   ['lightred',['LIGHTRED',['../namespace_cpp_common.html#ac1ca6affe95577c60f18950cd8682db4a873584aca3ab89ac1777300c8b4aed9a',1,'CppCommon']]],
   ['line',['line',['../struct_cpp_common_1_1_stack_trace_1_1_frame.html#abb8f52bdbac62fb5b650e91f92bde864',1,'CppCommon::StackTrace::Frame::line()'],['../class_cpp_common_1_1_source_location.html#a9ca875cf574b38a8fb42ddb8759e861b',1,'CppCommon::SourceLocation::line()']]],
   ['local',['local',['../class_cpp_common_1_1_timestamp.html#a10d21877165e1160d060532a47fdf3fd',1,'CppCommon::Timestamp::local()'],['../class_cpp_common_1_1_timezone.html#a2329c07e980bc21ed34e8d0d8a034cd9',1,'CppCommon::Timezone::local()']]],
-  ['localstamp',['localstamp',['../class_cpp_common_1_1_time.html#adbadf4983e9ebcf58d76bde585233fc7',1,'CppCommon::Time']]],
+  ['localstamp',['localstamp',['../class_cpp_common_1_1_time.html#a203e64d70b154a0fde9d94a821c25192',1,'CppCommon::Time']]],
   ['localtime',['LocalTime',['../class_cpp_common_1_1_local_time.html#ace7af804a8ff6c58b8ec98ef18d54afa',1,'CppCommon::LocalTime::LocalTime()'],['../class_cpp_common_1_1_local_time.html#a9aaf62f470473f39cd39c4b9a29d4e59',1,'CppCommon::LocalTime::LocalTime(const Timestamp &amp;timestamp)'],['../class_cpp_common_1_1_local_time.html#a73bf80a6f16abc1eaab6b28f55067cc6',1,'CppCommon::LocalTime::LocalTime(const Time &amp;time)'],['../class_cpp_common_1_1_local_time.html#a348456d0883ec58bf842b116460df1e2',1,'CppCommon::LocalTime::LocalTime(const UtcTime &amp;time)']]],
   ['localtime',['LocalTime',['../class_cpp_common_1_1_local_time.html',1,'CppCommon']]],
   ['localtimestamp',['LocalTimestamp',['../class_cpp_common_1_1_local_timestamp.html',1,'CppCommon']]],
