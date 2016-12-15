@@ -14,9 +14,9 @@ namespace CppCommon {
 
 std::vector<uint8_t> Reader::ReadAllBytes()
 {
-    const size_t DEFAULT_BUFFER = 8192;
+    const size_t CHUNK = 8192;
 
-    uint8_t buffer[DEFAULT_BUFFER];
+    uint8_t buffer[CHUNK];
     std::vector<uint8_t> result;
     size_t size = 0;
 
