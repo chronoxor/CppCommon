@@ -74,7 +74,7 @@ TEST_CASE("File-locker", "[CppCommon][Threads]")
             }
 
             // Sleep for a while...
-            Thread::SleepFor(CppCommon::Timespan::milliseconds(10));
+            Thread::Sleep(10);
         }
     });
 

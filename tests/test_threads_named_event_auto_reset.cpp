@@ -32,7 +32,7 @@ TEST_CASE("Named auto-reset event", "[CppCommon][Threads]")
             NamedEventAutoReset event_slave("named_auto_event_test");
 
             // Sleep for a while...
-            Thread::SleepFor(CppCommon::Timespan::milliseconds(thread * 10));
+            Thread::Sleep(thread * 10);
 
             // Wait for the event
             event_slave.Wait();
@@ -43,7 +43,7 @@ TEST_CASE("Named auto-reset event", "[CppCommon][Threads]")
     }
 
     // Allow threads to start
-    Thread::SleepFor(CppCommon::Timespan::milliseconds(100));
+    Thread::Sleep(100);
 
     // Signal the event for each thread that waits
     for (int thread = 0; thread < concurrency; ++thread)
@@ -58,4 +58,3 @@ TEST_CASE("Named auto-reset event", "[CppCommon][Threads]")
 }
 
 #endif
-
