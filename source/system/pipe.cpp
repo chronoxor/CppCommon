@@ -11,6 +11,8 @@
 #include "errors/exceptions.h"
 #include "errors/fatal.h"
 
+#include <cassert>
+
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
 #include <unistd.h>
 #elif defined(_WIN32) || defined(_WIN64)
@@ -38,7 +40,17 @@ public:
 
     ~Impl()
     {
-        Close();
+        if (IsPipeOpened())
+        {
+            try
+            {
+                Close();
+            }
+            catch (CppCommon::SystemException& ex)
+            {
+                fatality(SystemException(ex.string()));
+            }
+        }
     }
 
     void* reader() const noexcept
@@ -76,6 +88,7 @@ public:
 
     size_t Read(void* buffer, size_t size)
     {
+        assert(IsPipeReadOpened() && "Pipe is not opened for reading!");
         if (!IsPipeReadOpened())
             throwex SystemException("Cannot read from the closed pipe!");
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
@@ -93,6 +106,7 @@ public:
 
     size_t Write(const void* buffer, size_t size)
     {
+        assert(IsPipeWriteOpened() && "Pipe is not opened for writing!");
         if (!IsPipeWriteOpened())
             throwex SystemException("Cannot write into the closed pipe!");
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
@@ -110,48 +124,44 @@ public:
 
     void CloseRead()
     {
+        assert(IsPipeReadOpened() && "Pipe is not opened for reading!");
+        if (!IsPipeReadOpened())
+            throwex SystemException("Pipe is not opened for reading!");
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-        if (IsPipeReadOpened())
-        {
-            int result = close(_pipe[0]);
-            if (result != 0)
-                fatality(SystemException("Cannot close the read pipe endpoint!"));
-            _pipe[0] = -1;
-        }
+        int result = close(_pipe[0]);
+        if (result != 0)
+            throwex SystemException("Cannot close the read pipe endpoint!");
+        _pipe[0] = -1;
 #elif defined(_WIN32) || defined(_WIN64)
-        if (IsPipeReadOpened())
-        {
-            if (!CloseHandle(_pipe[0]))
-                fatality(SystemException("Cannot close the read pipe endpoint!"));
-            _pipe[0] = INVALID_HANDLE_VALUE;
-        }
+        if (!CloseHandle(_pipe[0]))
+            throwex SystemException("Cannot close the read pipe endpoint!");
+        _pipe[0] = INVALID_HANDLE_VALUE;
 #endif
     }
 
     void CloseWrite()
     {
+        assert(IsPipeWriteOpened() && "Pipe is not opened for writing!");
+        if (!IsPipeWriteOpened())
+            throwex SystemException("Pipe is not opened for writing!");
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-        if (IsPipeWriteOpened())
-        {
-            int result = close(_pipe[1]);
-            if (result != 0)
-                fatality(SystemException("Cannot close the write pipe endpoint!"));
-            _pipe[1] = -1;
-        }
+        int result = close(_pipe[1]);
+        if (result != 0)
+            throwex SystemException("Cannot close the write pipe endpoint!");
+        _pipe[1] = -1;
 #elif defined(_WIN32) || defined(_WIN64)
-        if (IsPipeWriteOpened())
-        {
-            if (!CloseHandle(_pipe[1]))
-                fatality(SystemException("Cannot close the write pipe endpoint!"));
-            _pipe[1] = INVALID_HANDLE_VALUE;
-        }
+        if (!CloseHandle(_pipe[1]))
+            throwex SystemException("Cannot close the write pipe endpoint!");
+        _pipe[1] = INVALID_HANDLE_VALUE;
 #endif
     }
 
     void Close()
     {
-        CloseRead();
-        CloseWrite();
+        if (IsPipeReadOpened())
+            CloseRead();
+        if (IsPipeWriteOpened())
+            CloseWrite();
     }
 
 private:
