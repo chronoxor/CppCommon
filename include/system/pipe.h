@@ -13,7 +13,6 @@
 #include "utility/writer.h"
 
 #include <memory>
-#include <vector>
 
 namespace CppCommon {
 
@@ -43,7 +42,7 @@ public:
     //! Get the native write endpoint handler
     void* writer() const noexcept;
 
-    //! Is pipe opened?
+    //! Is pipe opened for reading or writing?
     bool IsPipeOpened() const noexcept;
     //! Is pipe opened for reading?
     bool IsPipeReadOpened() const noexcept;
