@@ -1,134 +1,180 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="CMakeRunConfigurationManager" shouldGenerate="true" assignedExecutableTargets="true" buildAllGenerated="true">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" buildAllGenerated="true">
     <generated>
-      <config projectName="cppcommon" targetName="cppcommon-perf-mpsc_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-example-types_flags" />
-      <config projectName="cppcommon" targetName="cppcommon-example-filesystem_directoryr" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_named_mutex" />
-      <config projectName="cppcommon" targetName="cppcommon-example-system_shared_memory" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-spsc_ring_buffer" />
-      <config projectName="cppcommon" targetName="cppcommon-example-spsc_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_latch_single" />
-      <config projectName="cppcommon" targetName="cppcommon-benchmark-wf_ring_buffer" />
-      <config projectName="cppcommon" targetName="cppcommon-example-mpmc_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpsc_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_mpsc_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_file_lock" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_named_critical_section" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_spin_barrier" />
-      <config projectName="cppcommon" targetName="cppcommon-example-system_console" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-containers" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_event_manual_reset" />
-      <config projectName="cppcommon" targetName="cppcommon-example-errors_fatal" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-executor" />
-      <config projectName="cppcommon" targetName="cppcommon-example-system_rdts" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-system_rdts" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-time_time" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mutex" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-atomic" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-mpsc_linked_batcher" />
-      <config projectName="cppcommon" targetName="cppcommon-example-math_math" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_spinlock" />
-      <config projectName="cppcommon" targetName="cppcommon-example-filesystem_symlink" />
-      <config projectName="cppcommon" targetName="cppcommon-example-utility_static_constructor" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpsc_ring_buffer" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-mpmc_ring_queue_ex" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-time_timestamp" />
-      <config projectName="cppcommon" targetName="cppcommon-example-string_encoding" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-mpmc" />
-      <config projectName="cppcommon" targetName="cppcommon-example-time_timestamp" />
-      <config projectName="cppcommon" targetName="cppbenchmark-tests" />
-      <config projectName="cppcommon" targetName="cppcommon-example-filesystem_directory" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_critical_section" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_named_mutex" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_semaphore" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_named_critical_section" />
-      <config projectName="cppcommon" targetName="cppcommon-example-time_timezone" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_thread" />
-      <config projectName="cppcommon" targetName="cppbenchmark" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_rw_lock" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-system_stack_trace" />
-      <config projectName="cppcommon" targetName="cppcommon-benchmark-wf_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-example-time_time" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_mpsc_ring_buffer" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_named_event_auto_reset" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_spsc_ring_buffer" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_event_auto_reset" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_mpmc_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-example-system_environment" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-random" />
-      <config projectName="cppcommon" targetName="cppcommon-example-system_source_location" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_spsc_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-example-benchmark-ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-example-system_memory" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-iterators" />
       <config projectName="cppcommon" targetName="cppbenchmark-example-sort" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_named_semaphore" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-spsc" />
-      <config projectName="cppcommon" targetName="cppcommon" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-fwrite" />
-      <config projectName="cppcommon" targetName="doxygen" />
-      <config projectName="cppcommon" targetName="cppcommon-example-filesystem_path" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpsc_linked_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-example-system_cpu" />
-      <config projectName="cppcommon" targetName="cpp-optparse" />
-      <config projectName="cppcommon" targetName="cppcommon-example-utility_flags" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-timers" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-time_timezone" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-spsc_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_thread" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-mpmc_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-example-errors_system_error" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_named_rw_lock" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_pipe" />
       <config projectName="cppcommon" targetName="cppcommon-example-filesystem_file" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-filesystem_file" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_named_event_manual_reset" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_semaphore" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_named_rw_lock" />
-      <config projectName="cppcommon" targetName="cppcommon-example-errors_exceptions_handler" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_spsc_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpmc_ring_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_spsc_ring_buffer" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_mutex" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_critical_section" />
-      <config projectName="cppcommon" targetName="cppcommon-example-time_timespan" />
-      <config projectName="cppcommon" targetName="cppcommon-example-system_timestamp" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-fpu" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_barrier" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-system_timestamp" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_latch_multi" />
-      <config projectName="cppcommon" targetName="cppcommon-example-wf_ring_buffer" />
-      <config projectName="cppcommon" targetName="cppcommon-example-system_uuid" />
-      <config projectName="cppcommon" targetName="cppcommon-example-system_shared_type" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_event_manual_reset" />
       <config projectName="cppcommon" targetName="cppcommon-perf-threads_file_lock" />
-      <config projectName="cppcommon" targetName="cppcommon-example-mpsc_linked_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-system_stack_trace" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-time_timezone" />
+      <config projectName="cppcommon" targetName="cppcommon-performance-time_time" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_uuid" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-timers" />
+      <config projectName="cppcommon" targetName="cppbenchmark" />
+      <config projectName="cppcommon" targetName="cppcommon-performance-time_timestamp" />
+      <config projectName="cppcommon" targetName="cppcommon-example-filesystem_directoryr" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_latch_single" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_barrier" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_console" />
+      <config projectName="cppcommon" targetName="cppcommon-example-time_timezone" />
+      <config projectName="cppcommon" targetName="cppcommon-performance-threads_named_mutex" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpsc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-mpmc_ring_queue_ex" />
+      <config projectName="cppcommon" targetName="cppcommon-example-mpmc_ring_queue" />
+      <config projectName="cppcommon" targetName="cpp-optparse" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_timestamp" />
+      <config projectName="cppcommon" targetName="cppcommon-performance-threads_rw_lock" />
+      <config projectName="cppcommon" targetName="cppcommon-example-errors_exceptions_handler" />
+      <config projectName="cppcommon" targetName="cppcommon-example-errors_fatal" />
+      <config projectName="cppcommon" targetName="cppcommon-example-string_encoding" />
+      <config projectName="cppcommon" targetName="cppcommon-example-filesystem_directory" />
+      <config projectName="cppcommon" targetName="cppcommon-example-benchmark-ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-performance-threads_semaphore" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_critical_section" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_mpsc_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppbenchmark-tests" />
+      <config projectName="cppcommon" targetName="cppcommon-performance-threads_spin_lock" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-mpsc_ring_queue" />
       <config projectName="cppcommon" targetName="cppcommon-example-threads_spin_lock" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_rw_lock" />
-      <config projectName="cppcommon" targetName="cppbenchmark-example-mpsc" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_named_semaphore" />
-      <config projectName="cppcommon" targetName="cppcommon-example-threads_mpsc_linked_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpsc_linked_batcher" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-threads_spin_lock" />
-      <config projectName="cppcommon" targetName="cppcommon-example-utility_singleton" />
-      <config projectName="cppcommon" targetName="cppcommon-example-spsc_ring_buffer" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-system_uuid" />
-      <config projectName="cppcommon" targetName="cppcommon-example-system_stack_trace" />
-      <config projectName="cppcommon" targetName="cppcommon-tests" />
-      <config projectName="cppcommon" targetName="cppcommon-perf-mpsc_linked_queue" />
-      <config projectName="cppcommon" targetName="cppcommon-example-wf_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_named_critical_section" />
+      <config projectName="cppcommon" targetName="cppcommon-example-mpsc_linked_queue" />
       <config projectName="cppcommon" targetName="cppbenchmark-example-threads" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-atomic" />
+      <config projectName="cppcommon" targetName="cppcommon-example-spsc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-spsc" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_rw_lock" />
+      <config projectName="cppcommon" targetName="cppcommon-performance-threads_named_rw_lock" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_spinlock" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-mpmc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_named_rw_lock" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-mpsc_linked_batcher" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_mpmc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpsc_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppcommon-performance-threads_named_critical_section" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-system_rdts" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-spsc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-mpmc" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_named_mutex" />
+      <config projectName="cppcommon" targetName="cppcommon-performance-threads_mpsc_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppcommon-example-errors_system_error" />
+      <config projectName="cppcommon" targetName="HdrHistogram" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_process" />
+      <config projectName="cppcommon" targetName="cppcommon-benchmark-wf_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-performance-threads_critical_section" />
+      <config projectName="cppcommon" targetName="cppcommon-performance-string_format" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_named_mutex" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-iterators" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_event_auto_reset" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpmc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_condition_variable" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_stack_trace" />
+      <config projectName="cppcommon" targetName="cppcommon-performance-threads_spsc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-performance-threads_wait_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_mpsc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_critical_section" />
+      <config projectName="cppcommon" targetName="fmt" />
+      <config projectName="cppcommon" targetName="zlib" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_spin_barrier" />
+      <config projectName="cppcommon" targetName="cppcommon-example-spsc_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_named_critical_section" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_spsc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-performance-threads_file_lock" />
+      <config projectName="cppcommon" targetName="cppcommon-performance-threads_spsc_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_thread" />
+      <config projectName="cppcommon" targetName="cppcommon-performance-threads_named_semaphore" />
+      <config projectName="cppcommon" targetName="cppcommon-example-types_flags" />
+      <config projectName="cppcommon" targetName="cppcommon-performance-threads_mutex" />
+      <config projectName="cppcommon" targetName="cppcommon-performance-system_pipe" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_named_event_auto_reset" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_spsc_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_spsc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-benchmark-wf_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-mpsc" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mutex" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_rdts" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_mutex" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-fpu" />
+      <config projectName="cppcommon" targetName="cppcommon-performance-threads_mpsc_linked_batcher" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_shared_type" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_named_semaphore" />
+      <config projectName="cppcommon" targetName="cppcommon-performance-system_uuid" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-time_timestamp" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_named_condition_variable" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_wait_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-example-time_timestamp" />
+      <config projectName="cppcommon" targetName="cppcommon-example-wf_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-fwrite" />
+      <config projectName="cppcommon" targetName="cppcommon-tests" />
+      <config projectName="cppcommon" targetName="cppcommon" />
+      <config projectName="cppcommon" targetName="cppcommon-example-filesystem_symlink" />
+      <config projectName="cppcommon" targetName="cppcommon-performance-threads_mpmc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-performance-system_stack_trace" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_rw_lock" />
+      <config projectName="cppcommon" targetName="cppcommon-example-math_math" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_environment" />
+      <config projectName="cppcommon" targetName="cppcommon-example-time_timespan" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_cpu" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_semaphore" />
+      <config projectName="cppcommon" targetName="cppcommon-performance-filesystem_file" />
+      <config projectName="cppcommon" targetName="cppcommon-performance-threads_mpsc_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_mpsc_linked_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_semaphore" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-spsc_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppcommon-example-utility_singleton" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_wait_ring" />
+      <config projectName="cppcommon" targetName="cppcommon-example-utility_static_constructor" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-time_time" />
+      <config projectName="cppcommon" targetName="cppcommon-performance-threads_mpsc_linked_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-performance-threads_wait_ring" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_spsc_ring_buffer" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-mpsc_linked_queue" />
+      <config projectName="cppcommon" targetName="doxygen" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_process_pipes" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_named_semaphore" />
+      <config projectName="cppcommon" targetName="cppcommon-example-time_time" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-filesystem_file" />
+      <config projectName="cppcommon" targetName="cppcommon-example-utility_flags" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-executor" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpsc_linked_batcher" />
+      <config projectName="cppcommon" targetName="cppcommon-example-filesystem_path" />
+      <config projectName="cppcommon" targetName="cppcommon-example-wf_ring_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_mpsc_linked_queue" />
+      <config projectName="cppcommon" targetName="cppcommon-performance-time_timezone" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-system_timestamp" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_spin_lock" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_memory" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-containers" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_named_event_manual_reset" />
+      <config projectName="cppcommon" targetName="cppcommon-example-string_format" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_file_lock" />
+      <config projectName="cppcommon" targetName="cppcommon-performance-threads_thread" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_source_location" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-threads_thread" />
+      <config projectName="cppcommon" targetName="cppcommon-perf-system_uuid" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_named_rw_lock" />
+      <config projectName="cppcommon" targetName="cppcommon-example-system_shared_memory" />
+      <config projectName="cppcommon" targetName="cppcommon-example-threads_latch_multi" />
+      <config projectName="cppcommon" targetName="cppbenchmark-example-random" />
     </generated>
   </component>
-  <component name="CMakeSettings" AUTO_RELOAD="false" GENERATION_PASS_SYSTEM_ENVIRONMENT="true">
-    <ADDITIONAL_GENERATION_ENVIRONMENT>
-      <envs />
-    </ADDITIONAL_GENERATION_ENVIRONMENT>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration CONFIG_NAME="Debug" GENERATION_DIR="temp" />
+    </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="559410a7-8ec3-4eef-81f5-f9dd5eddd0fc" name="Default" comment="" />
+    <list default="true" id="559410a7-8ec3-4eef-81f5-f9dd5eddd0fc" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="$PROJECT_DIR$/.idea/.name" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/CppCommon.iml" afterPath="$PROJECT_DIR$/.idea/CppCommon.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="CppCommon.iws" />
     <ignored path=".idea/workspace.xml" />
+    <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
+    <ignored path="$PROJECT_DIR$/temp/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -144,40 +190,7 @@
     <favorites_list name="CppCommon" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="test_filesystem_path.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tests/test_filesystem_path.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7770">
-              <caret line="518" column="0" selection-start-line="518" selection-start-column="0" selection-end-line="518" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="file_lock.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/threads/file_lock.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2835">
-              <caret line="189" column="37" selection-start-line="189" selection-start-column="37" selection-end-line="189" selection-end-column="37" />
-              <folding>
-                <element signature="e#4778#5078#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="path.cpp" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/source/filesystem/path.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="230">
-              <caret line="1015" column="0" selection-start-line="1015" selection-start-column="0" selection-end-line="1015" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -232,16 +245,7 @@
       </profile-state>
     </entry>
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
-    <OptionsSetting value="true" id="Add" />
-    <OptionsSetting value="true" id="Remove" />
-    <OptionsSetting value="true" id="Checkout" />
-    <OptionsSetting value="true" id="Update" />
-    <OptionsSetting value="true" id="Status" />
-    <OptionsSetting value="true" id="Edit" />
-    <ConfirmationsSetting value="0" id="Add" />
-    <ConfirmationsSetting value="0" id="Remove" />
-  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
@@ -261,63 +265,11 @@
         <subPane>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="CppCommon" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CppCommon" />
+              <option name="myItemId" value="cppcommon" />
               <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="CppCommon" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CppCommon" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CppCommon" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tests" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CppCommon" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CppCommon" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CppCommon" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CppCommon" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="filesystem" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -327,7 +279,6 @@
   </component>
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.C/C++" />
-    <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files (x86)\nodejs\node.exe" />
     <property name="WebServerToolWindowFactoryState" value="false" />
   </component>
@@ -382,7 +333,7 @@
       <method />
     </configuration>
     <configuration default="true" type="js.build_tools.npm" factoryName="npm">
-      <command value="run-script" />
+      <command value="run" />
       <scripts />
       <node-interpreter value="project" />
       <envs />
@@ -961,7 +912,163 @@
       <envs />
       <method />
     </configuration>
-    <list size="117">
+    <configuration default="false" name="cppcommon-example-string_format" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-string_format" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-string_format">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-system_pipe" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-system_pipe" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-system_pipe">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-system_process" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-system_process" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-system_process">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-system_process_pipes" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-system_process_pipes" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-system_process_pipes">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-threads_condition_variable" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_condition_variable" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_condition_variable">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-threads_named_condition_variable" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_named_condition_variable" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_named_condition_variable">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-threads_wait_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_wait_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_wait_queue">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-example-threads_wait_ring" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-example-threads_wait_ring" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-example-threads_wait_ring">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-performance-filesystem_file" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-performance-filesystem_file" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-performance-filesystem_file">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-performance-string_format" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-performance-string_format" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-performance-string_format">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-performance-system_pipe" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-performance-system_pipe" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-performance-system_pipe">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-performance-system_stack_trace" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-performance-system_stack_trace" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-performance-system_stack_trace">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-performance-system_uuid" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-performance-system_uuid" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-performance-system_uuid">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-performance-threads_critical_section" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-performance-threads_critical_section" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-performance-threads_critical_section">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-performance-threads_file_lock" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-performance-threads_file_lock" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-performance-threads_file_lock">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-performance-threads_mpmc_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-performance-threads_mpmc_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-performance-threads_mpmc_ring_queue">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-performance-threads_mpsc_linked_batcher" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-performance-threads_mpsc_linked_batcher" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-performance-threads_mpsc_linked_batcher">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-performance-threads_mpsc_linked_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-performance-threads_mpsc_linked_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-performance-threads_mpsc_linked_queue">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-performance-threads_mpsc_ring_buffer" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-performance-threads_mpsc_ring_buffer" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-performance-threads_mpsc_ring_buffer">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-performance-threads_mpsc_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-performance-threads_mpsc_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-performance-threads_mpsc_ring_queue">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-performance-threads_mutex" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-performance-threads_mutex" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-performance-threads_mutex">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-performance-threads_named_critical_section" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-performance-threads_named_critical_section" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-performance-threads_named_critical_section">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-performance-threads_named_mutex" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-performance-threads_named_mutex" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-performance-threads_named_mutex">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-performance-threads_named_rw_lock" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-performance-threads_named_rw_lock" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-performance-threads_named_rw_lock">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-performance-threads_named_semaphore" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-performance-threads_named_semaphore" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-performance-threads_named_semaphore">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-performance-threads_rw_lock" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-performance-threads_rw_lock" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-performance-threads_rw_lock">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-performance-threads_semaphore" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-performance-threads_semaphore" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-performance-threads_semaphore">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-performance-threads_spin_lock" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-performance-threads_spin_lock" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-performance-threads_spin_lock">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-performance-threads_spsc_ring_buffer" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-performance-threads_spsc_ring_buffer" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-performance-threads_spsc_ring_buffer">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-performance-threads_spsc_ring_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-performance-threads_spsc_ring_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-performance-threads_spsc_ring_queue">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-performance-threads_thread" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-performance-threads_thread" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-performance-threads_thread">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-performance-threads_wait_queue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-performance-threads_wait_queue" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-performance-threads_wait_queue">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-performance-threads_wait_ring" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-performance-threads_wait_ring" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-performance-threads_wait_ring">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-performance-time_time" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-performance-time_time" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-performance-time_time">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-performance-time_timestamp" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-performance-time_timestamp" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-performance-time_timestamp">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="cppcommon-performance-time_timezone" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="cppcommon-performance-time_timezone" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cppcommon" RUN_TARGET_NAME="cppcommon-performance-time_timezone">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="fmt" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="fmt" CONFIG_NAME="Debug">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="HdrHistogram" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="HdrHistogram" CONFIG_NAME="Debug">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="zlib" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cppcommon" TARGET_NAME="zlib" CONFIG_NAME="Debug">
+      <envs />
+      <method />
+    </configuration>
+    <list size="156">
       <item index="0" class="java.lang.String" itemvalue="Application.Build All" />
       <item index="1" class="java.lang.String" itemvalue="Application.cppcommon" />
       <item index="2" class="java.lang.String" itemvalue="Application.cppcommon-tests" />
@@ -1079,6 +1186,45 @@
       <item index="114" class="java.lang.String" itemvalue="Application.cppcommon-example-filesystem_directoryr" />
       <item index="115" class="java.lang.String" itemvalue="Application.cppcommon-example-filesystem_file" />
       <item index="116" class="java.lang.String" itemvalue="Application.cppcommon-example-filesystem_symlink" />
+      <item index="117" class="java.lang.String" itemvalue="Application.cppcommon-example-string_format" />
+      <item index="118" class="java.lang.String" itemvalue="Application.cppcommon-example-system_pipe" />
+      <item index="119" class="java.lang.String" itemvalue="Application.cppcommon-example-system_process" />
+      <item index="120" class="java.lang.String" itemvalue="Application.cppcommon-example-system_process_pipes" />
+      <item index="121" class="java.lang.String" itemvalue="Application.cppcommon-example-threads_condition_variable" />
+      <item index="122" class="java.lang.String" itemvalue="Application.cppcommon-example-threads_named_condition_variable" />
+      <item index="123" class="java.lang.String" itemvalue="Application.cppcommon-example-threads_wait_queue" />
+      <item index="124" class="java.lang.String" itemvalue="Application.cppcommon-example-threads_wait_ring" />
+      <item index="125" class="java.lang.String" itemvalue="Application.cppcommon-performance-filesystem_file" />
+      <item index="126" class="java.lang.String" itemvalue="Application.cppcommon-performance-string_format" />
+      <item index="127" class="java.lang.String" itemvalue="Application.cppcommon-performance-system_pipe" />
+      <item index="128" class="java.lang.String" itemvalue="Application.cppcommon-performance-system_stack_trace" />
+      <item index="129" class="java.lang.String" itemvalue="Application.cppcommon-performance-system_uuid" />
+      <item index="130" class="java.lang.String" itemvalue="Application.cppcommon-performance-threads_critical_section" />
+      <item index="131" class="java.lang.String" itemvalue="Application.cppcommon-performance-threads_file_lock" />
+      <item index="132" class="java.lang.String" itemvalue="Application.cppcommon-performance-threads_mpmc_ring_queue" />
+      <item index="133" class="java.lang.String" itemvalue="Application.cppcommon-performance-threads_mpsc_linked_batcher" />
+      <item index="134" class="java.lang.String" itemvalue="Application.cppcommon-performance-threads_mpsc_linked_queue" />
+      <item index="135" class="java.lang.String" itemvalue="Application.cppcommon-performance-threads_mpsc_ring_buffer" />
+      <item index="136" class="java.lang.String" itemvalue="Application.cppcommon-performance-threads_mpsc_ring_queue" />
+      <item index="137" class="java.lang.String" itemvalue="Application.cppcommon-performance-threads_mutex" />
+      <item index="138" class="java.lang.String" itemvalue="Application.cppcommon-performance-threads_named_critical_section" />
+      <item index="139" class="java.lang.String" itemvalue="Application.cppcommon-performance-threads_named_mutex" />
+      <item index="140" class="java.lang.String" itemvalue="Application.cppcommon-performance-threads_named_rw_lock" />
+      <item index="141" class="java.lang.String" itemvalue="Application.cppcommon-performance-threads_named_semaphore" />
+      <item index="142" class="java.lang.String" itemvalue="Application.cppcommon-performance-threads_rw_lock" />
+      <item index="143" class="java.lang.String" itemvalue="Application.cppcommon-performance-threads_semaphore" />
+      <item index="144" class="java.lang.String" itemvalue="Application.cppcommon-performance-threads_spin_lock" />
+      <item index="145" class="java.lang.String" itemvalue="Application.cppcommon-performance-threads_spsc_ring_buffer" />
+      <item index="146" class="java.lang.String" itemvalue="Application.cppcommon-performance-threads_spsc_ring_queue" />
+      <item index="147" class="java.lang.String" itemvalue="Application.cppcommon-performance-threads_thread" />
+      <item index="148" class="java.lang.String" itemvalue="Application.cppcommon-performance-threads_wait_queue" />
+      <item index="149" class="java.lang.String" itemvalue="Application.cppcommon-performance-threads_wait_ring" />
+      <item index="150" class="java.lang.String" itemvalue="Application.cppcommon-performance-time_time" />
+      <item index="151" class="java.lang.String" itemvalue="Application.cppcommon-performance-time_timestamp" />
+      <item index="152" class="java.lang.String" itemvalue="Application.cppcommon-performance-time_timezone" />
+      <item index="153" class="java.lang.String" itemvalue="Application.fmt" />
+      <item index="154" class="java.lang.String" itemvalue="Application.HdrHistogram" />
+      <item index="155" class="java.lang.String" itemvalue="Application.zlib" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
@@ -1103,35 +1249,42 @@
       <workItem from="1473199131981" duration="251000" />
       <workItem from="1473199537024" duration="220000" />
       <workItem from="1473290155156" duration="4000" />
+      <workItem from="1484076513438" duration="6000" />
+      <workItem from="1484076541386" duration="28000" />
+      <workItem from="1484076598085" duration="64000" />
+      <workItem from="1484078448732" duration="207000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4362000" />
+    <option name="totallyTimeSpent" value="4667000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1615" height="1026" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2495356" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32912722" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32963988" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="processedProjectFiles" value="true" />
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -1146,18 +1299,9 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/tests/test_filesystem_path.cpp</url>
-          <line>518</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/source/filesystem/path.cpp</url>
-          <line>943</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-      </breakpoints>
+      <breakpoints-dialog>
+        <breakpoints-dialog />
+      </breakpoints-dialog>
       <option name="time" value="11" />
     </breakpoint-manager>
     <watches-manager />
@@ -1166,101 +1310,98 @@
     <entry file="file://$PROJECT_DIR$/source/threads/file_lock.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2580">
-          <caret line="172" column="0" selection-start-line="172" selection-start-column="0" selection-end-line="172" selection-end-column="0" />
-          <folding>
-            <element signature="e#4778#5078#0" expanded="true" />
-          </folding>
+          <caret line="172" column="0" lean-forward="false" selection-start-line="172" selection-start-column="0" selection-end-line="172" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_threads_file_lock.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_filesystem_path.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5640">
-          <caret line="376" column="0" selection-start-line="376" selection-start-column="0" selection-end-line="376" selection-end-column="0" />
+          <caret line="376" column="0" lean-forward="false" selection-start-line="376" selection-start-column="0" selection-end-line="376" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/source/filesystem/path.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="11475">
-          <caret line="765" column="48" selection-start-line="765" selection-start-column="48" selection-end-line="765" selection-end-column="48" />
+          <caret line="765" column="48" lean-forward="false" selection-start-line="765" selection-start-column="48" selection-end-line="765" selection-end-column="48" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_filesystem_symlink.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/catch/single_include/catch.hpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="117750">
-          <caret line="7850" column="0" selection-start-line="7850" selection-start-column="0" selection-end-line="7850" selection-end-column="0" />
+          <caret line="7850" column="0" lean-forward="false" selection-start-line="7850" selection-start-column="0" selection-end-line="7850" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_filesystem_path.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5430">
-          <caret line="362" column="0" selection-start-line="362" selection-start-column="0" selection-end-line="362" selection-end-column="0" />
+          <caret line="362" column="0" lean-forward="false" selection-start-line="362" selection-start-column="0" selection-end-line="362" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/source/filesystem/path.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/catch/single_include/catch.hpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="117750">
-          <caret line="7850" column="0" selection-start-line="7850" selection-start-column="0" selection-end-line="7850" selection-end-column="0" />
+          <caret line="7850" column="0" lean-forward="false" selection-start-line="7850" selection-start-column="0" selection-end-line="7850" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/examples/system_shared_memory.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/CppBenchmark/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
-          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/include/threads/thread.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cmake/SetCompilerFeatures.cmake">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/CppBenchmark/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1269,21 +1410,21 @@
     <entry file="file://$PROJECT_DIR$/include/threads/thread.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cmake/SetCompilerFeatures.cmake">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/CppBenchmark/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1292,21 +1433,21 @@
     <entry file="file://$PROJECT_DIR$/include/threads/thread.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cmake/SetCompilerFeatures.cmake">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/CppBenchmark/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1315,14 +1456,14 @@
     <entry file="file://$PROJECT_DIR$/cmake/SetCompilerFeatures.cmake">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/CppBenchmark/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1330,56 +1471,56 @@
     <entry file="file://$PROJECT_DIR$/cmake/SetCompilerFeatures.cmake">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/CppBenchmark/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cmake/SetCompilerFeatures.cmake">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/CppBenchmark/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cmake/SetCompilerFeatures.cmake">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/CppBenchmark/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cmake/SetCompilerFeatures.cmake">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/CppBenchmark/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
-          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1388,89 +1529,84 @@
     <entry file="file://$PROJECT_DIR$/include/threads/thread.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="587">
-          <caret line="74" column="0" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
+          <caret line="74" column="0" lean-forward="false" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cmake/SetCompilerFeatures.cmake">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/examples/system_shared_memory.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
-          <caret line="11" column="18" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
+          <caret line="11" column="18" lean-forward="false" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_filesystem_symlink.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/catch/single_include/catch.hpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="123405">
-          <caret line="8227" column="0" selection-start-line="8227" selection-start-column="0" selection-end-line="8227" selection-end-column="0" />
+          <caret line="8227" column="0" lean-forward="false" selection-start-line="8227" selection-start-column="0" selection-end-line="8227" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_threads_file_lock.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file:///usr/include/c++/5/bits/unique_ptr.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1095">
-          <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+          <caret line="73" column="0" lean-forward="false" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/source/filesystem/directory.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
-          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/include/filesystem/directory_iterator.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
-          <caret line="39" column="4" selection-start-line="39" selection-start-column="4" selection-end-line="39" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/threads/file_lock.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2835">
-          <caret line="189" column="37" selection-start-line="189" selection-start-column="37" selection-end-line="189" selection-end-column="37" />
-          <folding>
-            <element signature="e#4778#5078#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_filesystem_path.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7770">
-          <caret line="518" column="0" selection-start-line="518" selection-start-column="0" selection-end-line="518" selection-end-column="0" />
-          <folding />
+          <caret line="39" column="4" lean-forward="false" selection-start-line="39" selection-start-column="4" selection-end-line="39" selection-end-column="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/source/filesystem/path.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="230">
-          <caret line="1015" column="0" selection-start-line="1015" selection-start-column="0" selection-end-line="1015" selection-end-column="0" />
-          <folding />
+          <caret line="1015" column="0" lean-forward="false" selection-start-line="1015" selection-start-column="0" selection-end-line="1015" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/threads/file_lock.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="840">
+          <caret line="189" column="24" lean-forward="false" selection-start-line="189" selection-start-column="24" selection-end-line="189" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_filesystem_path.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="840">
+          <caret line="518" column="0" lean-forward="false" selection-start-line="518" selection-start-column="0" selection-end-line="518" selection-end-column="0" />
         </state>
       </provider>
     </entry>
