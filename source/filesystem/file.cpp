@@ -333,6 +333,11 @@ public:
 
     size_t Read(void* buffer, size_t size)
     {
+        assert((buffer != nullptr) && "Pointer to the buffer should not be equal to 'nullptr'!");
+        assert((size > 0) && "Buffer size should be greater than zero!");
+        if ((buffer == nullptr) || (size == 0))
+            return 0;
+
         assert(IsFileReadOpened() && "File is not opened for reading!");
         if (!IsFileReadOpened())
             throwex FileSystemException("File is not opened for reading!").Attach(_path);
@@ -393,6 +398,11 @@ public:
 
     size_t Write(const void* buffer, size_t size)
     {
+        assert((buffer != nullptr) && "Pointer to the buffer should not be equal to 'nullptr'!");
+        assert((size > 0) && "Buffer size should be greater than zero!");
+        if ((buffer == nullptr) || (size == 0))
+            return 0;
+
         assert(IsFileWriteOpened() && "File is not opened for writing!");
         if (!IsFileWriteOpened())
             throwex FileSystemException("File is not opened for writing!").Attach(_path);
