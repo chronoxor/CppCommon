@@ -6,8 +6,9 @@ if(NOT TARGET fmt)
     set_source_files_properties(${SOURCE_FILES} PROPERTIES COMPILE_FLAGS "${PEDANTIC_COMPILE_FLAGS}")
   else()
     # C4127: conditional expression is constant
+    # C4244: 'conversion' conversion from 'type1' to 'type2', possible loss of data
     # C4702: unreachable code
-    set_source_files_properties(${SOURCE_FILES} PROPERTIES COMPILE_FLAGS "${PEDANTIC_COMPILE_FLAGS} /wd4127 /wd4702")
+    set_source_files_properties(${SOURCE_FILES} PROPERTIES COMPILE_FLAGS "${PEDANTIC_COMPILE_FLAGS} /wd4127 /wd4244 /wd4702")
   endif()
   add_library(fmt ${SOURCE_FILES} ${ASSEMBLER_FILES})
   target_include_directories(fmt PRIVATE "fmt")
