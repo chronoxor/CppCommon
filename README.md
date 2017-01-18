@@ -25,6 +25,7 @@ encoding, shared memory, threading, time management and others.
     * [Windows (Visaul Studio 2015)](#windows-visaul-studio-2015)
 
 # Features
+* Cross platform (Linux, OSX, Windows)
 * Exception handling model
 * Filesystem manipulations
 * String encoding converters
