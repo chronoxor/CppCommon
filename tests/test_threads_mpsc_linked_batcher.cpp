@@ -12,23 +12,23 @@ TEST_CASE("Multiple producers / single consumer wait-free linked batcher", "[Cpp
 {
     MPSCLinkedBatcher<int> batcher;
 
-    REQUIRE(!batcher.Dequeue([](const int&){}));
+    REQUIRE(!batcher.Dequeue());
 
     REQUIRE(batcher.Enqueue(0));
     REQUIRE(batcher.Enqueue(1));
     REQUIRE(batcher.Enqueue(2));
 
-    REQUIRE(batcher.Dequeue([](const int&){}));
-    REQUIRE(!batcher.Dequeue([](const int&){}));
+    REQUIRE(batcher.Dequeue());
+    REQUIRE(!batcher.Dequeue());
 
     REQUIRE(batcher.Enqueue(3));
     REQUIRE(batcher.Enqueue(4));
 
-    REQUIRE(batcher.Dequeue([](const int&){}));
-    REQUIRE(!batcher.Dequeue([](const int&){}));
+    REQUIRE(batcher.Dequeue());
+    REQUIRE(!batcher.Dequeue());
 
     REQUIRE(batcher.Enqueue(5));
 
-    REQUIRE(batcher.Dequeue([](const int&){}));
-    REQUIRE(!batcher.Dequeue([](const int&){}));
+    REQUIRE(batcher.Dequeue());
+    REQUIRE(!batcher.Dequeue());
 }

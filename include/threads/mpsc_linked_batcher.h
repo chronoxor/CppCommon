@@ -65,10 +65,10 @@ public:
 
         Will not block.
 
-        \param handler - Batch handler
+        \param handler - Batch handler (default is empty handler)
         \return 'true' if all items were successfully handled, 'false' if the linked batcher is empty
     */
-    bool Dequeue(const std::function<void(const T&)>& handler);
+    bool Dequeue(const std::function<void(const T&)>& handler = [](const int&){});
 
 private:
     struct Node
