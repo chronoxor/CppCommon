@@ -46,7 +46,7 @@ public:
             {
                 Close();
             }
-            catch (CppCommon::SystemException& ex)
+            catch (SystemException& ex)
             {
                 fatality(SystemException(ex.string()));
             }
