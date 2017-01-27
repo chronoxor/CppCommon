@@ -40,16 +40,14 @@ public:
 
     ~Impl()
     {
-        if (IsPipeOpened())
+        try
         {
-            try
-            {
+            if (IsPipeOpened())
                 Close();
-            }
-            catch (SystemException& ex)
-            {
-                fatality(SystemException(ex.string()));
-            }
+        }
+        catch (SystemException& ex)
+        {
+            fatality(SystemException(ex.string()));
         }
     }
 

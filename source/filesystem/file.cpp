@@ -40,16 +40,14 @@ public:
 
     ~Impl()
     {
-        if (IsFileOpened())
+        try
         {
-            try
-            {
+            if (IsFileOpened())
                 Close();
-            }
-            catch (CppCommon::FileSystemException& ex)
-            {
-                fatality(FileSystemException(ex.string()).Attach(_path));
-            }
+        }
+        catch (FileSystemException& ex)
+        {
+            fatality(FileSystemException(ex.string()).Attach(_path));
         }
     }
 
