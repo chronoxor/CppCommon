@@ -30,7 +30,7 @@ public:
     Math& operator=(const Math&) = delete;
     Math& operator=(Math&&) = delete;
 
-    //! Calculate (operant * multiplier / divider) with 64 bit unsigned integer values
+    //! Calculate (operant * multiplier / divider) with 64-bit unsigned integer values
     /*!
         \param operant - Operant
         \param multiplier - Multiplier

@@ -18,8 +18,8 @@ namespace CppCommon {
     Time wraps date & time in a single object with a set of accessors - year, month, day,
     hours, minutes, seconds, milliseconds, microseconds or nanoseconds.
 
-    32 bit: time is limited in range 1970-01-01T00:00:00Z - 2038-01-18T23:59:59Z
-    64 bit: time is limited in range 1970-01-01T00:00:00Z - 3000-12-31T23:59:59Z
+    32-bit: time is limited in range 1970-01-01T00:00:00Z - 2038-01-18T23:59:59Z
+    64-bit: time is limited in range 1970-01-01T00:00:00Z - 3000-12-31T23:59:59Z
 
     Not thread-safe.
 */
@@ -28,7 +28,7 @@ class Time
 public:
     //! Initialize time with a given date & time components (year, month, day, hour, minute, second, etc.)
     /*!
-        \param year - Year value (1970-2038 for 32 bits or 1970-3000 for 64 bits)
+        \param year - Year value (1970-2038 for 32-bit or 1970-3000 for 64-bit)
         \param month - Month value (1-12)
         \param day - Day value (1-31)
         \param hour - Hour value (0-23) (default is 0)
@@ -109,7 +109,7 @@ public:
     std::chrono::time_point<std::chrono::system_clock, std::chrono::duration<uint64_t, std::nano>> chrono() const
     { return utcstamp().chrono(); }
 
-    //! Get year value (1970-2038 for 32 bits or 1970-3000 for 64 bits)
+    //! Get year value (1970-2038 for 32-bit or 1970-3000 for 64-bit)
     int year() const noexcept { return _year; }
     //! Get month value (1-12)
     int month() const noexcept { return _month; }
