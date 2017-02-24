@@ -116,7 +116,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ab1dc371f36e8e187f4dea0bd2b09d8b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert date &amp; time to the std::chrono time point.  <a href="#ab1dc371f36e8e187f4dea0bd2b09d8b4">More...</a><br /></td></tr>
 <tr class="separator:ab1dc371f36e8e187f4dea0bd2b09d8b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22ee65cd4ea59563f266dc4ccba0e802"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_time.html#a22ee65cd4ea59563f266dc4ccba0e802">year</a> () const noexcept</td></tr>
-<tr class="memdesc:a22ee65cd4ea59563f266dc4ccba0e802"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get year value (1970-2038 for 32 bits or 1970-3000 for 64 bits)  <a href="#a22ee65cd4ea59563f266dc4ccba0e802">More...</a><br /></td></tr>
+<tr class="memdesc:a22ee65cd4ea59563f266dc4ccba0e802"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get year value (1970-2038 for 32-bit or 1970-3000 for 64-bit)  <a href="#a22ee65cd4ea59563f266dc4ccba0e802">More...</a><br /></td></tr>
 <tr class="separator:a22ee65cd4ea59563f266dc4ccba0e802"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0dc80b34880ddd0d787fb8b87967a58a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_time.html#a0dc80b34880ddd0d787fb8b87967a58a">month</a> () const noexcept</td></tr>
 <tr class="memdesc:a0dc80b34880ddd0d787fb8b87967a58a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get month value (1-12)  <a href="#a0dc80b34880ddd0d787fb8b87967a58a">More...</a><br /></td></tr>
@@ -246,7 +246,7 @@ Friends</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="class_cpp_common_1_1_time.html" title="Time. ">Time</a>. </p>
 <p><a class="el" href="class_cpp_common_1_1_time.html" title="Time. ">Time</a> wraps date &amp; time in a single object with a set of accessors - year, month, day, hours, minutes, seconds, milliseconds, microseconds or nanoseconds.</p>
-<p>32 bit: time is limited in range 1970-01-01T00:00:00Z - 2038-01-18T23:59:59Z 64 bit: time is limited in range 1970-01-01T00:00:00Z - 3000-12-31T23:59:59Z</p>
+<p>32-bit: time is limited in range 1970-01-01T00:00:00Z - 2038-01-18T23:59:59Z 64-bit: time is limited in range 1970-01-01T00:00:00Z - 3000-12-31T23:59:59Z</p>
 <p>Not thread-safe. </p>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="time_time_8cpp-example.html#_a0">time_time.cpp</a>.</dd>
 </dl>
@@ -331,7 +331,7 @@ Friends</h2></td></tr>
 <p>Initialize time with a given date &amp; time components (year, month, day, hour, minute, second, etc.) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">year</td><td>- Year value (1970-2038 for 32 bits or 1970-3000 for 64 bits) </td></tr>
+    <tr><td class="paramname">year</td><td>- Year value (1970-2038 for 32-bit or 1970-3000 for 64-bit) </td></tr>
     <tr><td class="paramname">month</td><td>- Month value (1-12) </td></tr>
     <tr><td class="paramname">day</td><td>- Day value (1-31) </td></tr>
     <tr><td class="paramname">hour</td><td>- Hour value (0-23) (default is 0) </td></tr>
@@ -990,7 +990,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Get year value (1970-2038 for 32 bits or 1970-3000 for 64 bits) </p>
+<p>Get year value (1970-2038 for 32-bit or 1970-3000 for 64-bit) </p>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="time_time_8cpp-example.html#a1">time_time.cpp</a>.</dd>
 </dl>
 <p class="definition">Definition at line <a class="el" href="time_8h_source.html#l00113">113</a> of file <a class="el" href="time_8h_source.html">time.h</a>.</p>
