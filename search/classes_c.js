@@ -1,6 +1,7 @@
 var searchData=
 [
   ['semaphore',['Semaphore',['../class_cpp_common_1_1_semaphore.html',1,'CppCommon']]],
+  ['serializationexception',['SerializationException',['../class_cpp_common_1_1_serialization_exception.html',1,'CppCommon']]],
   ['sharedmemory',['SharedMemory',['../class_cpp_common_1_1_shared_memory.html',1,'CppCommon']]],
   ['sharedtype',['SharedType',['../class_cpp_common_1_1_shared_type.html',1,'CppCommon']]],
   ['singleton',['Singleton',['../class_cpp_common_1_1_singleton.html',1,'CppCommon']]],
