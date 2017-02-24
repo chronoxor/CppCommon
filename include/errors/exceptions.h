@@ -86,6 +86,13 @@ public:
     using Exception::Exception;
 };
 
+//! Serialization exception
+class SerializationException : public Exception
+{
+public:
+    using Exception::Exception;
+};
+
 //! System exception
 class SystemException : public Exception
 {
