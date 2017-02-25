@@ -7,7 +7,6 @@ var searchData=
   ['semaphore_2ecpp',['semaphore.cpp',['../semaphore_8cpp.html',1,'']]],
   ['semaphore_2eh',['semaphore.h',['../semaphore_8h.html',1,'']]],
   ['separator',['separator',['../class_cpp_common_1_1_path.html#aa7978694b3d0879fb72d98e9f8da70eb',1,'CppCommon::Path']]],
-  ['serializationexception',['SerializationException',['../class_cpp_common_1_1_serialization_exception.html',1,'CppCommon']]],
   ['setaffinity',['SetAffinity',['../class_cpp_common_1_1_thread.html#ac6f1c8267ce2d32476220e9688ef58fa',1,'CppCommon::Thread::SetAffinity(const std::bitset&lt; 64 &gt; &amp;affinity)'],['../class_cpp_common_1_1_thread.html#a0351a0a13647ceaae0f516be18a43f00',1,'CppCommon::Thread::SetAffinity(std::thread &amp;thread, const std::bitset&lt; 64 &gt; &amp;affinity)']]],
   ['setattributes',['SetAttributes',['../class_cpp_common_1_1_path.html#a970848116db5ff5fe1b1abae98c072d0',1,'CppCommon::Path']]],
   ['setcolor',['SetColor',['../class_cpp_common_1_1_console.html#a090b77d598579ae4f9194007e8b3f7c8',1,'CppCommon::Console']]],
