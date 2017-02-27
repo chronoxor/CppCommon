@@ -1,5 +1,5 @@
 //
-// Created by Ivan Shynkarenka on 15.04.2016.
+// Created by Ivan Shynkarenka on 15.04.2016
 //
 
 #include "catch.hpp"
@@ -53,4 +53,3 @@ TEST_CASE("Named mutex locker", "[CppCommon][Threads]")
 }
 
 #endif
-

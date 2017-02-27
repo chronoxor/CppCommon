@@ -1,5 +1,5 @@
 //
-// Created by Ivan Shynkarenka on 01.09.2016.
+// Created by Ivan Shynkarenka on 01.09.2016
 //
 
 #include "catch.hpp"

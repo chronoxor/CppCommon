@@ -1,5 +1,5 @@
 //
-// Created by Ivan Shynkarenka on 16.01.2016.
+// Created by Ivan Shynkarenka on 16.01.2016
 //
 
 #include "catch.hpp"
@@ -57,5 +57,5 @@ TEST_CASE("Single producer / single consumer wait-free ring buffer", "[CppCommon
     REQUIRE(!buffer.Dequeue(data, size = 3));
 
     REQUIRE(buffer.capacity() == 4);
-	REQUIRE(buffer.size() == 0);
+    REQUIRE(buffer.size() == 0);
 }

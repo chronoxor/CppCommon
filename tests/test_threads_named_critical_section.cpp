@@ -1,5 +1,5 @@
 //
-// Created by Ivan Shynkarenka on 26.05.2016.
+// Created by Ivan Shynkarenka on 26.05.2016
 //
 
 #include "catch.hpp"
@@ -77,4 +77,3 @@ TEST_CASE("Named critical section locker", "[CppCommon][Threads]")
 }
 
 #endif
-
