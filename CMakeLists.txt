@@ -105,7 +105,7 @@ if(NOT CPPCOMMON_MODULE)
 
   # CTest
   enable_testing()
-  add_test(cppcommon-tests cppcommon-tests)
+  add_test(cppcommon-tests cppcommon-tests --durations yes --order lex)
 
   # Install
   install(TARGETS ${INSTALL_TARGETS}
