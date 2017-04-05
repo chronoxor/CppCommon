@@ -143,8 +143,8 @@ std::pair<int, int> CPU::TotalCores()
 
     while (!allocated)
     {
-        DWORD dwResult = GetLogicalProcessorInformation(pBuffer, &dwLength);
-        if (dwResult == FALSE)
+        BOOL bResult = GetLogicalProcessorInformation(pBuffer, &dwLength);
+        if (bResult == FALSE)
         {
             if (GetLastError() == ERROR_INSUFFICIENT_BUFFER)
             {
