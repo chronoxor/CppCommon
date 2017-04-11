@@ -22,7 +22,7 @@ encoding, shared memory, threading, time management and others.
     * [Windows (Cygwin)](#windows-cygwin)
     * [Windows (MinGW)](#windows-mingw)
     * [Windows (MinGW with MSYS)](#windows-mingw-with-msys)
-    * [Windows (Visaul Studio 2015)](#windows-visaul-studio-2015)
+    * [Windows (Visaul Studio)](#windows-visaul-studio)
 
 # Features
 * Cross platform (Linux, OSX, Windows)
@@ -54,7 +54,7 @@ Optional:
 * [Clang](http://clang.llvm.org)
 * [Clion](https://www.jetbrains.com/clion)
 * [MinGW](http://mingw-w64.org/doku.php)
-* [Visual Studio 2015](https://www.visualstudio.com)
+* [Visual Studio](https://www.visualstudio.com)
 
 # How to build?
 
@@ -89,7 +89,7 @@ cd build
 mingw.bat
 ```
 
-## Windows (Visaul Studio 2015)
+## Windows (Visaul Studio)
 ```
 cd build
 vs.bat

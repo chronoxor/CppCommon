@@ -44,7 +44,7 @@ std::wstring Encoding::FromUTF8(const std::string& str)
 
 std::u16string Encoding::UTF8toUTF16(const std::string& str)
 {
-#if defined(_MSC_VER) && (_MSC_VER == 1900)
+#if defined(_MSC_VER)
     std::wstring_convert<std::codecvt_utf8_utf16<uint16_t>, uint16_t> convert;
     auto tmp = convert.from_bytes(str);
     return std::u16string(tmp.data(), tmp.data() + tmp.size());
@@ -56,7 +56,7 @@ std::u16string Encoding::UTF8toUTF16(const std::string& str)
 
 std::u32string Encoding::UTF8toUTF32(const std::string& str)
 {
-#if defined(_MSC_VER) && (_MSC_VER == 1900)
+#if defined(_MSC_VER)
     std::wstring_convert<std::codecvt_utf8<uint32_t>, uint32_t> convert;
     auto tmp = convert.from_bytes(str);
     return std::u32string(tmp.data(), tmp.data() + tmp.size());
@@ -68,7 +68,7 @@ std::u32string Encoding::UTF8toUTF32(const std::string& str)
 
 std::string Encoding::UTF16toUTF8(const std::u16string& str)
 {
-#if defined(_MSC_VER) && (_MSC_VER == 1900)
+#if defined(_MSC_VER)
     std::wstring_convert<std::codecvt_utf8_utf16<uint16_t>, uint16_t> convert;
     return convert.to_bytes((uint16_t*)str.data(), (uint16_t*)str.data() + str.size());
 #else
@@ -88,7 +88,7 @@ std::u32string Encoding::UTF16toUTF32(const std::u16string& str)
         bytes.push_back((uint8_t)(ch % 256));
     }
 
-#if defined(_MSC_VER) && (_MSC_VER == 1900)
+#if defined(_MSC_VER)
     std::wstring_convert<std::codecvt_utf16<uint32_t>, uint32_t> convert;
     auto tmp = convert.from_bytes(bytes);
     return std::u32string(tmp.data(), tmp.data() + tmp.size());
@@ -100,7 +100,7 @@ std::u32string Encoding::UTF16toUTF32(const std::u16string& str)
 
 std::string Encoding::UTF32toUTF8(const std::u32string& str)
 {
-#if defined(_MSC_VER) && (_MSC_VER == 1900)
+#if defined(_MSC_VER)
     std::wstring_convert<std::codecvt_utf8<uint32_t>, uint32_t> convert;
     return convert.to_bytes((uint32_t*)str.data(), (uint32_t*)str.data() + str.size());
 #else
@@ -111,7 +111,7 @@ std::string Encoding::UTF32toUTF8(const std::u32string& str)
 
 std::u16string Encoding::UTF32toUTF16(const std::u32string& str)
 {
-#if defined(_MSC_VER) && (_MSC_VER == 1900)
+#if defined(_MSC_VER)
     std::wstring_convert<std::codecvt_utf16<uint32_t>, uint32_t> convert;
     std::string bytes = convert.to_bytes((uint32_t*)str.data(), (uint32_t*)str.data() + str.size());
 #else

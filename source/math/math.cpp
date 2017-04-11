@@ -8,8 +8,8 @@
 
 #include "math/math.h"
 
-#if defined(_MSC_VER) && (_MSC_VER == 1900)
-#include <windows.h>
+#if defined(_MSC_VER)
+#include <intrin.h>
 #endif
 
 namespace CppCommon {
