@@ -33,6 +33,7 @@ var searchData=
   ['_7enamedmutex',['~NamedMutex',['../class_cpp_common_1_1_named_mutex.html#a6ff0f9178528a763852b5d6fbe2ce18d',1,'CppCommon::NamedMutex']]],
   ['_7enamedrwlock',['~NamedRWLock',['../class_cpp_common_1_1_named_r_w_lock.html#ad603f5fcae70bdf0e5ffe14f90a67ab6',1,'CppCommon::NamedRWLock']]],
   ['_7enamedsemaphore',['~NamedSemaphore',['../class_cpp_common_1_1_named_semaphore.html#aec5828eae8df56545f16992d40437f18',1,'CppCommon::NamedSemaphore']]],
+  ['_7enullallocator',['~NullAllocator',['../class_cpp_common_1_1_null_allocator.html#adcdbb5fbeed25250a057f97e79a296aa',1,'CppCommon::NullAllocator::~NullAllocator()'],['../class_cpp_common_1_1_null_allocator_3_01void_01_4.html#a1f329c63a2cb5f232d042a8d8adf564f',1,'CppCommon::NullAllocator&lt; void &gt;::~NullAllocator()']]],
   ['_7epath',['~Path',['../class_cpp_common_1_1_path.html#a8a21bda6651262cd6683f65c29f55f01',1,'CppCommon::Path']]],
   ['_7epipe',['~Pipe',['../class_cpp_common_1_1_pipe.html#af4624cea555877202785dd8f07b04e13',1,'CppCommon::Pipe']]],
   ['_7eprocess',['~Process',['../class_cpp_common_1_1_process.html#a9206d364f3f7a566c2d6d3f2a5d414f2',1,'CppCommon::Process']]],

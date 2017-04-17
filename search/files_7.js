@@ -14,5 +14,6 @@ var searchData=
   ['named_5frw_5flock_2ecpp',['named_rw_lock.cpp',['../named__rw__lock_8cpp.html',1,'']]],
   ['named_5frw_5flock_2eh',['named_rw_lock.h',['../named__rw__lock_8h.html',1,'']]],
   ['named_5fsemaphore_2ecpp',['named_semaphore.cpp',['../named__semaphore_8cpp.html',1,'']]],
-  ['named_5fsemaphore_2eh',['named_semaphore.h',['../named__semaphore_8h.html',1,'']]]
+  ['named_5fsemaphore_2eh',['named_semaphore.h',['../named__semaphore_8h.html',1,'']]],
+  ['null_5fallocator_2eh',['null_allocator.h',['../null__allocator_8h.html',1,'']]]
 ];
