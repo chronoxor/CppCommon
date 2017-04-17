@@ -4,17 +4,17 @@
 
 #include "catch.hpp"
 
-#include "system/memory.h"
+#include "memory/memory.h"
 
 using namespace CppCommon;
 
-TEST_CASE("Memory management", "[CppCommon][System]")
+TEST_CASE("Memory management", "[CppCommon][Memory]")
 {
     REQUIRE(Memory::RamTotal() > 0);
     REQUIRE(Memory::RamFree() > 0);
 }
 
-TEST_CASE("Memory align", "[CppCommon][System]")
+TEST_CASE("Memory align", "[CppCommon][Memory]")
 {
     REQUIRE(Memory::Align((void*)0x7fff5ebcf4af, 64, true) == (void*)0x7fff5ebcf4c0);
     REQUIRE(Memory::Align((void*)0x7fff5ebcf4be, 32, true) == (void*)0x7fff5ebcf4c0);

@@ -6,7 +6,7 @@
     \copyright MIT License
 */
 
-#include "system/memory.h"
+#include "memory/memory.h"
 
 #if defined(__APPLE__)
 #include <mach/mach.h>

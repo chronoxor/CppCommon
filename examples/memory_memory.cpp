@@ -1,12 +1,12 @@
 /*!
-    \file system_memory.cpp
+    \file memory_memory.cpp
     \brief Memory management example
     \author Ivan Shynkarenka
     \date 27.07.2016
     \copyright MIT License
 */
 
-#include "system/memory.h"
+#include "memory/memory.h"
 
 #include <iostream>
 

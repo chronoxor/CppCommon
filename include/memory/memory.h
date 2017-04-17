@@ -6,8 +6,8 @@
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_SYSTEM_MEMORY_H
-#define CPPCOMMON_SYSTEM_MEMORY_H
+#ifndef CPPCOMMON_MEMORY_MEMORY_H
+#define CPPCOMMON_MEMORY_MEMORY_H
 
 #include <cassert>
 #include <cstdint>
@@ -48,10 +48,10 @@ public:
     static T* Align(const T* ptr, size_t align, bool upwards = true);
 };
 
-/*! \example system_memory.cpp Memory management example */
+/*! \example memory_memory.cpp Memory management example */
 
 } // namespace CppCommon
 
 #include "memory.inl"
 
-#endif // CPPCOMMON_SYSTEM_MEMORY_H
+#endif // CPPCOMMON_MEMORY_MEMORY_H
