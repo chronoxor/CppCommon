@@ -37,15 +37,24 @@ public:
     //! Free RAM in bytes
     static int64_t RamFree();
 
+    //! Is the given pointer aligned?
+    /*!
+        \param ptr - Pointer
+        \param align - Must be a pointer of two (default is alignof(T))
+        \return 'true' if the given pointer is aligned, 'false' if the given pointer is not aligned
+    */
+    template <typename T>
+    static bool IsAligned(const T* ptr, size_t align = alignof(T));
+
     //! Align pointer (upwards or downwards)
     /*!
         \param ptr - Pointer
-        \param align - Must be a pointer of two
+        \param align - Must be a pointer of two (default is alignof(T))
         \param upwards - Upwards flag (default is true)
         \return Aligned pointer
     */
     template <typename T>
-    static T* Align(const T* ptr, size_t align, bool upwards = true);
+    static T* Align(const T* ptr, size_t align = alignof(T), bool upwards = true);
 };
 
 /*! \example memory_memory.cpp Memory management example */
