@@ -11,7 +11,7 @@
 namespace CppCommon {
 
 template <typename T>
-inline bool Memory::IsAligned(const T* ptr, size_t align)
+inline bool Memory::IsAligned(const T* ptr, size_t align) noexcept
 {
     assert((ptr != nullptr) && "Pointer must be valid!");
     assert((align > 0) && "Align must be greater than zero!");
@@ -22,7 +22,7 @@ inline bool Memory::IsAligned(const T* ptr, size_t align)
 }
 
 template <typename T>
-inline T* Memory::Align(const T* ptr, size_t align, bool upwards)
+inline T* Memory::Align(const T* ptr, size_t align, bool upwards) noexcept
 {
     assert((ptr != nullptr) && "Pointer must be valid!");
     assert((align > 0) && "Align must be greater than zero!");

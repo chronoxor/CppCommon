@@ -44,7 +44,7 @@ public:
         \return 'true' if the given pointer is aligned, 'false' if the given pointer is not aligned
     */
     template <typename T>
-    static bool IsAligned(const T* ptr, size_t align = alignof(T));
+    static bool IsAligned(const T* ptr, size_t align = alignof(T)) noexcept;
 
     //! Align pointer (upwards or downwards)
     /*!
@@ -54,7 +54,7 @@ public:
         \return Aligned pointer
     */
     template <typename T>
-    static T* Align(const T* ptr, size_t align = alignof(T), bool upwards = true);
+    static T* Align(const T* ptr, size_t align = alignof(T), bool upwards = true) noexcept;
 };
 
 /*! \example memory_memory.cpp Memory management example */
