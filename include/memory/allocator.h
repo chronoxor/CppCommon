@@ -50,11 +50,11 @@ public:
     { _manager = alloc._manager; return *this; }
     Allocator& operator=(Allocator&&) noexcept = default;
 
-    template <typename T, typename U>
-    friend bool operator==(const Allocator<T, TMemoryManager>& alloc1, const Allocator<U, TMemoryManager>& alloc2) noexcept
+    template <typename U, typename V>
+    friend bool operator==(const Allocator<U, TMemoryManager>& alloc1, const Allocator<V, TMemoryManager>& alloc2) noexcept
     { return true; }
-    template <typename T, typename U>
-    friend bool operator!=(const Allocator<T, TMemoryManager>& alloc1, const Allocator<U, TMemoryManager>& alloc2) noexcept
+    template <typename U, typename V>
+    friend bool operator!=(const Allocator<U, TMemoryManager>& alloc1, const Allocator<V, TMemoryManager>& alloc2) noexcept
     { return false; }
 
     //! Allocations count
