@@ -9,7 +9,7 @@
 namespace CppCommon {
 
 template <bool nothrow>
-inline void* MemoryManagerNull<nothrow>::allocate(size_t num, const void* hint)
+inline void* NullMemoryManager<nothrow>::allocate(size_t num, const void* hint)
 {
     if (nothrow)
         return nullptr;

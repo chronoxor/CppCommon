@@ -9,7 +9,7 @@
 #ifndef CPPCOMMON_MEMORY_ALLOCATOR_NULL_H
 #define CPPCOMMON_MEMORY_ALLOCATOR_NULL_H
 
-#include <allocator.h>
+#include "allocator.h"
 
 namespace CppCommon {
 
@@ -21,16 +21,16 @@ namespace CppCommon {
     Not thread-safe.
 */
 template <bool nothrow = false>
-class MemoryManagerNull
+class NullMemoryManager
 {
 public:
-    MemoryManagerNull() noexcept = default;
-    MemoryManagerNull(const MemoryManagerNull&) noexcept = default;
-    MemoryManagerNull(MemoryManagerNull&&) noexcept = default;
-    ~MemoryManagerNull() noexcept = default;
+    NullMemoryManager() noexcept = default;
+    NullMemoryManager(const NullMemoryManager&) noexcept = default;
+    NullMemoryManager(NullMemoryManager&&) noexcept = default;
+    ~NullMemoryManager() noexcept = default;
 
-    MemoryManagerNull& operator=(const MemoryManagerNull&) noexcept = default;
-    MemoryManagerNull& operator=(MemoryManagerNull&&) noexcept = default;
+    NullMemoryManager& operator=(const NullMemoryManager&) noexcept = default;
+    NullMemoryManager& operator=(NullMemoryManager&&) noexcept = default;
 
     //! Get the maximum number of elements, that could potentially be allocated by the allocator
     /*!
@@ -50,7 +50,7 @@ public:
         \param ptr - Pointer to a block of storage
         \param num - Number of releasing elements
     */
-    void deallocate(void* ptr, size_type num) {}
+    void deallocate(void* ptr, size_t num) {}
 
     //! Reset the memory manager
     void reset() {}
@@ -58,7 +58,7 @@ public:
 
 //! Null memory allocator class
 template <typename T, bool nothrow = false>
-using NullAllocator = Allocator<T, MemoryManagerNull<nothrow>>;
+using NullAllocator = Allocator<T, NullMemoryManager<nothrow>>;
 
 } // namespace CppCommon
 

@@ -9,7 +9,7 @@
 #ifndef CPPCOMMON_MEMORY_ALLOCATOR_WRAPPER_H
 #define CPPCOMMON_MEMORY_ALLOCATOR_WRAPPER_H
 
-#include <memory>
+#include "memory.h"
 
 namespace CppCommon {
 
@@ -39,11 +39,11 @@ public:
     //! Difference between two pointers
     typedef ptrdiff_t difference_type;
 
-    Allocator(TMemoryManager& manager) noexcept : _manager(manager) {}
+    Allocator(TMemoryManager& manager) noexcept : _allocations(0), _allocated(0), _manager(manager) {}
     template <typename U>
-    Allocator(const Allocator<U, TMemoryManager>& alloc) noexcept : _manager(alloc._manager) {}
+    Allocator(const Allocator<U, TMemoryManager>& alloc) noexcept : _allocations(0), _allocated(0), _manager(alloc._manager) {}
     Allocator(Allocator&&) noexcept = default;
-    ~Allocator() noexcept = default;
+    ~Allocator() noexcept;
 
     template <typename U>
     Allocator& operator=(const Allocator<U, TMemoryManager>& alloc) noexcept
@@ -56,6 +56,11 @@ public:
     template <typename T, typename U>
     friend bool operator!=(const Allocator<T, TMemoryManager>& alloc1, const Allocator<U, TMemoryManager>& alloc2) noexcept
     { return false; }
+
+    //! Allocations count
+    size_t allocations() const noexcept { return _allocations; }
+    //! Allocated bytes
+    size_t allocated() const noexcept { return _allocated; }
 
     //! Get the address of the given reference
     /*!
@@ -82,13 +87,13 @@ public:
         \param hint - Allocation hint (default is 0)
         \return A pointer to the initial element in the block of storage
     */
-    pointer allocate(size_type num, const void* hint = 0) { return _manager.allocate(num, hint); }
+    pointer allocate(size_type num, const void* hint = 0);
     //! Release a block of storage previously allocated
     /*!
         \param ptr - Pointer to a block of storage
         \param num - Number of releasing elements
     */
-    void deallocate(pointer ptr, size_type num) { _manager.deallocate(ptr, num); }
+    void deallocate(pointer ptr, size_type num);
 
     //! Reset the allocator
     void reset() { _manager.reset(); }
@@ -111,7 +116,9 @@ public:
     template <typename TOther> struct rebind { using other = Allocator<TOther, TMemoryManager>; };
 
 private:
-    TMemoryManager _manager;
+    size_t _allocations;
+    size_t _allocated;
+    TMemoryManager& _manager;
 };
 
 //! Memory allocator wrapper class (void specialization)
@@ -163,16 +170,16 @@ private:
     Not thread-safe.
 */
 template <bool nothrow = false>
-class MemoryManagerDefault
+class DefaultMemoryManager
 {
 public:
-    MemoryManagerDefault() noexcept = default;
-    MemoryManagerDefault(const MemoryManagerDefault&) noexcept = default;
-    MemoryManagerDefault(MemoryManagerDefault&&) noexcept = default;
-    ~MemoryManagerDefault() noexcept = default;
+    DefaultMemoryManager() noexcept = default;
+    DefaultMemoryManager(const DefaultMemoryManager&) noexcept = default;
+    DefaultMemoryManager(DefaultMemoryManager&&) noexcept = default;
+    ~DefaultMemoryManager() noexcept = default;
 
-    MemoryManagerDefault& operator=(const MemoryManagerDefault&) noexcept = default;
-    MemoryManagerDefault& operator=(MemoryManagerDefault&&) noexcept = default;
+    DefaultMemoryManager& operator=(const DefaultMemoryManager&) noexcept = default;
+    DefaultMemoryManager& operator=(DefaultMemoryManager&&) noexcept = default;
 
     //! Get the maximum number of elements, that could potentially be allocated by the allocator
     /*!
@@ -192,7 +199,7 @@ public:
         \param ptr - Pointer to a block of storage
         \param num - Number of releasing elements
     */
-    void deallocate(void* ptr, size_type num);
+    void deallocate(void* ptr, size_t num);
 
     //! Reset the memory manager
     void reset() {}
@@ -200,7 +207,7 @@ public:
 
 //! Default memory allocator class
 template <typename T, bool nothrow = false>
-using DefaultAllocator = Allocator<T, MemoryManagerDefault<nothrow>>;
+using DefaultAllocator = Allocator<T, DefaultMemoryManager<nothrow>>;
 
 } // namespace CppCommon
 

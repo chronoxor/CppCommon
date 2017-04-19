@@ -9,8 +9,7 @@
 #ifndef CPPCOMMON_MEMORY_ALLOCATOR_ARENA_H
 #define CPPCOMMON_MEMORY_ALLOCATOR_ARENA_H
 
-#include <cassert>
-#include <memory>
+#include "allocator.h"
 
 namespace CppCommon {
 
@@ -29,32 +28,39 @@ namespace CppCommon {
     Not thread-safe.
 */
 template <bool nothrow = false, std::size_t alignment = alignof(std::max_align_t)>
-class MemoryManagerArena
+class ArenaMemoryManager
 {
 public:
     //! Pre-allocate arena with a given capacity
     /*!
         \param capacity - Arena capacity in bytes
     */
-    explicit MemoryManagerArena(size_t capacity);
+    explicit ArenaMemoryManager(size_t capacity);
     //! Initialize arena with a given buffer
     /*!
         \param buffer - Arena buffer
         \param size - Arena buffer size
     */
-    explicit MemoryManagerArena(uint8_t* buffer, size_t size);
-    MemoryManagerArena(const MemoryManagerArena&) noexcept = delete;
-    MemoryManagerArena(MemoryManagerArena&&) noexcept = default;
-    ~MemoryManagerArena();
+    explicit ArenaMemoryManager(uint8_t* buffer, size_t size);
+    ArenaMemoryManager(const ArenaMemoryManager&) noexcept = delete;
+    ArenaMemoryManager(ArenaMemoryManager&&) noexcept = default;
+    ~ArenaMemoryManager();
 
-    MemoryManagerArena& operator=(const MemoryManagerArena&) noexcept = delete;
-    MemoryManagerArena& operator=(MemoryManagerArena&&) noexcept = default;
+    ArenaMemoryManager& operator=(const ArenaMemoryManager&) noexcept = delete;
+    ArenaMemoryManager& operator=(ArenaMemoryManager&&) noexcept = default;
+
+    //! Arena buffer
+    const uint8_t* buffer() const noexcept { return _buffer; }
+    //! Arena capacity
+    size_t capacity() const noexcept { return _capacity; }
+    //! Arena allocated size
+    size_t size() const noexcept { return _size; }
 
     //! Get the maximum number of elements, that could potentially be allocated by the allocator
     /*!
         \return The number of elements that might be allocated as maximum by a call to the allocate() method
     */
-    size_t max_size() const noexcept { return _capacity; }
+    size_t max_size() const noexcept { return capacity(); }
 
     //! Allocate a block of storage suitable to contain the given count of elements
     /*!
@@ -68,21 +74,32 @@ public:
         \param ptr - Pointer to a block of storage
         \param num - Number of releasing elements
     */
-    void deallocate(void* ptr, size_type num) {}
+    void deallocate(void* ptr, size_t num);
 
     //! Reset the memory manager
     void reset();
+    //! Reset the memory manager with a given capacity
+    /*!
+        \param capacity - Arena capacity in bytes
+    */
+    void reset(size_t capacity);
+    //! Reset the memory manager with a given buffer
+    /*!
+        \param buffer - Arena buffer
+        \param size - Arena buffer size
+    */
+    void reset(uint8_t* buffer, size_t size);
 
 private:
     bool _external;
-    uint8_t* _arena;
+    uint8_t* _buffer;
     size_t _capacity;
     size_t _size;
 };
 
 //! Arena memory allocator class
 template <typename T, bool nothrow = false, std::size_t alignment = alignof(std::max_align_t)>
-using ArenaAllocator = Allocator<T, MemoryManagerArena<alignment, nothrow, alignment>>;
+using ArenaAllocator = Allocator<T, ArenaMemoryManager<nothrow, alignment>>;
 
 } // namespace CppCommon
 
