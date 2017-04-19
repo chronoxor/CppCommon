@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['_7eallocator',['~Allocator',['../class_cpp_common_1_1_allocator.html#a3625fd6a0f4da19510686c78c033ed41',1,'CppCommon::Allocator::~Allocator()'],['../class_cpp_common_1_1_allocator_3_01void_00_01_t_memory_manager_01_4.html#adf906c6a1f564bcdfc371f8b8a87a149',1,'CppCommon::Allocator&lt; void, TMemoryManager &gt;::~Allocator()']]],
   ['_7ebarrier',['~Barrier',['../class_cpp_common_1_1_barrier.html#a25c79dbbf3131cac50f9d8d160d2e2a1',1,'CppCommon::Barrier']]],
   ['_7econditionvariable',['~ConditionVariable',['../class_cpp_common_1_1_condition_variable.html#aa031be4e128487a9e2ac1e20d9db10a4',1,'CppCommon::ConditionVariable']]],
   ['_7econsole',['~Console',['../class_cpp_common_1_1_console.html#ae5baa17a7b9e9e80a8f329d5283843c5',1,'CppCommon::Console']]],
@@ -20,6 +21,9 @@ var searchData=
   ['_7elocker',['~Locker',['../class_cpp_common_1_1_locker.html#aebbed39c6dda76f03f02ff3c7cb6249a',1,'CppCommon::Locker']]],
   ['_7emath',['~Math',['../class_cpp_common_1_1_math.html#adfd36c436a9f45ea879a2e4c29f18679',1,'CppCommon::Math']]],
   ['_7ememory',['~Memory',['../class_cpp_common_1_1_memory.html#a2e897f188f7df94a46d4b1821585788a',1,'CppCommon::Memory']]],
+  ['_7ememorymanagerarena',['~MemoryManagerArena',['../class_cpp_common_1_1_memory_manager_arena.html#adf78d18ae71ebe74f1e34b5137075063',1,'CppCommon::MemoryManagerArena']]],
+  ['_7ememorymanagerdefault',['~MemoryManagerDefault',['../class_cpp_common_1_1_memory_manager_default.html#aba724c41b064fa467b8adfb026f9c775',1,'CppCommon::MemoryManagerDefault']]],
+  ['_7ememorymanagernull',['~MemoryManagerNull',['../class_cpp_common_1_1_memory_manager_null.html#ab4ca74e2516836611fa4885727c445a6',1,'CppCommon::MemoryManagerNull']]],
   ['_7empmcringqueue',['~MPMCRingQueue',['../class_cpp_common_1_1_m_p_m_c_ring_queue.html#ab46f36e3a1550b248ee3b42d052d60bc',1,'CppCommon::MPMCRingQueue']]],
   ['_7empsclinkedbatcher',['~MPSCLinkedBatcher',['../class_cpp_common_1_1_m_p_s_c_linked_batcher.html#a18b24880d826941ba4d8caec8978418f',1,'CppCommon::MPSCLinkedBatcher']]],
   ['_7empsclinkedqueue',['~MPSCLinkedQueue',['../class_cpp_common_1_1_m_p_s_c_linked_queue.html#abc0583e61e27dc6e419039f81d2b9298',1,'CppCommon::MPSCLinkedQueue']]],
@@ -33,7 +37,6 @@ var searchData=
   ['_7enamedmutex',['~NamedMutex',['../class_cpp_common_1_1_named_mutex.html#a6ff0f9178528a763852b5d6fbe2ce18d',1,'CppCommon::NamedMutex']]],
   ['_7enamedrwlock',['~NamedRWLock',['../class_cpp_common_1_1_named_r_w_lock.html#ad603f5fcae70bdf0e5ffe14f90a67ab6',1,'CppCommon::NamedRWLock']]],
   ['_7enamedsemaphore',['~NamedSemaphore',['../class_cpp_common_1_1_named_semaphore.html#aec5828eae8df56545f16992d40437f18',1,'CppCommon::NamedSemaphore']]],
-  ['_7enullallocator',['~NullAllocator',['../class_cpp_common_1_1_null_allocator.html#adcdbb5fbeed25250a057f97e79a296aa',1,'CppCommon::NullAllocator::~NullAllocator()'],['../class_cpp_common_1_1_null_allocator_3_01void_01_4.html#a1f329c63a2cb5f232d042a8d8adf564f',1,'CppCommon::NullAllocator&lt; void &gt;::~NullAllocator()']]],
   ['_7epath',['~Path',['../class_cpp_common_1_1_path.html#a8a21bda6651262cd6683f65c29f55f01',1,'CppCommon::Path']]],
   ['_7epipe',['~Pipe',['../class_cpp_common_1_1_pipe.html#af4624cea555877202785dd8f07b04e13',1,'CppCommon::Pipe']]],
   ['_7eprocess',['~Process',['../class_cpp_common_1_1_process.html#a9206d364f3f7a566c2d6d3f2a5d414f2',1,'CppCommon::Process']]],

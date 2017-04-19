@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['value_5ftype',['value_type',['../class_cpp_common_1_1_directory_iterator.html#a3389e97756fe2ea66ce2e122918085be',1,'CppCommon::DirectoryIterator::value_type()'],['../class_cpp_common_1_1_null_allocator.html#a17332294057b109ab211d0c4569b4299',1,'CppCommon::NullAllocator::value_type()'],['../class_cpp_common_1_1_null_allocator_3_01void_01_4.html#a246457aa26303c8963eb64894469c4c0',1,'CppCommon::NullAllocator&lt; void &gt;::value_type()']]]
+  ['pointer',['pointer',['../class_cpp_common_1_1_directory_iterator.html#abb475dbbc327fec8e57fb6b8e2904acb',1,'CppCommon::DirectoryIterator::pointer()'],['../class_cpp_common_1_1_allocator.html#a137ebe2d2e92fceead7f7c15d73ddfe2',1,'CppCommon::Allocator::pointer()'],['../class_cpp_common_1_1_allocator_3_01void_00_01_t_memory_manager_01_4.html#a30c741ca083a3f059a6a9c6fa5784902',1,'CppCommon::Allocator&lt; void, TMemoryManager &gt;::pointer()']]]
 ];
