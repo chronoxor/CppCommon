@@ -141,7 +141,7 @@ TEST_CASE("Hybrid allocator", "[CppCommon][Memory]")
     alloc.deallocate(ptr, 1);
 }
 
-TEST_CASE("Hybrid allocator with stl containers", "[CppCommon][Memory]")
+TEST_CASE("Hybrid allocator with stl direct containers", "[CppCommon][Memory]")
 {
     DefaultMemoryManager auxiliary;
     HybridMemoryManager<DefaultMemoryManager> manger(auxiliary, 10);
@@ -158,6 +158,13 @@ TEST_CASE("Hybrid allocator with stl containers", "[CppCommon][Memory]")
     l.push_back(1);
     l.push_back(2);
     l.clear();
+}
+
+TEST_CASE("Hybrid allocator with stl associative containers", "[CppCommon][Memory]")
+{
+    DefaultMemoryManager auxiliary;
+    HybridMemoryManager<DefaultMemoryManager> manger(auxiliary, 10);
+    HybridAllocator<std::pair<const int, int>, DefaultMemoryManager> alloc(manger);
 
     std::map<int, int, std::less<int>, decltype(alloc)> m(alloc);
     m[0] = 0;
@@ -171,3 +178,4 @@ TEST_CASE("Hybrid allocator with stl containers", "[CppCommon][Memory]")
     u[2] = 20;
     u.clear();
 }
+
