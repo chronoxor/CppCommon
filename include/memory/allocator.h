@@ -49,14 +49,14 @@ public:
     Allocator(TMemoryManager& manager) noexcept : _manager(manager) {}
     template <typename U>
     Allocator(const Allocator<U, TMemoryManager, nothrow>& alloc) noexcept : _manager(alloc._manager) {}
-    Allocator(const Allocator<T, TMemoryManager, nothrow>& alloc) noexcept : _manager(alloc._manager) {}
+    Allocator(const Allocator& alloc) noexcept : _manager(alloc._manager) {}
     Allocator(Allocator&&) noexcept = default;
     ~Allocator() noexcept = default;
 
     template <typename U>
     Allocator& operator=(const Allocator<U, TMemoryManager, nothrow>& alloc) noexcept
     { _manager = alloc._manager; return *this; }
-    Allocator& operator=(const Allocator<T, TMemoryManager, nothrow>& alloc) noexcept
+    Allocator& operator=(const Allocator& alloc) noexcept
     { _manager = alloc._manager; return *this; }
     Allocator& operator=(Allocator&&) noexcept = default;
 
