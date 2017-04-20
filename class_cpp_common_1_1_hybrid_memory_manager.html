@@ -110,12 +110,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aab1344f7fd7b6ab311daf5d67209a197"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_hybrid_memory_manager.html#aab1344f7fd7b6ab311daf5d67209a197">max_size</a> () const noexcept</td></tr>
 <tr class="memdesc:aab1344f7fd7b6ab311daf5d67209a197"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the maximum number of elements, that could potentially be allocated by the allocator.  <a href="#aab1344f7fd7b6ab311daf5d67209a197">More...</a><br /></td></tr>
 <tr class="separator:aab1344f7fd7b6ab311daf5d67209a197"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae13d632c63e18a82bf7fd27872d88845"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_hybrid_memory_manager.html#ae13d632c63e18a82bf7fd27872d88845">allocate</a> (size_t num, const void *hint=0)</td></tr>
-<tr class="memdesc:ae13d632c63e18a82bf7fd27872d88845"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate a block of storage suitable to contain the given count of elements.  <a href="#ae13d632c63e18a82bf7fd27872d88845">More...</a><br /></td></tr>
-<tr class="separator:ae13d632c63e18a82bf7fd27872d88845"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af419c03e89f04ee92b136c897f617e66"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_hybrid_memory_manager.html#af419c03e89f04ee92b136c897f617e66">deallocate</a> (void *ptr, size_t num)</td></tr>
-<tr class="memdesc:af419c03e89f04ee92b136c897f617e66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Release a block of storage previously allocated.  <a href="#af419c03e89f04ee92b136c897f617e66">More...</a><br /></td></tr>
-<tr class="separator:af419c03e89f04ee92b136c897f617e66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae43f39c36df56824efe42d08c3037d88"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_hybrid_memory_manager.html#ae43f39c36df56824efe42d08c3037d88">allocate</a> (size_t <a class="el" href="class_cpp_common_1_1_hybrid_memory_manager.html#a5e5ebfd2351cae504c1aec3dc8b9184d">size</a>, const void *hint=nullptr)</td></tr>
+<tr class="memdesc:ae43f39c36df56824efe42d08c3037d88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate a block of storage of the given size.  <a href="#ae43f39c36df56824efe42d08c3037d88">More...</a><br /></td></tr>
+<tr class="separator:ae43f39c36df56824efe42d08c3037d88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a16d268c13d75f972450c5edb985dfb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_hybrid_memory_manager.html#a7a16d268c13d75f972450c5edb985dfb">deallocate</a> (void *ptr, size_t <a class="el" href="class_cpp_common_1_1_hybrid_memory_manager.html#a5e5ebfd2351cae504c1aec3dc8b9184d">size</a>)</td></tr>
+<tr class="memdesc:a7a16d268c13d75f972450c5edb985dfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Release a block of storage previously allocated.  <a href="#a7a16d268c13d75f972450c5edb985dfb">More...</a><br /></td></tr>
+<tr class="separator:a7a16d268c13d75f972450c5edb985dfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f0710eec9e992a3b24db473cf420013"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_hybrid_memory_manager.html#a8f0710eec9e992a3b24db473cf420013">reset</a> ()</td></tr>
 <tr class="memdesc:a8f0710eec9e992a3b24db473cf420013"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the memory manager.  <a href="#a8f0710eec9e992a3b24db473cf420013">More...</a><br /></td></tr>
 <tr class="separator:a8f0710eec9e992a3b24db473cf420013"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -327,8 +327,8 @@ template&lt;class TAuxMemoryManager , std::size_t alignment&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ae13d632c63e18a82bf7fd27872d88845"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae13d632c63e18a82bf7fd27872d88845">&#9670;&nbsp;</a></span>allocate()</h2>
+<a id="ae43f39c36df56824efe42d08c3037d88"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae43f39c36df56824efe42d08c3037d88">&#9670;&nbsp;</a></span>allocate()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -342,13 +342,13 @@ template&lt;class TAuxMemoryManager , std::size_t alignment&gt; </div>
           <td class="memname">void * <a class="el" href="class_cpp_common_1_1_hybrid_memory_manager.html">CppCommon::HybridMemoryManager</a>&lt; TAuxMemoryManager, alignment &gt;::allocate </td>
           <td>(</td>
           <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>num</em>, </td>
+          <td class="paramname"><em>size</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const void *&#160;</td>
-          <td class="paramname"><em>hint</em> = <code>0</code>&#160;</td>
+          <td class="paramname"><em>hint</em> = <code>nullptr</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -363,15 +363,15 @@ template&lt;class TAuxMemoryManager , std::size_t alignment&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Allocate a block of storage suitable to contain the given count of elements. </p>
+<p>Allocate a block of storage of the given size. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">num</td><td>- Number of elements to be allocated </td></tr>
-    <tr><td class="paramname">hint</td><td>- Allocation hint (default is 0) </td></tr>
+    <tr><td class="paramname">size</td><td>- Block size </td></tr>
+    <tr><td class="paramname">hint</td><td>- Allocation hint (default is nullptr) </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A pointer to the initial element in the block of storage </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A pointer to the block of storage </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="allocator__hybrid_8inl_source.html#l00043">43</a> of file <a class="el" href="allocator__hybrid_8inl_source.html">allocator_hybrid.inl</a>.</p>
 
@@ -470,8 +470,8 @@ template&lt;class TAuxMemoryManager  = DefaultMemoryManager, std::size_t alignme
 
 </div>
 </div>
-<a id="af419c03e89f04ee92b136c897f617e66"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af419c03e89f04ee92b136c897f617e66">&#9670;&nbsp;</a></span>deallocate()</h2>
+<a id="a7a16d268c13d75f972450c5edb985dfb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a16d268c13d75f972450c5edb985dfb">&#9670;&nbsp;</a></span>deallocate()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -491,7 +491,7 @@ template&lt;class TAuxMemoryManager , std::size_t alignment&gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>num</em>&#160;</td>
+          <td class="paramname"><em>size</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -510,7 +510,7 @@ template&lt;class TAuxMemoryManager , std::size_t alignment&gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ptr</td><td>- Pointer to a block of storage </td></tr>
-    <tr><td class="paramname">num</td><td>- Number of releasing elements </td></tr>
+    <tr><td class="paramname">size</td><td>- Block size </td></tr>
   </table>
   </dd>
 </dl>
@@ -545,7 +545,7 @@ template&lt;class TAuxMemoryManager  = DefaultMemoryManager, std::size_t alignme
 </div><div class="memdoc">
 
 <p>Get the maximum number of elements, that could potentially be allocated by the allocator. </p>
-<dl class="section return"><dt>Returns</dt><dd>The number of elements that might be allocated as maximum by a call to the <a class="el" href="class_cpp_common_1_1_hybrid_memory_manager.html#ae13d632c63e18a82bf7fd27872d88845" title="Allocate a block of storage suitable to contain the given count of elements. ">allocate()</a> method </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The number of elements that might be allocated as maximum by a call to the <a class="el" href="class_cpp_common_1_1_hybrid_memory_manager.html#ae43f39c36df56824efe42d08c3037d88" title="Allocate a block of storage of the given size. ">allocate()</a> method </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="allocator__hybrid_8h_source.html#l00063">63</a> of file <a class="el" href="allocator__hybrid_8h_source.html">allocator_hybrid.h</a>.</p>
 

@@ -94,12 +94,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac5b2b3b4ee5c6522c8909a25f0c9b9a4"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_default_memory_manager.html#ac5b2b3b4ee5c6522c8909a25f0c9b9a4">max_size</a> () const noexcept</td></tr>
 <tr class="memdesc:ac5b2b3b4ee5c6522c8909a25f0c9b9a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the maximum number of elements, that could potentially be allocated by the allocator.  <a href="#ac5b2b3b4ee5c6522c8909a25f0c9b9a4">More...</a><br /></td></tr>
 <tr class="separator:ac5b2b3b4ee5c6522c8909a25f0c9b9a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a12610a885d0273b2c8979a6a0e0bcd65"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_default_memory_manager.html#a12610a885d0273b2c8979a6a0e0bcd65">allocate</a> (size_t num, const void *hint=0)</td></tr>
-<tr class="memdesc:a12610a885d0273b2c8979a6a0e0bcd65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate a block of storage suitable to contain the given count of elements.  <a href="#a12610a885d0273b2c8979a6a0e0bcd65">More...</a><br /></td></tr>
-<tr class="separator:a12610a885d0273b2c8979a6a0e0bcd65"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af05a2c6f166df12df89b19ce0fb94657"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_default_memory_manager.html#af05a2c6f166df12df89b19ce0fb94657">deallocate</a> (void *ptr, size_t num)</td></tr>
-<tr class="memdesc:af05a2c6f166df12df89b19ce0fb94657"><td class="mdescLeft">&#160;</td><td class="mdescRight">Release a block of storage previously allocated.  <a href="#af05a2c6f166df12df89b19ce0fb94657">More...</a><br /></td></tr>
-<tr class="separator:af05a2c6f166df12df89b19ce0fb94657"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89a719c8a22e22187daa1e8b893163e9"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_default_memory_manager.html#a89a719c8a22e22187daa1e8b893163e9">allocate</a> (size_t size, const void *hint=nullptr)</td></tr>
+<tr class="memdesc:a89a719c8a22e22187daa1e8b893163e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate a block of storage of the given size.  <a href="#a89a719c8a22e22187daa1e8b893163e9">More...</a><br /></td></tr>
+<tr class="separator:a89a719c8a22e22187daa1e8b893163e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b94498fcfd07a67d84cda688499e2f2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_default_memory_manager.html#a2b94498fcfd07a67d84cda688499e2f2">deallocate</a> (void *ptr, size_t size)</td></tr>
+<tr class="memdesc:a2b94498fcfd07a67d84cda688499e2f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Release a block of storage previously allocated.  <a href="#a2b94498fcfd07a67d84cda688499e2f2">More...</a><br /></td></tr>
+<tr class="separator:a2b94498fcfd07a67d84cda688499e2f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b5457436c2eaa92a9032fa1a5cb3897"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_default_memory_manager.html#a7b5457436c2eaa92a9032fa1a5cb3897">reset</a> ()</td></tr>
 <tr class="memdesc:a7b5457436c2eaa92a9032fa1a5cb3897"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the memory manager.  <a href="#a7b5457436c2eaa92a9032fa1a5cb3897">More...</a><br /></td></tr>
 <tr class="separator:a7b5457436c2eaa92a9032fa1a5cb3897"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -109,7 +109,7 @@ Public Member Functions</h2></td></tr>
 <p>Default memory manager uses malloc() and free() system functions to allocate and deallocate memory.</p>
 <p>Not thread-safe. </p>
 
-<p class="definition">Definition at line <a class="el" href="allocator_8h_source.html#l00168">168</a> of file <a class="el" href="allocator_8h_source.html">allocator.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="allocator_8h_source.html#l00159">159</a> of file <a class="el" href="allocator_8h_source.html">allocator.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a33c434a72dfe0126d3fef60040c55dff"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a33c434a72dfe0126d3fef60040c55dff">&#9670;&nbsp;</a></span>DefaultMemoryManager() <span class="overload">[1/3]</span></h2>
@@ -214,8 +214,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a12610a885d0273b2c8979a6a0e0bcd65"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a12610a885d0273b2c8979a6a0e0bcd65">&#9670;&nbsp;</a></span>allocate()</h2>
+<a id="a89a719c8a22e22187daa1e8b893163e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a89a719c8a22e22187daa1e8b893163e9">&#9670;&nbsp;</a></span>allocate()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -227,13 +227,13 @@ Public Member Functions</h2></td></tr>
           <td class="memname">void * CppCommon::DefaultMemoryManager::allocate </td>
           <td>(</td>
           <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>num</em>, </td>
+          <td class="paramname"><em>size</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const void *&#160;</td>
-          <td class="paramname"><em>hint</em> = <code>0</code>&#160;</td>
+          <td class="paramname"><em>hint</em> = <code>nullptr</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -248,22 +248,22 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Allocate a block of storage suitable to contain the given count of elements. </p>
+<p>Allocate a block of storage of the given size. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">num</td><td>- Number of elements to be allocated </td></tr>
-    <tr><td class="paramname">hint</td><td>- Allocation hint (default is 0) </td></tr>
+    <tr><td class="paramname">size</td><td>- Block size </td></tr>
+    <tr><td class="paramname">hint</td><td>- Allocation hint (default is nullptr) </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A pointer to the initial element in the block of storage </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A pointer to the block of storage </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="allocator_8inl_source.html#l00031">31</a> of file <a class="el" href="allocator_8inl_source.html">allocator.inl</a>.</p>
+<p class="definition">Definition at line <a class="el" href="allocator_8inl_source.html#l00043">43</a> of file <a class="el" href="allocator_8inl_source.html">allocator.inl</a>.</p>
 
 </div>
 </div>
-<a id="af05a2c6f166df12df89b19ce0fb94657"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af05a2c6f166df12df89b19ce0fb94657">&#9670;&nbsp;</a></span>deallocate()</h2>
+<a id="a2b94498fcfd07a67d84cda688499e2f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b94498fcfd07a67d84cda688499e2f2">&#9670;&nbsp;</a></span>deallocate()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -278,7 +278,7 @@ Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>num</em>&#160;</td>
+          <td class="paramname"><em>size</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -292,12 +292,12 @@ Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ptr</td><td>- Pointer to a block of storage </td></tr>
-    <tr><td class="paramname">num</td><td>- Number of releasing elements </td></tr>
+    <tr><td class="paramname">size</td><td>- Block size </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="allocator_8inl_source.html#l00038">38</a> of file <a class="el" href="allocator_8inl_source.html">allocator.inl</a>.</p>
+<p class="definition">Definition at line <a class="el" href="allocator_8inl_source.html#l00050">50</a> of file <a class="el" href="allocator_8inl_source.html">allocator.inl</a>.</p>
 
 </div>
 </div>
@@ -325,9 +325,9 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get the maximum number of elements, that could potentially be allocated by the allocator. </p>
-<dl class="section return"><dt>Returns</dt><dd>The number of elements that might be allocated as maximum by a call to the <a class="el" href="class_cpp_common_1_1_default_memory_manager.html#a12610a885d0273b2c8979a6a0e0bcd65" title="Allocate a block of storage suitable to contain the given count of elements. ">allocate()</a> method </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The number of elements that might be allocated as maximum by a call to the <a class="el" href="class_cpp_common_1_1_default_memory_manager.html#a89a719c8a22e22187daa1e8b893163e9" title="Allocate a block of storage of the given size. ">allocate()</a> method </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="allocator_8h_source.html#l00183">183</a> of file <a class="el" href="allocator_8h_source.html">allocator.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="allocator_8h_source.html#l00174">174</a> of file <a class="el" href="allocator_8h_source.html">allocator.h</a>.</p>
 
 </div>
 </div>
@@ -408,7 +408,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Reset the memory manager. </p>
 
-<p class="definition">Definition at line <a class="el" href="allocator_8h_source.html#l00200">200</a> of file <a class="el" href="allocator_8h_source.html">allocator.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="allocator_8h_source.html#l00191">191</a> of file <a class="el" href="allocator_8h_source.html">allocator.h</a>.</p>
 
 </div>
 </div>
