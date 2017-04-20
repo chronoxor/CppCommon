@@ -12,6 +12,7 @@ var searchData=
   ['spinlock',['SpinLock',['../class_cpp_common_1_1_spin_lock.html',1,'CppCommon']]],
   ['spscringbuffer',['SPSCRingBuffer',['../class_cpp_common_1_1_s_p_s_c_ring_buffer.html',1,'CppCommon']]],
   ['spscringqueue',['SPSCRingQueue',['../class_cpp_common_1_1_s_p_s_c_ring_queue.html',1,'CppCommon']]],
+  ['stackmemorymanager',['StackMemoryManager',['../class_cpp_common_1_1_stack_memory_manager.html',1,'CppCommon']]],
   ['stacktrace',['StackTrace',['../class_cpp_common_1_1_stack_trace.html',1,'CppCommon']]],
   ['stacktracemanager',['StackTraceManager',['../class_cpp_common_1_1_stack_trace_manager.html',1,'CppCommon']]],
   ['staticconstructor',['StaticConstructor',['../class_cpp_common_1_1_static_constructor.html',1,'CppCommon']]],

@@ -51,6 +51,7 @@ var searchData=
   ['_7espinlock',['~SpinLock',['../class_cpp_common_1_1_spin_lock.html#a8f8b78ab58316fc474d01ede653152b4',1,'CppCommon::SpinLock']]],
   ['_7espscringbuffer',['~SPSCRingBuffer',['../class_cpp_common_1_1_s_p_s_c_ring_buffer.html#aea1b8c3b475c8fe44c0ddd66318d4437',1,'CppCommon::SPSCRingBuffer']]],
   ['_7espscringqueue',['~SPSCRingQueue',['../class_cpp_common_1_1_s_p_s_c_ring_queue.html#a326358f51c7023f26f8a4a0b9e4de614',1,'CppCommon::SPSCRingQueue']]],
+  ['_7estackmemorymanager',['~StackMemoryManager',['../class_cpp_common_1_1_stack_memory_manager.html#afe43e94d90d8f6d3753936d67ad0c22f',1,'CppCommon::StackMemoryManager']]],
   ['_7estacktrace',['~StackTrace',['../class_cpp_common_1_1_stack_trace.html#a509523c40b64fe6f216498eaef80d13b',1,'CppCommon::StackTrace']]],
   ['_7estacktracemanager',['~StackTraceManager',['../class_cpp_common_1_1_stack_trace_manager.html#ad0755a0b2db498add1031c124e756ac1',1,'CppCommon::StackTraceManager']]],
   ['_7esymlink',['~Symlink',['../class_cpp_common_1_1_symlink.html#a044d35e4ed8ff78a0cd1a1c3d1212f57',1,'CppCommon::Symlink']]],
