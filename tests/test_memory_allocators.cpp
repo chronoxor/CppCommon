@@ -145,7 +145,7 @@ TEST_CASE("Hybrid allocator with stl containers", "[CppCommon][Memory]")
 {
     DefaultMemoryManager auxiliary;
     HybridMemoryManager<DefaultMemoryManager> manger(auxiliary, 10);
-    HybridAllocator<uint8_t, DefaultMemoryManager> alloc(manger);
+    HybridAllocator<int, DefaultMemoryManager> alloc(manger);
 
     std::vector<int, decltype(alloc)> v(alloc);
     v.push_back(0);
