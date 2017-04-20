@@ -11,6 +11,7 @@ namespace CppCommon {
 template <bool nothrow>
 inline void* NullMemoryManager<nothrow>::allocate(size_t num, const void* hint)
 {
+    // Not enough free memory...
     if (nothrow)
         return nullptr;
     else

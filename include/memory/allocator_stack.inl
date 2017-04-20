@@ -23,12 +23,14 @@ inline void* StackMemoryManager<N, nothrow, alignment>::allocate(size_t num, con
     uint8_t* buffer = _buffer + _size;
     uint8_t* aligned = Memory::Align(buffer, alignment);
 
+    // Check if there is enough free space to allocate the block
     if ((num + (aligned - buffer)) <= (_capacity - _size))
     {
         _size += num;
         return aligned;
     }
 
+    // Not enough free memory...
     if (nothrow)
         return nullptr;
     else

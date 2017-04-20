@@ -39,6 +39,10 @@ public:
     //! Difference between two pointers
     typedef ptrdiff_t difference_type;
 
+    //! Initialize allocator with a given memory manager
+    /*!
+        \param manager - Memory manager
+    */
     Allocator(TMemoryManager& manager) noexcept : _allocations(0), _allocated(0), _manager(manager) {}
     template <typename U>
     Allocator(const Allocator<U, TMemoryManager>& alloc) noexcept : _allocations(0), _allocated(0), _manager(alloc._manager) {}
@@ -61,6 +65,9 @@ public:
     size_t allocations() const noexcept { return _allocations; }
     //! Allocated bytes
     size_t allocated() const noexcept { return _allocated; }
+
+    //! Memory manager
+    TMemoryManager& manager() noexcept { return _manager; }
 
     //! Get the address of the given reference
     /*!
