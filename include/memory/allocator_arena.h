@@ -18,12 +18,13 @@ namespace CppCommon {
     Arena memory manager uses pre-allocated memory buffer (arena) as a source
     of memory during the allocation.
 
-    When a new block of memory allocated arena free size is checked and free
-    offset is moved. If there is no enough space std::bad_alloc will be thrown
-    or null is returned (depends on parameter).
+    When a new block of memory allocated then the arena free size is checked and
+    the free offset is moved. If there is no enough space std::bad_alloc will be
+    thrown or null is returned (depends on parameter).
 
     Deallocate method does nothing. When the allocation/deallocation phase
-    is finished free arena offset could be reset with a corresponding method.
+    is finished then the free arena offset could be reset with a corresponding
+    method.
 
     Not thread-safe.
 */
