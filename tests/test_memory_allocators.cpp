@@ -14,7 +14,7 @@ using namespace CppCommon;
 
 TEST_CASE("Default allocator", "[CppCommon][Memory]")
 {
-    DefaultMemoryManager<> manger;
+    DefaultMemoryManager manger;
     DefaultAllocator<int> alloc(manger);
 
     int* ptr = alloc.allocate(1);
@@ -28,7 +28,7 @@ TEST_CASE("Default allocator", "[CppCommon][Memory]")
 
 TEST_CASE("Null allocator", "[CppCommon][Memory]")
 {
-    NullMemoryManager<true> manger;
+    NullMemoryManager manger;
     NullAllocator<int, true> alloc(manger);
 
     int* ptr = alloc.allocate(1);
@@ -42,7 +42,7 @@ TEST_CASE("Null allocator", "[CppCommon][Memory]")
 
 TEST_CASE("Stack allocator", "[CppCommon][Memory]")
 {
-    StackMemoryManager<11, true, 1> manger;
+    StackMemoryManager<11, 1> manger;
     StackAllocator<int, 11, true, 1> alloc(manger);
 
     REQUIRE(manger.capacity() == 11);
@@ -73,7 +73,7 @@ TEST_CASE("Stack allocator", "[CppCommon][Memory]")
 
 TEST_CASE("Arena allocator", "[CppCommon][Memory]")
 {
-    ArenaMemoryManager<true, 1> manger(11);
+    ArenaMemoryManager<1> manger(11);
     ArenaAllocator<int, true, 1> alloc(manger);
 
     REQUIRE(manger.capacity() == 11);
@@ -104,9 +104,9 @@ TEST_CASE("Arena allocator", "[CppCommon][Memory]")
 
 TEST_CASE("Hybrid allocator", "[CppCommon][Memory]")
 {
-    DefaultMemoryManager<true> auxiliary;
-    HybridMemoryManager<decltype(auxiliary), true, 1> manger(auxiliary, 11);
-    HybridAllocator<int, decltype(auxiliary), true, 1> alloc(manger);
+    DefaultMemoryManager auxiliary;
+    HybridMemoryManager<DefaultMemoryManager, 1> manger(auxiliary, 11);
+    HybridAllocator<int, DefaultMemoryManager, true, 1> alloc(manger);
 
     REQUIRE(manger.capacity() == 11);
     REQUIRE(manger.size() == 0);

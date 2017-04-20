@@ -20,7 +20,7 @@ namespace CppCommon {
 
     Not thread-safe.
 */
-template <typename T, class TMemoryManager>
+template <typename T, class TMemoryManager, bool nothrow = false>
 class Allocator
 {
 public:
@@ -45,20 +45,20 @@ public:
     */
     Allocator(TMemoryManager& manager) noexcept : _allocations(0), _allocated(0), _manager(manager) {}
     template <typename U>
-    Allocator(const Allocator<U, TMemoryManager>& alloc) noexcept : _allocations(0), _allocated(0), _manager(alloc._manager) {}
+    Allocator(const Allocator<U, TMemoryManager, nothrow>& alloc) noexcept : _allocations(0), _allocated(0), _manager(alloc._manager) {}
     Allocator(Allocator&&) noexcept = default;
     ~Allocator() noexcept;
 
     template <typename U>
-    Allocator& operator=(const Allocator<U, TMemoryManager>& alloc) noexcept
+    Allocator& operator=(const Allocator<U, TMemoryManager, nothrow>& alloc) noexcept
     { _manager = alloc._manager; return *this; }
     Allocator& operator=(Allocator&&) noexcept = default;
 
     template <typename U, typename V>
-    friend bool operator==(const Allocator<U, TMemoryManager>& alloc1, const Allocator<V, TMemoryManager>& alloc2) noexcept
+    friend bool operator==(const Allocator<U, TMemoryManager, nothrow>& alloc1, const Allocator<V, TMemoryManager, nothrow>& alloc2) noexcept
     { return true; }
     template <typename U, typename V>
-    friend bool operator!=(const Allocator<U, TMemoryManager>& alloc1, const Allocator<V, TMemoryManager>& alloc2) noexcept
+    friend bool operator!=(const Allocator<U, TMemoryManager, nothrow>& alloc1, const Allocator<V, TMemoryManager, nothrow>& alloc2) noexcept
     { return false; }
 
     //! Allocations count
@@ -120,7 +120,7 @@ public:
     void destroy(U* ptr) { ((U*)ptr)->~U(); }
 
     //! Rebind allocator
-    template <typename TOther> struct rebind { using other = Allocator<TOther, TMemoryManager>; };
+    template <typename TOther> struct rebind { using other = Allocator<TOther, TMemoryManager, nothrow>; };
 
 private:
     size_t _allocations;
@@ -129,8 +129,8 @@ private:
 };
 
 //! Memory allocator wrapper class (void specialization)
-template <class TMemoryManager>
-class Allocator<void, TMemoryManager>
+template <class TMemoryManager, bool nothrow>
+class Allocator<void, TMemoryManager, nothrow>
 {
 public:
     //! Element type
@@ -146,24 +146,24 @@ public:
 
     Allocator(TMemoryManager& manager) noexcept : _manager(manager) {}
     template <typename U>
-    Allocator(const Allocator<U, TMemoryManager>& alloc) noexcept : _manager(alloc._manager) {}
+    Allocator(const Allocator<U, TMemoryManager, nothrow>& alloc) noexcept : _manager(alloc._manager) {}
     Allocator(Allocator&&) noexcept = default;
     ~Allocator() noexcept = default;
 
     template <typename U>
-    Allocator& operator=(const Allocator<U, TMemoryManager>& alloc) noexcept
+    Allocator& operator=(const Allocator<U, TMemoryManager, nothrow>& alloc) noexcept
     { _manager = alloc._manager; return *this; }
     Allocator& operator=(Allocator&&) noexcept = default;
 
     template <typename T, typename U>
-    friend bool operator==(const Allocator<T, TMemoryManager>& alloc1, const Allocator<U, TMemoryManager>& alloc2) noexcept
+    friend bool operator==(const Allocator<T, TMemoryManager, nothrow>& alloc1, const Allocator<U, TMemoryManager, nothrow>& alloc2) noexcept
     { return true; }
     template <typename T, typename U>
-    friend bool operator!=(const Allocator<T, TMemoryManager>& alloc1, const Allocator<U, TMemoryManager>& alloc2) noexcept
+    friend bool operator!=(const Allocator<T, TMemoryManager, nothrow>& alloc1, const Allocator<U, TMemoryManager, nothrow>& alloc2) noexcept
     { return false; }
 
     //! Rebind allocator
-    template <typename TOther> struct rebind { using other = Allocator<TOther, TMemoryManager>; };
+    template <typename TOther> struct rebind { using other = Allocator<TOther, TMemoryManager, nothrow>; };
 
 private:
     TMemoryManager _manager;
@@ -176,7 +176,6 @@ private:
 
     Not thread-safe.
 */
-template <bool nothrow = false>
 class DefaultMemoryManager
 {
 public:
@@ -214,7 +213,7 @@ public:
 
 //! Default memory allocator class
 template <typename T, bool nothrow = false>
-using DefaultAllocator = Allocator<T, DefaultMemoryManager<nothrow>>;
+using DefaultAllocator = Allocator<T, DefaultMemoryManager, nothrow>;
 
 } // namespace CppCommon
 

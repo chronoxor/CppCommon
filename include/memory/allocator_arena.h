@@ -28,7 +28,7 @@ namespace CppCommon {
 
     Not thread-safe.
 */
-template <bool nothrow = false, std::size_t alignment = alignof(std::max_align_t)>
+template <std::size_t alignment = alignof(std::max_align_t)>
 class ArenaMemoryManager
 {
 public:
@@ -100,7 +100,7 @@ private:
 
 //! Arena memory allocator class
 template <typename T, bool nothrow = false, std::size_t alignment = alignof(std::max_align_t)>
-using ArenaAllocator = Allocator<T, ArenaMemoryManager<nothrow, alignment>>;
+using ArenaAllocator = Allocator<T, ArenaMemoryManager<alignment>, nothrow>;
 
 } // namespace CppCommon
 

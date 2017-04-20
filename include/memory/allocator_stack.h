@@ -28,7 +28,7 @@ namespace CppCommon {
 
     Not thread-safe.
 */
-template <size_t N, bool nothrow = false, std::size_t alignment = alignof(std::max_align_t)>
+template <size_t N, std::size_t alignment = alignof(std::max_align_t)>
 class StackMemoryManager
 {
 public:
@@ -78,7 +78,7 @@ private:
 
 //! Stack memory allocator class
 template <typename T, size_t N, bool nothrow = false, std::size_t alignment = alignof(std::max_align_t)>
-using StackAllocator = Allocator<T, StackMemoryManager<N, nothrow, alignment>>;
+using StackAllocator = Allocator<T, StackMemoryManager<N, alignment>, nothrow>;
 
 } // namespace CppCommon
 

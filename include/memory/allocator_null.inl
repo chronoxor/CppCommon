@@ -8,14 +8,10 @@
 
 namespace CppCommon {
 
-template <bool nothrow>
-inline void* NullMemoryManager<nothrow>::allocate(size_t num, const void* hint)
+inline void* NullMemoryManager::allocate(size_t num, const void* hint)
 {
-    // Not enough free memory...
-    if (nothrow)
-        return nullptr;
-    else
-        throw std::bad_alloc();
+    // Not enough memory...
+    return nullptr;
 }
 
 } // namespace CppCommon

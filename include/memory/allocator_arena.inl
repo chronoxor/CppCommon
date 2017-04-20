@@ -8,8 +8,8 @@
 
 namespace CppCommon {
 
-template <bool nothrow, std::size_t alignment>
-inline ArenaMemoryManager<nothrow, alignment>::ArenaMemoryManager(size_t capacity)
+template <std::size_t alignment>
+inline ArenaMemoryManager<alignment>::ArenaMemoryManager(size_t capacity)
     : _external(false),
       _buffer(nullptr),
       _capacity(0),
@@ -18,8 +18,8 @@ inline ArenaMemoryManager<nothrow, alignment>::ArenaMemoryManager(size_t capacit
     reset(capacity);
 }
 
-template <bool nothrow, std::size_t alignment>
-inline ArenaMemoryManager<nothrow, alignment>::ArenaMemoryManager(uint8_t* buffer, size_t size)
+template <std::size_t alignment>
+inline ArenaMemoryManager<alignment>::ArenaMemoryManager(uint8_t* buffer, size_t size)
     : _external(true),
       _buffer(nullptr),
       _capacity(0),
@@ -28,15 +28,15 @@ inline ArenaMemoryManager<nothrow, alignment>::ArenaMemoryManager(uint8_t* buffe
     reset(buffer, size);
 }
 
-template <bool nothrow, std::size_t alignment>
-inline ArenaMemoryManager<nothrow, alignment>::~ArenaMemoryManager()
+template <std::size_t alignment>
+inline ArenaMemoryManager<alignment>::~ArenaMemoryManager()
 {
     if (!_external && (_buffer != nullptr))
         free(_buffer);
 }
 
-template <bool nothrow, std::size_t alignment>
-inline void* ArenaMemoryManager<nothrow, alignment>::allocate(size_t num, const void* hint)
+template <std::size_t alignment>
+inline void* ArenaMemoryManager<alignment>::allocate(size_t num, const void* hint)
 {
     assert((num > 0) && "Allocated block size must be greater than zero!");
 
@@ -50,27 +50,24 @@ inline void* ArenaMemoryManager<nothrow, alignment>::allocate(size_t num, const 
         return aligned;
     }
 
-    // Not enough free memory...
-    if (nothrow)
-        return nullptr;
-    else
-        throw std::bad_alloc();
+    // Not enough memory...
+    return nullptr;
 }
 
-template <bool nothrow, std::size_t alignment>
-inline void ArenaMemoryManager<nothrow, alignment>::deallocate(void* ptr, size_t num)
+template <std::size_t alignment>
+inline void ArenaMemoryManager<alignment>::deallocate(void* ptr, size_t num)
 {
     assert((ptr != nullptr) && "Deallocated block must be valid!");
 }
 
-template <bool nothrow, std::size_t alignment>
-inline void ArenaMemoryManager<nothrow, alignment>::reset()
+template <std::size_t alignment>
+inline void ArenaMemoryManager<alignment>::reset()
 {
     _size = 0;
 }
 
-template <bool nothrow, std::size_t alignment>
-inline void ArenaMemoryManager<nothrow, alignment>::reset(size_t capacity)
+template <std::size_t alignment>
+inline void ArenaMemoryManager<alignment>::reset(size_t capacity)
 {
     assert((capacity > 0) && "Arena capacity must be greater than zero!");
 
@@ -83,8 +80,8 @@ inline void ArenaMemoryManager<nothrow, alignment>::reset(size_t capacity)
     _size = 0;
 }
 
-template <bool nothrow, std::size_t alignment>
-inline void ArenaMemoryManager<nothrow, alignment>::reset(uint8_t* buffer, size_t size)
+template <std::size_t alignment>
+inline void ArenaMemoryManager<alignment>::reset(uint8_t* buffer, size_t size)
 {
     assert((buffer != nullptr) && "Arena buffer must be valid!");
     assert((size > 0) && "Arena buffer size must be greater than zero!");

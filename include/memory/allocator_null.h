@@ -20,7 +20,6 @@ namespace CppCommon {
 
     Not thread-safe.
 */
-template <bool nothrow = false>
 class NullMemoryManager
 {
 public:
@@ -58,7 +57,7 @@ public:
 
 //! Null memory allocator class
 template <typename T, bool nothrow = false>
-using NullAllocator = Allocator<T, NullMemoryManager<nothrow>>;
+using NullAllocator = Allocator<T, NullMemoryManager, nothrow>;
 
 } // namespace CppCommon
 

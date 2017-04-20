@@ -8,15 +8,15 @@
 
 namespace CppCommon {
 
-template <size_t N, bool nothrow, std::size_t alignment>
-inline StackMemoryManager<N, nothrow, alignment>::StackMemoryManager()
+template <size_t N, std::size_t alignment>
+inline StackMemoryManager<N, alignment>::StackMemoryManager()
     : _capacity(N),
       _size(0)
 {
 }
 
-template <size_t N, bool nothrow, std::size_t alignment>
-inline void* StackMemoryManager<N, nothrow, alignment>::allocate(size_t num, const void* hint)
+template <size_t N, std::size_t alignment>
+inline void* StackMemoryManager<N, alignment>::allocate(size_t num, const void* hint)
 {
     assert((num > 0) && "Allocated block size must be greater than zero!");
 
@@ -30,21 +30,18 @@ inline void* StackMemoryManager<N, nothrow, alignment>::allocate(size_t num, con
         return aligned;
     }
 
-    // Not enough free memory...
-    if (nothrow)
-        return nullptr;
-    else
-        throw std::bad_alloc();
+    // Not enough memory...
+    return nullptr;
 }
 
-template <size_t N, bool nothrow, std::size_t alignment>
-inline void StackMemoryManager<N, nothrow, alignment>::deallocate(void* ptr, size_t num)
+template <size_t N, std::size_t alignment>
+inline void StackMemoryManager<N, alignment>::deallocate(void* ptr, size_t num)
 {
     assert((ptr != nullptr) && "Deallocated block must be valid!");
 }
 
-template <size_t N, bool nothrow, std::size_t alignment>
-inline void StackMemoryManager<N, nothrow, alignment>::reset()
+template <size_t N, std::size_t alignment>
+inline void StackMemoryManager<N, alignment>::reset()
 {
     _size = 0;
 }

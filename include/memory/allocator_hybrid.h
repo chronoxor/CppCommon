@@ -22,7 +22,7 @@ namespace CppCommon {
 
     Not thread-safe.
 */
-template <class TAuxMemoryManager = DefaultMemoryManager<nothrow>, bool nothrow = false, std::size_t alignment = alignof(std::max_align_t)>
+template <class TAuxMemoryManager = DefaultMemoryManager, std::size_t alignment = alignof(std::max_align_t)>
 class HybridMemoryManager
 {
 public:
@@ -101,7 +101,7 @@ private:
 
 //! Hybrid memory allocator class
 template <typename T, class TAuxMemoryManager = DefaultMemoryManager<nothrow>, bool nothrow = false, std::size_t alignment = alignof(std::max_align_t)>
-using HybridAllocator = Allocator<T, HybridMemoryManager<TAuxMemoryManager, nothrow, alignment>>;
+using HybridAllocator = Allocator<T, HybridMemoryManager<TAuxMemoryManager, alignment>, nothrow>;
 
 } // namespace CppCommon
 
