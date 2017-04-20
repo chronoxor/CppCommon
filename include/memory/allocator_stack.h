@@ -51,21 +51,21 @@ public:
     /*!
         \return The number of elements that might be allocated as maximum by a call to the allocate() method
     */
-    size_t max_size() const noexcept { return capacity(); }
+    size_t max_size() const noexcept { return _capacity; }
 
-    //! Allocate a block of storage suitable to contain the given count of elements
+    //! Allocate a block of storage of the given size
     /*!
-        \param num - Number of elements to be allocated
-        \param hint - Allocation hint (default is 0)
-        \return A pointer to the initial element in the block of storage
+        \param size - Block size
+        \param hint - Allocation hint (default is nullptr)
+        \return A pointer to the block of storage
     */
-    void* allocate(size_t num, const void* hint = 0);
+    void* allocate(size_t size, const void* hint = nullptr);
     //! Release a block of storage previously allocated
     /*!
         \param ptr - Pointer to a block of storage
-        \param num - Number of releasing elements
+        \param size - Block size
     */
-    void deallocate(void* ptr, size_t num);
+    void deallocate(void* ptr, size_t size);
 
     //! Reset the memory manager
     void reset();

@@ -16,17 +16,17 @@ inline StackMemoryManager<N, alignment>::StackMemoryManager()
 }
 
 template <size_t N, std::size_t alignment>
-inline void* StackMemoryManager<N, alignment>::allocate(size_t num, const void* hint)
+inline void* StackMemoryManager<N, alignment>::allocate(size_t size, const void* hint)
 {
-    assert((num > 0) && "Allocated block size must be greater than zero!");
+    assert((size > 0) && "Allocated block size must be greater than zero!");
 
     uint8_t* buffer = _buffer + _size;
     uint8_t* aligned = Memory::Align(buffer, alignment);
 
     // Check if there is enough free space to allocate the block
-    if ((num + (aligned - buffer)) <= (_capacity - _size))
+    if ((size + (aligned - buffer)) <= (_capacity - _size))
     {
-        _size += num;
+        _size += size;
         return aligned;
     }
 
@@ -35,7 +35,7 @@ inline void* StackMemoryManager<N, alignment>::allocate(size_t num, const void* 
 }
 
 template <size_t N, std::size_t alignment>
-inline void StackMemoryManager<N, alignment>::deallocate(void* ptr, size_t num)
+inline void StackMemoryManager<N, alignment>::deallocate(void* ptr, size_t size)
 {
     assert((ptr != nullptr) && "Deallocated block must be valid!");
 }

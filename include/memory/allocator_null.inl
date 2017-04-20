@@ -8,7 +8,7 @@
 
 namespace CppCommon {
 
-inline void* NullMemoryManager::allocate(size_t num, const void* hint)
+inline void* NullMemoryManager::allocate(size_t size, const void* hint)
 {
     // Not enough memory...
     return nullptr;

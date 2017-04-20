@@ -40,34 +40,34 @@ inline HybridMemoryManager<TAuxMemoryManager, alignment>::~HybridMemoryManager()
 }
 
 template <class TAuxMemoryManager, std::size_t alignment>
-inline void* HybridMemoryManager<TAuxMemoryManager, alignment>::allocate(size_t num, const void* hint)
+inline void* HybridMemoryManager<TAuxMemoryManager, alignment>::allocate(size_t size, const void* hint)
 {
-    assert((num > 0) && "Allocated block size must be greater than zero!");
+    assert((size > 0) && "Allocated block size must be greater than zero!");
 
     uint8_t* buffer = _buffer + _size;
     uint8_t* aligned = Memory::Align(buffer, alignment);
 
     // Check if there is enough free space to allocate the block
-    if ((num + (aligned - buffer)) <= (_capacity - _size))
+    if ((size + (aligned - buffer)) <= (_capacity - _size))
     {
-        _size += num;
+        _size += size;
         return aligned;
     }
 
     // Not enough memory... use auxiliary memory manager
-    void* result = _auxiliary.allocate(num, hint);
-    _auxiliary_allocated += num;
+    void* result = _auxiliary.allocate(size, hint);
+    _auxiliary_allocated += size;
     return result;
 }
 
 template <class TAuxMemoryManager, std::size_t alignment>
-inline void HybridMemoryManager<TAuxMemoryManager, alignment>::deallocate(void* ptr, size_t num)
+inline void HybridMemoryManager<TAuxMemoryManager, alignment>::deallocate(void* ptr, size_t size)
 {
     assert((ptr != nullptr) && "Deallocated block must be valid!");
 
     // Free memory block in auxiliary memory manager
     if ((ptr < _buffer) || (ptr >= (_buffer + _size)))
-        _auxiliary.deallocate(ptr, num);
+        _auxiliary.deallocate(ptr, size);
 }
 
 template <class TAuxMemoryManager, std::size_t alignment>
