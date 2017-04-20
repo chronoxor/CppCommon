@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['isenumflags',['IsEnumFlags',['../struct_cpp_common_1_1_is_enum_flags.html',1,'CppCommon']]]
+  ['hybridmemorymanager',['HybridMemoryManager',['../class_cpp_common_1_1_hybrid_memory_manager.html',1,'CppCommon']]]
 ];

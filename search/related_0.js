@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['conditionvariable',['ConditionVariable',['../class_cpp_common_1_1_critical_section.html#ab270e49e575fdf0fe1a4f2ee911df116',1,'CppCommon::CriticalSection']]]
+  ['allocator',['Allocator',['../class_cpp_common_1_1_allocator.html#a11159595ed5ed425e1be1bf0d9498882',1,'CppCommon::Allocator']]]
 ];
