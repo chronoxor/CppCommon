@@ -23,6 +23,9 @@ namespace CppCommon {
 template <typename T, class TMemoryManager, bool nothrow = false>
 class Allocator
 {
+    template <typename U, class UMemoryManager, bool flag>
+    friend class Allocator;
+
 public:
     //! Element type
     typedef T value_type;
@@ -43,31 +46,19 @@ public:
     /*!
         \param manager - Memory manager
     */
-    Allocator(TMemoryManager& manager) noexcept : _allocations(0), _allocated(0), _manager(manager) {}
+    Allocator(TMemoryManager& manager) noexcept : _manager(manager) {}
     template <typename U>
-    Allocator(const Allocator<U, TMemoryManager, nothrow>& alloc) noexcept : _allocations(0), _allocated(0), _manager(alloc._manager) {}
+    Allocator(const Allocator<U, TMemoryManager, nothrow>& alloc) noexcept : _manager(alloc._manager) {}
+    Allocator(const Allocator<T, TMemoryManager, nothrow>& alloc) noexcept : _manager(alloc._manager) {}
     Allocator(Allocator&&) noexcept = default;
-    ~Allocator() noexcept;
+    ~Allocator() noexcept = default;
 
     template <typename U>
     Allocator& operator=(const Allocator<U, TMemoryManager, nothrow>& alloc) noexcept
     { _manager = alloc._manager; return *this; }
+    Allocator& operator=(const Allocator<T, TMemoryManager, nothrow>& alloc) noexcept
+    { _manager = alloc._manager; return *this; }
     Allocator& operator=(Allocator&&) noexcept = default;
-
-    template <typename U, typename V>
-    friend bool operator==(const Allocator<U, TMemoryManager, nothrow>& alloc1, const Allocator<V, TMemoryManager, nothrow>& alloc2) noexcept
-    { return true; }
-    template <typename U, typename V>
-    friend bool operator!=(const Allocator<U, TMemoryManager, nothrow>& alloc1, const Allocator<V, TMemoryManager, nothrow>& alloc2) noexcept
-    { return false; }
-
-    //! Allocations count
-    size_t allocations() const noexcept { return _allocations; }
-    //! Allocated bytes
-    size_t allocated() const noexcept { return _allocated; }
-
-    //! Memory manager
-    TMemoryManager& manager() noexcept { return _manager; }
 
     //! Get the address of the given reference
     /*!
@@ -123,8 +114,6 @@ public:
     template <typename TOther> struct rebind { using other = Allocator<TOther, TMemoryManager, nothrow>; };
 
 private:
-    size_t _allocations;
-    size_t _allocated;
     TMemoryManager& _manager;
 };
 

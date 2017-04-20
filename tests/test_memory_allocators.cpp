@@ -123,6 +123,8 @@ TEST_CASE("Hybrid allocator", "[CppCommon][Memory]")
 
     ptr = alloc.allocate(1);
     REQUIRE(ptr != nullptr);
+    REQUIRE(manger.size() == 11);
+    alloc.deallocate(ptr, 1);
 
     alloc.reset();
     REQUIRE(manger.capacity() == 12);

@@ -60,7 +60,7 @@ public:
     /*!
         \return The number of elements that might be allocated as maximum by a call to the allocate() method
     */
-    size_t max_size() const noexcept { return auxiliary().max_size(); }
+    size_t max_size() const noexcept { return _auxiliary.max_size(); }
 
     //! Allocate a block of storage suitable to contain the given count of elements
     /*!
@@ -100,7 +100,7 @@ private:
 };
 
 //! Hybrid memory allocator class
-template <typename T, class TAuxMemoryManager = DefaultMemoryManager<nothrow>, bool nothrow = false, std::size_t alignment = alignof(std::max_align_t)>
+template <typename T, class TAuxMemoryManager = DefaultMemoryManager, bool nothrow = false, std::size_t alignment = alignof(std::max_align_t)>
 using HybridAllocator = Allocator<T, HybridMemoryManager<TAuxMemoryManager, alignment>, nothrow>;
 
 } // namespace CppCommon
