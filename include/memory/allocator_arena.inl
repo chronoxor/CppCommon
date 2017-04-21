@@ -32,11 +32,11 @@ template <std::size_t alignment>
 inline ArenaMemoryManager<alignment>::~ArenaMemoryManager()
 {
     if (!_external && (_buffer != nullptr))
-        free(_buffer);
+        ::free(_buffer);
 }
 
 template <std::size_t alignment>
-inline void* ArenaMemoryManager<alignment>::allocate(size_t size, const void* hint)
+inline void* ArenaMemoryManager<alignment>::malloc(size_t size, const void* hint)
 {
     assert((size > 0) && "Allocated block size must be greater than zero!");
 
@@ -55,7 +55,7 @@ inline void* ArenaMemoryManager<alignment>::allocate(size_t size, const void* hi
 }
 
 template <std::size_t alignment>
-inline void ArenaMemoryManager<alignment>::deallocate(void* ptr, size_t size)
+inline void ArenaMemoryManager<alignment>::free(void* ptr, size_t size)
 {
     assert((ptr != nullptr) && "Deallocated block must be valid!");
 }
@@ -72,10 +72,10 @@ inline void ArenaMemoryManager<alignment>::reset(size_t capacity)
     assert((capacity > 0) && "Arena capacity must be greater than zero!");
 
     if (!_external && (_buffer != nullptr))
-        free(_buffer);
+        ::free(_buffer);
 
     _external = false;
-    _buffer = (uint8_t*)malloc(capacity);
+    _buffer = (uint8_t*)::malloc(capacity);
     _capacity = capacity;
     _size = 0;
 }
@@ -87,7 +87,7 @@ inline void ArenaMemoryManager<alignment>::reset(uint8_t* buffer, size_t size)
     assert((size > 0) && "Arena buffer size must be greater than zero!");
 
     if (!_external && (_buffer != nullptr))
-        free(_buffer);
+        ::free(_buffer);
 
     _external = true;
     _buffer = buffer;

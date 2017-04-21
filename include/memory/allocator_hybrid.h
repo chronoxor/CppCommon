@@ -53,28 +53,25 @@ public:
     //! Arena allocated size
     size_t size() const noexcept { return _size; }
 
+    //! Maximum memory block size, that could be allocated by the memory manager
+    size_t max_size() const noexcept { return _auxiliary.max_size(); }
+
     //! Auxiliary memory manager
     TAuxMemoryManager& auxiliary() noexcept { return _auxiliary; }
 
-    //! Get the maximum number of elements, that could potentially be allocated by the allocator
-    /*!
-        \return The number of elements that might be allocated as maximum by a call to the allocate() method
-    */
-    size_t max_size() const noexcept { return _auxiliary.max_size(); }
-
-    //! Allocate a block of storage of the given size
+    //! Allocate a new memory block of the given size
     /*!
         \param size - Block size
         \param hint - Allocation hint (default is nullptr)
-        \return A pointer to the block of storage
+        \return A pointer to the allocated memory block or nullptr in case of allocation failed
     */
-    void* allocate(size_t size, const void* hint = nullptr);
-    //! Release a block of storage previously allocated
+    void* malloc(size_t size, const void* hint = nullptr);
+    //! Free the previously allocated memory block
     /*!
-        \param ptr - Pointer to a block of storage
+        \param ptr - Pointer to the memory block
         \param size - Block size
     */
-    void deallocate(void* ptr, size_t size);
+    void free(void* ptr, size_t size);
 
     //! Reset the memory manager
     void reset();

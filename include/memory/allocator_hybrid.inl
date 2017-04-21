@@ -36,11 +36,11 @@ template <class TAuxMemoryManager, std::size_t alignment>
 inline HybridMemoryManager<TAuxMemoryManager, alignment>::~HybridMemoryManager()
 {
     if (!_external && (_buffer != nullptr))
-        _auxiliary.deallocate(_buffer, _capacity);
+        _auxiliary.free(_buffer, _capacity);
 }
 
 template <class TAuxMemoryManager, std::size_t alignment>
-inline void* HybridMemoryManager<TAuxMemoryManager, alignment>::allocate(size_t size, const void* hint)
+inline void* HybridMemoryManager<TAuxMemoryManager, alignment>::malloc(size_t size, const void* hint)
 {
     assert((size > 0) && "Allocated block size must be greater than zero!");
 
@@ -55,19 +55,19 @@ inline void* HybridMemoryManager<TAuxMemoryManager, alignment>::allocate(size_t 
     }
 
     // Not enough memory... use auxiliary memory manager
-    void* result = _auxiliary.allocate(size, hint);
+    void* result = _auxiliary.malloc(size, hint);
     _auxiliary_allocated += size;
     return result;
 }
 
 template <class TAuxMemoryManager, std::size_t alignment>
-inline void HybridMemoryManager<TAuxMemoryManager, alignment>::deallocate(void* ptr, size_t size)
+inline void HybridMemoryManager<TAuxMemoryManager, alignment>::free(void* ptr, size_t size)
 {
     assert((ptr != nullptr) && "Deallocated block must be valid!");
 
     // Free memory block in auxiliary memory manager
     if ((ptr < _buffer) || (ptr >= (_buffer + _size)))
-        _auxiliary.deallocate(ptr, size);
+        _auxiliary.free(ptr, size);
 }
 
 template <class TAuxMemoryManager, std::size_t alignment>
@@ -87,11 +87,11 @@ inline void HybridMemoryManager<TAuxMemoryManager, alignment>::reset(size_t capa
     assert((capacity > 0) && "Arena capacity must be greater than zero!");
 
     if (!_external && (_buffer != nullptr))
-        _auxiliary.deallocate(_buffer, _capacity);
+        _auxiliary.free(_buffer, _capacity);
 
     _auxiliary_allocated = 0;
     _external = false;
-    _buffer = (uint8_t*)_auxiliary.allocate(capacity);
+    _buffer = (uint8_t*)_auxiliary.malloc(capacity);
     _capacity = capacity;
     _size = 0;
 }
@@ -103,7 +103,7 @@ inline void HybridMemoryManager<TAuxMemoryManager, alignment>::reset(uint8_t* bu
     assert((size > 0) && "Arena buffer size must be greater than zero!");
 
     if (!_external && (_buffer != nullptr))
-        _auxiliary.deallocate(_buffer, _capacity);
+        _auxiliary.free(_buffer, _capacity);
 
     _auxiliary_allocated = 0;
     _external = true;
