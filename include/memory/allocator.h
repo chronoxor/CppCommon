@@ -75,7 +75,7 @@ public:
     /*!
         \return The number of elements that might be allocated as maximum by a call to the allocate() method
     */
-    size_type max_size() const noexcept { return _manager.capacity(); }
+    size_type max_size() const noexcept { return _manager.max_size(); }
 
     //! Allocate a block of storage suitable to contain the given count of elements
     /*!
