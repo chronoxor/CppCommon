@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['absolute',['absolute',['../class_cpp_common_1_1_path.html#a0a113d765cd2ed860adbc69bd6f70491',1,'CppCommon::Path']]],
-  ['address',['address',['../class_cpp_common_1_1_allocator.html#a4c0be745fe0c9e77e026d6e22caae26e',1,'CppCommon::Allocator::address(reference x) const noexcept'],['../class_cpp_common_1_1_allocator.html#aef1123f4b496594d0fc554484211e680',1,'CppCommon::Allocator::address(const_reference x) const noexcept']]],
+  ['absolute',['absolute',['../class_cpp_common_1_1_path.html#a0c242646e647f41da2ee404943cabf54',1,'CppCommon::Path']]],
+  ['address',['address',['../class_cpp_common_1_1_allocator.html#ab39ee416a01510bb54055a6dd9e7f8d4',1,'CppCommon::Allocator::address(reference x) const  noexcept'],['../class_cpp_common_1_1_allocator.html#ab62ecfddb5691dd25c8b6ca4e57541c9',1,'CppCommon::Allocator::address(const_reference x) const  noexcept']]],
   ['affinity',['Affinity',['../class_cpp_common_1_1_c_p_u.html#a4191ea4a31c5e56245a0843acb12ffa0',1,'CppCommon::CPU']]],
   ['align',['Align',['../class_cpp_common_1_1_memory.html#a175ebd7811dd37aa17d2debbea645530',1,'CppCommon::Memory']]],
   ['allocate',['allocate',['../class_cpp_common_1_1_allocator.html#a95bc86bbe1f4eb4fd8938a4c04b88226',1,'CppCommon::Allocator']]],
@@ -11,6 +11,6 @@ var searchData=
   ['arenamemorymanager',['ArenaMemoryManager',['../class_cpp_common_1_1_arena_memory_manager.html#a2988195df98256216c4fc8dac08750ed',1,'CppCommon::ArenaMemoryManager::ArenaMemoryManager(size_t capacity)'],['../class_cpp_common_1_1_arena_memory_manager.html#a7ae890ae413704e17b7eaa398eb8769f',1,'CppCommon::ArenaMemoryManager::ArenaMemoryManager(uint8_t *buffer, size_t size)'],['../class_cpp_common_1_1_arena_memory_manager.html#a6559571c972706eb814948d82fc9f334',1,'CppCommon::ArenaMemoryManager::ArenaMemoryManager(const ArenaMemoryManager &amp;) noexcept=delete'],['../class_cpp_common_1_1_arena_memory_manager.html#a5252d4ca2616d7792eb6df8c1c4bd52e',1,'CppCommon::ArenaMemoryManager::ArenaMemoryManager(ArenaMemoryManager &amp;&amp;) noexcept=default']]],
   ['assign',['Assign',['../class_cpp_common_1_1_path.html#a2493bacb4293cd31538354b06e5f5846',1,'CppCommon::Path']]],
   ['attach',['Attach',['../class_cpp_common_1_1_file_system_exception.html#aa608a23acd04d571929bf20e674bef76',1,'CppCommon::FileSystemException::Attach(const Path &amp;path)'],['../class_cpp_common_1_1_file_system_exception.html#a71c1bc9a2632ebfe0b9c40bfadaab8b5',1,'CppCommon::FileSystemException::Attach(const Path &amp;src, const Path &amp;dst)']]],
-  ['attributes',['attributes',['../class_cpp_common_1_1_path.html#a4bd57ffd0e554c5a332aa91383173f58',1,'CppCommon::Path']]],
+  ['attributes',['attributes',['../class_cpp_common_1_1_path.html#a59dbb579db744e294517a00512c1780d',1,'CppCommon::Path']]],
   ['auxiliary',['auxiliary',['../class_cpp_common_1_1_hybrid_memory_manager.html#a53bb49eca949d7a70f248257fe625c8a',1,'CppCommon::HybridMemoryManager']]]
 ];
