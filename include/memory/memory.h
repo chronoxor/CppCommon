@@ -10,6 +10,7 @@
 #define CPPCOMMON_MEMORY_MEMORY_H
 
 #include <cassert>
+#include <cstddef>
 #include <cstdint>
 #include <cstring>
 #include <memory>
