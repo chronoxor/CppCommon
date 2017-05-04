@@ -1,7 +1,7 @@
 var searchData=
 [
   ['_7eallocator',['~Allocator',['../class_cpp_common_1_1_allocator.html#a0efe0d55cc606ba71b9c04882e46f77b',1,'CppCommon::Allocator::~Allocator()'],['../class_cpp_common_1_1_allocator_3_01void_00_01_t_memory_manager_00_01nothrow_01_4.html#aa15d47b6c41f764ec494cb2af388d00f',1,'CppCommon::Allocator&lt; void, TMemoryManager, nothrow &gt;::~Allocator()']]],
-  ['_7earenamemorymanager',['~ArenaMemoryManager',['../class_cpp_common_1_1_arena_memory_manager.html#ad4905af5360c049a7f920c3c49d101a3',1,'CppCommon::ArenaMemoryManager']]],
+  ['_7earenamemorymanager',['~ArenaMemoryManager',['../class_cpp_common_1_1_arena_memory_manager.html#af3002fd77bd07e29fc7f6aabbbef0a0c',1,'CppCommon::ArenaMemoryManager']]],
   ['_7ebarrier',['~Barrier',['../class_cpp_common_1_1_barrier.html#a25c79dbbf3131cac50f9d8d160d2e2a1',1,'CppCommon::Barrier']]],
   ['_7econditionvariable',['~ConditionVariable',['../class_cpp_common_1_1_condition_variable.html#aa031be4e128487a9e2ac1e20d9db10a4',1,'CppCommon::ConditionVariable']]],
   ['_7econsole',['~Console',['../class_cpp_common_1_1_console.html#ae5baa17a7b9e9e80a8f329d5283843c5',1,'CppCommon::Console']]],
@@ -19,7 +19,6 @@ var searchData=
   ['_7efile',['~File',['../class_cpp_common_1_1_file.html#a65494c1f50a8c989b1ef19ac6ab15175',1,'CppCommon::File']]],
   ['_7efilelock',['~FileLock',['../class_cpp_common_1_1_file_lock.html#aea0067462a9b1160b6327f80343e2bba',1,'CppCommon::FileLock']]],
   ['_7eflags',['~Flags',['../class_cpp_common_1_1_flags.html#a918b854c67f2d0a2ee056cbd7893d4bb',1,'CppCommon::Flags']]],
-  ['_7ehybridmemorymanager',['~HybridMemoryManager',['../class_cpp_common_1_1_hybrid_memory_manager.html#adc5b71e2e1bc4d2e23c8b472083b7a67',1,'CppCommon::HybridMemoryManager']]],
   ['_7elatch',['~Latch',['../class_cpp_common_1_1_latch.html#a94475663b791f2695e7693df310fed24',1,'CppCommon::Latch']]],
   ['_7elocker',['~Locker',['../class_cpp_common_1_1_locker.html#aebbed39c6dda76f03f02ff3c7cb6249a',1,'CppCommon::Locker']]],
   ['_7emath',['~Math',['../class_cpp_common_1_1_math.html#adfd36c436a9f45ea879a2e4c29f18679',1,'CppCommon::Math']]],

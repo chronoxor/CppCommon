@@ -5,10 +5,10 @@ var searchData=
   ['barrier_2ecpp',['barrier.cpp',['../barrier_8cpp.html',1,'']]],
   ['barrier_2eh',['barrier.h',['../barrier_8h.html',1,'']]],
   ['begin',['begin',['../class_cpp_common_1_1_directory.html#a10ba7f4da1370eb37141b47388a690c9',1,'CppCommon::Directory']]],
-  ['bitset',['bitset',['../class_cpp_common_1_1_flags.html#a57029786b43b267efd895681e78f144a',1,'CppCommon::Flags']]],
+  ['bitset',['bitset',['../class_cpp_common_1_1_flags.html#a0500b70ea7cf23828e6426d212176a72',1,'CppCommon::Flags']]],
   ['black',['BLACK',['../namespace_cpp_common.html#ac1ca6affe95577c60f18950cd8682db4a08d0012388564e95c3b4a7407cf04965',1,'CppCommon']]],
   ['block',['BLOCK',['../namespace_cpp_common.html#a3566e27bae7f971c3c1547098a74a12fa4d34f53389ed7f28ca91fc31ea360a66',1,'CppCommon']]],
   ['blue',['BLUE',['../namespace_cpp_common.html#ac1ca6affe95577c60f18950cd8682db4a1b3e1ee9bff86431dea6b181365ba65f',1,'CppCommon']]],
   ['brown',['BROWN',['../namespace_cpp_common.html#ac1ca6affe95577c60f18950cd8682db4a493cacf6f6a2ae4798b319b8b9ba9488',1,'CppCommon']]],
-  ['buffer',['buffer',['../class_cpp_common_1_1_arena_memory_manager.html#a931fd3055ebb25b56509d533927e4a1a',1,'CppCommon::ArenaMemoryManager::buffer()'],['../class_cpp_common_1_1_hybrid_memory_manager.html#a92ce3640279f05349f78f14260e68cfe',1,'CppCommon::HybridMemoryManager::buffer()'],['../class_cpp_common_1_1_stack_memory_manager.html#a1628024ae3671e4155891ef1423f1c63',1,'CppCommon::StackMemoryManager::buffer()']]]
+  ['buffer',['buffer',['../class_cpp_common_1_1_arena_memory_manager.html#ab9ed52c05f1033e4f2e2e574b962e5d3',1,'CppCommon::ArenaMemoryManager::buffer()'],['../class_cpp_common_1_1_stack_memory_manager.html#aaaad4c4d04f99fef9c370985d8186519',1,'CppCommon::StackMemoryManager::buffer()']]]
 ];
