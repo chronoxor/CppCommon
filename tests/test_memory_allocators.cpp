@@ -6,7 +6,6 @@
 
 #include "memory/allocator.h"
 #include "memory/allocator_arena.h"
-#include "memory/allocator_hybrid.h"
 #include "memory/allocator_null.h"
 #include "memory/allocator_stack.h"
 
@@ -76,10 +75,12 @@ TEST_CASE("Stack allocator", "[CppCommon][Memory]")
     alloc.deallocate(ptr, 1);
 }
 
-TEST_CASE("Arena allocator", "[CppCommon][Memory]")
+TEST_CASE("Arena allocator with fixed buffer", "[CppCommon][Memory]")
 {
-    ArenaMemoryManager<1> manger(11);
-    ArenaAllocator<uint8_t, true, 1> alloc(manger);
+    DefaultMemoryManager auxiliary;
+    uint8_t buffer[11];
+    ArenaMemoryManager<DefaultMemoryManager, 1> manger(auxiliary, buffer, 11);
+    ArenaAllocator<uint8_t, DefaultMemoryManager, true, 1> alloc(manger);
 
     REQUIRE(manger.capacity() == 11);
     REQUIRE(manger.size() == 0);
@@ -95,7 +96,8 @@ TEST_CASE("Arena allocator", "[CppCommon][Memory]")
     alloc.deallocate(ptr, 10);
 
     ptr = alloc.allocate(1);
-    REQUIRE(ptr == nullptr);
+    REQUIRE(manger.size() == 11);
+    REQUIRE(ptr != nullptr);
 
     alloc.reset();
     REQUIRE(manger.capacity() == 11);
@@ -107,45 +109,38 @@ TEST_CASE("Arena allocator", "[CppCommon][Memory]")
     alloc.deallocate(ptr, 1);
 }
 
-TEST_CASE("Hybrid allocator", "[CppCommon][Memory]")
+TEST_CASE("Arena allocator with dynamic buffer", "[CppCommon][Memory]")
 {
     DefaultMemoryManager auxiliary;
-    HybridMemoryManager<DefaultMemoryManager, 1> manger(auxiliary, 11);
-    HybridAllocator<uint8_t, DefaultMemoryManager, true, 1> alloc(manger);
+    ArenaMemoryManager<DefaultMemoryManager, 1> manger(auxiliary, 11);
+    ArenaAllocator<uint8_t, DefaultMemoryManager, true, 1> alloc(manger);
 
-    REQUIRE(manger.capacity() == 11);
     REQUIRE(manger.size() == 0);
 
     uint8_t* ptr = alloc.allocate(1);
     REQUIRE(ptr != nullptr);
-    REQUIRE(manger.size() == 1);
     alloc.deallocate(ptr, 1);
 
     ptr = alloc.allocate(10);
     REQUIRE(ptr != nullptr);
-    REQUIRE(manger.size() == 11);
     alloc.deallocate(ptr, 10);
 
     ptr = alloc.allocate(1);
     REQUIRE(ptr != nullptr);
-    REQUIRE(manger.size() == 11);
     alloc.deallocate(ptr, 1);
 
     alloc.reset();
-    REQUIRE(manger.capacity() == 12);
-    REQUIRE(manger.size() == 0);
 
     ptr = alloc.allocate(1);
     REQUIRE(ptr != nullptr);
-    REQUIRE(manger.size() == 1);
     alloc.deallocate(ptr, 1);
 }
 
-TEST_CASE("Hybrid allocator with stl direct containers", "[CppCommon][Memory]")
+TEST_CASE("Arena allocator with stl direct containers", "[CppCommon][Memory]")
 {
     DefaultMemoryManager auxiliary;
-    HybridMemoryManager<DefaultMemoryManager> manger(auxiliary, 10);
-    HybridAllocator<int, DefaultMemoryManager> alloc(manger);
+    ArenaMemoryManager<DefaultMemoryManager> manger(auxiliary, 10);
+    ArenaAllocator<int, DefaultMemoryManager> alloc(manger);
 
     std::vector<int, decltype(alloc)> v(alloc);
     v.push_back(0);
@@ -160,11 +155,11 @@ TEST_CASE("Hybrid allocator with stl direct containers", "[CppCommon][Memory]")
     l.clear();
 }
 
-TEST_CASE("Hybrid allocator with stl associative containers", "[CppCommon][Memory]")
+TEST_CASE("Arena allocator with stl associative containers", "[CppCommon][Memory]")
 {
     DefaultMemoryManager auxiliary;
-    HybridMemoryManager<DefaultMemoryManager> manger(auxiliary, 10);
-    HybridAllocator<std::pair<const int, int>, DefaultMemoryManager> alloc(manger);
+    ArenaMemoryManager<DefaultMemoryManager> manger(auxiliary, 10);
+    ArenaAllocator<std::pair<const int, int>, DefaultMemoryManager> alloc(manger);
 
     std::map<int, int, std::less<int>, decltype(alloc)> m(alloc);
     m[0] = 0;
@@ -178,4 +173,3 @@ TEST_CASE("Hybrid allocator with stl associative containers", "[CppCommon][Memor
     u[2] = 20;
     u.clear();
 }
-

@@ -15,34 +15,30 @@ namespace CppCommon {
 
 //! Arena memory manager class
 /*!
-    Arena memory manager uses pre-allocated memory buffer (arena) as a source
-    of memory during the allocation.
-
-    When a new block of memory allocated then the arena free size is checked and
-    the free offset is moved. If there is no enough space std::bad_alloc will be
-    thrown or null is returned (depends on parameter).
-
-    Deallocate method does nothing. When the allocation/deallocation phase
-    is finished then the free arena offset could be reset with a corresponding
-    method.
+    Arena memory manager uses pre-allocated memory buffer (arena) as a first
+    source of memory during the allocation. If arena buffer has insufficient
+    space to allocate the required block then an auxiliary memory manager will
+    be used.
 
     Not thread-safe.
 */
-template <std::size_t alignment = alignof(std::max_align_t)>
+template <class TAuxMemoryManager = DefaultMemoryManager, std::size_t alignment = alignof(std::max_align_t)>
 class ArenaMemoryManager
 {
 public:
-    //! Pre-allocate arena with a given capacity
+    //! Initialize memory manager with an auxiliary memory manager and a given capacity
     /*!
+        \param auxiliary - Auxiliary memory manager
         \param capacity - Arena capacity in bytes
     */
-    explicit ArenaMemoryManager(size_t capacity);
-    //! Initialize arena with a given buffer
+    explicit ArenaMemoryManager(TAuxMemoryManager& auxiliary, size_t capacity);
+    //! Initialize memory manager with an auxiliary memory manager and a given buffer
     /*!
+        \param auxiliary - Auxiliary memory manager
         \param buffer - Arena buffer
         \param size - Arena buffer size
     */
-    explicit ArenaMemoryManager(uint8_t* buffer, size_t size);
+    explicit ArenaMemoryManager(TAuxMemoryManager& auxiliary, uint8_t* buffer, size_t size);
     ArenaMemoryManager(const ArenaMemoryManager&) noexcept = delete;
     ArenaMemoryManager(ArenaMemoryManager&&) noexcept = default;
     ~ArenaMemoryManager();
@@ -58,7 +54,10 @@ public:
     size_t size() const noexcept { return _size; }
 
     //! Maximum memory block size, that could be allocated by the memory manager
-    size_t max_size() const noexcept { return _capacity; }
+    size_t max_size() const noexcept { return _auxiliary.max_size(); }
+
+    //! Auxiliary memory manager
+    TAuxMemoryManager& auxiliary() noexcept { return _auxiliary; }
 
     //! Allocate a new memory block of the given size
     /*!
@@ -88,16 +87,40 @@ public:
     */
     void reset(uint8_t* buffer, size_t size);
 
+    //! Clear allocated memory
+    void clear();
+
 private:
+    struct Chunk
+    {
+        uint8_t* buffer;
+        size_t capacity;
+        size_t size;
+        Chunk* prev;
+    };
+
+    // Auxiliary memory manager
+    TAuxMemoryManager& _auxiliary;
+
+    // Arena chunks
+    Chunk* _current;
+    size_t _reserved;
+
+    // External buffer
     bool _external;
     uint8_t* _buffer;
     size_t _capacity;
     size_t _size;
+
+    //! Clear arena
+    Chunk* AllocateArena(Chunk* prev, size_t capacity);
+    //! Clear arena
+    void ClearArena();
 };
 
 //! Arena memory allocator class
-template <typename T, bool nothrow = false, std::size_t alignment = alignof(std::max_align_t)>
-using ArenaAllocator = Allocator<T, ArenaMemoryManager<alignment>, nothrow>;
+template <typename T, class TAuxMemoryManager = DefaultMemoryManager, bool nothrow = false, std::size_t alignment = alignof(std::max_align_t)>
+using ArenaAllocator = Allocator<T, ArenaMemoryManager<TAuxMemoryManager, alignment>, nothrow>;
 
 } // namespace CppCommon
 

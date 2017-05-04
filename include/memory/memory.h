@@ -46,6 +46,13 @@ public:
     */
     template <typename T>
     static bool IsAligned(const T* ptr, size_t align = alignof(T)) noexcept;
+    //! Is the given value aligned?
+    /*!
+        \param value - Value
+        \param align - Must be a pointer of two (default is alignof(std::max_align_t))
+        \return 'true' if the given value is aligned, 'false' if the given value is not aligned
+    */
+    static bool IsAligned(size_t value, size_t align = alignof(std::max_align_t)) noexcept;
 
     //! Align pointer (upwards or downwards)
     /*!
@@ -56,6 +63,14 @@ public:
     */
     template <typename T>
     static T* Align(const T* ptr, size_t align = alignof(T), bool upwards = true) noexcept;
+    //! Align value (upwards or downwards)
+    /*!
+        \param value - Value
+        \param align - Must be a pointer of two (default is alignof(std::max_align_t))
+        \param upwards - Upwards flag (default is true)
+        \return Aligned value
+    */
+    static size_t Align(size_t value, size_t align = alignof(std::max_align_t), bool upwards = true) noexcept;
 };
 
 /*! \example memory_memory.cpp Memory management example */
