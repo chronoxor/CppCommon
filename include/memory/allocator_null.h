@@ -23,13 +23,18 @@ namespace CppCommon {
 class NullMemoryManager
 {
 public:
-    NullMemoryManager() noexcept = default;
+    NullMemoryManager() noexcept : _allocated(0), _allocations(0) {}
     NullMemoryManager(const NullMemoryManager&) noexcept = default;
     NullMemoryManager(NullMemoryManager&&) noexcept = default;
-    ~NullMemoryManager() noexcept = default;
+    ~NullMemoryManager() noexcept { reset(); }
 
     NullMemoryManager& operator=(const NullMemoryManager&) noexcept = default;
     NullMemoryManager& operator=(NullMemoryManager&&) noexcept = default;
+
+    //! Allocated memory in bytes
+    size_t allocated() const noexcept { return _allocated; }
+    //! Count of active memory allocations
+    size_t allocations() const noexcept { return _allocations; }
 
     //! Maximum memory block size, that could be allocated by the memory manager
     size_t max_size() const noexcept { return std::numeric_limits<size_t>::max(); }
@@ -46,10 +51,15 @@ public:
         \param ptr - Pointer to the memory block
         \param size - Block size
     */
-    void free(void* ptr, size_t size) {}
+    void free(void* ptr, size_t size);
 
     //! Reset the memory manager
-    void reset() {}
+    void reset();
+
+private:
+    // Allocation statistics
+    size_t _allocated;
+    size_t _allocations;
 };
 
 //! Null memory allocator class

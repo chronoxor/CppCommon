@@ -20,59 +20,107 @@ TEST_CASE("Default allocator", "[CppCommon][Memory]")
 {
     DefaultMemoryManager manger;
     DefaultAllocator<uint8_t> alloc(manger);
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
 
     uint8_t* ptr = alloc.allocate(1);
     REQUIRE(ptr != nullptr);
+    REQUIRE(manger.allocated() == 1);
+    REQUIRE(manger.allocations() == 1);
     alloc.deallocate(ptr, 1);
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
 
     ptr = alloc.allocate(10);
     REQUIRE(ptr != nullptr);
+    REQUIRE(manger.allocated() == 10);
+    REQUIRE(manger.allocations() == 1);
     alloc.deallocate(ptr, 10);
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
 }
 
 TEST_CASE("Null allocator", "[CppCommon][Memory]")
 {
     NullMemoryManager manger;
     NullAllocator<uint8_t, true> alloc(manger);
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
 
     uint8_t* ptr = alloc.allocate(1);
     REQUIRE(ptr == nullptr);
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
     alloc.deallocate(ptr, 1);
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
 
     ptr = alloc.allocate(10);
     REQUIRE(ptr == nullptr);
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
     alloc.deallocate(ptr, 10);
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
 }
 
 TEST_CASE("Stack allocator", "[CppCommon][Memory]")
 {
     StackMemoryManager<11, 1> manger;
     StackAllocator<uint8_t, 11, true, 1> alloc(manger);
-
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
     REQUIRE(manger.capacity() == 11);
     REQUIRE(manger.size() == 0);
 
     uint8_t* ptr = alloc.allocate(1);
     REQUIRE(ptr != nullptr);
+    REQUIRE(manger.allocated() == 1);
+    REQUIRE(manger.allocations() == 1);
+    REQUIRE(manger.capacity() == 11);
     REQUIRE(manger.size() == 1);
     alloc.deallocate(ptr, 1);
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
+    REQUIRE(manger.capacity() == 11);
+    REQUIRE(manger.size() == 1);
 
     ptr = alloc.allocate(10);
     REQUIRE(ptr != nullptr);
+    REQUIRE(manger.allocated() == 10);
+    REQUIRE(manger.allocations() == 1);
+    REQUIRE(manger.capacity() == 11);
     REQUIRE(manger.size() == 11);
     alloc.deallocate(ptr, 10);
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
+    REQUIRE(manger.capacity() == 11);
+    REQUIRE(manger.size() == 11);
 
     ptr = alloc.allocate(1);
     REQUIRE(ptr == nullptr);
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
+    REQUIRE(manger.capacity() == 11);
+    REQUIRE(manger.size() == 11);
 
     alloc.reset();
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
     REQUIRE(manger.capacity() == 11);
     REQUIRE(manger.size() == 0);
 
     ptr = alloc.allocate(1);
     REQUIRE(ptr != nullptr);
+    REQUIRE(manger.allocated() == 1);
+    REQUIRE(manger.allocations() == 1);
+    REQUIRE(manger.capacity() == 11);
     REQUIRE(manger.size() == 1);
     alloc.deallocate(ptr, 1);
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
+    REQUIRE(manger.capacity() == 11);
+    REQUIRE(manger.size() == 1);
 }
 
 TEST_CASE("Arena allocator with fixed buffer", "[CppCommon][Memory]")
@@ -81,32 +129,64 @@ TEST_CASE("Arena allocator with fixed buffer", "[CppCommon][Memory]")
     uint8_t buffer[11];
     ArenaMemoryManager<DefaultMemoryManager, 1> manger(auxiliary, buffer, 11);
     ArenaAllocator<uint8_t, DefaultMemoryManager, true, 1> alloc(manger);
-
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
     REQUIRE(manger.capacity() == 11);
     REQUIRE(manger.size() == 0);
 
     uint8_t* ptr = alloc.allocate(1);
     REQUIRE(ptr != nullptr);
+    REQUIRE(manger.allocated() == 1);
+    REQUIRE(manger.allocations() == 1);
+    REQUIRE(manger.capacity() == 11);
     REQUIRE(manger.size() == 1);
     alloc.deallocate(ptr, 1);
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
+    REQUIRE(manger.capacity() == 11);
+    REQUIRE(manger.size() == 1);
 
     ptr = alloc.allocate(10);
     REQUIRE(ptr != nullptr);
+    REQUIRE(manger.allocated() == 10);
+    REQUIRE(manger.allocations() == 1);
+    REQUIRE(manger.capacity() == 11);
     REQUIRE(manger.size() == 11);
     alloc.deallocate(ptr, 10);
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
+    REQUIRE(manger.capacity() == 11);
+    REQUIRE(manger.size() == 11);
 
     ptr = alloc.allocate(1);
-    REQUIRE(manger.size() == 11);
     REQUIRE(ptr != nullptr);
+    REQUIRE(manger.allocated() == 1);
+    REQUIRE(manger.allocations() == 1);
+    REQUIRE(manger.capacity() == 11);
+    REQUIRE(manger.size() == 11);
+    alloc.deallocate(ptr, 1);
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
+    REQUIRE(manger.capacity() == 11);
+    REQUIRE(manger.size() == 11);
 
     alloc.reset();
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
     REQUIRE(manger.capacity() == 11);
     REQUIRE(manger.size() == 0);
 
     ptr = alloc.allocate(1);
     REQUIRE(ptr != nullptr);
+    REQUIRE(manger.allocated() == 1);
+    REQUIRE(manger.allocations() == 1);
+    REQUIRE(manger.capacity() == 11);
     REQUIRE(manger.size() == 1);
     alloc.deallocate(ptr, 1);
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
+    REQUIRE(manger.capacity() == 11);
+    REQUIRE(manger.size() == 1);
 }
 
 TEST_CASE("Arena allocator with dynamic buffer", "[CppCommon][Memory]")
@@ -114,26 +194,44 @@ TEST_CASE("Arena allocator with dynamic buffer", "[CppCommon][Memory]")
     DefaultMemoryManager auxiliary;
     ArenaMemoryManager<DefaultMemoryManager, 1> manger(auxiliary, 11);
     ArenaAllocator<uint8_t, DefaultMemoryManager, true, 1> alloc(manger);
-
-    REQUIRE(manger.size() == 0);
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
 
     uint8_t* ptr = alloc.allocate(1);
     REQUIRE(ptr != nullptr);
+    REQUIRE(manger.allocated() == 1);
+    REQUIRE(manger.allocations() == 1);
     alloc.deallocate(ptr, 1);
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
 
     ptr = alloc.allocate(10);
     REQUIRE(ptr != nullptr);
+    REQUIRE(manger.allocated() == 10);
+    REQUIRE(manger.allocations() == 1);
     alloc.deallocate(ptr, 10);
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
 
     ptr = alloc.allocate(1);
     REQUIRE(ptr != nullptr);
+    REQUIRE(manger.allocated() == 1);
+    REQUIRE(manger.allocations() == 1);
     alloc.deallocate(ptr, 1);
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
 
     alloc.reset();
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
 
     ptr = alloc.allocate(1);
     REQUIRE(ptr != nullptr);
+    REQUIRE(manger.allocated() == 1);
+    REQUIRE(manger.allocations() == 1);
     alloc.deallocate(ptr, 1);
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
 }
 
 TEST_CASE("Arena allocator with stl direct containers", "[CppCommon][Memory]")

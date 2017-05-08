@@ -35,10 +35,15 @@ public:
     StackMemoryManager();
     StackMemoryManager(const StackMemoryManager&) noexcept = delete;
     StackMemoryManager(StackMemoryManager&&) noexcept = default;
-    ~StackMemoryManager() = default;
+    ~StackMemoryManager() noexcept { reset(); }
 
     StackMemoryManager& operator=(const StackMemoryManager&) noexcept = delete;
     StackMemoryManager& operator=(StackMemoryManager&&) noexcept = default;
+
+    //! Allocated memory in bytes
+    size_t allocated() const noexcept { return _allocated; }
+    //! Count of active memory allocations
+    size_t allocations() const noexcept { return _allocations; }
 
     //! Stack buffer
     const uint8_t* buffer() const noexcept { return _buffer; }
@@ -68,6 +73,10 @@ public:
     void reset();
 
 private:
+    // Allocation statistics
+    size_t _allocated;
+    size_t _allocations;
+    // Stack buffer
     uint8_t _buffer[N];
     size_t _capacity;
     size_t _size;

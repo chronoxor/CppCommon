@@ -10,7 +10,9 @@ namespace CppCommon {
 
 template <class TAuxMemoryManager, std::size_t alignment>
 inline ArenaMemoryManager<TAuxMemoryManager, alignment>::ArenaMemoryManager(TAuxMemoryManager& auxiliary, size_t capacity)
-    : _auxiliary(auxiliary),
+    : _allocated(0),
+      _allocations(0),
+      _auxiliary(auxiliary),
       _current(nullptr),
       _reserved(0),
       _external(false),
@@ -23,7 +25,9 @@ inline ArenaMemoryManager<TAuxMemoryManager, alignment>::ArenaMemoryManager(TAux
 
 template <class TAuxMemoryManager, std::size_t alignment>
 inline ArenaMemoryManager<TAuxMemoryManager, alignment>::ArenaMemoryManager(TAuxMemoryManager& auxiliary, uint8_t* buffer, size_t size)
-    : _auxiliary(auxiliary),
+    : _allocated(0),
+      _allocations(0),
+      _auxiliary(auxiliary),
       _current(nullptr),
       _reserved(0),
       _external(true),
@@ -32,12 +36,6 @@ inline ArenaMemoryManager<TAuxMemoryManager, alignment>::ArenaMemoryManager(TAux
       _size(0)
 {
     reset(buffer, size);
-}
-
-template <class TAuxMemoryManager, std::size_t alignment>
-inline ArenaMemoryManager<TAuxMemoryManager, alignment>::~ArenaMemoryManager()
-{
-    clear();
 }
 
 template <class TAuxMemoryManager, std::size_t alignment>
@@ -55,11 +53,23 @@ inline void* ArenaMemoryManager<TAuxMemoryManager, alignment>::malloc(size_t siz
         if (aligned_size <= (_capacity - _size))
         {
             _size += aligned_size;
+
+            // Update allocation statistics
+            _allocated += size;
+            ++_allocations;
+
             return aligned;
         }
 
         // Not enough memory... use auxiliary memory manager
-        return _auxiliary.malloc(size, hint);
+        void* result = _auxiliary.malloc(size, hint);
+        if (result != nullptr)
+        {
+            // Update allocation statistics
+            _allocated += size;
+            ++_allocations;
+        }
+        return result;
     }
     else
     {
@@ -73,6 +83,11 @@ inline void* ArenaMemoryManager<TAuxMemoryManager, alignment>::malloc(size_t siz
             if (aligned_size <= (_current->capacity - _current->size))
             {
                 _current->size += aligned_size;
+
+                // Update allocation statistics
+                _allocated += size;
+                ++_allocations;
+
                 return aligned;
             }
         }
@@ -93,6 +108,10 @@ inline void* ArenaMemoryManager<TAuxMemoryManager, alignment>::malloc(size_t siz
             // Update the current arena chunk
             _current = current;
             _current->size += aligned_size;
+
+            // Update allocation statistics
+            _allocated += size;
+            ++_allocations;
 
             // Return an aligned memory buffer from the current arena chunk
             return Memory::Align(_current->buffer, alignment);
@@ -121,11 +140,17 @@ inline void ArenaMemoryManager<TAuxMemoryManager, alignment>::free(void* ptr, si
             _auxiliary.free(ptr, size);
     }
 
+    // Update allocation statistics
+    _allocated -= size;
+    --_allocations;
 }
 
 template <class TAuxMemoryManager, std::size_t alignment>
 inline void ArenaMemoryManager<TAuxMemoryManager, alignment>::reset()
 {
+    assert((_allocated == 0) && "Memory leak detected! Allocated memory size must be zero!");
+    assert((_allocations == 0) && "Memory leak detected! Count of active memory allocations must be zero!");
+
     // Expand internal arena buffer to fit auxiliary allocated storage
     if (!_external)
         reset(_reserved);
@@ -137,6 +162,9 @@ template <class TAuxMemoryManager, std::size_t alignment>
 inline void ArenaMemoryManager<TAuxMemoryManager, alignment>::reset(size_t capacity)
 {
     assert((capacity > 0) && "Arena capacity must be greater than zero!");
+
+    assert((_allocated == 0) && "Memory leak detected! Allocated memory size must be zero!");
+    assert((_allocations == 0) && "Memory leak detected! Count of active memory allocations must be zero!");
 
     // Clear previous allocations
     clear();
@@ -156,6 +184,9 @@ inline void ArenaMemoryManager<TAuxMemoryManager, alignment>::reset(uint8_t* buf
     assert((buffer != nullptr) && "Arena buffer must be valid!");
     assert((size > 0) && "Arena buffer size must be greater than zero!");
 
+    assert((_allocated == 0) && "Memory leak detected! Allocated memory size must be zero!");
+    assert((_allocations == 0) && "Memory leak detected! Count of active memory allocations must be zero!");
+
     // Clear previous allocations
     clear();
 
@@ -168,6 +199,9 @@ inline void ArenaMemoryManager<TAuxMemoryManager, alignment>::reset(uint8_t* buf
 template <class TAuxMemoryManager, std::size_t alignment>
 inline void ArenaMemoryManager<TAuxMemoryManager, alignment>::clear()
 {
+    assert((_allocated == 0) && "Memory leak detected! Allocated memory size must be zero!");
+    assert((_allocations == 0) && "Memory leak detected! Count of active memory allocations must be zero!");
+
     // Clear arena
     ClearArena();
 

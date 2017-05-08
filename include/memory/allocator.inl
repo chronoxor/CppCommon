@@ -44,14 +44,34 @@ inline void* DefaultMemoryManager::malloc(size_t size, const void* hint)
 {
     assert((size > 0) && "Allocated block size must be greater than zero!");
 
-    return ::malloc(size);
+    void* result = ::malloc(size);
+    if (result != nullptr)
+    {
+        // Update allocation statistics
+        _allocated += size;
+        ++_allocations;
+    }
+    return result;
 }
 
-void DefaultMemoryManager::free(void* ptr, size_t size)
+inline void DefaultMemoryManager::free(void* ptr, size_t size)
 {
     assert((ptr != nullptr) && "Deallocated block must be valid!");
 
-    ::free(ptr);
+    if (ptr != nullptr)
+    {
+        ::free(ptr);
+
+        // Update allocation statistics
+        _allocated -= size;
+        --_allocations;
+    }
+}
+
+inline void DefaultMemoryManager::reset()
+{
+    assert((_allocated == 0) && "Memory leak detected! Allocated memory size must be zero!");
+    assert((_allocations == 0) && "Memory leak detected! Count of active memory allocations must be zero!");
 }
 
 } // namespace CppCommon

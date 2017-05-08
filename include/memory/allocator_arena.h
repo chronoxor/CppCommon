@@ -41,10 +41,15 @@ public:
     explicit ArenaMemoryManager(TAuxMemoryManager& auxiliary, uint8_t* buffer, size_t size);
     ArenaMemoryManager(const ArenaMemoryManager&) noexcept = delete;
     ArenaMemoryManager(ArenaMemoryManager&&) noexcept = default;
-    ~ArenaMemoryManager();
+    ~ArenaMemoryManager() { clear(); }
 
     ArenaMemoryManager& operator=(const ArenaMemoryManager&) noexcept = delete;
     ArenaMemoryManager& operator=(ArenaMemoryManager&&) noexcept = default;
+
+    //! Allocated memory in bytes
+    size_t allocated() const noexcept { return _allocated; }
+    //! Count of active memory allocations
+    size_t allocations() const noexcept { return _allocations; }
 
     //! Arena buffer
     const uint8_t* buffer() const noexcept { return _buffer; }
@@ -87,10 +92,11 @@ public:
     */
     void reset(uint8_t* buffer, size_t size);
 
-    //! Clear allocated memory
+    //! Clear arena memory allocator
     void clear();
 
 private:
+    // Arena chunk
     struct Chunk
     {
         uint8_t* buffer;
@@ -98,6 +104,10 @@ private:
         size_t size;
         Chunk* prev;
     };
+
+    // Allocation statistics
+    size_t _allocated;
+    size_t _allocations;
 
     // Auxiliary memory manager
     TAuxMemoryManager& _auxiliary;

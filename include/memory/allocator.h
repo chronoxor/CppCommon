@@ -159,13 +159,18 @@ private:
 class DefaultMemoryManager
 {
 public:
-    DefaultMemoryManager() noexcept = default;
+    DefaultMemoryManager() noexcept : _allocated(0), _allocations(0) {}
     DefaultMemoryManager(const DefaultMemoryManager&) noexcept = default;
     DefaultMemoryManager(DefaultMemoryManager&&) noexcept = default;
-    ~DefaultMemoryManager() noexcept = default;
+    ~DefaultMemoryManager() noexcept { reset(); }
 
     DefaultMemoryManager& operator=(const DefaultMemoryManager&) noexcept = default;
     DefaultMemoryManager& operator=(DefaultMemoryManager&&) noexcept = default;
+
+    //! Allocated memory in bytes
+    size_t allocated() const noexcept { return _allocated; }
+    //! Count of active memory allocations
+    size_t allocations() const noexcept { return _allocations; }
 
     //! Maximum memory block size, that could be allocated by the memory manager
     size_t max_size() const noexcept { return std::numeric_limits<size_t>::max(); }
@@ -185,7 +190,12 @@ public:
     void free(void* ptr, size_t size);
 
     //! Reset the memory manager
-    void reset() {}
+    void reset();
+
+private:
+    // Allocation statistics
+    size_t _allocated;
+    size_t _allocations;
 };
 
 //! Default memory allocator class
