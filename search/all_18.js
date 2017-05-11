@@ -1,7 +1,7 @@
 var searchData=
 [
   ['_7eallocator',['~Allocator',['../class_cpp_common_1_1_allocator.html#a0efe0d55cc606ba71b9c04882e46f77b',1,'CppCommon::Allocator::~Allocator()'],['../class_cpp_common_1_1_allocator_3_01void_00_01_t_memory_manager_00_01nothrow_01_4.html#aa15d47b6c41f764ec494cb2af388d00f',1,'CppCommon::Allocator&lt; void, TMemoryManager, nothrow &gt;::~Allocator()']]],
-  ['_7earenamemorymanager',['~ArenaMemoryManager',['../class_cpp_common_1_1_arena_memory_manager.html#af3002fd77bd07e29fc7f6aabbbef0a0c',1,'CppCommon::ArenaMemoryManager']]],
+  ['_7earenamemorymanager',['~ArenaMemoryManager',['../class_cpp_common_1_1_arena_memory_manager.html#aa6894bce4aa925fcfe3ca7e503d55917',1,'CppCommon::ArenaMemoryManager']]],
   ['_7ebarrier',['~Barrier',['../class_cpp_common_1_1_barrier.html#a25c79dbbf3131cac50f9d8d160d2e2a1',1,'CppCommon::Barrier']]],
   ['_7econditionvariable',['~ConditionVariable',['../class_cpp_common_1_1_condition_variable.html#aa031be4e128487a9e2ac1e20d9db10a4',1,'CppCommon::ConditionVariable']]],
   ['_7econsole',['~Console',['../class_cpp_common_1_1_console.html#ae5baa17a7b9e9e80a8f329d5283843c5',1,'CppCommon::Console']]],
@@ -39,7 +39,7 @@ var searchData=
   ['_7enullmemorymanager',['~NullMemoryManager',['../class_cpp_common_1_1_null_memory_manager.html#a583fad9575828d4653c5a466df9aabdf',1,'CppCommon::NullMemoryManager']]],
   ['_7epath',['~Path',['../class_cpp_common_1_1_path.html#a8a21bda6651262cd6683f65c29f55f01',1,'CppCommon::Path']]],
   ['_7epipe',['~Pipe',['../class_cpp_common_1_1_pipe.html#af4624cea555877202785dd8f07b04e13',1,'CppCommon::Pipe']]],
-  ['_7epoolmemorymanager',['~PoolMemoryManager',['../class_cpp_common_1_1_pool_memory_manager.html#aea56724560e66e640b8232998c9c4cb9',1,'CppCommon::PoolMemoryManager']]],
+  ['_7epoolmemorymanager',['~PoolMemoryManager',['../class_cpp_common_1_1_pool_memory_manager.html#a09c21ffacb14697337f2af576e4a7648',1,'CppCommon::PoolMemoryManager']]],
   ['_7eprocess',['~Process',['../class_cpp_common_1_1_process.html#a9206d364f3f7a566c2d6d3f2a5d414f2',1,'CppCommon::Process']]],
   ['_7ereader',['~Reader',['../class_cpp_common_1_1_reader.html#a932417672cfad23a2ef74b4ee7da4feb',1,'CppCommon::Reader']]],
   ['_7ereadlocker',['~ReadLocker',['../class_cpp_common_1_1_read_locker.html#a00a07cb97513053204978ec7080ddf1f',1,'CppCommon::ReadLocker']]],
@@ -52,7 +52,7 @@ var searchData=
   ['_7espinlock',['~SpinLock',['../class_cpp_common_1_1_spin_lock.html#a8f8b78ab58316fc474d01ede653152b4',1,'CppCommon::SpinLock']]],
   ['_7espscringbuffer',['~SPSCRingBuffer',['../class_cpp_common_1_1_s_p_s_c_ring_buffer.html#aea1b8c3b475c8fe44c0ddd66318d4437',1,'CppCommon::SPSCRingBuffer']]],
   ['_7espscringqueue',['~SPSCRingQueue',['../class_cpp_common_1_1_s_p_s_c_ring_queue.html#a326358f51c7023f26f8a4a0b9e4de614',1,'CppCommon::SPSCRingQueue']]],
-  ['_7estackmemorymanager',['~StackMemoryManager',['../class_cpp_common_1_1_stack_memory_manager.html#a786693344b4076ae2290ac2b1a849bc1',1,'CppCommon::StackMemoryManager']]],
+  ['_7estackmemorymanager',['~StackMemoryManager',['../class_cpp_common_1_1_stack_memory_manager.html#aae0994ea4b9906ce82fabb5767cf1be9',1,'CppCommon::StackMemoryManager']]],
   ['_7estacktrace',['~StackTrace',['../class_cpp_common_1_1_stack_trace.html#a509523c40b64fe6f216498eaef80d13b',1,'CppCommon::StackTrace']]],
   ['_7estacktracemanager',['~StackTraceManager',['../class_cpp_common_1_1_stack_trace_manager.html#ad0755a0b2db498add1031c124e756ac1',1,'CppCommon::StackTraceManager']]],
   ['_7esymlink',['~Symlink',['../class_cpp_common_1_1_symlink.html#a044d35e4ed8ff78a0cd1a1c3d1212f57',1,'CppCommon::Symlink']]],
