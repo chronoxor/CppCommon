@@ -22,12 +22,22 @@ namespace CppCommon {
     During the allocation memory pool manager will return a first-fit memory
     block in the free list!
 
+    If the allocated block is huge and does not fit into the memory pool chunk
+    then it will be allocated directly from auxiliary memory manager.
+
     Not thread-safe.
 */
-template <class TAuxMemoryManager = DefaultMemoryManager, std::size_t alignment = alignof(std::max_align_t)>
+template <class TAuxMemoryManager = DefaultMemoryManager>
 class PoolMemoryManager
 {
 public:
+    //! Initialize memory pool manager with an auxiliary memory manager
+    /*!
+        Memory pool will have unlimited chunks of size 65536.
+
+        \param auxiliary - Auxiliary memory manager
+    */
+    explicit PoolMemoryManager(TAuxMemoryManager& auxiliary) : PoolMemoryManager(auxiliary, 65536, 0) {}
     //! Initialize memory pool manager with an auxiliary memory manager, single chunk size and max chunks count
     /*!
         \param auxiliary - Auxiliary memory manager
@@ -39,9 +49,9 @@ public:
     /*!
         \param auxiliary - Auxiliary memory manager
         \param buffer - Pool buffer
-        \param size - Pool buffer size
+        \param size - Pool buffer capacity
     */
-    explicit PoolMemoryManager(TAuxMemoryManager& auxiliary, uint8_t* buffer, size_t size);
+    explicit PoolMemoryManager(TAuxMemoryManager& auxiliary, uint8_t* buffer, size_t capacity);
     PoolMemoryManager(const PoolMemoryManager&) noexcept = delete;
     PoolMemoryManager(PoolMemoryManager&&) noexcept = default;
     ~PoolMemoryManager() { clear(); }
@@ -54,6 +64,11 @@ public:
     //! Count of active memory allocations
     size_t allocations() const noexcept { return _allocations; }
 
+    //! Chunk size in bytes
+    size_t chunk() const noexcept { return _chunk; }
+    //! Max chunks size
+    size_t chunks() const noexcept { return _chunks; }
+
     //! Maximum memory block size, that could be allocated by the memory manager
     size_t max_size() const noexcept { return _auxiliary.max_size(); }
 
@@ -63,10 +78,10 @@ public:
     //! Allocate a new memory block of the given size
     /*!
         \param size - Block size
-        \param hint - Allocation hint (default is nullptr)
+        \param alignment - Block alignment (default is alignof(std::max_align_t))
         \return A pointer to the allocated memory block or nullptr in case of allocation failed
     */
-    void* malloc(size_t size, const void* hint = nullptr);
+    void* malloc(size_t size, size_t alignment = alignof(std::max_align_t));
     //! Free the previously allocated memory block
     /*!
         \param ptr - Pointer to the memory block
@@ -85,9 +100,9 @@ public:
     //! Reset the memory manager with a given buffer
     /*!
         \param buffer - Pool buffer
-        \param size - Pool buffer size
+        \param size - Pool buffer capacity
     */
-    void reset(uint8_t* buffer, size_t size);
+    void reset(uint8_t* buffer, size_t capacity);
 
     //! Clear memory pool
     void clear();
@@ -98,6 +113,7 @@ private:
     {
         uint8_t* buffer;
         Chunk* prev;
+        Chunk* next;
     };
     // Allocated block
     struct AllocBlock
@@ -120,17 +136,23 @@ private:
     TAuxMemoryManager& _auxiliary;
 
     // Pool chunks
-    Chunk* _current;
+    bool _external;
     size_t _chunk;
     size_t _chunks;
+    Chunk* _current;
 
     // Free block
     FreeBlock* _free_block;
+
+    //! Allocate memory pool
+    Chunk* AllocateMemoryPool(size_t capacity, Chunk* prev);
+    //! Clear memory pool
+    void ClearMemoryPool();
 };
 
 //! Pool memory allocator class
-template <typename T, class TAuxMemoryManager = DefaultMemoryManager, bool nothrow = false, std::size_t alignment = alignof(std::max_align_t)>
-using PoolAllocator = Allocator<T, PoolMemoryManager<TAuxMemoryManager, alignment>, nothrow>;
+template <typename T, class TAuxMemoryManager = DefaultMemoryManager, bool nothrow = false>
+using PoolAllocator = Allocator<T, PoolMemoryManager<TAuxMemoryManager>, nothrow>;
 
 } // namespace CppCommon
 

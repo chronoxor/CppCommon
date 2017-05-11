@@ -28,7 +28,7 @@ namespace CppCommon {
 
     Not thread-safe.
 */
-template <size_t N, std::size_t alignment = alignof(std::max_align_t)>
+template <size_t N>
 class StackMemoryManager
 {
 public:
@@ -58,10 +58,10 @@ public:
     //! Allocate a new memory block of the given size
     /*!
         \param size - Block size
-        \param hint - Allocation hint (default is nullptr)
+        \param alignment - Block alignment (default is alignof(std::max_align_t))
         \return A pointer to the allocated memory block or nullptr in case of allocation failed
     */
-    void* malloc(size_t size, const void* hint = nullptr);
+    void* malloc(size_t size, size_t alignment = alignof(std::max_align_t));
     //! Free the previously allocated memory block
     /*!
         \param ptr - Pointer to the memory block
@@ -83,8 +83,8 @@ private:
 };
 
 //! Stack memory allocator class
-template <typename T, size_t N, bool nothrow = false, std::size_t alignment = alignof(std::max_align_t)>
-using StackAllocator = Allocator<T, StackMemoryManager<N, alignment>, nothrow>;
+template <typename T, size_t N, bool nothrow = false>
+using StackAllocator = Allocator<T, StackMemoryManager<N>, nothrow>;
 
 } // namespace CppCommon
 

@@ -178,10 +178,10 @@ public:
     //! Allocate a new memory block of the given size
     /*!
         \param size - Block size
-        \param hint - Allocation hint (default is nullptr)
+        \param alignment - Block alignment (default is alignof(std::max_align_t))
         \return A pointer to the allocated memory block or nullptr in case of allocation failed
     */
-    void* malloc(size_t size, const void* hint = nullptr);
+    void* malloc(size_t size, size_t alignment = alignof(std::max_align_t));
     //! Free the previously allocated memory block
     /*!
         \param ptr - Pointer to the memory block

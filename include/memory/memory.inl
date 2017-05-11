@@ -10,49 +10,33 @@
 
 namespace CppCommon {
 
+inline bool Memory::IsValidAlignment(size_t alignment) noexcept
+{
+    return ((alignment > 0) && ((alignment & (alignment - 1)) == 0));
+}
+
 template <typename T>
-inline bool Memory::IsAligned(const T* ptr, size_t align) noexcept
+inline bool Memory::IsAligned(const T* ptr, size_t alignment) noexcept
 {
     assert((ptr != nullptr) && "Pointer must be valid!");
-    assert((align > 0) && "Align must be greater than zero!");
-    assert(((align & (align - 1)) == 0) && "Align must be a power of two!");
+    assert(IsValidAlignment(alignment) && "Alignment must be valid!");
 
     uintptr_t address = (uintptr_t)ptr;
-    return (address & (align - 1)) == 0;
-}
-
-inline bool Memory::IsAligned(size_t value, size_t align) noexcept
-{
-    assert((align > 0) && "Align must be greater than zero!");
-    assert(((align & (align - 1)) == 0) && "Align must be a power of two!");
-
-    return (value & (align - 1)) == 0;
+    return (address & (alignment - 1)) == 0;
 }
 
 template <typename T>
-inline T* Memory::Align(const T* ptr, size_t align, bool upwards) noexcept
+inline T* Memory::Align(const T* ptr, size_t alignment, bool upwards) noexcept
 {
     assert((ptr != nullptr) && "Pointer must be valid!");
-    assert((align > 0) && "Align must be greater than zero!");
-    assert(((align & (align - 1)) == 0) && "Align must be a power of two!");
+    assert(IsValidAlignment(alignment) && "Alignment must be valid!");
 
     uintptr_t address = (uintptr_t)ptr;
 
     if (upwards)
-        return (T*)((address + (align - 1)) & -((int)align));
+        return (T*)((address + (alignment - 1)) & -((int)alignment));
     else
-        return (T*)(address & -((int)align));
-}
-
-inline size_t Memory::Align(size_t value, size_t align, bool upwards) noexcept
-{
-    assert((align > 0) && "Align must be greater than zero!");
-    assert(((align & (align - 1)) == 0) && "Align must be a power of two!");
-
-    if (upwards)
-        return (size_t)((value + (align - 1)) & -((int)align));
-    else
-        return (size_t)(value & -((int)align));
+        return (T*)(address & -((int)alignment));
 }
 
 } // namespace CppCommon

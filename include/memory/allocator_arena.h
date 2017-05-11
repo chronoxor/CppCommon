@@ -22,7 +22,7 @@ namespace CppCommon {
 
     Not thread-safe.
 */
-template <class TAuxMemoryManager = DefaultMemoryManager, std::size_t alignment = alignof(std::max_align_t)>
+template <class TAuxMemoryManager = DefaultMemoryManager>
 class ArenaMemoryManager
 {
 public:
@@ -36,9 +36,9 @@ public:
     /*!
         \param auxiliary - Auxiliary memory manager
         \param buffer - Arena buffer
-        \param size - Arena buffer size
+        \param size - Arena buffer capacity
     */
-    explicit ArenaMemoryManager(TAuxMemoryManager& auxiliary, uint8_t* buffer, size_t size);
+    explicit ArenaMemoryManager(TAuxMemoryManager& auxiliary, uint8_t* buffer, size_t capacity);
     ArenaMemoryManager(const ArenaMemoryManager&) noexcept = delete;
     ArenaMemoryManager(ArenaMemoryManager&&) noexcept = default;
     ~ArenaMemoryManager() { clear(); }
@@ -67,10 +67,10 @@ public:
     //! Allocate a new memory block of the given size
     /*!
         \param size - Block size
-        \param hint - Allocation hint (default is nullptr)
+        \param alignment - Block alignment (default is alignof(std::max_align_t))
         \return A pointer to the allocated memory block or nullptr in case of allocation failed
     */
-    void* malloc(size_t size, const void* hint = nullptr);
+    void* malloc(size_t size, size_t alignment = alignof(std::max_align_t));
     //! Free the previously allocated memory block
     /*!
         \param ptr - Pointer to the memory block
@@ -88,9 +88,9 @@ public:
     //! Reset the memory manager with a given buffer
     /*!
         \param buffer - Arena buffer
-        \param size - Arena buffer size
+        \param size - Arena buffer capacity
     */
-    void reset(uint8_t* buffer, size_t size);
+    void reset(uint8_t* buffer, size_t capacity);
 
     //! Clear arena memory allocator
     void clear();
@@ -122,15 +122,15 @@ private:
     size_t _capacity;
     size_t _size;
 
-    //! Clear arena
-    Chunk* AllocateArena(Chunk* prev, size_t capacity);
+    //! Allocate arena
+    Chunk* AllocateArena(size_t capacity, Chunk* prev);
     //! Clear arena
     void ClearArena();
 };
 
 //! Arena memory allocator class
-template <typename T, class TAuxMemoryManager = DefaultMemoryManager, bool nothrow = false, std::size_t alignment = alignof(std::max_align_t)>
-using ArenaAllocator = Allocator<T, ArenaMemoryManager<TAuxMemoryManager, alignment>, nothrow>;
+template <typename T, class TAuxMemoryManager = DefaultMemoryManager, bool nothrow = false>
+using ArenaAllocator = Allocator<T, ArenaMemoryManager<TAuxMemoryManager>, nothrow>;
 
 } // namespace CppCommon
 

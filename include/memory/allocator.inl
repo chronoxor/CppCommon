@@ -23,7 +23,7 @@ inline bool operator!=(const Allocator<T, TMemoryManager, nothrow>& alloc1, cons
 template <typename T, class TMemoryManager, bool nothrow>
 inline T* Allocator<T, TMemoryManager, nothrow>::allocate(size_t num, const void* hint)
 {
-    pointer result = (pointer)_manager.malloc(num * sizeof(T), hint);
+    pointer result = (pointer)_manager.malloc(num * sizeof(T), alignof(T));
     if (result != nullptr)
         return result;
 
@@ -40,9 +40,10 @@ inline void Allocator<T, TMemoryManager, nothrow>::deallocate(T* ptr, size_t num
     _manager.free(ptr, num * sizeof(T));
 }
 
-inline void* DefaultMemoryManager::malloc(size_t size, const void* hint)
+inline void* DefaultMemoryManager::malloc(size_t size, size_t alignment)
 {
     assert((size > 0) && "Allocated block size must be greater than zero!");
+    assert(Memory::IsValidAlignment(alignment) && "Alignment must be valid!");
 
     void* result = ::malloc(size);
     if (result != nullptr)

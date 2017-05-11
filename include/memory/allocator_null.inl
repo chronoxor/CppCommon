@@ -8,9 +8,10 @@
 
 namespace CppCommon {
 
-inline void* NullMemoryManager::malloc(size_t size, const void* hint)
+inline void* NullMemoryManager::malloc(size_t size, size_t alignment)
 {
     assert((size > 0) && "Allocated block size must be greater than zero!");
+    assert(Memory::IsValidAlignment(alignment) && "Alignment must be valid!");
 
     // Not enough memory...
     return nullptr;
