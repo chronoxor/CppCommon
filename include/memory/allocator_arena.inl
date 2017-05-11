@@ -106,7 +106,7 @@ inline void* ArenaMemoryManager<TAuxMemoryManager>::malloc(size_t size, size_t a
             next_reserved *= 2;
 
         // Allocate a new arena chunk
-        Chunk* current = AllocateArena(_current, next_reserved);
+        Chunk* current = AllocateArena(next_reserved, _current);
         if (current != nullptr)
         {
             // Update the current arena chunk
@@ -183,7 +183,7 @@ inline void ArenaMemoryManager<TAuxMemoryManager>::reset(size_t capacity)
     clear();
 
     // Allocate a new arena chunk
-    Chunk* current = AllocateArena(_current, capacity);
+    Chunk* current = AllocateArena(capacity, _current);
     if (current != nullptr)
         _current = current;
 
