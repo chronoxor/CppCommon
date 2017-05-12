@@ -100,13 +100,25 @@ public:
         \param val - Value to initialize the construced element to
     */
     template <typename U, class... Args>
-    void construct(U* ptr, Args&&... args) { new((void*)ptr) U(std::forward<Args>(args)...); }
+    void construct(U* ptr, Args&&... args) { new ((void*)ptr) U(std::forward<Args>(args)...); }
     //! Destroys in-place the object pointed by the given location pointer
     /*!
         \param ptr - Pointer to the object to be destroyed
     */
     template <typename U>
-    void destroy(U* ptr) { ((U*)ptr)->~U(); }
+    void destroy(U* ptr) { ptr->~U(); }
+
+    //! Create an element object
+    /*!
+        \param val - Value to initialize the construced element to
+    */
+    template <class... Args>
+    T* create(Args&&... args) { new (allocate(1)) T(std::forward<Args>(args)...); }
+    //! Release an element object
+    /*!
+        \param ptr - Pointer to the object to be released
+    */
+    void release(T* ptr) { ptr->~U(); deallocate(ptr, sizeof(T)); }
 
     //! Rebind allocator
     template <typename TOther> struct rebind { using other = Allocator<TOther, TMemoryManager, nothrow>; };
