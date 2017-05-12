@@ -48,22 +48,22 @@ public:
 
     //! Is the given pointer aligned?
     /*!
-        \param ptr - Pointer
+        \param address - Address
         \param alignment - Alignment value. Must be a pointer of two (default is alignof(T))
-        \return 'true' if the given pointer is aligned, 'false' if the given pointer is not aligned
+        \return 'true' if the given address is aligned, 'false' if the given address is not aligned
     */
     template <typename T>
-    static bool IsAligned(const T* ptr, size_t alignment = alignof(T)) noexcept;
+    static bool IsAligned(const T* address, size_t alignment = alignof(T)) noexcept;
 
     //! Align pointer (upwards or downwards)
     /*!
-        \param ptr - Pointer
+        \param address - Address
         \param alignment - Alignment value. Must be a pointer of two (default is alignof(T))
         \param upwards - Upwards flag (default is true)
-        \return Aligned pointer
+        \return Aligned address
     */
     template <typename T>
-    static T* Align(const T* ptr, size_t alignment = alignof(T), bool upwards = true) noexcept;
+    static T* Align(const T* address, size_t alignment = alignof(T), bool upwards = true) noexcept;
 };
 
 /*! \example memory_memory.cpp Memory management example */

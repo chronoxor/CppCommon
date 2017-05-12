@@ -145,6 +145,29 @@ inline void PoolMemoryManager<TAuxMemoryManager>::clear()
 }
 
 template <class TAuxMemoryManager>
+inline uint8_t PoolMemoryManager<TAuxMemoryManager>::AlignAdjustment(const void* address, uint8_t alignment)
+{
+    return (uint8_t)((uint8_t*)Memory::Align(address, alignment) - (uint8_t*)address);
+}
+
+template <class TAuxMemoryManager>
+inline uint8_t PoolMemoryManager<TAuxMemoryManager>::AlignAdjustment(const void* address, uint8_t alignment, uint8_t header)
+{
+    uint8_t adjustment = AlignAdjustment(address, alignment);
+
+    uint8_t required = header;
+    if (adjustment < required)
+    {
+        required -= adjustment;
+        adjustment += alignment * (required / alignment);
+        if ((required % alignment) > 0)
+            adjustment += alignment;
+    }
+
+    return adjustment;
+}
+
+template <class TAuxMemoryManager>
 inline Chunk* PoolMemoryManager<TAuxMemoryManager>::AllocateMemoryPool(size_t capacity, Chunk* prev)
 {
     // Allocate a new memory pool chunk

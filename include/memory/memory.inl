@@ -16,27 +16,27 @@ inline bool Memory::IsValidAlignment(size_t alignment) noexcept
 }
 
 template <typename T>
-inline bool Memory::IsAligned(const T* ptr, size_t alignment) noexcept
+inline bool Memory::IsAligned(const T* address, size_t alignment) noexcept
 {
-    assert((ptr != nullptr) && "Pointer must be valid!");
+    assert((address != nullptr) && "Address must be valid!");
     assert(IsValidAlignment(alignment) && "Alignment must be valid!");
 
-    uintptr_t address = (uintptr_t)ptr;
-    return (address & (alignment - 1)) == 0;
+    uintptr_t ptr = (uintptr_t)address;
+    return (ptr & (alignment - 1)) == 0;
 }
 
 template <typename T>
-inline T* Memory::Align(const T* ptr, size_t alignment, bool upwards) noexcept
+inline T* Memory::Align(const T* address, size_t alignment, bool upwards) noexcept
 {
-    assert((ptr != nullptr) && "Pointer must be valid!");
+    assert((address != nullptr) && "Address must be valid!");
     assert(IsValidAlignment(alignment) && "Alignment must be valid!");
 
-    uintptr_t address = (uintptr_t)ptr;
+    uintptr_t ptr = (uintptr_t)address;
 
     if (upwards)
-        return (T*)((address + (alignment - 1)) & -((int)alignment));
+        return (T*)((ptr + (alignment - 1)) & -((int)alignment));
     else
-        return (T*)(address & -((int)alignment));
+        return (T*)(ptr & -((int)alignment));
 }
 
 } // namespace CppCommon

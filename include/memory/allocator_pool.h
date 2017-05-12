@@ -144,6 +144,11 @@ private:
     // Free block
     FreeBlock* _free_block;
 
+    //! Calculate the align adjustment of the given buffer
+    uint8_t AlignAdjustment(const void* address, uint8_t alignment);
+    //! Calculate the align adjustment of the given buffer with header
+    uint8_t AlignAdjustment(const void* address, uint8_t alignment, uint8_t header);
+
     //! Allocate memory pool
     Chunk* AllocateMemoryPool(size_t capacity, Chunk* prev);
     //! Clear memory pool
