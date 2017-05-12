@@ -38,7 +38,7 @@ public:
         \param buffer - Arena buffer
         \param size - Arena buffer capacity
     */
-    explicit ArenaMemoryManager(TAuxMemoryManager& auxiliary, uint8_t* buffer, size_t capacity);
+    explicit ArenaMemoryManager(TAuxMemoryManager& auxiliary, void* buffer, size_t capacity);
     ArenaMemoryManager(const ArenaMemoryManager&) noexcept = delete;
     ArenaMemoryManager(ArenaMemoryManager&&) noexcept = default;
     ~ArenaMemoryManager() { clear(); }
@@ -90,7 +90,7 @@ public:
         \param buffer - Arena buffer
         \param size - Arena buffer capacity
     */
-    void reset(uint8_t* buffer, size_t capacity);
+    void reset(void* buffer, size_t capacity);
 
     //! Clear arena memory allocator
     void clear();

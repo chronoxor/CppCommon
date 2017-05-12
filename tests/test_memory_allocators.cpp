@@ -7,6 +7,7 @@
 #include "memory/allocator.h"
 #include "memory/allocator_arena.h"
 #include "memory/allocator_null.h"
+#include "memory/allocator_pool.h"
 #include "memory/allocator_stack.h"
 
 #include <list>
@@ -49,15 +50,9 @@ TEST_CASE("Null memory manager", "[CppCommon][Memory]")
     REQUIRE(ptr == nullptr);
     REQUIRE(manger.allocated() == 0);
     REQUIRE(manger.allocations() == 0);
-    manger.free(ptr, 1);
-    REQUIRE(manger.allocated() == 0);
-    REQUIRE(manger.allocations() == 0);
 
     ptr = manger.malloc(10);
     REQUIRE(ptr == nullptr);
-    REQUIRE(manger.allocated() == 0);
-    REQUIRE(manger.allocations() == 0);
-    manger.free(ptr, 10);
     REQUIRE(manger.allocated() == 0);
     REQUIRE(manger.allocations() == 0);
 }
@@ -266,3 +261,69 @@ TEST_CASE("Arena allocator with stl associative containers", "[CppCommon][Memory
     u[2] = 20;
     u.clear();
 }
+
+TEST_CASE("Pool memory manager with fixed buffer", "[CppCommon][Memory]")
+{
+    DefaultMemoryManager auxiliary;
+    uint8_t buffer[80];
+    PoolMemoryManager<DefaultMemoryManager> manger(auxiliary, buffer, 80);
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
+    REQUIRE(manger.chunk() == 80);
+    REQUIRE(manger.chunks() == 1);
+
+    void* ptr = manger.malloc(1, 1);
+    REQUIRE(ptr != nullptr);
+    REQUIRE(manger.allocated() == 1);
+    REQUIRE(manger.allocations() == 1);
+    REQUIRE(manger.chunk() == 80);
+    REQUIRE(manger.chunks() == 1);
+    manger.free(ptr, 1);
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
+    REQUIRE(manger.chunk() == 80);
+    REQUIRE(manger.chunks() == 1);
+
+    ptr = manger.malloc(10, 1);
+    REQUIRE(ptr != nullptr);
+    REQUIRE(manger.allocated() == 10);
+    REQUIRE(manger.allocations() == 1);
+    REQUIRE(manger.chunk() == 80);
+    REQUIRE(manger.chunks() == 1);
+    manger.free(ptr, 10);
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
+    REQUIRE(manger.chunk() == 80);
+    REQUIRE(manger.chunks() == 1);
+
+    ptr = manger.malloc(1, 1);
+    REQUIRE(ptr != nullptr);
+    REQUIRE(manger.allocated() == 1);
+    REQUIRE(manger.allocations() == 1);
+    REQUIRE(manger.chunk() == 80);
+    REQUIRE(manger.chunks() == 1);
+    manger.free(ptr, 1);
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
+    REQUIRE(manger.chunk() == 80);
+    REQUIRE(manger.chunks() == 1);
+
+    manger.reset();
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
+    REQUIRE(manger.chunk() == 80);
+    REQUIRE(manger.chunks() == 1);
+
+    ptr = manger.malloc(1, 1);
+    REQUIRE(ptr != nullptr);
+    REQUIRE(manger.allocated() == 1);
+    REQUIRE(manger.allocations() == 1);
+    REQUIRE(manger.chunk() == 80);
+    REQUIRE(manger.chunks() == 1);
+    manger.free(ptr, 1);
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
+    REQUIRE(manger.chunk() == 80);
+    REQUIRE(manger.chunks() == 1);
+}
+

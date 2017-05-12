@@ -24,7 +24,7 @@ inline ArenaMemoryManager<TAuxMemoryManager>::ArenaMemoryManager(TAuxMemoryManag
 }
 
 template <class TAuxMemoryManager>
-inline ArenaMemoryManager<TAuxMemoryManager>::ArenaMemoryManager(TAuxMemoryManager& auxiliary, uint8_t* buffer, size_t capacity)
+inline ArenaMemoryManager<TAuxMemoryManager>::ArenaMemoryManager(TAuxMemoryManager& auxiliary, void* buffer, size_t capacity)
     : _allocated(0),
       _allocations(0),
       _auxiliary(auxiliary),
@@ -192,7 +192,7 @@ inline void ArenaMemoryManager<TAuxMemoryManager>::reset(size_t capacity)
 }
 
 template <class TAuxMemoryManager>
-inline void ArenaMemoryManager<TAuxMemoryManager>::reset(uint8_t* buffer, size_t capacity)
+inline void ArenaMemoryManager<TAuxMemoryManager>::reset(void* buffer, size_t capacity)
 {
     assert((buffer != nullptr) && "Arena buffer must be valid!");
     assert((capacity > 0) && "Arena buffer capacity must be greater than zero!");
@@ -205,7 +205,7 @@ inline void ArenaMemoryManager<TAuxMemoryManager>::reset(uint8_t* buffer, size_t
 
     // Initialize an external arena buffer
     _external = true;
-    _buffer = buffer;
+    _buffer = (uint8_t*)buffer;
     _capacity = capacity;
     _size = 0;
 

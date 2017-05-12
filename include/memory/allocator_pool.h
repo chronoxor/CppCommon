@@ -51,7 +51,7 @@ public:
         \param buffer - Pool buffer
         \param size - Pool buffer capacity
     */
-    explicit PoolMemoryManager(TAuxMemoryManager& auxiliary, uint8_t* buffer, size_t capacity);
+    explicit PoolMemoryManager(TAuxMemoryManager& auxiliary, void* buffer, size_t capacity);
     PoolMemoryManager(const PoolMemoryManager&) noexcept = delete;
     PoolMemoryManager(PoolMemoryManager&&) noexcept = default;
     ~PoolMemoryManager() { clear(); }
@@ -67,7 +67,7 @@ public:
     //! Chunk size in bytes
     size_t chunk() const noexcept { return _chunk; }
     //! Max chunks size
-    size_t chunks() const noexcept { return _chunks; }
+    size_t chunks() const noexcept { return _max_chunks; }
 
     //! Maximum memory block size, that could be allocated by the memory manager
     size_t max_size() const noexcept { return _auxiliary.max_size(); }
@@ -102,7 +102,7 @@ public:
         \param buffer - Pool buffer
         \param size - Pool buffer capacity
     */
-    void reset(uint8_t* buffer, size_t capacity);
+    void reset(void* buffer, size_t capacity);
 
     //! Clear memory pool
     void clear();
@@ -119,7 +119,7 @@ private:
     struct AllocBlock
     {
         size_t size;
-        uint8_t offset;
+        size_t adjustment;
     };
     // Free block
     struct FreeBlock
@@ -137,17 +137,18 @@ private:
 
     // Pool chunks
     bool _external;
-    size_t _chunk;
+    size_t _max_chunks;
     size_t _chunks;
+    size_t _chunk;
     Chunk* _current;
 
     // Free block
     FreeBlock* _free_block;
 
     //! Calculate the align adjustment of the given buffer
-    uint8_t AlignAdjustment(const void* address, uint8_t alignment);
+    size_t AlignAdjustment(const void* address, size_t alignment);
     //! Calculate the align adjustment of the given buffer with header
-    uint8_t AlignAdjustment(const void* address, uint8_t alignment, uint8_t header);
+    size_t AlignAdjustment(const void* address, size_t alignment, size_t header);
 
     //! Allocate memory pool
     Chunk* AllocateMemoryPool(size_t capacity, Chunk* prev);
