@@ -84,7 +84,7 @@ inline void PoolMemoryManager<TAuxMemoryManager>::reset(size_t chunk, size_t chu
     _chunks = (chunks > 0) ? chunks : std::numeric_limits<size_t>::max();
 
     // Allocate a new memory pool chunk
-    Chunk* current = AllocateMemoryPool(_current, chunk);
+    Chunk* current = AllocateMemoryPool(chunk, _current);
     if (current != nullptr)
     {
         _current = current;
