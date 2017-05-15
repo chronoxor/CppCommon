@@ -9,10 +9,12 @@
 #ifndef CPPCOMMON_MEMORY_MEMORY_H
 #define CPPCOMMON_MEMORY_MEMORY_H
 
+#include <algorithm>
 #include <cassert>
 #include <cstddef>
 #include <cstdint>
 #include <cstring>
+#include <limits>
 #include <memory>
 
 namespace CppCommon {
