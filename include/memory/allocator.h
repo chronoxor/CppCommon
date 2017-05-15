@@ -100,25 +100,38 @@ public:
         \param val - Value to initialize the construced element to
     */
     template <typename U, class... Args>
-    void construct(U* ptr, Args&&... args) { new ((void*)ptr) U(std::forward<Args>(args)...); }
+    void construct(U* ptr, Args&&... args);
     //! Destroys in-place the object pointed by the given location pointer
     /*!
         \param ptr - Pointer to the object to be destroyed
     */
     template <typename U>
-    void destroy(U* ptr) { ptr->~U(); }
+    void destroy(U* ptr);
 
-    //! Create an element object
+    //! Create a single element object
     /*!
-        \param val - Value to initialize the construced element to
+        \param val - Value to initialize the construced element
     */
     template <class... Args>
-    T* create(Args&&... args) { new (allocate(1)) T(std::forward<Args>(args)...); }
-    //! Release an element object
+    T* Create(Args&&... args);
+    //! Release a single element object
     /*!
         \param ptr - Pointer to the object to be released
     */
-    void release(T* ptr) { ptr->~U(); deallocate(ptr, sizeof(T)); }
+    void Release(T* ptr);
+
+    //! Create an array of element objects
+    /*!
+        \param length - Length of the array
+        \param val - Value to initialize the construced element
+    */
+    template <class... Args>
+    T* CreateArray(size_t length, Args&&... args);
+    //! Release an array of element objects
+    /*!
+        \param ptr - Pointer to the object to be released
+    */
+    void ReleaseArray(T* ptr);
 
     //! Rebind allocator
     template <typename TOther> struct rebind { using other = Allocator<TOther, TMemoryManager, nothrow>; };

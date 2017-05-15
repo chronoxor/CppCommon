@@ -115,7 +115,7 @@ TEST_CASE("Stack memory manager", "[CppCommon][Memory]")
     REQUIRE(manger.size() == 1);
 }
 
-TEST_CASE("Arena memory manager with fixed buffer", "[CppCommon][Memory]")
+TEST_CASE("Arena memory manager with a fixed buffer", "[CppCommon][Memory]")
 {
     DefaultMemoryManager auxiliary;
     uint8_t buffer[11];
@@ -180,7 +180,7 @@ TEST_CASE("Arena memory manager with fixed buffer", "[CppCommon][Memory]")
     REQUIRE(manger.size() == 1);
 }
 
-TEST_CASE("Arena memory manager with dynamic buffer", "[CppCommon][Memory]")
+TEST_CASE("Arena memory manager with a dynamic buffer", "[CppCommon][Memory]")
 {
     DefaultMemoryManager auxiliary;
     ArenaMemoryManager<DefaultMemoryManager> manger(auxiliary, 11);
@@ -224,10 +224,10 @@ TEST_CASE("Arena memory manager with dynamic buffer", "[CppCommon][Memory]")
     REQUIRE(manger.allocations() == 0);
 }
 
-TEST_CASE("Arena allocator with stl direct containers", "[CppCommon][Memory]")
+TEST_CASE("Arena allocator with stl direct access containers", "[CppCommon][Memory]")
 {
     DefaultMemoryManager auxiliary;
-    ArenaMemoryManager<DefaultMemoryManager> manger(auxiliary, 10);
+    ArenaMemoryManager<DefaultMemoryManager> manger(auxiliary);
     ArenaAllocator<int, DefaultMemoryManager> alloc(manger);
 
     std::vector<int, decltype(alloc)> v(alloc);
@@ -246,7 +246,7 @@ TEST_CASE("Arena allocator with stl direct containers", "[CppCommon][Memory]")
 TEST_CASE("Arena allocator with stl associative containers", "[CppCommon][Memory]")
 {
     DefaultMemoryManager auxiliary;
-    ArenaMemoryManager<DefaultMemoryManager> manger(auxiliary, 10);
+    ArenaMemoryManager<DefaultMemoryManager> manger(auxiliary);
     ArenaAllocator<std::pair<const int, int>, DefaultMemoryManager> alloc(manger);
 
     std::map<int, int, std::less<int>, decltype(alloc)> m(alloc);
@@ -262,7 +262,7 @@ TEST_CASE("Arena allocator with stl associative containers", "[CppCommon][Memory
     u.clear();
 }
 
-TEST_CASE("Pool memory manager with fixed buffer", "[CppCommon][Memory]")
+TEST_CASE("Pool memory manager with a fixed buffer", "[CppCommon][Memory]")
 {
     DefaultMemoryManager auxiliary;
     uint8_t buffer[80];
@@ -327,3 +327,104 @@ TEST_CASE("Pool memory manager with fixed buffer", "[CppCommon][Memory]")
     REQUIRE(manger.chunks() == 1);
 }
 
+TEST_CASE("Pool memory manager with a dynamic buffer", "[CppCommon][Memory]")
+{
+    DefaultMemoryManager auxiliary;
+    PoolMemoryManager<DefaultMemoryManager> manger(auxiliary, 80);
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
+    REQUIRE(manger.chunk() == 80);
+    REQUIRE(manger.chunks() > 0);
+
+    void* ptr = manger.malloc(1, 1);
+    REQUIRE(ptr != nullptr);
+    REQUIRE(manger.allocated() == 1);
+    REQUIRE(manger.allocations() == 1);
+    REQUIRE(manger.chunk() == 80);
+    REQUIRE(manger.chunks() > 0);
+    manger.free(ptr, 1);
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
+    REQUIRE(manger.chunk() == 80);
+    REQUIRE(manger.chunks() > 0);
+
+    ptr = manger.malloc(10, 1);
+    REQUIRE(ptr != nullptr);
+    REQUIRE(manger.allocated() == 10);
+    REQUIRE(manger.allocations() == 1);
+    REQUIRE(manger.chunk() == 80);
+    REQUIRE(manger.chunks() > 0);
+    manger.free(ptr, 10);
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
+    REQUIRE(manger.chunk() == 80);
+    REQUIRE(manger.chunks() > 0);
+
+    ptr = manger.malloc(1, 1);
+    REQUIRE(ptr != nullptr);
+    REQUIRE(manger.allocated() == 1);
+    REQUIRE(manger.allocations() == 1);
+    REQUIRE(manger.chunk() == 80);
+    REQUIRE(manger.chunks() > 0);
+    manger.free(ptr, 1);
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
+    REQUIRE(manger.chunk() == 80);
+    REQUIRE(manger.chunks() > 0);
+
+    manger.reset();
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
+    REQUIRE(manger.chunk() == 80);
+    REQUIRE(manger.chunks() > 0);
+
+    ptr = manger.malloc(1, 1);
+    REQUIRE(ptr != nullptr);
+    REQUIRE(manger.allocated() == 1);
+    REQUIRE(manger.allocations() == 1);
+    REQUIRE(manger.chunk() == 80);
+    REQUIRE(manger.chunks() > 0);
+    manger.free(ptr, 1);
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
+    REQUIRE(manger.chunk() == 80);
+    REQUIRE(manger.chunks() > 0);
+}
+
+TEST_CASE("Pool allocator with stl direct access containers", "[CppCommon][Memory]")
+{
+    DefaultMemoryManager auxiliary;
+    PoolMemoryManager<DefaultMemoryManager> manger(auxiliary);
+    PoolAllocator<int, DefaultMemoryManager> alloc(manger);
+
+    std::vector<int, decltype(alloc)> v(alloc);
+    v.push_back(0);
+    v.push_back(1);
+    v.push_back(2);
+    v.clear();
+
+    std::list<int, decltype(alloc)> l(alloc);
+    l.push_back(0);
+    l.push_back(1);
+    l.push_back(2);
+    l.clear();
+}
+
+TEST_CASE("Pool allocator with stl associative containers", "[CppCommon][Memory]")
+{
+    DefaultMemoryManager auxiliary;
+    PoolMemoryManager<DefaultMemoryManager> manger(auxiliary);
+    PoolAllocator<std::pair<const int, int>, DefaultMemoryManager> alloc(manger);
+
+    std::map<int, int, std::less<int>, decltype(alloc)> m(alloc);
+    m[0] = 0;
+    m[1] = 10;
+    m[2] = 20;
+    m.clear();
+
+    std::unordered_map<int, int, std::hash<int>, std::equal_to<int>, decltype(alloc)> u(alloc);
+    u[0] = 0;
+    u[1] = 10;
+    u[2] = 20;
+    u.clear();
+}

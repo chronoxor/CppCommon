@@ -160,6 +160,8 @@ private:
 template <typename T, class TAuxMemoryManager = DefaultMemoryManager, bool nothrow = false>
 using PoolAllocator = Allocator<T, PoolMemoryManager<TAuxMemoryManager>, nothrow>;
 
+/*! \example memory_pool.cpp Pool memory allocator example */
+
 } // namespace CppCommon
 
 #include "allocator_pool.inl"

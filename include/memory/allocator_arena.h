@@ -26,13 +26,20 @@ template <class TAuxMemoryManager = DefaultMemoryManager>
 class ArenaMemoryManager
 {
 public:
-    //! Initialize memory manager with an auxiliary memory manager and a given capacity
+    //! Initialize arena memory manager with an auxiliary memory manager
+    /*!
+        Arena chunk capacity will be 65536.
+
+        \param auxiliary - Auxiliary memory manager
+    */
+    explicit ArenaMemoryManager(TAuxMemoryManager& auxiliary) : ArenaMemoryManager(auxiliary, 65536) {}
+    //! Initialize arena memory manager with an auxiliary memory manager and a given chunk capacity
     /*!
         \param auxiliary - Auxiliary memory manager
-        \param capacity - Arena capacity in bytes
+        \param capacity - Arena chunk capacity in bytes
     */
     explicit ArenaMemoryManager(TAuxMemoryManager& auxiliary, size_t capacity);
-    //! Initialize memory manager with an auxiliary memory manager and a given buffer
+    //! Initialize arena memory manager with an auxiliary memory manager and a given buffer
     /*!
         \param auxiliary - Auxiliary memory manager
         \param buffer - Arena buffer
@@ -80,9 +87,9 @@ public:
 
     //! Reset the memory manager
     void reset();
-    //! Reset the memory manager with a given capacity
+    //! Reset the memory manager with a given chunk capacity
     /*!
-        \param capacity - Arena capacity in bytes
+        \param capacity - Arena chunk capacity in bytes
     */
     void reset(size_t capacity);
     //! Reset the memory manager with a given buffer
@@ -131,6 +138,8 @@ private:
 //! Arena memory allocator class
 template <typename T, class TAuxMemoryManager = DefaultMemoryManager, bool nothrow = false>
 using ArenaAllocator = Allocator<T, ArenaMemoryManager<TAuxMemoryManager>, nothrow>;
+
+/*! \example memory_arena.cpp Arena memory allocator example */
 
 } // namespace CppCommon
 
