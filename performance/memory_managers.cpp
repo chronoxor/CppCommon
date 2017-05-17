@@ -59,8 +59,8 @@ class MallocFixture : public TMemoryManagerFixture
 protected:
     void Cleanup(CppBenchmark::Context& context) override
     {
-        for (auto ptr : pointers)
-            manager.free(ptr, context.y());
+        for (auto ptr : this->pointers)
+            this->manager.free(ptr, context.y());
         TMemoryManagerFixture::Reset();
         TMemoryManagerFixture::Cleanup(context);
     }
@@ -74,85 +74,85 @@ protected:
     {
         TMemoryManagerFixture::Initialize(context);
         for (int i = 0; i < context.x(); ++i)
-            pointers.push_back(manager.malloc(context.y()));
+            this->pointers.push_back(this->manager.malloc(context.y()));
     }
 };
 
 BENCHMARK_FIXTURE(MallocFixture<DefaultMemoryManagerFixture>, "DefaultMemoryManager.malloc", CppBenchmark::Settings().Iterations(10000000).Pair(10000000, 16))
 {
-    pointers.push_back(manager.malloc(context.y()));
+    this->pointers.push_back(this->manager.malloc(context.y()));
     context.metrics().AddBytes(context.y());
 }
 
 BENCHMARK_FIXTURE(FreeFixture<DefaultMemoryManagerFixture>, "DefaultMemoryManager.free", CppBenchmark::Settings().Iterations(10000000).Pair(10000000, 16))
 {
-    manager.free(pointers.back(), context.y());
-    pointers.pop_back();
+    this->manager.free(this->pointers.back(), context.y());
+    this->pointers.pop_back();
     context.metrics().AddBytes(context.y());
 }
 
 BENCHMARK_FIXTURE(MallocFixture<DefaultMemoryManagerFixture>, "DefaultMemoryManager.malloc", CppBenchmark::Settings().Iterations(1000000).Pair(1000000, 256))
 {
-    pointers.push_back(manager.malloc(context.y()));
+    this->pointers.push_back(this->manager.malloc(context.y()));
     context.metrics().AddBytes(context.y());
 }
 
 BENCHMARK_FIXTURE(FreeFixture<DefaultMemoryManagerFixture>, "DefaultMemoryManager.free", CppBenchmark::Settings().Iterations(1000000).Pair(1000000, 256))
 {
-    manager.free(pointers.back(), context.y());
-    pointers.pop_back();
+    this->manager.free(this->pointers.back(), context.y());
+    this->pointers.pop_back();
     context.metrics().AddBytes(context.y());
 }
 
 BENCHMARK_FIXTURE(MallocFixture<ArenaMemoryManagerFixture>, "ArenaMemoryManager.malloc", CppBenchmark::Settings().Iterations(10000000).Pair(10000000, 16))
 {
-    pointers.push_back(manager.malloc(context.y()));
+    this->pointers.push_back(this->manager.malloc(context.y()));
     context.metrics().AddBytes(context.y());
 }
 
 BENCHMARK_FIXTURE(FreeFixture<ArenaMemoryManagerFixture>, "ArenaMemoryManager.free", CppBenchmark::Settings().Iterations(10000000).Pair(10000000, 16))
 {
-    manager.free(pointers.back(), context.y());
-    pointers.pop_back();
+    this->manager.free(this->pointers.back(), context.y());
+    this->pointers.pop_back();
     context.metrics().AddBytes(context.y());
 }
 
 BENCHMARK_FIXTURE(MallocFixture<ArenaMemoryManagerFixture>, "ArenaMemoryManager.malloc", CppBenchmark::Settings().Iterations(1000000).Pair(1000000, 256))
 {
-    pointers.push_back(manager.malloc(context.y()));
+    this->pointers.push_back(this->manager.malloc(context.y()));
     context.metrics().AddBytes(context.y());
 }
 
 BENCHMARK_FIXTURE(FreeFixture<ArenaMemoryManagerFixture>, "ArenaMemoryManager.free", CppBenchmark::Settings().Iterations(1000000).Pair(1000000, 256))
 {
-    manager.free(pointers.back(), context.y());
-    pointers.pop_back();
+    this->manager.free(this->pointers.back(), context.y());
+    this->pointers.pop_back();
     context.metrics().AddBytes(context.y());
 }
 
 BENCHMARK_FIXTURE(MallocFixture<PoolMemoryManagerFixture>, "PoolMemoryManager.malloc", CppBenchmark::Settings().Iterations(10000000).Pair(10000000, 16))
 {
-    pointers.push_back(manager.malloc(context.y()));
+    this->pointers.push_back(this->manager.malloc(context.y()));
     context.metrics().AddBytes(context.y());
 }
 
 BENCHMARK_FIXTURE(FreeFixture<PoolMemoryManagerFixture>, "PoolMemoryManager.free", CppBenchmark::Settings().Iterations(10000000).Pair(10000000, 16))
 {
-    manager.free(pointers.back(), context.y());
-    pointers.pop_back();
+    this->manager.free(this->pointers.back(), context.y());
+    this->pointers.pop_back();
     context.metrics().AddBytes(context.y());
 }
 
 BENCHMARK_FIXTURE(MallocFixture<PoolMemoryManagerFixture>, "PoolMemoryManager.malloc", CppBenchmark::Settings().Iterations(1000000).Pair(1000000, 256))
 {
-    pointers.push_back(manager.malloc(context.y()));
+    this->pointers.push_back(this->manager.malloc(context.y()));
     context.metrics().AddBytes(context.y());
 }
 
 BENCHMARK_FIXTURE(FreeFixture<PoolMemoryManagerFixture>, "PoolMemoryManager.free", CppBenchmark::Settings().Iterations(1000000).Pair(1000000, 256))
 {
-    manager.free(pointers.back(), context.y());
-    pointers.pop_back();
+    this->manager.free(this->pointers.back(), context.y());
+    this->pointers.pop_back();
     context.metrics().AddBytes(context.y());
 }
 
