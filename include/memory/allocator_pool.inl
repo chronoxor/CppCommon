@@ -213,10 +213,21 @@ inline void PoolMemoryManager<TAuxMemoryManager>::free(void* ptr, size_t size)
     _free_block = new_free_block;
 
     // Concatenate two joint free blocks
-    if ((old_free_block != nullptr) && ((uint8_t*)old_free_block == block_end))
+    if (old_free_block != nullptr)
     {
-        new_free_block->size += old_free_block->size;
-        new_free_block->next = old_free_block->next;
+        // Left joint
+        if (((uint8_t*)old_free_block + old_free_block->size) == block_start)
+        {
+            old_free_block->size += new_free_block->size;
+            _free_block = old_free_block;
+        }
+        // Right joint
+        else if ((uint8_t*)old_free_block == block_end)
+        {
+            new_free_block->size += old_free_block->size;
+            new_free_block->next = old_free_block->next;
+            _free_block = new_free_block;
+        }
     }
 
     // Update allocation statistics

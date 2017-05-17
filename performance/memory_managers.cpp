@@ -142,7 +142,7 @@ BENCHMARK_FIXTURE(FreeFixture<PoolMemoryManagerFixture>, "PoolMemoryManager.free
     pointers.pop_back();
     context.metrics().AddBytes(context.y());
 }
-*/
+
 BENCHMARK_FIXTURE(MallocFixture<PoolMemoryManagerFixture>, "PoolMemoryManager.malloc", CppBenchmark::Settings().Iterations(1000000).Pair(1000000, 256))
 {
     pointers.push_back(manager.malloc(context.y()));
