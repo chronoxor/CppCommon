@@ -71,17 +71,16 @@ inline void* PoolMemoryManager<TAuxMemoryManager>::malloc(size_t size, size_t al
                 // Use the next memory pool chunk
                 _current = _current->next;
 
-                // Reset the free block pointer
-                _free_block = (FreeBlock*)_current->buffer;
-                _free_block->size = _chunk;
-                _free_block->next = nullptr;
-
                 // Update the current free block
-                current_free_block = _free_block;
+                current_free_block = (FreeBlock*)_current->buffer;
+                current_free_block->size = _chunk;
+                current_free_block->next = nullptr;
 
                 // Update the free blocks list
                 if (prev_free_block != nullptr)
                     prev_free_block->next = current_free_block;
+                else
+                    _free_block = current_free_block;
             }
             else
             {
@@ -95,17 +94,16 @@ inline void* PoolMemoryManager<TAuxMemoryManager>::malloc(size_t size, size_t al
                         // Use the new memory pool chunk
                         _current = current;
 
-                        // Reset the free block pointer
-                        _free_block = (FreeBlock*)_current->buffer;
-                        _free_block->size = _chunk;
-                        _free_block->next = nullptr;
-
                         // Update the current free block
-                        current_free_block = _free_block;
+                        current_free_block = (FreeBlock*)_current->buffer;
+                        current_free_block->size = _chunk;
+                        current_free_block->next = nullptr;
 
                         // Update the free blocks list
                         if (prev_free_block != nullptr)
                             prev_free_block->next = current_free_block;
+                        else
+                            _free_block = current_free_block;
 
                         // Update created memory pool chunks count
                         --_chunks;
@@ -130,7 +128,9 @@ inline void* PoolMemoryManager<TAuxMemoryManager>::malloc(size_t size, size_t al
         // If there is no enough free space in the current free block use the next one
         if (current_free_block->size < aligned_size)
         {
-            prev_free_block = current_free_block;
+            // Optimization: Skip the last too small peace of memory in chunk
+            if (current_free_block->next != nullptr)
+                prev_free_block = current_free_block;
             current_free_block = current_free_block->next;
             continue;
         }
@@ -205,49 +205,18 @@ inline void PoolMemoryManager<TAuxMemoryManager>::free(void* ptr, size_t size)
     size_t   block_size  = alloc_block->size;
     uint8_t* block_end   = block_start + block_size;
 
-    FreeBlock* prev_free_block = nullptr;
-    FreeBlock* current_free_block = _free_block;
-
-    // Find a suitable place to insert a free block
-    while (current_free_block != nullptr)
-    {
-        if ((uint8_t*)current_free_block >= block_end)
-            break;
-
-        prev_free_block = current_free_block;
-        current_free_block = current_free_block->next;
-    }
-
-    if (prev_free_block == nullptr)
-    {
-        // Insert a new free block in the begin of the list
-        prev_free_block = (FreeBlock*)block_start;
-        prev_free_block->size = block_size;
-        prev_free_block->next = _free_block;
-
-        _free_block = prev_free_block;
-    }
-    else if (((uint8_t*)prev_free_block + prev_free_block->size) == block_start)
-    {
-        // Increase the size of the suitable free block
-        prev_free_block->size += block_size;
-    }
-    else
-    {
-        // Insert a new free block in the middle of the list
-        FreeBlock* temp = (FreeBlock*)block_start;
-        temp->size = block_size;
-        temp->next = prev_free_block->next;
-        prev_free_block->next = temp;
-
-        prev_free_block = temp;
-    }
+    // Insert a new free block in the begin of the list
+    FreeBlock* old_free_block = _free_block;
+    FreeBlock* new_free_block = (FreeBlock*)block_start;
+    new_free_block->size = block_size;
+    new_free_block->next = old_free_block;
+    _free_block = new_free_block;
 
     // Concatenate two joint free blocks
-    if ((current_free_block != nullptr) && ((uint8_t*)current_free_block == block_end))
+    if ((old_free_block != nullptr) && ((uint8_t*)old_free_block == block_end))
     {
-        prev_free_block->size += current_free_block->size;
-        prev_free_block->next = current_free_block->next;
+        new_free_block->size += old_free_block->size;
+        new_free_block->next = old_free_block->next;
     }
 
     // Update allocation statistics
@@ -409,8 +378,20 @@ inline void PoolMemoryManager<TAuxMemoryManager>::ClearMemoryPool()
         while (_current != nullptr)
         {
             Chunk* prev = _current->prev;
+            Chunk* next = _current->next;
             _auxiliary.free(_current, sizeof(Chunk) + _chunk + alignof(std::max_align_t));
-            _current = prev;
+            if (prev != nullptr)
+            {
+                prev->next = next;
+                _current = prev;
+            }
+            else if (next != nullptr)
+            {
+                next->prev = prev;
+                _current = next;
+            }
+            else
+                _current = nullptr;
         }
 
         // Reset the free block pointer
