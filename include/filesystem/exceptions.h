@@ -10,7 +10,6 @@
 #define CPPCOMMON_FILESYSTEM_EXCEPTIONS_H
 
 #include "errors/exceptions.h"
-
 #include "filesystem/path.h"
 
 namespace CppCommon {
@@ -48,13 +47,6 @@ protected:
     Path _src;
     //! Filesystem exception destination path
     Path _dst;
-};
-
-//! Dynamic link library exception
-class DLLException : public FileSystemException
-{
-public:
-    using FileSystemException::FileSystemException;
 };
 
 } // namespace CppCommon

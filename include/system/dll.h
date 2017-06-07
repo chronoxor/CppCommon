@@ -6,12 +6,33 @@
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_FILESYSTEM_DLL_H
-#define CPPCOMMON_FILESYSTEM_DLL_H
+#ifndef CPPCOMMON_SYSTEM_DLL_H
+#define CPPCOMMON_SYSTEM_DLL_H
 
 #include "filesystem/path.h"
+#include "system/exceptions.h"
 
 #include <memory>
+
+//! DLL export macro
+/*!
+    DLL export macro is used to mark functions or classes that
+    should be exported into dynamic linked library:
+
+    \code{.cpp}
+    EXPORT int MyFunction();
+    EXPORT class MyClass {};
+    \endcode
+*/
+#if defined(_WIN32) || defined(_WIN64)
+  #ifdef EXPORTS
+    #define EXPORT __declspec(dllexport)
+  #else
+    #define EXPORT __declspec(dllimport)
+  #endif
+#elif
+  #define EXPORT
+#endif
 
 namespace CppCommon {
 
@@ -24,13 +45,14 @@ namespace CppCommon {
 class DLL
 {
 public:
-    //! Initialize dynamic link library with an empty path
+    //! Initialize the dynamic link library with an empty path
     DLL();
-    //! Initialize dynamic link library with a given path
+    //! Initialize the dynamic link library with a given path and optionally load it
     /*!
         \param path - Dynamic link library path
+        \param load - Load library flag (default is true)
     */
-    DLL(const Path& path);
+    DLL(const Path& path, bool load = true);
     DLL(const DLL& dll);
     DLL(DLL&& dll) noexcept;
     ~DLL();
@@ -39,28 +61,30 @@ public:
     DLL& operator=(const DLL& dll);
     DLL& operator=(DLL&& dll) noexcept;
 
+    //! Check if the dynamic link library is loaded
+    explicit operator bool() const { return IsLoaded(); }
+
     //! Get the dynamic link library path
     const Path path() const;
 
     //! Is dynamic link library loaded?
     bool IsLoaded() const;
-    //! Is dynamic link library symbol resolving by the given name?
-    bool IsResolving(const std::string& name);
+
+    //! Is dynamic link library resolve the given symbol?
+    bool IsResolve(const std::string& name);
 
     //! Load dynamic link library
     /*!
-        If the dynamic link library cannot be loaded the method will raise
-        a dynamic link library exception!
+        \return 'true' if the library was successfully loaded, 'false' if the library was not loaded
     */
-    void Load();
+    bool Load();
     //! Load dynamic link library with a given path
     /*!
-        If the dynamic link library cannot be loaded the method will raise
-        a dynamic link library exception!
-
         \param path - Dynamic link library path
+        \return 'true' if the library was successfully loaded, 'false' if the library was not loaded
     */
-    void Load(const Path& path);
+    bool Load(const Path& path);
+
     //! Unload dynamic link library
     /*!
         If the dynamic link library cannot be unloaded the method will raise
@@ -85,15 +109,19 @@ public:
     */
     static std::string extension();
 
+    //! Swap two instances
+    void swap(DLL& dll) noexcept;
+    friend void swap(DLL& dll1, DLL& dll2) noexcept;
+
 private:
     class Impl;
     std::unique_ptr<Impl> _pimpl;
 };
 
-/*! \example filesystem_dll.cpp Dynamic link library example */
+/*! \example system_dll.cpp Dynamic link library example */
 
 } // namespace CppCommon
 
 #include "dll.inl"
 
-#endif // CPPCOMMON_FILESYSTEM_DLL_H
+#endif // CPPCOMMON_SYSTEM_DLL_H

@@ -9,7 +9,6 @@
 #ifndef CPPCOMMON_FILESYSTEM_H
 #define CPPCOMMON_FILESYSTEM_H
 
-#include "filesystem/dll.h"
 #include "filesystem/directory.h"
 #include "filesystem/exceptions.h"
 #include "filesystem/file.h"

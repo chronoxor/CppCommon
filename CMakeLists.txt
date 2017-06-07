@@ -64,6 +64,20 @@ set_target_properties(cppcommon PROPERTIES FOLDER libraries)
 list(APPEND INSTALL_TARGETS cppcommon)
 list(APPEND LINKLIBS cppcommon)
 
+# Plugins
+file(GLOB PLUGINS RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/plugins" "plugins/*")
+foreach(PLUGIN ${PLUGINS})
+  set(PLUGIN_TARGET "${PLUGIN}")
+  file(GLOB PLUGIN_FILES "${CMAKE_CURRENT_SOURCE_DIR}/plugins/${PLUGIN}/*.cpp")
+  set_source_files_properties(${PLUGIN_FILES} PROPERTIES COMPILE_DEFINITIONS "EXPORTS")
+  set_source_files_properties(${PLUGIN_FILES} PROPERTIES COMPILE_FLAGS "${PEDANTIC_COMPILE_FLAGS}")
+  add_library(${PLUGIN_TARGET} SHARED ${PLUGIN_FILES})
+  target_link_libraries(${PLUGIN_TARGET} ${LINKLIBS})
+  set_target_properties(${PLUGIN_TARGET} PROPERTIES FOLDER plugins)
+  list(APPEND INSTALL_TARGETS ${PLUGIN_TARGET})
+  list(APPEND INSTALL_TARGETS_PDB ${PLUGIN_TARGET})
+endforeach()
+
 # Additional module components: examples, performance benchmarks, tests, tools and install
 if(NOT CPPCOMMON_MODULE)
 

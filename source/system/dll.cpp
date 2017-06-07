@@ -6,7 +6,7 @@
     \copyright MIT License
 */
 
-#include "filesystem/dll.h"
+#include "system/dll.h"
 
 #include "errors/fatal.h"
 #include "string/format.h"
@@ -48,7 +48,7 @@ public:
         return (_dll != nullptr);
     }
 
-    bool IsResolving(const std::string& name)
+    bool IsResolve(const std::string& name)
     {
         assert(IsLoaded() && "DLL must be loaded!");
         if (!IsLoaded())
@@ -65,32 +65,29 @@ public:
 
         _path = path;
 
-        // Append DLL extension if not provided
+        // Concatenate DLL extension if not provided
         if (_path.extension() != DLL::extension())
-            _path /= DLL::extension();
+            _path += DLL::extension();
     }
 
-    void Load()
+    bool Load()
     {
         assert(!IsLoaded() && "DLL is already loaded!");
         if (IsLoaded())
-            return;
+            Unload();
 
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         _dll = dlopen(_path.string().c_str(), RTLD_NOW);
-        if (_dll == nullptr)
-            throwex DLLException("Cannot load DLL file: {}!"_format(dlerror())).Attach(_path);
 #elif defined(_WIN32) || defined(_WIN64)
         _dll = LoadLibraryExW(_path.wstring().c_str(), nullptr, 0);
-        if (_dll == nullptr)
-            throwex DLLException("Cannot load DLL file!").Attach(_path);
 #endif
+        return (_dll != nullptr);
     }
 
-    void Load(const Path& path)
+    bool Load(const Path& path)
     {
         Assign(path);
-        Load();
+        return Load();
     }
 
     void Unload()
@@ -138,9 +135,12 @@ DLL::DLL() : _pimpl(std::make_unique<Impl>())
 {
 }
 
-DLL::DLL(const Path& path) : _pimpl(std::make_unique<Impl>())
+DLL::DLL(const Path& path, bool load) : _pimpl(std::make_unique<Impl>())
 {
     _pimpl->Assign(path);
+
+    if (load)
+        _pimpl->Load();
 }
 
 DLL::DLL(const DLL& dll) : _pimpl(std::make_unique<Impl>())
@@ -184,19 +184,19 @@ bool DLL::IsLoaded() const
     return _pimpl->IsLoaded();
 }
 
-bool DLL::IsResolving(const std::string& name)
+bool DLL::IsResolve(const std::string& name)
 {
-    return _pimpl->IsResolving(name);
+    return _pimpl->IsResolve(name);
 }
 
-void DLL::Load()
+bool DLL::Load()
 {
-    _pimpl->Load();
+    return _pimpl->Load();
 }
 
-void DLL::Load(const Path& path)
+bool DLL::Load(const Path& path)
 {
-    _pimpl->Load(path);
+    return _pimpl->Load(path);
 }
 
 void DLL::Unload()
