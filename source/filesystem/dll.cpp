@@ -9,6 +9,7 @@
 #include "filesystem/dll.h"
 
 #include "errors/fatal.h"
+#include "string/format.h"
 
 #include <cassert>
 
