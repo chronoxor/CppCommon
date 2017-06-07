@@ -10,6 +10,7 @@ var searchData=
   ['_7edefaultmemorymanager',['~DefaultMemoryManager',['../class_cpp_common_1_1_default_memory_manager.html#a27e1fe4a748c180b2c75bb9248dbaa73',1,'CppCommon::DefaultMemoryManager']]],
   ['_7edirectory',['~Directory',['../class_cpp_common_1_1_directory.html#a7f4eae93641b030ce70bb72f8bc8f2e8',1,'CppCommon::Directory']]],
   ['_7edirectoryiterator',['~DirectoryIterator',['../class_cpp_common_1_1_directory_iterator.html#a2fa7dc18f6f410371874b224ee28a3ff',1,'CppCommon::DirectoryIterator']]],
+  ['_7edll',['~DLL',['../class_cpp_common_1_1_d_l_l.html#a19e2ac7671b5dec036fae51f1f9a481e',1,'CppCommon::DLL']]],
   ['_7eencoding',['~Encoding',['../class_cpp_common_1_1_encoding.html#a675c98ee57a588bd2916e33a1e0a5344',1,'CppCommon::Encoding']]],
   ['_7eenvironment',['~Environment',['../class_cpp_common_1_1_environment.html#a74118bb886855a3fcc0269d150fa0a23',1,'CppCommon::Environment']]],
   ['_7eeventautoreset',['~EventAutoReset',['../class_cpp_common_1_1_event_auto_reset.html#a6352170e469acc8aee5c2fec16af41cd',1,'CppCommon::EventAutoReset']]],
