@@ -119,7 +119,7 @@ public:
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         return dlsym(_dll, name.c_str());
 #elif defined(_WIN32) || defined(_WIN64)
-        return GetProcAddress(_dll, name.c_str());
+        return (void*)GetProcAddress(_dll, name.c_str());
 #endif
     }
 
