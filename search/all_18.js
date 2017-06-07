@@ -19,6 +19,7 @@ var searchData=
   ['_7efile',['~File',['../class_cpp_common_1_1_file.html#a65494c1f50a8c989b1ef19ac6ab15175',1,'CppCommon::File']]],
   ['_7efilelock',['~FileLock',['../class_cpp_common_1_1_file_lock.html#aea0067462a9b1160b6327f80343e2bba',1,'CppCommon::FileLock']]],
   ['_7eflags',['~Flags',['../class_cpp_common_1_1_flags.html#a918b854c67f2d0a2ee056cbd7893d4bb',1,'CppCommon::Flags']]],
+  ['_7eheapmemorymanager',['~HeapMemoryManager',['../class_cpp_common_1_1_heap_memory_manager.html#a40f68c91d9d5d446f17fc8b3b6a17836',1,'CppCommon::HeapMemoryManager']]],
   ['_7elatch',['~Latch',['../class_cpp_common_1_1_latch.html#a94475663b791f2695e7693df310fed24',1,'CppCommon::Latch']]],
   ['_7elocker',['~Locker',['../class_cpp_common_1_1_locker.html#aebbed39c6dda76f03f02ff3c7cb6249a',1,'CppCommon::Locker']]],
   ['_7emath',['~Math',['../class_cpp_common_1_1_math.html#adfd36c436a9f45ea879a2e4c29f18679',1,'CppCommon::Math']]],

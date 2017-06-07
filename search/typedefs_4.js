@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['nullallocator',['NullAllocator',['../namespace_cpp_common.html#a57038708ee77bac5eef922662df2d8db',1,'CppCommon']]]
+  ['iterator_5fcategory',['iterator_category',['../class_cpp_common_1_1_directory_iterator.html#ab13fa40aef6305e032e51efa1cd78932',1,'CppCommon::DirectoryIterator']]]
 ];
