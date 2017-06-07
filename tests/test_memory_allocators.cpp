@@ -6,6 +6,7 @@
 
 #include "memory/allocator.h"
 #include "memory/allocator_arena.h"
+#include "memory/allocator_heap.h"
 #include "memory/allocator_null.h"
 #include "memory/allocator_pool.h"
 #include "memory/allocator_stack.h"
@@ -20,6 +21,29 @@ using namespace CppCommon;
 TEST_CASE("Default memory manager", "[CppCommon][Memory]")
 {
     DefaultMemoryManager manger;
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
+
+    void* ptr = manger.malloc(1);
+    REQUIRE(ptr != nullptr);
+    REQUIRE(manger.allocated() == 1);
+    REQUIRE(manger.allocations() == 1);
+    manger.free(ptr, 1);
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
+
+    ptr = manger.malloc(10);
+    REQUIRE(ptr != nullptr);
+    REQUIRE(manger.allocated() == 10);
+    REQUIRE(manger.allocations() == 1);
+    manger.free(ptr, 10);
+    REQUIRE(manger.allocated() == 0);
+    REQUIRE(manger.allocations() == 0);
+}
+
+TEST_CASE("Heap memory manager", "[CppCommon][Memory]")
+{
+    HeapMemoryManager manger;
     REQUIRE(manger.allocated() == 0);
     REQUIRE(manger.allocations() == 0);
 

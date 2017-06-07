@@ -6,6 +6,7 @@
 
 #include "memory/allocator.h"
 #include "memory/allocator_arena.h"
+#include "memory/allocator_heap.h"
 #include "memory/allocator_pool.h"
 
 #include <vector>
@@ -27,6 +28,14 @@ class DefaultMemoryManagerFixture : public MemoryManagerFixture
 {
 protected:
     DefaultMemoryManager manager;
+
+    void Reset() override { manager.reset(); }
+};
+
+class HeapMemoryManagerFixture : public MemoryManagerFixture
+{
+protected:
+    HeapMemoryManager manager;
 
     void Reset() override { manager.reset(); }
 };
@@ -98,6 +107,32 @@ BENCHMARK_FIXTURE(MallocFixture<DefaultMemoryManagerFixture>, "DefaultMemoryMana
 }
 
 BENCHMARK_FIXTURE(FreeFixture<DefaultMemoryManagerFixture>, "DefaultMemoryManager.free", CppBenchmark::Settings().Iterations(1000000).Pair(1000000, 256))
+{
+    this->manager.free(this->pointers.back(), context.y());
+    this->pointers.pop_back();
+    context.metrics().AddBytes(context.y());
+}
+
+BENCHMARK_FIXTURE(MallocFixture<HeapMemoryManagerFixture>, "HeapMemoryManager.malloc", CppBenchmark::Settings().Iterations(10000000).Pair(10000000, 16))
+{
+    this->pointers.push_back(this->manager.malloc(context.y()));
+    context.metrics().AddBytes(context.y());
+}
+
+BENCHMARK_FIXTURE(FreeFixture<HeapMemoryManagerFixture>, "HeapMemoryManager.free", CppBenchmark::Settings().Iterations(10000000).Pair(10000000, 16))
+{
+    this->manager.free(this->pointers.back(), context.y());
+    this->pointers.pop_back();
+    context.metrics().AddBytes(context.y());
+}
+
+BENCHMARK_FIXTURE(MallocFixture<HeapMemoryManagerFixture>, "HeapMemoryManager.malloc", CppBenchmark::Settings().Iterations(1000000).Pair(1000000, 256))
+{
+    this->pointers.push_back(this->manager.malloc(context.y()));
+    context.metrics().AddBytes(context.y());
+}
+
+BENCHMARK_FIXTURE(FreeFixture<HeapMemoryManagerFixture>, "HeapMemoryManager.free", CppBenchmark::Settings().Iterations(1000000).Pair(1000000, 256))
 {
     this->manager.free(this->pointers.back(), context.y());
     this->pointers.pop_back();
