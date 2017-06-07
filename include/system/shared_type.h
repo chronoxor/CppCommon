@@ -1,6 +1,6 @@
 /*!
     \file shared_type.h
-    \brief Shared memory type wrapper definition
+    \brief Shared memory type definition
     \author Ivan Shynkarenka
     \date 23.05.2016
     \copyright MIT License
@@ -16,7 +16,7 @@
 
 namespace CppCommon {
 
-//! Shared memory type wrapper
+//! Shared memory type
 /*!
     Shared memory type allows to create an instance of the given type in a shared memory and access
     to the instance from multiple processes using the given name.
@@ -74,7 +74,7 @@ private:
     SharedMemory _shared;
 };
 
-/*! \example system_shared_type.cpp Shared memory type wrapper example */
+/*! \example system_shared_type.cpp Shared memory type example */
 
 } // namespace CppCommon
 

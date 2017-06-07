@@ -1,6 +1,6 @@
 /*!
     \file system_source_location.cpp
-    \brief Source location wrapper example
+    \brief Source location example
     \author Ivan Shynkarenka
     \date 09.02.2016
     \copyright MIT License

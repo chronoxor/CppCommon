@@ -10,17 +10,17 @@
 
 using namespace CppCommon;
 
-TEST_CASE("Shared memory type wrapper", "[CppCommon][System]")
+TEST_CASE("Shared memory type", "[CppCommon][System]")
 {
     std::string name = "shared_type_test";
 
-    // Create new shared memory type wrapper with the given name
+    // Create new shared memory type with the given name
     SharedType<int> shared1(name);
     REQUIRE(shared1);
     REQUIRE(shared1.owner());
     REQUIRE(shared1.ptr() != nullptr);
 
-    // Assign a new value to the shared memory type wrapper
+    // Assign a new value to the shared memory type
     *shared1 = 123;
 
     SharedType<int> shared2(name);
@@ -28,6 +28,6 @@ TEST_CASE("Shared memory type wrapper", "[CppCommon][System]")
     REQUIRE(!shared2.owner());
     REQUIRE(shared2.ptr() != nullptr);
 
-    // Check the value of the shared memory type wrapper
+    // Check the value of the shared memory type
     REQUIRE(shared1.ref() == *shared2);
 }

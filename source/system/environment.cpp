@@ -8,7 +8,6 @@
 
 #include "system/environment.h"
 
-#include "errors/exceptions.h"
 #include "string/encoding.h"
 #include "utility/resource.h"
 

@@ -1,6 +1,6 @@
 /*!
     \file filesystem_file.cpp
-    \brief Filesystem file wrapper example
+    \brief Filesystem file example
     \author Ivan Shynkarenka
     \date 04.09.2016
     \copyright MIT License

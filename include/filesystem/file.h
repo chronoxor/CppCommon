@@ -1,6 +1,6 @@
 /*!
     \file file.h
-    \brief Filesystem file wrapper definition
+    \brief Filesystem file definition
     \author Ivan Shynkarenka
     \date 29.08.2016
     \copyright MIT License
@@ -20,7 +20,7 @@ namespace CppCommon {
 
 //! Filesystem file
 /*!
-    Filesystem file wraps file management operations (create, open, read, write, flush).
+    Filesystem file wraps file management operations (create, open, read, write, flush, close).
 
     Not thread-safe.
 */
@@ -219,7 +219,7 @@ private:
     std::unique_ptr<Impl> _pimpl;
 };
 
-/*! \example filesystem_file.cpp Filesystem file wrapper example */
+/*! \example filesystem_file.cpp Filesystem file example */
 
 } // namespace CppCommon
 

@@ -1,6 +1,6 @@
 /*!
     \file system_error.h
-    \brief System error wrapper definition
+    \brief System error definition
     \author Ivan Shynkarenka
     \date 09.02.2016
     \copyright MIT License
@@ -15,7 +15,7 @@ namespace CppCommon {
 
 //! System error
 /*!
-    System exception wrapper provides interface to get, set and clear the last system error.
+    System exception provides interface to get, set and clear the last system error.
 
     Thread-safe.
 */
@@ -58,7 +58,7 @@ public:
     static std::string Description(int error);
 };
 
-/*! \example errors_system_error.cpp System error wrapper example */
+/*! \example errors_system_error.cpp System error example */
 
 } // namespace CppCommon
 

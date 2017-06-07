@@ -8,7 +8,6 @@
 
 #include "threads/named_event_auto_reset.h"
 
-#include "errors/exceptions.h"
 #include "errors/fatal.h"
 
 #include <algorithm>

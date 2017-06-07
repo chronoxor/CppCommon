@@ -1,21 +1,21 @@
 /*!
     \file allocator.h
-    \brief Memory allocator wrapper definition
+    \brief Memory allocator definition
     \author Ivan Shynkarenka
     \date 17.04.2017
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_MEMORY_ALLOCATOR_WRAPPER_H
-#define CPPCOMMON_MEMORY_ALLOCATOR_WRAPPER_H
+#ifndef CPPCOMMON_MEMORY_ALLOCATOR_H
+#define CPPCOMMON_MEMORY_ALLOCATOR_H
 
 #include "memory.h"
 
 namespace CppCommon {
 
-//! Memory allocator wrapper class
+//! Memory allocator class
 /*!
-    Memory allocator wrapper implements standard allocator interface and
+    Memory allocator implements standard allocator interface and
     wraps the memory manager provided as a template argument.
 
     Not thread-safe.
@@ -140,7 +140,7 @@ private:
     TMemoryManager& _manager;
 };
 
-//! Memory allocator wrapper class (void specialization)
+//! Memory allocator class (void specialization)
 template <class TMemoryManager, bool nothrow>
 class Allocator<void, TMemoryManager, nothrow>
 {
@@ -231,4 +231,4 @@ using DefaultAllocator = Allocator<T, DefaultMemoryManager, nothrow>;
 
 #include "allocator.inl"
 
-#endif // CPPCOMMON_MEMORY_ALLOCATOR_WRAPPER_H
+#endif // CPPCOMMON_MEMORY_ALLOCATOR_H

@@ -1,6 +1,6 @@
 /*!
     \file time_time.cpp
-    \brief Time wrapper example
+    \brief Time example
     \author Ivan Shynkarenka
     \date 13.07.2016
     \copyright MIT License

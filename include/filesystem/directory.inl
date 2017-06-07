@@ -1,6 +1,6 @@
 /*!
     \file directory.inl
-    \brief Filesystem directory wrapper inline implementation
+    \brief Filesystem directory inline implementation
     \author Ivan Shynkarenka
     \date 30.08.2016
     \copyright MIT License

@@ -8,7 +8,6 @@
 
 #include "threads/named_critical_section.h"
 
-#include "errors/exceptions.h"
 #include "errors/fatal.h"
 #include "system/shared_type.h"
 #include "threads/named_event_auto_reset.h"

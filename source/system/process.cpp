@@ -8,7 +8,6 @@
 
 #include "system/process.h"
 
-#include "errors/exceptions.h"
 #include "errors/fatal.h"
 #include "string/encoding.h"
 #include "string/format.h"

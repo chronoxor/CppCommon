@@ -9,7 +9,6 @@
 #include "filesystem/directory_iterator.h"
 
 #include "errors/fatal.h"
-#include "filesystem/exceptions.h"
 #include "filesystem/symlink.h"
 #include "utility/countof.h"
 

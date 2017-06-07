@@ -9,7 +9,7 @@
 #ifndef CPPCOMMON_ERRORS_EXCEPTIONS_HANDLER_H
 #define CPPCOMMON_ERRORS_EXCEPTIONS_HANDLER_H
 
-#include "errors/exceptions.h"
+#include "filesystem/exceptions.h"
 #include "system/stack_trace.h"
 #include "utility/singleton.h"
 

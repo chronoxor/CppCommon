@@ -1,6 +1,6 @@
 /*!
     \file path.h
-    \brief Filesystem path wrapper definition
+    \brief Filesystem path definition
     \author Ivan Shynkarenka
     \date 11.08.2016
     \copyright MIT License
@@ -10,7 +10,6 @@
 #define CPPCOMMON_FILESYSTEM_PATH_H
 
 #include "string/encoding.h"
-
 #include "time/timestamp.h"
 #include "utility/flags.h"
 
@@ -79,8 +78,8 @@ struct SpaceInfo
 /*!
     Filesystem path wraps string directory, filename, symlink and other path types
     in a class and provide utility methods to check type of the path, status and
-    permissions in a file system. Additionally path wrapper contains operators and
-    methods for path manipulation (concatenation, canonization, absolute path).
+    permissions in a file system. Additionally path contains operators and methods
+    for path manipulation (concatenation, canonization, absolute path).
 
     Path is managed in UTF-8 encoding!
 
@@ -373,10 +372,13 @@ protected:
     std::string _path;
 };
 
-/*! \example filesystem_path.cpp Filesystem path wrapper example */
+/*! \example filesystem_path.cpp Filesystem path example */
 
 } // namespace CppCommon
 
 #include "path.inl"
+
+// Resolve forward declaration issue
+#include "filesystem/exceptions.h"
 
 #endif // CPPCOMMON_FILESYSTEM_PATH_H

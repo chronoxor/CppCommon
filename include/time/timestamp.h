@@ -1,6 +1,6 @@
 /*!
     \file timestamp.h
-    \brief Timestamp wrapper definition
+    \brief Timestamp definition
     \author Ivan Shynkarenka
     \date 26.01.2016
     \copyright MIT License
@@ -268,7 +268,7 @@ public:
     RdtsTimestamp(const Timestamp& timestamp) : Timestamp(timestamp) {}
 };
 
-/*! \example time_timestamp.cpp Timestamp wrapper example */
+/*! \example time_timestamp.cpp Timestamp example */
 
 } // namespace CppCommon
 

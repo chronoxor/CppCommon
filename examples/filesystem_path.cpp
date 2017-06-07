@@ -1,6 +1,6 @@
 /*!
     \file filesystem_path.cpp
-    \brief Filesystem path wrapper example
+    \brief Filesystem path example
     \author Ivan Shynkarenka
     \date 17.08.2016
     \copyright MIT License

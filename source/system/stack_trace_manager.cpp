@@ -8,8 +8,6 @@
 
 #include "system/stack_trace_manager.h"
 
-#include "errors/exceptions.h"
-
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
 #if defined(DBGHELP_SUPPORT)

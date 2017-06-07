@@ -1,6 +1,6 @@
 /*!
     \file timespan.h
-    \brief Timespan wrapper definition
+    \brief Timespan definition
     \author Ivan Shynkarenka
     \date 11.07.2016
     \copyright MIT License
@@ -10,6 +10,8 @@
 #define CPPCOMMON_TIME_TIMESPAN_H
 
 #include <chrono>
+
+#include "errors/exceptions.h"
 
 namespace CppCommon {
 
@@ -179,7 +181,7 @@ private:
     int64_t _duration;
 };
 
-/*! \example time_timespan.cpp Timespan wrapper example */
+/*! \example time_timespan.cpp Timespan example */
 
 } // namespace CppCommon
 

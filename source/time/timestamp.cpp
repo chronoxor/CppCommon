@@ -8,8 +8,6 @@
 
 #include "time/timestamp.h"
 
-#include "errors/exceptions.h"
-
 #if defined(__APPLE__)
 #include <mach/mach.h>
 #include <mach/mach_time.h>

@@ -8,7 +8,7 @@
 
 using namespace CppCommon;
 
-TEST_CASE("Source location wrapper", "[CppCommon][System]")
+TEST_CASE("Source location", "[CppCommon][System]")
 {
     auto location = __LOCATION__;
 

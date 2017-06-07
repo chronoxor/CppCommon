@@ -31,7 +31,7 @@ namespace CppCommon {
 
     Thread-safe.
 
-    \param location - Source location wrapper
+    \param location - Source location
     \param trace - Stack trace
     \param message - Fatal message
     \param error - System error code
@@ -45,7 +45,7 @@ void fatal(const SourceLocation& location, const StackTrace& trace, const std::s
 
     Thread-safe.
 
-    \param location - Source location wrapper
+    \param location - Source location
     \param trace - Stack trace
     \param fatal - Fatal exception
 */

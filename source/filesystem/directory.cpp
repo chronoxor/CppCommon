@@ -1,6 +1,6 @@
 /*!
     \file directory.cpp
-    \brief Filesystem directory wrapper implementation
+    \brief Filesystem directory implementation
     \author Ivan Shynkarenka
     \date 30.08.2016
     \copyright MIT License
@@ -8,7 +8,6 @@
 
 #include "filesystem/directory.h"
 
-#include "filesystem/exceptions.h"
 #include "utility/countof.h"
 #include "utility/resource.h"
 

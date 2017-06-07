@@ -8,7 +8,6 @@
 
 #include "threads/named_condition_variable.h"
 
-#include "errors/exceptions.h"
 #include "errors/fatal.h"
 
 #include <algorithm>

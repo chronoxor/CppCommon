@@ -1,6 +1,6 @@
 /*!
     \file time.inl
-    \brief Time wrapper inline implementation
+    \brief Time inline implementation
     \author Ivan Shynkarenka
     \date 12.07.2016
     \copyright MIT License

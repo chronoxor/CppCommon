@@ -1,6 +1,6 @@
 /*!
     \file allocator.inl
-    \brief Memory allocator wrapper inline implementation
+    \brief Memory allocator inline implementation
     \author Ivan Shynkarenka
     \date 17.04.2017
     \copyright MIT License

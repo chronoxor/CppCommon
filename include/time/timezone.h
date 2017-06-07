@@ -1,6 +1,6 @@
 /*!
     \file timezone.h
-    \brief Time zone wrapper definition
+    \brief Time zone definition
     \author Ivan Shynkarenka
     \date 18.07.2016
     \copyright MIT License
@@ -108,7 +108,7 @@ protected:
     Timespan _dstoffset;
 };
 
-/*! \example time_timezone.cpp Time zone wrapper example */
+/*! \example time_timezone.cpp Time zone example */
 
 } // namespace CppCommon
 

@@ -1,6 +1,6 @@
 /*!
     \file source_location.h
-    \brief Source location wrapper definition
+    \brief Source location definition
     \author Ivan Shynkarenka
     \date 09.02.2016
     \copyright MIT License
@@ -16,11 +16,11 @@ namespace CppCommon {
 
 //! Current source location macro
 /*!
-    Create a new source location wrapper with a current file name and line number.
+    Create a new source location with a current file name and line number.
 */
 #define __LOCATION__ CppCommon::SourceLocation(__FILE__, __LINE__)
 
-//! Source location wrapper
+//! Source location
 /*!
     Source location wraps file name and line number into single object with easy-to-use interface.
 
@@ -63,7 +63,7 @@ private:
     SourceLocation() noexcept : SourceLocation(nullptr, 0) {}
 };
 
-/*! \example system_source_location.cpp Source location wrapper example */
+/*! \example system_source_location.cpp Source location example */
 
 } // namespace CppCommon
 

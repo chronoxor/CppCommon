@@ -1,14 +1,12 @@
 /*!
     \file timezone.cpp
-    \brief Time zone wrapper implementation
+    \brief Time zone implementation
     \author Ivan Shynkarenka
     \date 18.07.2016
     \copyright MIT License
 */
 
 #include "time/timezone.h"
-
-#include "errors/exceptions.h"
 
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
 #include <time.h>

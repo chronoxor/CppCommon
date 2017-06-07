@@ -1,6 +1,6 @@
 /*!
     \file path.inl
-    \brief Filesystem path wrapper inline implementation
+    \brief Filesystem path inline implementation
     \author Ivan Shynkarenka
     \date 11.08.2016
     \copyright MIT License

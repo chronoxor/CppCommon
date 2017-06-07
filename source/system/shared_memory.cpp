@@ -8,7 +8,6 @@
 
 #include "system/shared_memory.h"
 
-#include "errors/exceptions.h"
 #include "errors/fatal.h"
 
 #include <cassert>

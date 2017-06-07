@@ -8,7 +8,6 @@
 
 #include "threads/mutex.h"
 
-#include "errors/exceptions.h"
 #include "errors/fatal.h"
 
 #include <algorithm>

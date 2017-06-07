@@ -9,6 +9,8 @@
 #ifndef CPPCOMMON_THREADS_BARRIER_H
 #define CPPCOMMON_THREADS_BARRIER_H
 
+#include "errors/exceptions.h"
+
 #include <memory>
 
 namespace CppCommon {

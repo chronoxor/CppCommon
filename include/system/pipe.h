@@ -9,6 +9,7 @@
 #ifndef CPPCOMMON_SYSTEM_PIPE_H
 #define CPPCOMMON_SYSTEM_PIPE_H
 
+#include "errors/exceptions.h"
 #include "utility/reader.h"
 #include "utility/writer.h"
 

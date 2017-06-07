@@ -8,7 +8,6 @@
 
 #include "threads/semaphore.h"
 
-#include "errors/exceptions.h"
 #include "errors/fatal.h"
 
 #include <algorithm>

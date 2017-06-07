@@ -1,6 +1,6 @@
 /*!
     \file shared_type.inl
-    \brief Shared memory type wrapper inline implementation
+    \brief Shared memory type inline implementation
     \author Ivan Shynkarenka
     \date 23.05.2016
     \copyright MIT License

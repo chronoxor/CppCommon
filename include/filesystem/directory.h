@@ -1,6 +1,6 @@
 /*!
     \file directory.h
-    \brief Filesystem directory wrapper definition
+    \brief Filesystem directory definition
     \author Ivan Shynkarenka
     \date 30.08.2016
     \copyright MIT License
@@ -135,7 +135,7 @@ public:
     friend void swap(Directory& directory1, Directory& directory2) noexcept;
 };
 
-/*! \example filesystem_directory.cpp Filesystem directory wrapper example */
+/*! \example filesystem_directory.cpp Filesystem directory example */
 
 } // namespace CppCommon
 

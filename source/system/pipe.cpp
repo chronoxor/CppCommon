@@ -8,7 +8,6 @@
 
 #include "system/pipe.h"
 
-#include "errors/exceptions.h"
 #include "errors/fatal.h"
 
 #include <cassert>

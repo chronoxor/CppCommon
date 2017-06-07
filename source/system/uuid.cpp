@@ -8,8 +8,6 @@
 
 #include "system/uuid.h"
 
-#include "errors/exceptions.h"
-
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
 #include <uuid/uuid.h>
 #elif defined(_WIN32) || defined(_WIN64)

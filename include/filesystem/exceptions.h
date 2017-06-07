@@ -50,6 +50,13 @@ protected:
     Path _dst;
 };
 
+//! Dynamic link library exception
+class DLLException : public FileSystemException
+{
+public:
+    using FileSystemException::FileSystemException;
+};
+
 } // namespace CppCommon
 
 #endif // CPPCOMMON_FILESYSTEM_EXCEPTIONS_H

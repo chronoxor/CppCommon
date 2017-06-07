@@ -1,6 +1,6 @@
 /*!
     \file time.h
-    \brief Time wrapper definition
+    \brief Time definition
     \author Ivan Shynkarenka
     \date 12.07.2016
     \copyright MIT License
@@ -225,7 +225,7 @@ public:
     { return LocalTime(Timestamp::chrono(time_point)); }
 };
 
-/*! \example time_time.cpp Time wrapper example */
+/*! \example time_time.cpp Time example */
 
 } // namespace CppCommon
 

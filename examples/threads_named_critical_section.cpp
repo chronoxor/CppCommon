@@ -6,7 +6,6 @@
     \copyright MIT License
 */
 
-#include "errors/exceptions.h"
 #include "threads/named_critical_section.h"
 
 #include <iostream>

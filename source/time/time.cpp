@@ -1,6 +1,6 @@
 /*!
     \file time.cpp
-    \brief Time wrapper implementation
+    \brief Time implementation
     \author Ivan Shynkarenka
     \date 12.07.2016
     \copyright MIT License
@@ -8,7 +8,6 @@
 
 #include "time/time.h"
 
-#include "errors/exceptions.h"
 #include "string/format.h"
 
 #include <cassert>

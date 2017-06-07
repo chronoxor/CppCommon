@@ -1,6 +1,6 @@
 /*!
     \file path.cpp
-    \brief Filesystem path wrapper implementation
+    \brief Filesystem path implementation
     \author Ivan Shynkarenka
     \date 11.08.2016
     \copyright MIT License
@@ -9,7 +9,6 @@
 #include "filesystem/path.h"
 
 #include "filesystem/directory.h"
-#include "filesystem/exceptions.h"
 #include "filesystem/symlink.h"
 #include "system/uuid.h"
 #include "utility/countof.h"

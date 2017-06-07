@@ -1,6 +1,6 @@
 /*!
     \file symlink.inl
-    \brief Filesystem symlink wrapper inline implementation
+    \brief Filesystem symlink inline implementation
     \author Ivan Shynkarenka
     \date 30.08.2016
     \copyright MIT License

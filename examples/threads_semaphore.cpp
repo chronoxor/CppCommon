@@ -6,7 +6,6 @@
     \copyright MIT License
 */
 
-#include "errors/exceptions.h"
 #include "threads/semaphore.h"
 
 #include <iostream>

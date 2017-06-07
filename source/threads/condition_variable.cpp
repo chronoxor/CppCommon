@@ -8,8 +8,6 @@
 
 #include "threads/condition_variable.h"
 
-#include "errors/exceptions.h"
-
 #include <algorithm>
 
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)

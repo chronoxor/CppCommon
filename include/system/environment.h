@@ -9,6 +9,8 @@
 #ifndef CPPCOMMON_SYSTEM_ENVIRONMENT_H
 #define CPPCOMMON_SYSTEM_ENVIRONMENT_H
 
+#include "errors/exceptions.h"
+
 #include <map>
 #include <string>
 

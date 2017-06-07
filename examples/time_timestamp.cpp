@@ -1,6 +1,6 @@
 /*!
     \file time_timestamp.cpp
-    \brief Timestamp wrapper example
+    \brief Timestamp example
     \author Ivan Shynkarenka
     \date 26.01.2016
     \copyright MIT License

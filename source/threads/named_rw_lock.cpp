@@ -8,7 +8,6 @@
 
 #include "threads/named_rw_lock.h"
 
-#include "errors/exceptions.h"
 #include "errors/fatal.h"
 #include "system/shared_type.h"
 #include "threads/thread.h"

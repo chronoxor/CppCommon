@@ -1,6 +1,6 @@
 /*!
     \file system_error.cpp
-    \brief System error wrapper implementation
+    \brief System error implementation
     \author Ivan Shynkarenka
     \date 10.02.2016
     \copyright MIT License

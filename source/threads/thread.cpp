@@ -8,7 +8,6 @@
 
 #include "threads/thread.h"
 
-#include "errors/exceptions.h"
 #include "system/cpu.h"
 #include "time/timestamp.h"
 

@@ -9,7 +9,6 @@
 #include "threads/file_lock.h"
 
 #include "errors/fatal.h"
-#include "filesystem/exceptions.h"
 #include "threads/thread.h"
 
 #if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)

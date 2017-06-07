@@ -8,7 +8,7 @@
 
 using namespace CppCommon;
 
-TEST_CASE("System error wrapper", "[CppCommon][Errors]")
+TEST_CASE("System error", "[CppCommon][Errors]")
 {
     SystemError::SetLast(123);
     REQUIRE(SystemError::GetLast() == 123);

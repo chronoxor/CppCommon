@@ -9,6 +9,7 @@
 #ifndef CPPCOMMON_SYSTEM_STACK_TRACE_MANAGER_H
 #define CPPCOMMON_SYSTEM_STACK_TRACE_MANAGER_H
 
+#include "errors/exceptions.h"
 #include "utility/singleton.h"
 
 #include <memory>

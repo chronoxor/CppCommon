@@ -1,6 +1,6 @@
 /*!
     \file symlink.h
-    \brief Filesystem symlink wrapper definition
+    \brief Filesystem symlink definition
     \author Ivan Shynkarenka
     \date 30.08.2016
     \copyright MIT License
@@ -81,7 +81,7 @@ public:
     friend void swap(Symlink& symlink1, Symlink& symlink2) noexcept;
 };
 
-/*! \example filesystem_symlink.cpp Filesystem symlink wrapper example */
+/*! \example filesystem_symlink.cpp Filesystem symlink example */
 
 } // namespace CppCommon
 

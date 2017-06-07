@@ -1,6 +1,6 @@
 /*!
     \file symlink.cpp
-    \brief Filesystem symlink wrapper implementation
+    \brief Filesystem symlink implementation
     \author Ivan Shynkarenka
     \date 30.08.2016
     \copyright MIT License
@@ -8,7 +8,6 @@
 
 #include "filesystem/symlink.h"
 
-#include "filesystem/exceptions.h"
 #include "utility/resource.h"
 
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)

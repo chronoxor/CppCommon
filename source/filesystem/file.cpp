@@ -1,6 +1,6 @@
 /*!
     \file file.cpp
-    \brief Filesystem file wrapper implementation
+    \brief Filesystem file implementation
     \author Ivan Shynkarenka
     \date 29.08.2016
     \copyright MIT License
@@ -9,7 +9,6 @@
 #include "filesystem/file.h"
 
 #include "errors/fatal.h"
-#include "filesystem/exceptions.h"
 
 #include <cassert>
 #include <cstring>

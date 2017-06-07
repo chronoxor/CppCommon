@@ -1,6 +1,6 @@
 /*!
     \file source_location.inl
-    \brief Source location wrapper inline implementation
+    \brief Source location inline implementation
     \author Ivan Shynkarenka
     \date 09.02.2016
     \copyright MIT License

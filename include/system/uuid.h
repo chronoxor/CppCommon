@@ -9,6 +9,8 @@
 #ifndef CPPCOMMON_SYSTEM_UUID_H
 #define CPPCOMMON_SYSTEM_UUID_H
 
+#include "errors/exceptions.h"
+
 #include <array>
 #include <string>
 

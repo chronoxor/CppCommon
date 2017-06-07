@@ -9,6 +9,8 @@
 #ifndef CPPCOMMON_SYSTEM_SHARED_MEMORY_H
 #define CPPCOMMON_SYSTEM_SHARED_MEMORY_H
 
+#include "errors/exceptions.h"
+
 #include <memory>
 #include <string>
 

@@ -1,6 +1,6 @@
 /*!
     \file filesystem_symlink.cpp
-    \brief Filesystem symlink wrapper example
+    \brief Filesystem symlink example
     \author Ivan Shynkarenka
     \date 04.09.2016
     \copyright MIT License

@@ -9,6 +9,7 @@
 #ifndef CPPCOMMON_SYSTEM_PROCESS_H
 #define CPPCOMMON_SYSTEM_PROCESS_H
 
+#include "errors/exceptions.h"
 #include "system/pipe.h"
 
 #include <map>

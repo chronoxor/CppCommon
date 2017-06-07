@@ -8,8 +8,6 @@
 
 #include "threads/barrier.h"
 
-#include "errors/exceptions.h"
-
 #include <cassert>
 
 #if (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__APPLE__)

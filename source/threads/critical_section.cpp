@@ -11,7 +11,6 @@
 #include "threads/thread.h"
 
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-#include "errors/exceptions.h"
 #include "errors/fatal.h"
 #include <pthread.h>
 #elif defined(_WIN32) || defined(_WIN64)
