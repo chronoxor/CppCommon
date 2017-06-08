@@ -21,6 +21,7 @@ var searchData=
   ['allocator_5fpool_2einl',['allocator_pool.inl',['../allocator__pool_8inl.html',1,'']]],
   ['allocator_5fstack_2eh',['allocator_stack.h',['../allocator__stack_8h.html',1,'']]],
   ['allocator_5fstack_2einl',['allocator_stack.inl',['../allocator__stack_8inl.html',1,'']]],
+  ['api',['API',['../dll_8h.html#ad8ce4efaa307683d3d763b37b4711c53',1,'dll.h']]],
   ['append',['Append',['../class_cpp_common_1_1_path.html#ac72e9b6a58f023197e86fa37204460ee',1,'CppCommon::Path']]],
   ['architecture',['Architecture',['../class_cpp_common_1_1_c_p_u.html#a4d6550e237149de526828651008d4dc5',1,'CppCommon::CPU']]],
   ['archived',['ARCHIVED',['../namespace_cpp_common.html#af3227fe73424d43d02a24275b3177a6da75b8b0f4c0aee5b8df95a0541307c9f4',1,'CppCommon']]],

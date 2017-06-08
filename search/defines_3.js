@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['plugin',['PLUGIN',['../dll_8h.html#a6f009266a51f1916177cff47f6691f26',1,'dll.h']]]
+  ['fatality',['fatality',['../fatal_8h.html#a58f99c4783afc0f169f7b232d1659577',1,'fatal.h']]]
 ];

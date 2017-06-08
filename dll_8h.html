@@ -99,9 +99,9 @@ Macros</h2></td></tr>
 <tr class="memitem:a3472d8cdbb788d5f1815b3522595bc49"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dll_8h.html#a3472d8cdbb788d5f1815b3522595bc49">EXPORT</a></td></tr>
 <tr class="memdesc:a3472d8cdbb788d5f1815b3522595bc49"><td class="mdescLeft">&#160;</td><td class="mdescRight">DLL export macro.  <a href="#a3472d8cdbb788d5f1815b3522595bc49">More...</a><br /></td></tr>
 <tr class="separator:a3472d8cdbb788d5f1815b3522595bc49"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f009266a51f1916177cff47f6691f26"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dll_8h.html#a6f009266a51f1916177cff47f6691f26">PLUGIN</a>&#160;&#160;&#160;extern &quot;C&quot; EXPORT</td></tr>
-<tr class="memdesc:a6f009266a51f1916177cff47f6691f26"><td class="mdescLeft">&#160;</td><td class="mdescRight">DLL plugin function macro.  <a href="#a6f009266a51f1916177cff47f6691f26">More...</a><br /></td></tr>
-<tr class="separator:a6f009266a51f1916177cff47f6691f26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8ce4efaa307683d3d763b37b4711c53"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dll_8h.html#ad8ce4efaa307683d3d763b37b4711c53">API</a>&#160;&#160;&#160;extern &quot;C&quot; EXPORT</td></tr>
+<tr class="memdesc:ad8ce4efaa307683d3d763b37b4711c53"><td class="mdescLeft">&#160;</td><td class="mdescRight">DLL API macro.  <a href="#ad8ce4efaa307683d3d763b37b4711c53">More...</a><br /></td></tr>
+<tr class="separator:ad8ce4efaa307683d3d763b37b4711c53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Dynamic link library definition. </p>
@@ -111,6 +111,25 @@ Macros</h2></td></tr>
 
 <p class="definition">Definition in file <a class="el" href="dll_8h_source.html">dll.h</a>.</p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ad8ce4efaa307683d3d763b37b4711c53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8ce4efaa307683d3d763b37b4711c53">&#9670;&nbsp;</a></span>API</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define API&#160;&#160;&#160;extern &quot;C&quot; EXPORT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>DLL API macro. </p>
+<p>DLL API is used to mark exported API functions:</p>
+<div class="fragment"><div class="line"><a class="code" href="dll_8h.html#ad8ce4efaa307683d3d763b37b4711c53">API</a> <span class="keywordtype">int</span> PluginFunction();</div></div><!-- fragment --> 
+<p class="definition">Definition at line <a class="el" href="dll_8h_source.html#l00045">45</a> of file <a class="el" href="dll_8h_source.html">dll.h</a>.</p>
+
+</div>
+</div>
 <a id="a3472d8cdbb788d5f1815b3522595bc49"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3472d8cdbb788d5f1815b3522595bc49">&#9670;&nbsp;</a></span>EXPORT</h2>
 
@@ -127,25 +146,6 @@ Macros</h2></td></tr>
 <p>DLL export macro is used to mark functions or classes that should be exported into dynamic linked library:</p>
 <div class="fragment"><div class="line"><a class="code" href="dll_8h.html#a3472d8cdbb788d5f1815b3522595bc49">EXPORT</a> <span class="keywordtype">int</span> MyFunction();</div><div class="line"><span class="keyword">class </span><a class="code" href="dll_8h.html#a3472d8cdbb788d5f1815b3522595bc49">EXPORT</a> MyClass {};</div></div><!-- fragment --> 
 <p class="definition">Definition at line <a class="el" href="dll_8h_source.html#l00034">34</a> of file <a class="el" href="dll_8h_source.html">dll.h</a>.</p>
-
-</div>
-</div>
-<a id="a6f009266a51f1916177cff47f6691f26"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6f009266a51f1916177cff47f6691f26">&#9670;&nbsp;</a></span>PLUGIN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define PLUGIN&#160;&#160;&#160;extern &quot;C&quot; EXPORT</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>DLL plugin function macro. </p>
-<p>DLL plugin function is used to mark plugin functions:</p>
-<div class="fragment"><div class="line"><a class="code" href="dll_8h.html#a6f009266a51f1916177cff47f6691f26">PLUGIN</a> <span class="keywordtype">int</span> PluginFunction();</div></div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="dll_8h_source.html#l00045">45</a> of file <a class="el" href="dll_8h_source.html">dll.h</a>.</p>
 
 </div>
 </div>
