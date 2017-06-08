@@ -68,7 +68,7 @@ public:
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         // Concatenate DLL executable path
         if (_path.IsRelative())
-            _path = Path::executable().Append(_path);
+            _path = Path::executable().parent().Append(_path);
 #endif
 
         // Concatenate DLL prefix if not provided
