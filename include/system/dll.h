@@ -21,7 +21,7 @@
 
     \code{.cpp}
     EXPORT int MyFunction();
-    EXPORT class MyClass {};
+    class EXPORT MyClass {};
     \endcode
 */
 #if defined(_WIN32) || defined(_WIN64)
@@ -33,6 +33,16 @@
 #else
   #define EXPORT
 #endif
+
+//! DLL plugin function macro
+/*!
+    DLL plugin function is used to mark plugin functions:
+
+    \code{.cpp}
+    PLUGIN int PluginFunction();
+    \endcode
+*/
+#define PLUGIN extern "C" EXPORT
 
 namespace CppCommon {
 
@@ -71,7 +81,7 @@ public:
     bool IsLoaded() const;
 
     //! Is dynamic link library resolve the given symbol?
-    bool IsResolve(const std::string& name);
+    bool IsResolve(const std::string& name) const;
 
     //! Load dynamic link library
     /*!
@@ -97,7 +107,8 @@ public:
         \param name - Symbol name
         \return A pointer to the resolved symbol or nullptr in case of symbol resolution failed
     */
-    void* Resolve(const std::string& name);
+    template <typename T>
+    T* Resolve(const std::string& name) const;
 
     //! Get the dynamic link library extension
     /*!
@@ -116,6 +127,13 @@ public:
 private:
     class Impl;
     std::unique_ptr<Impl> _pimpl;
+
+    //! Resolve dynamic link library symbol by the given name
+    /*!
+        \param name - Symbol name
+        \return A pointer to the resolved symbol or nullptr in case of symbol resolution failed
+    */
+    void* ResolveAddress(const std::string& name) const;
 };
 
 /*! \example system_dll.cpp Dynamic link library example */

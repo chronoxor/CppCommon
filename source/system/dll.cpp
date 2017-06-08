@@ -48,13 +48,13 @@ public:
         return (_dll != nullptr);
     }
 
-    bool IsResolve(const std::string& name)
+    bool IsResolve(const std::string& name) const
     {
         assert(IsLoaded() && "DLL must be loaded!");
         if (!IsLoaded())
             return false;
 
-        return Resolve(name) != nullptr;
+        return ResolveAddress(name) != nullptr;
     }
 
     void Assign(const Path& path)
@@ -107,7 +107,7 @@ public:
         _dll = nullptr;
     }
 
-    void* Resolve(const std::string& name)
+    void* ResolveAddress(const std::string& name) const
     {
         assert(IsLoaded() && "DLL is not loaded!");
         if (!IsLoaded())
@@ -184,7 +184,7 @@ bool DLL::IsLoaded() const
     return _pimpl->IsLoaded();
 }
 
-bool DLL::IsResolve(const std::string& name)
+bool DLL::IsResolve(const std::string& name) const
 {
     return _pimpl->IsResolve(name);
 }
@@ -204,9 +204,9 @@ void DLL::Unload()
     _pimpl->Unload();
 }
 
-void* DLL::Resolve(const std::string& name)
+void* DLL::ResolveAddress(const std::string& name) const
 {
-    return _pimpl->Resolve(name);
+    return _pimpl->ResolveAddress(name);
 }
 
 } // namespace CppCommon

@@ -8,6 +8,12 @@
 
 namespace CppCommon {
 
+template <typename T>
+inline T* DLL::Resolve(const std::string& name) const
+{
+    return (T*)ResolveAddress(name);
+}
+
 inline std::string DLL::extension()
 {
 #if defined(__APPLE__)
