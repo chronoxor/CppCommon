@@ -34,15 +34,15 @@
   #define EXPORT
 #endif
 
-//! DLL plugin function macro
+//! DLL API macro
 /*!
-    DLL plugin function is used to mark plugin functions:
+    DLL API is used to mark exported API functions:
 
     \code{.cpp}
-    PLUGIN int PluginFunction();
+    API int PluginFunction();
     \endcode
 */
-#define PLUGIN extern "C" EXPORT
+#define API extern "C" EXPORT
 
 namespace CppCommon {
 

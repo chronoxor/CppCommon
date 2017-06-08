@@ -10,7 +10,7 @@
 
 #include <cstdlib>
 
-PLUGIN int PluginRandom()
+API int PluginRandom()
 {
    return std::rand();
 }

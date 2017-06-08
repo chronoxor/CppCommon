@@ -17,5 +17,5 @@ public:
     virtual int random() = 0;
 };
 
-PLUGIN bool PluginRandomCreate(IRandom** ppRandom);
-PLUGIN bool PluginRandomRelease(IRandom* pRandom);
+API bool PluginRandomCreate(IRandom** ppRandom);
+API bool PluginRandomRelease(IRandom* pRandom);
