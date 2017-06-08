@@ -16,10 +16,10 @@ inline T* DLL::Resolve(const std::string& name) const
 
 inline std::string DLL::prefix()
 {
-#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
-    return "lib";
-#elif defined(__CYGWIN__)
+#if defined(__CYGWIN__)
     return "cyg";
+#elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+    return "lib";
 #else
     return "";
 #endif
@@ -29,9 +29,9 @@ inline std::string DLL::extension()
 {
 #if defined(__APPLE__)
     return ".dylib";
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#elif (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__CYGWIN__)
     return ".so";
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
     return ".dll";
 #else
     return "";
