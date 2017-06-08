@@ -110,6 +110,17 @@ public:
     template <typename T>
     T* Resolve(const std::string& name) const;
 
+    //! Get the dynamic link library prefix
+    /*!
+        Cygwin: cyg
+        MinGW: lib
+        Linux: lib
+        OSX: lib
+        Windows:
+
+        \return Dynamic link library prefix
+    */
+    static std::string prefix();
     //! Get the dynamic link library extension
     /*!
         Linux: .so

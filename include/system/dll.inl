@@ -14,6 +14,17 @@ inline T* DLL::Resolve(const std::string& name) const
     return (T*)ResolveAddress(name);
 }
 
+inline std::string DLL::prefix()
+{
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
+    return "lib";
+#elif defined(__CYGWIN__)
+    return "cyg";
+#else
+    return "";
+#endif
+}
+
 inline std::string DLL::extension()
 {
 #if defined(__APPLE__)

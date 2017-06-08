@@ -65,9 +65,15 @@ public:
 
         _path = path;
 
+        // Concatenate DLL prefix if not provided
+        std::string filename = _path.filename().string();
+        std::string prefix = DLL::prefix();
+        if (std::strncmp(filename.c_str(), prefix.c_str(), prefix.size()) != 0)
+            _path.ReplaceFilename(prefix + filename);
+
         // Concatenate DLL extension if not provided
         if (_path.extension() != DLL::extension())
-            _path += DLL::extension();
+            _path.Concat(DLL::extension());
     }
 
     bool Load()
