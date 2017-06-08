@@ -65,6 +65,12 @@ public:
 
         _path = path;
 
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+        // Concatenate DLL executable path
+        if (_path.IsRelative())
+            _path = Path::executable().Append(_path);
+#endif
+
         // Concatenate DLL prefix if not provided
         std::string filename = _path.filename().string();
         std::string prefix = DLL::prefix();

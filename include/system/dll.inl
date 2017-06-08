@@ -18,7 +18,7 @@ inline std::string DLL::prefix()
 {
 #if defined(__CYGWIN__)
     return "cyg";
-#elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__) || defined(__MINGW32__) || defined(__MINGW64__)
     return "lib";
 #else
     return "";
