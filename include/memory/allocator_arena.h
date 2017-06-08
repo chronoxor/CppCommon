@@ -43,7 +43,7 @@ public:
     /*!
         \param auxiliary - Auxiliary memory manager
         \param buffer - Arena buffer
-        \param size - Arena buffer capacity
+        \param capacity - Arena buffer capacity
     */
     explicit ArenaMemoryManager(TAuxMemoryManager& auxiliary, void* buffer, size_t capacity);
     ArenaMemoryManager(const ArenaMemoryManager&) noexcept = delete;
@@ -95,7 +95,7 @@ public:
     //! Reset the memory manager with a given buffer
     /*!
         \param buffer - Arena buffer
-        \param size - Arena buffer capacity
+        \param capacity - Arena buffer capacity
     */
     void reset(void* buffer, size_t capacity);
 

@@ -49,7 +49,7 @@ public:
     /*!
         \param auxiliary - Auxiliary memory manager
         \param buffer - Pool buffer
-        \param size - Pool buffer capacity
+        \param capacity - Pool buffer capacity
     */
     explicit PoolMemoryManager(TAuxMemoryManager& auxiliary, void* buffer, size_t capacity);
     PoolMemoryManager(const PoolMemoryManager&) noexcept = delete;
@@ -100,7 +100,7 @@ public:
     //! Reset the memory manager with a given buffer
     /*!
         \param buffer - Pool buffer
-        \param size - Pool buffer capacity
+        \param capacity - Pool buffer capacity
     */
     void reset(void* buffer, size_t capacity);
 

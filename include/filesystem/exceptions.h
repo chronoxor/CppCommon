@@ -1,5 +1,5 @@
 /*!
-    \file filesystem/exceptions.h
+    \file include/filesystem/exceptions.h
     \brief File system exceptions definition
     \author Ivan Shynkarenka
     \date 24.08.2016

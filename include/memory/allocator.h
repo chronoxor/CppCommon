@@ -97,7 +97,7 @@ public:
     //! Constructs an element object on the given location pointer
     /*!
         \param ptr - Pointer to a location with enough storage space to contain an element
-        \param val - Value to initialize the construced element to
+        \param args - Arguments to initialize the construced element with
     */
     template <typename U, class... Args>
     void construct(U* ptr, Args&&... args);
@@ -110,7 +110,7 @@ public:
 
     //! Create a single element object
     /*!
-        \param val - Value to initialize the construced element
+        \param args - Arguments to initialize the construced element with
     */
     template <class... Args>
     T* Create(Args&&... args);
@@ -123,7 +123,7 @@ public:
     //! Create an array of element objects
     /*!
         \param length - Length of the array
-        \param val - Value to initialize the construced element
+        \param args - Arguments to initialize the construced element with
     */
     template <class... Args>
     T* CreateArray(size_t length, Args&&... args);

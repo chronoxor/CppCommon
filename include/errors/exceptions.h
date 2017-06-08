@@ -1,5 +1,5 @@
 /*!
-    \file errors/exceptions.h
+    \file include/errors/exceptions.h
     \brief Exceptions definition
     \author Ivan Shynkarenka
     \date 09.02.2016
