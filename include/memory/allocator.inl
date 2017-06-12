@@ -150,7 +150,7 @@ inline void* DefaultMemoryManager::malloc(size_t size, size_t alignment)
     assert((size > 0) && "Allocated block size must be greater than zero!");
     assert(Memory::IsValidAlignment(alignment) && "Alignment must be valid!");
 
-    void* result = ::malloc(size);
+    void* result = std::malloc(size);
     if (result != nullptr)
     {
         // Update allocation statistics
@@ -166,7 +166,7 @@ inline void DefaultMemoryManager::free(void* ptr, size_t size)
 
     if (ptr != nullptr)
     {
-        ::free(ptr);
+        std::free(ptr);
 
         // Update allocation statistics
         _allocated -= size;

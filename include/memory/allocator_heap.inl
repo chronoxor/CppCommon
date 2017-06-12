@@ -16,7 +16,7 @@ inline void* HeapMemoryManager::malloc(size_t size, size_t alignment)
 #if defined(_WIN32) || defined(_WIN64)
     void* result = HeapAlloc(GetProcessHeap(), 0, size);
 #else
-    void* result = ::malloc(size);
+    void* result = std::malloc(size);
 #endif
     if (result != nullptr)
     {
@@ -36,7 +36,7 @@ inline void HeapMemoryManager::free(void* ptr, size_t size)
 #if defined(_WIN32) || defined(_WIN64)
         HeapFree(GetProcessHeap(), 0, (LPVOID)ptr);
 #else
-        ::free(ptr);
+        std::free(ptr);
 #endif
 
         // Update allocation statistics

@@ -149,8 +149,8 @@ std::pair<int, int> CPU::TotalCores()
             if (GetLastError() == ERROR_INSUFFICIENT_BUFFER)
             {
                 if (pBuffer != nullptr)
-                    free(pBuffer);
-                pBuffer = (PSYSTEM_LOGICAL_PROCESSOR_INFORMATION)malloc(dwLength);
+                    std::free(pBuffer);
+                pBuffer = (PSYSTEM_LOGICAL_PROCESSOR_INFORMATION)std::malloc(dwLength);
                 if (pBuffer == nullptr)
                     return std::make_pair(-1, -1);
             }
@@ -184,7 +184,7 @@ std::pair<int, int> CPU::TotalCores()
         pCurrent++;
     }
 
-    free(pBuffer);
+    std::free(pBuffer);
 
     return result;
 #else
