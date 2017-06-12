@@ -29,7 +29,7 @@ void produce_consume(CppBenchmark::Context& context)
     // Start consumer thread
     auto consumer = std::thread([&pipe, item_size, items_to_produce, &crc]()
     {
-        char item[item_size_to];
+        uint8_t item[item_size_to];
 
         for (uint64_t i = 0; i < items_to_produce; ++i)
         {
@@ -46,13 +46,13 @@ void produce_consume(CppBenchmark::Context& context)
     // Start producer thread
     auto producer = std::thread([&pipe, item_size, items_to_produce]()
     {
-        char item[item_size_to];
+        uint8_t item[item_size_to];
 
         for (uint64_t i = 0; i < items_to_produce; ++i)
         {
             // Emulate producing
             for (uint64_t j = 0; j < item_size; ++j)
-                item[j] = (char)j;
+                item[j] = (uint8_t)j;
 
             // Write the item into the pipe
             if (pipe.Write(item, item_size) != item_size)

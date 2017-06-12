@@ -54,13 +54,13 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     // Start producer thread
     auto producer = std::thread([&buffer, &wait_strategy, item_size, items_to_produce, &consumer]()
     {
-        char item[item_size_to];
+        uint8_t item[item_size_to];
 
         for (uint64_t i = 0; i < items_to_produce; ++i)
         {
             // Emulate producing
             for (int j = 0; j < item_size; ++j)
-                item[j] = (char)j;
+                item[j] = (uint8_t)j;
 
             // Enqueue using the given waiting strategy
             while (!buffer.Enqueue(item, item_size))
