@@ -155,7 +155,8 @@ public:
 
     //! Swap two instances
     void swap(Stack& stack) noexcept;
-    friend void swap(Stack& stack1, Stack& stack2) noexcept;
+    template <typename U>
+    friend void swap(Stack<U>& stack1, Stack<U>& stack2) noexcept;
 
 private:
     T* _top;    //!< The top node
@@ -201,7 +202,8 @@ public:
 
     //! Swap two instances
     void swap(StackIterator& it) noexcept;
-    friend void swap(StackIterator& it1, StackIterator& it2) noexcept;
+    template <typename U>
+    friend void swap(StackIterator<U>& it1, StackIterator<U>& it2) noexcept;
 
 private:
     T* _current;
@@ -249,7 +251,8 @@ public:
 
     //! Swap two instances
     void swap(StackConstIterator& it) noexcept;
-    friend void swap(StackConstIterator& it1, StackConstIterator& it2) noexcept;
+    template <typename U>
+    friend void swap(StackConstIterator<U>& it1, StackConstIterator<U>& it2) noexcept;
 
 private:
     const T* _current;
