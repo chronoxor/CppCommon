@@ -127,24 +127,25 @@ public:
     //! Get the stack size
     size_t size() const noexcept;
 
-    //! Get the stack top item
+    //! Get the top stack item
     T* top() noexcept { return _top; }
     const T* top() const noexcept { return _top; }
 
-    //! Get the stack begin iterator
+    //! Get the begin stack iterator
     StackIterator<T> begin() noexcept;
     StackConstIterator<T> begin() const noexcept;
-    //! Get the stack end iterator
+    //! Get the end stack iterator
     StackIterator<T> end() noexcept;
     StackConstIterator<T> end() const noexcept;
 
-    //! Push a new item into the stack
+    //! Push a new item into the top of the stack
     /*!
-        \param item - Stack item
+        \param item - Pushed item
         \return The current stack collection
     */
     Stack& Push(T& item) noexcept;
-    //! Pop the top item from the stack
+
+    //! Pop the item from the top of the stack
     /*!
         \return The top item popped from the stack
     */
@@ -228,12 +229,12 @@ public:
     typedef std::forward_iterator_tag iterator_category;
 
     StackConstIterator() noexcept : _current(nullptr) {}
-    StackConstIterator(const StackIterator& it) noexcept : _current(it._current) {}
+    StackConstIterator(const StackIterator<T>& it) noexcept : _current(it._current) {}
     StackConstIterator(const StackConstIterator& it) noexcept = default;
     StackConstIterator(StackConstIterator&& it) noexcept = default;
     ~StackConstIterator() noexcept = default;
 
-    StackConstIterator& operator=(const StackIterator& it) noexcept
+    StackConstIterator& operator=(const StackIterator<T>& it) noexcept
     { _current = it._current; return *this; }
     StackConstIterator& operator=(const StackConstIterator& it) noexcept = default;
     StackConstIterator& operator=(StackConstIterator&& it) noexcept = default;

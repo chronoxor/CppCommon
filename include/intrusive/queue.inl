@@ -12,7 +12,7 @@ template <typename T>
 inline size_t Queue<T>::size() const noexcept
 {
     size_t size = 0;
-    for (T* node = _first; node != nullptr; node = node->next)
+    for (T* node = _front; node != nullptr; node = node->next)
         ++size;
     return size;
 }
@@ -20,13 +20,13 @@ inline size_t Queue<T>::size() const noexcept
 template <typename T>
 inline QueueIterator<T> Queue<T>::begin() noexcept
 {
-    return QueueIterator<T>(_first);
+    return QueueIterator<T>(_front);
 }
 
 template <typename T>
 inline QueueConstIterator<T> Queue<T>::begin() const noexcept
 {
-    return QueueConstIterator<T>(_first);
+    return QueueConstIterator<T>(_front);
 }
 
 template <typename T>
@@ -44,37 +44,37 @@ inline QueueConstIterator<T> Queue<T>::end() const noexcept
 template <typename T>
 inline Queue<T>& Queue<T>::Push(T& item) noexcept
 {
-    if (_last != nullptr)
-        _last->next = &item;
+    if (_back != nullptr)
+        _back->next = &item;
     item.next = nullptr;
-    _last = &item;
-    if (_first == nullptr)
-        _first = _last;
+    _back = &item;
+    if (_front == nullptr)
+        _front = _back;
     return *this;
 }
 
 template <typename T>
 inline T* Queue<T>::Pop() noexcept
 {
-    if (_first == nullptr)
+    if (_front == nullptr)
         return nullptr;
 
-    T* result = _first;
-    _first = result->next;
+    T* result = _front;
+    _front = result->next;
     result->next = nullptr;
-    if (_first == nullptr)
-        _last = nullptr;
+    if (_front == nullptr)
+        _back = nullptr;
     return result;
 }
 
 template <typename T>
 inline void Queue<T>::Reverse() noexcept
 {
-    T* current = _first;
+    T* current = _front;
     T* prev = nullptr;
     T* next = nullptr;
 
-    _last = current;
+    _back = current;
     while (current != nullptr)
     {
         next = current->next;
@@ -82,15 +82,15 @@ inline void Queue<T>::Reverse() noexcept
         prev = current;
         current = next;
     }
-    _first = prev;
+    _front = prev;
 }
 
 template <typename T>
 inline void Queue<T>::swap(Queue& stack) noexcept
 {
     using std::swap;
-    swap(_first, stack._first);
-    swap(_last, stack._last);
+    swap(_front, stack._front);
+    swap(_back, stack._back);
 }
 
 template <typename T>
