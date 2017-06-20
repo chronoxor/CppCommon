@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['version',['version',['../namespace_cpp_common.html#adac2cda3dd10d945032bcf5e1b3d1561',1,'CppCommon']]]
+  ['next',['next',['../struct_cpp_common_1_1_stack_1_1_node.html#a49d21cb3ee6789c882a58378db203147',1,'CppCommon::Stack::Node']]]
 ];

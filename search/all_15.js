@@ -9,7 +9,7 @@ var searchData=
   ['waitqueue',['WaitQueue',['../class_cpp_common_1_1_wait_queue.html#af0fc84e6250cd566ceeee7e24210b249',1,'CppCommon::WaitQueue::WaitQueue()'],['../class_cpp_common_1_1_wait_queue.html#a538fbcc170acddecf50247ed55676c1f',1,'CppCommon::WaitQueue::WaitQueue(const WaitQueue &amp;)=delete'],['../class_cpp_common_1_1_wait_queue.html#acc409f5b3debaa1f9f2a4238e259f022',1,'CppCommon::WaitQueue::WaitQueue(WaitQueue &amp;&amp;) noexcept=default']]],
   ['waitring',['WaitRing',['../class_cpp_common_1_1_wait_ring.html',1,'CppCommon']]],
   ['waitring',['WaitRing',['../class_cpp_common_1_1_wait_ring.html#a4332d92cfbb6220f169f017986ea77fd',1,'CppCommon::WaitRing::WaitRing(size_t capacity)'],['../class_cpp_common_1_1_wait_ring.html#ae9bba2552f2d215b59ca10e2974d070d',1,'CppCommon::WaitRing::WaitRing(const WaitRing &amp;)=delete'],['../class_cpp_common_1_1_wait_ring.html#a5e25ac1bb1c9bfd07adc76620d9466cb',1,'CppCommon::WaitRing::WaitRing(WaitRing &amp;&amp;) noexcept=default']]],
-  ['what',['what',['../class_cpp_common_1_1_exception.html#a107ebf99ec137f1380444359418f4f5f',1,'CppCommon::Exception']]],
+  ['what',['what',['../class_cpp_common_1_1_exception.html#aa050971385438783268d9c984e3782c3',1,'CppCommon::Exception']]],
   ['white',['WHITE',['../namespace_cpp_common.html#ac1ca6affe95577c60f18950cd8682db4ab5bf627e448384cf3a4c35121ca6008d',1,'CppCommon']]],
   ['write',['Write',['../class_cpp_common_1_1_file.html#abdd1f7203a7798d6d41017033dab4b84',1,'CppCommon::File::Write()'],['../class_cpp_common_1_1_pipe.html#aa20e4a9b3fa546e24bf60be9f531edb0',1,'CppCommon::Pipe::Write()'],['../class_cpp_common_1_1_writer.html#a6a2574d98372658e35ac721dde402e0c',1,'CppCommon::Writer::Write(const void *buffer, size_t size)=0'],['../class_cpp_common_1_1_writer.html#a490463ec7fbbf4b52e3861672e014733',1,'CppCommon::Writer::Write(const std::string &amp;text)'],['../class_cpp_common_1_1_writer.html#a4938df5a832e876e3960d2d68cbe7314',1,'CppCommon::Writer::Write(const std::vector&lt; std::string &gt; &amp;lines)']]],
   ['writeallbytes',['WriteAllBytes',['../class_cpp_common_1_1_file.html#af13784b8d2cb11cfc64e93741f07057b',1,'CppCommon::File']]],
@@ -21,5 +21,5 @@ var searchData=
   ['writer',['Writer',['../class_cpp_common_1_1_writer.html',1,'CppCommon']]],
   ['writer_2ecpp',['writer.cpp',['../writer_8cpp.html',1,'']]],
   ['writer_2eh',['writer.h',['../writer_8h.html',1,'']]],
-  ['wstring',['wstring',['../class_cpp_common_1_1_path.html#a30a95ec01bd7c3f90a7e1957876bf42a',1,'CppCommon::Path']]]
+  ['wstring',['wstring',['../class_cpp_common_1_1_path.html#a3d6d799bd82f62c847227174a861ef54',1,'CppCommon::Path']]]
 ];

@@ -17,6 +17,8 @@ var searchData=
   ['spsc_5fring_5fbuffer_2einl',['spsc_ring_buffer.inl',['../spsc__ring__buffer_8inl.html',1,'']]],
   ['spsc_5fring_5fqueue_2eh',['spsc_ring_queue.h',['../spsc__ring__queue_8h.html',1,'']]],
   ['spsc_5fring_5fqueue_2einl',['spsc_ring_queue.inl',['../spsc__ring__queue_8inl.html',1,'']]],
+  ['stack_2eh',['stack.h',['../stack_8h.html',1,'']]],
+  ['stack_2einl',['stack.inl',['../stack_8inl.html',1,'']]],
   ['stack_5ftrace_2ecpp',['stack_trace.cpp',['../stack__trace_8cpp.html',1,'']]],
   ['stack_5ftrace_2eh',['stack_trace.h',['../stack__trace_8h.html',1,'']]],
   ['stack_5ftrace_5fmanager_2ecpp',['stack_trace_manager.cpp',['../stack__trace__manager_8cpp.html',1,'']]],
