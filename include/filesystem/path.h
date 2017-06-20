@@ -183,7 +183,7 @@ public:
     //! Get the path space information
     SpaceInfo space() const;
 
-    //! Is path empty?
+    //! Is the path empty?
     bool empty() const noexcept { return _path.empty(); }
 
     //! Has root path?
@@ -204,22 +204,22 @@ public:
     //! Is relative path?
     bool IsRelative() const { return !HasRoot(); }
 
-    //! Is path exists?
+    //! Is the path exists?
     bool IsExists() const { return type() != FileType::NONE; }
 
-    //! Is path points to regular file?
+    //! Is the path points to regular file?
     bool IsRegularFile() const { return type() == FileType::REGULAR; }
-    //! Is path points to directory?
+    //! Is the path points to directory?
     bool IsDirectory() const { return type() == FileType::DIRECTORY; }
-    //! Is path points to symbolic link?
+    //! Is the path points to symbolic link?
     bool IsSymlink() const { return type() == FileType::SYMLINK; }
-    //! Is path points to special file (block, character, FIFO, socket)?
+    //! Is the path points to special file (block, character, FIFO, socket)?
     bool IsOther() const;
 
     //! Is the current path is equivalent to the given one (points to the same node on a filesystem)?
     bool IsEquivalent(const Path& path) const;
 
-    //! Clear path content
+    //! Clear the path content
     void Clear() noexcept { return _path.clear(); }
 
     //! Assign the given path to the current one

@@ -42,9 +42,9 @@ public:
     //! Read symlink target path
     Path target() const;
 
-    //! Is symlink exists?
+    //! Is the symlink exists?
     bool IsSymlinkExists() const;
-    //! Is target exists?
+    //! Is the target exists?
     bool IsTargetExists() const
     { return !target().empty(); }
 

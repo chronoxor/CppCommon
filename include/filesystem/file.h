@@ -55,16 +55,16 @@ public:
     //! Get the current file size
     uint64_t size() const;
 
-    //! Is file exists?
+    //! Is the file exists?
     bool IsFileExists() const;
-    //! Is file empty?
+    //! Is the file empty?
     bool IsFileEmpty() const
     { return (size() == 0); }
-    //! Is file opened?
+    //! Is the file opened?
     bool IsFileOpened() const;
-    //! Is file opened for reading?
+    //! Is the file opened for reading?
     bool IsFileReadOpened() const;
-    //! Is file opened for writing?
+    //! Is the file opened for writing?
     bool IsFileWriteOpened() const;
 
     //! Create a new file
