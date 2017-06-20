@@ -178,7 +178,7 @@ public:
 
     //! Get the front list item
     T* front() noexcept { return _front; }
-    const T* first() const noexcept { return _first; }
+    const T* front() const noexcept { return _front; }
     //! Get the back list item
     T* back() noexcept { return _back; }
     const T* back() const noexcept { return _back; }
