@@ -41,7 +41,7 @@ class StackConstIterator;
     Not thread-safe.
 
     <b>Overview.</b>\n
-    \image html Stack.png "Stack."
+    \image html Stack.png "Stack"
     In computer science, a stack is a temporary abstract data  type  and  data
     structure based on the principle of Last In First Out (LIFO).  Stacks  are
     used extensively at every level of a modern computer system. For  example,
@@ -138,13 +138,13 @@ public:
     StackIterator<T> end() noexcept;
     StackConstIterator<T> end() const noexcept;
 
-    //! Push a new item into the top of the stack
+    //! Push a new item into the stack
     /*!
         \param item - Stack item
         \return The current stack collection
     */
     Stack& Push(T& item) noexcept;
-    //! Pop the top item from the top of the stack
+    //! Pop the top item from the stack
     /*!
         \return The top item popped from the stack
     */
@@ -159,7 +159,7 @@ public:
     friend void swap(Stack<U>& stack1, Stack<U>& stack2) noexcept;
 
 private:
-    T* _top;    //!< The top node
+    T* _top;    //!< The top stack node
 };
 
 //! Intrusive stack iterator
@@ -228,10 +228,13 @@ public:
     typedef std::forward_iterator_tag iterator_category;
 
     StackConstIterator() noexcept : _current(nullptr) {}
+    StackConstIterator(const StackIterator& it) noexcept : _current(it._current) {}
     StackConstIterator(const StackConstIterator& it) noexcept = default;
     StackConstIterator(StackConstIterator&& it) noexcept = default;
     ~StackConstIterator() noexcept = default;
 
+    StackConstIterator& operator=(const StackIterator& it) noexcept
+    { _current = it._current; return *this; }
     StackConstIterator& operator=(const StackConstIterator& it) noexcept = default;
     StackConstIterator& operator=(StackConstIterator&& it) noexcept = default;
 

@@ -27,8 +27,8 @@ int main(int argc, char** argv)
     MyStackNode item3(789);
     stack.Push(item3);
 
-    for (auto& it : stack)
-        std::cout << it.value << std::endl;
+    while (stack)
+        std::cout << "stack.Pop() = " << stack.Pop()->value << std::endl;
 
     return 0;
 }
