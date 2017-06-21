@@ -28,7 +28,7 @@ class QueueConstIterator;
     item B at the begin of the queue.
 
     \code
-     Begin                          Insert here --->--End
+     Front                          Insert here --->--Back
        |                                               |
     +-----+         +-----+         +-----+         +-----+
     |     |    Next |     |    Next |     |    Next |     |    Next
@@ -108,7 +108,7 @@ public:
         T* next;    //!< Pointer to the next queue node
     };
 
-    Queue() noexcept : _first(nullptr), _last(nullptr) {}
+    Queue() noexcept : _front(nullptr), _back(nullptr) {}
     Queue(const Queue&) noexcept = delete;
     Queue(Queue&&) noexcept = default;
     ~Queue() noexcept = default;
@@ -120,34 +120,35 @@ public:
     explicit operator bool() const noexcept { return !empty(); }
 
     //! Is the queue empty?
-    bool empty() const noexcept { return _first == nullptr; }
+    bool empty() const noexcept { return _front == nullptr; }
 
     //! Get the queue size
     size_t size() const noexcept;
 
-    //! Get the queue first item
-    T* first() noexcept { return _first; }
-    const T* first() const noexcept { return _first; }
-    //! Get the queue last item
-    T* last() noexcept { return _last; }
-    const T* last() const noexcept { return _last; }
+    //! Get the front queue item
+    T* front() noexcept { return _front; }
+    const T* front() const noexcept { return _front; }
+    //! Get the back queue item
+    T* back() noexcept { return _back; }
+    const T* back() const noexcept { return _back; }
 
-    //! Get the queue begin iterator
+    //! Get the begin queue iterator
     QueueIterator<T> begin() noexcept;
     QueueConstIterator<T> begin() const noexcept;
-    //! Get the queue end iterator
+    //! Get the end queue iterator
     QueueIterator<T> end() noexcept;
     QueueConstIterator<T> end() const noexcept;
 
-    //! Push a new item into the queue
+    //! Push a new item into the back of the queue
     /*!
-        \param item - Queue item
+        \param item - Pushed item
         \return The current queue collection
     */
     Queue& Push(T& item) noexcept;
-    //! Pop the first item from the queue
+
+    //! Pop the item from the front of the queue
     /*!
-        \return The first item popped from the queue
+        \return The front item popped from the queue
     */
     T* Pop() noexcept;
 
@@ -160,8 +161,8 @@ public:
     friend void swap(Queue<U>& queue1, Queue<U>& queue2) noexcept;
 
 private:
-    T* _first;  //!< The first queue node
-    T* _last;   //!< The last queue node
+    T* _front;  //!< The front queue node
+    T* _back;   //!< The back queue node
 };
 
 //! Intrusive queue iterator
