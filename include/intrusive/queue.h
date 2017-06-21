@@ -230,12 +230,12 @@ public:
     typedef std::forward_iterator_tag iterator_category;
 
     QueueConstIterator() noexcept : _current(nullptr) {}
-    QueueConstIterator(const QueueIterator& it) noexcept : _current(it._current) {}
+    QueueConstIterator(const QueueIterator<T>& it) noexcept : _current(it._current) {}
     QueueConstIterator(const QueueConstIterator& it) noexcept = default;
     QueueConstIterator(QueueConstIterator&& it) noexcept = default;
     ~QueueConstIterator() noexcept = default;
 
-    QueueConstIterator& operator=(const QueueIterator& it) noexcept
+    QueueConstIterator& operator=(const QueueIterator<T>& it) noexcept
     { _current = it._current; return *this; }
     QueueConstIterator& operator=(const QueueConstIterator& it) noexcept = default;
     QueueConstIterator& operator=(QueueConstIterator&& it) noexcept = default;

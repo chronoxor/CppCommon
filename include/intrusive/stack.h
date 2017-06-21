@@ -228,12 +228,12 @@ public:
     typedef std::forward_iterator_tag iterator_category;
 
     StackConstIterator() noexcept : _current(nullptr) {}
-    StackConstIterator(const StackIterator& it) noexcept : _current(it._current) {}
+    StackConstIterator(const StackIterator<T>& it) noexcept : _current(it._current) {}
     StackConstIterator(const StackConstIterator& it) noexcept = default;
     StackConstIterator(StackConstIterator&& it) noexcept = default;
     ~StackConstIterator() noexcept = default;
 
-    StackConstIterator& operator=(const StackIterator& it) noexcept
+    StackConstIterator& operator=(const StackIterator<T>& it) noexcept
     { _current = it._current; return *this; }
     StackConstIterator& operator=(const StackConstIterator& it) noexcept = default;
     StackConstIterator& operator=(StackConstIterator&& it) noexcept = default;
