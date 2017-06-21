@@ -111,6 +111,8 @@ public:
     };
 
     Stack() noexcept : _top(nullptr) {}
+    template <class InputIterator>
+    Stack(InputIterator first, InputIterator last);
     Stack(const Stack&) noexcept = delete;
     Stack(Stack&&) noexcept = default;
     ~Stack() noexcept = default;
