@@ -1,7 +1,7 @@
 var searchData=
 [
   ['queue',['Queue',['../class_cpp_common_1_1_queue.html',1,'CppCommon']]],
-  ['queue',['Queue',['../class_cpp_common_1_1_queue.html#a32304678d10482cf59ebc3e07aecfb06',1,'CppCommon::Queue::Queue() noexcept'],['../class_cpp_common_1_1_queue.html#a397893517892b8262db21cd1beb99be7',1,'CppCommon::Queue::Queue(const Queue &amp;) noexcept=delete'],['../class_cpp_common_1_1_queue.html#a1afe05384722908bf6d78daf1d887e90',1,'CppCommon::Queue::Queue(Queue &amp;&amp;) noexcept=default']]],
+  ['queue',['Queue',['../class_cpp_common_1_1_queue.html#a32304678d10482cf59ebc3e07aecfb06',1,'CppCommon::Queue::Queue() noexcept'],['../class_cpp_common_1_1_queue.html#a9b689cd23b9412b347011398fccf52b1',1,'CppCommon::Queue::Queue(InputIterator first, InputIterator last)'],['../class_cpp_common_1_1_queue.html#a397893517892b8262db21cd1beb99be7',1,'CppCommon::Queue::Queue(const Queue &amp;) noexcept=delete'],['../class_cpp_common_1_1_queue.html#a1afe05384722908bf6d78daf1d887e90',1,'CppCommon::Queue::Queue(Queue &amp;&amp;) noexcept=default']]],
   ['queue_2eh',['queue.h',['../queue_8h.html',1,'']]],
   ['queue_2einl',['queue.inl',['../queue_8inl.html',1,'']]],
   ['queue_3c_20t_20_3e',['Queue&lt; T &gt;',['../class_cpp_common_1_1_queue_iterator.html#aad85a9afefd67b71dbc18c899fe6f828',1,'CppCommon::QueueIterator::Queue&lt; T &gt;()'],['../class_cpp_common_1_1_queue_const_iterator.html#aad85a9afefd67b71dbc18c899fe6f828',1,'CppCommon::QueueConstIterator::Queue&lt; T &gt;()']]],
