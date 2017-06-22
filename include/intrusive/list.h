@@ -159,7 +159,7 @@ public:
         T* prev;    //!< Pointer to the previous list node
     };
 
-    List() noexcept : _front(nullptr), _back(nullptr) {}
+    List() noexcept : _size(0), _front(nullptr), _back(nullptr) {}
     template <class InputIterator>
     List(InputIterator first, InputIterator last);
     List(const List&) noexcept = delete;
@@ -176,7 +176,7 @@ public:
     bool empty() const noexcept { return _front == nullptr; }
 
     //! Get the list size
-    size_t size() const noexcept;
+    size_t size() const noexcept { return _size; }
 
     //! Get the front list item
     T* front() noexcept { return _front; }
@@ -264,8 +264,9 @@ public:
     friend void swap(List<U>& list1, List<U>& list2) noexcept;
 
 private:
-    T* _front;  //!< The front list node
-    T* _back;   //!< The back list node
+    size_t _size;   // List size
+    T* _front;      // List front node
+    T* _back;       // List back node
 };
 
 //! Intrusive list iterator

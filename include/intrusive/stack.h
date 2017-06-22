@@ -110,7 +110,7 @@ public:
         T* next;    //!< Pointer to the next stack node
     };
 
-    Stack() noexcept : _top(nullptr) {}
+    Stack() noexcept : _size(0), _top(nullptr) {}
     template <class InputIterator>
     Stack(InputIterator first, InputIterator last);
     Stack(const Stack&) noexcept = delete;
@@ -127,7 +127,7 @@ public:
     bool empty() const noexcept { return _top == nullptr; }
 
     //! Get the stack size
-    size_t size() const noexcept;
+    size_t size() const noexcept { return _size; }
 
     //! Get the top stack item
     T* top() noexcept { return _top; }
@@ -162,7 +162,8 @@ public:
     friend void swap(Stack<U>& stack1, Stack<U>& stack2) noexcept;
 
 private:
-    T* _top;    //!< The top stack node
+    size_t _size;   // Stack size
+    T* _top;        // Stack top node
 };
 
 //! Intrusive stack iterator

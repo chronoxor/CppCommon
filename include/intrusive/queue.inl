@@ -17,15 +17,6 @@ inline Queue<T>::Queue(InputIterator first, InputIterator last)
 }
 
 template <typename T>
-inline size_t Queue<T>::size() const noexcept
-{
-    size_t size = 0;
-    for (T* node = _front; node != nullptr; node = node->next)
-        ++size;
-    return size;
-}
-
-template <typename T>
 inline QueueIterator<T> Queue<T>::begin() noexcept
 {
     return QueueIterator<T>(_front);
@@ -58,6 +49,7 @@ inline Queue<T>& Queue<T>::Push(T& item) noexcept
     _back = &item;
     if (_front == nullptr)
         _front = _back;
+    ++_size;
     return *this;
 }
 
@@ -72,6 +64,7 @@ inline T* Queue<T>::Pop() noexcept
     result->next = nullptr;
     if (_front == nullptr)
         _back = nullptr;
+    --_size;
     return result;
 }
 
@@ -94,17 +87,18 @@ inline void Queue<T>::Reverse() noexcept
 }
 
 template <typename T>
-inline void Queue<T>::swap(Queue& stack) noexcept
+inline void Queue<T>::swap(Queue& queue) noexcept
 {
     using std::swap;
-    swap(_front, stack._front);
-    swap(_back, stack._back);
+    swap(_size, queue._size);
+    swap(_front, queue._front);
+    swap(_back, queue._back);
 }
 
 template <typename T>
-inline void swap(Queue<T>& stack1, Queue<T>& stack2) noexcept
+inline void swap(Queue<T>& queue1, Queue<T>& queue2) noexcept
 {
-    stack1.swap(stack2);
+    queue1.swap(queue2);
 }
 
 template <typename T>

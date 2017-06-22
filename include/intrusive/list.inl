@@ -17,15 +17,6 @@ inline List<T>::List(InputIterator first, InputIterator last)
 }
 
 template <typename T>
-inline size_t List<T>::size() const noexcept
-{
-    size_t size = 0;
-    for (T* node = _front; node != nullptr; node = node->next)
-        ++size;
-    return size;
-}
-
-template <typename T>
 inline ListIterator<T> List<T>::begin() noexcept
 {
     return ListIterator<T>(_front);
@@ -83,6 +74,7 @@ inline List<T>& List<T>::PushFront(T& item) noexcept
     _front = &item;
     if (_back == nullptr)
         _back = _front;
+    ++_size;
     return *this;
 }
 
@@ -96,6 +88,7 @@ inline List<T>& List<T>::PushBack(T& item) noexcept
     _back = &item;
     if (_front == nullptr)
         _front = _back;
+    ++_size;
     return *this;
 }
 
@@ -109,6 +102,7 @@ inline List<T>& List<T>::PushNext(T& base, T& item) noexcept
     if (base.next != nullptr)
         base.next->prev = &item;
     base.next = &item;
+    ++_size;
     return *this;
 }
 
@@ -122,6 +116,7 @@ inline List<T>& List<T>::PushPrev(T& base, T& item) noexcept
     if (base.prev != nullptr)
         base.prev->next = &item;
     base.prev = &item;
+    ++_size;
     return *this;
 }
 
@@ -139,6 +134,7 @@ inline T* List<T>::PopFront() noexcept
         _back = nullptr;
     else
         _front->prev = nullptr;
+    --_size;
     return result;
 }
 
@@ -156,6 +152,7 @@ inline T* List<T>::PopBack() noexcept
         _front = nullptr;
     else
         _back->next = nullptr;
+    --_size;
     return result;
 }
 
@@ -173,6 +170,7 @@ inline T* List<T>::PopCurrent(T& base) noexcept
         _front = result->next;
     result->next = nullptr;
     result->prev = nullptr;
+    --_size;
     return result;
 }
 
@@ -190,6 +188,7 @@ inline T* List<T>::PopNext(T& base) noexcept
     base.next = result->next;
     result->next = nullptr;
     result->prev = nullptr;
+    --_size;
     return result;
 }
 
@@ -207,6 +206,7 @@ inline T* List<T>::PopPrev(T& base) noexcept
     base.prev = result->prev;
     result->next = nullptr;
     result->prev = nullptr;
+    --_size;
     return result;
 }
 
@@ -230,17 +230,18 @@ inline void List<T>::Reverse() noexcept
 }
 
 template <typename T>
-inline void List<T>::swap(List& stack) noexcept
+inline void List<T>::swap(List& list) noexcept
 {
     using std::swap;
-    swap(_front, stack._front);
-    swap(_back, stack._back);
+    swap(_size, list._size);
+    swap(_front, list._front);
+    swap(_back, list._back);
 }
 
 template <typename T>
-inline void swap(List<T>& stack1, List<T>& stack2) noexcept
+inline void swap(List<T>& list1, List<T>& list2) noexcept
 {
-    stack1.swap(stack2);
+    list1.swap(list2);
 }
 
 template <typename T>

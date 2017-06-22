@@ -17,15 +17,6 @@ inline Stack<T>::Stack(InputIterator first, InputIterator last)
 }
 
 template <typename T>
-inline size_t Stack<T>::size() const noexcept
-{
-    size_t size = 0;
-    for (T* node = _top; node != nullptr; node = node->next)
-        ++size;
-    return size;
-}
-
-template <typename T>
 inline StackIterator<T> Stack<T>::begin() noexcept
 {
     return StackIterator<T>(_top);
@@ -54,6 +45,7 @@ inline Stack<T>& Stack<T>::Push(T& item) noexcept
 {
     item.next = _top;
     _top = &item;
+    ++_size;
     return *this;
 }
 
@@ -66,6 +58,7 @@ inline T* Stack<T>::Pop() noexcept
     T* result = _top;
     _top = result->next;
     result->next = nullptr;
+    --_size;
     return result;
 }
 
@@ -91,6 +84,7 @@ inline void Stack<T>::swap(Stack& stack) noexcept
 {
     using std::swap;
     swap(_top, stack._top);
+    swap(_size, stack._size);
 }
 
 template <typename T>

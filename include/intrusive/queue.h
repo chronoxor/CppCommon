@@ -108,7 +108,7 @@ public:
         T* next;    //!< Pointer to the next queue node
     };
 
-    Queue() noexcept : _front(nullptr), _back(nullptr) {}
+    Queue() noexcept : _size(0), _front(nullptr), _back(nullptr) {}
     template <class InputIterator>
     Queue(InputIterator first, InputIterator last);
     Queue(const Queue&) noexcept = delete;
@@ -125,7 +125,7 @@ public:
     bool empty() const noexcept { return _front == nullptr; }
 
     //! Get the queue size
-    size_t size() const noexcept;
+    size_t size() const noexcept { return _size; }
 
     //! Get the front queue item
     T* front() noexcept { return _front; }
@@ -163,8 +163,9 @@ public:
     friend void swap(Queue<U>& queue1, Queue<U>& queue2) noexcept;
 
 private:
-    T* _front;  //!< The front queue node
-    T* _back;   //!< The back queue node
+    size_t _size;   // Queue size
+    T* _front;      // Queue front node
+    T* _back;       // Queue back node
 };
 
 //! Intrusive queue iterator
