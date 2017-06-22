@@ -9,6 +9,14 @@
 namespace CppCommon {
 
 template <typename T>
+template <class InputIterator>
+inline Stack<T>::Stack(InputIterator first, InputIterator last)
+{
+    for (InputIterator it = first; it != last; ++it)
+        Push(*it);
+}
+
+template <typename T>
 inline size_t Stack<T>::size() const noexcept
 {
     size_t size = 0;

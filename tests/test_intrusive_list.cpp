@@ -33,7 +33,7 @@ TEST_CASE("Intrusive list", "[CppCommon][Intrusive]")
     REQUIRE(!list.empty());
 
     int sum = 0;
-    for (auto& it : list)
+    for (auto it : list)
         sum += it.value;
     REQUIRE(sum == 6);
 

@@ -9,6 +9,14 @@
 namespace CppCommon {
 
 template <typename T>
+template <class InputIterator>
+inline List<T>::List(InputIterator first, InputIterator last)
+{
+    for (InputIterator it = first; it != last; ++it)
+        PushBack(*it);
+}
+
+template <typename T>
 inline size_t List<T>::size() const noexcept
 {
     size_t size = 0;
