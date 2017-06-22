@@ -350,7 +350,7 @@ inline T* BinTree<T, TCompare>::Pop(const T& item) noexcept
 }
 
 template <typename T, typename TCompare>
-inline void BinTree<T, TCompare>::swap(BinTree& binTree) noexcept
+inline void BinTree<T, TCompare>::swap(BinTree& bintree) noexcept
 {
     using std::swap;
     swap(_compare, bintree._compare);
