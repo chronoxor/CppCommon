@@ -21,10 +21,11 @@ int main(int argc, char** argv)
     CppCommon::Stack<MyStackNode> stack;
 
     MyStackNode item1(123);
-    stack.Push(item1);
     MyStackNode item2(456);
-    stack.Push(item2);
     MyStackNode item3(789);
+
+    stack.Push(item1);
+    stack.Push(item2);
     stack.Push(item3);
 
     while (stack)

@@ -19,13 +19,13 @@ inline List<T>::List(InputIterator first, InputIterator last)
 template <typename T>
 inline ListIterator<T> List<T>::begin() noexcept
 {
-    return ListIterator<T>(_front);
+    return ListIterator<T>(front());
 }
 
 template <typename T>
 inline ListConstIterator<T> List<T>::begin() const noexcept
 {
-    return ListConstIterator<T>(_front);
+    return ListConstIterator<T>(front());
 }
 
 template <typename T>
@@ -43,13 +43,13 @@ inline ListConstIterator<T> List<T>::end() const noexcept
 template <typename T>
 inline ListReverseIterator<T> List<T>::rbegin() noexcept
 {
-    return ListReverseIterator<T>(_back);
+    return ListReverseIterator<T>(back());
 }
 
 template <typename T>
 inline ListReverseConstIterator<T> List<T>::rbegin() const noexcept
 {
-    return ListReverseConstIterator<T>(_back);
+    return ListReverseConstIterator<T>(back());
 }
 
 template <typename T>

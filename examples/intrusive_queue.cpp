@@ -21,10 +21,11 @@ int main(int argc, char** argv)
     CppCommon::Queue<MyQueueNode> queue;
 
     MyQueueNode item1(123);
-    queue.Push(item1);
     MyQueueNode item2(456);
-    queue.Push(item2);
     MyQueueNode item3(789);
+
+    queue.Push(item1);
+    queue.Push(item2);
     queue.Push(item3);
 
     while (queue)

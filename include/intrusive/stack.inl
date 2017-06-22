@@ -19,13 +19,13 @@ inline Stack<T>::Stack(InputIterator first, InputIterator last)
 template <typename T>
 inline StackIterator<T> Stack<T>::begin() noexcept
 {
-    return StackIterator<T>(_top);
+    return StackIterator<T>(top());
 }
 
 template <typename T>
 inline StackConstIterator<T> Stack<T>::begin() const noexcept
 {
-    return StackConstIterator<T>(_top);
+    return StackConstIterator<T>(top());
 }
 
 template <typename T>
@@ -83,8 +83,8 @@ template <typename T>
 inline void Stack<T>::swap(Stack& stack) noexcept
 {
     using std::swap;
-    swap(_top, stack._top);
     swap(_size, stack._size);
+    swap(_top, stack._top);
 }
 
 template <typename T>

@@ -173,8 +173,6 @@ private:
 template <typename T>
 class StackIterator
 {
-    friend class Stack<T>;
-
 public:
     // Standard iterator type definitions
     typedef T value_type;
@@ -183,6 +181,7 @@ public:
     typedef std::forward_iterator_tag iterator_category;
 
     StackIterator() noexcept : _current(nullptr) {}
+    explicit StackIterator(T* current) noexcept : _current(current) {}
     StackIterator(const StackIterator& it) noexcept = default;
     StackIterator(StackIterator&& it) noexcept = default;
     ~StackIterator() noexcept = default;
@@ -202,7 +201,7 @@ public:
     T* operator->() noexcept;
 
     //! Check if the iterator is valid
-    explicit operator bool() const noexcept { return _current == nullptr; }
+    explicit operator bool() const noexcept { return _current != nullptr; }
 
     //! Swap two instances
     void swap(StackIterator& it) noexcept;
@@ -211,8 +210,6 @@ public:
 
 private:
     T* _current;
-
-    StackIterator(T* current) noexcept : _current(current) {}
 };
 
 //! Intrusive stack constant iterator
@@ -222,8 +219,6 @@ private:
 template <typename T>
 class StackConstIterator
 {
-    friend class Stack<T>;
-
 public:
     // Standard constant iterator type definitions
     typedef const T value_type;
@@ -232,6 +227,7 @@ public:
     typedef std::forward_iterator_tag iterator_category;
 
     StackConstIterator() noexcept : _current(nullptr) {}
+    explicit StackConstIterator(const T* current) noexcept : _current(current) {}
     StackConstIterator(const StackIterator<T>& it) noexcept : _current(it._current) {}
     StackConstIterator(const StackConstIterator& it) noexcept = default;
     StackConstIterator(StackConstIterator&& it) noexcept = default;
@@ -254,7 +250,7 @@ public:
     const T* operator->() const noexcept;
 
     //! Check if the iterator is valid
-    explicit operator bool() const noexcept { return _current == nullptr; }
+    explicit operator bool() const noexcept { return _current != nullptr; }
 
     //! Swap two instances
     void swap(StackConstIterator& it) noexcept;
@@ -263,8 +259,6 @@ public:
 
 private:
     const T* _current;
-
-    StackConstIterator(const T* current) noexcept : _current(current) {}
 };
 
 /*! \example intrusive_stack.cpp Intrusive stack container example */

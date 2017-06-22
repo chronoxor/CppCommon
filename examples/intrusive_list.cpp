@@ -21,10 +21,11 @@ int main(int argc, char** argv)
     CppCommon::List<MyListNode> list;
 
     MyListNode item1(123);
-    list.PushFront(item1);
     MyListNode item2(456);
-    list.PushBack(item2);
     MyListNode item3(789);
+
+    list.PushFront(item1);
+    list.PushBack(item2);
     list.PushNext(item2, item3);
 
     while (list)

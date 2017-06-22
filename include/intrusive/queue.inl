@@ -19,13 +19,13 @@ inline Queue<T>::Queue(InputIterator first, InputIterator last)
 template <typename T>
 inline QueueIterator<T> Queue<T>::begin() noexcept
 {
-    return QueueIterator<T>(_front);
+    return QueueIterator<T>(front());
 }
 
 template <typename T>
 inline QueueConstIterator<T> Queue<T>::begin() const noexcept
 {
-    return QueueConstIterator<T>(_front);
+    return QueueConstIterator<T>(front());
 }
 
 template <typename T>

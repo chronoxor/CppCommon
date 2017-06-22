@@ -175,8 +175,6 @@ private:
 template <typename T>
 class QueueIterator
 {
-    friend class Queue<T>;
-
 public:
     // Standard iterator type definitions
     typedef T value_type;
@@ -185,6 +183,7 @@ public:
     typedef std::forward_iterator_tag iterator_category;
 
     QueueIterator() noexcept : _current(nullptr) {}
+    explicit QueueIterator(T* current) noexcept : _current(current) {}
     QueueIterator(const QueueIterator& it) noexcept = default;
     QueueIterator(QueueIterator&& it) noexcept = default;
     ~QueueIterator() noexcept = default;
@@ -204,7 +203,7 @@ public:
     T* operator->() noexcept;
 
     //! Check if the iterator is valid
-    explicit operator bool() const noexcept { return _current == nullptr; }
+    explicit operator bool() const noexcept { return _current != nullptr; }
 
     //! Swap two instances
     void swap(QueueIterator& it) noexcept;
@@ -213,8 +212,6 @@ public:
 
 private:
     T* _current;
-
-    QueueIterator(T* current) noexcept : _current(current) {}
 };
 
 //! Intrusive queue constant iterator
@@ -224,8 +221,6 @@ private:
 template <typename T>
 class QueueConstIterator
 {
-    friend class Queue<T>;
-
 public:
     // Standard constant iterator type definitions
     typedef const T value_type;
@@ -234,6 +229,7 @@ public:
     typedef std::forward_iterator_tag iterator_category;
 
     QueueConstIterator() noexcept : _current(nullptr) {}
+    explicit QueueConstIterator(const T* current) noexcept : _current(current) {}
     QueueConstIterator(const QueueIterator<T>& it) noexcept : _current(it._current) {}
     QueueConstIterator(const QueueConstIterator& it) noexcept = default;
     QueueConstIterator(QueueConstIterator&& it) noexcept = default;
@@ -256,7 +252,7 @@ public:
     const T* operator->() const noexcept;
 
     //! Check if the iterator is valid
-    explicit operator bool() const noexcept { return _current == nullptr; }
+    explicit operator bool() const noexcept { return _current != nullptr; }
 
     //! Swap two instances
     void swap(QueueConstIterator& it) noexcept;
@@ -265,8 +261,6 @@ public:
 
 private:
     const T* _current;
-
-    QueueConstIterator(const T* current) noexcept : _current(current) {}
 };
 
 /*! \example intrusive_queue.cpp Intrusive queue container example */
