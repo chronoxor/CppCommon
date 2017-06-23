@@ -137,7 +137,6 @@ void test()
     REQUIRE(bintree.Pop(9));
     REQUIRE(bintree.size() == 5);
 
-    REQUIRE(bintree.root()->value == 2);
     REQUIRE(bintree.lowest()->value == 2);
     REQUIRE(bintree.highest()->value == 8);
 

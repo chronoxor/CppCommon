@@ -283,6 +283,24 @@ inline BinTreeAA<T, TCompare>& BinTreeAA<T, TCompare>::Push(T& item) noexcept
     if (_root == nullptr)
         _root = &item;
     ++_size;
+
+    // Balance the binary tree
+    T* node = &item;
+    node->level = 1;
+    while (node->parent != nullptr)
+    {
+        node = node->parent;
+        if (node->level != ((node->left != nullptr) ? node->left->level + 1 : 1))
+        {
+            skew(node);
+            if ((node->right == nullptr) || (node->level != node->right->level))
+                node = node->parent;
+        }
+
+        if (!split(node->parent))
+            break;
+    }
+
     return *this;
 }
 
@@ -293,63 +311,79 @@ inline T* BinTreeAA<T, TCompare>::Pop(const T& item) noexcept
     if (result == nullptr)
         return nullptr;
 
-    T* parent = result->parent;
-    T* left = result->left;
-    T* right = result->right;
+    T* node = result;
+    T* temp;
 
-    // Binary tree node without left child
-    if (left == nullptr)
+    if (result->left != nullptr)
     {
-        // Link the parent node with a right child
-        if (parent != nullptr)
-        {
-            if (parent->left == result)
-                parent->left = right;
-            else
-                parent->right = right;
-        }
-        else
-            _root = right;
-        if (right != nullptr)
-            right->parent = parent;
+        node = result->left;
+        while (node->right != nullptr)
+            node = node->right;
     }
-    // Binary tree node without right child
-    else if (right == nullptr)
+    else if (result->right != nullptr)
+        node = result->right;
+
+    temp = ((node->parent == result) ? node : node->parent);
+    if (node->parent != nullptr)
     {
-        // Link the parent node with a left child
-        if (parent != nullptr)
-        {
-            if (parent->left == result)
-                parent->left = left;
-            else
-                parent->right = left;
-        }
+        if (node->parent->left == node)
+            node->parent->left = nullptr;
         else
-            _root = left;
-        if (left != nullptr)
-            left->parent = parent;
+            node->parent->right = nullptr;
     }
-    // Binary tree node with both left and right childs
     else
+        _root = nullptr;
+
+    if (result != node)
     {
-        // Link the parent node with a left child
-        if (parent != nullptr)
+        if (result->parent != nullptr)
         {
-            if (parent->left == result)
-                parent->left = left;
+            if (result->parent->left == result)
+                result->parent->left = node;
             else
-                parent->right = left;
+                result->parent->right = node;
         }
         else
-            _root = left;
-        left->parent = parent;
+            _root = node;
 
-        // Find a new base node
-        T* temp = left;
-        while (temp->right != nullptr)
-            temp = temp->right;
-        temp->right = right;
-        right->parent = temp;
+        node->parent = result->parent;
+        if (result->left != nullptr)
+            result->left->parent = node;
+        node->left = result->left;
+        if (result->right != nullptr)
+            result->right->parent = node;
+        node->right = result->right;
+
+        // Copy levels
+        node->level = result->level;
+    }
+
+    while (temp != nullptr)
+    {
+        if (temp->level > ((temp->left != nullptr) ? temp->left->level + 1 : 1))
+        {
+            temp->level = temp->level - 1;
+            if (split(temp))
+            {
+                if (split(temp))
+                    skew(temp->parent->parent);
+                break;
+            }
+        }
+        else if (temp->level <= ((temp->right != nullptr) ? temp->right->level + 1 : 1))
+            break;
+        else
+        {
+            skew(temp);
+            if (temp->level > temp->parent->level)
+            {
+                skew(temp);
+                split(temp->parent->parent);
+                break;
+            }
+            temp = temp->parent;
+        }
+        temp = temp->parent;
     }
 
     result->parent = nullptr;
@@ -357,6 +391,68 @@ inline T* BinTreeAA<T, TCompare>::Pop(const T& item) noexcept
     result->right = nullptr;
     --_size;
     return result;
+}
+
+template <typename T, typename TCompare>
+inline void BinTreeAA<T, TCompare>::skew(T* node)
+{
+    if (node == nullptr)
+        return;
+
+    T* current = node->left;
+    if (node->parent != nullptr)
+    {
+        if (node->parent->left == node)
+            node->parent->left = current;
+        else
+            node->parent->right = current;
+    }
+    else
+        _root = current;
+    current->parent = node->parent;
+    node->parent = current;
+
+    node->left = current->right;
+    if (node->left != nullptr)
+        node->left->parent = node;
+    current->right = node;
+
+    if (node->left != nullptr)
+        node->level = node->left->level + 1;
+    else
+        node->level = 1;
+}
+
+template <typename T, typename TCompare>
+inline bool BinTreeAA<T, TCompare>::split(T* node)
+{
+    if (node == nullptr)
+        return false;
+
+    T* current = node->right;
+    if ((current != nullptr) && (current->right != nullptr) && (current->right->level == node->level))
+    {
+        if (node->parent != nullptr)
+        {
+        if (node->parent->left == node)
+            node->parent->left = current;
+          else
+            node->parent->right = current;
+        }
+        else
+            _root = current;
+        current->parent = node->parent;
+        node->parent = current;
+
+        node->right = current->left;
+        if (node->right != nullptr)
+            node->right->parent = node;
+        current->left = node;
+        current->level = node->level + 1;
+        return true;
+    }
+
+    return false;
 }
 
 template <typename T, typename TCompare>

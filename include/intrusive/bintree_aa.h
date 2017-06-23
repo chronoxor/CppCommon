@@ -151,6 +151,24 @@ private:
     const T* InternalFind(const T& item) const noexcept;
     const T* InternalLowerBound(const T& item) const noexcept;
     const T* InternalUpperBound(const T& item) const noexcept;
+
+    //! Skew the binary tree node
+    /*!
+        Skew is a right rotation when an insertion or deletion creates a left
+        red link.
+
+        \param node - Skew node
+    */
+    void skew(T* node);
+    //! Split the binary tree node.
+    /*!
+        Split is a conditional left rotation when an insertion or deletion
+        creates two consecutive red links.
+
+        \param node - Split node
+        \return 'true' if the split operation completed successfully, 'false' if the split operation failed
+    */
+    bool split(T* node);
 };
 
 } // namespace CppCommon
