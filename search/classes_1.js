@@ -4,6 +4,7 @@ var searchData=
   ['bintree',['BinTree',['../class_cpp_common_1_1_bin_tree.html',1,'CppCommon']]],
   ['bintreeconstiterator',['BinTreeConstIterator',['../class_cpp_common_1_1_bin_tree_const_iterator.html',1,'CppCommon']]],
   ['bintreeiterator',['BinTreeIterator',['../class_cpp_common_1_1_bin_tree_iterator.html',1,'CppCommon']]],
+  ['bintreerb',['BinTreeRB',['../class_cpp_common_1_1_bin_tree_r_b.html',1,'CppCommon']]],
   ['bintreereverseconstiterator',['BinTreeReverseConstIterator',['../class_cpp_common_1_1_bin_tree_reverse_const_iterator.html',1,'CppCommon']]],
   ['bintreereverseiterator',['BinTreeReverseIterator',['../class_cpp_common_1_1_bin_tree_reverse_iterator.html',1,'CppCommon']]]
 ];
