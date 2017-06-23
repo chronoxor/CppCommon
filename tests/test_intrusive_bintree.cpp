@@ -5,20 +5,28 @@
 #include "catch.hpp"
 
 #include "intrusive/bintree.h"
+#include "intrusive/bintree_rb.h"
 
 using namespace CppCommon;
 
-struct MyBinTreeNode : public CppCommon::BinTree<MyBinTreeNode>::Node
+struct MyBinTreeNode
 {
     int value;
+
+    MyBinTreeNode* parent;
+    MyBinTreeNode* left;
+    MyBinTreeNode* right;
+    bool rb;
+
     MyBinTreeNode(int v) : value(v) {}
     friend bool operator<(const MyBinTreeNode& node1, const MyBinTreeNode& node2)
     { return node1.value < node2.value; }
 };
 
-TEST_CASE("Intrusive binary tree", "[CppCommon][Intrusive]")
+template <class TBinTree>
+void test()
 {
-    CppCommon::BinTree<MyBinTreeNode> bintree;
+    TBinTree bintree;
     REQUIRE(bintree.empty());
     REQUIRE(bintree.size() == 0);
 
@@ -170,3 +178,14 @@ TEST_CASE("Intrusive binary tree", "[CppCommon][Intrusive]")
 
     REQUIRE(bintree.empty());
 }
+
+TEST_CASE("Intrusive non balanced binary tree", "[CppCommon][Intrusive]")
+{
+    test<CppCommon::BinTree<MyBinTreeNode>>();
+}
+
+TEST_CASE("Intrusive balanced Reb-Black binary tree", "[CppCommon][Intrusive]")
+{
+    test<CppCommon::BinTreeRB<MyBinTreeNode>>();
+}
+

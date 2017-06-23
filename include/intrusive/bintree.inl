@@ -18,6 +18,50 @@ inline BinTree<T, TCompare>::BinTree(InputIterator first, InputIterator last, co
 }
 
 template <typename T, typename TCompare>
+inline T* BinTree<T, TCompare>::lowest() noexcept
+{
+    return (T*)InternalLowest();
+}
+
+template <typename T, typename TCompare>
+inline const T* BinTree<T, TCompare>::lowest() const noexcept
+{
+    return InternalLowest();
+}
+
+template <typename T, typename TCompare>
+inline const T* BinTree<T, TCompare>::InternalLowest() const noexcept
+{
+    const T* result = _root;
+    if (result != nullptr)
+        while (result->left != nullptr)
+            result = result->left;
+    return result;
+}
+
+template <typename T, typename TCompare>
+inline T* BinTree<T, TCompare>::highest() noexcept
+{
+    return (T*)InternalHighest();
+}
+
+template <typename T, typename TCompare>
+inline const T* BinTree<T, TCompare>::highest() const noexcept
+{
+    return InternalHighest();
+}
+
+template <typename T, typename TCompare>
+inline const T* BinTree<T, TCompare>::InternalHighest() const noexcept
+{
+    const T* result = _root;
+    if (result != nullptr)
+        while (result->right != nullptr)
+            result = result->right;
+    return result;
+}
+
+template <typename T, typename TCompare>
 inline BinTreeIterator<T> BinTree<T, TCompare>::begin() noexcept
 {
     return BinTreeIterator<T>(lowest());
@@ -208,8 +252,6 @@ inline BinTree<T, TCompare>& BinTree<T, TCompare>::Push(T& item) noexcept
             {
                 // Link a new item to the left leaf
                 current->left = &item;
-                if (_lowest == current)
-                    _lowest = current->left;
                 break;
             }
         }
@@ -226,8 +268,6 @@ inline BinTree<T, TCompare>& BinTree<T, TCompare>::Push(T& item) noexcept
             {
                 // Link a new item to the right leaf
                 current->right = &item;
-                if (_highest == current)
-                    _highest = current->right;
                 break;
             }
         }
@@ -241,11 +281,7 @@ inline BinTree<T, TCompare>& BinTree<T, TCompare>::Push(T& item) noexcept
     item.left = nullptr;
     item.right = nullptr;
     if (_root == nullptr)
-    {
         _root = &item;
-        _lowest = &item;
-        _highest = &item;
-    }
     ++_size;
     return *this;
 }
@@ -316,32 +352,6 @@ inline T* BinTree<T, TCompare>::Pop(const T& item) noexcept
         right->parent = temp;
     }
 
-    // Find a new lowest node
-    if (_lowest == result)
-    {
-        if (right != nullptr)
-        {
-            _lowest = right;
-            while (_lowest->left != nullptr)
-                _lowest = _lowest->left;
-        }
-        else
-            _lowest = parent;
-    }
-
-    // Find a new highest node
-    if (_highest == result)
-    {
-        if (left != nullptr)
-        {
-            _highest = left;
-            while (_highest->right != nullptr)
-                _highest = _highest->right;
-        }
-        else
-            _highest = parent;
-    }
-
     result->parent = nullptr;
     result->left = nullptr;
     result->right = nullptr;
@@ -356,8 +366,6 @@ inline void BinTree<T, TCompare>::swap(BinTree& bintree) noexcept
     swap(_compare, bintree._compare);
     swap(_size, bintree._size);
     swap(_root, bintree._root);
-    swap(_lowest, bintree._lowest);
-    swap(_highest, bintree._highest);
 }
 
 template <typename T, typename TCompare>

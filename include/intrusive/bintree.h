@@ -38,7 +38,7 @@ class BinTreeReverseConstIterator;
     \li The right subtree of a node contains only values greater than or equal
         to the node's value.
 
-    \image html BinTree.png "Binary tree."
+    \image html BinTree.png "Binary tree"
     The major advantage of binary search trees is  that  the  related  sorting
     algorithms and search algorithms such as in-order traversal  can  be  very
     efficient.
@@ -136,17 +136,15 @@ public:
     //! Binary tree node
     struct Node
     {
-        T* parent;  //!< Pointer to the parent node
-        T* left;    //!< Pointer to the left child node
-        T* right;   //!< Pointer to the right child node
+        T* parent;  //!< Pointer to the parent binary tree node
+        T* left;    //!< Pointer to the left child binary tree node
+        T* right;   //!< Pointer to the right child binary tree node
     };
 
     explicit BinTree(const TCompare& compare = TCompare()) noexcept
         : _compare(compare),
           _size(0),
-          _root(nullptr),
-          _lowest(nullptr),
-          _highest(nullptr)
+          _root(nullptr)
     {}
     template <class InputIterator>
     BinTree(InputIterator first, InputIterator last, const TCompare& compare = TCompare());
@@ -170,11 +168,11 @@ public:
     T* root() noexcept { return _root; }
     const T* root() const noexcept { return _root; }
     //! Get the lowest binary tree item
-    T* lowest() noexcept { return _lowest; }
-    const T* lowest() const noexcept { return _lowest; }
+    T* lowest() noexcept;
+    const T* lowest() const noexcept;
     //! Get the highest binary tree item
-    T* highest() noexcept { return _highest; }
-    const T* highest() const noexcept { return _highest; }
+    T* highest() noexcept;
+    const T* highest() const noexcept;
 
     //! Compare two items: if the first item is less than the second one?
     bool compare(const T& item1, const T& item2) const noexcept { return _compare(item1, item2); }
@@ -226,9 +224,9 @@ private:
     TCompare _compare;  // Binary tree compare
     size_t _size;       // Binary tree size
     T* _root;           // Binary tree root node
-    T* _lowest;         // Binary tree lowest node
-    T* _highest;        // Binary tree highest node
 
+    const T* InternalLowest() const noexcept;
+    const T* InternalHighest() const noexcept;
     const T* InternalFind(const T& item) const noexcept;
     const T* InternalLowerBound(const T& item) const noexcept;
     const T* InternalUpperBound(const T& item) const noexcept;
