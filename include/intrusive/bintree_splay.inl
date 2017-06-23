@@ -302,30 +302,28 @@ inline T* BinTreeSplay<T, TCompare>::Pop(const T& item) noexcept
     if (result == nullptr)
         return nullptr;
 
-    T* left = result->left;
-    T* right = result->right;
-    if ((left == nullptr) && (right == nullptr))
-        _root = nullptr;
-    else if (left == nullptr)
+    if (result->left == nullptr)
     {
-        right->parent = nullptr;
-        T* subtree = SubtreeMin(right);
-        Splay(subtree);
+        _root = result->right;
+        if (_root != nullptr)
+            _root->parent = nullptr;
     }
-    else if (right == nullptr)
+    else if (result->right == nullptr)
     {
-        left->parent = nullptr;
-        T* subtree = SubtreeMax(left);
-        Splay(subtree);
+        _root = result->left;
+        if (_root != nullptr)
+            _root->parent = nullptr;
     }
     else
     {
-        left->parent = nullptr;
-        right->parent = nullptr;
-        T* subtree = SubtreeMax(left);
-        subtree->right = right;
-        right->parent = subtree;
-        Splay(subtree);
+        _root = result->left;
+        _root->parent = nullptr;
+        T* highest = result->left;
+        while (highest->right != nullptr)
+            highest = highest->right;
+        highest->right = result->right;
+        if (highest->right != nullptr)
+            highest->right->parent = highest;
     }
 
     result->parent = nullptr;
@@ -554,24 +552,6 @@ inline void BinTreeSplay<T, TCompare>::ZigZag(T* x) const
         (void)c;
         (void)d;
     }
-}
-
-template <typename T, typename TCompare>
-inline T* BinTreeSplay<T, TCompare>::SubtreeMin(T* x)
-{
-    T* current = x;
-    while (current->left != nullptr)
-        current = current->left;
-    return current;
-}
-
-template <typename T, typename TCompare>
-inline T* BinTreeSplay<T, TCompare>::SubtreeMax(T* x)
-{
-    T* current = x;
-    while (current->right != nullptr)
-        current = current->right;
-    return current;
 }
 
 template <typename T, typename TCompare>

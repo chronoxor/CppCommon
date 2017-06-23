@@ -194,22 +194,22 @@ void test()
 
 TEST_CASE("Intrusive non balanced binary tree", "[CppCommon][Intrusive]")
 {
-    //test<CppCommon::BinTree<MyBinTreeNode>>();
+    test<CppCommon::BinTree<MyBinTreeNode>>();
 }
 
 TEST_CASE("Intrusive balanced A.Andersson binary tree", "[CppCommon][Intrusive]")
 {
-    //test<CppCommon::BinTreeAA<MyBinTreeNode>>();
+    test<CppCommon::BinTreeAA<MyBinTreeNode>>();
 }
 
 TEST_CASE("Intrusive balanced AVL binary tree", "[CppCommon][Intrusive]")
 {
-    //test<CppCommon::BinTreeAVL<MyBinTreeNode>>();
+    test<CppCommon::BinTreeAVL<MyBinTreeNode>>();
 }
 
 TEST_CASE("Intrusive balanced Reb-Black binary tree", "[CppCommon][Intrusive]")
 {
-    //test<CppCommon::BinTreeRB<MyBinTreeNode>>();
+    test<CppCommon::BinTreeRB<MyBinTreeNode>>();
 }
 
 TEST_CASE("Intrusive balanced Splay binary tree", "[CppCommon][Intrusive]")

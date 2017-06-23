@@ -294,9 +294,6 @@ private:
     void Zig(T* x) const;
     void ZigZig(T* x) const;
     void ZigZag(T* x) const;
-
-    static T* SubtreeMin(T* x);
-    static T* SubtreeMax(T* x);
 };
 
 } // namespace CppCommon
