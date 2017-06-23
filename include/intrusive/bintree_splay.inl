@@ -126,12 +126,14 @@ inline const T* BinTreeSplay<T, TCompare>::InternalFind(const T& item) const noe
 {
     // Perform the binary tree search from the root node
     const T* current = _root;
+    const T* previous = nullptr;
 
     while (current != nullptr)
     {
         // Move to the left subtree
         if (compare(item, *current))
         {
+            previous = current;
             current = current->left;
             continue;
         }
@@ -139,13 +141,22 @@ inline const T* BinTreeSplay<T, TCompare>::InternalFind(const T& item) const noe
         // Move to the right subtree
         if (compare(*current, item))
         {
+            previous = current;
             current = current->right;
             continue;
         }
 
+        // Balance the binary tree
+        if (current != nullptr)
+            Splay((T*)current);
+
         // Found result node
         return current;
     }
+
+    // Balance the binary tree
+    if (previous != nullptr)
+        Splay((T*)previous);
 
     // Nothing was found...
     return nullptr;
@@ -187,9 +198,17 @@ inline const T* BinTreeSplay<T, TCompare>::InternalLowerBound(const T& item) con
             continue;
         }
 
+        // Balance the binary tree
+        if (current != nullptr)
+            Splay((T*)current);
+
         // Found result node
         return current;
     }
+
+    // Balance the binary tree
+    if (previous != nullptr)
+        Splay((T*)previous);
 
     // Return the previous lower bound node if any met
     return previous;
@@ -228,6 +247,10 @@ inline const T* BinTreeSplay<T, TCompare>::InternalUpperBound(const T& item) con
         current = current->right;
     }
 
+    // Balance the binary tree
+    if (previous != nullptr)
+        Splay((T*)previous);
+
     // Return the previous upper bound node if any met
     return previous;
 }
@@ -235,53 +258,39 @@ inline const T* BinTreeSplay<T, TCompare>::InternalUpperBound(const T& item) con
 template <typename T, typename TCompare>
 inline BinTreeSplay<T, TCompare>& BinTreeSplay<T, TCompare>::Push(T& item) noexcept
 {
-    // Perform the binary tree insert from the root node
-    T* current = _root;
-
-    while (current != nullptr)
+    T* result = (T*)InternalFind(item);
+    if (result != nullptr)
     {
-        // Move to the left subtree
-        if (compare(item, *current))
-        {
-            if (current->left != nullptr)
-            {
-                current = current->left;
-                continue;
-            }
-            else
-            {
-                // Link a new item to the left leaf
-                current->left = &item;
-                break;
-            }
-        }
-
-        // Move to the right subtree
-        if (compare(*current, item))
-        {
-            if (current->right != nullptr)
-            {
-                current = current->right;
-                continue;
-            }
-            else
-            {
-                // Link a new item to the right leaf
-                current->right = &item;
-                break;
-            }
-        }
-
         // Found duplicate node
         assert("Duplicate node can not be placed into the binary tree!");
         return *this;
     }
 
-    item.parent = current;
+    item.parent = nullptr;
     item.left = nullptr;
     item.right = nullptr;
-    if (_root == nullptr)
-        _root = &item;
+    if (_root != nullptr)
+    {
+        if (compare(item, *_root))
+        {
+            item.left = _root->left;
+            item.right = _root;
+            _root->parent = &item;
+            if (_root->left != nullptr)
+                _root->left->parent = &item;
+            _root->left = nullptr;
+        }
+        else
+        {
+            item.right = _root->right;
+            item.left = _root;
+            _root->parent = &item;
+            if (_root->right != nullptr)
+                _root->right->parent = &item;
+            _root->right = nullptr;
+        }
+    }
+    _root = &item;
     ++_size;
     return *this;
 }
@@ -293,63 +302,30 @@ inline T* BinTreeSplay<T, TCompare>::Pop(const T& item) noexcept
     if (result == nullptr)
         return nullptr;
 
-    T* parent = result->parent;
     T* left = result->left;
     T* right = result->right;
-
-    // Binary tree node without left child
-    if (left == nullptr)
+    if ((left == nullptr) && (right == nullptr))
+        _root = nullptr;
+    else if (left == nullptr)
     {
-        // Link the parent node with a right child
-        if (parent != nullptr)
-        {
-            if (parent->left == result)
-                parent->left = right;
-            else
-                parent->right = right;
-        }
-        else
-            _root = right;
-        if (right != nullptr)
-            right->parent = parent;
+        right->parent = nullptr;
+        T* subtree = SubtreeMin(right);
+        Splay(subtree);
     }
-    // Binary tree node without right child
     else if (right == nullptr)
     {
-        // Link the parent node with a left child
-        if (parent != nullptr)
-        {
-            if (parent->left == result)
-                parent->left = left;
-            else
-                parent->right = left;
-        }
-        else
-            _root = left;
-        if (left != nullptr)
-            left->parent = parent;
+        left->parent = nullptr;
+        T* subtree = SubtreeMax(left);
+        Splay(subtree);
     }
-    // Binary tree node with both left and right childs
     else
     {
-        // Link the parent node with a left child
-        if (parent != nullptr)
-        {
-            if (parent->left == result)
-                parent->left = left;
-            else
-                parent->right = left;
-        }
-        else
-            _root = left;
-        left->parent = parent;
-
-        // Find a new base node
-        T* temp = left;
-        while (temp->right != nullptr)
-            temp = temp->right;
-        temp->right = right;
-        right->parent = temp;
+        left->parent = nullptr;
+        right->parent = nullptr;
+        T* subtree = SubtreeMax(left);
+        subtree->right = right;
+        right->parent = subtree;
+        Splay(subtree);
     }
 
     result->parent = nullptr;
@@ -357,6 +333,245 @@ inline T* BinTreeSplay<T, TCompare>::Pop(const T& item) noexcept
     result->right = nullptr;
     --_size;
     return result;
+}
+
+template <typename T, typename TCompare>
+inline void BinTreeSplay<T, TCompare>::Splay(T* x) const
+{
+    while (x->parent != nullptr)
+    {
+        T* p = x->parent;
+        T* g = p->parent;
+        if (g == nullptr)
+            Zig(x);
+        else if ((g->left == p) && (p->left == x))
+            ZigZig(x);
+        else if ((g->right == p) && (p->right == x))
+            ZigZig(x);
+        else
+            ZigZag(x);
+    }
+    (T*&)_root = x;
+}
+
+template <typename T, typename TCompare>
+inline void BinTreeSplay<T, TCompare>::Zig(T* x) const
+{
+    T* p = x->parent;
+    if (p->left == x)
+    {
+        T* a = x->left;
+        T* b = x->right;
+        T* c = p->right;
+
+        x->parent = nullptr;
+        x->right = p;
+
+        p->parent = x;
+        p->left = b;
+
+        if (b != nullptr)
+            b->parent = p;
+
+        (void)a;
+        (void)b;
+        (void)c;
+    }
+    else
+    {
+        T* a = p->left;
+        T* b = x->left;
+        T* c = x->right;
+
+        x->parent = nullptr;
+        x->left = p;
+
+        p->parent = x;
+        p->right = b;
+
+        if (b != nullptr)
+            b->parent = p;
+
+        (void)a;
+        (void)b;
+        (void)c;
+    }
+}
+
+template <typename T, typename TCompare>
+inline void BinTreeSplay<T, TCompare>::ZigZig(T* x) const
+{
+    T* p = x->parent;
+    T* g = p->parent;
+    if (p->left == x)
+    {
+        T* a = x->left;
+        T* b = x->right;
+        T* c = p->right;
+        T* d = g->right;
+
+        x->parent = g->parent;
+        x->right = p;
+
+        p->parent = x;
+        p->left = b;
+        p->right = g;
+
+        g->parent = p;
+        g->left = c;
+
+        if (x->parent != nullptr)
+        {
+            if (x->parent->left == g)
+                x->parent->left = x;
+            else
+                x->parent->right = x;
+        }
+
+        if (b != nullptr)
+            b->parent = p;
+
+        if (c != nullptr)
+            c->parent = g;
+
+        (void)a;
+        (void)b;
+        (void)c;
+        (void)d;
+    }
+    else
+    {
+        T* a = g->left;
+        T* b = p->left;
+        T* c = x->left;
+        T* d = x->right;
+
+        x->parent = g->parent;
+        x->left = p;
+
+        p->parent = x;
+        p->left = g;
+        p->right = c;
+
+        g->parent = p;
+        g->right = b;
+
+        if (x->parent != nullptr)
+        {
+            if (x->parent->left == g)
+                x->parent->left = x;
+            else
+                x->parent->right = x;
+        }
+
+        if (b != nullptr)
+            b->parent = g;
+
+        if (c != nullptr)
+            c->parent = p;
+
+        (void)a;
+        (void)b;
+        (void)c;
+        (void)d;
+    }
+}
+
+template <typename T, typename TCompare>
+inline void BinTreeSplay<T, TCompare>::ZigZag(T* x) const
+{
+    T* p = x->parent;
+    T* g = p->parent;
+    if (p->right == x)
+    {
+        T* a = p->left;
+        T* b = x->left;
+        T* c = x->right;
+        T* d = g->right;
+
+        x->parent = g->parent;
+        x->left = p;
+        x->right = g;
+
+        p->parent = x;
+        p->right = b;
+
+        g->parent = x;
+        g->left = c;
+
+        if (x->parent != nullptr)
+        {
+            if (x->parent->left == g)
+                x->parent->left = x;
+            else
+                x->parent->right = x;
+        }
+
+        if (b != nullptr)
+            b->parent = p;
+
+        if (c != nullptr)
+            c->parent = g;
+
+        (void)a;
+        (void)b;
+        (void)c;
+        (void)d;
+    }
+    else
+    {
+        T* a = g->left;
+        T* b = x->left;
+        T* c = x->right;
+        T* d = p->right;
+
+        x->parent = g->parent;
+        x->left = g;
+        x->right = p;
+
+        p->parent = x;
+        p->left = c;
+
+        g->parent = x;
+        g->right = b;
+
+        if (x->parent != nullptr)
+        {
+            if (x->parent->left == g)
+                x->parent->left = x;
+            else
+                x->parent->right = x;
+        }
+
+        if (b != nullptr)
+            b->parent = g;
+
+        if (c != nullptr)
+            c->parent = p;
+
+        (void)a;
+        (void)b;
+        (void)c;
+        (void)d;
+    }
+}
+
+template <typename T, typename TCompare>
+inline T* BinTreeSplay<T, TCompare>::SubtreeMin(T* x)
+{
+    T* current = x;
+    while (current->left != nullptr)
+        current = current->left;
+    return current;
+}
+
+template <typename T, typename TCompare>
+inline T* BinTreeSplay<T, TCompare>::SubtreeMax(T* x)
+{
+    T* current = x;
+    while (current->right != nullptr)
+        current = current->right;
+    return current;
 }
 
 template <typename T, typename TCompare>

@@ -126,12 +126,14 @@ inline const T* BinTreeAA<T, TCompare>::InternalFind(const T& item) const noexce
 {
     // Perform the binary tree search from the root node
     const T* current = _root;
+    const T* previous = nullptr;
 
     while (current != nullptr)
     {
         // Move to the left subtree
         if (compare(item, *current))
         {
+            previous = current;
             current = current->left;
             continue;
         }
@@ -139,6 +141,7 @@ inline const T* BinTreeAA<T, TCompare>::InternalFind(const T& item) const noexce
         // Move to the right subtree
         if (compare(*current, item))
         {
+            previous = current;
             current = current->right;
             continue;
         }
@@ -292,12 +295,12 @@ inline BinTreeAA<T, TCompare>& BinTreeAA<T, TCompare>::Push(T& item) noexcept
         node = node->parent;
         if (node->level != ((node->left != nullptr) ? node->left->level + 1 : 1))
         {
-            skew(node);
+            Skew(node);
             if ((node->right == nullptr) || (node->level != node->right->level))
                 node = node->parent;
         }
 
-        if (!split(node->parent))
+        if (!Split(node->parent))
             break;
     }
 
@@ -363,10 +366,10 @@ inline T* BinTreeAA<T, TCompare>::Pop(const T& item) noexcept
         if (temp->level > ((temp->left != nullptr) ? temp->left->level + 1 : 1))
         {
             temp->level = temp->level - 1;
-            if (split(temp))
+            if (Split(temp))
             {
-                if (split(temp))
-                    skew(temp->parent->parent);
+                if (Split(temp))
+                    Skew(temp->parent->parent);
                 break;
             }
         }
@@ -374,11 +377,11 @@ inline T* BinTreeAA<T, TCompare>::Pop(const T& item) noexcept
             break;
         else
         {
-            skew(temp);
+            Skew(temp);
             if (temp->level > temp->parent->level)
             {
-                skew(temp);
-                split(temp->parent->parent);
+                Skew(temp);
+                Split(temp->parent->parent);
                 break;
             }
             temp = temp->parent;
@@ -394,7 +397,7 @@ inline T* BinTreeAA<T, TCompare>::Pop(const T& item) noexcept
 }
 
 template <typename T, typename TCompare>
-inline void BinTreeAA<T, TCompare>::skew(T* node)
+inline void BinTreeAA<T, TCompare>::Skew(T* node)
 {
     if (node == nullptr)
         return;
@@ -424,7 +427,7 @@ inline void BinTreeAA<T, TCompare>::skew(T* node)
 }
 
 template <typename T, typename TCompare>
-inline bool BinTreeAA<T, TCompare>::split(T* node)
+inline bool BinTreeAA<T, TCompare>::Split(T* node)
 {
     if (node == nullptr)
         return false;

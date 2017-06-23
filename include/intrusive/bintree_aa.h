@@ -159,7 +159,7 @@ private:
 
         \param node - Skew node
     */
-    void skew(T* node);
+    void Skew(T* node);
     //! Split the binary tree node.
     /*!
         Split is a conditional left rotation when an insertion or deletion
@@ -168,7 +168,7 @@ private:
         \param node - Split node
         \return 'true' if the split operation completed successfully, 'false' if the split operation failed
     */
-    bool split(T* node);
+    bool Split(T* node);
 };
 
 } // namespace CppCommon

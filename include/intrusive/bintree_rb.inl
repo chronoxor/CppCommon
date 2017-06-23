@@ -126,12 +126,14 @@ inline const T* BinTreeRB<T, TCompare>::InternalFind(const T& item) const noexce
 {
     // Perform the binary tree search from the root node
     const T* current = _root;
+    const T* previous = nullptr;
 
     while (current != nullptr)
     {
         // Move to the left subtree
         if (compare(item, *current))
         {
+            previous = current;
             current = current->left;
             continue;
         }
@@ -139,6 +141,7 @@ inline const T* BinTreeRB<T, TCompare>::InternalFind(const T& item) const noexce
         // Move to the right subtree
         if (compare(*current, item))
         {
+            previous = current;
             current = current->right;
             continue;
         }
