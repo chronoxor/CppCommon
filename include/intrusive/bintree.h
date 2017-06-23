@@ -28,7 +28,7 @@ class BinTreeReverseConstIterator;
     Binary trees are the good structures for associative searching. They  keep
     items in sort order, so each of item can be found in a short time.
 
-    <b>Overview.</b>\n
+    <b>Overview</b>\n
     In computer science, a binary search tree (BST) is a binary tree which has
     the following properties:
     \li Each node has a value.
@@ -95,7 +95,7 @@ class BinTreeReverseConstIterator;
     For some implementations these times are worst-case, while for others they
     are amortized.
 
-    <b>Applications.</b>\n
+    <b>Applications</b>\n
     Self-balancing binary search trees  can  be  used  in  a  natural  way  to
     construct associative arrays; key-value pairs are simply inserted with  an
     ordering based on the key alone. In  this  capacity,  self-balancing  BSTs
@@ -120,7 +120,7 @@ class BinTreeReverseConstIterator;
     extensions can be used, for example, to optimize database queries or other
     list-processing algorithms.
 
-    <b>References.</b>\n
+    <b>References</b>\n
     \li Donald Knuth. The Art of Computer Programming, Volume 3:  Sorting  and
         Searching, Third Edition. Addison-Wesley,  1997.  ISBN  0-201-89685-0.
         Section 6.2.3: Balanced Trees, pp.458-481.

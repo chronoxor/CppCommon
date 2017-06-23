@@ -42,7 +42,7 @@ class ListReverseConstIterator;
                       +--->------ Remove from here and there -----<---+
     \endcode
 
-    <b>Overview.</b>\n
+    <b>Overview</b>\n
     \image html List.png "Double linked list"
     In computer science,  a  linked  list  is  one  of  the  fundamental  data
     structures used in computer programming. It  consists  of  a  sequence  of
@@ -59,14 +59,14 @@ class ListReverseConstIterator;
     access the linked list. Procedural languages such  as  C,  C++,  and  Java
     typically rely on mutable references to create linked lists.
 
-    <b>Doubly-linked list.</b>\n
+    <b>Doubly-linked list</b>\n
     A more sophisticated kind of  linked  list  is  a  doubly-linked  list  or
     two-way linked list. Each node has two links: one points to  the  previous
     node, or points to a null value or empty list if it is the first node; and
     one points to the next, or points to a null value or empty list if  it  is
     the final node.
 
-    <b>Applications of linked lists.</b>\n
+    <b>Applications of linked lists</b>\n
     Linked lists are used as a building block for many other data  structures,
     such as stacks, queues and their variations.
 
@@ -104,7 +104,7 @@ class ListReverseConstIterator;
     that these indexes may need to be updated each time a  node  is  added  or
     removed (or at least, before that index is used again).
 
-    <b>References.</b>\n
+    <b>References</b>\n
     \li National Institute of Standards  and  Technology  (August  16,  2004).
         Definition of a linked list. Retrieved December 14, 2004.
     \li Antonakos, James L. and Mansfield,  Kenneth  C.,  Jr.  Practical  Data

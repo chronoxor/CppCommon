@@ -5,7 +5,10 @@
 #include "catch.hpp"
 
 #include "intrusive/bintree.h"
+#include "intrusive/bintree_aa.h"
+#include "intrusive/bintree_avl.h"
 #include "intrusive/bintree_rb.h"
+#include "intrusive/bintree_splay.h"
 
 using namespace CppCommon;
 
@@ -16,6 +19,8 @@ struct MyBinTreeNode
     MyBinTreeNode* parent;
     MyBinTreeNode* left;
     MyBinTreeNode* right;
+    uint8_t balance;
+    size_t level;
     bool rb;
 
     MyBinTreeNode(int v) : value(v) {}
@@ -67,11 +72,21 @@ void test()
 
     int sum = 0;
     int prev = 0;
-    for (auto it : bintree)
+    for (auto it = bintree.begin(); it != bintree.end(); ++it)
     {
-        REQUIRE(prev < it.value);
-        prev = it.value;
-        sum += it.value;
+        REQUIRE(prev < it->value);
+        prev = it->value;
+        sum += it->value;
+    }
+    REQUIRE(sum == 45);
+
+    sum = 0;
+    prev = 10;
+    for (auto it = bintree.rbegin(); it != bintree.rend(); ++it)
+    {
+        REQUIRE(prev > it->value);
+        prev = it->value;
+        sum += it->value;
     }
     REQUIRE(sum == 45);
 
@@ -184,8 +199,22 @@ TEST_CASE("Intrusive non balanced binary tree", "[CppCommon][Intrusive]")
     test<CppCommon::BinTree<MyBinTreeNode>>();
 }
 
+TEST_CASE("Intrusive balanced A.Andersson binary tree", "[CppCommon][Intrusive]")
+{
+    test<CppCommon::BinTreeAA<MyBinTreeNode>>();
+}
+
+TEST_CASE("Intrusive balanced AVL binary tree", "[CppCommon][Intrusive]")
+{
+    test<CppCommon::BinTreeAVL<MyBinTreeNode>>();
+}
+
 TEST_CASE("Intrusive balanced Reb-Black binary tree", "[CppCommon][Intrusive]")
 {
     test<CppCommon::BinTreeRB<MyBinTreeNode>>();
 }
 
+TEST_CASE("Intrusive balanced Splay binary tree", "[CppCommon][Intrusive]")
+{
+    test<CppCommon::BinTreeSplay<MyBinTreeNode>>();
+}

@@ -16,7 +16,7 @@ namespace CppCommon {
 
 //! Intrusive balanced Red-Black binary tree container
 /*!
-    <b>Overview.</b>\n
+    <b>Overview</b>\n
     A red-black tree is a type of self-balancing binary search  tree,  a  data
     structure  used  in  computer  science,  typically   used   to   implement
     associative arrays. The original structure was invented in 1972 by  Rudolf
@@ -26,7 +26,7 @@ namespace CppCommon {
     efficient in practice: it can search, insert, and delete in O(log n) time,
     where n is the number of elements in the tree.
 
-    <b>Background and terminology.</b>\n
+    <b>Background and terminology</b>\n
     A red-black tree is a special type of binary tree, which  is  a  structure
     used in computer science to organize pieces of comparable  data,  such  as
     numbers. Each piece of data is stored in a node. One of the  nodes  always
@@ -72,7 +72,7 @@ namespace CppCommon {
     introduce 2-3-4 trees just before red-black trees, even though 2-3-4 trees
     are not often used in practice.
 
-    <b>Properties.</b>\n
+    <b>Properties</b>\n
     \image html BinTreeRB.png "Red-Black binary tree"
     A red-black tree is a binary search tree  where  each  node  has  a  color
     attribute, the value of which is either red or black. In addition  to  the
@@ -120,7 +120,7 @@ namespace CppCommon {
     node  is  always  black  in  our  terminology  (property  2)  whereas  the
     corresponding edge does not exist.
 
-    <b>Operations.</b>\n
+    <b>Operations</b>\n
     Read-only operations on a red-black  tree  require  no  modification  from
     those used for binary search trees, because  every  red-black  tree  is  a
     specialization of a simple binary  search  tree.  However,  the  immediate
@@ -131,7 +131,7 @@ namespace CppCommon {
     Although insert and delete operations are complicated, their times  remain
     O(log n).
 
-    <b>Proof of asymptotic bounds.</b>\n
+    <b>Proof of asymptotic bounds</b>\n
 
     A red black  tree  which  contains  n  internal  nodes  has  a  height  of
     O(log(n)).
@@ -176,7 +176,7 @@ namespace CppCommon {
 
     Therefore the height of the root is O(log(n)).
 
-    <b>References.</b>\n
+    <b>References</b>\n
     \li Mathworld: Red-Black Tree
     \li San Diego State University: CS 660: Red-Black  tree  notes,  by  Roger
         Whitney

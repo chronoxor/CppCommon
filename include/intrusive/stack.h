@@ -40,7 +40,7 @@ class StackConstIterator;
 
     Not thread-safe.
 
-    <b>Overview.</b>\n
+    <b>Overview</b>\n
     \image html Stack.png "Stack"
     In computer science, a stack is a temporary abstract data  type  and  data
     structure based on the principle of Last In First Out (LIFO).  Stacks  are
@@ -55,7 +55,7 @@ class StackConstIterator;
     primarily in stacks, rather than hardware CPU registers (a  register-based
     computer system).
 
-    <b>Abstract data type.</b>\n
+    <b>Abstract data type</b>\n
     As an abstract data type, the stack is a  container  (data  structure)  of
     nodes and has two basic operations: push and pop. Push adds a  given  node
     to the top of the stack leaving previous  nodes  below.  Pop  removes  and
@@ -71,23 +71,23 @@ class StackConstIterator;
     see what is on the third plate, the first and second plates will  have  to
     be removed.
 
-    <b>Other Operations.</b>\n
+    <b>Other Operations</b>\n
     In modern computer languages, the stack is usually implemented  with  more
     operations than just "push" and "pop". The length of a stack can often  be
     returned as a parameter. Another helper  operation  peek  can  return  the
     current top node of the stack without removing it from the stack.
 
-    <b>Implementation.</b>\n
+    <b>Implementation</b>\n
     A typical storage requirement for a stack  of  n  elements  is  O(n).  The
     typical time requirement of O(1) operations is also easy to  satisfy  with
     an dynamic array or (singly) linked list implementation.
 
-    <b>History.</b>\n
+    <b>History</b>\n
     The stack method of expression evaluation  was  first  proposed  by  early
     German computer scientist F.L.  Bauer,  who  received  the  IEEE  Computer
     Society Pioneer Award in 1988 for his work on Computer Stacks.
 
-    <b>References.</b>\n
+    <b>References</b>\n
     \li Donald Knuth. The Art of Computer Programming, Volume  1:  Fundamental
         Algorithms, Third Edition. Addison-Wesley, 1997.  ISBN  0-201-89683-4.
         Section 2.2.1: Stacks, Queues, and Deques, pp. 238-243.

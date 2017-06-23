@@ -41,7 +41,7 @@ class QueueConstIterator;
 
     Not thread-safe.
 
-    <b>Overview.</b>\n
+    <b>Overview</b>\n
     \image html Queue.png "Queue"
     In providing services  in  computer  science,  transport,  and  operations
     research a queue is a buffer where various entities such as data, objects,
@@ -70,7 +70,7 @@ class QueueConstIterator;
     element onto a full queue and  queue  underflow  happens  when  trying  to
     remove an element from an empty queue.
 
-    <b>Scheduling and buffering queues.</b>
+    <b>Scheduling and buffering queues</b>
     A queue is natural data structure for  a  system  to  serve  the  incoming
     requests. Most of the process scheduling or disk scheduling algorithms  in
     operating systems use queues. Computer hardware  like  a  processor  or  a
@@ -80,12 +80,12 @@ class QueueConstIterator;
     save messages to communicate between two users or processes in a system is
     essentially a queue like structure.
 
-    <b>Search space exploration.</b>
+    <b>Search space exploration</b>
     Like stacks, queues can be used to remember the search space that needs to
     be explored at one point of time in traversing algorithms.  Breadth  first
     search of a graph uses a queue to remember the nodes yet to be visited.
 
-    <b>References.</b>\n
+    <b>References</b>\n
     \li Donald Knuth. The Art of Computer Programming, Volume  1:  Fundamental
         Algorithms, Third Edition. Addison-Wesley, 1997.  ISBN  0-201-89683-4.
         Section 2.2.1: Stacks, Queues, and Deques, pp. 238-243.
