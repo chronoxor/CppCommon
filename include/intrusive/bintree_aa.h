@@ -45,6 +45,11 @@ namespace CppCommon {
     performance than an AA tree, but an AA tree tends  to  be  flatter,  which
     results in slightly faster search times.
 
+    <b>Usage</b>\n
+    When comparisons are expensive but lookups are more frequent than updates,
+    the  AA  tree  might win.  AA  tree  tends  to  be flatter,  which results
+    in  slightly faster search times.
+
     <b>Taken from:</b>\n
     AA tree from Wikipedia, the free encyclopedia
     http://en.wikipedia.org/wiki/AA_tree

@@ -76,6 +76,10 @@ namespace CppCommon {
     structure is not modified by lookups. (This is in contrast to  splay  tree
     lookups, which do modify their tree's structure.)
 
+    <b>Usage</b>\n
+    AVL trees are  faster than Red-Black  trees when lookups are more frequent
+    than inserts/deletes and comparisons are expensive.
+
     <b>References</b>\n
     \li G. Adelson-Velskii and E.M. Landis, "An algorithm for the organization
         of  information."  Doklady  Akademii  Nauk  SSSR,  146:263-266,   1962

@@ -176,6 +176,13 @@ namespace CppCommon {
 
     Therefore the height of the root is O(log(n)).
 
+    <b>Usage</b>\n
+    Reb-Black trees have as a first advantage that their performance is easier
+    to  predict, making  them a good  data structure  for libraries. Reb-Black
+    tree  win AVL trees  in cases when there are lots of inserts / deletes and
+    comparisons  are  chap.  Reb-Black tree  will be faster because on average
+    Reb-Black tree use less rotation.
+
     <b>References</b>\n
     \li Mathworld: Red-Black Tree
     \li San Diego State University: CS 660: Red-Black  tree  notes,  by  Roger

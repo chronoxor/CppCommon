@@ -171,6 +171,10 @@ namespace CppCommon {
     the elements in T2 in preorder (i.e. depth first search order). The  total
     cost of performing the sequence S of acesses on T1 is O(n).
 
+    <b>Usage</b>\n
+    Splay tree might be used in different caches and provides near O(1) lookup
+    to the most frequent access items.
+
     <b>References</b>\n
     \li Sleator and R.E. Tarjan. Self-Adjusting Binary Search  Trees.  Journal
         of the ACM 32:3, pages 652-686, 1985.
