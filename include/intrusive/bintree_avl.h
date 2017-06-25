@@ -104,7 +104,7 @@ public:
         T* parent;          //!< Pointer to the parent binary tree node
         T* left;            //!< Pointer to the left child binary tree node
         T* right;           //!< Pointer to the right child binary tree node
-        uint8_t balance;    //!< Balance level (-1, 0, 1)
+        char balance;       //!< Balance level (-1, 0, 1)
     };
 
     explicit BinTreeAVL(const TCompare& compare = TCompare()) noexcept
@@ -196,6 +196,13 @@ private:
     const T* InternalFind(const T& item) const noexcept;
     const T* InternalLowerBound(const T& item) const noexcept;
     const T* InternalUpperBound(const T& item) const noexcept;
+
+    static void RotateLeft(T* node);
+    static void RotateRight(T* node);
+    static void RotateLeftLeft(T* node);
+    static void RotateRightRight(T* node);
+    static void Unlink(T* node);
+    static void Swap(T*& node1, T*& node2);
 };
 
 } // namespace CppCommon

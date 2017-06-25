@@ -19,7 +19,7 @@ struct MyBinTreeNode
     MyBinTreeNode* parent;
     MyBinTreeNode* left;
     MyBinTreeNode* right;
-    uint8_t balance;
+    char balance;
     size_t level;
     bool rb;
 
