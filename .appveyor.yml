@@ -15,6 +15,7 @@ only_commits:
 
 # Cache files to speed up build
 cache:
+    - C:\miktex -> appveyor.yml 
     - C:\mingw.7z -> .appveyor.yml
     - C:\cache\cygwin -> .appveyor.yml
     - C:\ProgramData\chocolatey\bin -> .appveyor.yml
@@ -54,8 +55,12 @@ install:
   - if "%type%"=="MinGW" set PATH=C:\mingw64\bin;%PATH:C:\Program Files\Git\usr\bin;=%
   - if "%type%"=="MinGW" set INCLUDE=C:\mingw64\x86_64-w64-mingw32\include;%INCLUDE%
   # Visual Studio
+  - if "%type%"=="VisualStudio" if not exist c:\miktex\texmfs\install\miktex\bin\pdflatex.exe appveyor DownloadFile http://mirrors.ctan.org/systems/win32/miktex/setup/miktex-portable.exe 
+  - if "%type%"=="VisualStudio" if not exist c:\miktex\texmfs\install\miktex\bin\pdflatex.exe 7z x miktex-portable.exe -oC:\miktex > NUL 
   - if "%type%"=="VisualStudio" set INCLUDE=C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\um;%INCLUDE%
   - if "%type%"=="VisualStudio" set LIB=C:\Program Files (x86)\Windows Kits\10\Lib\10.0.15063.0\um\x64;%LIB%
+  - if "%type%"=="VisualStudio" set PATH=C:\miktex\texmfs\install\miktex\bin;%PATH%
+  - if "%type%"=="VisualStudio" initexmf --set-config-value "[MPM]AutoInstall=1"
   # git
   - '%command% "cmake --version"'
   - '%command% "git config --global user.name "AppVeyor""'
