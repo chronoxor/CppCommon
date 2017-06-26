@@ -55,7 +55,7 @@ install:
   - if "%type%"=="VisualStudio" set PATH=C:\Program Files\MiKTeX 2.9\miktex\bin\x64;C:\Program Files\gs\gs9.21\bin;%PATH%
   - if "%type%"=="VisualStudio" set INCLUDE=C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\um;%INCLUDE%
   - if "%type%"=="VisualStudio" set LIB=C:\Program Files (x86)\Windows Kits\10\Lib\10.0.15063.0\um\x64;%LIB%
-  - if "%type%"=="VisualStudio" copy gswin64c.exe gswin32c.exe
+  - if "%type%"=="VisualStudio" copy "C:\Program Files\gs\gs9.21\bin\gswin64c.exe" "C:\Program Files\gs\gs9.21\bin\gswin32c.exe"
   # git
   - '%command% "cmake --version"'
   - '%command% "git config --global user.name "AppVeyor""'
