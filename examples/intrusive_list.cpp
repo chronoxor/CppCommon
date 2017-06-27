@@ -24,12 +24,12 @@ int main(int argc, char** argv)
     MyListNode item2(456);
     MyListNode item3(789);
 
-    list.PushFront(item1);
-    list.PushBack(item2);
-    list.PushNext(item2, item3);
+    list.push_front(item1);
+    list.push_back(item2);
+    list.push_next(item2, item3);
 
     while (list)
-        std::cout << "list.PopFront() = " << list.PopFront()->value << std::endl;
+        std::cout << "list.pop_front() = " << list.pop_front()->value << std::endl;
 
     return 0;
 }

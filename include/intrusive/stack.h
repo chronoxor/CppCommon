@@ -145,16 +145,16 @@ public:
         \param item - Pushed item
         \return The current stack collection
     */
-    Stack& Push(T& item) noexcept;
+    Stack& push(T& item) noexcept;
 
     //! Pop the item from the top of the stack
     /*!
         \return The top item popped from the stack
     */
-    T* Pop() noexcept;
+    T* pop() noexcept;
 
     //! Reverse the stack
-    void Reverse() noexcept;
+    void reverse() noexcept;
 
     //! Swap two instances
     void swap(Stack& stack) noexcept;

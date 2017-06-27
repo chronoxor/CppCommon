@@ -204,59 +204,59 @@ public:
         \param item - Pushed item
         \return The current list collection
     */
-    List& PushFront(T& item) noexcept;
+    List& push_front(T& item) noexcept;
     //! Push a new item into the back of the list
     /*!
         \param item - Pushed item
         \return The current list collection
     */
-    List& PushBack(T& item) noexcept;
+    List& push_back(T& item) noexcept;
     //! Push a new item as a next to the given one
     /*!
         \param base - Base item
         \param item - Pushed item
         \return The current list collection
     */
-    List& PushNext(T& base, T& item) noexcept;
+    List& push_next(T& base, T& item) noexcept;
     //! Push a new item as a previous to the given one
     /*!
         \param base - Base item
         \param item - Pushed item
         \return The current list collection
     */
-    List& PushPrev(T& base, T& item) noexcept;
+    List& push_prev(T& base, T& item) noexcept;
 
     //! Pop the item from the front of the list
     /*!
         \return The front item popped from the list
     */
-    T* PopFront() noexcept;
+    T* pop_front() noexcept;
     //! Pop the item from the back of the list
     /*!
         \return The back item popped from the list
     */
-    T* PopBack() noexcept;
+    T* pop_back() noexcept;
     //! Pop the given item from the list
     /*!
         \param base - Base item
         \return The given item popped from the list
     */
-    T* PopCurrent(T& base) noexcept;
+    T* pop_current(T& base) noexcept;
     //! Pop the next item of the given one from the list
     /*!
         \param base - Base item
         \return The next item popped from the list
     */
-    T* PopNext(T& base) noexcept;
+    T* pop_next(T& base) noexcept;
     //! Pop the previous item of the given one from the list
     /*!
         \param base - Base item
         \return The previous item popped from the list
     */
-    T* PopPrev(T& base) noexcept;
+    T* pop_prev(T& base) noexcept;
 
     //! Reverse the list
-    void Reverse() noexcept;
+    void reverse() noexcept;
 
     //! Swap two instances
     void swap(List& list) noexcept;

@@ -24,12 +24,12 @@ int main(int argc, char** argv)
     MyQueueNode item2(456);
     MyQueueNode item3(789);
 
-    queue.Push(item1);
-    queue.Push(item2);
-    queue.Push(item3);
+    queue.push(item1);
+    queue.push(item2);
+    queue.push(item3);
 
     while (queue)
-        std::cout << "queue.Pop() = " << queue.Pop()->value << std::endl;
+        std::cout << "queue.pop() = " << queue.pop()->value << std::endl;
 
     return 0;
 }

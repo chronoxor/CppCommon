@@ -41,7 +41,7 @@ inline QueueConstIterator<T> Queue<T>::end() const noexcept
 }
 
 template <typename T>
-inline Queue<T>& Queue<T>::Push(T& item) noexcept
+inline Queue<T>& Queue<T>::push(T& item) noexcept
 {
     if (_back != nullptr)
         _back->next = &item;
@@ -54,7 +54,7 @@ inline Queue<T>& Queue<T>::Push(T& item) noexcept
 }
 
 template <typename T>
-inline T* Queue<T>::Pop() noexcept
+inline T* Queue<T>::pop() noexcept
 {
     if (_front == nullptr)
         return nullptr;
@@ -69,7 +69,7 @@ inline T* Queue<T>::Pop() noexcept
 }
 
 template <typename T>
-inline void Queue<T>::Reverse() noexcept
+inline void Queue<T>::reverse() noexcept
 {
     T* current = _front;
     T* prev = nullptr;

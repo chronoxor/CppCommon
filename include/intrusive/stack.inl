@@ -41,7 +41,7 @@ inline StackConstIterator<T> Stack<T>::end() const noexcept
 }
 
 template <typename T>
-inline Stack<T>& Stack<T>::Push(T& item) noexcept
+inline Stack<T>& Stack<T>::push(T& item) noexcept
 {
     item.next = _top;
     _top = &item;
@@ -50,7 +50,7 @@ inline Stack<T>& Stack<T>::Push(T& item) noexcept
 }
 
 template <typename T>
-inline T* Stack<T>::Pop() noexcept
+inline T* Stack<T>::pop() noexcept
 {
     if (_top == nullptr)
         return nullptr;
@@ -63,7 +63,7 @@ inline T* Stack<T>::Pop() noexcept
 }
 
 template <typename T>
-inline void Stack<T>::Reverse() noexcept
+inline void Stack<T>::reverse() noexcept
 {
     T* current = _top;
     T* prev = nullptr;

@@ -21,13 +21,13 @@ TEST_CASE("Intrusive stack", "[CppCommon][Intrusive]")
     REQUIRE(stack.size() == 0);
 
     MyStackNode item1(1);
-    stack.Push(item1);
+    stack.push(item1);
     REQUIRE(stack.size() == 1);
     MyStackNode item2(2);
-    stack.Push(item2);
+    stack.push(item2);
     REQUIRE(stack.size() == 2);
     MyStackNode item3(3);
-    stack.Push(item3);
+    stack.push(item3);
     REQUIRE(stack.size() == 3);
 
     REQUIRE(!stack.empty());
@@ -37,34 +37,34 @@ TEST_CASE("Intrusive stack", "[CppCommon][Intrusive]")
         sum += it.value;
     REQUIRE(sum == 6);
 
-    MyStackNode* node = stack.Pop();
+    MyStackNode* node = stack.pop();
     REQUIRE(node != nullptr);
     REQUIRE(node->value == 3);
     REQUIRE(stack.size() == 2);
 
-    node = stack.Pop();
+    node = stack.pop();
     REQUIRE(node != nullptr);
     REQUIRE(node->value == 2);
     REQUIRE(stack.size() == 1);
 
-    stack.Push(item2);
+    stack.push(item2);
     REQUIRE(stack.size() == 2);
-    stack.Push(item3);
+    stack.push(item3);
     REQUIRE(stack.size() == 3);
 
-    stack.Reverse();
+    stack.reverse();
 
-    node = stack.Pop();
+    node = stack.pop();
     REQUIRE(node != nullptr);
     REQUIRE(node->value == 1);
     REQUIRE(stack.size() == 2);
 
-    node = stack.Pop();
+    node = stack.pop();
     REQUIRE(node != nullptr);
     REQUIRE(node->value == 2);
     REQUIRE(stack.size() == 1);
 
-    node = stack.Pop();
+    node = stack.pop();
     REQUIRE(node != nullptr);
     REQUIRE(node->value == 3);
     REQUIRE(stack.size() == 0);

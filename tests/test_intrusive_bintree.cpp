@@ -45,23 +45,23 @@ void test()
     MyBinTreeNode item8(8);
     MyBinTreeNode item9(9);
 
-    bintree.Push(item6);
+    bintree.push(item6);
     REQUIRE(bintree.size() == 1);
-    bintree.Push(item3);
+    bintree.push(item3);
     REQUIRE(bintree.size() == 2);
-    bintree.Push(item7);
+    bintree.push(item7);
     REQUIRE(bintree.size() == 3);
-    bintree.Push(item2);
+    bintree.push(item2);
     REQUIRE(bintree.size() == 4);
-    bintree.Push(item8);
+    bintree.push(item8);
     REQUIRE(bintree.size() == 5);
-    bintree.Push(item1);
+    bintree.push(item1);
     REQUIRE(bintree.size() == 6);
-    bintree.Push(item4);
+    bintree.push(item4);
     REQUIRE(bintree.size() == 7);
-    bintree.Push(item9);
+    bintree.push(item9);
     REQUIRE(bintree.size() == 8);
-    bintree.Push(item5);
+    bintree.push(item5);
     REQUIRE(bintree.size() == 9);
 
     REQUIRE(!bintree.empty());
@@ -124,16 +124,16 @@ void test()
     REQUIRE(bintree.upper_bound(8)->value == 9);
     REQUIRE(!bintree.upper_bound(9));
 
-    REQUIRE(!bintree.Pop(0));
-    REQUIRE(!bintree.Pop(10));
+    REQUIRE(!bintree.pop(0));
+    REQUIRE(!bintree.pop(10));
 
-    REQUIRE(bintree.Pop(1));
+    REQUIRE(bintree.pop(1));
     REQUIRE(bintree.size() == 8);
-    REQUIRE(bintree.Pop(3));
+    REQUIRE(bintree.pop(3));
     REQUIRE(bintree.size() == 7);
-    REQUIRE(bintree.Pop(6));
+    REQUIRE(bintree.pop(6));
     REQUIRE(bintree.size() == 6);
-    REQUIRE(bintree.Pop(9));
+    REQUIRE(bintree.pop(9));
     REQUIRE(bintree.size() == 5);
 
     REQUIRE(bintree.lowest()->value == 2);
@@ -174,15 +174,15 @@ void test()
     REQUIRE(!bintree.upper_bound(8));
     REQUIRE(!bintree.upper_bound(9));
 
-    REQUIRE(bintree.Pop(5));
+    REQUIRE(bintree.pop(5));
     REQUIRE(bintree.size() == 4);
-    REQUIRE(bintree.Pop(2));
+    REQUIRE(bintree.pop(2));
     REQUIRE(bintree.size() == 3);
-    REQUIRE(bintree.Pop(7));
+    REQUIRE(bintree.pop(7));
     REQUIRE(bintree.size() == 2);
-    REQUIRE(bintree.Pop(8));
+    REQUIRE(bintree.pop(8));
     REQUIRE(bintree.size() == 1);
-    REQUIRE(bintree.Pop(4));
+    REQUIRE(bintree.pop(4));
     REQUIRE(bintree.size() == 0);
 
     REQUIRE(!bintree.root());

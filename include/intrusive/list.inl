@@ -65,7 +65,7 @@ inline ListReverseConstIterator<T> List<T>::rend() const noexcept
 }
 
 template <typename T>
-inline List<T>& List<T>::PushFront(T& item) noexcept
+inline List<T>& List<T>::push_front(T& item) noexcept
 {
     if (_front != nullptr)
         _front->prev = &item;
@@ -79,7 +79,7 @@ inline List<T>& List<T>::PushFront(T& item) noexcept
 }
 
 template <typename T>
-inline List<T>& List<T>::PushBack(T& item) noexcept
+inline List<T>& List<T>::push_back(T& item) noexcept
 {
     if (_back != nullptr)
         _back->next = &item;
@@ -93,7 +93,7 @@ inline List<T>& List<T>::PushBack(T& item) noexcept
 }
 
 template <typename T>
-inline List<T>& List<T>::PushNext(T& base, T& item) noexcept
+inline List<T>& List<T>::push_next(T& base, T& item) noexcept
 {
     item.next = base.next;
     item.prev = &base;
@@ -107,7 +107,7 @@ inline List<T>& List<T>::PushNext(T& base, T& item) noexcept
 }
 
 template <typename T>
-inline List<T>& List<T>::PushPrev(T& base, T& item) noexcept
+inline List<T>& List<T>::push_prev(T& base, T& item) noexcept
 {
     item.next = &base;
     item.prev = base.prev;
@@ -121,7 +121,7 @@ inline List<T>& List<T>::PushPrev(T& base, T& item) noexcept
 }
 
 template <typename T>
-inline T* List<T>::PopFront() noexcept
+inline T* List<T>::pop_front() noexcept
 {
     if (_front == nullptr)
         return nullptr;
@@ -139,7 +139,7 @@ inline T* List<T>::PopFront() noexcept
 }
 
 template <typename T>
-inline T* List<T>::PopBack() noexcept
+inline T* List<T>::pop_back() noexcept
 {
     if (_back == nullptr)
         return nullptr;
@@ -157,7 +157,7 @@ inline T* List<T>::PopBack() noexcept
 }
 
 template <typename T>
-inline T* List<T>::PopCurrent(T& base) noexcept
+inline T* List<T>::pop_current(T& base) noexcept
 {
     T* result = &base;
     if (result->next != nullptr)
@@ -175,7 +175,7 @@ inline T* List<T>::PopCurrent(T& base) noexcept
 }
 
 template <typename T>
-inline T* List<T>::PopNext(T& base) noexcept
+inline T* List<T>::pop_next(T& base) noexcept
 {
     if (base.next == nullptr)
         return nullptr;
@@ -193,7 +193,7 @@ inline T* List<T>::PopNext(T& base) noexcept
 }
 
 template <typename T>
-inline T* List<T>::PopPrev(T& base) noexcept
+inline T* List<T>::pop_prev(T& base) noexcept
 {
     if (base.prev == nullptr)
         return nullptr;
@@ -211,7 +211,7 @@ inline T* List<T>::PopPrev(T& base) noexcept
 }
 
 template <typename T>
-inline void List<T>::Reverse() noexcept
+inline void List<T>::reverse() noexcept
 {
     T* current = _front;
     T* prev = nullptr;

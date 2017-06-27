@@ -256,7 +256,7 @@ inline const T* BinTreeSplay<T, TCompare>::InternalUpperBound(const T& item) con
 }
 
 template <typename T, typename TCompare>
-inline BinTreeSplay<T, TCompare>& BinTreeSplay<T, TCompare>::Push(T& item) noexcept
+inline BinTreeSplay<T, TCompare>& BinTreeSplay<T, TCompare>::push(T& item) noexcept
 {
     T* result = (T*)InternalFind(item);
     if (result != nullptr)
@@ -296,7 +296,7 @@ inline BinTreeSplay<T, TCompare>& BinTreeSplay<T, TCompare>::Push(T& item) noexc
 }
 
 template <typename T, typename TCompare>
-inline T* BinTreeSplay<T, TCompare>::Pop(const T& item) noexcept
+inline T* BinTreeSplay<T, TCompare>::pop(const T& item) noexcept
 {
     T* result = (T*)InternalFind(item);
     if (result == nullptr)

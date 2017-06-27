@@ -21,13 +21,13 @@ TEST_CASE("Intrusive queue", "[CppCommon][Intrusive]")
     REQUIRE(queue.size() == 0);
 
     MyQueueNode item1(1);
-    queue.Push(item1);
+    queue.push(item1);
     REQUIRE(queue.size() == 1);
     MyQueueNode item2(2);
-    queue.Push(item2);
+    queue.push(item2);
     REQUIRE(queue.size() == 2);
     MyQueueNode item3(3);
-    queue.Push(item3);
+    queue.push(item3);
     REQUIRE(queue.size() == 3);
 
     REQUIRE(!queue.empty());
@@ -37,34 +37,34 @@ TEST_CASE("Intrusive queue", "[CppCommon][Intrusive]")
         sum += it.value;
     REQUIRE(sum == 6);
 
-    MyQueueNode* node = queue.Pop();
+    MyQueueNode* node = queue.pop();
     REQUIRE(node != nullptr);
     REQUIRE(node->value == 1);
     REQUIRE(queue.size() == 2);
 
-    node = queue.Pop();
+    node = queue.pop();
     REQUIRE(node != nullptr);
     REQUIRE(node->value == 2);
     REQUIRE(queue.size() == 1);
 
-    queue.Push(item2);
+    queue.push(item2);
     REQUIRE(queue.size() == 2);
-    queue.Push(item1);
+    queue.push(item1);
     REQUIRE(queue.size() == 3);
 
-    queue.Reverse();
+    queue.reverse();
 
-    node = queue.Pop();
+    node = queue.pop();
     REQUIRE(node != nullptr);
     REQUIRE(node->value == 1);
     REQUIRE(queue.size() == 2);
 
-    node = queue.Pop();
+    node = queue.pop();
     REQUIRE(node != nullptr);
     REQUIRE(node->value == 2);
     REQUIRE(queue.size() == 1);
 
-    node = queue.Pop();
+    node = queue.pop();
     REQUIRE(node != nullptr);
     REQUIRE(node->value == 3);
     REQUIRE(queue.size() == 0);

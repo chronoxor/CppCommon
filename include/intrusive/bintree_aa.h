@@ -133,13 +133,13 @@ public:
         \param item - Pushed item
         \return The current binary tree collection
     */
-    BinTreeAA& Push(T& item) noexcept;
+    BinTreeAA& push(T& item) noexcept;
 
     //! Pop the given item from the binary tree
     /*!
         \return The item popped from the binary tree
     */
-    T* Pop(const T& item) noexcept;
+    T* pop(const T& item) noexcept;
 
     //! Swap two instances
     void swap(BinTreeAA& bintree) noexcept;

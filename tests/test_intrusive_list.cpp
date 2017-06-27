@@ -21,13 +21,13 @@ TEST_CASE("Intrusive list", "[CppCommon][Intrusive]")
     REQUIRE(list.size() == 0);
 
     MyListNode item1(1);
-    list.PushFront(item1);
+    list.push_front(item1);
     REQUIRE(list.size() == 1);
     MyListNode item2(2);
-    list.PushBack(item2);
+    list.push_back(item2);
     REQUIRE(list.size() == 2);
     MyListNode item3(3);
-    list.PushNext(item2, item3);
+    list.push_next(item2, item3);
     REQUIRE(list.size() == 3);
 
     REQUIRE(!list.empty());
@@ -37,34 +37,34 @@ TEST_CASE("Intrusive list", "[CppCommon][Intrusive]")
         sum += it.value;
     REQUIRE(sum == 6);
 
-    MyListNode* node = list.PopFront();
+    MyListNode* node = list.pop_front();
     REQUIRE(node != nullptr);
     REQUIRE(node->value == 1);
     REQUIRE(list.size() == 2);
 
-    node = list.PopBack();
+    node = list.pop_back();
     REQUIRE(node != nullptr);
     REQUIRE(node->value == 3);
     REQUIRE(list.size() == 1);
 
-    list.PushPrev(item2, item3);
+    list.push_prev(item2, item3);
     REQUIRE(list.size() == 2);
-    list.PushNext(item2, item1);
+    list.push_next(item2, item1);
     REQUIRE(list.size() == 3);
 
-    list.Reverse();
+    list.reverse();
 
-    node = list.PopPrev(item2);
+    node = list.pop_prev(item2);
     REQUIRE(node != nullptr);
     REQUIRE(node->value == 1);
     REQUIRE(list.size() == 2);
 
-    node = list.PopNext(item2);
+    node = list.pop_next(item2);
     REQUIRE(node != nullptr);
     REQUIRE(node->value == 3);
     REQUIRE(list.size() == 1);
 
-    node = list.PopCurrent(item2);
+    node = list.pop_current(item2);
     REQUIRE(node != nullptr);
     REQUIRE(node->value == 2);
     REQUIRE(list.size() == 0);

@@ -146,16 +146,16 @@ public:
         \param item - Pushed item
         \return The current queue collection
     */
-    Queue& Push(T& item) noexcept;
+    Queue& push(T& item) noexcept;
 
     //! Pop the item from the front of the queue
     /*!
         \return The front item popped from the queue
     */
-    T* Pop() noexcept;
+    T* pop() noexcept;
 
     //! Reverse the queue
-    void Reverse() noexcept;
+    void reverse() noexcept;
 
     //! Swap two instances
     void swap(Queue& queue) noexcept;

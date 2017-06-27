@@ -233,7 +233,7 @@ inline const T* BinTreeAA<T, TCompare>::InternalUpperBound(const T& item) const 
 }
 
 template <typename T, typename TCompare>
-inline BinTreeAA<T, TCompare>& BinTreeAA<T, TCompare>::Push(T& item) noexcept
+inline BinTreeAA<T, TCompare>& BinTreeAA<T, TCompare>::push(T& item) noexcept
 {
     // Perform the binary tree insert from the root node
     T* current = _root;
@@ -305,7 +305,7 @@ inline BinTreeAA<T, TCompare>& BinTreeAA<T, TCompare>::Push(T& item) noexcept
 }
 
 template <typename T, typename TCompare>
-inline T* BinTreeAA<T, TCompare>::Pop(const T& item) noexcept
+inline T* BinTreeAA<T, TCompare>::pop(const T& item) noexcept
 {
     T* result = (T*)InternalFind(item);
     if (result == nullptr)

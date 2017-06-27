@@ -24,12 +24,12 @@ int main(int argc, char** argv)
     MyStackNode item2(456);
     MyStackNode item3(789);
 
-    stack.Push(item1);
-    stack.Push(item2);
-    stack.Push(item3);
+    stack.push(item1);
+    stack.push(item2);
+    stack.push(item3);
 
     while (stack)
-        std::cout << "stack.Pop() = " << stack.Pop()->value << std::endl;
+        std::cout << "stack.pop() = " << stack.pop()->value << std::endl;
 
     return 0;
 }

@@ -233,7 +233,7 @@ inline const T* BinTreeAVL<T, TCompare>::InternalUpperBound(const T& item) const
 }
 
 template <typename T, typename TCompare>
-inline BinTreeAVL<T, TCompare>& BinTreeAVL<T, TCompare>::Push(T& item) noexcept
+inline BinTreeAVL<T, TCompare>& BinTreeAVL<T, TCompare>::push(T& item) noexcept
 {
     // Perform the binary tree insert from the root node
     T* current = _root;
@@ -342,7 +342,7 @@ inline BinTreeAVL<T, TCompare>& BinTreeAVL<T, TCompare>::Push(T& item) noexcept
 }
 
 template <typename T, typename TCompare>
-inline T* BinTreeAVL<T, TCompare>::Pop(const T& item) noexcept
+inline T* BinTreeAVL<T, TCompare>::pop(const T& item) noexcept
 {
     T* result = (T*)InternalFind(item);
     if (result == nullptr)
