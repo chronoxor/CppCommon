@@ -19,7 +19,7 @@
 
 using namespace CppCommon;
 
-const int items = 100000;
+const int items = 1000000;
 
 struct MyBinTreeNode
 {
