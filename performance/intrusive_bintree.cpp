@@ -75,9 +75,9 @@ protected:
         std::random_shuffle(values.begin(), values.end());
         for (auto value : values)
         {
-            set.insert(value);
-            unordered_set.insert(value);
-            tree.insert(*allocator.Create(value));
+            this->set.insert(value);
+            this->unordered_set.insert(value);
+            this->tree.insert(*allocator.Create(value));
         }
         std::random_shuffle(values.begin(), values.end());
     }
@@ -85,8 +85,8 @@ protected:
 
 BENCHMARK_FIXTURE(InsertFixture<BinTree<MyBinTreeNode>>, "std::set: Insert")
 {
-    for (auto value : values)
-        set.insert(value);
+    for (auto value : this->values)
+        this->set.insert(value);
 
     // Update benchmark metrics
     context.metrics().AddIterations(items - 1);
@@ -94,8 +94,8 @@ BENCHMARK_FIXTURE(InsertFixture<BinTree<MyBinTreeNode>>, "std::set: Insert")
 
 BENCHMARK_FIXTURE(InsertFixture<BinTree<MyBinTreeNode>>, "std::unordered_set: Insert")
 {
-    for (auto value : values)
-        unordered_set.insert(value);
+    for (auto value : this->values)
+        this->unordered_set.insert(value);
 
     // Update benchmark metrics
     context.metrics().AddIterations(items - 1);
@@ -103,8 +103,8 @@ BENCHMARK_FIXTURE(InsertFixture<BinTree<MyBinTreeNode>>, "std::unordered_set: In
 
 BENCHMARK_FIXTURE(InsertFixture<BinTreeAA<MyBinTreeNode>>, "BinTreeAA: Insert")
 {
-    for (auto value : values)
-        tree.insert(*allocator.Create(value));
+    for (auto value : this->values)
+        this->tree.insert(*allocator.Create(value));
 
     // Update benchmark metrics
     context.metrics().AddIterations(items - 1);
@@ -112,8 +112,8 @@ BENCHMARK_FIXTURE(InsertFixture<BinTreeAA<MyBinTreeNode>>, "BinTreeAA: Insert")
 
 BENCHMARK_FIXTURE(InsertFixture<BinTreeAVL<MyBinTreeNode>>, "BinTreeAVL: Insert")
 {
-    for (auto value : values)
-        tree.insert(*allocator.Create(value));
+    for (auto value : this->values)
+        this->tree.insert(*allocator.Create(value));
 
     // Update benchmark metrics
     context.metrics().AddIterations(items - 1);
@@ -121,8 +121,8 @@ BENCHMARK_FIXTURE(InsertFixture<BinTreeAVL<MyBinTreeNode>>, "BinTreeAVL: Insert"
 
 BENCHMARK_FIXTURE(InsertFixture<BinTreeRB<MyBinTreeNode>>, "BinTreeRB: Insert")
 {
-    for (auto value : values)
-        tree.insert(*allocator.Create(value));
+    for (auto value : this->values)
+        this->tree.insert(*allocator.Create(value));
 
     // Update benchmark metrics
     context.metrics().AddIterations(items - 1);
@@ -132,8 +132,8 @@ BENCHMARK_FIXTURE(FindFixture<BinTree<MyBinTreeNode>>, "std::set: Find")
 {
     uint64_t crc = 0;
 
-    for (auto value : values)
-        crc += *set.find(value);
+    for (auto value : this->values)
+        crc += *this->set.find(value);
 
     // Update benchmark metrics
     context.metrics().AddIterations(items - 1);
@@ -144,8 +144,8 @@ BENCHMARK_FIXTURE(FindFixture<BinTree<MyBinTreeNode>>, "std::unordered_set: Find
 {
     uint64_t crc = 0;
 
-    for (auto value : values)
-        crc += *unordered_set.find(value);
+    for (auto value : this->values)
+        crc += *this->unordered_set.find(value);
 
     // Update benchmark metrics
     context.metrics().AddIterations(items - 1);
@@ -156,10 +156,10 @@ BENCHMARK_FIXTURE(FindFixture<BinTree<MyBinTreeNode>>, "BinTree: Find")
 {
     uint64_t crc = 0;
 
-    for (auto value : values)
+    for (auto value : this->values)
     {
         MyBinTreeNode node(value);
-        crc += tree.find(node)->value;
+        crc += this->tree.find(node)->value;
     }
 
     // Update benchmark metrics
@@ -171,10 +171,10 @@ BENCHMARK_FIXTURE(FindFixture<BinTreeAA<MyBinTreeNode>>, "BinTreeAA: Find")
 {
     uint64_t crc = 0;
 
-    for (auto value : values)
+    for (auto value : this->values)
     {
         MyBinTreeNode node(value);
-        crc += tree.find(node)->value;
+        crc += this->tree.find(node)->value;
     }
 
     // Update benchmark metrics
@@ -186,10 +186,10 @@ BENCHMARK_FIXTURE(FindFixture<BinTreeAVL<MyBinTreeNode>>, "BinTreeAVL: Find")
 {
     uint64_t crc = 0;
 
-    for (auto value : values)
+    for (auto value : this->values)
     {
         MyBinTreeNode node(value);
-        crc += tree.find(node)->value;
+        crc += this->tree.find(node)->value;
     }
 
     // Update benchmark metrics
@@ -201,10 +201,10 @@ BENCHMARK_FIXTURE(FindFixture<BinTreeRB<MyBinTreeNode>>, "BinTreeRB: Find")
 {
     uint64_t crc = 0;
 
-    for (auto value : values)
+    for (auto value : this->values)
     {
         MyBinTreeNode node(value);
-        crc += tree.find(node)->value;
+        crc += this->tree.find(node)->value;
     }
 
     // Update benchmark metrics
@@ -216,10 +216,10 @@ BENCHMARK_FIXTURE(FindFixture<BinTreeSplay<MyBinTreeNode>>, "BinTreeSplay: Find"
 {
     uint64_t crc = 0;
 
-    for (auto value : values)
+    for (auto value : this->values)
     {
         MyBinTreeNode node(value);
-        crc += tree.find(node)->value;
+        crc += this->tree.find(node)->value;
     }
 
     // Update benchmark metrics
@@ -231,11 +231,11 @@ BENCHMARK_FIXTURE(FindFixture<BinTree<MyBinTreeNode>>, "std::set: Find & Remove"
 {
     uint64_t crc = 0;
 
-    for (auto value : values)
+    for (auto value : this->values)
     {
-        auto it = set.find(value);
+        auto it = this->set.find(value);
         crc += *it;
-        set.erase(it);
+        this->set.erase(it);
     }
 
     // Update benchmark metrics
@@ -247,11 +247,11 @@ BENCHMARK_FIXTURE(FindFixture<BinTree<MyBinTreeNode>>, "std::unordered_set: Find
 {
     uint64_t crc = 0;
 
-    for (auto value : values)
+    for (auto value : this->values)
     {
-        auto it = unordered_set.find(value);
+        auto it = this->unordered_set.find(value);
         crc += *it;
-        unordered_set.erase(it);
+        this->unordered_set.erase(it);
     }
 
     // Update benchmark metrics
@@ -263,10 +263,10 @@ BENCHMARK_FIXTURE(FindFixture<BinTreeAA<MyBinTreeNode>>, "BinTreeAA: Find & Remo
 {
     uint64_t crc = 0;
 
-    for (auto value : values)
+    for (auto value : this->values)
     {
         MyBinTreeNode node(value);
-        crc += tree.erase(*tree.find(node))->value;
+        crc += this->tree.erase(*this->tree.find(node))->value;
     }
 
     // Update benchmark metrics
@@ -278,10 +278,10 @@ BENCHMARK_FIXTURE(FindFixture<BinTreeAVL<MyBinTreeNode>>, "BinTreeAVL: Find & Re
 {
     uint64_t crc = 0;
 
-    for (auto value : values)
+    for (auto value : this->values)
     {
         MyBinTreeNode node(value);
-        crc += tree.erase(*tree.find(node))->value;
+        crc += this->tree.erase(*this->tree.find(node))->value;
     }
 
     // Update benchmark metrics
@@ -293,10 +293,10 @@ BENCHMARK_FIXTURE(FindFixture<BinTreeRB<MyBinTreeNode>>, "BinTreeRB: Find & Remo
 {
     uint64_t crc = 0;
 
-    for (auto value : values)
+    for (auto value : this->values)
     {
         MyBinTreeNode node(value);
-        crc += tree.erase(*tree.find(node))->value;
+        crc += this->tree.erase(*this->tree.find(node))->value;
     }
 
     // Update benchmark metrics
