@@ -45,23 +45,23 @@ void test()
     MyBinTreeNode item8(8);
     MyBinTreeNode item9(9);
 
-    bintree.push(item6);
+    bintree.insert(item6);
     REQUIRE(bintree.size() == 1);
-    bintree.push(item3);
+    bintree.insert(item3);
     REQUIRE(bintree.size() == 2);
-    bintree.push(item7);
+    bintree.insert(item7);
     REQUIRE(bintree.size() == 3);
-    bintree.push(item2);
+    bintree.insert(item2);
     REQUIRE(bintree.size() == 4);
-    bintree.push(item8);
+    bintree.insert(item8);
     REQUIRE(bintree.size() == 5);
-    bintree.push(item1);
+    bintree.insert(item1);
     REQUIRE(bintree.size() == 6);
-    bintree.push(item4);
+    bintree.insert(item4);
     REQUIRE(bintree.size() == 7);
-    bintree.push(item9);
+    bintree.insert(item9);
     REQUIRE(bintree.size() == 8);
-    bintree.push(item5);
+    bintree.insert(item5);
     REQUIRE(bintree.size() == 9);
 
     REQUIRE(!bintree.empty());
@@ -124,16 +124,16 @@ void test()
     REQUIRE(bintree.upper_bound(8)->value == 9);
     REQUIRE(!bintree.upper_bound(9));
 
-    REQUIRE(!bintree.pop(0));
-    REQUIRE(!bintree.pop(10));
+    REQUIRE(!bintree.erase(0));
+    REQUIRE(!bintree.erase(10));
 
-    REQUIRE(bintree.pop(1));
+    REQUIRE(bintree.erase(1));
     REQUIRE(bintree.size() == 8);
-    REQUIRE(bintree.pop(3));
+    REQUIRE(bintree.erase(3));
     REQUIRE(bintree.size() == 7);
-    REQUIRE(bintree.pop(6));
+    REQUIRE(bintree.erase(6));
     REQUIRE(bintree.size() == 6);
-    REQUIRE(bintree.pop(9));
+    REQUIRE(bintree.erase(9));
     REQUIRE(bintree.size() == 5);
 
     REQUIRE(bintree.lowest()->value == 2);
@@ -174,15 +174,15 @@ void test()
     REQUIRE(!bintree.upper_bound(8));
     REQUIRE(!bintree.upper_bound(9));
 
-    REQUIRE(bintree.pop(5));
+    REQUIRE(bintree.erase(5));
     REQUIRE(bintree.size() == 4);
-    REQUIRE(bintree.pop(2));
+    REQUIRE(bintree.erase(2));
     REQUIRE(bintree.size() == 3);
-    REQUIRE(bintree.pop(7));
+    REQUIRE(bintree.erase(7));
     REQUIRE(bintree.size() == 2);
-    REQUIRE(bintree.pop(8));
+    REQUIRE(bintree.erase(8));
     REQUIRE(bintree.size() == 1);
-    REQUIRE(bintree.pop(4));
+    REQUIRE(bintree.erase(4));
     REQUIRE(bintree.size() == 0);
 
     REQUIRE(!bintree.root());

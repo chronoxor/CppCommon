@@ -13,7 +13,7 @@ template <class InputIterator>
 inline Queue<T>::Queue(InputIterator first, InputIterator last)
 {
     for (InputIterator it = first; it != last; ++it)
-        Push(*it);
+        push(*it);
 }
 
 template <typename T>

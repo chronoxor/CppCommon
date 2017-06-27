@@ -14,7 +14,7 @@ inline BinTree<T, TCompare>::BinTree(InputIterator first, InputIterator last, co
     : _compare(compare)
 {
     for (InputIterator it = first; it != last; ++it)
-        Push(*it);
+        insert(*it);
 }
 
 template <typename T, typename TCompare>
@@ -233,7 +233,7 @@ inline const T* BinTree<T, TCompare>::InternalUpperBound(const T& item) const no
 }
 
 template <typename T, typename TCompare>
-inline BinTree<T, TCompare>& BinTree<T, TCompare>::push(T& item) noexcept
+inline BinTree<T, TCompare>& BinTree<T, TCompare>::insert(T& item) noexcept
 {
     // Perform the binary tree insert from the root node
     T* current = _root;
@@ -273,7 +273,7 @@ inline BinTree<T, TCompare>& BinTree<T, TCompare>::push(T& item) noexcept
         }
 
         // Found duplicate node
-        assert("Duplicate node can not be placed into the binary tree!");
+        assert("Duplicate node can not be inserted into the binary tree!");
         return *this;
     }
 
@@ -287,7 +287,7 @@ inline BinTree<T, TCompare>& BinTree<T, TCompare>::push(T& item) noexcept
 }
 
 template <typename T, typename TCompare>
-inline T* BinTree<T, TCompare>::pop(const T& item) noexcept
+inline T* BinTree<T, TCompare>::erase(const T& item) noexcept
 {
     T* result = (T*)InternalFind(item);
     if (result == nullptr)
@@ -357,6 +357,12 @@ inline T* BinTree<T, TCompare>::pop(const T& item) noexcept
     result->right = nullptr;
     --_size;
     return result;
+}
+
+template <typename T, typename TCompare>
+inline BinTreeIterator<T> BinTree<T, TCompare>::erase(const BinTreeIterator<T>& it) noexcept
+{
+    return BinTreeIterator<T>(erase(*it));
 }
 
 template <typename T, typename TCompare>

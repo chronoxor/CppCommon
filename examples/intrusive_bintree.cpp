@@ -32,15 +32,15 @@ int main(int argc, char** argv)
     MyBinTreeNode item8(8);
     MyBinTreeNode item9(9);
 
-    bintree.push(item6);
-    bintree.push(item3);
-    bintree.push(item7);
-    bintree.push(item2);
-    bintree.push(item8);
-    bintree.push(item1);
-    bintree.push(item4);
-    bintree.push(item9);
-    bintree.push(item5);
+    bintree.insert(item6);
+    bintree.insert(item3);
+    bintree.insert(item7);
+    bintree.insert(item2);
+    bintree.insert(item8);
+    bintree.insert(item1);
+    bintree.insert(item4);
+    bintree.insert(item9);
+    bintree.insert(item5);
 
     std::cout << "bintree:" << std::endl;
     for (auto it : bintree)

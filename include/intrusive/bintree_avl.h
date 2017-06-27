@@ -168,18 +168,25 @@ public:
     BinTreeIterator<T> upper_bound(const T& item) noexcept;
     BinTreeConstIterator<T> upper_bound(const T& item) const noexcept;
 
-    //! Push a new item into the binary tree
+    //! Insert a new item into the binary tree
     /*!
-        \param item - Pushed item
+        \param item - Item to insert
         \return The current binary tree collection
     */
-    BinTreeAVL& push(T& item) noexcept;
+    BinTreeAVL& insert(T& item) noexcept;
 
-    //! Pop the given item from the binary tree
+    //! Erase the given item from the binary tree
     /*!
-        \return The item popped from the binary tree
+        \param item - Item to erase
+        \return Erased item
     */
-    T* pop(const T& item) noexcept;
+    T* erase(const T& item) noexcept;
+    //! Erase the given item from the binary tree
+    /*!
+        \param it - Iterator to the erased item
+        \return Erased item iterator
+    */
+    BinTreeIterator<T> erase(const BinTreeIterator<T>& it) noexcept;
 
     //! Swap two instances
     void swap(BinTreeAVL& bintree) noexcept;

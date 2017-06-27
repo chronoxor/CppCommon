@@ -14,7 +14,7 @@ inline BinTreeRB<T, TCompare>::BinTreeRB(InputIterator first, InputIterator last
     : _compare(compare)
 {
     for (InputIterator it = first; it != last; ++it)
-        Push(*it);
+        insert(*it);
 }
 
 template <typename T, typename TCompare>
@@ -233,7 +233,7 @@ inline const T* BinTreeRB<T, TCompare>::InternalUpperBound(const T& item) const 
 }
 
 template <typename T, typename TCompare>
-inline BinTreeRB<T, TCompare>& BinTreeRB<T, TCompare>::push(T& item) noexcept
+inline BinTreeRB<T, TCompare>& BinTreeRB<T, TCompare>::insert(T& item) noexcept
 {
     // Perform the binary tree insert from the root node
     T* current = _root;
@@ -273,7 +273,7 @@ inline BinTreeRB<T, TCompare>& BinTreeRB<T, TCompare>::push(T& item) noexcept
         }
 
         // Found duplicate node
-        assert("Duplicate node can not be placed into the binary tree!");
+        assert("Duplicate node can not be inserted into the binary tree!");
         return *this;
     }
 
@@ -283,80 +283,336 @@ inline BinTreeRB<T, TCompare>& BinTreeRB<T, TCompare>::push(T& item) noexcept
     if (_root == nullptr)
         _root = &item;
     ++_size;
+
+    // Balance the binary tree
+    T* node = &item;
+    // Set red color for new red-black balanced binary tree node
+    node->rb = true;
+    // Check red-black properties
+    while ((node->parent != nullptr) && node->parent->rb)
+    {
+        // We have a violation...
+        if (node->parent == node->parent->parent->left)
+        {
+            T* uncle = node->parent->parent->right;
+            if ((uncle != nullptr) && uncle->rb)
+            {
+                // Uncle is red
+                node->parent->rb = false;
+                uncle->rb = false;
+                node->parent->parent->rb = true;
+                node = node->parent->parent;
+            }
+            else
+            {
+                // Uncle is back
+                if (node == node->parent->right)
+                {
+                    // Make node a left child
+                    node = node->parent;
+                    RotateLeft(node);
+                }
+
+                // Recolor and rotate
+                node->parent->rb = false;
+                node->parent->parent->rb = true;
+                RotateRight(node->parent->parent);
+            }
+        }
+        else
+        {
+            // Mirror image of above code...
+            T* uncle = node->parent->parent->left;
+            if ((uncle != nullptr) && uncle->rb)
+            {
+                // Uncle is red
+                node->parent->rb = false;
+                uncle->rb = false;
+                node->parent->parent->rb = true;
+                node = node->parent->parent;
+            }
+            else
+            {
+                // Uncle is black
+                if (node == node->parent->left)
+                {
+                    node = node->parent;
+                    RotateRight(node);
+                }
+
+                // Recolor and rotate
+                node->parent->rb = false;
+                node->parent->parent->rb = true;
+                RotateLeft(node->parent->parent);
+            }
+        }
+    }
+    _root->rb = false;
+
     return *this;
 }
 
 template <typename T, typename TCompare>
-inline T* BinTreeRB<T, TCompare>::pop(const T& item) noexcept
+inline T* BinTreeRB<T, TCompare>::erase(const T& item) noexcept
 {
     T* result = (T*)InternalFind(item);
     if (result == nullptr)
         return nullptr;
 
-    T* parent = result->parent;
-    T* left = result->left;
-    T* right = result->right;
+    T* x;
+    T* y;
+    T* node = result;
 
-    // Binary tree node without left child
-    if (left == nullptr)
+    if ((node->left == nullptr) || (node->right == nullptr))
     {
-        // Link the parent node with a right child
-        if (parent != nullptr)
-        {
-            if (parent->left == result)
-                parent->left = right;
-            else
-                parent->right = right;
-        }
-        else
-            _root = right;
-        if (right != nullptr)
-            right->parent = parent;
+        // y has a nullptr node as a child
+        y = node;
     }
-    // Binary tree node without right child
-    else if (right == nullptr)
-    {
-        // Link the parent node with a left child
-        if (parent != nullptr)
-        {
-            if (parent->left == result)
-                parent->left = left;
-            else
-                parent->right = left;
-        }
-        else
-            _root = left;
-        if (left != nullptr)
-            left->parent = parent;
-    }
-    // Binary tree node with both left and right childs
     else
     {
-        // Link the parent node with a left child
-        if (parent != nullptr)
-        {
-            if (parent->left == result)
-                parent->left = left;
-            else
-                parent->right = left;
-        }
-        else
-            _root = left;
-        left->parent = parent;
-
-        // Find a new base node
-        T* temp = left;
-        while (temp->right != nullptr)
-            temp = temp->right;
-        temp->right = right;
-        right->parent = temp;
+        // Find tree successor with a nullptr node as a child
+        y = node->right;
+        while (y->left != nullptr)
+            y = y->left;
     }
+
+    // Swap two nodes
+    if (y != node)
+    {
+        if (node->parent == nullptr)
+            _root = y;
+        Swap(node, y);
+    }
+
+    // x is y's only child
+    if (y->left != nullptr)
+        x = y->left;
+    else
+        x = y->right;
+
+    // Remove y from the parent chain
+    if (x != nullptr)
+        x->parent = y->parent;
+    if (y->parent != nullptr)
+    {
+        if (y == y->parent->left)
+            y->parent->left = x;
+        else
+            y->parent->right = x;
+    }
+    else
+        _root = x;
+
+    // Unlink given node
+    if (!y->rb)
+        Unlink(x, y->parent);
 
     result->parent = nullptr;
     result->left = nullptr;
     result->right = nullptr;
     --_size;
     return result;
+}
+
+template <typename T, typename TCompare>
+inline BinTreeIterator<T> BinTreeRB<T, TCompare>::erase(const BinTreeIterator<T>& it) noexcept
+{
+    return BinTreeIterator<T>(erase(*it));
+}
+
+template <typename T, typename TCompare>
+inline void BinTreeRB<T, TCompare>::RotateLeft(T* node)
+{
+    T* current = node->right;
+
+    // Establish node->right link
+    node->right = current->left;
+    if (current->left != nullptr)
+        current->left->parent = node;
+
+    // Establish current->parent link
+    current->parent = node->parent;
+    if (node->parent != nullptr)
+    {
+        if (node == node->parent->left)
+            node->parent->left = current;
+        else
+            node->parent->right = current;
+    }
+    else
+        _root = current;
+
+    // Link node and current
+    current->left = node;
+    node->parent = current;
+}
+
+template <typename T, typename TCompare>
+inline void BinTreeRB<T, TCompare>::RotateRight(T* node)
+{
+    T* current = node->left;
+
+    // Establish node->right link
+    node->left = current->right;
+    if (current->right != nullptr)
+        current->right->parent = node;
+
+    // Establish current->parent link
+    current->parent = node->parent;
+    if (node->parent != nullptr)
+    {
+        if (node == node->parent->right)
+            node->parent->right = current;
+        else
+            node->parent->left = current;
+    }
+    else
+        _root = current;
+
+    // Link node and current
+    current->right = node;
+    node->parent = current;
+}
+
+template <typename T, typename TCompare>
+inline void BinTreeRB<T, TCompare>::Unlink(T* node, T* parent)
+{
+    T* w;
+
+    while ((parent != nullptr) && ((node == nullptr) || !node->rb))
+    {
+        if (node == parent->left)
+        {
+            w = parent->right;
+            if ((w != nullptr) && w->rb)
+            {
+                w->rb = false;
+                parent->rb = true;
+                RotateLeft(parent);
+                w = parent->right;
+            }
+            if (w == nullptr)
+                break;
+            if (((w->left == nullptr) || !w->left->rb) && ((w->right == nullptr) || !w->right->rb))
+            {
+                w->rb = true;
+                node = parent;
+                parent = parent->parent;
+            }
+            else
+            {
+                if ((w->right == nullptr) || !w->right->rb)
+                {
+                    w->left->rb = false;
+                    w->rb = true;
+                    RotateRight(w);
+                    w = parent->right;
+                }
+
+                // Copy red-black color information
+                if (parent->rb)
+                    w->rb = true;
+                else
+                    w->rb = false;
+                parent->rb = false;
+                w->right->rb = false;
+                RotateLeft(parent);
+                node = _root;
+                parent = nullptr;
+            }
+        }
+        else
+        {
+            w = parent->left;
+            if ((w != nullptr) && w->rb)
+            {
+                w->rb = false;
+                parent->rb = true;
+                RotateRight(parent);
+                w = parent->left;
+            }
+            if (w == nullptr)
+                break;
+            if (((w->left == nullptr) || !w->left->rb) && ((w->right == nullptr) || !w->right->rb))
+            {
+                w->rb = true;
+                node = parent;
+                parent = parent->parent;
+            }
+            else
+            {
+                if ((w->left == nullptr) || !w->left->rb)
+                {
+                    w->right->rb = false;
+                    w->rb = true;
+                    RotateLeft(w);
+                    w = parent->left;
+                }
+
+                // Copy red-black color information
+                if (parent->rb)
+                    w->rb = true;
+                else
+                    w->rb = false;
+                parent->rb = false;
+                w->left->rb = false;
+                RotateRight(parent);
+                node = _root;
+                parent = nullptr;
+            }
+        }
+    }
+
+    if (node != nullptr)
+        node->rb = false;
+}
+
+template <typename T, typename TCompare>
+inline void BinTreeRB<T, TCompare>::Swap(T*& node1, T*& node2)
+{
+    T* first_parent = node1->parent;
+    T* first_left = node1->left;
+    T* first_right = node1->right;
+    T* second_parent = node2->parent;
+    T* second_left = node2->left;
+    T* second_right = node2->right;
+    bool first_is_left = ((first_parent != nullptr) && (first_parent->left == node1));
+    bool second_is_left = ((second_parent != nullptr) && (second_parent->left == node2));
+
+    // Update first node links
+    if (first_parent != nullptr)
+    {
+        if (first_is_left)
+            first_parent->left = node2;
+        else
+            first_parent->right = node2;
+    }
+    if (first_left != nullptr)
+        first_left->parent = node2;
+    if (first_right != nullptr)
+        first_right->parent = node2;
+
+    // Update second node links
+    if (second_parent != nullptr)
+    {
+        if (second_is_left)
+            second_parent->left = node1;
+        else
+            second_parent->right = node1;
+    }
+    if (second_left != nullptr)
+        second_left->parent = node1;
+    if (second_right != nullptr)
+        second_right->parent = node1;
+
+    // Swap node links
+    std::swap(node1->parent, node2->parent);
+    std::swap(node1->left, node2->left);
+    std::swap(node1->right, node2->right);
+    std::swap(node1->balance, node2->balance);
+
+    // Swap nodes
+    std::swap(node1, node2);
 }
 
 template <typename T, typename TCompare>

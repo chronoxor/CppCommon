@@ -270,18 +270,25 @@ public:
     BinTreeIterator<T> upper_bound(const T& item) noexcept;
     BinTreeConstIterator<T> upper_bound(const T& item) const noexcept;
 
-    //! Push a new item into the binary tree
+    //! Insert a new item into the binary tree
     /*!
-        \param item - Pushed item
+        \param item - Item to insert
         \return The current binary tree collection
     */
-    BinTreeRB& push(T& item) noexcept;
+    BinTreeRB& insert(T& item) noexcept;
 
-    //! Pop the given item from the binary tree
+    //! Erase the given item from the binary tree
     /*!
-        \return The item popped from the binary tree
+        \param item - Item to erase
+        \return Erased item
     */
-    T* pop(const T& item) noexcept;
+    T* erase(const T& item) noexcept;
+    //! Erase the given item from the binary tree
+    /*!
+        \param it - Iterator to the erased item
+        \return Erased item iterator
+    */
+    BinTreeIterator<T> erase(const BinTreeIterator<T>& it) noexcept;
 
     //! Swap two instances
     void swap(BinTreeRB& bintree) noexcept;
@@ -298,6 +305,11 @@ private:
     const T* InternalFind(const T& item) const noexcept;
     const T* InternalLowerBound(const T& item) const noexcept;
     const T* InternalUpperBound(const T& item) const noexcept;
+
+    void RotateLeft(T* node);
+    void RotateRight(T* node);
+    void Unlink(T* node, T* parent);
+    static void Swap(T*& node1, T*& node2);
 };
 
 } // namespace CppCommon
