@@ -37,10 +37,6 @@ struct MyBinTreeNode
     { return node1.value < node2.value; }
 };
 
-DefaultMemoryManager auxiliary;
-PoolMemoryManager<DefaultMemoryManager> pool(auxiliary);
-PoolAllocator<MyBinTreeNode> allocator(pool);
-
 template <class T>
 class InsertFixture : public virtual CppBenchmark::Fixture
 {
@@ -50,7 +46,11 @@ protected:
     std::unordered_set<int> unordered_set;
     std::vector<int> values;
 
-    InsertFixture()
+    DefaultMemoryManager auxiliary;
+    PoolMemoryManager<DefaultMemoryManager> pool;
+    PoolAllocator<MyBinTreeNode> allocator;
+
+    InsertFixture() : pool(auxiliary), allocator(pool)
     {
         for (int i = 0; i < items; ++i)
             values.push_back(i);
@@ -72,14 +72,14 @@ class FindFixture : public InsertFixture<T>
 protected:
     void Initialize(CppBenchmark::Context& context) override
     {
-        std::random_shuffle(values.begin(), values.end());
-        for (auto value : values)
+        std::random_shuffle(this->values.begin(), this->values.end());
+        for (auto value : this->values)
         {
             this->set.insert(value);
             this->unordered_set.insert(value);
-            this->tree.insert(*allocator.Create(value));
+            this->tree.insert(*this->allocator.Create(value));
         }
-        std::random_shuffle(values.begin(), values.end());
+        std::random_shuffle(this->values.begin(), this->values.end());
     }
 };
 
@@ -104,7 +104,7 @@ BENCHMARK_FIXTURE(InsertFixture<BinTree<MyBinTreeNode>>, "std::unordered_set: In
 BENCHMARK_FIXTURE(InsertFixture<BinTreeAA<MyBinTreeNode>>, "BinTreeAA: Insert")
 {
     for (auto value : this->values)
-        this->tree.insert(*allocator.Create(value));
+        this->tree.insert(*this->allocator.Create(value));
 
     // Update benchmark metrics
     context.metrics().AddIterations(items - 1);
@@ -113,7 +113,7 @@ BENCHMARK_FIXTURE(InsertFixture<BinTreeAA<MyBinTreeNode>>, "BinTreeAA: Insert")
 BENCHMARK_FIXTURE(InsertFixture<BinTreeAVL<MyBinTreeNode>>, "BinTreeAVL: Insert")
 {
     for (auto value : this->values)
-        this->tree.insert(*allocator.Create(value));
+        this->tree.insert(*this->allocator.Create(value));
 
     // Update benchmark metrics
     context.metrics().AddIterations(items - 1);
@@ -122,7 +122,7 @@ BENCHMARK_FIXTURE(InsertFixture<BinTreeAVL<MyBinTreeNode>>, "BinTreeAVL: Insert"
 BENCHMARK_FIXTURE(InsertFixture<BinTreeRB<MyBinTreeNode>>, "BinTreeRB: Insert")
 {
     for (auto value : this->values)
-        this->tree.insert(*allocator.Create(value));
+        this->tree.insert(*this->allocator.Create(value));
 
     // Update benchmark metrics
     context.metrics().AddIterations(items - 1);
