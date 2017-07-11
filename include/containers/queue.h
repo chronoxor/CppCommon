@@ -110,7 +110,7 @@ public:
 
     Queue() noexcept : _size(0), _front(nullptr), _back(nullptr) {}
     template <class InputIterator>
-    Queue(InputIterator first, InputIterator last);
+    Queue(InputIterator first, InputIterator last) noexcept;
     Queue(const Queue&) noexcept = delete;
     Queue(Queue&&) noexcept = default;
     ~Queue() noexcept = default;

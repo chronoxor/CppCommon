@@ -10,7 +10,7 @@ namespace CppCommon {
 
 template <typename T>
 template <class InputIterator>
-inline List<T>::List(InputIterator first, InputIterator last)
+inline List<T>::List(InputIterator first, InputIterator last) noexcept
 {
     for (InputIterator it = first; it != last; ++it)
         PushBack(*it);

@@ -10,7 +10,7 @@ namespace CppCommon {
 
 template <typename T, typename TCompare>
 template <class InputIterator>
-inline BinTree<T, TCompare>::BinTree(InputIterator first, InputIterator last, const TCompare& compare)
+inline BinTree<T, TCompare>::BinTree(InputIterator first, InputIterator last, const TCompare& compare) noexcept
     : _compare(compare)
 {
     for (InputIterator it = first; it != last; ++it)

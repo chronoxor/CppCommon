@@ -147,7 +147,7 @@ public:
           _root(nullptr)
     {}
     template <class InputIterator>
-    BinTree(InputIterator first, InputIterator last, const TCompare& compare = TCompare());
+    BinTree(InputIterator first, InputIterator last, const TCompare& compare = TCompare()) noexcept;
     BinTree(const BinTree&) noexcept = delete;
     BinTree(BinTree&&) noexcept = default;
     ~BinTree() noexcept = default;

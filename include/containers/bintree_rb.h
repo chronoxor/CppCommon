@@ -215,7 +215,7 @@ public:
           _root(nullptr)
     {}
     template <class InputIterator>
-    BinTreeRB(InputIterator first, InputIterator last, const TCompare& compare = TCompare());
+    BinTreeRB(InputIterator first, InputIterator last, const TCompare& compare = TCompare()) noexcept;
     BinTreeRB(const BinTreeRB&) noexcept = delete;
     BinTreeRB(BinTreeRB&&) noexcept = default;
     ~BinTreeRB() noexcept = default;

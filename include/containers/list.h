@@ -161,7 +161,7 @@ public:
 
     List() noexcept : _size(0), _front(nullptr), _back(nullptr) {}
     template <class InputIterator>
-    List(InputIterator first, InputIterator last);
+    List(InputIterator first, InputIterator last) noexcept;
     List(const List&) noexcept = delete;
     List(List&&) noexcept = default;
     ~List() noexcept = default;

@@ -33,40 +33,36 @@ template <typename TKey, typename TValue, typename THash = std::hash<Key>, typen
 class HashMap
 {
 public:
-    //! Initialize the hash map with a given capacity and empty
+    //! Initialize the hash map with a given capacity and blank key value
     /*!
-        \param item - Pushed item
-        \return The current stack collection
+        \param capacity - Hash map capacity (default is 128)
+        \param blank - Blank key value (default is TKey())
     */
-    HashMap() noexcept : _size(0) {}
+    explicit HashMap(size_t capacity = 128, const TKey& blank = TKey()) noexcept;
     template <class InputIterator>
-    Stack(InputIterator first, InputIterator last);
-    Stack(const Stack&) noexcept = delete;
-    Stack(Stack&&) noexcept = default;
-    ~Stack() noexcept = default;
+    HashMap(InputIterator first, InputIterator last) noexcept;
+    HashMap(const HashMap&) noexcept = delete;
+    HashMap(HashMap&&) noexcept = default;
+    ~HashMap() noexcept = default;
 
-    Stack& operator=(const Stack&) noexcept = delete;
-    Stack& operator=(Stack&&) noexcept = default;
+    HashMap& operator=(const HashMap&) noexcept = delete;
+    HashMap& operator=(HashMap&&) noexcept = default;
 
-    //! Check if the stack is not empty
+    //! Check if the hash map is not empty
     explicit operator bool() const noexcept { return !empty(); }
 
-    //! Is the stack empty?
-    bool empty() const noexcept { return _top == nullptr; }
+    //! Is the hash map empty?
+    bool empty() const noexcept { return _size == 0; }
 
-    //! Get the stack size
+    //! Get the hash map size
     size_t size() const noexcept { return _size; }
 
-    //! Get the top stack item
-    T* top() noexcept { return _top; }
-    const T* top() const noexcept { return _top; }
-
-    //! Get the begin stack iterator
-    StackIterator<T> begin() noexcept;
-    StackConstIterator<T> begin() const noexcept;
-    //! Get the end stack iterator
-    StackIterator<T> end() noexcept;
-    StackConstIterator<T> end() const noexcept;
+    //! Get the begin hash map iterator
+    HashMapIterator<T> begin() noexcept;
+    HashMapConstIterator<T> begin() const noexcept;
+    //! Get the end hash map iterator
+    HashMapIterator<T> end() noexcept;
+    HashMapConstIterator<T> end() const noexcept;
 
     //! Push a new item into the top of the stack
     /*!
@@ -90,8 +86,9 @@ public:
     friend void swap(Stack<U>& stack1, Stack<U>& stack2) noexcept;
 
 private:
-    size_t _size;   // Stack size
-    T* _top;        // Stack top node
+    size_t _size;   // Hash map size
+    TKey _blank;    // Hash map blank key
+    std::vector<std::pair<TKey, TValue>> _buckets; // Hash map buckets
 };
 
 //! Intrusive stack iterator

@@ -113,7 +113,7 @@ public:
           _root(nullptr)
     {}
     template <class InputIterator>
-    BinTreeAVL(InputIterator first, InputIterator last, const TCompare& compare = TCompare());
+    BinTreeAVL(InputIterator first, InputIterator last, const TCompare& compare = TCompare()) noexcept;
     BinTreeAVL(const BinTreeAVL&) noexcept = delete;
     BinTreeAVL(BinTreeAVL&&) noexcept = default;
     ~BinTreeAVL() noexcept = default;

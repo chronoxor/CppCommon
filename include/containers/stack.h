@@ -112,7 +112,7 @@ public:
 
     Stack() noexcept : _size(0), _top(nullptr) {}
     template <class InputIterator>
-    Stack(InputIterator first, InputIterator last);
+    Stack(InputIterator first, InputIterator last) noexcept;
     Stack(const Stack&) noexcept = delete;
     Stack(Stack&&) noexcept = default;
     ~Stack() noexcept = default;

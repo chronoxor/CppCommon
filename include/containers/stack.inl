@@ -10,7 +10,7 @@ namespace CppCommon {
 
 template <typename T>
 template <class InputIterator>
-inline Stack<T>::Stack(InputIterator first, InputIterator last)
+inline Stack<T>::Stack(InputIterator first, InputIterator last) noexcept
 {
     for (InputIterator it = first; it != last; ++it)
         push(*it);
