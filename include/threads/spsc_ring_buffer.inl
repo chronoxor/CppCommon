@@ -16,6 +16,7 @@ inline SPSCRingBuffer::SPSCRingBuffer(size_t capacity) : _capacity(capacity), _m
     memset(_pad0, 0, sizeof(cache_line_pad));
     memset(_pad1, 0, sizeof(cache_line_pad));
     memset(_pad2, 0, sizeof(cache_line_pad));
+    memset(_pad3, 0, sizeof(cache_line_pad));
 }
 
 inline size_t SPSCRingBuffer::size() const noexcept

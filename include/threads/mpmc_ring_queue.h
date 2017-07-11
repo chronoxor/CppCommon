@@ -85,11 +85,11 @@ public:
 private:
     struct Node
     {
-        T value;
         std::atomic<size_t> sequence;
+        T value;
     };
 
-    typedef char cache_line_pad[64];
+    typedef char cache_line_pad[128];
 
     cache_line_pad _pad0;
     const size_t _capacity;
@@ -98,9 +98,9 @@ private:
 
     cache_line_pad _pad1;
     std::atomic<size_t> _head;
-
     cache_line_pad _pad2;
     std::atomic<size_t> _tail;
+    cache_line_pad _pad3;
 };
 
 /*! \example threads_mpmc_ring_queue.cpp Multiple producers / multiple consumers wait-free ring queue example */

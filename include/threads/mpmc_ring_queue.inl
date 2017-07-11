@@ -22,6 +22,7 @@ inline MPMCRingQueue<T>::MPMCRingQueue(size_t capacity) : _capacity(capacity), _
     memset(_pad0, 0, sizeof(cache_line_pad));
     memset(_pad1, 0, sizeof(cache_line_pad));
     memset(_pad2, 0, sizeof(cache_line_pad));
+    memset(_pad3, 0, sizeof(cache_line_pad));
 
     // Populate the sequence initial values
     for (size_t i = 0; i < capacity; ++i)

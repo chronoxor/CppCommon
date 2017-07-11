@@ -73,17 +73,17 @@ public:
 private:
     struct Node
     {
-        T value;
         std::atomic<Node*> next;
+        T value;
     };
 
-    typedef char cache_line_pad[64];
+    typedef char cache_line_pad[128];
 
     cache_line_pad _pad0;
     std::atomic<Node*> _head;
-
     cache_line_pad _pad1;
     std::atomic<Node*> _tail;
+    cache_line_pad _pad2;
 };
 
 /*! \example threads_mpsc_linked_queue.cpp Multiple producers / single consumer wait-free linked queue example */

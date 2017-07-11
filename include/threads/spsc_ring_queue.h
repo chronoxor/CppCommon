@@ -84,7 +84,7 @@ public:
     bool Dequeue(T& item);
 
 private:
-    typedef char cache_line_pad[64];
+    typedef char cache_line_pad[128];
 
     cache_line_pad _pad0;
     const size_t _capacity;
@@ -93,9 +93,9 @@ private:
 
     cache_line_pad _pad1;
     std::atomic<size_t> _head;
-
     cache_line_pad _pad2;
     std::atomic<size_t> _tail;
+    cache_line_pad _pad3;
 };
 
 /*! \example threads_spsc_ring_queue.cpp Single producer / single consumer wait-free ring queue example */

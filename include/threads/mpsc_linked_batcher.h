@@ -73,8 +73,8 @@ public:
 private:
     struct Node
     {
-        T value;
         Node* next;
+        T value;
     };
 
     std::atomic<Node*> _head;
