@@ -6,8 +6,8 @@
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_INTRUSIVE_QUEUE_H
-#define CPPCOMMON_INTRUSIVE_QUEUE_H
+#ifndef CPPCOMMON_CONTAINERS_QUEUE_H
+#define CPPCOMMON_CONTAINERS_QUEUE_H
 
 #include <cassert>
 #include <iterator>
@@ -269,4 +269,4 @@ private:
 
 #include "queue.inl"
 
-#endif // CPPCOMMON_INTRUSIVE_QUEUE_H
+#endif // CPPCOMMON_CONTAINERS_QUEUE_H

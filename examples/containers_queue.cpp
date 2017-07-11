@@ -1,12 +1,12 @@
 /*!
-    \file intrusive_queue.cpp
+    \file containers_queue.cpp
     \brief Intrusive queue container example
     \author Ivan Shynkarenka
     \date 20.06.2017
     \copyright MIT License
 */
 
-#include "intrusive/queue.h"
+#include "containers/queue.h"
 
 #include <iostream>
 

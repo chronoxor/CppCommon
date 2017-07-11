@@ -4,11 +4,11 @@
 
 #include "catch.hpp"
 
-#include "intrusive/bintree.h"
-#include "intrusive/bintree_aa.h"
-#include "intrusive/bintree_avl.h"
-#include "intrusive/bintree_rb.h"
-#include "intrusive/bintree_splay.h"
+#include "containers/bintree.h"
+#include "containers/bintree_aa.h"
+#include "containers/bintree_avl.h"
+#include "containers/bintree_rb.h"
+#include "containers/bintree_splay.h"
 
 using namespace CppCommon;
 

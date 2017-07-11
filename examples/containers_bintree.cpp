@@ -1,12 +1,12 @@
 /*!
-    \file intrusive_bintree.cpp
+    \file containers_bintree.cpp
     \brief Intrusive binary tree container example
     \author Ivan Shynkarenka
     \date 22.06.2017
     \copyright MIT License
 */
 
-#include "intrusive/bintree.h"
+#include "containers/bintree.h"
 
 #include <iostream>
 

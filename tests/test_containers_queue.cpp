@@ -4,7 +4,7 @@
 
 #include "catch.hpp"
 
-#include "intrusive/queue.h"
+#include "containers/queue.h"
 
 using namespace CppCommon;
 

@@ -6,8 +6,8 @@
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_INTRUSIVE_BINTREE_SPLAY_H
-#define CPPCOMMON_INTRUSIVE_BINTREE_SPLAY_H
+#ifndef CPPCOMMON_CONTAINERS_BINTREE_SPLAY_H
+#define CPPCOMMON_CONTAINERS_BINTREE_SPLAY_H
 
 #include <cassert>
 #include <iterator>
@@ -311,4 +311,4 @@ private:
 
 #include "bintree_splay.inl"
 
-#endif // CPPCOMMON_INTRUSIVE_BINTREE_SPLAY_H
+#endif // CPPCOMMON_CONTAINERS_BINTREE_SPLAY_H

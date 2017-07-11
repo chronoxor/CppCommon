@@ -46,10 +46,9 @@ public:
     /*!
         \param manager - Memory manager
     */
-    Allocator(TMemoryManager& manager) noexcept : _manager(manager) {}
+    explicit Allocator(TMemoryManager& manager) noexcept : _manager(manager) {}
     template <typename U>
     Allocator(const Allocator<U, TMemoryManager, nothrow>& alloc) noexcept : _manager(alloc._manager) {}
-    Allocator(const Allocator<T, TMemoryManager, nothrow>& alloc) noexcept : _manager(alloc._manager) {}
     Allocator(Allocator&&) noexcept = default;
     ~Allocator() noexcept = default;
 

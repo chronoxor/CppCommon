@@ -6,8 +6,8 @@
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_INTRUSIVE_BINTREE_RB_H
-#define CPPCOMMON_INTRUSIVE_BINTREE_RB_H
+#ifndef CPPCOMMON_CONTAINERS_BINTREE_RB_H
+#define CPPCOMMON_CONTAINERS_BINTREE_RB_H
 
 #include <cassert>
 #include <iterator>
@@ -316,4 +316,4 @@ private:
 
 #include "bintree_rb.inl"
 
-#endif // CPPCOMMON_INTRUSIVE_BINTREE_RB_H
+#endif // CPPCOMMON_CONTAINERS_BINTREE_RB_H

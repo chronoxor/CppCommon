@@ -1,12 +1,12 @@
 /*!
-    \file intrusive_stack.cpp
+    \file containers_stack.cpp
     \brief Intrusive stack container example
     \author Ivan Shynkarenka
     \date 20.06.2017
     \copyright MIT License
 */
 
-#include "intrusive/stack.h"
+#include "containers/stack.h"
 
 #include <iostream>
 

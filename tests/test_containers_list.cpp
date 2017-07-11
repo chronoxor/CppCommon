@@ -4,7 +4,7 @@
 
 #include "catch.hpp"
 
-#include "intrusive/list.h"
+#include "containers/list.h"
 
 using namespace CppCommon;
 

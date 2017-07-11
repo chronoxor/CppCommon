@@ -1,12 +1,12 @@
 /*!
-    \file intrusive_list.cpp
+    \file containers_list.cpp
     \brief Intrusive list container example
     \author Ivan Shynkarenka
     \date 20.06.2017
     \copyright MIT License
 */
 
-#include "intrusive/list.h"
+#include "containers/list.h"
 
 #include <iostream>
 

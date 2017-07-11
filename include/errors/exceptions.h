@@ -35,7 +35,7 @@ public:
     /*!
         \param message - Exception message (default is "")
     */
-    Exception(const std::string& message = "") : _message(message), _location() {}
+    explicit Exception(const std::string& message = "") : _message(message), _location() {}
     Exception(const Exception&) = default;
     Exception(Exception&&) = default;
     virtual ~Exception() = default;
@@ -98,14 +98,14 @@ public:
     /*!
         \param error - System error code
     */
-    SystemException(int error)
+    explicit SystemException(int error)
         : SystemException(SystemError::Description(error), error)
     {}
     //! Create system exception based on the given exception message
     /*!
         \param message - Exception message
     */
-    SystemException(const std::string& message)
+    explicit SystemException(const std::string& message)
         : SystemException(message, SystemError::GetLast())
     {}
     //! Create system exception based on the given exception message and system error code
@@ -113,7 +113,7 @@ public:
         \param message - Exception message
         \param error - System error code
     */
-    SystemException(const std::string& message, int error)
+    explicit SystemException(const std::string& message, int error)
         : Exception(message),
           _system_error(error),
           _system_message(SystemError::Description(error))

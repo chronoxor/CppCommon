@@ -6,8 +6,8 @@
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_INTRUSIVE_BINTREE_AVL_H
-#define CPPCOMMON_INTRUSIVE_BINTREE_AVL_H
+#ifndef CPPCOMMON_CONTAINERS_BINTREE_AVL_H
+#define CPPCOMMON_CONTAINERS_BINTREE_AVL_H
 
 #include <cassert>
 #include <iterator>
@@ -216,4 +216,4 @@ private:
 
 #include "bintree_avl.inl"
 
-#endif // CPPCOMMON_INTRUSIVE_BINTREE_AVL_H
+#endif // CPPCOMMON_CONTAINERS_BINTREE_AVL_H

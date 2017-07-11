@@ -6,8 +6,8 @@
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_INTRUSIVE_STACK_H
-#define CPPCOMMON_INTRUSIVE_STACK_H
+#ifndef CPPCOMMON_CONTAINERS_STACK_H
+#define CPPCOMMON_CONTAINERS_STACK_H
 
 #include <cassert>
 #include <iterator>
@@ -267,4 +267,4 @@ private:
 
 #include "stack.inl"
 
-#endif // CPPCOMMON_INTRUSIVE_STACK_H
+#endif // CPPCOMMON_CONTAINERS_STACK_H

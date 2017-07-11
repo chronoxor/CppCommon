@@ -4,7 +4,7 @@
 
 #include "catch.hpp"
 
-#include "intrusive/stack.h"
+#include "containers/stack.h"
 
 using namespace CppCommon;
 
