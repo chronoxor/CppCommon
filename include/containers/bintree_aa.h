@@ -9,8 +9,7 @@
 #ifndef CPPCOMMON_CONTAINERS_BINTREE_AA_H
 #define CPPCOMMON_CONTAINERS_BINTREE_AA_H
 
-#include <cassert>
-#include <iterator>
+#include "bintree.h"
 
 namespace CppCommon {
 

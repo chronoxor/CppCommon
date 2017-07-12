@@ -10,6 +10,7 @@
 #define CPPCOMMON_CONTAINERS_STACK_H
 
 #include <cassert>
+#include <cstddef>
 #include <iterator>
 
 namespace CppCommon {

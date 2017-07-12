@@ -10,6 +10,7 @@
 #define CPPCOMMON_CONTAINERS_HASHMAP_H
 
 #include <cassert>
+#include <cstddef>
 #include <iterator>
 #include <vector>
 
