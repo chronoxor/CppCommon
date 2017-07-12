@@ -291,7 +291,7 @@ public:
     friend bool operator==(const BinTreeIterator& it1, const BinTreeIterator& it2) noexcept
     { return (it1._container == it2._container) && (it1._node == it2._node); }
     friend bool operator!=(const BinTreeIterator& it1, const BinTreeIterator& it2) noexcept
-    { return (it1._container != it2._container) || (it1._node == it2._node); }
+    { return (it1._container != it2._container) || (it1._node != it2._node); }
 
     BinTreeIterator& operator++() noexcept;
     BinTreeIterator operator++(int) noexcept;
