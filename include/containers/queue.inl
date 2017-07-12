@@ -17,27 +17,39 @@ inline Queue<T>::Queue(InputIterator first, InputIterator last) noexcept
 }
 
 template <typename T>
-inline QueueIterator<T> Queue<T>::begin() noexcept
+inline typename Queue<T>::iterator Queue<T>::begin() noexcept
 {
-    return QueueIterator<T>(front());
+    return iterator(front());
 }
 
 template <typename T>
-inline QueueConstIterator<T> Queue<T>::begin() const noexcept
+inline typename Queue<T>::const_iterator Queue<T>::begin() const noexcept
 {
-    return QueueConstIterator<T>(front());
+    return const_iterator(front());
 }
 
 template <typename T>
-inline QueueIterator<T> Queue<T>::end() noexcept
+inline typename Queue<T>::const_iterator Queue<T>::cbegin() const noexcept
 {
-    return QueueIterator<T>(nullptr);
+    return const_iterator(front());
 }
 
 template <typename T>
-inline QueueConstIterator<T> Queue<T>::end() const noexcept
+inline typename Queue<T>::iterator Queue<T>::end() noexcept
 {
-    return QueueConstIterator<T>(nullptr);
+    return iterator(nullptr);
+}
+
+template <typename T>
+inline typename Queue<T>::const_iterator Queue<T>::end() const noexcept
+{
+    return const_iterator(nullptr);
+}
+
+template <typename T>
+inline typename Queue<T>::const_iterator Queue<T>::cend() const noexcept
+{
+    return const_iterator(nullptr);
 }
 
 template <typename T>
@@ -87,6 +99,14 @@ inline void Queue<T>::reverse() noexcept
 }
 
 template <typename T>
+inline void Queue<T>::clear() noexcept
+{
+    _size = 0;
+    _front = nullptr;
+    _back = nullptr;
+}
+
+template <typename T>
 inline void Queue<T>::swap(Queue& queue) noexcept
 {
     using std::swap;
@@ -104,8 +124,8 @@ inline void swap(Queue<T>& queue1, Queue<T>& queue2) noexcept
 template <typename T>
 QueueIterator<T>& QueueIterator<T>::operator++() noexcept
 {
-    if (_current != nullptr)
-        _current = _current->next;
+    if (_node != nullptr)
+        _node = _node->next;
     return *this;
 }
 
@@ -120,22 +140,22 @@ inline QueueIterator<T> QueueIterator<T>::operator++(int) noexcept
 template <typename T>
 T& QueueIterator<T>::operator*() noexcept
 {
-    assert((_current != nullptr) && "Iterator must be valid!");
+    assert((_node != nullptr) && "Iterator must be valid!");
 
-    return *_current;
+    return *_node;
 }
 
 template <typename T>
 T* QueueIterator<T>::operator->() noexcept
 {
-    return _current;
+    return _node;
 }
 
 template <typename T>
 void QueueIterator<T>::swap(QueueIterator& it) noexcept
 {
     using std::swap;
-    swap(_current, it._current);
+    swap(_node, it._node);
 }
 
 template <typename T>
@@ -147,8 +167,8 @@ void swap(QueueIterator<T>& it1, QueueIterator<T>& it2) noexcept
 template <typename T>
 QueueConstIterator<T>& QueueConstIterator<T>::operator++() noexcept
 {
-    if (_current != nullptr)
-        _current = _current->next;
+    if (_node != nullptr)
+        _node = _node->next;
     return *this;
 }
 
@@ -163,22 +183,22 @@ inline QueueConstIterator<T> QueueConstIterator<T>::operator++(int) noexcept
 template <typename T>
 const T& QueueConstIterator<T>::operator*() const noexcept
 {
-    assert((_current != nullptr) && "Iterator must be valid!");
+    assert((_node != nullptr) && "Iterator must be valid!");
 
-    return *_current;
+    return *_node;
 }
 
 template <typename T>
 const T* QueueConstIterator<T>::operator->() const noexcept
 {
-    return _current;
+    return _node;
 }
 
 template <typename T>
 void QueueConstIterator<T>::swap(QueueConstIterator& it) noexcept
 {
     using std::swap;
-    swap(_current, it._current);
+    swap(_node, it._node);
 }
 
 template <typename T>

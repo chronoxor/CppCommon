@@ -102,6 +102,17 @@ template <typename T>
 class Queue
 {
 public:
+    // Standard container type definitions
+    typedef T value_type;
+    typedef value_type& reference;
+    typedef const value_type& const_reference;
+    typedef value_type* pointer;
+    typedef const value_type* const_pointer;
+    typedef ptrdiff_t difference_type;
+    typedef size_t size_type;
+    typedef QueueIterator<T> iterator;
+    typedef QueueConstIterator<T> const_iterator;
+
     //! Queue node
     struct Node
     {
@@ -135,11 +146,13 @@ public:
     const T* back() const noexcept { return _back; }
 
     //! Get the begin queue iterator
-    QueueIterator<T> begin() noexcept;
-    QueueConstIterator<T> begin() const noexcept;
+    iterator begin() noexcept;
+    const_iterator begin() const noexcept;
+    const_iterator cbegin() const noexcept;
     //! Get the end queue iterator
-    QueueIterator<T> end() noexcept;
-    QueueConstIterator<T> end() const noexcept;
+    iterator end() noexcept;
+    const_iterator end() const noexcept;
+    const_iterator cend() const noexcept;
 
     //! Push a new item into the back of the queue
     /*!
@@ -156,6 +169,9 @@ public:
 
     //! Reverse the queue
     void reverse() noexcept;
+
+    //! Clear the queue
+    void clear() noexcept;
 
     //! Swap two instances
     void swap(Queue& queue) noexcept;
@@ -178,12 +194,16 @@ class QueueIterator
 public:
     // Standard iterator type definitions
     typedef T value_type;
-    typedef T& reference;
-    typedef T* pointer;
+    typedef value_type& reference;
+    typedef const value_type& const_reference;
+    typedef value_type* pointer;
+    typedef const value_type* const_pointer;
+    typedef ptrdiff_t difference_type;
+    typedef size_t size_type;
     typedef std::forward_iterator_tag iterator_category;
 
-    QueueIterator() noexcept : _current(nullptr) {}
-    explicit QueueIterator(T* current) noexcept : _current(current) {}
+    QueueIterator() noexcept : _node(nullptr) {}
+    explicit QueueIterator(T* node) noexcept : _node(node) {}
     QueueIterator(const QueueIterator& it) noexcept = default;
     QueueIterator(QueueIterator&& it) noexcept = default;
     ~QueueIterator() noexcept = default;
@@ -192,9 +212,9 @@ public:
     QueueIterator& operator=(QueueIterator&& it) noexcept = default;
 
     friend bool operator==(const QueueIterator& it1, const QueueIterator& it2) noexcept
-    { return it1._current == it2._current; }
+    { return it1._node == it2._node; }
     friend bool operator!=(const QueueIterator& it1, const QueueIterator& it2) noexcept
-    { return it1._current != it2._current; }
+    { return it1._node != it2._node; }
 
     QueueIterator& operator++() noexcept;
     QueueIterator operator++(int) noexcept;
@@ -203,7 +223,7 @@ public:
     T* operator->() noexcept;
 
     //! Check if the iterator is valid
-    explicit operator bool() const noexcept { return _current != nullptr; }
+    explicit operator bool() const noexcept { return _node != nullptr; }
 
     //! Swap two instances
     void swap(QueueIterator& it) noexcept;
@@ -211,7 +231,7 @@ public:
     friend void swap(QueueIterator<U>& it1, QueueIterator<U>& it2) noexcept;
 
 private:
-    T* _current;
+    T* _node;
 };
 
 //! Intrusive queue constant iterator
@@ -222,28 +242,32 @@ template <typename T>
 class QueueConstIterator
 {
 public:
-    // Standard constant iterator type definitions
-    typedef const T value_type;
-    typedef const T& reference;
-    typedef const T* pointer;
+    // Standard iterator type definitions
+    typedef T value_type;
+    typedef value_type& reference;
+    typedef const value_type& const_reference;
+    typedef value_type* pointer;
+    typedef const value_type* const_pointer;
+    typedef ptrdiff_t difference_type;
+    typedef size_t size_type;
     typedef std::forward_iterator_tag iterator_category;
 
-    QueueConstIterator() noexcept : _current(nullptr) {}
-    explicit QueueConstIterator(const T* current) noexcept : _current(current) {}
-    QueueConstIterator(const QueueIterator<T>& it) noexcept : _current(it._current) {}
+    QueueConstIterator() noexcept : _node(nullptr) {}
+    explicit QueueConstIterator(const T* node) noexcept : _node(node) {}
+    QueueConstIterator(const QueueIterator<T>& it) noexcept : _node(it._node) {}
     QueueConstIterator(const QueueConstIterator& it) noexcept = default;
     QueueConstIterator(QueueConstIterator&& it) noexcept = default;
     ~QueueConstIterator() noexcept = default;
 
     QueueConstIterator& operator=(const QueueIterator<T>& it) noexcept
-    { _current = it._current; return *this; }
+    { _node = it._node; return *this; }
     QueueConstIterator& operator=(const QueueConstIterator& it) noexcept = default;
     QueueConstIterator& operator=(QueueConstIterator&& it) noexcept = default;
 
     friend bool operator==(const QueueConstIterator& it1, const QueueConstIterator& it2) noexcept
-    { return it1._current == it2._current; }
+    { return it1._node == it2._node; }
     friend bool operator!=(const QueueConstIterator& it1, const QueueConstIterator& it2) noexcept
-    { return it1._current != it2._current; }
+    { return it1._node != it2._node; }
 
     QueueConstIterator& operator++() noexcept;
     QueueConstIterator operator++(int) noexcept;
@@ -252,7 +276,7 @@ public:
     const T* operator->() const noexcept;
 
     //! Check if the iterator is valid
-    explicit operator bool() const noexcept { return _current != nullptr; }
+    explicit operator bool() const noexcept { return _node != nullptr; }
 
     //! Swap two instances
     void swap(QueueConstIterator& it) noexcept;
@@ -260,10 +284,10 @@ public:
     friend void swap(QueueConstIterator<U>& it1, QueueConstIterator<U>& it2) noexcept;
 
 private:
-    const T* _current;
+    const T* _node;
 };
 
-/*! \example intrusive_queue.cpp Intrusive queue container example */
+/*! \example containers_queue.cpp Intrusive queue container example */
 
 } // namespace CppCommon
 

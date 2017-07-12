@@ -17,27 +17,39 @@ inline Stack<T>::Stack(InputIterator first, InputIterator last) noexcept
 }
 
 template <typename T>
-inline StackIterator<T> Stack<T>::begin() noexcept
+inline typename Stack<T>::iterator Stack<T>::begin() noexcept
 {
-    return StackIterator<T>(top());
+    return iterator(top());
 }
 
 template <typename T>
-inline StackConstIterator<T> Stack<T>::begin() const noexcept
+inline typename Stack<T>::const_iterator Stack<T>::begin() const noexcept
 {
-    return StackConstIterator<T>(top());
+    return const_iterator(top());
 }
 
 template <typename T>
-inline StackIterator<T> Stack<T>::end() noexcept
+inline typename Stack<T>::const_iterator Stack<T>::cbegin() const noexcept
 {
-    return StackIterator<T>(nullptr);
+    return const_iterator(top());
 }
 
 template <typename T>
-inline StackConstIterator<T> Stack<T>::end() const noexcept
+inline typename Stack<T>::iterator Stack<T>::end() noexcept
 {
-    return StackConstIterator<T>(nullptr);
+    return iterator(nullptr);
+}
+
+template <typename T>
+inline typename Stack<T>::const_iterator Stack<T>::end() const noexcept
+{
+    return const_iterator(nullptr);
+}
+
+template <typename T>
+inline typename Stack<T>::const_iterator Stack<T>::cend() const noexcept
+{
+    return const_iterator(nullptr);
 }
 
 template <typename T>
@@ -80,6 +92,13 @@ inline void Stack<T>::reverse() noexcept
 }
 
 template <typename T>
+inline void Stack<T>::clear() noexcept
+{
+    _size = 0;
+    _top = nullptr;
+}
+
+template <typename T>
 inline void Stack<T>::swap(Stack& stack) noexcept
 {
     using std::swap;
@@ -96,8 +115,8 @@ inline void swap(Stack<T>& stack1, Stack<T>& stack2) noexcept
 template <typename T>
 StackIterator<T>& StackIterator<T>::operator++() noexcept
 {
-    if (_current != nullptr)
-        _current = _current->next;
+    if (_node != nullptr)
+        _node = _node->next;
     return *this;
 }
 
@@ -112,22 +131,22 @@ inline StackIterator<T> StackIterator<T>::operator++(int) noexcept
 template <typename T>
 T& StackIterator<T>::operator*() noexcept
 {
-    assert((_current != nullptr) && "Iterator must be valid!");
+    assert((_node != nullptr) && "Iterator must be valid!");
 
-    return *_current;
+    return *_node;
 }
 
 template <typename T>
 T* StackIterator<T>::operator->() noexcept
 {
-    return _current;
+    return _node;
 }
 
 template <typename T>
 void StackIterator<T>::swap(StackIterator& it) noexcept
 {
     using std::swap;
-    swap(_current, it._current);
+    swap(_node, it._node);
 }
 
 template <typename T>
@@ -139,8 +158,8 @@ void swap(StackIterator<T>& it1, StackIterator<T>& it2) noexcept
 template <typename T>
 StackConstIterator<T>& StackConstIterator<T>::operator++() noexcept
 {
-    if (_current != nullptr)
-        _current = _current->next;
+    if (_node != nullptr)
+        _node = _node->next;
     return *this;
 }
 
@@ -155,22 +174,22 @@ inline StackConstIterator<T> StackConstIterator<T>::operator++(int) noexcept
 template <typename T>
 const T& StackConstIterator<T>::operator*() const noexcept
 {
-    assert((_current != nullptr) && "Iterator must be valid!");
+    assert((_node != nullptr) && "Iterator must be valid!");
 
-    return *_current;
+    return *_node;
 }
 
 template <typename T>
 const T* StackConstIterator<T>::operator->() const noexcept
 {
-    return _current;
+    return _node;
 }
 
 template <typename T>
 void StackConstIterator<T>::swap(StackConstIterator& it) noexcept
 {
     using std::swap;
-    swap(_current, it._current);
+    swap(_node, it._node);
 }
 
 template <typename T>

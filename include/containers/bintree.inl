@@ -62,63 +62,87 @@ inline const T* BinTree<T, TCompare>::InternalHighest() const noexcept
 }
 
 template <typename T, typename TCompare>
-inline BinTreeIterator<T> BinTree<T, TCompare>::begin() noexcept
+inline typename BinTree<T, TCompare>::iterator BinTree<T, TCompare>::begin() noexcept
 {
-    return BinTreeIterator<T>(lowest());
+    return iterator(this, lowest());
 }
 
 template <typename T, typename TCompare>
-inline BinTreeConstIterator<T> BinTree<T, TCompare>::begin() const noexcept
+inline typename BinTree<T, TCompare>::const_iterator BinTree<T, TCompare>::begin() const noexcept
 {
-    return BinTreeConstIterator<T>(lowest());
+    return const_iterator(this, lowest());
 }
 
 template <typename T, typename TCompare>
-inline BinTreeIterator<T> BinTree<T, TCompare>::end() noexcept
+inline typename BinTree<T, TCompare>::const_iterator BinTree<T, TCompare>::cbegin() const noexcept
 {
-    return BinTreeIterator<T>(nullptr);
+    return const_iterator(this, lowest());
 }
 
 template <typename T, typename TCompare>
-inline BinTreeConstIterator<T> BinTree<T, TCompare>::end() const noexcept
+inline typename BinTree<T, TCompare>::iterator BinTree<T, TCompare>::end() noexcept
 {
-    return BinTreeConstIterator<T>(nullptr);
+    return iterator(this, nullptr);
 }
 
 template <typename T, typename TCompare>
-inline BinTreeReverseIterator<T> BinTree<T, TCompare>::rbegin() noexcept
+inline typename BinTree<T, TCompare>::const_iterator BinTree<T, TCompare>::end() const noexcept
 {
-    return BinTreeReverseIterator<T>(highest());
+    return const_iterator(this, nullptr);
 }
 
 template <typename T, typename TCompare>
-inline BinTreeReverseConstIterator<T> BinTree<T, TCompare>::rbegin() const noexcept
+inline typename BinTree<T, TCompare>::const_iterator BinTree<T, TCompare>::cend() const noexcept
 {
-    return BinTreeReverseConstIterator<T>(highest());
+    return const_iterator(this, nullptr);
 }
 
 template <typename T, typename TCompare>
-inline BinTreeReverseIterator<T> BinTree<T, TCompare>::rend() noexcept
+inline typename BinTree<T, TCompare>::reverse_iterator BinTree<T, TCompare>::rbegin() noexcept
 {
-    return BinTreeReverseIterator<T>(nullptr);
+    return reverse_iterator(this, highest());
 }
 
 template <typename T, typename TCompare>
-inline BinTreeReverseConstIterator<T> BinTree<T, TCompare>::rend() const noexcept
+inline typename BinTree<T, TCompare>::const_reverse_iterator BinTree<T, TCompare>::rbegin() const noexcept
 {
-    return BinTreeReverseConstIterator<T>(nullptr);
+    return const_reverse_iterator(this, highest());
 }
 
 template <typename T, typename TCompare>
-inline BinTreeIterator<T> BinTree<T, TCompare>::find(const T& item) noexcept
+inline typename BinTree<T, TCompare>::const_reverse_iterator BinTree<T, TCompare>::crbegin() const noexcept
 {
-    return BinTreeIterator<T>((T*)InternalFind(item));
+    return const_reverse_iterator(this, highest());
 }
 
 template <typename T, typename TCompare>
-inline BinTreeConstIterator<T> BinTree<T, TCompare>::find(const T& item) const noexcept
+inline typename BinTree<T, TCompare>::reverse_iterator BinTree<T, TCompare>::rend() noexcept
 {
-    return BinTreeConstIterator<T>(InternalFind(item));
+    return reverse_iterator(this, nullptr);
+}
+
+template <typename T, typename TCompare>
+inline typename BinTree<T, TCompare>::const_reverse_iterator BinTree<T, TCompare>::rend() const noexcept
+{
+    return const_reverse_iterator(this, nullptr);
+}
+
+template <typename T, typename TCompare>
+inline typename BinTree<T, TCompare>::const_reverse_iterator BinTree<T, TCompare>::crend() const noexcept
+{
+    return const_reverse_iterator(this, nullptr);
+}
+
+template <typename T, typename TCompare>
+inline typename BinTree<T, TCompare>::iterator BinTree<T, TCompare>::find(const T& item) noexcept
+{
+    return iterator(this, (T*)InternalFind(item));
+}
+
+template <typename T, typename TCompare>
+inline typename BinTree<T, TCompare>::const_iterator BinTree<T, TCompare>::find(const T& item) const noexcept
+{
+    return const_iterator(this, InternalFind(item));
 }
 
 template <typename T, typename TCompare>
@@ -152,15 +176,15 @@ inline const T* BinTree<T, TCompare>::InternalFind(const T& item) const noexcept
 }
 
 template <typename T, typename TCompare>
-inline BinTreeIterator<T> BinTree<T, TCompare>::lower_bound(const T& item) noexcept
+inline typename BinTree<T, TCompare>::iterator BinTree<T, TCompare>::lower_bound(const T& item) noexcept
 {
-    return BinTreeIterator<T>((T*)InternalLowerBound(item));
+    return iterator(this, (T*)InternalLowerBound(item));
 }
 
 template <typename T, typename TCompare>
-inline BinTreeConstIterator<T> BinTree<T, TCompare>::lower_bound(const T& item) const noexcept
+inline typename BinTree<T, TCompare>::const_iterator BinTree<T, TCompare>::lower_bound(const T& item) const noexcept
 {
-    return BinTreeConstIterator<T>(InternalLowerBound(item));
+    return const_iterator(this, InternalLowerBound(item));
 }
 
 template <typename T, typename TCompare>
@@ -196,15 +220,15 @@ inline const T* BinTree<T, TCompare>::InternalLowerBound(const T& item) const no
 }
 
 template <typename T, typename TCompare>
-inline BinTreeIterator<T> BinTree<T, TCompare>::upper_bound(const T& item) noexcept
+inline typename BinTree<T, TCompare>::iterator BinTree<T, TCompare>::upper_bound(const T& item) noexcept
 {
-    return BinTreeIterator<T>((T*)InternalUpperBound(item));
+    return iterator(this, (T*)InternalUpperBound(item));
 }
 
 template <typename T, typename TCompare>
-inline BinTreeConstIterator<T> BinTree<T, TCompare>::upper_bound(const T& item) const noexcept
+inline typename BinTree<T, TCompare>::const_iterator BinTree<T, TCompare>::upper_bound(const T& item) const noexcept
 {
-    return BinTreeConstIterator<T>(InternalUpperBound(item));
+    return const_iterator(this, InternalUpperBound(item));
 }
 
 template <typename T, typename TCompare>
@@ -360,9 +384,16 @@ inline T* BinTree<T, TCompare>::erase(const T& item) noexcept
 }
 
 template <typename T, typename TCompare>
-inline BinTreeIterator<T> BinTree<T, TCompare>::erase(const BinTreeIterator<T>& it) noexcept
+inline typename BinTree<T, TCompare>::iterator BinTree<T, TCompare>::erase(const iterator& it) noexcept
 {
-    return BinTreeIterator<T>(erase(*it));
+    return iterator(this, erase(*it));
+}
+
+template <typename T, typename TCompare>
+inline void BinTree<T, TCompare>::clear() noexcept
+{
+    _size = 0;
+    _root = nullptr;
 }
 
 template <typename T, typename TCompare>
@@ -380,226 +411,230 @@ inline void swap(BinTree<T, TCompare>& bintree1, BinTree<T, TCompare>& bintree2)
     bintree1.swap(bintree2);
 }
 
-template <typename T, typename TCompare>
-BinTreeIterator<T, TCompare>& BinTreeIterator<T, TCompare>::operator++() noexcept
+template <class TContainer, typename T>
+BinTreeIterator<TContainer, T>& BinTreeIterator<TContainer, T>::operator++() noexcept
 {
-    if (_current != nullptr)
+    if (_node != nullptr)
     {
-        if (_current->right != nullptr)
+        if (_node->right != nullptr)
         {
-            _current = _current->right;
-            while (_current->left != nullptr)
-                _current = _current->left;
+            _node = _node->right;
+            while (_node->left != nullptr)
+                _node = _node->left;
         }
         else
         {
-            while ((_current->parent != nullptr) && compare(*_current->parent, *_current))
-                _current = _current->parent;
-            _current = _current->parent;
+            while ((_node->parent != nullptr) && compare(*_node->parent, *_node))
+                _node = _node->parent;
+            _node = _node->parent;
         }
     }
     return *this;
 }
 
-template <typename T, typename TCompare>
-inline BinTreeIterator<T, TCompare> BinTreeIterator<T, TCompare>::operator++(int) noexcept
+template <class TContainer, typename T>
+inline BinTreeIterator<TContainer, T> BinTreeIterator<TContainer, T>::operator++(int) noexcept
 {
-    BinTreeIterator<T, TCompare> result(*this);
+    BinTreeIterator<TContainer, T> result(*this);
     operator++();
     return result;
 }
 
-template <typename T, typename TCompare>
-T& BinTreeIterator<T, TCompare>::operator*() noexcept
+template <class TContainer, typename T>
+T& BinTreeIterator<TContainer, T>::operator*() noexcept
 {
-    assert((_current != nullptr) && "Iterator must be valid!");
+    assert((_node != nullptr) && "Iterator must be valid!");
 
-    return *_current;
+    return *_node;
 }
 
-template <typename T, typename TCompare>
-T* BinTreeIterator<T, TCompare>::operator->() noexcept
+template <class TContainer, typename T>
+T* BinTreeIterator<TContainer, T>::operator->() noexcept
 {
-    return _current;
+    return _node;
 }
 
-template <typename T, typename TCompare>
-void BinTreeIterator<T, TCompare>::swap(BinTreeIterator& it) noexcept
+template <class TContainer, typename T>
+void BinTreeIterator<TContainer, T>::swap(BinTreeIterator& it) noexcept
 {
     using std::swap;
-    swap(_current, it._current);
+    swap(_container, it._container);
+    swap(_node, it._node);
 }
 
-template <typename T, typename TCompare>
-void swap(BinTreeIterator<T, TCompare>& it1, BinTreeIterator<T, TCompare>& it2) noexcept
+template <class TContainer, typename T>
+void swap(BinTreeIterator<TContainer, T>& it1, BinTreeIterator<TContainer, T>& it2) noexcept
 {
     it1.swap(it2);
 }
 
-template <typename T, typename TCompare>
-BinTreeConstIterator<T, TCompare>& BinTreeConstIterator<T, TCompare>::operator++() noexcept
+template <class TContainer, typename T>
+BinTreeConstIterator<TContainer, T>& BinTreeConstIterator<TContainer, T>::operator++() noexcept
 {
-    if (_current != nullptr)
+    if (_node != nullptr)
     {
-        if (_current->right != nullptr)
+        if (_node->right != nullptr)
         {
-            _current = _current->right;
-            while (_current->left != nullptr)
-                _current = _current->left;
+            _node = _node->right;
+            while (_node->left != nullptr)
+                _node = _node->left;
         }
         else
         {
-            while ((_current->parent != nullptr) && compare(*_current->parent, *_current))
-                _current = _current->parent;
-            _current = _current->parent;
+            while ((_node->parent != nullptr) && compare(*_node->parent, *_node))
+                _node = _node->parent;
+            _node = _node->parent;
         }
     }
     return *this;
 }
 
-template <typename T, typename TCompare>
-inline BinTreeConstIterator<T, TCompare> BinTreeConstIterator<T, TCompare>::operator++(int) noexcept
+template <class TContainer, typename T>
+inline BinTreeConstIterator<TContainer, T> BinTreeConstIterator<TContainer, T>::operator++(int) noexcept
 {
-    BinTreeConstIterator<T, TCompare> result(*this);
+    BinTreeConstIterator<TContainer, T> result(*this);
     operator++();
     return result;
 }
 
-template <typename T, typename TCompare>
-const T& BinTreeConstIterator<T, TCompare>::operator*() const noexcept
+template <class TContainer, typename T>
+const T& BinTreeConstIterator<TContainer, T>::operator*() const noexcept
 {
-    assert((_current != nullptr) && "Iterator must be valid!");
+    assert((_node != nullptr) && "Iterator must be valid!");
 
-    return *_current;
+    return *_node;
 }
 
-template <typename T, typename TCompare>
-const T* BinTreeConstIterator<T, TCompare>::operator->() const noexcept
+template <class TContainer, typename T>
+const T* BinTreeConstIterator<TContainer, T>::operator->() const noexcept
 {
-    return _current;
+    return _node;
 }
 
-template <typename T, typename TCompare>
-void BinTreeConstIterator<T, TCompare>::swap(BinTreeConstIterator& it) noexcept
+template <class TContainer, typename T>
+void BinTreeConstIterator<TContainer, T>::swap(BinTreeConstIterator& it) noexcept
 {
     using std::swap;
-    swap(_current, it._current);
+    swap(_container, it._container);
+    swap(_node, it._node);
 }
 
-template <typename T, typename TCompare>
-void swap(BinTreeConstIterator<T, TCompare>& it1, BinTreeConstIterator<T, TCompare>& it2) noexcept
+template <class TContainer, typename T>
+void swap(BinTreeConstIterator<TContainer, T>& it1, BinTreeConstIterator<TContainer, T>& it2) noexcept
 {
     it1.swap(it2);
 }
 
-template <typename T, typename TCompare>
-BinTreeReverseIterator<T, TCompare>& BinTreeReverseIterator<T, TCompare>::operator++() noexcept
+template <class TContainer, typename T>
+BinTreeReverseIterator<TContainer, T>& BinTreeReverseIterator<TContainer, T>::operator++() noexcept
 {
-    if (_current != nullptr)
+    if (_node != nullptr)
     {
-        if (_current->left != nullptr)
+        if (_node->left != nullptr)
         {
-            _current = _current->left;
-            while (_current->right != nullptr)
-                _current = _current->right;
+            _node = _node->left;
+            while (_node->right != nullptr)
+                _node = _node->right;
         }
         else
         {
-            while ((_current->parent != nullptr) && compare(*_current, *_current->parent))
-                _current = _current->parent;
-            _current = _current->parent;
+            while ((_node->parent != nullptr) && compare(*_node, *_node->parent))
+                _node = _node->parent;
+            _node = _node->parent;
         }
     }
     return *this;
 }
 
-template <typename T, typename TCompare>
-inline BinTreeReverseIterator<T, TCompare> BinTreeReverseIterator<T, TCompare>::operator++(int) noexcept
+template <class TContainer, typename T>
+inline BinTreeReverseIterator<TContainer, T> BinTreeReverseIterator<TContainer, T>::operator++(int) noexcept
 {
-    BinTreeReverseIterator<T, TCompare> result(*this);
+    BinTreeReverseIterator<TContainer, T> result(*this);
     operator++();
     return result;
 }
 
-template <typename T, typename TCompare>
-T& BinTreeReverseIterator<T, TCompare>::operator*() noexcept
+template <class TContainer, typename T>
+T& BinTreeReverseIterator<TContainer, T>::operator*() noexcept
 {
-    assert((_current != nullptr) && "Iterator must be valid!");
+    assert((_node != nullptr) && "Iterator must be valid!");
 
-    return *_current;
+    return *_node;
 }
 
-template <typename T, typename TCompare>
-T* BinTreeReverseIterator<T, TCompare>::operator->() noexcept
+template <class TContainer, typename T>
+T* BinTreeReverseIterator<TContainer, T>::operator->() noexcept
 {
-    return _current;
+    return _node;
 }
 
-template <typename T, typename TCompare>
-void BinTreeReverseIterator<T, TCompare>::swap(BinTreeReverseIterator& it) noexcept
+template <class TContainer, typename T>
+void BinTreeReverseIterator<TContainer, T>::swap(BinTreeReverseIterator& it) noexcept
 {
     using std::swap;
-    swap(_current, it._current);
+    swap(_container, it._container);
+    swap(_node, it._node);
 }
 
-template <typename T, typename TCompare>
-void swap(BinTreeReverseIterator<T, TCompare>& it1, BinTreeReverseIterator<T, TCompare>& it2) noexcept
+template <class TContainer, typename T>
+void swap(BinTreeReverseIterator<TContainer, T>& it1, BinTreeReverseIterator<TContainer, T>& it2) noexcept
 {
     it1.swap(it2);
 }
 
-template <typename T, typename TCompare>
-BinTreeReverseConstIterator<T, TCompare>& BinTreeReverseConstIterator<T, TCompare>::operator++() noexcept
+template <class TContainer, typename T>
+BinTreeConstReverseIterator<TContainer, T>& BinTreeConstReverseIterator<TContainer, T>::operator++() noexcept
 {
-    if (_current != nullptr)
+    if (_node != nullptr)
     {
-        if (_current->left != nullptr)
+        if (_node->left != nullptr)
         {
-            _current = _current->left;
-            while (_current->right != nullptr)
-                _current = _current->right;
+            _node = _node->left;
+            while (_node->right != nullptr)
+                _node = _node->right;
         }
         else
         {
-            while ((_current->parent != nullptr) && compare(*_current, *_current->parent))
-                _current = _current->parent;
-            _current = _current->parent;
+            while ((_node->parent != nullptr) && compare(*_node, *_node->parent))
+                _node = _node->parent;
+            _node = _node->parent;
         }
     }
     return *this;
 }
 
-template <typename T, typename TCompare>
-inline BinTreeReverseConstIterator<T, TCompare> BinTreeReverseConstIterator<T, TCompare>::operator++(int) noexcept
+template <class TContainer, typename T>
+inline BinTreeConstReverseIterator<TContainer, T> BinTreeConstReverseIterator<TContainer, T>::operator++(int) noexcept
 {
-    BinTreeReverseConstIterator<T, TCompare> result(*this);
+    BinTreeConstReverseIterator<TContainer, T> result(*this);
     operator++();
     return result;
 }
 
-template <typename T, typename TCompare>
-const T& BinTreeReverseConstIterator<T, TCompare>::operator*() const noexcept
+template <class TContainer, typename T>
+const T& BinTreeConstReverseIterator<TContainer, T>::operator*() const noexcept
 {
-    assert((_current != nullptr) && "Iterator must be valid!");
+    assert((_node != nullptr) && "Iterator must be valid!");
 
-    return *_current;
+    return *_node;
 }
 
-template <typename T, typename TCompare>
-const T* BinTreeReverseConstIterator<T, TCompare>::operator->() const noexcept
+template <class TContainer, typename T>
+const T* BinTreeConstReverseIterator<TContainer, T>::operator->() const noexcept
 {
-    return _current;
+    return _node;
 }
 
-template <typename T, typename TCompare>
-void BinTreeReverseConstIterator<T, TCompare>::swap(BinTreeReverseConstIterator& it) noexcept
+template <class TContainer, typename T>
+void BinTreeConstReverseIterator<TContainer, T>::swap(BinTreeConstReverseIterator& it) noexcept
 {
     using std::swap;
-    swap(_current, it._current);
+    swap(_container, it._container);
+    swap(_node, it._node);
 }
 
-template <typename T, typename TCompare>
-void swap(BinTreeReverseConstIterator<T, TCompare>& it1, BinTreeReverseConstIterator<T, TCompare>& it2) noexcept
+template <class TContainer, typename T>
+void swap(BinTreeConstReverseIterator<TContainer, T>& it1, BinTreeConstReverseIterator<TContainer, T>& it2) noexcept
 {
     it1.swap(it2);
 }

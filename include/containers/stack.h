@@ -104,6 +104,17 @@ template <typename T>
 class Stack
 {
 public:
+    // Standard container type definitions
+    typedef T value_type;
+    typedef value_type& reference;
+    typedef const value_type& const_reference;
+    typedef value_type* pointer;
+    typedef const value_type* const_pointer;
+    typedef ptrdiff_t difference_type;
+    typedef size_t size_type;
+    typedef StackIterator<T> iterator;
+    typedef StackConstIterator<T> const_iterator;
+
     //! Stack node
     struct Node
     {
@@ -134,11 +145,13 @@ public:
     const T* top() const noexcept { return _top; }
 
     //! Get the begin stack iterator
-    StackIterator<T> begin() noexcept;
-    StackConstIterator<T> begin() const noexcept;
+    iterator begin() noexcept;
+    const_iterator begin() const noexcept;
+    const_iterator cbegin() const noexcept;
     //! Get the end stack iterator
-    StackIterator<T> end() noexcept;
-    StackConstIterator<T> end() const noexcept;
+    iterator end() noexcept;
+    const_iterator end() const noexcept;
+    const_iterator cend() const noexcept;
 
     //! Push a new item into the top of the stack
     /*!
@@ -155,6 +168,9 @@ public:
 
     //! Reverse the stack
     void reverse() noexcept;
+
+    //! Clear the stack
+    void clear() noexcept;
 
     //! Swap two instances
     void swap(Stack& stack) noexcept;
@@ -176,12 +192,16 @@ class StackIterator
 public:
     // Standard iterator type definitions
     typedef T value_type;
-    typedef T& reference;
-    typedef T* pointer;
+    typedef value_type& reference;
+    typedef const value_type& const_reference;
+    typedef value_type* pointer;
+    typedef const value_type* const_pointer;
+    typedef ptrdiff_t difference_type;
+    typedef size_t size_type;
     typedef std::forward_iterator_tag iterator_category;
 
-    StackIterator() noexcept : _current(nullptr) {}
-    explicit StackIterator(T* current) noexcept : _current(current) {}
+    StackIterator() noexcept : _node(nullptr) {}
+    explicit StackIterator(T* node) noexcept : _node(node) {}
     StackIterator(const StackIterator& it) noexcept = default;
     StackIterator(StackIterator&& it) noexcept = default;
     ~StackIterator() noexcept = default;
@@ -190,9 +210,9 @@ public:
     StackIterator& operator=(StackIterator&& it) noexcept = default;
 
     friend bool operator==(const StackIterator& it1, const StackIterator& it2) noexcept
-    { return it1._current == it2._current; }
+    { return it1._node == it2._node; }
     friend bool operator!=(const StackIterator& it1, const StackIterator& it2) noexcept
-    { return it1._current != it2._current; }
+    { return it1._node != it2._node; }
 
     StackIterator& operator++() noexcept;
     StackIterator operator++(int) noexcept;
@@ -201,7 +221,7 @@ public:
     T* operator->() noexcept;
 
     //! Check if the iterator is valid
-    explicit operator bool() const noexcept { return _current != nullptr; }
+    explicit operator bool() const noexcept { return _node != nullptr; }
 
     //! Swap two instances
     void swap(StackIterator& it) noexcept;
@@ -209,7 +229,7 @@ public:
     friend void swap(StackIterator<U>& it1, StackIterator<U>& it2) noexcept;
 
 private:
-    T* _current;
+    T* _node;
 };
 
 //! Intrusive stack constant iterator
@@ -220,28 +240,32 @@ template <typename T>
 class StackConstIterator
 {
 public:
-    // Standard constant iterator type definitions
-    typedef const T value_type;
-    typedef const T& reference;
-    typedef const T* pointer;
+    // Standard iterator type definitions
+    typedef T value_type;
+    typedef value_type& reference;
+    typedef const value_type& const_reference;
+    typedef value_type* pointer;
+    typedef const value_type* const_pointer;
+    typedef ptrdiff_t difference_type;
+    typedef size_t size_type;
     typedef std::forward_iterator_tag iterator_category;
 
-    StackConstIterator() noexcept : _current(nullptr) {}
-    explicit StackConstIterator(const T* current) noexcept : _current(current) {}
-    StackConstIterator(const StackIterator<T>& it) noexcept : _current(it._current) {}
+    StackConstIterator() noexcept : _node(nullptr) {}
+    explicit StackConstIterator(const T* node) noexcept : _node(node) {}
+    StackConstIterator(const StackIterator<T>& it) noexcept : _node(it._node) {}
     StackConstIterator(const StackConstIterator& it) noexcept = default;
     StackConstIterator(StackConstIterator&& it) noexcept = default;
     ~StackConstIterator() noexcept = default;
 
     StackConstIterator& operator=(const StackIterator<T>& it) noexcept
-    { _current = it._current; return *this; }
+    { _node = it._node; return *this; }
     StackConstIterator& operator=(const StackConstIterator& it) noexcept = default;
     StackConstIterator& operator=(StackConstIterator&& it) noexcept = default;
 
     friend bool operator==(const StackConstIterator& it1, const StackConstIterator& it2) noexcept
-    { return it1._current == it2._current; }
+    { return it1._node == it2._node; }
     friend bool operator!=(const StackConstIterator& it1, const StackConstIterator& it2) noexcept
-    { return it1._current != it2._current; }
+    { return it1._node != it2._node; }
 
     StackConstIterator& operator++() noexcept;
     StackConstIterator operator++(int) noexcept;
@@ -250,7 +274,7 @@ public:
     const T* operator->() const noexcept;
 
     //! Check if the iterator is valid
-    explicit operator bool() const noexcept { return _current != nullptr; }
+    explicit operator bool() const noexcept { return _node != nullptr; }
 
     //! Swap two instances
     void swap(StackConstIterator& it) noexcept;
@@ -258,10 +282,10 @@ public:
     friend void swap(StackConstIterator<U>& it1, StackConstIterator<U>& it2) noexcept;
 
 private:
-    const T* _current;
+    const T* _node;
 };
 
-/*! \example intrusive_stack.cpp Intrusive stack container example */
+/*! \example containers_stack.cpp Intrusive stack container example */
 
 } // namespace CppCommon
 

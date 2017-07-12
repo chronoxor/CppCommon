@@ -21,7 +21,7 @@ class ListConstIterator;
 template <typename T>
 class ListReverseIterator;
 template <typename T>
-class ListReverseConstIterator;
+class ListConstReverseIterator;
 
 
 //! Intrusive list container
@@ -152,6 +152,19 @@ template <typename T>
 class List
 {
 public:
+    // Standard container type definitions
+    typedef T value_type;
+    typedef value_type& reference;
+    typedef const value_type& const_reference;
+    typedef value_type* pointer;
+    typedef const value_type* const_pointer;
+    typedef ptrdiff_t difference_type;
+    typedef size_t size_type;
+    typedef ListIterator<T> iterator;
+    typedef ListConstIterator<T> const_iterator;
+    typedef ListReverseIterator<T> reverse_iterator;
+    typedef ListConstReverseIterator<T> const_reverse_iterator;
+
     //! List node
     struct Node
     {
@@ -186,18 +199,22 @@ public:
     const T* back() const noexcept { return _back; }
 
     //! Get the begin list iterator
-    ListIterator<T> begin() noexcept;
-    ListConstIterator<T> begin() const noexcept;
+    iterator begin() noexcept;
+    const_iterator begin() const noexcept;
+    const_iterator cbegin() const noexcept;
     //! Get the end list iterator
-    ListIterator<T> end() noexcept;
-    ListConstIterator<T> end() const noexcept;
+    iterator end() noexcept;
+    const_iterator end() const noexcept;
+    const_iterator cend() const noexcept;
 
     //! Get the reverse begin list iterator
-    ListReverseIterator<T> rbegin() noexcept;
-    ListReverseConstIterator<T> rbegin() const noexcept;
+    reverse_iterator rbegin() noexcept;
+    const_reverse_iterator rbegin() const noexcept;
+    const_reverse_iterator crbegin() const noexcept;
     //! Get the reverse end list iterator
-    ListReverseIterator<T> rend() noexcept;
-    ListReverseConstIterator<T> rend() const noexcept;
+    reverse_iterator rend() noexcept;
+    const_reverse_iterator rend() const noexcept;
+    const_reverse_iterator crend() const noexcept;
 
     //! Push a new item into the front of the list
     /*!
@@ -258,6 +275,9 @@ public:
     //! Reverse the list
     void reverse() noexcept;
 
+    //! Clear the list
+    void clear() noexcept;
+
     //! Swap two instances
     void swap(List& list) noexcept;
     template <typename U>
@@ -279,12 +299,16 @@ class ListIterator
 public:
     // Standard iterator type definitions
     typedef T value_type;
-    typedef T& reference;
-    typedef T* pointer;
-    typedef std::forward_iterator_tag iterator_category;
+    typedef value_type& reference;
+    typedef const value_type& const_reference;
+    typedef value_type* pointer;
+    typedef const value_type* const_pointer;
+    typedef ptrdiff_t difference_type;
+    typedef size_t size_type;
+    typedef std::bidirectional_iterator_tag iterator_category;
 
-    ListIterator() noexcept : _current(nullptr) {}
-    explicit ListIterator(T* current) noexcept : _current(current) {}
+    ListIterator() noexcept : _node(nullptr) {}
+    explicit ListIterator(T* node) noexcept : _node(node) {}
     ListIterator(const ListIterator& it) noexcept = default;
     ListIterator(ListIterator&& it) noexcept = default;
     ~ListIterator() noexcept = default;
@@ -293,9 +317,9 @@ public:
     ListIterator& operator=(ListIterator&& it) noexcept = default;
 
     friend bool operator==(const ListIterator& it1, const ListIterator& it2) noexcept
-    { return it1._current == it2._current; }
+    { return it1._node == it2._node; }
     friend bool operator!=(const ListIterator& it1, const ListIterator& it2) noexcept
-    { return it1._current != it2._current; }
+    { return it1._node != it2._node; }
 
     ListIterator& operator++() noexcept;
     ListIterator operator++(int) noexcept;
@@ -304,7 +328,7 @@ public:
     T* operator->() noexcept;
 
     //! Check if the iterator is valid
-    explicit operator bool() const noexcept { return _current != nullptr; }
+    explicit operator bool() const noexcept { return _node != nullptr; }
 
     //! Swap two instances
     void swap(ListIterator& it) noexcept;
@@ -312,7 +336,7 @@ public:
     friend void swap(ListIterator<U>& it1, ListIterator<U>& it2) noexcept;
 
 private:
-    T* _current;
+    T* _node;
 };
 
 //! Intrusive list constant iterator
@@ -323,28 +347,32 @@ template <typename T>
 class ListConstIterator
 {
 public:
-    // Standard constant iterator type definitions
-    typedef const T value_type;
-    typedef const T& reference;
-    typedef const T* pointer;
-    typedef std::forward_iterator_tag iterator_category;
+    // Standard iterator type definitions
+    typedef T value_type;
+    typedef value_type& reference;
+    typedef const value_type& const_reference;
+    typedef value_type* pointer;
+    typedef const value_type* const_pointer;
+    typedef ptrdiff_t difference_type;
+    typedef size_t size_type;
+    typedef std::bidirectional_iterator_tag iterator_category;
 
-    ListConstIterator() noexcept : _current(nullptr) {}
-    explicit ListConstIterator(const T* current) noexcept : _current(current) {}
-    ListConstIterator(const ListIterator<T>& it) noexcept : _current(it._current) {}
+    ListConstIterator() noexcept : _node(nullptr) {}
+    explicit ListConstIterator(const T* node) noexcept : _node(node) {}
+    ListConstIterator(const ListIterator<T>& it) noexcept : _node(it._node) {}
     ListConstIterator(const ListConstIterator& it) noexcept = default;
     ListConstIterator(ListConstIterator&& it) noexcept = default;
     ~ListConstIterator() noexcept = default;
 
     ListConstIterator& operator=(const ListIterator<T>& it) noexcept
-    { _current = it._current; return *this; }
+    { _node = it._node; return *this; }
     ListConstIterator& operator=(const ListConstIterator& it) noexcept = default;
     ListConstIterator& operator=(ListConstIterator&& it) noexcept = default;
 
     friend bool operator==(const ListConstIterator& it1, const ListConstIterator& it2) noexcept
-    { return it1._current == it2._current; }
+    { return it1._node == it2._node; }
     friend bool operator!=(const ListConstIterator& it1, const ListConstIterator& it2) noexcept
-    { return it1._current != it2._current; }
+    { return it1._node != it2._node; }
 
     ListConstIterator& operator++() noexcept;
     ListConstIterator operator++(int) noexcept;
@@ -353,7 +381,7 @@ public:
     const T* operator->() const noexcept;
 
     //! Check if the iterator is valid
-    explicit operator bool() const noexcept { return _current != nullptr; }
+    explicit operator bool() const noexcept { return _node != nullptr; }
 
     //! Swap two instances
     void swap(ListConstIterator& it) noexcept;
@@ -361,7 +389,7 @@ public:
     friend void swap(ListConstIterator<U>& it1, ListConstIterator<U>& it2) noexcept;
 
 private:
-    const T* _current;
+    const T* _node;
 };
 
 //! Intrusive list reverse iterator
@@ -374,12 +402,16 @@ class ListReverseIterator
 public:
     // Standard iterator type definitions
     typedef T value_type;
-    typedef T& reference;
-    typedef T* pointer;
-    typedef std::forward_iterator_tag iterator_category;
+    typedef value_type& reference;
+    typedef const value_type& const_reference;
+    typedef value_type* pointer;
+    typedef const value_type* const_pointer;
+    typedef ptrdiff_t difference_type;
+    typedef size_t size_type;
+    typedef std::bidirectional_iterator_tag iterator_category;
 
-    ListReverseIterator() noexcept : _current(nullptr) {}
-    explicit ListReverseIterator(T* current) noexcept : _current(current) {}
+    ListReverseIterator() noexcept : _node(nullptr) {}
+    explicit ListReverseIterator(T* node) noexcept : _node(node) {}
     ListReverseIterator(const ListReverseIterator& it) noexcept = default;
     ListReverseIterator(ListReverseIterator&& it) noexcept = default;
     ~ListReverseIterator() noexcept = default;
@@ -388,9 +420,9 @@ public:
     ListReverseIterator& operator=(ListReverseIterator&& it) noexcept = default;
 
     friend bool operator==(const ListReverseIterator& it1, const ListReverseIterator& it2) noexcept
-    { return it1._current == it2._current; }
+    { return it1._node == it2._node; }
     friend bool operator!=(const ListReverseIterator& it1, const ListReverseIterator& it2) noexcept
-    { return it1._current != it2._current; }
+    { return it1._node != it2._node; }
 
     ListReverseIterator& operator++() noexcept;
     ListReverseIterator operator++(int) noexcept;
@@ -399,7 +431,7 @@ public:
     T* operator->() noexcept;
 
     //! Check if the iterator is valid
-    explicit operator bool() const noexcept { return _current != nullptr; }
+    explicit operator bool() const noexcept { return _node != nullptr; }
 
     //! Swap two instances
     void swap(ListReverseIterator& it) noexcept;
@@ -407,7 +439,7 @@ public:
     friend void swap(ListReverseIterator<U>& it1, ListReverseIterator<U>& it2) noexcept;
 
 private:
-    T* _current;
+    T* _node;
 };
 
 //! Intrusive list constant reverse iterator
@@ -415,51 +447,55 @@ private:
     Not thread-safe.
 */
 template <typename T>
-class ListReverseConstIterator
+class ListConstReverseIterator
 {
 public:
-    // Standard constant iterator type definitions
-    typedef const T value_type;
-    typedef const T& reference;
-    typedef const T* pointer;
-    typedef std::forward_iterator_tag iterator_category;
+    // Standard iterator type definitions
+    typedef T value_type;
+    typedef value_type& reference;
+    typedef const value_type& const_reference;
+    typedef value_type* pointer;
+    typedef const value_type* const_pointer;
+    typedef ptrdiff_t difference_type;
+    typedef size_t size_type;
+    typedef std::bidirectional_iterator_tag iterator_category;
 
-    ListReverseConstIterator() noexcept : _current(nullptr) {}
-    explicit ListReverseConstIterator(const T* current) noexcept : _current(current) {}
-    ListReverseConstIterator(const ListReverseIterator<T>& it) noexcept : _current(it._current) {}
-    ListReverseConstIterator(const ListReverseConstIterator& it) noexcept = default;
-    ListReverseConstIterator(ListReverseConstIterator&& it) noexcept = default;
-    ~ListReverseConstIterator() noexcept = default;
+    ListConstReverseIterator() noexcept : _node(nullptr) {}
+    explicit ListConstReverseIterator(const T* node) noexcept : _node(node) {}
+    ListConstReverseIterator(const ListReverseIterator<T>& it) noexcept : _node(it._node) {}
+    ListConstReverseIterator(const ListConstReverseIterator& it) noexcept = default;
+    ListConstReverseIterator(ListConstReverseIterator&& it) noexcept = default;
+    ~ListConstReverseIterator() noexcept = default;
 
-    ListReverseConstIterator& operator=(const ListReverseIterator<T>& it) noexcept
-    { _current = it._current; return *this; }
-    ListReverseConstIterator& operator=(const ListReverseConstIterator& it) noexcept = default;
-    ListReverseConstIterator& operator=(ListReverseConstIterator&& it) noexcept = default;
+    ListConstReverseIterator& operator=(const ListReverseIterator<T>& it) noexcept
+    { _node = it._node; return *this; }
+    ListConstReverseIterator& operator=(const ListConstReverseIterator& it) noexcept = default;
+    ListConstReverseIterator& operator=(ListConstReverseIterator&& it) noexcept = default;
 
-    friend bool operator==(const ListReverseConstIterator& it1, const ListReverseConstIterator& it2) noexcept
-    { return it1._current == it2._current; }
-    friend bool operator!=(const ListReverseConstIterator& it1, const ListReverseConstIterator& it2) noexcept
-    { return it1._current != it2._current; }
+    friend bool operator==(const ListConstReverseIterator& it1, const ListConstReverseIterator& it2) noexcept
+    { return it1._node == it2._node; }
+    friend bool operator!=(const ListConstReverseIterator& it1, const ListConstReverseIterator& it2) noexcept
+    { return it1._node != it2._node; }
 
-    ListReverseConstIterator& operator++() noexcept;
-    ListReverseConstIterator operator++(int) noexcept;
+    ListConstReverseIterator& operator++() noexcept;
+    ListConstReverseIterator operator++(int) noexcept;
 
     const T& operator*() const noexcept;
     const T* operator->() const noexcept;
 
     //! Check if the iterator is valid
-    explicit operator bool() const noexcept { return _current != nullptr; }
+    explicit operator bool() const noexcept { return _node != nullptr; }
 
     //! Swap two instances
-    void swap(ListReverseConstIterator& it) noexcept;
+    void swap(ListConstReverseIterator& it) noexcept;
     template <typename U>
-    friend void swap(ListReverseConstIterator<U>& it1, ListReverseConstIterator<U>& it2) noexcept;
+    friend void swap(ListConstReverseIterator<U>& it1, ListConstReverseIterator<U>& it2) noexcept;
 
 private:
-    const T* _current;
+    const T* _node;
 };
 
-/*! \example intrusive_list.cpp Intrusive list container example */
+/*! \example containers_list.cpp Intrusive list container example */
 
 } // namespace CppCommon
 

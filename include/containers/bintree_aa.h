@@ -58,6 +58,20 @@ template <typename T, typename TCompare = std::less<T>>
 class BinTreeAA
 {
 public:
+    // Standard container type definitions
+    typedef T value_type;
+    typedef TCompare value_compare;
+    typedef value_type& reference;
+    typedef const value_type& const_reference;
+    typedef value_type* pointer;
+    typedef const value_type* const_pointer;
+    typedef ptrdiff_t difference_type;
+    typedef size_t size_type;
+    typedef BinTreeIterator<BinTreeAA<T, TCompare>, T> iterator;
+    typedef BinTreeConstIterator<BinTreeAA<T, TCompare>, T> const_iterator;
+    typedef BinTreeReverseIterator<BinTreeAA<T, TCompare>, T> reverse_iterator;
+    typedef BinTreeConstReverseIterator<BinTreeAA<T, TCompare>, T> const_reverse_iterator;
+
     //! A.Andersson binary tree node
     struct Node
     {
@@ -104,29 +118,33 @@ public:
     bool compare(const T& item1, const T& item2) const noexcept { return _compare(item1, item2); }
 
     //! Get the begin binary tree iterator
-    BinTreeIterator<T> begin() noexcept;
-    BinTreeConstIterator<T> begin() const noexcept;
+    iterator begin() noexcept;
+    const_iterator begin() const noexcept;
+    const_iterator cbegin() const noexcept;
     //! Get the end binary tree iterator
-    BinTreeIterator<T> end() noexcept;
-    BinTreeConstIterator<T> end() const noexcept;
+    iterator end() noexcept;
+    const_iterator end() const noexcept;
+    const_iterator cend() const noexcept;
 
     //! Get the reverse begin binary tree iterator
-    BinTreeReverseIterator<T> rbegin() noexcept;
-    BinTreeReverseConstIterator<T> rbegin() const noexcept;
+    reverse_iterator rbegin() noexcept;
+    const_reverse_iterator rbegin() const noexcept;
+    const_reverse_iterator crbegin() const noexcept;
     //! Get the reverse end binary tree iterator
-    BinTreeReverseIterator<T> rend() noexcept;
-    BinTreeReverseConstIterator<T> rend() const noexcept;
+    reverse_iterator rend() noexcept;
+    const_reverse_iterator rend() const noexcept;
+    const_reverse_iterator crend() const noexcept;
 
     //! Find the iterator which points to the first equal item in the binary tree or return end iterator
-    BinTreeIterator<T> find(const T& item) noexcept;
-    BinTreeConstIterator<T> find(const T& item) const noexcept;
+    iterator find(const T& item) noexcept;
+    const_iterator find(const T& item) const noexcept;
 
     //! Find the iterator which points to the first item not less than the given item in the binary tree or return end iterator
-    BinTreeIterator<T> lower_bound(const T& item) noexcept;
-    BinTreeConstIterator<T> lower_bound(const T& item) const noexcept;
+    iterator lower_bound(const T& item) noexcept;
+    const_iterator lower_bound(const T& item) const noexcept;
     //! Find the iterator which points to the first item that greater than the given item in the binary tree or return end iterator
-    BinTreeIterator<T> upper_bound(const T& item) noexcept;
-    BinTreeConstIterator<T> upper_bound(const T& item) const noexcept;
+    iterator upper_bound(const T& item) noexcept;
+    const_iterator upper_bound(const T& item) const noexcept;
 
     //! Insert a new item into the binary tree
     /*!
@@ -146,12 +164,15 @@ public:
         \param it - Iterator to the erased item
         \return Erased item iterator
     */
-    BinTreeIterator<T> erase(const BinTreeIterator<T>& it) noexcept;
+    iterator erase(const iterator& it) noexcept;
+
+    //! Clear the binary tree
+    void clear() noexcept;
 
     //! Swap two instances
     void swap(BinTreeAA& bintree) noexcept;
-    template <typename U>
-    friend void swap(BinTreeAA<U>& bintree1, BinTreeAA<U>& bintree2) noexcept;
+    template <typename U, typename UCompare>
+    friend void swap(BinTreeAA<U, UCompare>& bintree1, BinTreeAA<U, UCompare>& bintree2) noexcept;
 
 private:
     TCompare _compare;  // Binary tree compare

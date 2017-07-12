@@ -17,51 +17,75 @@ inline List<T>::List(InputIterator first, InputIterator last) noexcept
 }
 
 template <typename T>
-inline ListIterator<T> List<T>::begin() noexcept
+inline typename List<T>::iterator List<T>::begin() noexcept
 {
-    return ListIterator<T>(front());
+    return iterator(front());
 }
 
 template <typename T>
-inline ListConstIterator<T> List<T>::begin() const noexcept
+inline typename List<T>::const_iterator List<T>::begin() const noexcept
 {
-    return ListConstIterator<T>(front());
+    return const_iterator(front());
 }
 
 template <typename T>
-inline ListIterator<T> List<T>::end() noexcept
+inline typename List<T>::const_iterator List<T>::cbegin() const noexcept
 {
-    return ListIterator<T>(nullptr);
+    return const_iterator(front());
 }
 
 template <typename T>
-inline ListConstIterator<T> List<T>::end() const noexcept
+inline typename List<T>::iterator List<T>::end() noexcept
 {
-    return ListConstIterator<T>(nullptr);
+    return iterator(nullptr);
 }
 
 template <typename T>
-inline ListReverseIterator<T> List<T>::rbegin() noexcept
+inline typename List<T>::const_iterator List<T>::end() const noexcept
 {
-    return ListReverseIterator<T>(back());
+    return const_iterator(nullptr);
 }
 
 template <typename T>
-inline ListReverseConstIterator<T> List<T>::rbegin() const noexcept
+inline typename List<T>::const_iterator List<T>::cend() const noexcept
 {
-    return ListReverseConstIterator<T>(back());
+    return const_iterator(nullptr);
 }
 
 template <typename T>
-inline ListReverseIterator<T> List<T>::rend() noexcept
+inline typename List<T>::reverse_iterator List<T>::rbegin() noexcept
 {
-    return ListReverseIterator<T>(nullptr);
+    return reverse_iterator(back());
 }
 
 template <typename T>
-inline ListReverseConstIterator<T> List<T>::rend() const noexcept
+inline typename List<T>::const_reverse_iterator List<T>::rbegin() const noexcept
 {
-    return ListReverseConstIterator<T>(nullptr);
+    return const_reverse_iterator(back());
+}
+
+template <typename T>
+inline typename List<T>::const_reverse_iterator List<T>::crbegin() const noexcept
+{
+    return const_reverse_iterator(back());
+}
+
+template <typename T>
+inline typename List<T>::reverse_iterator List<T>::rend() noexcept
+{
+    return reverse_iterator(nullptr);
+}
+
+template <typename T>
+inline typename List<T>::const_reverse_iterator List<T>::rend() const noexcept
+{
+    return const_reverse_iterator(nullptr);
+}
+
+template <typename T>
+inline typename List<T>::const_reverse_iterator List<T>::crend() const noexcept
+{
+    return const_reverse_iterator(nullptr);
 }
 
 template <typename T>
@@ -230,6 +254,14 @@ inline void List<T>::reverse() noexcept
 }
 
 template <typename T>
+inline void List<T>::clear() noexcept
+{
+    _size = 0;
+    _front = nullptr;
+    _back = nullptr;
+}
+
+template <typename T>
 inline void List<T>::swap(List& list) noexcept
 {
     using std::swap;
@@ -247,8 +279,8 @@ inline void swap(List<T>& list1, List<T>& list2) noexcept
 template <typename T>
 ListIterator<T>& ListIterator<T>::operator++() noexcept
 {
-    if (_current != nullptr)
-        _current = _current->next;
+    if (_node != nullptr)
+        _node = _node->next;
     return *this;
 }
 
@@ -263,22 +295,22 @@ inline ListIterator<T> ListIterator<T>::operator++(int) noexcept
 template <typename T>
 T& ListIterator<T>::operator*() noexcept
 {
-    assert((_current != nullptr) && "Iterator must be valid!");
+    assert((_node != nullptr) && "Iterator must be valid!");
 
-    return *_current;
+    return *_node;
 }
 
 template <typename T>
 T* ListIterator<T>::operator->() noexcept
 {
-    return _current;
+    return _node;
 }
 
 template <typename T>
 void ListIterator<T>::swap(ListIterator& it) noexcept
 {
     using std::swap;
-    swap(_current, it._current);
+    swap(_node, it._node);
 }
 
 template <typename T>
@@ -290,8 +322,8 @@ void swap(ListIterator<T>& it1, ListIterator<T>& it2) noexcept
 template <typename T>
 ListConstIterator<T>& ListConstIterator<T>::operator++() noexcept
 {
-    if (_current != nullptr)
-        _current = _current->next;
+    if (_node != nullptr)
+        _node = _node->next;
     return *this;
 }
 
@@ -306,22 +338,22 @@ inline ListConstIterator<T> ListConstIterator<T>::operator++(int) noexcept
 template <typename T>
 const T& ListConstIterator<T>::operator*() const noexcept
 {
-    assert((_current != nullptr) && "Iterator must be valid!");
+    assert((_node != nullptr) && "Iterator must be valid!");
 
-    return *_current;
+    return *_node;
 }
 
 template <typename T>
 const T* ListConstIterator<T>::operator->() const noexcept
 {
-    return _current;
+    return _node;
 }
 
 template <typename T>
 void ListConstIterator<T>::swap(ListConstIterator& it) noexcept
 {
     using std::swap;
-    swap(_current, it._current);
+    swap(_node, it._node);
 }
 
 template <typename T>
@@ -333,8 +365,8 @@ void swap(ListConstIterator<T>& it1, ListConstIterator<T>& it2) noexcept
 template <typename T>
 ListReverseIterator<T>& ListReverseIterator<T>::operator++() noexcept
 {
-    if (_current != nullptr)
-        _current = _current->prev;
+    if (_node != nullptr)
+        _node = _node->prev;
     return *this;
 }
 
@@ -349,22 +381,22 @@ inline ListReverseIterator<T> ListReverseIterator<T>::operator++(int) noexcept
 template <typename T>
 T& ListReverseIterator<T>::operator*() noexcept
 {
-    assert((_current != nullptr) && "Iterator must be valid!");
+    assert((_node != nullptr) && "Iterator must be valid!");
 
-    return *_current;
+    return *_node;
 }
 
 template <typename T>
 T* ListReverseIterator<T>::operator->() noexcept
 {
-    return _current;
+    return _node;
 }
 
 template <typename T>
 void ListReverseIterator<T>::swap(ListReverseIterator& it) noexcept
 {
     using std::swap;
-    swap(_current, it._current);
+    swap(_node, it._node);
 }
 
 template <typename T>
@@ -374,44 +406,44 @@ void swap(ListReverseIterator<T>& it1, ListReverseIterator<T>& it2) noexcept
 }
 
 template <typename T>
-ListReverseConstIterator<T>& ListReverseConstIterator<T>::operator++() noexcept
+ListConstReverseIterator<T>& ListConstReverseIterator<T>::operator++() noexcept
 {
-    if (_current != nullptr)
-        _current = _current->prev;
+    if (_node != nullptr)
+        _node = _node->prev;
     return *this;
 }
 
 template <typename T>
-inline ListReverseConstIterator<T> ListReverseConstIterator<T>::operator++(int) noexcept
+inline ListConstReverseIterator<T> ListConstReverseIterator<T>::operator++(int) noexcept
 {
-    ListReverseConstIterator<T> result(*this);
+    ListConstReverseIterator<T> result(*this);
     operator++();
     return result;
 }
 
 template <typename T>
-const T& ListReverseConstIterator<T>::operator*() const noexcept
+const T& ListConstReverseIterator<T>::operator*() const noexcept
 {
-    assert((_current != nullptr) && "Iterator must be valid!");
+    assert((_node != nullptr) && "Iterator must be valid!");
 
-    return *_current;
+    return *_node;
 }
 
 template <typename T>
-const T* ListReverseConstIterator<T>::operator->() const noexcept
+const T* ListConstReverseIterator<T>::operator->() const noexcept
 {
-    return _current;
+    return _node;
 }
 
 template <typename T>
-void ListReverseConstIterator<T>::swap(ListReverseConstIterator& it) noexcept
+void ListConstReverseIterator<T>::swap(ListConstReverseIterator& it) noexcept
 {
     using std::swap;
-    swap(_current, it._current);
+    swap(_node, it._node);
 }
 
 template <typename T>
-void swap(ListReverseConstIterator<T>& it1, ListReverseConstIterator<T>& it2) noexcept
+void swap(ListConstReverseIterator<T>& it1, ListConstReverseIterator<T>& it2) noexcept
 {
     it1.swap(it2);
 }

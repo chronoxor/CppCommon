@@ -14,14 +14,14 @@
 
 namespace CppCommon {
 
-template <typename T, typename TCompare = std::less<T>>
+template <class TContainer, typename T>
 class BinTreeIterator;
-template <typename T, typename TCompare = std::less<T>>
+template <class TContainer, typename T>
 class BinTreeConstIterator;
-template <typename T, typename TCompare = std::less<T>>
+template <class TContainer, typename T>
 class BinTreeReverseIterator;
-template <typename T, typename TCompare = std::less<T>>
-class BinTreeReverseConstIterator;
+template <class TContainer, typename T>
+class BinTreeConstReverseIterator;
 
 //! Intrusive non balanced binary tree container
 /*!
@@ -133,6 +133,20 @@ template <typename T, typename TCompare = std::less<T>>
 class BinTree
 {
 public:
+    // Standard container type definitions
+    typedef T value_type;
+    typedef TCompare value_compare;
+    typedef value_type& reference;
+    typedef const value_type& const_reference;
+    typedef value_type* pointer;
+    typedef const value_type* const_pointer;
+    typedef ptrdiff_t difference_type;
+    typedef size_t size_type;
+    typedef BinTreeIterator<BinTree<T, TCompare>, T> iterator;
+    typedef BinTreeConstIterator<BinTree<T, TCompare>, T> const_iterator;
+    typedef BinTreeReverseIterator<BinTree<T, TCompare>, T> reverse_iterator;
+    typedef BinTreeConstReverseIterator<BinTree<T, TCompare>, T> const_reverse_iterator;
+
     //! Binary tree node
     struct Node
     {
@@ -178,29 +192,33 @@ public:
     bool compare(const T& item1, const T& item2) const noexcept { return _compare(item1, item2); }
 
     //! Get the begin binary tree iterator
-    BinTreeIterator<T> begin() noexcept;
-    BinTreeConstIterator<T> begin() const noexcept;
+    iterator begin() noexcept;
+    const_iterator begin() const noexcept;
+    const_iterator cbegin() const noexcept;
     //! Get the end binary tree iterator
-    BinTreeIterator<T> end() noexcept;
-    BinTreeConstIterator<T> end() const noexcept;
+    iterator end() noexcept;
+    const_iterator end() const noexcept;
+    const_iterator cend() const noexcept;
 
     //! Get the reverse begin binary tree iterator
-    BinTreeReverseIterator<T> rbegin() noexcept;
-    BinTreeReverseConstIterator<T> rbegin() const noexcept;
+    reverse_iterator rbegin() noexcept;
+    const_reverse_iterator rbegin() const noexcept;
+    const_reverse_iterator crbegin() const noexcept;
     //! Get the reverse end binary tree iterator
-    BinTreeReverseIterator<T> rend() noexcept;
-    BinTreeReverseConstIterator<T> rend() const noexcept;
+    reverse_iterator rend() noexcept;
+    const_reverse_iterator rend() const noexcept;
+    const_reverse_iterator crend() const noexcept;
 
     //! Find the iterator which points to the first equal item in the binary tree or return end iterator
-    BinTreeIterator<T> find(const T& item) noexcept;
-    BinTreeConstIterator<T> find(const T& item) const noexcept;
+    iterator find(const T& item) noexcept;
+    const_iterator find(const T& item) const noexcept;
 
     //! Find the iterator which points to the first item not less than the given item in the binary tree or return end iterator
-    BinTreeIterator<T> lower_bound(const T& item) noexcept;
-    BinTreeConstIterator<T> lower_bound(const T& item) const noexcept;
+    iterator lower_bound(const T& item) noexcept;
+    const_iterator lower_bound(const T& item) const noexcept;
     //! Find the iterator which points to the first item that greater than the given item in the binary tree or return end iterator
-    BinTreeIterator<T> upper_bound(const T& item) noexcept;
-    BinTreeConstIterator<T> upper_bound(const T& item) const noexcept;
+    iterator upper_bound(const T& item) noexcept;
+    const_iterator upper_bound(const T& item) const noexcept;
 
     //! Insert a new item into the binary tree
     /*!
@@ -220,15 +238,18 @@ public:
         \param it - Iterator to the erased item
         \return Erased item iterator
     */
-    BinTreeIterator<T> erase(const BinTreeIterator<T>& it) noexcept;
+    iterator erase(const iterator& it) noexcept;
+
+    //! Clear the binary tree
+    void clear() noexcept;
 
     //! Swap two instances
     void swap(BinTree& bintree) noexcept;
-    template <typename U>
-    friend void swap(BinTree<U>& bintree1, BinTree<U>& bintree2) noexcept;
+    template <typename U, typename UCompare>
+    friend void swap(BinTree<U, UCompare>& bintree1, BinTree<U, UCompare>& bintree2) noexcept;
 
 private:
-    TCompare _compare;  // Binary tree compare
+    TCompare _compare;  // Binary tree comparer
     size_t _size;       // Binary tree size
     T* _root;           // Binary tree root node
 
@@ -243,24 +264,22 @@ private:
 /*!
     Not thread-safe.
 */
-template <typename T, typename TCompare>
+template <class TContainer, typename T>
 class BinTreeIterator
 {
 public:
     // Standard iterator type definitions
     typedef T value_type;
-    typedef T& reference;
-    typedef T* pointer;
-    typedef std::forward_iterator_tag iterator_category;
+    typedef value_type& reference;
+    typedef const value_type& const_reference;
+    typedef value_type* pointer;
+    typedef const value_type* const_pointer;
+    typedef ptrdiff_t difference_type;
+    typedef size_t size_type;
+    typedef std::bidirectional_iterator_tag iterator_category;
 
-    explicit BinTreeIterator(const TCompare& compare = TCompare()) noexcept
-        : _compare(compare),
-          _current(nullptr)
-    {}
-    explicit BinTreeIterator(T* current, const TCompare& compare = TCompare()) noexcept
-        : _compare(compare),
-          _current(current)
-    {}
+    BinTreeIterator() noexcept : _container(nullptr), _node(nullptr) {}
+    explicit BinTreeIterator(TContainer* container, T* node) noexcept : _container(container), _node(node) {}
     BinTreeIterator(const BinTreeIterator& it) noexcept = default;
     BinTreeIterator(BinTreeIterator&& it) noexcept = default;
     ~BinTreeIterator() noexcept = default;
@@ -269,9 +288,9 @@ public:
     BinTreeIterator& operator=(BinTreeIterator&& it) noexcept = default;
 
     friend bool operator==(const BinTreeIterator& it1, const BinTreeIterator& it2) noexcept
-    { return it1._current == it2._current; }
+    { return (it1._container == it2._container) && (it1._node == it2._node); }
     friend bool operator!=(const BinTreeIterator& it1, const BinTreeIterator& it2) noexcept
-    { return it1._current != it2._current; }
+    { return (it1._container != it2._container) || (it1._node == it2._node); }
 
     BinTreeIterator& operator++() noexcept;
     BinTreeIterator operator++(int) noexcept;
@@ -280,60 +299,55 @@ public:
     T* operator->() noexcept;
 
     //! Check if the iterator is valid
-    explicit operator bool() const noexcept { return _current != nullptr; }
+    explicit operator bool() const noexcept { return (_container != nullptr) && (_node != nullptr); }
 
     //! Compare two items: if the first item is less than the second one?
-    bool compare(const T& item1, const T& item2) const noexcept { return _compare(item1, item2); }
+    bool compare(const T& item1, const T& item2) const noexcept { return (_container != nullptr) ? _container->compare(item1, item2) : false; }
 
     //! Swap two instances
     void swap(BinTreeIterator& it) noexcept;
-    template <typename U, typename UCompare>
-    friend void swap(BinTreeIterator<U, UCompare>& it1, BinTreeIterator<U, UCompare>& it2) noexcept;
+    template <class UContainer, typename U>
+    friend void swap(BinTreeIterator<UContainer, U>& it1, BinTreeIterator<UContainer, U>& it2) noexcept;
 
 private:
-    TCompare _compare;
-    T* _current;
+    TContainer* _container;
+    T* _node;
 };
 
 //! Intrusive binary tree constant iterator
 /*!
     Not thread-safe.
 */
-template <typename T, typename TCompare>
+template <class TContainer, typename T>
 class BinTreeConstIterator
 {
 public:
-    // Standard constant iterator type definitions
-    typedef const T value_type;
-    typedef const T& reference;
-    typedef const T* pointer;
-    typedef std::forward_iterator_tag iterator_category;
+    // Standard iterator type definitions
+    typedef T value_type;
+    typedef value_type& reference;
+    typedef const value_type& const_reference;
+    typedef value_type* pointer;
+    typedef const value_type* const_pointer;
+    typedef ptrdiff_t difference_type;
+    typedef size_t size_type;
+    typedef std::bidirectional_iterator_tag iterator_category;
 
-    explicit BinTreeConstIterator(const TCompare& compare = TCompare()) noexcept
-        : _compare(compare),
-          _current(nullptr)
-    {}
-    explicit BinTreeConstIterator(const T* current, const TCompare& compare = TCompare()) noexcept
-        : _compare(compare),
-          _current(current)
-    {}
-    BinTreeConstIterator(const BinTreeIterator<T, TCompare>& it) noexcept
-        : _compare(it._compare),
-          _current(it._current)
-    {}
+    BinTreeConstIterator() noexcept : _container(nullptr), _node(nullptr) {}
+    explicit BinTreeConstIterator(const TContainer* container, const T* node) noexcept : _container(container), _node(node) {}
+    BinTreeConstIterator(const BinTreeIterator<TContainer, T>& it) noexcept  : _container(it._container), _node(it._node) {}
     BinTreeConstIterator(const BinTreeConstIterator& it) noexcept = default;
     BinTreeConstIterator(BinTreeConstIterator&& it) noexcept = default;
     ~BinTreeConstIterator() noexcept = default;
 
-    BinTreeConstIterator& operator=(const BinTreeIterator<T>& it) noexcept
-    { _current = it._current; return *this; }
+    BinTreeConstIterator& operator=(const BinTreeIterator<TContainer, T>& it) noexcept
+    { _container = it._container; _node = it._node; return *this; }
     BinTreeConstIterator& operator=(const BinTreeConstIterator& it) noexcept = default;
     BinTreeConstIterator& operator=(BinTreeConstIterator&& it) noexcept = default;
 
     friend bool operator==(const BinTreeConstIterator& it1, const BinTreeConstIterator& it2) noexcept
-    { return it1._current == it2._current; }
+    { return (it1._container == it2._container) && (it1._node == it2._node); }
     friend bool operator!=(const BinTreeConstIterator& it1, const BinTreeConstIterator& it2) noexcept
-    { return it1._current != it2._current; }
+    { return (it1._container != it2._container) || (it1._node != it2._node); }
 
     BinTreeConstIterator& operator++() noexcept;
     BinTreeConstIterator operator++(int) noexcept;
@@ -342,43 +356,41 @@ public:
     const T* operator->() const noexcept;
 
     //! Check if the iterator is valid
-    explicit operator bool() const noexcept { return _current != nullptr; }
+    explicit operator bool() const noexcept { return (_container != nullptr) && (_node != nullptr); }
 
     //! Compare two items: if the first item is less than the second one?
-    bool compare(const T& item1, const T& item2) const noexcept { return _compare(item1, item2); }
+    bool compare(const T& item1, const T& item2) const noexcept { return (_container != nullptr) ? _container->compare(item1, item2) : false; }
 
     //! Swap two instances
     void swap(BinTreeConstIterator& it) noexcept;
-    template <typename U, typename UCompare>
-    friend void swap(BinTreeConstIterator<U, UCompare>& it1, BinTreeConstIterator<U, UCompare>& it2) noexcept;
+    template <class UContainer, typename U>
+    friend void swap(BinTreeConstIterator<UContainer, U>& it1, BinTreeConstIterator<UContainer, U>& it2) noexcept;
 
 private:
-    TCompare _compare;
-    const T* _current;
+    const TContainer* _container;
+    const T* _node;
 };
 
 //! Intrusive binary tree reverse iterator
 /*!
     Not thread-safe.
 */
-template <typename T, typename TCompare>
+template <class TContainer, typename T>
 class BinTreeReverseIterator
 {
 public:
     // Standard iterator type definitions
     typedef T value_type;
-    typedef T& reference;
-    typedef T* pointer;
-    typedef std::forward_iterator_tag iterator_category;
+    typedef value_type& reference;
+    typedef const value_type& const_reference;
+    typedef value_type* pointer;
+    typedef const value_type* const_pointer;
+    typedef ptrdiff_t difference_type;
+    typedef size_t size_type;
+    typedef std::bidirectional_iterator_tag iterator_category;
 
-    explicit BinTreeReverseIterator(const TCompare& compare = TCompare()) noexcept
-        : _compare(compare),
-          _current(nullptr)
-    {}
-    explicit BinTreeReverseIterator(T* current, const TCompare& compare = TCompare()) noexcept
-        : _compare(compare),
-          _current(current)
-    {}
+    BinTreeReverseIterator() noexcept : _container(nullptr), _node(nullptr) {}
+    explicit BinTreeReverseIterator(TContainer* container, T* node) noexcept : _container(container), _node(node) {}
     BinTreeReverseIterator(const BinTreeReverseIterator& it) noexcept = default;
     BinTreeReverseIterator(BinTreeReverseIterator&& it) noexcept = default;
     ~BinTreeReverseIterator() noexcept = default;
@@ -387,9 +399,9 @@ public:
     BinTreeReverseIterator& operator=(BinTreeReverseIterator&& it) noexcept = default;
 
     friend bool operator==(const BinTreeReverseIterator& it1, const BinTreeReverseIterator& it2) noexcept
-    { return it1._current == it2._current; }
+    { return (it1._container == it2._container) && (it1._node == it2._node); }
     friend bool operator!=(const BinTreeReverseIterator& it1, const BinTreeReverseIterator& it2) noexcept
-    { return it1._current != it2._current; }
+    { return (it1._container != it2._container) || (it1._node != it2._node); }
 
     BinTreeReverseIterator& operator++() noexcept;
     BinTreeReverseIterator operator++(int) noexcept;
@@ -398,84 +410,79 @@ public:
     T* operator->() noexcept;
 
     //! Check if the iterator is valid
-    explicit operator bool() const noexcept { return _current != nullptr; }
+    explicit operator bool() const noexcept { return (_container != nullptr) && (_node != nullptr); }
 
     //! Compare two items: if the first item is less than the second one?
-    bool compare(const T& item1, const T& item2) const noexcept { return _compare(item1, item2); }
+    bool compare(const T& item1, const T& item2) const noexcept { return (_container != nullptr) ? _container->compare(item1, item2) : false; }
 
     //! Swap two instances
     void swap(BinTreeReverseIterator& it) noexcept;
-    template <typename U, typename UCompare>
-    friend void swap(BinTreeReverseIterator<U, UCompare>& it1, BinTreeReverseIterator<U, UCompare>& it2) noexcept;
+    template <class UContainer, typename U>
+    friend void swap(BinTreeReverseIterator<UContainer, U>& it1, BinTreeReverseIterator<UContainer, U>& it2) noexcept;
 
 private:
-    TCompare _compare;
-    T* _current;
+    TContainer* _container;
+    T* _node;
 };
 
 //! Intrusive binary tree constant reverse iterator
 /*!
     Not thread-safe.
 */
-template <typename T, typename TCompare>
-class BinTreeReverseConstIterator
+template <class TContainer, typename T>
+class BinTreeConstReverseIterator
 {
 public:
-    // Standard constant iterator type definitions
-    typedef const T value_type;
-    typedef const T& reference;
-    typedef const T* pointer;
-    typedef std::forward_iterator_tag iterator_category;
+    // Standard iterator type definitions
+    typedef T value_type;
+    typedef value_type& reference;
+    typedef const value_type& const_reference;
+    typedef value_type* pointer;
+    typedef const value_type* const_pointer;
+    typedef ptrdiff_t difference_type;
+    typedef size_t size_type;
+    typedef std::bidirectional_iterator_tag iterator_category;
 
-    explicit BinTreeReverseConstIterator(const TCompare& compare = TCompare()) noexcept
-        : _compare(compare),
-          _current(nullptr)
-    {}
-    explicit BinTreeReverseConstIterator(const T* current, const TCompare& compare = TCompare()) noexcept
-        : _compare(compare),
-          _current(current)
-    {}
-    BinTreeReverseConstIterator(const BinTreeIterator<T, TCompare>& it) noexcept
-        : _compare(it._compare),
-          _current(it._current)
-    {}
-    BinTreeReverseConstIterator(const BinTreeReverseConstIterator& it) noexcept = default;
-    BinTreeReverseConstIterator(BinTreeReverseConstIterator&& it) noexcept = default;
-    ~BinTreeReverseConstIterator() noexcept = default;
+    BinTreeConstReverseIterator() noexcept : _container(nullptr), _node(nullptr) {}
+    explicit BinTreeConstReverseIterator(const TContainer* container, const T* node) noexcept : _container(container), _node(node) {}
+    BinTreeConstReverseIterator(const BinTreeReverseIterator<TContainer, T>& it) noexcept : _container(it._container), _node(it._node) {}
+    BinTreeConstReverseIterator(const BinTreeConstReverseIterator& it) noexcept = default;
+    BinTreeConstReverseIterator(BinTreeConstReverseIterator&& it) noexcept = default;
+    ~BinTreeConstReverseIterator() noexcept = default;
 
-    BinTreeReverseConstIterator& operator=(const BinTreeReverseIterator<T>& it) noexcept
-    { _current = it._current; return *this; }
-    BinTreeReverseConstIterator& operator=(const BinTreeReverseConstIterator& it) noexcept = default;
-    BinTreeReverseConstIterator& operator=(BinTreeReverseConstIterator&& it) noexcept = default;
+    BinTreeConstReverseIterator& operator=(const BinTreeReverseIterator<TContainer, T>& it) noexcept
+    { _container = it._container; _node = it._node; return *this; }
+    BinTreeConstReverseIterator& operator=(const BinTreeConstReverseIterator& it) noexcept = default;
+    BinTreeConstReverseIterator& operator=(BinTreeConstReverseIterator&& it) noexcept = default;
 
-    friend bool operator==(const BinTreeReverseConstIterator& it1, const BinTreeReverseConstIterator& it2) noexcept
-    { return it1._current == it2._current; }
-    friend bool operator!=(const BinTreeReverseConstIterator& it1, const BinTreeReverseConstIterator& it2) noexcept
-    { return it1._current != it2._current; }
+    friend bool operator==(const BinTreeConstReverseIterator& it1, const BinTreeConstReverseIterator& it2) noexcept
+    { return (it1._container == it2._container) && (it1._node == it2._node); }
+    friend bool operator!=(const BinTreeConstReverseIterator& it1, const BinTreeConstReverseIterator& it2) noexcept
+    { return (it1._container != it2._container) || (it1._node != it2._node); }
 
-    BinTreeReverseConstIterator& operator++() noexcept;
-    BinTreeReverseConstIterator operator++(int) noexcept;
+    BinTreeConstReverseIterator& operator++() noexcept;
+    BinTreeConstReverseIterator operator++(int) noexcept;
 
     const T& operator*() const noexcept;
     const T* operator->() const noexcept;
 
     //! Check if the iterator is valid
-    explicit operator bool() const noexcept { return _current != nullptr; }
+    explicit operator bool() const noexcept { return (_container != nullptr) && (_node != nullptr); }
 
     //! Compare two items: if the first item is less than the second one?
-    bool compare(const T& item1, const T& item2) const noexcept { return _compare(item1, item2); }
+    bool compare(const T& item1, const T& item2) const noexcept { return (_container != nullptr) ? _container->compare(item1, item2) : false; }
 
     //! Swap two instances
-    void swap(BinTreeReverseConstIterator& it) noexcept;
-    template <typename U, typename UCompare>
-    friend void swap(BinTreeReverseConstIterator<U, UCompare>& it1, BinTreeReverseConstIterator<U, UCompare>& it2) noexcept;
+    void swap(BinTreeConstReverseIterator& it) noexcept;
+    template <class UContainer, typename U>
+    friend void swap(BinTreeConstReverseIterator<UContainer, U>& it1, BinTreeConstReverseIterator<UContainer, U>& it2) noexcept;
 
 private:
-    TCompare _compare;
-    const T* _current;
+    const TContainer* _container;
+    const T* _node;
 };
 
-/*! \example intrusive_bintree.cpp Intrusive binary tree container example */
+/*! \example containers_bintree.cpp Intrusive binary tree container example */
 
 } // namespace CppCommon
 
