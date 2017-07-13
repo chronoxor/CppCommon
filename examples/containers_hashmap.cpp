@@ -27,7 +27,7 @@ int main(int argc, char** argv)
 
     std::cout << "hashmap:" << std::endl;
     for (auto& item : hashmap)
-        std::cout << "Key: " << item.first << " Value: " << item.second << std::endl;
+        std::cout << item.first << " => " << item.second << std::endl;
 
     return 0;
 }
