@@ -159,7 +159,7 @@ public:
     void clear() noexcept;
 
     //! Swap two instances
-    void swap(HashMap& stack) noexcept;
+    void swap(HashMap& hashmap) noexcept;
     template <typename UKey, typename UValue, typename UHash, typename UEqual, typename UAllocator>
     friend void swap(HashMap<UKey, UValue, UHash, UEqual, UAllocator>& hashmap1, HashMap<UKey, UValue, UHash, UEqual, UAllocator>& hashmap2) noexcept;
 
@@ -248,7 +248,7 @@ public:
     typedef size_t size_type;
     typedef std::bidirectional_iterator_tag iterator_category;
 
-    HashMapConstIterator() noexcept : _container(nullptr), _size(0) {}
+    HashMapConstIterator() noexcept : _container(nullptr), _index(0) {}
     explicit HashMapConstIterator(const TContainer* container) noexcept;
     explicit HashMapConstIterator(const TContainer* container, size_t index) noexcept : _container(container), _index(index) {}
     HashMapConstIterator(const HashMapIterator<TContainer, TKey, TValue>& it) noexcept : _container(it._container), _index(it._index) {}
@@ -355,7 +355,7 @@ public:
     typedef size_t size_type;
     typedef std::bidirectional_iterator_tag iterator_category;
 
-    HashMapConstReverseIterator() noexcept : _container(nullptr), _size(0) {}
+    HashMapConstReverseIterator() noexcept : _container(nullptr), _index(0) {}
     explicit HashMapConstReverseIterator(const TContainer* container) noexcept;
     explicit HashMapConstReverseIterator(const TContainer* container, size_t index) noexcept : _container(container), _index(index) {}
     HashMapConstReverseIterator(const HashMapReverseIterator<TContainer, TKey, TValue>& it) noexcept : _container(it._container), _index(it._index) {}

@@ -256,14 +256,14 @@ inline void HashMap<TKey, TValue, THash, TEqual, TAllocator>::clear() noexcept
 }
 
 template <typename TKey, typename TValue, typename THash, typename TEqual, typename TAllocator>
-inline void HashMap<TKey, TValue, THash, TEqual, TAllocator>::swap(HashMap& HashMap) noexcept
+inline void HashMap<TKey, TValue, THash, TEqual, TAllocator>::swap(HashMap& hashmap) noexcept
 {
     using std::swap;
-    swap(_hash, HashMap._hash);
-    swap(_equal, HashMap._equal);
-    swap(_size, HashMap._size);
-    swap(_blank, HashMap._blank);
-    swap(_buckets, HashMap._buckets);
+    swap(_hash, hashmap._hash);
+    swap(_equal, hashmap._equal);
+    swap(_blank, hashmap._blank);
+    swap(_size, hashmap._size);
+    swap(_buckets, hashmap._buckets);
 }
 
 template <typename TKey, typename TValue, typename THash, typename TEqual, typename TAllocator>
