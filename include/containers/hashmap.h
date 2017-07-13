@@ -155,6 +155,13 @@ private:
     size_t _size;   // Hash map size
     TKey _blank;    // Hash map blank key
     std::vector<std::pair<TKey, TValue>, TAllocator> _buckets; // Hash map buckets
+
+    template <typename... Args>
+    std::pair<iterator, bool> emplace_internal(const TKey& key, Args&&... args);
+    void erase_internal(size_t index);
+    size_t key_to_index(const TKey& key) const noexcept;
+    size_t next_index(size_t index) const noexcept;
+    size_t diff(size_t index1, size_t index2) const noexcept;
 };
 
 //! Hash map iterator
