@@ -9,6 +9,7 @@
 #ifndef CPPCOMMON_CONTAINERS_HASHMAP_H
 #define CPPCOMMON_CONTAINERS_HASHMAP_H
 
+#include <algorithm>
 #include <cassert>
 #include <cstddef>
 #include <iterator>
@@ -34,17 +35,14 @@ class HashMapConstReverseIterator;
     Open  address  hash map resolves collisions of the  same  hash  values  by
     inserting new item into the next free place (probing with step 1).
 */
-template <typename TKey, typename TValue, typename THash = std::hash<Key>, typename TEqual = std::equal_to<Key>, typename TAllocator = std::allocator<std::pair<const TKey, TValue>>>
+template <typename TKey, typename TValue, typename THash = std::hash<TKey>, typename TEqual = std::equal_to<TKey>, typename TAllocator = std::allocator<std::pair<const TKey, TValue>>>
 class HashMap
 {
 public:
     // Standard container type definitions
     typedef TKey key_type;
     typedef TValue mapped_type;
-    typedef std::pair<const TKey, TValue> value_type;
-    typedef THash hasher;
-    typedef TEqual key_equal;
-    typedef TAllocator allocator_type;
+    typedef std::pair<TKey, TValue> value_type;
     typedef value_type& reference;
     typedef const value_type& const_reference;
     typedef value_type* pointer;
@@ -55,6 +53,11 @@ public:
     typedef HashMapConstIterator<HashMap<TKey, TValue, THash, TEqual, TAllocator>, TKey, TValue> const_iterator;
     typedef HashMapReverseIterator<HashMap<TKey, TValue, THash, TEqual, TAllocator>, TKey, TValue> reverse_iterator;
     typedef HashMapConstReverseIterator<HashMap<TKey, TValue, THash, TEqual, TAllocator>, TKey, TValue> const_reverse_iterator;
+
+    friend class iterator;
+    friend class const_iterator;
+    friend class reverse_iterator;
+    friend class const_reverse_iterator;
 
     //! Initialize the hash map with a given capacity and blank key value
     /*!
@@ -83,7 +86,7 @@ public:
     //! Calculate hash of the given key
     size_t key_hash(const TKey& key) const noexcept { return _hash(key); }
     //! Compare two keys: if the first key equals to the second one?
-    bool key_equal(const TKey& key1, const TKey& equal2) const noexcept { return _equal(key1, key2); }
+    bool key_equal(const TKey& key1, const TKey& key2) const noexcept { return _equal(key1, key2); }
 
     //! Get the begin hash map iterator
     iterator begin() noexcept;
@@ -141,6 +144,17 @@ public:
     */
     iterator erase(const const_iterator& it);
 
+    //! Rehash the hash map to the given capacity or more
+    /*!
+        \param capacity - Hash map capacity
+    */
+    void rehash(size_t capacity);
+    //! Reserve the hash map capacity to fit the given count of items
+    /*!
+        \param count - Count of items to fit
+    */
+    void reserve(size_t count);
+
     //! Clear the hash map
     void clear() noexcept;
 
@@ -152,9 +166,9 @@ public:
 private:
     THash _hash;    // Hash map key hasher
     TEqual _equal;  // Hash map key comparer
-    size_t _size;   // Hash map size
     TKey _blank;    // Hash map blank key
-    std::vector<std::pair<TKey, TValue>, TAllocator> _buckets; // Hash map buckets
+    size_t _size;   // Hash map size
+    std::vector<value_type, TAllocator> _buckets; // Hash map buckets
 
     template <typename... Args>
     std::pair<iterator, bool> emplace_internal(const TKey& key, Args&&... args);
@@ -173,7 +187,7 @@ class HashMapIterator
 {
 public:
     // Standard iterator type definitions
-    typedef std::pair<const TKey, TValue> value_type;
+    typedef std::pair<TKey, TValue> value_type;
     typedef value_type& reference;
     typedef const value_type& const_reference;
     typedef value_type* pointer;
@@ -200,8 +214,8 @@ public:
     HashMapIterator& operator++() noexcept;
     HashMapIterator operator++(int) noexcept;
 
-    T& operator*() noexcept;
-    T* operator->() noexcept;
+    reference operator*() noexcept;
+    pointer operator->() noexcept;
 
     //! Check if the iterator is valid
     explicit operator bool() const noexcept { return _container != nullptr; }
@@ -225,7 +239,7 @@ class HashMapConstIterator
 {
 public:
     // Standard iterator type definitions
-    typedef std::pair<const TKey, TValue> value_type;
+    typedef std::pair<TKey, TValue> value_type;
     typedef value_type& reference;
     typedef const value_type& const_reference;
     typedef value_type* pointer;
@@ -237,12 +251,12 @@ public:
     HashMapConstIterator() noexcept : _container(nullptr), _size(0) {}
     explicit HashMapConstIterator(const TContainer* container) noexcept;
     explicit HashMapConstIterator(const TContainer* container, size_t index) noexcept : _container(container), _index(index) {}
-    HashMapConstIterator(const HashMapIterator<T>& it) noexcept : _container(it._container), _index(it._index) {}
+    HashMapConstIterator(const HashMapIterator<TContainer, TKey, TValue>& it) noexcept : _container(it._container), _index(it._index) {}
     HashMapConstIterator(const HashMapConstIterator& it) noexcept = default;
     HashMapConstIterator(HashMapConstIterator&& it) noexcept = default;
     ~HashMapConstIterator() noexcept = default;
 
-    HashMapConstIterator& operator=(const HashMapIterator<T>& it) noexcept
+    HashMapConstIterator& operator=(const HashMapIterator<TContainer, TKey, TValue>& it) noexcept
     { _container = it._container; _index = it._index; return *this; }
     HashMapConstIterator& operator=(const HashMapConstIterator& it) noexcept = default;
     HashMapConstIterator& operator=(HashMapConstIterator&& it) noexcept = default;
@@ -255,8 +269,8 @@ public:
     HashMapConstIterator& operator++() noexcept;
     HashMapConstIterator operator++(int) noexcept;
 
-    const T& operator*() const noexcept;
-    const T* operator->() const noexcept;
+    const_reference operator*() const noexcept;
+    const_pointer operator->() const noexcept;
 
     //! Check if the iterator is valid
     explicit operator bool() const noexcept { return _container != nullptr; }
@@ -307,8 +321,8 @@ public:
     HashMapReverseIterator& operator++() noexcept;
     HashMapReverseIterator operator++(int) noexcept;
 
-    T& operator*() noexcept;
-    T* operator->() noexcept;
+    reference operator*() noexcept;
+    pointer operator->() noexcept;
 
     //! Check if the iterator is valid
     explicit operator bool() const noexcept { return _container != nullptr; }
@@ -344,12 +358,12 @@ public:
     HashMapConstReverseIterator() noexcept : _container(nullptr), _size(0) {}
     explicit HashMapConstReverseIterator(const TContainer* container) noexcept;
     explicit HashMapConstReverseIterator(const TContainer* container, size_t index) noexcept : _container(container), _index(index) {}
-    HashMapConstReverseIterator(const HashMapReverseIterator<T>& it) noexcept : _container(it._container), _index(it._index) {}
+    HashMapConstReverseIterator(const HashMapReverseIterator<TContainer, TKey, TValue>& it) noexcept : _container(it._container), _index(it._index) {}
     HashMapConstReverseIterator(const HashMapConstReverseIterator& it) noexcept = default;
     HashMapConstReverseIterator(HashMapConstReverseIterator&& it) noexcept = default;
     ~HashMapConstReverseIterator() noexcept = default;
 
-    HashMapConstReverseIterator& operator=(const HashMapReverseIterator<T>& it) noexcept
+    HashMapConstReverseIterator& operator=(const HashMapReverseIterator<TContainer, TKey, TValue>& it) noexcept
     { _container = it._container; _index = it._index; return *this; }
     HashMapConstReverseIterator& operator=(const HashMapConstReverseIterator& it) noexcept = default;
     HashMapConstReverseIterator& operator=(HashMapConstReverseIterator&& it) noexcept = default;
@@ -362,8 +376,8 @@ public:
     HashMapConstReverseIterator& operator++() noexcept;
     HashMapConstReverseIterator operator++(int) noexcept;
 
-    const T& operator*() const noexcept;
-    const T* operator->() const noexcept;
+    const_reference operator*() const noexcept;
+    const_pointer operator->() const noexcept;
 
     //! Check if the iterator is valid
     explicit operator bool() const noexcept { return _container != nullptr; }

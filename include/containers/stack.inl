@@ -129,7 +129,7 @@ inline StackIterator<T> StackIterator<T>::operator++(int) noexcept
 }
 
 template <typename T>
-T& StackIterator<T>::operator*() noexcept
+typename StackIterator<T>::reference StackIterator<T>::operator*() noexcept
 {
     assert((_node != nullptr) && "Iterator must be valid!");
 
@@ -137,7 +137,7 @@ T& StackIterator<T>::operator*() noexcept
 }
 
 template <typename T>
-T* StackIterator<T>::operator->() noexcept
+typename StackIterator<T>::pointer StackIterator<T>::operator->() noexcept
 {
     return _node;
 }
@@ -172,7 +172,7 @@ inline StackConstIterator<T> StackConstIterator<T>::operator++(int) noexcept
 }
 
 template <typename T>
-const T& StackConstIterator<T>::operator*() const noexcept
+typename StackConstIterator<T>::const_reference StackConstIterator<T>::operator*() const noexcept
 {
     assert((_node != nullptr) && "Iterator must be valid!");
 
@@ -180,7 +180,7 @@ const T& StackConstIterator<T>::operator*() const noexcept
 }
 
 template <typename T>
-const T* StackConstIterator<T>::operator->() const noexcept
+typename StackConstIterator<T>::const_pointer StackConstIterator<T>::operator->() const noexcept
 {
     return _node;
 }

@@ -325,8 +325,8 @@ public:
     ListIterator& operator++() noexcept;
     ListIterator operator++(int) noexcept;
 
-    T& operator*() noexcept;
-    T* operator->() noexcept;
+    reference operator*() noexcept;
+    pointer operator->() noexcept;
 
     //! Check if the iterator is valid
     explicit operator bool() const noexcept { return _node != nullptr; }
@@ -378,8 +378,8 @@ public:
     ListConstIterator& operator++() noexcept;
     ListConstIterator operator++(int) noexcept;
 
-    const T& operator*() const noexcept;
-    const T* operator->() const noexcept;
+    const_reference operator*() const noexcept;
+    const_pointer operator->() const noexcept;
 
     //! Check if the iterator is valid
     explicit operator bool() const noexcept { return _node != nullptr; }
@@ -428,8 +428,8 @@ public:
     ListReverseIterator& operator++() noexcept;
     ListReverseIterator operator++(int) noexcept;
 
-    T& operator*() noexcept;
-    T* operator->() noexcept;
+    reference operator*() noexcept;
+    pointer operator->() noexcept;
 
     //! Check if the iterator is valid
     explicit operator bool() const noexcept { return _node != nullptr; }
@@ -481,8 +481,8 @@ public:
     ListConstReverseIterator& operator++() noexcept;
     ListConstReverseIterator operator++(int) noexcept;
 
-    const T& operator*() const noexcept;
-    const T* operator->() const noexcept;
+    const_reference operator*() const noexcept;
+    const_pointer operator->() const noexcept;
 
     //! Check if the iterator is valid
     explicit operator bool() const noexcept { return _node != nullptr; }

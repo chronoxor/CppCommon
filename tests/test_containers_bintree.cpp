@@ -71,7 +71,7 @@ void test()
 
     int sum = 0;
     int prev = 0;
-    for (auto it = bintree.begin(); it != bintree.end(); ++it)
+    for (auto& it = bintree.begin(); it != bintree.end(); ++it)
     {
         REQUIRE(prev < it->value);
         prev = it->value;
@@ -81,7 +81,7 @@ void test()
 
     sum = 0;
     prev = 10;
-    for (auto it = bintree.rbegin(); it != bintree.rend(); ++it)
+    for (auto& it = bintree.rbegin(); it != bintree.rend(); ++it)
     {
         REQUIRE(prev > it->value);
         prev = it->value;

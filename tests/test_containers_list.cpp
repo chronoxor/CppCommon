@@ -33,8 +33,8 @@ TEST_CASE("Intrusive list", "[CppCommon][Intrusive]")
     REQUIRE(!list.empty());
 
     int sum = 0;
-    for (auto it : list)
-        sum += it.value;
+    for (auto& item : list)
+        sum += item.value;
     REQUIRE(sum == 6);
 
     MyListNode* node = list.pop_front();

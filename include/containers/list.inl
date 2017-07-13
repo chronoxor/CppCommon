@@ -293,7 +293,7 @@ inline ListIterator<T> ListIterator<T>::operator++(int) noexcept
 }
 
 template <typename T>
-T& ListIterator<T>::operator*() noexcept
+typename ListIterator<T>::reference ListIterator<T>::operator*() noexcept
 {
     assert((_node != nullptr) && "Iterator must be valid!");
 
@@ -301,7 +301,7 @@ T& ListIterator<T>::operator*() noexcept
 }
 
 template <typename T>
-T* ListIterator<T>::operator->() noexcept
+typename ListIterator<T>::pointer ListIterator<T>::operator->() noexcept
 {
     return _node;
 }
@@ -336,7 +336,7 @@ inline ListConstIterator<T> ListConstIterator<T>::operator++(int) noexcept
 }
 
 template <typename T>
-const T& ListConstIterator<T>::operator*() const noexcept
+typename ListConstIterator<T>::const_reference ListConstIterator<T>::operator*() const noexcept
 {
     assert((_node != nullptr) && "Iterator must be valid!");
 
@@ -344,7 +344,7 @@ const T& ListConstIterator<T>::operator*() const noexcept
 }
 
 template <typename T>
-const T* ListConstIterator<T>::operator->() const noexcept
+typename ListConstIterator<T>::const_pointer ListConstIterator<T>::operator->() const noexcept
 {
     return _node;
 }
@@ -379,7 +379,7 @@ inline ListReverseIterator<T> ListReverseIterator<T>::operator++(int) noexcept
 }
 
 template <typename T>
-T& ListReverseIterator<T>::operator*() noexcept
+typename ListReverseIterator<T>::reference ListReverseIterator<T>::operator*() noexcept
 {
     assert((_node != nullptr) && "Iterator must be valid!");
 
@@ -387,7 +387,7 @@ T& ListReverseIterator<T>::operator*() noexcept
 }
 
 template <typename T>
-T* ListReverseIterator<T>::operator->() noexcept
+typename ListReverseIterator<T>::pointer ListReverseIterator<T>::operator->() noexcept
 {
     return _node;
 }
@@ -422,7 +422,7 @@ inline ListConstReverseIterator<T> ListConstReverseIterator<T>::operator++(int) 
 }
 
 template <typename T>
-const T& ListConstReverseIterator<T>::operator*() const noexcept
+typename ListConstReverseIterator<T>::const_reference ListConstReverseIterator<T>::operator*() const noexcept
 {
     assert((_node != nullptr) && "Iterator must be valid!");
 
@@ -430,7 +430,7 @@ const T& ListConstReverseIterator<T>::operator*() const noexcept
 }
 
 template <typename T>
-const T* ListConstReverseIterator<T>::operator->() const noexcept
+typename ListConstReverseIterator<T>::const_pointer ListConstReverseIterator<T>::operator->() const noexcept
 {
     return _node;
 }

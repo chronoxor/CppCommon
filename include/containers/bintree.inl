@@ -441,7 +441,7 @@ inline BinTreeIterator<TContainer, T> BinTreeIterator<TContainer, T>::operator++
 }
 
 template <class TContainer, typename T>
-T& BinTreeIterator<TContainer, T>::operator*() noexcept
+typename BinTreeIterator<TContainer, T>::reference BinTreeIterator<TContainer, T>::operator*() noexcept
 {
     assert((_node != nullptr) && "Iterator must be valid!");
 
@@ -449,7 +449,7 @@ T& BinTreeIterator<TContainer, T>::operator*() noexcept
 }
 
 template <class TContainer, typename T>
-T* BinTreeIterator<TContainer, T>::operator->() noexcept
+typename BinTreeIterator<TContainer, T>::pointer BinTreeIterator<TContainer, T>::operator->() noexcept
 {
     return _node;
 }
@@ -498,7 +498,7 @@ inline BinTreeConstIterator<TContainer, T> BinTreeConstIterator<TContainer, T>::
 }
 
 template <class TContainer, typename T>
-const T& BinTreeConstIterator<TContainer, T>::operator*() const noexcept
+typename BinTreeConstIterator<TContainer, T>::const_reference BinTreeConstIterator<TContainer, T>::operator*() const noexcept
 {
     assert((_node != nullptr) && "Iterator must be valid!");
 
@@ -506,7 +506,7 @@ const T& BinTreeConstIterator<TContainer, T>::operator*() const noexcept
 }
 
 template <class TContainer, typename T>
-const T* BinTreeConstIterator<TContainer, T>::operator->() const noexcept
+typename BinTreeConstIterator<TContainer, T>::const_pointer BinTreeConstIterator<TContainer, T>::operator->() const noexcept
 {
     return _node;
 }
@@ -555,7 +555,7 @@ inline BinTreeReverseIterator<TContainer, T> BinTreeReverseIterator<TContainer, 
 }
 
 template <class TContainer, typename T>
-T& BinTreeReverseIterator<TContainer, T>::operator*() noexcept
+typename BinTreeReverseIterator<TContainer, T>::reference BinTreeReverseIterator<TContainer, T>::operator*() noexcept
 {
     assert((_node != nullptr) && "Iterator must be valid!");
 
@@ -563,7 +563,7 @@ T& BinTreeReverseIterator<TContainer, T>::operator*() noexcept
 }
 
 template <class TContainer, typename T>
-T* BinTreeReverseIterator<TContainer, T>::operator->() noexcept
+typename BinTreeReverseIterator<TContainer, T>::pointer BinTreeReverseIterator<TContainer, T>::operator->() noexcept
 {
     return _node;
 }
@@ -612,7 +612,7 @@ inline BinTreeConstReverseIterator<TContainer, T> BinTreeConstReverseIterator<TC
 }
 
 template <class TContainer, typename T>
-const T& BinTreeConstReverseIterator<TContainer, T>::operator*() const noexcept
+typename BinTreeConstReverseIterator<TContainer, T>::const_reference BinTreeConstReverseIterator<TContainer, T>::operator*() const noexcept
 {
     assert((_node != nullptr) && "Iterator must be valid!");
 
@@ -620,7 +620,7 @@ const T& BinTreeConstReverseIterator<TContainer, T>::operator*() const noexcept
 }
 
 template <class TContainer, typename T>
-const T* BinTreeConstReverseIterator<TContainer, T>::operator->() const noexcept
+typename BinTreeConstReverseIterator<TContainer, T>::const_pointer BinTreeConstReverseIterator<TContainer, T>::operator->() const noexcept
 {
     return _node;
 }

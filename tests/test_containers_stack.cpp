@@ -33,8 +33,8 @@ TEST_CASE("Intrusive stack", "[CppCommon][Intrusive]")
     REQUIRE(!stack.empty());
 
     int sum = 0;
-    for (auto it : stack)
-        sum += it.value;
+    for (auto& item : stack)
+        sum += item.value;
     REQUIRE(sum == 6);
 
     MyStackNode* node = stack.pop();

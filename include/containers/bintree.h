@@ -296,8 +296,8 @@ public:
     BinTreeIterator& operator++() noexcept;
     BinTreeIterator operator++(int) noexcept;
 
-    T& operator*() noexcept;
-    T* operator->() noexcept;
+    reference operator*() noexcept;
+    pointer operator->() noexcept;
 
     //! Check if the iterator is valid
     explicit operator bool() const noexcept { return (_container != nullptr) && (_node != nullptr); }
@@ -353,8 +353,8 @@ public:
     BinTreeConstIterator& operator++() noexcept;
     BinTreeConstIterator operator++(int) noexcept;
 
-    const T& operator*() const noexcept;
-    const T* operator->() const noexcept;
+    const_reference operator*() const noexcept;
+    const_pointer operator->() const noexcept;
 
     //! Check if the iterator is valid
     explicit operator bool() const noexcept { return (_container != nullptr) && (_node != nullptr); }
@@ -407,8 +407,8 @@ public:
     BinTreeReverseIterator& operator++() noexcept;
     BinTreeReverseIterator operator++(int) noexcept;
 
-    T& operator*() noexcept;
-    T* operator->() noexcept;
+    reference operator*() noexcept;
+    pointer operator->() noexcept;
 
     //! Check if the iterator is valid
     explicit operator bool() const noexcept { return (_container != nullptr) && (_node != nullptr); }
@@ -464,8 +464,8 @@ public:
     BinTreeConstReverseIterator& operator++() noexcept;
     BinTreeConstReverseIterator operator++(int) noexcept;
 
-    const T& operator*() const noexcept;
-    const T* operator->() const noexcept;
+    const_reference operator*() const noexcept;
+    const_pointer operator->() const noexcept;
 
     //! Check if the iterator is valid
     explicit operator bool() const noexcept { return (_container != nullptr) && (_node != nullptr); }

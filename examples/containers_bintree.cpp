@@ -43,8 +43,8 @@ int main(int argc, char** argv)
     bintree.insert(item5);
 
     std::cout << "bintree:" << std::endl;
-    for (auto it : bintree)
-        std::cout << it.value << std::endl;
+    for (auto& item : bintree)
+        std::cout << item.value << std::endl;
 
     return 0;
 }

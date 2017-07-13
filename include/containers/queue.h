@@ -220,8 +220,8 @@ public:
     QueueIterator& operator++() noexcept;
     QueueIterator operator++(int) noexcept;
 
-    T& operator*() noexcept;
-    T* operator->() noexcept;
+    reference operator*() noexcept;
+    pointer operator->() noexcept;
 
     //! Check if the iterator is valid
     explicit operator bool() const noexcept { return _node != nullptr; }
@@ -273,8 +273,8 @@ public:
     QueueConstIterator& operator++() noexcept;
     QueueConstIterator operator++(int) noexcept;
 
-    const T& operator*() const noexcept;
-    const T* operator->() const noexcept;
+    const_reference operator*() const noexcept;
+    const_pointer operator->() const noexcept;
 
     //! Check if the iterator is valid
     explicit operator bool() const noexcept { return _node != nullptr; }

@@ -218,8 +218,8 @@ public:
     StackIterator& operator++() noexcept;
     StackIterator operator++(int) noexcept;
 
-    T& operator*() noexcept;
-    T* operator->() noexcept;
+    reference operator*() noexcept;
+    pointer operator->() noexcept;
 
     //! Check if the iterator is valid
     explicit operator bool() const noexcept { return _node != nullptr; }
@@ -271,8 +271,8 @@ public:
     StackConstIterator& operator++() noexcept;
     StackConstIterator operator++(int) noexcept;
 
-    const T& operator*() const noexcept;
-    const T* operator->() const noexcept;
+    const_reference operator*() const noexcept;
+    const_pointer operator->() const noexcept;
 
     //! Check if the iterator is valid
     explicit operator bool() const noexcept { return _node != nullptr; }

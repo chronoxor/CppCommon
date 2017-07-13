@@ -138,7 +138,7 @@ inline QueueIterator<T> QueueIterator<T>::operator++(int) noexcept
 }
 
 template <typename T>
-T& QueueIterator<T>::operator*() noexcept
+typename QueueIterator<T>::reference QueueIterator<T>::operator*() noexcept
 {
     assert((_node != nullptr) && "Iterator must be valid!");
 
@@ -146,7 +146,7 @@ T& QueueIterator<T>::operator*() noexcept
 }
 
 template <typename T>
-T* QueueIterator<T>::operator->() noexcept
+typename QueueIterator<T>::pointer QueueIterator<T>::operator->() noexcept
 {
     return _node;
 }
@@ -181,7 +181,7 @@ inline QueueConstIterator<T> QueueConstIterator<T>::operator++(int) noexcept
 }
 
 template <typename T>
-const T& QueueConstIterator<T>::operator*() const noexcept
+typename QueueConstIterator<T>::const_reference QueueConstIterator<T>::operator*() const noexcept
 {
     assert((_node != nullptr) && "Iterator must be valid!");
 
@@ -189,7 +189,7 @@ const T& QueueConstIterator<T>::operator*() const noexcept
 }
 
 template <typename T>
-const T* QueueConstIterator<T>::operator->() const noexcept
+typename QueueConstIterator<T>::const_pointer QueueConstIterator<T>::operator->() const noexcept
 {
     return _node;
 }

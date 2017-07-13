@@ -33,8 +33,8 @@ TEST_CASE("Intrusive queue", "[CppCommon][Intrusive]")
     REQUIRE(!queue.empty());
 
     int sum = 0;
-    for (auto it : queue)
-        sum += it.value;
+    for (auto& item : queue)
+        sum += item.value;
     REQUIRE(sum == 6);
 
     MyQueueNode* node = queue.pop();
