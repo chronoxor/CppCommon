@@ -192,27 +192,27 @@ void test()
     REQUIRE(bintree.empty());
 }
 
-TEST_CASE("Intrusive non balanced binary tree", "[CppCommon][Intrusive]")
+TEST_CASE("Intrusive non balanced binary tree", "[CppCommon][Containers]")
 {
-    test<CppCommon::BinTree<MyBinTreeNode>>();
+    test<BinTree<MyBinTreeNode>>();
 }
 
-TEST_CASE("Intrusive balanced A.Andersson binary tree", "[CppCommon][Intrusive]")
+TEST_CASE("Intrusive balanced A.Andersson binary tree", "[CppCommon][Containers]")
 {
-    test<CppCommon::BinTreeAA<MyBinTreeNode>>();
+    test<BinTreeAA<MyBinTreeNode>>();
 }
 
-TEST_CASE("Intrusive balanced AVL binary tree", "[CppCommon][Intrusive]")
+TEST_CASE("Intrusive balanced AVL binary tree", "[CppCommon][Containers]")
 {
-    test<CppCommon::BinTreeAVL<MyBinTreeNode>>();
+    test<BinTreeAVL<MyBinTreeNode>>();
 }
 
-TEST_CASE("Intrusive balanced Reb-Black binary tree", "[CppCommon][Intrusive]")
+TEST_CASE("Intrusive balanced Reb-Black binary tree", "[CppCommon][Containers]")
 {
-    test<CppCommon::BinTreeRB<MyBinTreeNode>>();
+    test<BinTreeRB<MyBinTreeNode>>();
 }
 
-TEST_CASE("Intrusive balanced Splay binary tree", "[CppCommon][Intrusive]")
+TEST_CASE("Intrusive balanced Splay binary tree", "[CppCommon][Containers]")
 {
-    test<CppCommon::BinTreeSplay<MyBinTreeNode>>();
+    test<BinTreeSplay<MyBinTreeNode>>();
 }

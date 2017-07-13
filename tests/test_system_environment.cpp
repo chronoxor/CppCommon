@@ -20,14 +20,14 @@ TEST_CASE("Environment management", "[CppCommon][System]")
 
 TEST_CASE("Environment variables", "[CppCommon][System]")
 {
-    auto envars = CppCommon::Environment::envars();
+    auto envars = Environment::envars();
     REQUIRE(envars.size() > 0);
     for (auto& envar : envars)
         REQUIRE(!envar.first.empty());
 
-    REQUIRE(CppCommon::Environment::GetEnvar("TestEnvar") == "");
-    CppCommon::Environment::SetEnvar("TestEnvar", "123");
-    REQUIRE(CppCommon::Environment::GetEnvar("TestEnvar") == "123");
-    CppCommon::Environment::ClearEnvar("TestEnvar");
-    REQUIRE(CppCommon::Environment::GetEnvar("TestEnvar") == "");
+    REQUIRE(Environment::GetEnvar("TestEnvar") == "");
+    Environment::SetEnvar("TestEnvar", "123");
+    REQUIRE(Environment::GetEnvar("TestEnvar") == "123");
+    Environment::ClearEnvar("TestEnvar");
+    REQUIRE(Environment::GetEnvar("TestEnvar") == "");
 }

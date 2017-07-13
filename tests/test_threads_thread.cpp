@@ -27,7 +27,7 @@ TEST_CASE("Thread", "[CppCommon][Threads]")
     for (int64_t i = 1; i < 1000000; i *= 10)
     {
         int64_t start = Timestamp::nano();
-        Thread::SleepFor(CppCommon::Timespan::nanoseconds(i));
+        Thread::SleepFor(Timespan::nanoseconds(i));
         int64_t stop = Timestamp::nano();
         REQUIRE(((stop - start) >= 0));
     }
@@ -36,7 +36,7 @@ TEST_CASE("Thread", "[CppCommon][Threads]")
     for (int64_t i = 1; i < 1000000; i *= 10)
     {
         int64_t start = Timestamp::nano();
-        Thread::SleepUntil(CppCommon::UtcTimestamp() + CppCommon::Timespan::nanoseconds(i));
+        Thread::SleepUntil(UtcTimestamp() + Timespan::nanoseconds(i));
         int64_t stop = Timestamp::nano();
         REQUIRE(((stop - start) >= 0));
     }

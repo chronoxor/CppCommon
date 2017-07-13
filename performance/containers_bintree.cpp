@@ -227,7 +227,7 @@ BENCHMARK_FIXTURE(FindFixture<BinTreeSplay<MyBinTreeNode>>, "BinTreeSplay: Find"
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK_FIXTURE(FindFixture<BinTree<MyBinTreeNode>>, "std::set: Find & Remove")
+BENCHMARK_FIXTURE(FindFixture<BinTree<MyBinTreeNode>>, "std::set: Remove")
 {
     uint64_t crc = 0;
 
@@ -243,7 +243,7 @@ BENCHMARK_FIXTURE(FindFixture<BinTree<MyBinTreeNode>>, "std::set: Find & Remove"
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK_FIXTURE(FindFixture<BinTree<MyBinTreeNode>>, "std::unordered_set: Find & Remove")
+BENCHMARK_FIXTURE(FindFixture<BinTree<MyBinTreeNode>>, "std::unordered_set: Remove")
 {
     uint64_t crc = 0;
 
@@ -259,7 +259,7 @@ BENCHMARK_FIXTURE(FindFixture<BinTree<MyBinTreeNode>>, "std::unordered_set: Find
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK_FIXTURE(FindFixture<BinTreeAA<MyBinTreeNode>>, "BinTreeAA: Find & Remove")
+BENCHMARK_FIXTURE(FindFixture<BinTreeAA<MyBinTreeNode>>, "BinTreeAA: Remove")
 {
     uint64_t crc = 0;
 
@@ -274,7 +274,7 @@ BENCHMARK_FIXTURE(FindFixture<BinTreeAA<MyBinTreeNode>>, "BinTreeAA: Find & Remo
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK_FIXTURE(FindFixture<BinTreeAVL<MyBinTreeNode>>, "BinTreeAVL: Find & Remove")
+BENCHMARK_FIXTURE(FindFixture<BinTreeAVL<MyBinTreeNode>>, "BinTreeAVL: Remove")
 {
     uint64_t crc = 0;
 
@@ -289,7 +289,7 @@ BENCHMARK_FIXTURE(FindFixture<BinTreeAVL<MyBinTreeNode>>, "BinTreeAVL: Find & Re
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK_FIXTURE(FindFixture<BinTreeRB<MyBinTreeNode>>, "BinTreeRB: Find & Remove")
+BENCHMARK_FIXTURE(FindFixture<BinTreeRB<MyBinTreeNode>>, "BinTreeRB: Remove")
 {
     uint64_t crc = 0;
 

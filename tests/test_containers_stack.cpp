@@ -8,15 +8,15 @@
 
 using namespace CppCommon;
 
-struct MyStackNode : public CppCommon::Stack<MyStackNode>::Node
+struct MyStackNode : public Stack<MyStackNode>::Node
 {
     int value;
     MyStackNode(int v) : value(v) {}
 };
 
-TEST_CASE("Intrusive stack", "[CppCommon][Intrusive]")
+TEST_CASE("Intrusive stack", "[CppCommon][Containers]")
 {
-    CppCommon::Stack<MyStackNode> stack;
+    Stack<MyStackNode> stack;
     REQUIRE(stack.empty());
     REQUIRE(stack.size() == 0);
 

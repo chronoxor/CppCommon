@@ -8,15 +8,15 @@
 
 using namespace CppCommon;
 
-struct MyListNode : public CppCommon::List<MyListNode>::Node
+struct MyListNode : public List<MyListNode>::Node
 {
     int value;
     MyListNode(int v) : value(v) {}
 };
 
-TEST_CASE("Intrusive list", "[CppCommon][Intrusive]")
+TEST_CASE("Intrusive list", "[CppCommon][Containers]")
 {
-    CppCommon::List<MyListNode> list;
+    List<MyListNode> list;
     REQUIRE(list.empty());
     REQUIRE(list.size() == 0);
 

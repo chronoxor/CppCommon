@@ -13,7 +13,7 @@ using namespace CppCommon;
 
 TEST_CASE("DLL plugin function", "[CppCommon][System]")
 {
-    CppCommon::DLL plugin;
+    DLL plugin;
     REQUIRE(!plugin);
     REQUIRE(!plugin.IsLoaded());
 
@@ -40,7 +40,7 @@ TEST_CASE("DLL plugin function", "[CppCommon][System]")
 TEST_CASE("DLL plugin interface", "[CppCommon][System]")
 {
     // Load the plugin
-    CppCommon::DLL plugin("plugin-interface");
+    DLL plugin("plugin-interface");
     REQUIRE(plugin);
     REQUIRE(plugin.IsLoaded());
 

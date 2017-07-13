@@ -15,15 +15,15 @@ int main(int argc, char** argv)
 {
     CppCommon::HashMap<std::string, int> hashmap;
 
-    hashmap.emplace("item6", 6);
-    hashmap.emplace("item3", 3);
-    hashmap.emplace("item7", 7);
-    hashmap.emplace("item2", 2);
-    hashmap.emplace("item8", 8);
-    hashmap.emplace("item1", 1);
-    hashmap.emplace("item4", 4);
-    hashmap.emplace("item9", 9);
-    hashmap.emplace("item5", 5);
+    hashmap["item6"] = 6;
+    hashmap["item3"] = 3;
+    hashmap["item7"] = 7;
+    hashmap["item2"] = 2;
+    hashmap["item8"] = 8;
+    hashmap["item1"] = 1;
+    hashmap["item4"] = 4;
+    hashmap["item9"] = 9;
+    hashmap["item5"] = 5;
 
     std::cout << "hashmap:" << std::endl;
     for (auto& item : hashmap)

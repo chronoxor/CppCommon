@@ -12,7 +12,7 @@ template <typename T>
 template <class InputIterator>
 inline Queue<T>::Queue(InputIterator first, InputIterator last) noexcept
 {
-    for (InputIterator it = first; it != last; ++it)
+    for (auto it = first; it != last; ++it)
         push(*it);
 }
 

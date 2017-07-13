@@ -14,17 +14,18 @@
 #include <cstddef>
 #include <functional>
 #include <iterator>
+#include <limits>
 #include <vector>
 
 namespace CppCommon {
 
-template <typename TContainer, typename TKey, typename TValue>
+template <class TContainer, typename TKey, typename TValue>
 class HashMapIterator;
-template <typename TContainer, typename TKey, typename TValue>
+template <class TContainer, typename TKey, typename TValue>
 class HashMapConstIterator;
-template <typename TContainer, typename TKey, typename TValue>
+template <class TContainer, typename TKey, typename TValue>
 class HashMapReverseIterator;
-template <typename TContainer, typename TKey, typename TValue>
+template <class TContainer, typename TKey, typename TValue>
 class HashMapConstReverseIterator;
 
 //! Hash map container
@@ -64,25 +65,38 @@ public:
     /*!
         \param capacity - Hash map capacity (default is 128)
         \param blank - Blank key value (default is TKey())
+        \param hash - Key hasher (default is THash())
+        \param equal - Key comparator (default is THash())
+        \param allocator - Allocator (default is TAllocator())
     */
     explicit HashMap(size_t capacity = 128, const TKey& blank = TKey(), const THash& hash = THash(), const TEqual& equal = TEqual(), const TAllocator& allocator = TAllocator());
     template <class InputIterator>
-    HashMap(InputIterator first, InputIterator last, size_t capacity = 128, const TKey& blank = TKey(), const THash& hash = THash(), const TEqual& equal = TEqual(), const TAllocator& allocator = TAllocator());
-    HashMap(const HashMap&) = delete;
+    HashMap(InputIterator first, InputIterator last, bool unused, size_t capacity = 128, const TKey& blank = TKey(), const THash& hash = THash(), const TEqual& equal = TEqual(), const TAllocator& allocator = TAllocator());
+    HashMap(const HashMap& hash);
+    HashMap(const HashMap& hash, size_t capacity);
     HashMap(HashMap&&) noexcept = default;
     ~HashMap() = default;
 
-    HashMap& operator=(const HashMap&) = delete;
+    HashMap& operator=(const HashMap& hash);
     HashMap& operator=(HashMap&&) noexcept = default;
 
     //! Check if the hash map is not empty
     explicit operator bool() const noexcept { return !empty(); }
+
+    //! Access to the item with the given key or insert a new one
+    mapped_type& operator[](const TKey& key) { return emplace_internal(key).first->second; }
 
     //! Is the hash map empty?
     bool empty() const noexcept { return _size == 0; }
 
     //! Get the hash map size
     size_t size() const noexcept { return _size; }
+    //! Get the hash map maximum size
+    size_t max_size() const noexcept { return std::numeric_limits<size_type>::max(); }
+    //! Get the hash map bucket count
+    size_t bucket_count() const noexcept { return _buckets.size(); }
+    //! Get the hash map maximum bucket count
+    size_t max_bucket_count() const noexcept { return std::numeric_limits<size_type>::max(); }
 
     //! Calculate hash of the given key
     size_t key_hash(const TKey& key) const noexcept { return _hash(key); }
@@ -110,6 +124,22 @@ public:
     //! Find the iterator which points to the first equal item in the hash map or return end iterator
     iterator find(const TKey& key) noexcept;
     const_iterator find(const TKey& key) const noexcept;
+
+    //! Find the count of items with the given key
+    size_t count(const TKey& key) const noexcept { return (find(key) == end()) ? 0 : 1; }
+
+    //! Access to the item with the given key or throw std::out_of_range exception
+    /*!
+        \param key - Key of the item
+        \return Item with the given key
+    */
+    mapped_type& at(const TKey& key) noexcept;
+    //! Access to the constant item with the given key or throw std::out_of_range exception
+    /*!
+        \param key - Key of the item
+        \return Constant item with the given key
+    */
+    const mapped_type& at(const TKey& key) const noexcept;
 
     //! Insert a new item into the hash map
     /*!
@@ -166,7 +196,7 @@ public:
 
 private:
     THash _hash;    // Hash map key hasher
-    TEqual _equal;  // Hash map key comparer
+    TEqual _equal;  // Hash map key comparator
     TKey _blank;    // Hash map blank key
     size_t _size;   // Hash map size
     std::vector<value_type, TAllocator> _buckets; // Hash map buckets
@@ -183,9 +213,11 @@ private:
 /*!
     Not thread-safe.
 */
-template <typename TContainer, typename TKey, typename TValue>
+template <class TContainer, typename TKey, typename TValue>
 class HashMapIterator
 {
+    friend TContainer;
+
 public:
     // Standard iterator type definitions
     typedef std::pair<TKey, TValue> value_type;
@@ -223,7 +255,7 @@ public:
 
     //! Swap two instances
     void swap(HashMapIterator& it) noexcept;
-    template <typename UContainer, typename UKey, typename UValue>
+    template <class UContainer, typename UKey, typename UValue>
     friend void swap(HashMapIterator<UContainer, UKey, UValue>& it1, HashMapIterator<UContainer, UKey, UValue>& it2) noexcept;
 
 private:
@@ -235,9 +267,11 @@ private:
 /*!
     Not thread-safe.
 */
-template <typename TContainer, typename TKey, typename TValue>
+template <class TContainer, typename TKey, typename TValue>
 class HashMapConstIterator
 {
+    friend TContainer;
+
 public:
     // Standard iterator type definitions
     typedef std::pair<TKey, TValue> value_type;
@@ -278,7 +312,7 @@ public:
 
     //! Swap two instances
     void swap(HashMapConstIterator& it) noexcept;
-    template <typename UContainer, typename UKey, typename UValue>
+    template <class UContainer, typename UKey, typename UValue>
     friend void swap(HashMapConstIterator<UContainer, UKey, UValue>& it1, HashMapConstIterator<UContainer, UKey, UValue>& it2) noexcept;
 
 private:
@@ -290,12 +324,14 @@ private:
 /*!
     Not thread-safe.
 */
-template <typename TContainer, typename TKey, typename TValue>
+template <class TContainer, typename TKey, typename TValue>
 class HashMapReverseIterator
 {
+    friend TContainer;
+
 public:
     // Standard iterator type definitions
-    typedef std::pair<const TKey, TValue> value_type;
+    typedef std::pair<TKey, TValue> value_type;
     typedef value_type& reference;
     typedef const value_type& const_reference;
     typedef value_type* pointer;
@@ -330,7 +366,7 @@ public:
 
     //! Swap two instances
     void swap(HashMapReverseIterator& it) noexcept;
-    template <typename UContainer, typename UKey, typename UValue>
+    template <class UContainer, typename UKey, typename UValue>
     friend void swap(HashMapReverseIterator<UContainer, UKey, UValue>& it1, HashMapReverseIterator<UContainer, UKey, UValue>& it2) noexcept;
 
 private:
@@ -342,12 +378,14 @@ private:
 /*!
     Not thread-safe.
 */
-template <typename TContainer, typename TKey, typename TValue>
+template <class TContainer, typename TKey, typename TValue>
 class HashMapConstReverseIterator
 {
+    friend TContainer;
+
 public:
     // Standard iterator type definitions
-    typedef std::pair<const TKey, TValue> value_type;
+    typedef std::pair<TKey, TValue> value_type;
     typedef value_type& reference;
     typedef const value_type& const_reference;
     typedef value_type* pointer;
@@ -385,7 +423,7 @@ public:
 
     //! Swap two instances
     void swap(HashMapConstReverseIterator& it) noexcept;
-    template <typename UContainer, typename UKey, typename UValue>
+    template <class UContainer, typename UKey, typename UValue>
     friend void swap(HashMapConstReverseIterator<UContainer, UKey, UValue>& it1, HashMapConstReverseIterator<UContainer, UKey, UValue>& it2) noexcept;
 
 private:

@@ -13,7 +13,7 @@ template <class InputIterator>
 inline BinTreeAVL<T, TCompare>::BinTreeAVL(InputIterator first, InputIterator last, const TCompare& compare) noexcept
     : _compare(compare)
 {
-    for (InputIterator it = first; it != last; ++it)
+    for (auto it = first; it != last; ++it)
         insert(*it);
 }
 

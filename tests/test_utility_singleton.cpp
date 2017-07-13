@@ -8,9 +8,9 @@
 
 using namespace CppCommon;
 
-class TestSingleton : public CppCommon::Singleton<TestSingleton>
+class TestSingleton : public Singleton<TestSingleton>
 {
-   friend CppCommon::Singleton<TestSingleton>;
+   friend Singleton<TestSingleton>;
 
 public:
     bool Test() { return _init; }

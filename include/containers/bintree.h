@@ -156,11 +156,7 @@ public:
         T* right;   //!< Pointer to the right child binary tree node
     };
 
-    explicit BinTree(const TCompare& compare = TCompare()) noexcept
-        : _compare(compare),
-          _size(0),
-          _root(nullptr)
-    {}
+    explicit BinTree(const TCompare& compare = TCompare()) noexcept : _compare(compare), _size(0), _root(nullptr) {}
     template <class InputIterator>
     BinTree(InputIterator first, InputIterator last, const TCompare& compare = TCompare()) noexcept;
     BinTree(const BinTree&) noexcept = delete;
@@ -250,7 +246,7 @@ public:
     friend void swap(BinTree<U, UCompare>& bintree1, BinTree<U, UCompare>& bintree2) noexcept;
 
 private:
-    TCompare _compare;  // Binary tree comparer
+    TCompare _compare;  // Binary tree node comparator
     size_t _size;       // Binary tree size
     T* _root;           // Binary tree root node
 

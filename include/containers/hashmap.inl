@@ -20,11 +20,37 @@ inline HashMap<TKey, TValue, THash, TEqual, TAllocator>::HashMap(size_t capacity
 
 template <typename TKey, typename TValue, typename THash, typename TEqual, typename TAllocator>
 template <class InputIterator>
-inline HashMap<TKey, TValue, THash, TEqual, TAllocator>::HashMap(InputIterator first, InputIterator last, size_t capacity, const TKey& blank, const THash& hash, const TEqual& equal, const TAllocator& allocator)
-    : _hash(hash), _equal(equal), _blank(blank), _size(0), _buckets(allocator)
+inline HashMap<TKey, TValue, THash, TEqual, TAllocator>::HashMap(InputIterator first, InputIterator last, bool unused, size_t capacity, const TKey& blank, const THash& hash, const TEqual& equal, const TAllocator& allocator)
+    : HashMap(capacity, blank, hash, equal, allocator)
 {
-    for (InputIterator it = first; it != last; ++it)
+    for (auto it = first; it != last; ++it)
         insert(*it);
+}
+
+template <typename TKey, typename TValue, typename THash, typename TEqual, typename TAllocator>
+inline HashMap<TKey, TValue, THash, TEqual, TAllocator>::HashMap(const HashMap& hash)
+    : HashMap(hash.bucket_count(), hash._blank, hash._hash, hash._equal, hash._buckets.get_allocator())
+{
+    for (auto& item : hash)
+        insert(item);
+}
+
+template <typename TKey, typename TValue, typename THash, typename TEqual, typename TAllocator>
+inline HashMap<TKey, TValue, THash, TEqual, TAllocator>::HashMap(const HashMap& hash, size_t capacity)
+    : HashMap(capacity, hash._blank, hash._hash, hash._equal, hash._buckets.get_allocator())
+{
+    for (auto& item : hash)
+        insert(item);
+}
+
+template <typename TKey, typename TValue, typename THash, typename TEqual, typename TAllocator>
+inline HashMap<TKey, TValue, THash, TEqual, TAllocator>& HashMap<TKey, TValue, THash, TEqual, TAllocator>::operator=(const HashMap& hash)
+{
+    clear();
+    reserve(hash.size());
+    for (auto& item : hash)
+        insert(item);
+    return *this;
 }
 
 template <typename TKey, typename TValue, typename THash, typename TEqual, typename TAllocator>
@@ -125,6 +151,26 @@ inline typename HashMap<TKey, TValue, THash, TEqual, TAllocator>::const_iterator
         if (key_equal(_buckets[index].first, _blank))
             return end();
     }
+}
+
+template <typename TKey, typename TValue, typename THash, typename TEqual, typename TAllocator>
+inline typename HashMap<TKey, TValue, THash, TEqual, TAllocator>::mapped_type& HashMap<TKey, TValue, THash, TEqual, TAllocator>::at(const TKey& key) noexcept
+{
+    auto it = find(key);
+    if (it == end())
+        throw std::out_of_range("Item with the given key was not found in hash map!");
+
+    return it->second;
+}
+
+template <typename TKey, typename TValue, typename THash, typename TEqual, typename TAllocator>
+inline const typename HashMap<TKey, TValue, THash, TEqual, TAllocator>::mapped_type& HashMap<TKey, TValue, THash, TEqual, TAllocator>::at(const TKey& key) const noexcept
+{
+    auto it = find(key);
+    if (it == end())
+        throw std::out_of_range("Item with the given key was not found in hash map!");
+
+    return it->second;
 }
 
 template <typename TKey, typename TValue, typename THash, typename TEqual, typename TAllocator>
@@ -236,7 +282,7 @@ template <typename TKey, typename TValue, typename THash, typename TEqual, typen
 inline void HashMap<TKey, TValue, THash, TEqual, TAllocator>::rehash(size_t capacity)
 {
     capacity = std::max(capacity, 2 * size());
-    HashMap<TKey, TValue, THash, TEqual, TAllocator> temp(begin(), end(), capacity, _blank, _hash, _equal, _buckets.get_allocator());
+    HashMap<TKey, TValue, THash, TEqual, TAllocator> temp(*this, capacity);
     swap(temp);
 }
 
@@ -272,7 +318,7 @@ inline void swap(HashMap<TKey, TValue, THash, TEqual, TAllocator>& HashMap1, Has
     HashMap1.swap(HashMap2);
 }
 
-template <typename TContainer, typename TKey, typename TValue>
+template <class TContainer, typename TKey, typename TValue>
 inline HashMapIterator<TContainer, TKey, TValue>::HashMapIterator(TContainer* container) noexcept : _container(container), _index(0)
 {
     if (_container != nullptr)
@@ -300,7 +346,7 @@ inline HashMapIterator<TContainer, TKey, TValue>::HashMapIterator(TContainer* co
     }
 }
 
-template <typename TContainer, typename TKey, typename TValue>
+template <class TContainer, typename TKey, typename TValue>
 HashMapIterator<TContainer, TKey, TValue>& HashMapIterator<TContainer, TKey, TValue>::operator++() noexcept
 {
     if (_container != nullptr)
@@ -322,7 +368,7 @@ HashMapIterator<TContainer, TKey, TValue>& HashMapIterator<TContainer, TKey, TVa
     return *this;
 }
 
-template <typename TContainer, typename TKey, typename TValue>
+template <class TContainer, typename TKey, typename TValue>
 inline HashMapIterator<TContainer, TKey, TValue> HashMapIterator<TContainer, TKey, TValue>::operator++(int) noexcept
 {
     HashMapIterator<TContainer, TKey, TValue> result(*this);
@@ -330,7 +376,7 @@ inline HashMapIterator<TContainer, TKey, TValue> HashMapIterator<TContainer, TKe
     return result;
 }
 
-template <typename TContainer, typename TKey, typename TValue>
+template <class TContainer, typename TKey, typename TValue>
 typename HashMapIterator<TContainer, TKey, TValue>::reference HashMapIterator<TContainer, TKey, TValue>::operator*() noexcept
 {
     assert(((_container != nullptr) && (_index < _container->_buckets.size())) && "Iterator must be valid!");
@@ -338,13 +384,13 @@ typename HashMapIterator<TContainer, TKey, TValue>::reference HashMapIterator<TC
     return _container->_buckets[_index];
 }
 
-template <typename TContainer, typename TKey, typename TValue>
+template <class TContainer, typename TKey, typename TValue>
 typename HashMapIterator<TContainer, TKey, TValue>::pointer HashMapIterator<TContainer, TKey, TValue>::operator->() noexcept
 {
     return ((_container != nullptr) && (_index < _container->_buckets.size())) ? &_container->_buckets[_index] : nullptr;
 }
 
-template <typename TContainer, typename TKey, typename TValue>
+template <class TContainer, typename TKey, typename TValue>
 void HashMapIterator<TContainer, TKey, TValue>::swap(HashMapIterator& it) noexcept
 {
     using std::swap;
@@ -352,8 +398,266 @@ void HashMapIterator<TContainer, TKey, TValue>::swap(HashMapIterator& it) noexce
     swap(_index, it._index);
 }
 
-template <typename TContainer, typename TKey, typename TValue>
+template <class TContainer, typename TKey, typename TValue>
 void swap(HashMapIterator<TContainer, TKey, TValue>& it1, HashMapIterator<TContainer, TKey, TValue>& it2) noexcept
+{
+    it1.swap(it2);
+}
+
+template <class TContainer, typename TKey, typename TValue>
+inline HashMapConstIterator<TContainer, TKey, TValue>::HashMapConstIterator(const TContainer* container) noexcept : _container(container), _index(0)
+{
+    if (_container != nullptr)
+    {
+        if (_container->size() == 0)
+        {
+            // Hash map is empty
+            _container = nullptr;
+            _index = 0;
+            return;
+        }
+        else
+        {
+            for (size_t i = 0; i < _container->_buckets.size(); ++i)
+            {
+                if (!_container->key_equal(_container->_buckets[i].first, _container->_blank))
+                {
+                    _index = i;
+                    return;
+                }
+            }
+
+            assert("Non empty hash map has no valid items!");
+        }
+    }
+}
+
+template <class TContainer, typename TKey, typename TValue>
+HashMapConstIterator<TContainer, TKey, TValue>& HashMapConstIterator<TContainer, TKey, TValue>::operator++() noexcept
+{
+    if (_container != nullptr)
+    {
+        for (size_t i = _index + 1; i < _container->_buckets.size(); ++i)
+        {
+            if (!_container->key_equal(_container->_buckets[i].first, _container->_blank))
+            {
+                _index = i;
+                return *this;
+            }
+        }
+
+        // End of the hash map
+        _container = nullptr;
+        _index = 0;
+    }
+
+    return *this;
+}
+
+template <class TContainer, typename TKey, typename TValue>
+inline HashMapConstIterator<TContainer, TKey, TValue> HashMapConstIterator<TContainer, TKey, TValue>::operator++(int) noexcept
+{
+    HashMapConstIterator<TContainer, TKey, TValue> result(*this);
+    operator++();
+    return result;
+}
+
+template <class TContainer, typename TKey, typename TValue>
+typename HashMapConstIterator<TContainer, TKey, TValue>::const_reference HashMapConstIterator<TContainer, TKey, TValue>::operator*() const noexcept
+{
+    assert(((_container != nullptr) && (_index < _container->_buckets.size())) && "Iterator must be valid!");
+
+    return _container->_buckets[_index];
+}
+
+template <class TContainer, typename TKey, typename TValue>
+typename HashMapConstIterator<TContainer, TKey, TValue>::const_pointer HashMapConstIterator<TContainer, TKey, TValue>::operator->() const noexcept
+{
+    return ((_container != nullptr) && (_index < _container->_buckets.size())) ? &_container->_buckets[_index] : nullptr;
+}
+
+template <class TContainer, typename TKey, typename TValue>
+void HashMapConstIterator<TContainer, TKey, TValue>::swap(HashMapConstIterator& it) noexcept
+{
+    using std::swap;
+    swap(_container, it._container);
+    swap(_index, it._index);
+}
+
+template <class TContainer, typename TKey, typename TValue>
+void swap(HashMapConstIterator<TContainer, TKey, TValue>& it1, HashMapConstIterator<TContainer, TKey, TValue>& it2) noexcept
+{
+    it1.swap(it2);
+}
+
+template <class TContainer, typename TKey, typename TValue>
+inline HashMapReverseIterator<TContainer, TKey, TValue>::HashMapReverseIterator(TContainer* container) noexcept : _container(container), _index(0)
+{
+    if (_container != nullptr)
+    {
+        if (_container->size() == 0)
+        {
+            // Hash map is empty
+            _container = nullptr;
+            _index = 0;
+            return;
+        }
+        else
+        {
+            for (size_t i = _container->_buckets.size(); i-- > 0;)
+            {
+                if (!_container->key_equal(_container->_buckets[i].first, _container->_blank))
+                {
+                    _index = i;
+                    return;
+                }
+            }
+
+            assert("Non empty hash map has no valid items!");
+        }
+    }
+}
+
+template <class TContainer, typename TKey, typename TValue>
+HashMapReverseIterator<TContainer, TKey, TValue>& HashMapReverseIterator<TContainer, TKey, TValue>::operator++() noexcept
+{
+    if (_container != nullptr)
+    {
+        for (size_t i = _index; i-- > 0;)
+        {
+            if (!_container->key_equal(_container->_buckets[i].first, _container->_blank))
+            {
+                _index = i;
+                return *this;
+            }
+        }
+
+        // End of the hash map
+        _container = nullptr;
+        _index = 0;
+    }
+
+    return *this;
+}
+
+template <class TContainer, typename TKey, typename TValue>
+inline HashMapReverseIterator<TContainer, TKey, TValue> HashMapReverseIterator<TContainer, TKey, TValue>::operator++(int) noexcept
+{
+    HashMapReverseIterator<TContainer, TKey, TValue> result(*this);
+    operator++();
+    return result;
+}
+
+template <class TContainer, typename TKey, typename TValue>
+typename HashMapReverseIterator<TContainer, TKey, TValue>::reference HashMapReverseIterator<TContainer, TKey, TValue>::operator*() noexcept
+{
+    assert(((_container != nullptr) && (_index < _container->_buckets.size())) && "Iterator must be valid!");
+
+    return _container->_buckets[_index];
+}
+
+template <class TContainer, typename TKey, typename TValue>
+typename HashMapReverseIterator<TContainer, TKey, TValue>::pointer HashMapReverseIterator<TContainer, TKey, TValue>::operator->() noexcept
+{
+    return ((_container != nullptr) && (_index < _container->_buckets.size())) ? &_container->_buckets[_index] : nullptr;
+}
+
+template <class TContainer, typename TKey, typename TValue>
+void HashMapReverseIterator<TContainer, TKey, TValue>::swap(HashMapReverseIterator& it) noexcept
+{
+    using std::swap;
+    swap(_container, it._container);
+    swap(_index, it._index);
+}
+
+template <class TContainer, typename TKey, typename TValue>
+void swap(HashMapReverseIterator<TContainer, TKey, TValue>& it1, HashMapReverseIterator<TContainer, TKey, TValue>& it2) noexcept
+{
+    it1.swap(it2);
+}
+
+template <class TContainer, typename TKey, typename TValue>
+inline HashMapConstReverseIterator<TContainer, TKey, TValue>::HashMapConstReverseIterator(const TContainer* container) noexcept : _container(container), _index(0)
+{
+    if (_container != nullptr)
+    {
+        if (_container->size() == 0)
+        {
+            // Hash map is empty
+            _container = nullptr;
+            _index = 0;
+            return;
+        }
+        else
+        {
+            for (size_t i = _container->_buckets.size(); i-- > 0;)
+            {
+                if (!_container->key_equal(_container->_buckets[i].first, _container->_blank))
+                {
+                    _index = i;
+                    return;
+                }
+            }
+
+            assert("Non empty hash map has no valid items!");
+        }
+    }
+}
+
+template <class TContainer, typename TKey, typename TValue>
+HashMapConstReverseIterator<TContainer, TKey, TValue>& HashMapConstReverseIterator<TContainer, TKey, TValue>::operator++() noexcept
+{
+    if (_container != nullptr)
+    {
+        for (size_t i = _index; i-- > 0;)
+        {
+            if (!_container->key_equal(_container->_buckets[i].first, _container->_blank))
+            {
+                _index = i;
+                return *this;
+            }
+        }
+
+        // End of the hash map
+        _container = nullptr;
+        _index = 0;
+    }
+
+    return *this;
+}
+
+template <class TContainer, typename TKey, typename TValue>
+inline HashMapConstReverseIterator<TContainer, TKey, TValue> HashMapConstReverseIterator<TContainer, TKey, TValue>::operator++(int) noexcept
+{
+    HashMapConstReverseIterator<TContainer, TKey, TValue> result(*this);
+    operator++();
+    return result;
+}
+
+template <class TContainer, typename TKey, typename TValue>
+typename HashMapConstReverseIterator<TContainer, TKey, TValue>::const_reference HashMapConstReverseIterator<TContainer, TKey, TValue>::operator*() const noexcept
+{
+    assert(((_container != nullptr) && (_index < _container->_buckets.size())) && "Iterator must be valid!");
+
+    return _container->_buckets[_index];
+}
+
+template <class TContainer, typename TKey, typename TValue>
+typename HashMapConstReverseIterator<TContainer, TKey, TValue>::const_pointer HashMapConstReverseIterator<TContainer, TKey, TValue>::operator->() const noexcept
+{
+    return ((_container != nullptr) && (_index < _container->_buckets.size())) ? &_container->_buckets[_index] : nullptr;
+}
+
+template <class TContainer, typename TKey, typename TValue>
+void HashMapConstReverseIterator<TContainer, TKey, TValue>::swap(HashMapConstReverseIterator& it) noexcept
+{
+    using std::swap;
+    swap(_container, it._container);
+    swap(_index, it._index);
+}
+
+template <class TContainer, typename TKey, typename TValue>
+void swap(HashMapConstReverseIterator<TContainer, TKey, TValue>& it1, HashMapConstReverseIterator<TContainer, TKey, TValue>& it2) noexcept
 {
     it1.swap(it2);
 }
