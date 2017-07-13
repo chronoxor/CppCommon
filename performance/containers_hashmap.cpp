@@ -49,7 +49,7 @@ protected:
     }
 };
 
-BENCHMARK_FIXTURE(InsertFixture<Map>, "std::map: Insert")
+BENCHMARK_FIXTURE(InsertFixture<Map>, "Insert: std::map")
 {
     for (auto& value : this->values)
         this->map.emplace(value, value);
@@ -58,7 +58,7 @@ BENCHMARK_FIXTURE(InsertFixture<Map>, "std::map: Insert")
     context.metrics().AddIterations(items - 1);
 }
 
-BENCHMARK_FIXTURE(InsertFixture<UnorderedMap>, "std::unordered_map: Insert")
+BENCHMARK_FIXTURE(InsertFixture<UnorderedMap>, "Insert: std::unordered_map")
 {
     for (auto& value : this->values)
         this->map.emplace(value, value);
@@ -67,7 +67,7 @@ BENCHMARK_FIXTURE(InsertFixture<UnorderedMap>, "std::unordered_map: Insert")
     context.metrics().AddIterations(items - 1);
 }
 
-BENCHMARK_FIXTURE(InsertFixture<Hash>, "HashMap: Insert")
+BENCHMARK_FIXTURE(InsertFixture<Hash>, "Insert: HashMap")
 {
     for (auto& value : this->values)
         this->map.emplace(value, value);
@@ -76,7 +76,7 @@ BENCHMARK_FIXTURE(InsertFixture<Hash>, "HashMap: Insert")
     context.metrics().AddIterations(items - 1);
 }
 
-BENCHMARK_FIXTURE(FindFixture<Map>, "std::map: Find")
+BENCHMARK_FIXTURE(FindFixture<Map>, "Find: std::map")
 {
     uint64_t crc = 0;
 
@@ -88,7 +88,7 @@ BENCHMARK_FIXTURE(FindFixture<Map>, "std::map: Find")
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK_FIXTURE(FindFixture<UnorderedMap>, "std::unordered_map: Find")
+BENCHMARK_FIXTURE(FindFixture<UnorderedMap>, "Find: std::unordered_map")
 {
     uint64_t crc = 0;
 
@@ -100,7 +100,7 @@ BENCHMARK_FIXTURE(FindFixture<UnorderedMap>, "std::unordered_map: Find")
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK_FIXTURE(FindFixture<Hash>, "HashMap: Find")
+BENCHMARK_FIXTURE(FindFixture<Hash>, "Find: HashMap")
 {
     uint64_t crc = 0;
 
@@ -112,7 +112,7 @@ BENCHMARK_FIXTURE(FindFixture<Hash>, "HashMap: Find")
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK_FIXTURE(FindFixture<Map>, "std::map: Remove")
+BENCHMARK_FIXTURE(FindFixture<Map>, "Remove: std::map")
 {
     uint64_t crc = 0;
 
@@ -124,7 +124,7 @@ BENCHMARK_FIXTURE(FindFixture<Map>, "std::map: Remove")
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK_FIXTURE(FindFixture<UnorderedMap>, "std::unordered_map: Remove")
+BENCHMARK_FIXTURE(FindFixture<UnorderedMap>, "Remove: std::unordered_map")
 {
     uint64_t crc = 0;
 
@@ -136,7 +136,7 @@ BENCHMARK_FIXTURE(FindFixture<UnorderedMap>, "std::unordered_map: Remove")
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK_FIXTURE(FindFixture<Hash>, "HashMap: Remove")
+BENCHMARK_FIXTURE(FindFixture<Hash>, "Remove: HashMap")
 {
     uint64_t crc = 0;
 
