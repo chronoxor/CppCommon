@@ -38,6 +38,11 @@ class HashMapConstReverseIterator;
 template <typename TKey, typename TValue, typename THash = std::hash<TKey>, typename TEqual = std::equal_to<TKey>, typename TAllocator = std::allocator<std::pair<const TKey, TValue>>>
 class HashMap
 {
+    friend class HashMapIterator<HashMap<TKey, TValue, THash, TEqual, TAllocator>, TKey, TValue>;
+    friend class HashMapConstIterator<HashMap<TKey, TValue, THash, TEqual, TAllocator>, TKey, TValue>;
+    friend class HashMapReverseIterator<HashMap<TKey, TValue, THash, TEqual, TAllocator>, TKey, TValue>;
+    friend class HashMapConstReverseIterator<HashMap<TKey, TValue, THash, TEqual, TAllocator>, TKey, TValue>;
+
 public:
     // Standard container type definitions
     typedef TKey key_type;
@@ -53,11 +58,6 @@ public:
     typedef HashMapConstIterator<HashMap<TKey, TValue, THash, TEqual, TAllocator>, TKey, TValue> const_iterator;
     typedef HashMapReverseIterator<HashMap<TKey, TValue, THash, TEqual, TAllocator>, TKey, TValue> reverse_iterator;
     typedef HashMapConstReverseIterator<HashMap<TKey, TValue, THash, TEqual, TAllocator>, TKey, TValue> const_reverse_iterator;
-
-    friend class iterator;
-    friend class const_iterator;
-    friend class reverse_iterator;
-    friend class const_reverse_iterator;
 
     //! Initialize the hash map with a given capacity and blank key value
     /*!
