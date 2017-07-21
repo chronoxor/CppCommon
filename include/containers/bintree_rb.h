@@ -15,6 +15,8 @@ namespace CppCommon {
 
 //! Intrusive balanced Red-Black binary tree container
 /*!
+    Not thread-safe.
+
     <b>Overview</b>\n
     A red-black tree is a type of self-balancing binary search  tree,  a  data
     structure  used  in  computer  science,  typically   used   to   implement

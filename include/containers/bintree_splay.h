@@ -15,6 +15,8 @@ namespace CppCommon {
 
 //! Intrusive balanced Splay binary tree container
 /*!
+    Not thread-safe.
+
     <b>Overview</b>\n
     A splay tree is a self-balancing binary search tree  with  the  additional
     unusual property that recently  accessed  elements  are  quick  to  access

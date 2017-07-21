@@ -15,6 +15,8 @@ namespace CppCommon {
 
 //! Intrusive balanced A.Andersson binary tree container
 /*!
+    Not thread-safe.
+
     <b>Overview</b>\n
     Andersson trees are simple and easy to implement  balanced  binary  search
     trees that are based on the foundations of red black trees.  Consequently,

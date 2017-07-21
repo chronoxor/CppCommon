@@ -29,6 +29,8 @@ class BinTreeConstReverseIterator;
     Binary trees are the good structures for associative searching. They  keep
     items in sort order, so each of item can be found in a short time.
 
+    Not thread-safe.
+
     <b>Overview</b>\n
     In computer science, a binary search tree (BST) is a binary tree which has
     the following properties:

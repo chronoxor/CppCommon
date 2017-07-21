@@ -43,6 +43,8 @@ class ListConstReverseIterator;
                       +--->------ Remove from here and there -----<---+
     \endcode
 
+    Not thread-safe.
+
     <b>Overview</b>\n
     \image html List.png "Double linked list"
     In computer science,  a  linked  list  is  one  of  the  fundamental  data

@@ -15,6 +15,8 @@ namespace CppCommon {
 
 //! Intrusive balanced AVL binary tree container
 /*!
+    Not thread-safe.
+
     <b>Overview</b>\n
     In computer science, an AVL tree is a self-balancing binary  search  tree,
     and the first such data structure to be  invented.  In  an  AVL  tree  the

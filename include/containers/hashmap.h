@@ -36,6 +36,8 @@ class HashMapConstReverseIterator;
 
     Open  address  hash map resolves collisions of the  same  hash  values  by
     inserting new item into the next free place (probing with step 1).
+
+    Not thread-safe.
 */
 template <typename TKey, typename TValue, typename THash = std::hash<TKey>, typename TEqual = std::equal_to<TKey>, typename TAllocator = std::allocator<std::pair<TKey, TValue>>>
 class HashMap

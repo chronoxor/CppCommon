@@ -27,6 +27,8 @@ namespace CppCommon {
 //! Exception
 /*!
     Exception base interface.
+
+    Not thread-safe.
 */
 class Exception : public std::exception
 {

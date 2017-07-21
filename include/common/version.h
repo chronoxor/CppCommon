@@ -24,7 +24,7 @@ GitHub: https://github.com/chronoxor/CppCommon
 
 /*!
     \namespace CppCommon
-    \brief C++ common project definitions
+    \brief C++ Common project definitions
 */
 namespace CppCommon {
 
