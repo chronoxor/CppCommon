@@ -20,6 +20,8 @@ struct MyBinTreeNode : public CppCommon::BinTree<MyBinTreeNode>::Node
 
 int main(int argc, char** argv)
 {
+    assert("Duplicate node can not be inserted into the binary tree!");
+
     CppCommon::BinTree<MyBinTreeNode> bintree;
 
     MyBinTreeNode item1(1);

@@ -286,7 +286,7 @@ inline BinTreeSplay<T, TCompare>& BinTreeSplay<T, TCompare>::insert(T& item) noe
     if (result != nullptr)
     {
         // Found duplicate node
-        assert("Duplicate node can not be inserted into the binary tree!");
+        assert(false && "Duplicate node can not be inserted into the binary tree!");
         return *this;
     }
 

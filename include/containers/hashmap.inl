@@ -341,7 +341,7 @@ inline HashMapIterator<TContainer, TKey, TValue>::HashMapIterator(TContainer* co
                 }
             }
 
-            assert("Non empty hash map has no valid items!");
+            assert(false && "Non empty hash map has no valid items!");
         }
     }
 }
@@ -427,7 +427,7 @@ inline HashMapConstIterator<TContainer, TKey, TValue>::HashMapConstIterator(cons
                 }
             }
 
-            assert("Non empty hash map has no valid items!");
+            assert(false && "Non empty hash map has no valid items!");
         }
     }
 }
@@ -513,7 +513,7 @@ inline HashMapReverseIterator<TContainer, TKey, TValue>::HashMapReverseIterator(
                 }
             }
 
-            assert("Non empty hash map has no valid items!");
+            assert(false && "Non empty hash map has no valid items!");
         }
     }
 }
@@ -599,7 +599,7 @@ inline HashMapConstReverseIterator<TContainer, TKey, TValue>::HashMapConstRevers
                 }
             }
 
-            assert("Non empty hash map has no valid items!");
+            assert(false && "Non empty hash map has no valid items!");
         }
     }
 }

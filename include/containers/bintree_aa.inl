@@ -297,7 +297,7 @@ inline BinTreeAA<T, TCompare>& BinTreeAA<T, TCompare>::insert(T& item) noexcept
         }
 
         // Found duplicate node
-        assert("Duplicate node can not be inserted into the binary tree!");
+        assert(false && "Duplicate node can not be inserted into the binary tree!");
         return *this;
     }
 

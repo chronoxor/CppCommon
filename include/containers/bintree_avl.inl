@@ -297,7 +297,7 @@ inline BinTreeAVL<T, TCompare>& BinTreeAVL<T, TCompare>::insert(T& item) noexcep
         }
 
         // Found duplicate node
-        assert("Duplicate node can not be inserted into the binary tree!");
+        assert(false && "Duplicate node can not be inserted into the binary tree!");
         return *this;
     }
 
