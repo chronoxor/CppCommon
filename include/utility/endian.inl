@@ -8,12 +8,12 @@
 
 namespace CppCommon {
 
-bool Endian::IsBigEndian()
+inline bool Endian::IsBigEndian()
 {
     return false;
 }
 
-bool Endian::IsLittleEndian()
+inline bool Endian::IsLittleEndian()
 {
     return true;
 }
