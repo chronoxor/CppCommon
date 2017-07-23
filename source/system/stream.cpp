@@ -14,6 +14,7 @@
 
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
 #include <stdio.h>
+#include <unistd.h>
 #elif defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
 #endif
