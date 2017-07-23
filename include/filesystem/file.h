@@ -159,7 +159,7 @@ public:
         on a disk. If the file is not opened for writing the method will
         raise a filesystem exception!
     */
-    void Flush();
+    void Flush() override;
 
     //! Close the file
     /*!

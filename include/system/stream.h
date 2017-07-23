@@ -1,0 +1,161 @@
+/*!
+    \file stream.h
+    \brief Standard input/output/error stream definition
+    \author Ivan Shynkarenka
+    \date 23.07.2017
+    \copyright MIT License
+*/
+
+#ifndef CPPCOMMON_SYSTEM_STREAM_H
+#define CPPCOMMON_SYSTEM_STREAM_H
+
+#include "errors/exceptions.h"
+#include "utility/reader.h"
+#include "utility/writer.h"
+
+#include <memory>
+
+namespace CppCommon {
+
+//! Standard input stream
+/*!
+    Thread-safe.
+*/
+class StdInput : public Reader
+{
+public:
+    StdInput();
+    StdInput(const StdInput&) = delete;
+    StdInput(StdInput&& stream) noexcept;
+    virtual ~StdInput();
+
+    StdInput& operator=(const StdInput&) = delete;
+    StdInput& operator=(StdInput&& stream) noexcept;
+
+    //! Check if the stream is valid
+    explicit operator bool() const { return IsValid(); }
+
+    //! Get the native stream handler
+    void* stream() const noexcept;
+
+    //! Is stream valid?
+    bool IsValid() const noexcept;
+
+    //! Read a bytes buffer from the stream
+    /*!
+        \param buffer - Buffer to read
+        \param size - Buffer size
+        \return Count of read bytes
+    */
+    size_t Read(void* buffer, size_t size) override;
+
+    using Reader::ReadAllBytes;
+    using Reader::ReadAllText;
+    using Reader::ReadAllLines;
+
+    //! Swap two instances
+    void swap(StdInput& stream) noexcept;
+    friend void swap(StdInput& stream1, StdInput& stream2) noexcept;
+
+private:
+    class Impl;
+    std::unique_ptr<Impl> _pimpl;
+};
+
+//! Standard output stream
+/*!
+    Thread-safe.
+*/
+class StdOutput : public Writer
+{
+public:
+    StdOutput();
+    StdOutput(const StdOutput&) = delete;
+    StdOutput(StdOutput&& stream) noexcept;
+    virtual ~StdOutput();
+
+    StdOutput& operator=(const StdOutput&) = delete;
+    StdOutput& operator=(StdOutput&& stream) noexcept;
+
+    //! Check if the stream is valid
+    explicit operator bool() const { return IsValid(); }
+
+    //! Get the native stream handler
+    void* stream() const noexcept;
+
+    //! Is stream valid?
+    bool IsValid() const noexcept;
+
+    //! Write a byte buffer into the stream
+    /*!
+        \param buffer - Buffer to write
+        \param size - Buffer size
+        \return Count of written bytes
+    */
+    size_t Write(const void* buffer, size_t size) override;
+
+    using Writer::Write;
+
+    //! Flush the stream
+    void Flush() override;
+
+    //! Swap two instances
+    void swap(StdOutput& stream) noexcept;
+    friend void swap(StdOutput& stream1, StdOutput& stream2) noexcept;
+
+private:
+    class Impl;
+    std::unique_ptr<Impl> _pimpl;
+};
+
+//! Standard error stream
+/*!
+    Thread-safe.
+*/
+class StdError : public Writer
+{
+public:
+    StdError();
+    StdError(const StdError&) = delete;
+    StdError(StdError&& stream) noexcept;
+    virtual ~StdError();
+
+    StdError& operator=(const StdError&) = delete;
+    StdError& operator=(StdError&& stream) noexcept;
+
+    //! Check if the stream is valid
+    explicit operator bool() const { return IsValid(); }
+
+    //! Get the native stream handler
+    void* stream() const noexcept;
+
+    //! Is stream valid?
+    bool IsValid() const noexcept;
+
+    //! Write a byte buffer into the stream
+    /*!
+        \param buffer - Buffer to write
+        \param size - Buffer size
+        \return Count of written bytes
+    */
+    size_t Write(const void* buffer, size_t size) override;
+
+    using Writer::Write;
+
+    //! Flush the stream
+    void Flush() override;
+
+    //! Swap two instances
+    void swap(StdError& stream) noexcept;
+    friend void swap(StdError& stream1, StdError& stream2) noexcept;
+
+private:
+    class Impl;
+    std::unique_ptr<Impl> _pimpl;
+};
+
+} // namespace CppCommon
+
+#include "stream.inl"
+
+#endif // CPPCOMMON_SYSTEM_STREAM_H

@@ -50,6 +50,9 @@ public:
         \return Count of written lines
     */
     size_t Write(const std::vector<std::string>& lines);
+
+    //! Flush the writer
+    virtual void Flush() {}
 };
 
 } // namespace CppCommon

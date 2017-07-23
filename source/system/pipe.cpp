@@ -68,18 +68,18 @@ public:
     bool IsPipeReadOpened() const noexcept
     {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-        return _pipe[0] != -1;
+        return (_pipe[0] >= 0);
 #elif defined(_WIN32) || defined(_WIN64)
-        return _pipe[0] != INVALID_HANDLE_VALUE;
+        return (_pipe[0] != INVALID_HANDLE_VALUE);
 #endif
     }
 
     bool IsPipeWriteOpened() const noexcept
     {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-        return _pipe[1] != -1;
+        return (_pipe[1] >= 0);
 #elif defined(_WIN32) || defined(_WIN64)
-        return _pipe[1] != INVALID_HANDLE_VALUE;
+        return (_pipe[1] != INVALID_HANDLE_VALUE);
 #endif
     }
 
