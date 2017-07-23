@@ -10,7 +10,7 @@
 
 namespace CppCommon {
 
-void Endian::ReadBigEndian(const void* buffer, int16_t& value)
+size_t Endian::ReadBigEndian(const void* buffer, int16_t& value)
 {
     if (IsBigEndian())
     {
@@ -22,9 +22,11 @@ void Endian::ReadBigEndian(const void* buffer, int16_t& value)
         ((uint8_t*)&value)[0] = ((const uint8_t*)buffer)[1];
         ((uint8_t*)&value)[1] = ((const uint8_t*)buffer)[0];
     }
+
+    return 2;
 }
 
-void Endian::ReadBigEndian(const void* buffer, uint16_t& value)
+size_t Endian::ReadBigEndian(const void* buffer, uint16_t& value)
 {
     if (IsBigEndian())
     {
@@ -36,9 +38,11 @@ void Endian::ReadBigEndian(const void* buffer, uint16_t& value)
         ((uint8_t*)&value)[0] = ((const uint8_t*)buffer)[1];
         ((uint8_t*)&value)[1] = ((const uint8_t*)buffer)[0];
     }
+
+    return 2;
 }
 
-void Endian::ReadBigEndian(const void* buffer, int32_t& value)
+size_t Endian::ReadBigEndian(const void* buffer, int32_t& value)
 {
     if (IsBigEndian())
     {
@@ -54,9 +58,11 @@ void Endian::ReadBigEndian(const void* buffer, int32_t& value)
         ((uint8_t*)&value)[2] = ((const uint8_t*)buffer)[1];
         ((uint8_t*)&value)[3] = ((const uint8_t*)buffer)[0];
     }
+
+    return 4;
 }
 
-void Endian::ReadBigEndian(const void* buffer, uint32_t& value)
+size_t Endian::ReadBigEndian(const void* buffer, uint32_t& value)
 {
     if (IsBigEndian())
     {
@@ -72,9 +78,11 @@ void Endian::ReadBigEndian(const void* buffer, uint32_t& value)
         ((uint8_t*)&value)[2] = ((const uint8_t*)buffer)[1];
         ((uint8_t*)&value)[3] = ((const uint8_t*)buffer)[0];
     }
+
+    return 4;
 }
 
-void Endian::ReadBigEndian(const void* buffer, int64_t& value)
+size_t Endian::ReadBigEndian(const void* buffer, int64_t& value)
 {
     if (IsBigEndian())
     {
@@ -98,9 +106,11 @@ void Endian::ReadBigEndian(const void* buffer, int64_t& value)
         ((uint8_t*)&value)[6] = ((const uint8_t*)buffer)[1];
         ((uint8_t*)&value)[7] = ((const uint8_t*)buffer)[0];
     }
+
+    return 8;
 }
 
-void Endian::ReadBigEndian(const void* buffer, uint64_t& value)
+size_t Endian::ReadBigEndian(const void* buffer, uint64_t& value)
 {
     if (IsBigEndian())
     {
@@ -124,9 +134,11 @@ void Endian::ReadBigEndian(const void* buffer, uint64_t& value)
         ((uint8_t*)&value)[6] = ((const uint8_t*)buffer)[1];
         ((uint8_t*)&value)[7] = ((const uint8_t*)buffer)[0];
     }
+
+    return 8;
 }
 
-void Endian::ReadLittleEndian(const void* buffer, int16_t& value)
+size_t Endian::ReadLittleEndian(const void* buffer, int16_t& value)
 {
     if (IsBigEndian())
     {
@@ -138,9 +150,11 @@ void Endian::ReadLittleEndian(const void* buffer, int16_t& value)
         ((uint8_t*)&value)[0] = ((const uint8_t*)buffer)[0];
         ((uint8_t*)&value)[1] = ((const uint8_t*)buffer)[1];
     }
+
+    return 2;
 }
 
-void Endian::ReadLittleEndian(const void* buffer, uint16_t& value)
+size_t Endian::ReadLittleEndian(const void* buffer, uint16_t& value)
 {
     if (IsBigEndian())
     {
@@ -152,9 +166,11 @@ void Endian::ReadLittleEndian(const void* buffer, uint16_t& value)
         ((uint8_t*)&value)[0] = ((const uint8_t*)buffer)[0];
         ((uint8_t*)&value)[1] = ((const uint8_t*)buffer)[1];
     }
+
+    return 2;
 }
 
-void Endian::ReadLittleEndian(const void* buffer, int32_t& value)
+size_t Endian::ReadLittleEndian(const void* buffer, int32_t& value)
 {
     if (IsBigEndian())
     {
@@ -170,9 +186,11 @@ void Endian::ReadLittleEndian(const void* buffer, int32_t& value)
         ((uint8_t*)&value)[2] = ((const uint8_t*)buffer)[2];
         ((uint8_t*)&value)[3] = ((const uint8_t*)buffer)[3];
     }
+
+    return 4;
 }
 
-void Endian::ReadLittleEndian(const void* buffer, uint32_t& value)
+size_t Endian::ReadLittleEndian(const void* buffer, uint32_t& value)
 {
     if (IsBigEndian())
     {
@@ -188,9 +206,11 @@ void Endian::ReadLittleEndian(const void* buffer, uint32_t& value)
         ((uint8_t*)&value)[2] = ((const uint8_t*)buffer)[2];
         ((uint8_t*)&value)[3] = ((const uint8_t*)buffer)[3];
     }
+
+    return 4;
 }
 
-void Endian::ReadLittleEndian(const void* buffer, int64_t& value)
+size_t Endian::ReadLittleEndian(const void* buffer, int64_t& value)
 {
     if (IsBigEndian())
     {
@@ -214,9 +234,11 @@ void Endian::ReadLittleEndian(const void* buffer, int64_t& value)
         ((uint8_t*)&value)[6] = ((const uint8_t*)buffer)[6];
         ((uint8_t*)&value)[7] = ((const uint8_t*)buffer)[7];
     }
+
+    return 8;
 }
 
-void Endian::ReadLittleEndian(const void* buffer, uint64_t& value)
+size_t Endian::ReadLittleEndian(const void* buffer, uint64_t& value)
 {
     if (IsBigEndian())
     {
@@ -240,9 +262,11 @@ void Endian::ReadLittleEndian(const void* buffer, uint64_t& value)
         ((uint8_t*)&value)[6] = ((const uint8_t*)buffer)[6];
         ((uint8_t*)&value)[7] = ((const uint8_t*)buffer)[7];
     }
+
+    return 8;
 }
 
-void Endian::WriteBigEndian(void* buffer, int16_t value)
+size_t Endian::WriteBigEndian(void* buffer, int16_t value)
 {
     if (IsBigEndian())
     {
@@ -254,9 +278,11 @@ void Endian::WriteBigEndian(void* buffer, int16_t value)
         ((uint8_t*)buffer)[0] = ((const uint8_t*)&value)[1];
         ((uint8_t*)buffer)[1] = ((const uint8_t*)&value)[0];
     }
+
+    return 2;
 }
 
-void Endian::WriteBigEndian(void* buffer, uint16_t value)
+size_t Endian::WriteBigEndian(void* buffer, uint16_t value)
 {
     if (IsBigEndian())
     {
@@ -268,9 +294,11 @@ void Endian::WriteBigEndian(void* buffer, uint16_t value)
         ((uint8_t*)buffer)[0] = ((const uint8_t*)&value)[1];
         ((uint8_t*)buffer)[1] = ((const uint8_t*)&value)[0];
     }
+
+    return 2;
 }
 
-void Endian::WriteBigEndian(void* buffer, int32_t value)
+size_t Endian::WriteBigEndian(void* buffer, int32_t value)
 {
     if (IsBigEndian())
     {
@@ -286,9 +314,11 @@ void Endian::WriteBigEndian(void* buffer, int32_t value)
         ((uint8_t*)buffer)[2] = ((const uint8_t*)&value)[1];
         ((uint8_t*)buffer)[3] = ((const uint8_t*)&value)[0];
     }
+
+    return 4;
 }
 
-void Endian::WriteBigEndian(void* buffer, uint32_t value)
+size_t Endian::WriteBigEndian(void* buffer, uint32_t value)
 {
     if (IsBigEndian())
     {
@@ -304,9 +334,11 @@ void Endian::WriteBigEndian(void* buffer, uint32_t value)
         ((uint8_t*)buffer)[2] = ((const uint8_t*)&value)[1];
         ((uint8_t*)buffer)[3] = ((const uint8_t*)&value)[0];
     }
+
+    return 4;
 }
 
-void Endian::WriteBigEndian(void* buffer, int64_t value)
+size_t Endian::WriteBigEndian(void* buffer, int64_t value)
 {
     if (IsBigEndian())
     {
@@ -330,9 +362,11 @@ void Endian::WriteBigEndian(void* buffer, int64_t value)
         ((uint8_t*)buffer)[6] = ((const uint8_t*)&value)[1];
         ((uint8_t*)buffer)[7] = ((const uint8_t*)&value)[0];
     }
+
+    return 8;
 }
 
-void Endian::WriteBigEndian(void* buffer, uint64_t value)
+size_t Endian::WriteBigEndian(void* buffer, uint64_t value)
 {
     if (IsBigEndian())
     {
@@ -356,9 +390,11 @@ void Endian::WriteBigEndian(void* buffer, uint64_t value)
         ((uint8_t*)buffer)[6] = ((const uint8_t*)&value)[1];
         ((uint8_t*)buffer)[7] = ((const uint8_t*)&value)[0];
     }
+
+    return 8;
 }
 
-void Endian::WriteLittleEndian(void* buffer, int16_t value)
+size_t Endian::WriteLittleEndian(void* buffer, int16_t value)
 {
     if (IsBigEndian())
     {
@@ -370,9 +406,11 @@ void Endian::WriteLittleEndian(void* buffer, int16_t value)
         ((uint8_t*)buffer)[0] = ((const uint8_t*)&value)[0];
         ((uint8_t*)buffer)[1] = ((const uint8_t*)&value)[1];
     }
+
+    return 2;
 }
 
-void Endian::WriteLittleEndian(void* buffer, uint16_t value)
+size_t Endian::WriteLittleEndian(void* buffer, uint16_t value)
 {
     if (IsBigEndian())
     {
@@ -384,9 +422,11 @@ void Endian::WriteLittleEndian(void* buffer, uint16_t value)
         ((uint8_t*)buffer)[0] = ((const uint8_t*)&value)[0];
         ((uint8_t*)buffer)[1] = ((const uint8_t*)&value)[1];
     }
+
+    return 2;
 }
 
-void Endian::WriteLittleEndian(void* buffer, int32_t value)
+size_t Endian::WriteLittleEndian(void* buffer, int32_t value)
 {
     if (IsBigEndian())
     {
@@ -402,9 +442,11 @@ void Endian::WriteLittleEndian(void* buffer, int32_t value)
         ((uint8_t*)buffer)[2] = ((const uint8_t*)&value)[2];
         ((uint8_t*)buffer)[3] = ((const uint8_t*)&value)[3];
     }
+
+    return 4;
 }
 
-void Endian::WriteLittleEndian(void* buffer, uint32_t value)
+size_t Endian::WriteLittleEndian(void* buffer, uint32_t value)
 {
     if (IsBigEndian())
     {
@@ -420,9 +462,11 @@ void Endian::WriteLittleEndian(void* buffer, uint32_t value)
         ((uint8_t*)buffer)[2] = ((const uint8_t*)&value)[2];
         ((uint8_t*)buffer)[3] = ((const uint8_t*)&value)[3];
     }
+
+    return 4;
 }
 
-void Endian::WriteLittleEndian(void* buffer, int64_t value)
+size_t Endian::WriteLittleEndian(void* buffer, int64_t value)
 {
     if (IsBigEndian())
     {
@@ -446,9 +490,11 @@ void Endian::WriteLittleEndian(void* buffer, int64_t value)
         ((uint8_t*)buffer)[6] = ((const uint8_t*)&value)[6];
         ((uint8_t*)buffer)[7] = ((const uint8_t*)&value)[7];
     }
+
+    return 8;
 }
 
-void Endian::WriteLittleEndian(void* buffer, uint64_t value)
+size_t Endian::WriteLittleEndian(void* buffer, uint64_t value)
 {
     if (IsBigEndian())
     {
@@ -472,6 +518,8 @@ void Endian::WriteLittleEndian(void* buffer, uint64_t value)
         ((uint8_t*)buffer)[6] = ((const uint8_t*)&value)[6];
         ((uint8_t*)buffer)[7] = ((const uint8_t*)&value)[7];
     }
+
+    return 8;
 }
 
 } // namespace CppCommon

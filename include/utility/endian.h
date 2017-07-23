@@ -39,149 +39,173 @@ public:
     /*!
         \param buffer - Buffer to read
         \param value - Signed 16-bit integer value
+        \return Count of read bytes
     */
-    static void ReadBigEndian(const void* buffer, int16_t& value);
+    static size_t ReadBigEndian(const void* buffer, int16_t& value);
     //! Read big-endian unsigned 16-bit integer value from the given buffer
     /*!
         \param buffer - Buffer to read
         \param value - Unsigned 16-bit integer value
+        \return Count of read bytes
     */
-    static void ReadBigEndian(const void* buffer, uint16_t& value);
+    static size_t ReadBigEndian(const void* buffer, uint16_t& value);
     //! Read big-endian signed 32-bit integer value from the given buffer
     /*!
         \param buffer - Buffer to read
         \param value - Signed 32-bit integer value
+        \return Count of read bytes
     */
-    static void ReadBigEndian(const void* buffer, int32_t& value);
+    static size_t ReadBigEndian(const void* buffer, int32_t& value);
     //! Read big-endian unsigned 32-bit integer value from the given buffer
     /*!
         \param buffer - Buffer to read
         \param value - Unsigned 32-bit integer value
+        \return Count of read bytes
     */
-    static void ReadBigEndian(const void* buffer, uint32_t& value);
+    static size_t ReadBigEndian(const void* buffer, uint32_t& value);
     //! Read big-endian signed 64-bit integer value from the given buffer
     /*!
         \param buffer - Buffer to read
         \param value - Signed 64-bit integer value
+        \return Count of read bytes
     */
-    static void ReadBigEndian(const void* buffer, int64_t& value);
+    static size_t ReadBigEndian(const void* buffer, int64_t& value);
     //! Read big-endian unsigned 64-bit integer value from the given buffer
     /*!
         \param buffer - Buffer to read
         \param value - Unsigned 64-bit integer value
+        \return Count of read bytes
     */
-    static void ReadBigEndian(const void* buffer, uint64_t& value);
+    static size_t ReadBigEndian(const void* buffer, uint64_t& value);
 
     //! Read little-endian signed 16-bit integer value from the given buffer
     /*!
         \param buffer - Buffer to read
         \param value - Signed 16-bit integer value
+        \return Count of read bytes
     */
-    static void ReadLittleEndian(const void* buffer, int16_t& value);
+    static size_t ReadLittleEndian(const void* buffer, int16_t& value);
     //! Read little-endian unsigned 16-bit integer value from the given buffer
     /*!
         \param buffer - Buffer to read
         \param value - Unsigned 16-bit integer value
+        \return Count of read bytes
     */
-    static void ReadLittleEndian(const void* buffer, uint16_t& value);
+    static size_t ReadLittleEndian(const void* buffer, uint16_t& value);
     //! Read little-endian signed 32-bit integer value from the given buffer
     /*!
         \param buffer - Buffer to read
         \param value - Signed 32-bit integer value
+        \return Count of read bytes
     */
-    static void ReadLittleEndian(const void* buffer, int32_t& value);
+    static size_t ReadLittleEndian(const void* buffer, int32_t& value);
     //! Read little-endian unsigned 32-bit integer value from the given buffer
     /*!
         \param buffer - Buffer to read
         \param value - Unsigned 32-bit integer value
+        \return Count of read bytes
     */
-    static void ReadLittleEndian(const void* buffer, uint32_t& value);
+    static size_t ReadLittleEndian(const void* buffer, uint32_t& value);
     //! Read little-endian signed 64-bit integer value from the given buffer
     /*!
         \param buffer - Buffer to read
         \param value - Signed 64-bit integer value
+        \return Count of read bytes
     */
-    static void ReadLittleEndian(const void* buffer, int64_t& value);
+    static size_t ReadLittleEndian(const void* buffer, int64_t& value);
     //! Read little-endian unsigned 64-bit integer value from the given buffer
     /*!
         \param buffer - Buffer to read
         \param value - Unsigned 64-bit integer value
+        \return Count of read bytes
     */
-    static void ReadLittleEndian(const void* buffer, uint64_t& value);
+    static size_t ReadLittleEndian(const void* buffer, uint64_t& value);
 
     //! Write big-endian signed 16-bit integer value into the given buffer
     /*!
         \param buffer - Buffer to write
         \param value - Signed 16-bit integer value
+        \return Count of written bytes
     */
-    static void WriteBigEndian(void* buffer, int16_t value);
+    static size_t WriteBigEndian(void* buffer, int16_t value);
     //! Write big-endian unsigned 16-bit integer value into the given buffer
     /*!
         \param buffer - Buffer to write
         \param value - Unsigned 16-bit integer value
+        \return Count of written bytes
     */
-    static void WriteBigEndian(void* buffer, uint16_t value);
+    static size_t WriteBigEndian(void* buffer, uint16_t value);
     //! Write big-endian signed 32-bit integer value into the given buffer
     /*!
         \param buffer - Buffer to write
         \param value - Signed 32-bit integer value
+        \return Count of written bytes
     */
-    static void WriteBigEndian(void* buffer, int32_t value);
+    static size_t WriteBigEndian(void* buffer, int32_t value);
     //! Write big-endian unsigned 32-bit integer value into the given buffer
     /*!
         \param buffer - Buffer to write
         \param value - Unsigned 32-bit integer value
+        \return Count of written bytes
     */
-    static void WriteBigEndian(void* buffer, uint32_t value);
+    static size_t WriteBigEndian(void* buffer, uint32_t value);
     //! Write big-endian signed 64-bit integer value into the given buffer
     /*!
         \param buffer - Buffer to write
         \param value - Signed 64-bit integer value
+        \return Count of written bytes
     */
-    static void WriteBigEndian(void* buffer, int64_t value);
+    static size_t WriteBigEndian(void* buffer, int64_t value);
     //! Write big-endian unsigned 64-bit integer value into the given buffer
     /*!
         \param buffer - Buffer to write
         \param value - Unsigned 64-bit integer value
+        \return Count of written bytes
     */
-    static void WriteBigEndian(void* buffer, uint64_t value);
+    static size_t WriteBigEndian(void* buffer, uint64_t value);
 
     //! Write little-endian signed 16-bit integer value into the given buffer
     /*!
         \param buffer - Buffer to write
         \param value - Signed 16-bit integer value
+        \return Count of written bytes
     */
-    static void WriteLittleEndian(void* buffer, int16_t value);
+    static size_t WriteLittleEndian(void* buffer, int16_t value);
     //! Write little-endian unsigned 16-bit integer value into the given buffer
     /*!
         \param buffer - Buffer to write
         \param value - Unsigned 16-bit integer value
+        \return Count of written bytes
     */
-    static void WriteLittleEndian(void* buffer, uint16_t value);
+    static size_t WriteLittleEndian(void* buffer, uint16_t value);
     //! Write little-endian signed 32-bit integer value into the given buffer
     /*!
         \param buffer - Buffer to write
         \param value - Signed 32-bit integer value
+        \return Count of written bytes
     */
-    static void WriteLittleEndian(void* buffer, int32_t value);
+    static size_t WriteLittleEndian(void* buffer, int32_t value);
     //! Write little-endian unsigned 32-bit integer value into the given buffer
     /*!
         \param buffer - Buffer to write
         \param value - Unsigned 32-bit integer value
+        \return Count of written bytes
     */
-    static void WriteLittleEndian(void* buffer, uint32_t value);
+    static size_t WriteLittleEndian(void* buffer, uint32_t value);
     //! Write little-endian signed 64-bit integer value into the given buffer
     /*!
         \param buffer - Buffer to write
         \param value - Signed 64-bit integer value
+        \return Count of written bytes
     */
-    static void WriteLittleEndian(void* buffer, int64_t value);
+    static size_t WriteLittleEndian(void* buffer, int64_t value);
     //! Write little-endian unsigned 64-bit integer value into the given buffer
     /*!
         \param buffer - Buffer to write
         \param value - Unsigned 64-bit integer value
+        \return Count of written bytes
     */
-    static void WriteLittleEndian(void* buffer, uint64_t value);
+    static size_t WriteLittleEndian(void* buffer, uint64_t value);
 };
 
 } // namespace CppCommon
