@@ -14,7 +14,6 @@
 
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
 #include <stdio.h>
-#include <unistd.h>
 #elif defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
 #endif
@@ -66,10 +65,10 @@ public:
         if (!IsValid())
             throwex SystemException("Cannot read from the invalid standard input stream!");
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-        ssize_t result = read(_stream, buffer, size);
-        if (result < 0)
+        size_t result = fread(buffer, 1, size, _stream);
+        if (ferror(_stream) != 0)
             throwex SystemException("Cannot read from the standard input stream!");
-        return (size_t)result;
+        return result;
 #elif defined(_WIN32) || defined(_WIN64)
         DWORD result;
         if (!ReadFile(_stream, buffer, (DWORD)size, &result, nullptr))
@@ -129,10 +128,10 @@ public:
         if (!IsValid())
             throwex SystemException("Cannot write into the invalid standard output stream!");
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-        ssize_t result = write(_stream, buffer, size);
-        if (result < 0)
+        size_t result = fwrite(buffer, 1, size, _stream);
+        if (ferror(_stream) != 0)
             throwex SystemException("Cannot write into the standard output stream!");
-        return (size_t)result;
+        return result;
 #elif defined(_WIN32) || defined(_WIN64)
         DWORD result;
         if (!WriteFile(_stream, buffer, (DWORD)size, &result, nullptr))
@@ -204,10 +203,10 @@ public:
         if (!IsValid())
             throwex SystemException("Cannot write into the invalid standard error stream!");
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-        ssize_t result = write(_stream, buffer, size);
-        if (result < 0)
+        size_t result = fwrite(buffer, 1, size, _stream);
+        if (ferror(_stream) != 0)
             throwex SystemException("Cannot write into the standard error stream!");
-        return (size_t)result;
+        return result;
 #elif defined(_WIN32) || defined(_WIN64)
         DWORD result;
         if (!WriteFile(_stream, buffer, (DWORD)size, &result, nullptr))
