@@ -121,7 +121,7 @@ Barrier::Barrier(int threads) : _pimpl(std::make_unique<Impl>(threads))
 {
 }
 
-Barrier::Barrier(Barrier&& barrier) : _pimpl(std::move(barrier._pimpl))
+Barrier::Barrier(Barrier&& barrier) noexcept : _pimpl(std::move(barrier._pimpl))
 {
 }
 
@@ -129,7 +129,7 @@ Barrier::~Barrier()
 {
 }
 
-Barrier& Barrier::operator=(Barrier&& barrier)
+Barrier& Barrier::operator=(Barrier&& barrier) noexcept
 {
     _pimpl = std::move(barrier._pimpl);
     return *this;
