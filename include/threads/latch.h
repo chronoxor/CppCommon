@@ -34,11 +34,11 @@ public:
     */
     explicit Latch(int threads) noexcept;
     Latch(const Latch&) = delete;
-    Latch(Latch&&) noexcept = default;
+    Latch(Latch&&) = default;
     ~Latch() = default;
 
     Latch& operator=(const Latch&) = delete;
-    Latch& operator=(Latch&&) noexcept = default;
+    Latch& operator=(Latch&&) = default;
 
     //! Get the count of threads to wait for the latch
     int threads() const noexcept { return _threads; }
