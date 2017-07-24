@@ -45,7 +45,7 @@ public:
     }
 
     Impl(const Impl&) = delete;
-    Impl(Impl&&) noexcept = default;
+    Impl(Impl&&) = default;
 
     ~Impl()
     {
@@ -61,7 +61,7 @@ public:
     }
 
     Impl& operator=(const Impl&) = delete;
-    Impl& operator=(Impl&&) noexcept = default;
+    Impl& operator=(Impl&&) = default;
 
     int threads() const noexcept
     {
@@ -127,7 +127,7 @@ Barrier::Barrier(int threads) : _pimpl(std::make_unique<Impl>(threads))
 {
 }
 
-Barrier::Barrier(Barrier&& barrier) noexcept : _pimpl(std::move(barrier._pimpl))
+Barrier::Barrier(Barrier&& barrier) : _pimpl(std::move(barrier._pimpl))
 {
 }
 
@@ -135,7 +135,7 @@ Barrier::~Barrier()
 {
 }
 
-Barrier& Barrier::operator=(Barrier&& barrier) noexcept
+Barrier& Barrier::operator=(Barrier&& barrier)
 {
     _pimpl = std::move(barrier._pimpl);
     return *this;
