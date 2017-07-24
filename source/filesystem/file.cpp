@@ -622,7 +622,7 @@ File::File(const File& file) : Path(file), _pimpl(std::make_unique<Impl>(*this))
 {
 }
 
-File::File(File&& file) noexcept : Path(file), _pimpl(std::move(file._pimpl))
+File::File(File&& file) noexcept : Path(std::move(file)), _pimpl(std::move(file._pimpl))
 {
 }
 
@@ -639,7 +639,7 @@ File& File::operator=(const File& file)
 
 File& File::operator=(File&& file) noexcept
 {
-    Path::operator=(file);
+    Path::operator=(std::move(file));
     _pimpl = std::move(file._pimpl);
     return *this;
 }
