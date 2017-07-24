@@ -1,7 +1,7 @@
 var searchData=
 [
   ['latch',['Latch',['../class_cpp_common_1_1_latch.html',1,'CppCommon']]],
-  ['latch',['Latch',['../class_cpp_common_1_1_latch.html#a48e79e6e10c06067af6197d0badd4ff0',1,'CppCommon::Latch::Latch(int threads) noexcept'],['../class_cpp_common_1_1_latch.html#abed87827f6fe7d8aae999e675652a86b',1,'CppCommon::Latch::Latch(const Latch &amp;)=delete'],['../class_cpp_common_1_1_latch.html#a601d22241779a6a00d1747ab30d39cd1',1,'CppCommon::Latch::Latch(Latch &amp;&amp;) noexcept=default']]],
+  ['latch',['Latch',['../class_cpp_common_1_1_latch.html#a48e79e6e10c06067af6197d0badd4ff0',1,'CppCommon::Latch::Latch(int threads) noexcept'],['../class_cpp_common_1_1_latch.html#abed87827f6fe7d8aae999e675652a86b',1,'CppCommon::Latch::Latch(const Latch &amp;)=delete'],['../class_cpp_common_1_1_latch.html#a8b7675cf1ee8e72858a4ca048ed91b3d',1,'CppCommon::Latch::Latch(Latch &amp;&amp;)=default']]],
   ['latch_2ecpp',['latch.cpp',['../latch_8cpp.html',1,'']]],
   ['latch_2eh',['latch.h',['../latch_8h.html',1,'']]],
   ['latch_2einl',['latch.inl',['../latch_8inl.html',1,'']]],
