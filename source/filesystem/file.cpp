@@ -591,7 +591,7 @@ public:
     }
 
 private:
-    const Path& _path;
+    Path _path;
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     int _file;
 #elif defined(_WIN32) || defined(_WIN64)
