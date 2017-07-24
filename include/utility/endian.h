@@ -10,6 +10,7 @@
 #define CPPCOMMON_UTILITY_ENDIAN_H
 
 #include <cstdint>
+#include <cstring>
 
 namespace CppCommon {
 
