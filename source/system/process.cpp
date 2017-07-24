@@ -52,6 +52,9 @@ public:
 #endif
     }
 
+    Impl(const Impl&) = delete;
+    Impl(Impl&&) noexcept = default;
+
     ~Impl()
     {
 #if defined(_WIN32) || defined(_WIN64)
@@ -63,6 +66,9 @@ public:
         }
 #endif
     }
+
+    Impl& operator=(const Impl&) = delete;
+    Impl& operator=(Impl&&) noexcept = default;
 
     uint64_t pid() const noexcept
     {

@@ -47,6 +47,11 @@ class ExceptionsHandler::Impl
 {
 public:
     Impl() : _initialized(false), _handler(ExceptionsHandler::Impl::DefaultHandler) {}
+    Impl(const Impl&) = delete;
+    Impl(Impl&&) noexcept = delete;
+
+    Impl& operator=(const Impl&) = delete;
+    Impl& operator=(Impl&&) noexcept = delete;
 
     static ExceptionsHandler::Impl& GetInstance()
     { return *ExceptionsHandler::GetInstance()._pimpl; }

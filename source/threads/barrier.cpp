@@ -44,6 +44,9 @@ public:
 #endif
     }
 
+    Impl(const Impl&) = delete;
+    Impl(Impl&&) noexcept = default;
+
     ~Impl()
     {
 #if (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__APPLE__)
@@ -56,6 +59,9 @@ public:
         DeleteSynchronizationBarrier(&_barrier);
 #endif
     }
+
+    Impl& operator=(const Impl&) = delete;
+    Impl& operator=(Impl&&) noexcept = default;
 
     int threads() const noexcept
     {

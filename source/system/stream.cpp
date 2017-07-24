@@ -38,7 +38,12 @@ public:
 #endif
     }
 
+    Impl(const Impl&) = delete;
+    Impl(Impl&&) noexcept = default;
     ~Impl() {}
+
+    Impl& operator=(const Impl&) = delete;
+    Impl& operator=(Impl&&) noexcept = default;
 
     void* stream() const noexcept
     {

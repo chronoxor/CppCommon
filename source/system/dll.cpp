@@ -27,6 +27,8 @@ class DLL::Impl
 {
 public:
     Impl() : _dll(nullptr) {}
+    Impl(const Impl&) = delete;
+    Impl(Impl&&) noexcept = default;
 
     ~Impl()
     {
@@ -40,6 +42,9 @@ public:
             fatality(DLLException(ex.string()).Attach(_path));
         }
     }
+
+    Impl& operator=(const Impl&) = delete;
+    Impl& operator=(Impl&&) noexcept = default;
 
     const Path path() const { return _path; }
 

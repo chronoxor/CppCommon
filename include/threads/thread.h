@@ -48,11 +48,11 @@ public:
 
     Thread() = delete;
     Thread(const Thread&) = delete;
-    Thread(Thread&&) = delete;
+    Thread(Thread&&) noexcept = delete;
     ~Thread() = delete;
 
     Thread& operator=(const Thread&) = delete;
-    Thread& operator=(Thread&&) = delete;
+    Thread& operator=(Thread&&) noexcept = delete;
 
     //! Get the current thread Id
     /*!

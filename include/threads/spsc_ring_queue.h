@@ -38,11 +38,11 @@ public:
     */
     explicit SPSCRingQueue(size_t capacity);
     SPSCRingQueue(const SPSCRingQueue&) = delete;
-    SPSCRingQueue(SPSCRingQueue&&) = default;
+    SPSCRingQueue(SPSCRingQueue&&) noexcept = default;
     ~SPSCRingQueue() { delete[] _buffer; }
 
     SPSCRingQueue& operator=(const SPSCRingQueue&) = delete;
-    SPSCRingQueue& operator=(SPSCRingQueue&&) = default;
+    SPSCRingQueue& operator=(SPSCRingQueue&&) noexcept = default;
 
     //! Is ring queue empty?
     bool empty() const noexcept { return (size() == 0); }

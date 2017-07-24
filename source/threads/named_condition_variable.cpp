@@ -83,6 +83,9 @@ public:
 #endif
     }
 
+    Impl(const Impl&) = delete;
+    Impl(Impl&&) noexcept = default;
+
     ~Impl()
     {
 #if defined(__APPLE__)
@@ -105,6 +108,9 @@ public:
             fatality(SystemException("Failed to close a named semaphore for the named condition variable!"));
 #endif
     }
+
+    Impl& operator=(const Impl&) = delete;
+    Impl& operator=(Impl&&) noexcept = default;
 
     const std::string& name() const
     {

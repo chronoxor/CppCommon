@@ -54,11 +54,11 @@ public:
     */
     explicit StackTrace(int skip = 0);
     StackTrace(const StackTrace&) = default;
-    StackTrace(StackTrace&&) = default;
+    StackTrace(StackTrace&&) noexcept = default;
     ~StackTrace() = default;
 
     StackTrace& operator=(const StackTrace&) = default;
-    StackTrace& operator=(StackTrace&&) = default;
+    StackTrace& operator=(StackTrace&&) noexcept = default;
 
     //! Get stack trace frames
     const std::vector<Frame>& frames() const noexcept { return _frames; }

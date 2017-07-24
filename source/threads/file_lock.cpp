@@ -102,6 +102,9 @@ public:
 #endif
     }
 
+    Impl(const Impl&) = delete;
+    Impl(Impl&&) noexcept = default;
+
     ~Impl()
     {
 #if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
@@ -128,6 +131,9 @@ public:
         }
 #endif
     }
+
+    Impl& operator=(const Impl&) = delete;
+    Impl& operator=(Impl&&) noexcept = default;
 
     const Path& path() const noexcept { return _path; }
 

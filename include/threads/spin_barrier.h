@@ -36,11 +36,11 @@ public:
     */
     explicit SpinBarrier(int threads) noexcept;
     SpinBarrier(const SpinBarrier&) = delete;
-    SpinBarrier(SpinBarrier&&) = default;
+    SpinBarrier(SpinBarrier&&) noexcept = default;
     ~SpinBarrier() = default;
 
     SpinBarrier& operator=(const SpinBarrier&) = delete;
-    SpinBarrier& operator=(SpinBarrier&&) = default;
+    SpinBarrier& operator=(SpinBarrier&&) noexcept = default;
 
     //! Get the count of threads to wait at the barrier
     int threads() const noexcept { return _threads; }
