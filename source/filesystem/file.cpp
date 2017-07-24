@@ -37,9 +37,6 @@ public:
 #endif
     }
 
-    Impl(const Impl&) = delete;
-    Impl(Impl&&) noexcept = default;
-
     ~Impl()
     {
         try
@@ -52,9 +49,6 @@ public:
             fatality(FileSystemException(ex.string()).Attach(_path));
         }
     }
-
-    Impl& operator=(const Impl&) = delete;
-    Impl& operator=(Impl&&) noexcept = default;
 
     uint64_t offset() const
     {

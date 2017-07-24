@@ -25,11 +25,11 @@ class Endian
 public:
     Endian() = delete;
     Endian(const Endian&) = delete;
-    Endian(Endian&&) = delete;
+    Endian(Endian&&) noexcept = delete;
     ~Endian() = delete;
 
     Endian& operator=(const Endian&) = delete;
-    Endian& operator=(Endian&&) = delete;
+    Endian& operator=(Endian&&) noexcept = delete;
 
     //! Is big-endian system?
     static bool IsBigEndian();

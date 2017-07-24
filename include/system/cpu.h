@@ -25,11 +25,11 @@ class CPU
 public:
     CPU() = delete;
     CPU(const CPU&) = delete;
-    CPU(CPU&&) = delete;
+    CPU(CPU&&) noexcept = delete;
     ~CPU() = delete;
 
     CPU& operator=(const CPU&) = delete;
-    CPU& operator=(CPU&&) = delete;
+    CPU& operator=(CPU&&) noexcept = delete;
 
     //! CPU architecture string
     static std::string Architecture();

@@ -24,11 +24,11 @@ class Math
 public:
     Math() = delete;
     Math(const Math&) = delete;
-    Math(Math&&) = delete;
+    Math(Math&&) noexcept = delete;
     ~Math() = delete;
 
     Math& operator=(const Math&) = delete;
-    Math& operator=(Math&&) = delete;
+    Math& operator=(Math&&) noexcept = delete;
 
     //! Calculate (operant * multiplier / divider) with 64-bit unsigned integer values
     /*!

@@ -49,10 +49,10 @@ class Singleton
 
 public:
     Singleton(const Singleton&) = delete;
-    Singleton(Singleton&&) = delete;
+    Singleton(Singleton&&) noexcept = delete;
 
     Singleton& operator=(const Singleton&) = delete;
-    Singleton& operator=(Singleton &&) = delete;
+    Singleton& operator=(Singleton &&) noexcept = delete;
 
     //! Get singleton instance
     /*!

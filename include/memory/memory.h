@@ -31,11 +31,11 @@ class Memory
 public:
     Memory() = delete;
     Memory(const Memory&) = delete;
-    Memory(Memory&&) = delete;
+    Memory(Memory&&) noexcept = delete;
     ~Memory() = delete;
 
     Memory& operator=(const Memory&) = delete;
-    Memory& operator=(Memory&&) = delete;
+    Memory& operator=(Memory&&) noexcept = delete;
 
     //! Total RAM in bytes
     static int64_t RamTotal();

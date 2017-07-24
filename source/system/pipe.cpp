@@ -37,9 +37,6 @@ public:
 #endif
     }
 
-    Impl(const Impl&) = delete;
-    Impl(Impl&&) noexcept = default;
-
     ~Impl()
     {
         try
@@ -52,9 +49,6 @@ public:
             fatality(SystemException(ex.string()));
         }
     }
-
-    Impl& operator=(const Impl&) = delete;
-    Impl& operator=(Impl&&) noexcept = default;
 
     void* reader() const noexcept
     {

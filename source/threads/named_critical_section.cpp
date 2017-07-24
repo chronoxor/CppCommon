@@ -29,17 +29,11 @@ class NamedCriticalSection::Impl
 public:
     Impl(const std::string& name, uint32_t spin) : _shared(name), _event(name + "_event"), _spin(spin) {}
 
-    Impl(const Impl&) = delete;
-    Impl(Impl&&) noexcept = default;
-
     ~Impl()
     {
         if (_shared->thread_id == Thread::CurrentThreadId())
             fatality(SystemException("Named critical section should not be destroyed if our thread owns it!"));
     }
-
-    Impl& operator=(const Impl&) = delete;
-    Impl& operator=(Impl&&) noexcept = default;
 
     const std::string& name() const
     {

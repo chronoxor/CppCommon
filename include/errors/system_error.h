@@ -24,11 +24,11 @@ class SystemError
 public:
     SystemError() = delete;
     SystemError(const SystemError&) = delete;
-    SystemError(SystemError&&) = delete;
+    SystemError(SystemError&&) noexcept = delete;
     ~SystemError() = delete;
 
     SystemError& operator=(const SystemError&) = delete;
-    SystemError& operator=(SystemError&&) = delete;
+    SystemError& operator=(SystemError&&) noexcept = delete;
 
     //! Get the last system error code
     /*!

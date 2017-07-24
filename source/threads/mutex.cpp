@@ -43,9 +43,6 @@ public:
 #endif
     }
 
-    Impl(const Impl&) = delete;
-    Impl(Impl&&) noexcept = default;
-
     ~Impl()
     {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
@@ -57,9 +54,6 @@ public:
             fatality(SystemException("Failed to close a mutex!"));
 #endif
     }
-
-    Impl& operator=(const Impl&) = delete;
-    Impl& operator=(Impl&&) noexcept = default;
 
     bool TryLock()
     {

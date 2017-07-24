@@ -34,11 +34,11 @@ class ExceptionsHandler : public CppCommon::Singleton<ExceptionsHandler>
 
 public:
     ExceptionsHandler(const ExceptionsHandler&) = delete;
-    ExceptionsHandler(ExceptionsHandler&&) = delete;
+    ExceptionsHandler(ExceptionsHandler&&) noexcept = delete;
     ~ExceptionsHandler();
 
     ExceptionsHandler& operator=(const ExceptionsHandler&) = delete;
-    ExceptionsHandler& operator=(ExceptionsHandler&&) = delete;
+    ExceptionsHandler& operator=(ExceptionsHandler&&) noexcept = delete;
 
     //! Setup new global exceptions handler function
     /*!

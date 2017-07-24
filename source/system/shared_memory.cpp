@@ -120,9 +120,6 @@ public:
         }
     }
 
-    Impl(const Impl&) = delete;
-    Impl(Impl&&) noexcept = default;
-
     ~Impl()
     {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)

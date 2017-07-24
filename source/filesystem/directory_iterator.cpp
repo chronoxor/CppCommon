@@ -32,12 +32,7 @@ class DirectoryIterator::Impl
 
 public:
     Impl(const Path& parent) : _parent(parent), _current() {}
-    Impl(const Impl&) = default;
-    Impl(Impl&&) noexcept = default;
     virtual ~Impl() = default;
-
-    Impl& operator=(const Impl&) = default;
-    Impl& operator=(Impl&&) noexcept = default;
 
     const Path& parent() const noexcept { return _parent; }
     const Path& current() const noexcept { return _current; }
@@ -65,9 +60,6 @@ public:
 #endif
     }
 
-    SimpleImpl(const SimpleImpl&) = default;
-    SimpleImpl(SimpleImpl&&) noexcept = default;
-
     ~SimpleImpl()
     {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
@@ -85,9 +77,6 @@ public:
         }
 #endif
     }
-
-    SimpleImpl& operator=(const SimpleImpl&) = default;
-    SimpleImpl& operator=(SimpleImpl&&) noexcept = default;
 
     Path Next() override
     {
@@ -177,12 +166,7 @@ class DirectoryIterator::RecurseImpl : public DirectoryIterator::Impl
 {
 public:
     RecurseImpl(const Path& parent) : DirectoryIterator::Impl(parent), _current(parent) {}
-    RecurseImpl(const RecurseImpl&) = default;
-    RecurseImpl(RecurseImpl&&) noexcept = default;
     ~RecurseImpl() = default;
-
-    RecurseImpl& operator=(const RecurseImpl&) = default;
-    RecurseImpl& operator=(RecurseImpl&&) noexcept = default;
 
     Path Next() override
     {

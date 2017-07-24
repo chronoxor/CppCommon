@@ -30,11 +30,6 @@ class StackTraceManager::Impl
 {
 public:
     Impl() : _initialized(false) {}
-    Impl(const Impl&) = delete;
-    Impl(Impl&&) noexcept = delete;
-
-    Impl& operator=(const Impl&) = delete;
-    Impl& operator=(Impl&&) noexcept = delete;
 
     void Initialize()
     {

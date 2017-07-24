@@ -56,9 +56,6 @@ public:
 #endif
     }
 
-    Impl(const Impl&) = delete;
-    Impl(Impl&&) noexcept = default;
-
     ~Impl()
     {
 #if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
@@ -77,9 +74,6 @@ public:
             fatality(SystemException("Failed to close a named semaphore!"));
 #endif
     }
-
-    Impl& operator=(const Impl&) = delete;
-    Impl& operator=(Impl&&) noexcept = default;
 
     const std::string& name() const
     {
