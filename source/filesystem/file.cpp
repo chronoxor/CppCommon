@@ -27,8 +27,10 @@ namespace CppCommon {
 
 class File::Impl
 {
+    friend class File;
+
 public:
-    Impl(const Path& path) : _path(path), _read(false), _write(false), _index(0), _size(0), _buffer()
+    Impl(const Path* path) : _path(path), _read(false), _write(false), _index(0), _size(0), _buffer()
     {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         _file = -1;
@@ -46,26 +48,28 @@ public:
         }
         catch (FileSystemException& ex)
         {
-            fatality(FileSystemException(ex.string()).Attach(_path));
+            fatality(FileSystemException(ex.string()).Attach(path()));
         }
     }
+
+    const Path& path() const { return *_path; }
 
     uint64_t offset() const
     {
         assert(IsFileOpened() && "File is not opened!");
         if (!IsFileOpened())
-            throwex FileSystemException("File is not opened!").Attach(_path);
+            throwex FileSystemException("File is not opened!").Attach(path());
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         off_t result = lseek(_file, 0, SEEK_CUR);
         if (result == (off_t)-1)
-            throwex FileSystemException("Cannot seek the file!").Attach(_path);
+            throwex FileSystemException("Cannot seek the file!").Attach(path());
         return (uint64_t)result;
 #elif defined(_WIN32) || defined(_WIN64)
         LARGE_INTEGER seek;
         LARGE_INTEGER result;
         seek.QuadPart = 0;
         if (!SetFilePointerEx(_file, seek, &result, FILE_CURRENT))
-            throwex FileSystemException("Cannot seek the file!").Attach(_path);
+            throwex FileSystemException("Cannot seek the file!").Attach(path());
         return (uint64_t)result.QuadPart;
 #endif
     }
@@ -78,15 +82,15 @@ public:
             struct stat status;
             int result = fstat(_file, &status);
             if (result != 0)
-                throwex FileSystemException("Cannot get the current file size!").Attach(_path);
+                throwex FileSystemException("Cannot get the current file size!").Attach(path());
             return (uint64_t)status.st_size;
         }
         else
         {
             struct stat status;
-            int result = stat(_path.string().c_str(), &status);
+            int result = stat(path().string().c_str(), &status);
             if (result != 0)
-                throwex FileSystemException("Cannot get the current file size!").Attach(_path);
+                throwex FileSystemException("Cannot get the current file size!").Attach(path());
             return (uint64_t)status.st_size;
         }
 #elif defined(_WIN32) || defined(_WIN64)
@@ -94,14 +98,14 @@ public:
         {
             LARGE_INTEGER result;
             if (!GetFileSizeEx(_file, &result))
-                throwex FileSystemException("Cannot get the current file size!").Attach(_path);
+                throwex FileSystemException("Cannot get the current file size!").Attach(path());
             return (uint64_t)result.QuadPart;
         }
         else
         {
             WIN32_FILE_ATTRIBUTE_DATA fad;
-            if (!GetFileAttributesExW(_path.wstring().c_str(), GetFileExInfoStandard, &fad))
-                throwex FileSystemException("Cannot get the current file size!").Attach(_path);
+            if (!GetFileAttributesExW(path().wstring().c_str(), GetFileExInfoStandard, &fad))
+                throwex FileSystemException("Cannot get the current file size!").Attach(path());
 
             LARGE_INTEGER result;
             result.HighPart = fad.nFileSizeHigh;
@@ -163,9 +167,9 @@ public:
         if (permissions & FilePermissions::ISVTX)
             mode |= S_ISVTX;
 
-        _file = open(_path.string().c_str(), O_CREAT | O_EXCL | ((read && write) ? O_RDWR : (read ? O_RDONLY : (write ? O_WRONLY : 0))) | (truncate ? O_TRUNC : 0), mode);
+        _file = open(path().string().c_str(), O_CREAT | O_EXCL | ((read && write) ? O_RDWR : (read ? O_RDONLY : (write ? O_WRONLY : 0))) | (truncate ? O_TRUNC : 0), mode);
         if (_file < 0)
-            throwex FileSystemException("Cannot create a new file!").Attach(_path);
+            throwex FileSystemException("Cannot create a new file!").Attach(path());
 #elif defined(_WIN32) || defined(_WIN64)
         DWORD dwFlagsAndAttributes = 0;
         if (attributes & FileAttributes::NORMAL)
@@ -185,9 +189,9 @@ public:
         if (attributes & FileAttributes::TEMPORARY)
             dwFlagsAndAttributes |= FILE_ATTRIBUTE_TEMPORARY;
 
-        _file = CreateFileW(_path.wstring().c_str(), (read ? GENERIC_READ : 0) | (write ? GENERIC_WRITE : 0), FILE_SHARE_READ, nullptr, CREATE_NEW, dwFlagsAndAttributes, nullptr);
+        _file = CreateFileW(path().wstring().c_str(), (read ? GENERIC_READ : 0) | (write ? GENERIC_WRITE : 0), FILE_SHARE_READ, nullptr, CREATE_NEW, dwFlagsAndAttributes, nullptr);
         if (_file == INVALID_HANDLE_VALUE)
-            throwex FileSystemException("Cannot create a new file!").Attach(_path);
+            throwex FileSystemException("Cannot create a new file!").Attach(path());
 #endif
         _read = read;
         _write = write;
@@ -229,9 +233,9 @@ public:
         if (permissions & FilePermissions::ISVTX)
             mode |= S_ISVTX;
 
-        _file = open(_path.string().c_str(), ((read && write) ? O_RDWR : (read ? O_RDONLY : (write ? O_WRONLY : 0))) | (truncate ? O_TRUNC : 0), mode);
+        _file = open(path().string().c_str(), ((read && write) ? O_RDWR : (read ? O_RDONLY : (write ? O_WRONLY : 0))) | (truncate ? O_TRUNC : 0), mode);
         if (_file < 0)
-            throwex FileSystemException("Cannot create a new file!").Attach(_path);
+            throwex FileSystemException("Cannot create a new file!").Attach(path());
 #elif defined(_WIN32) || defined(_WIN64)
         DWORD dwFlagsAndAttributes = 0;
         if (attributes & FileAttributes::NORMAL)
@@ -251,9 +255,9 @@ public:
         if (attributes & FileAttributes::TEMPORARY)
             dwFlagsAndAttributes |= FILE_ATTRIBUTE_TEMPORARY;
 
-        _file = CreateFileW(_path.wstring().c_str(), (read ? GENERIC_READ : 0) | (write ? GENERIC_WRITE : 0), FILE_SHARE_READ, nullptr, (truncate ? TRUNCATE_EXISTING : OPEN_EXISTING), dwFlagsAndAttributes, nullptr);
+        _file = CreateFileW(path().wstring().c_str(), (read ? GENERIC_READ : 0) | (write ? GENERIC_WRITE : 0), FILE_SHARE_READ, nullptr, (truncate ? TRUNCATE_EXISTING : OPEN_EXISTING), dwFlagsAndAttributes, nullptr);
         if (_file == INVALID_HANDLE_VALUE)
-            throwex FileSystemException("Cannot open existing file!").Attach(_path);
+            throwex FileSystemException("Cannot open existing file!").Attach(path());
 #endif
         _read = read;
         _write = write;
@@ -295,9 +299,9 @@ public:
         if (permissions & FilePermissions::ISVTX)
             mode |= S_ISVTX;
 
-        _file = open(_path.string().c_str(), O_CREAT | ((read && write) ? O_RDWR : (read ? O_RDONLY : (write ? O_WRONLY : 0))) | (truncate ? O_TRUNC : 0), mode);
+        _file = open(path().string().c_str(), O_CREAT | ((read && write) ? O_RDWR : (read ? O_RDONLY : (write ? O_WRONLY : 0))) | (truncate ? O_TRUNC : 0), mode);
         if (_file < 0)
-            throwex FileSystemException("Cannot create a new file!").Attach(_path);
+            throwex FileSystemException("Cannot create a new file!").Attach(path());
 #elif defined(_WIN32) || defined(_WIN64)
         DWORD dwFlagsAndAttributes = 0;
         if (attributes & FileAttributes::NORMAL)
@@ -317,9 +321,9 @@ public:
         if (attributes & FileAttributes::TEMPORARY)
             dwFlagsAndAttributes |= FILE_ATTRIBUTE_TEMPORARY;
 
-        _file = CreateFileW(_path.wstring().c_str(), (read ? GENERIC_READ : 0) | (write ? GENERIC_WRITE : 0), FILE_SHARE_READ, nullptr, (truncate ? CREATE_ALWAYS : OPEN_ALWAYS), dwFlagsAndAttributes, nullptr);
+        _file = CreateFileW(path().wstring().c_str(), (read ? GENERIC_READ : 0) | (write ? GENERIC_WRITE : 0), FILE_SHARE_READ, nullptr, (truncate ? CREATE_ALWAYS : OPEN_ALWAYS), dwFlagsAndAttributes, nullptr);
         if (_file == INVALID_HANDLE_VALUE)
-            throwex FileSystemException("Cannot open existing file!").Attach(_path);
+            throwex FileSystemException("Cannot open existing file!").Attach(path());
 #endif
         _read = read;
         _write = write;
@@ -337,7 +341,7 @@ public:
 
         assert(IsFileReadOpened() && "File is not opened for reading!");
         if (!IsFileReadOpened())
-            throwex FileSystemException("File is not opened for reading!").Attach(_path);
+            throwex FileSystemException("File is not opened for reading!").Attach(path());
 
         // Read file with zero buffer
         if (_buffer.empty())
@@ -345,12 +349,12 @@ public:
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
             ssize_t result = read(_file, buffer, size);
             if (result < 0)
-                throwex FileSystemException("Cannot read from the file!").Attach(_path);
+                throwex FileSystemException("Cannot read from the file!").Attach(path());
             return (size_t)result;
 #elif defined(_WIN32) || defined(_WIN64)
             DWORD result;
             if (!ReadFile(_file, buffer, (DWORD)size, &result, nullptr))
-                throwex FileSystemException("Cannot read from the file!").Attach(_path);
+                throwex FileSystemException("Cannot read from the file!").Attach(path());
             return (size_t)result;
 #endif
         }
@@ -367,12 +371,12 @@ public:
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
                 ssize_t result = read(_file, _buffer.data(), _buffer.size());
                 if (result < 0)
-                    throwex FileSystemException("Cannot read from the file!").Attach(_path);
+                    throwex FileSystemException("Cannot read from the file!").Attach(path());
                 _size = (size_t)result;
 #elif defined(_WIN32) || defined(_WIN64)
                 DWORD result;
                 if (!ReadFile(_file, _buffer.data(), (DWORD)_buffer.size(), &result, nullptr))
-                    throwex FileSystemException("Cannot read from the file!").Attach(_path);
+                    throwex FileSystemException("Cannot read from the file!").Attach(path());
                 _size = (size_t)result;
 #endif
                 // Stop if the end of file was met
@@ -402,7 +406,7 @@ public:
 
         assert(IsFileWriteOpened() && "File is not opened for writing!");
         if (!IsFileWriteOpened())
-            throwex FileSystemException("File is not opened for writing!").Attach(_path);
+            throwex FileSystemException("File is not opened for writing!").Attach(path());
 
         // Write file with zero buffer
         if (_buffer.empty())
@@ -410,12 +414,12 @@ public:
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
             ssize_t result = write(_file, buffer, size);
             if (result < 0)
-                throwex FileSystemException("Cannot write into the file!").Attach(_path);
+                throwex FileSystemException("Cannot write into the file!").Attach(path());
             return (size_t)result;
 #elif defined(_WIN32) || defined(_WIN64)
             DWORD result;
             if (!WriteFile(_file, buffer, (DWORD)size, &result, nullptr))
-                throwex FileSystemException("Cannot write into the file!").Attach(_path);
+                throwex FileSystemException("Cannot write into the file!").Attach(path());
             return (size_t)result;
 #endif
         }
@@ -431,12 +435,12 @@ public:
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
                 ssize_t result = write(_file, _buffer.data() + _index, (_size - _index));
                 if (result < 0)
-                    throwex FileSystemException("Cannot write into the file!").Attach(_path);
+                    throwex FileSystemException("Cannot write into the file!").Attach(path());
                 _index += (size_t)result;
 #elif defined(_WIN32) || defined(_WIN64)
                 DWORD result;
                 if (!WriteFile(_file, _buffer.data() + _index, (DWORD)(_size - _index), &result, nullptr))
-                    throwex FileSystemException("Cannot write into the file!").Attach(_path);
+                    throwex FileSystemException("Cannot write into the file!").Attach(path());
                 _index += (size_t)result;
 #endif
                 // Stop if the buffer was not written completely
@@ -465,17 +469,17 @@ public:
     {
         assert(IsFileOpened() && "File is not opened!");
         if (!IsFileOpened())
-            throwex FileSystemException("File is not opened!").Attach(_path);
+            throwex FileSystemException("File is not opened!").Attach(path());
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         off_t result = lseek(_file, (off_t)offset, SEEK_SET);
         if (result == (off_t)-1)
-            throwex FileSystemException("Cannot seek the file!").Attach(_path);
+            throwex FileSystemException("Cannot seek the file!").Attach(path());
 #elif defined(_WIN32) || defined(_WIN64)
         LARGE_INTEGER seek;
         LARGE_INTEGER result;
         seek.QuadPart = offset;
         if (!SetFilePointerEx(_file, seek, &result, FILE_BEGIN))
-            throwex FileSystemException("Cannot seek the file!").Attach(_path);
+            throwex FileSystemException("Cannot seek the file!").Attach(path());
 #endif
     }
 
@@ -486,13 +490,13 @@ public:
         {
             int result = ftruncate(_file, (off_t)size);
             if (result != 0)
-                throwex FileSystemException("Cannot resize the current file!").Attach(_path);
+                throwex FileSystemException("Cannot resize the current file!").Attach(path());
         }
         else
         {
-            int result = truncate(_path.string().c_str(), (off_t)size);
+            int result = truncate(path().string().c_str(), (off_t)size);
             if (result != 0)
-                throwex FileSystemException("Cannot resize the current file!").Attach(_path);
+                throwex FileSystemException("Cannot resize the current file!").Attach(path());
         }
 #elif defined(_WIN32) || defined(_WIN64)
         if (IsFileOpened())
@@ -500,7 +504,7 @@ public:
             uint64_t current = offset();
             Seek(size);
             if (!SetEndOfFile(_file))
-                throwex FileSystemException("Cannot resize the current file!").Attach(_path);
+                throwex FileSystemException("Cannot resize the current file!").Attach(path());
             Seek((current < size) ? current : size);
         }
         else
@@ -516,7 +520,7 @@ public:
     {
         assert(IsFileWriteOpened() && "File is not opened for writing!");
         if (!IsFileWriteOpened())
-            throwex FileSystemException("File is not opened for writing!").Attach(_path);
+            throwex FileSystemException("File is not opened for writing!").Attach(path());
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         // Force to write all buffered data
         size_t remain = _size - _index;
@@ -524,10 +528,10 @@ public:
         {
             ssize_t result = write(_file, _buffer.data() + _index, (_size - _index));
             if (result < 0)
-                throwex FileSystemException("Cannot write into the file during the flush operation!").Attach(_path);
+                throwex FileSystemException("Cannot write into the file during the flush operation!").Attach(path());
             _index += (size_t)result;
             if (_index != _size)
-                throwex FileSystemException("Cannot write all remaining data into the file during the flush operation!").Attach(_path);
+                throwex FileSystemException("Cannot write all remaining data into the file during the flush operation!").Attach(path());
 
             // Reset the buffer cursor
             _index = 0;
@@ -540,10 +544,10 @@ public:
         {
             DWORD result;
             if (!WriteFile(_file, _buffer.data() + _index, (DWORD)(_size - _index), &result, nullptr))
-                throwex FileSystemException("Cannot write into the file during the flush operation!").Attach(_path);
+                throwex FileSystemException("Cannot write into the file during the flush operation!").Attach(path());
             _index += (size_t)result;
             if (_index != _size)
-                throwex FileSystemException("Cannot write all remaining data into the file during the flush operation!").Attach(_path);
+                throwex FileSystemException("Cannot write all remaining data into the file during the flush operation!").Attach(path());
 
             // Reset the buffer cursor
             _index = 0;
@@ -558,10 +562,10 @@ public:
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         int result = fsync(_file);
         if (result != 0)
-            throwex FileSystemException("Cannot flush the file buffers!").Attach(_path);
+            throwex FileSystemException("Cannot flush the file buffers!").Attach(path());
 #elif defined(_WIN32) || defined(_WIN64)
         if (!FlushFileBuffers(_file))
-            throwex FileSystemException("Cannot flush the file buffers!").Attach(_path);
+            throwex FileSystemException("Cannot flush the file buffers!").Attach(path());
 #endif
     }
 
@@ -569,18 +573,18 @@ public:
     {
         assert(IsFileOpened() && "File is not opened!");
         if (!IsFileOpened())
-            throwex FileSystemException("File is not opened!").Attach(_path);
+            throwex FileSystemException("File is not opened!").Attach(path());
         // Flush the file buffer if the file is opened for writing
         if (IsFileWriteOpened())
             FlushBuffer();
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         int result = close(_file);
         if (result != 0)
-            throwex FileSystemException("Cannot close the file descriptor!").Attach(_path);
+            throwex FileSystemException("Cannot close the file descriptor!").Attach(path());
         _file = -1;
 #elif defined(_WIN32) || defined(_WIN64)
         if (!CloseHandle(_file))
-            throwex FileSystemException("Cannot close the file handle!").Attach(_path);
+            throwex FileSystemException("Cannot close the file handle!").Attach(path());
         _file = INVALID_HANDLE_VALUE;
 #endif
         _read = false;
@@ -591,7 +595,7 @@ public:
     }
 
 private:
-    Path _path;
+    const Path* _path;
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     int _file;
 #elif defined(_WIN32) || defined(_WIN64)
@@ -610,20 +614,21 @@ const Flags<FileAttributes> File::DEFAULT_ATTRIBUTES = FileAttributes::NORMAL;
 const Flags<FilePermissions> File::DEFAULT_PERMISSIONS = FilePermissions::IRUSR | FilePermissions::IWUSR | FilePermissions::IRGRP | FilePermissions::IROTH;
 const size_t File::DEFAULT_BUFFER = 8192;
 
-File::File() : Path(), _pimpl(std::make_unique<Impl>(*this))
+File::File() : Path(), _pimpl(std::make_unique<Impl>(this))
 {
 }
 
-File::File(const Path& path) : Path(path), _pimpl(std::make_unique<Impl>(*this))
+File::File(const Path& path) : Path(path), _pimpl(std::make_unique<Impl>(this))
 {
 }
 
-File::File(const File& file) : Path(file), _pimpl(std::make_unique<Impl>(*this))
+File::File(const File& file) : Path(file), _pimpl(std::make_unique<Impl>(this))
 {
 }
 
 File::File(File&& file) noexcept : Path(std::move(file)), _pimpl(std::move(file._pimpl))
 {
+    _pimpl->_path = this;
 }
 
 File::~File()
@@ -633,7 +638,7 @@ File::~File()
 File& File::operator=(const File& file)
 {
     Path::operator=(file);
-    _pimpl = std::make_unique<Impl>(file);
+    _pimpl = std::make_unique<Impl>(this);
     return *this;
 }
 
@@ -641,6 +646,7 @@ File& File::operator=(File&& file) noexcept
 {
     Path::operator=(std::move(file));
     _pimpl = std::move(file._pimpl);
+    _pimpl->_path = this;
     return *this;
 }
 
