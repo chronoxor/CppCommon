@@ -14,6 +14,7 @@
 #include "time/timestamp.h"
 
 #include <cstdio>
+#include <functional>
 #include <memory>
 #include <thread>
 #include <utility>
