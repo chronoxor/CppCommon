@@ -1,5 +1,5 @@
 /*!
-    \file bintree_AVL.h
+    \file bintree_avl.h
     \brief Intrusive balanced AVL binary tree container definition
     \author Ivan Shynkarenka
     \date 23.06.2017
