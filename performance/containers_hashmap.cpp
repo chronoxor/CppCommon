@@ -6,7 +6,9 @@
 
 #include "containers/hashmap.h"
 
+#include <algorithm>
 #include <map>
+#include <random>
 #include <unordered_map>
 
 using namespace CppCommon;
@@ -42,10 +44,12 @@ class FindFixture : public InsertFixture<T>
 protected:
     void Initialize(CppBenchmark::Context& context) override
     {
-        std::random_shuffle(this->values.begin(), this->values.end());
+        std::default_random_engine random;
+
+        std::shuffle(this->values.begin(), this->values.end(), random);
         for (auto& value : this->values)
             this->map.emplace(value, value);
-        std::random_shuffle(this->values.begin(), this->values.end());
+        std::shuffle(this->values.begin(), this->values.end(), random);
     }
 };
 

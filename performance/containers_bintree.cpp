@@ -13,6 +13,7 @@
 #include "memory/allocator_pool.h"
 
 #include <algorithm>
+#include <random>
 #include <set>
 #include <unordered_set>
 #include <vector>
@@ -72,14 +73,16 @@ class FindFixture : public InsertFixture<T>
 protected:
     void Initialize(CppBenchmark::Context& context) override
     {
-        std::random_shuffle(this->values.begin(), this->values.end());
+        std::default_random_engine random;
+
+        std::shuffle(this->values.begin(), this->values.end(),  random);
         for (auto& value : this->values)
         {
             this->set.insert(value);
             this->unordered_set.insert(value);
             this->tree.insert(*this->allocator.Create(value));
         }
-        std::random_shuffle(this->values.begin(), this->values.end());
+        std::shuffle(this->values.begin(), this->values.end(), random);
     }
 };
 
