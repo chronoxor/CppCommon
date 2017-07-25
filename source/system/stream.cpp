@@ -29,7 +29,7 @@ public:
     {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         _stream = stdin;
-        if (_stream < 0)
+        if (_stream == nullptr)
             throwex SystemException("Failed to get a valid standard input stream!");
 #elif defined(_WIN32) || defined(_WIN64)
         _stream = GetStdHandle(STD_INPUT_HANDLE);
@@ -48,7 +48,7 @@ public:
     bool IsValid() const noexcept
     {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-        return (_stream >= 0);
+        return (_stream != nullptr);
 #elif defined(_WIN32) || defined(_WIN64)
         return (_stream != INVALID_HANDLE_VALUE);
 #endif
@@ -92,7 +92,7 @@ public:
     {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         _stream = stdout;
-        if (_stream < 0)
+        if (_stream == nullptr)
             throwex SystemException("Failed to get a valid standard output stream!");
 #elif defined(_WIN32) || defined(_WIN64)
         _stream = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -111,7 +111,7 @@ public:
     bool IsValid() const noexcept
     {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-        return (_stream >= 0);
+        return (_stream != nullptr);
 #elif defined(_WIN32) || defined(_WIN64)
         return (_stream != INVALID_HANDLE_VALUE);
 #endif
@@ -167,7 +167,7 @@ public:
     {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         _stream = stderr;
-        if (_stream < 0)
+        if (_stream == nullptr)
             throwex SystemException("Failed to get a valid standard error stream!");
 #elif defined(_WIN32) || defined(_WIN64)
         _stream = GetStdHandle(STD_ERROR_HANDLE);
@@ -186,7 +186,7 @@ public:
     bool IsValid() const noexcept
     {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-        return (_stream >= 0);
+        return (_stream != nullptr);
 #elif defined(_WIN32) || defined(_WIN64)
         return (_stream != INVALID_HANDLE_VALUE);
 #endif
