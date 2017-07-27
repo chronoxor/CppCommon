@@ -28,27 +28,27 @@ inline HashMap<TKey, TValue, THash, TEqual, TAllocator>::HashMap(InputIterator f
 }
 
 template <typename TKey, typename TValue, typename THash, typename TEqual, typename TAllocator>
-inline HashMap<TKey, TValue, THash, TEqual, TAllocator>::HashMap(const HashMap& hash)
-    : HashMap(hash.bucket_count(), hash._blank, hash._hash, hash._equal, hash._buckets.get_allocator())
+inline HashMap<TKey, TValue, THash, TEqual, TAllocator>::HashMap(const HashMap& hashmap)
+    : HashMap(hashmap.bucket_count(), hashmap._blank, hashmap._hash, hashmap._equal, hashmap._buckets.get_allocator())
 {
-    for (auto& item : hash)
+    for (auto& item : hashmap)
         insert(item);
 }
 
 template <typename TKey, typename TValue, typename THash, typename TEqual, typename TAllocator>
-inline HashMap<TKey, TValue, THash, TEqual, TAllocator>::HashMap(const HashMap& hash, size_t capacity)
-    : HashMap(capacity, hash._blank, hash._hash, hash._equal, hash._buckets.get_allocator())
+inline HashMap<TKey, TValue, THash, TEqual, TAllocator>::HashMap(const HashMap& hashmap, size_t capacity)
+    : HashMap(capacity, hashmap._blank, hashmap._hash, hashmap._equal, hashmap._buckets.get_allocator())
 {
-    for (auto& item : hash)
+    for (auto& item : hashmap)
         insert(item);
 }
 
 template <typename TKey, typename TValue, typename THash, typename TEqual, typename TAllocator>
-inline HashMap<TKey, TValue, THash, TEqual, TAllocator>& HashMap<TKey, TValue, THash, TEqual, TAllocator>::operator=(const HashMap& hash)
+inline HashMap<TKey, TValue, THash, TEqual, TAllocator>& HashMap<TKey, TValue, THash, TEqual, TAllocator>::operator=(const HashMap& hashmap)
 {
     clear();
-    reserve(hash.size());
-    for (auto& item : hash)
+    reserve(hashmap.size());
+    for (auto& item : hashmap)
         insert(item);
     return *this;
 }
@@ -154,11 +154,23 @@ inline typename HashMap<TKey, TValue, THash, TEqual, TAllocator>::const_iterator
 }
 
 template <typename TKey, typename TValue, typename THash, typename TEqual, typename TAllocator>
+inline std::pair<typename HashMap<TKey, TValue, THash, TEqual, TAllocator>::iterator, typename HashMap<TKey, TValue, THash, TEqual, TAllocator>::iterator> HashMap<TKey, TValue, THash, TEqual, TAllocator>::equal_range(const TKey& key) noexcept
+{
+    return std::make_pair(find(key), end());
+}
+
+template <typename TKey, typename TValue, typename THash, typename TEqual, typename TAllocator>
+inline std::pair<typename HashMap<TKey, TValue, THash, TEqual, TAllocator>::const_iterator, typename HashMap<TKey, TValue, THash, TEqual, TAllocator>::const_iterator> HashMap<TKey, TValue, THash, TEqual, TAllocator>::equal_range(const TKey& key) const noexcept
+{
+    return std::make_pair(find(key), end());
+}
+
+template <typename TKey, typename TValue, typename THash, typename TEqual, typename TAllocator>
 inline typename HashMap<TKey, TValue, THash, TEqual, TAllocator>::mapped_type& HashMap<TKey, TValue, THash, TEqual, TAllocator>::at(const TKey& key) noexcept
 {
     auto it = find(key);
     if (it == end())
-        throw std::out_of_range("Item with the given key was not found in hash map!");
+        throw std::out_of_range("Item with the given key was not found in the hash map!");
 
     return it->second;
 }
@@ -168,19 +180,19 @@ inline const typename HashMap<TKey, TValue, THash, TEqual, TAllocator>::mapped_t
 {
     auto it = find(key);
     if (it == end())
-        throw std::out_of_range("Item with the given key was not found in hash map!");
+        throw std::out_of_range("Item with the given key was not found in the hash map!");
 
     return it->second;
 }
 
 template <typename TKey, typename TValue, typename THash, typename TEqual, typename TAllocator>
-inline std::pair<typename HashMap<TKey, TValue, THash, TEqual, TAllocator>::iterator, bool> HashMap<TKey, TValue, THash, TEqual, TAllocator>::insert(const std::pair<TKey, TValue>& item)
+inline std::pair<typename HashMap<TKey, TValue, THash, TEqual, TAllocator>::iterator, bool> HashMap<TKey, TValue, THash, TEqual, TAllocator>::insert(const value_type& item)
 {
     return emplace_internal(item.first, item.second);
 }
 
 template <typename TKey, typename TValue, typename THash, typename TEqual, typename TAllocator>
-inline std::pair<typename HashMap<TKey, TValue, THash, TEqual, TAllocator>::iterator, bool> HashMap<TKey, TValue, THash, TEqual, TAllocator>::insert(std::pair<TKey, TValue>&& item)
+inline std::pair<typename HashMap<TKey, TValue, THash, TEqual, TAllocator>::iterator, bool> HashMap<TKey, TValue, THash, TEqual, TAllocator>::insert(value_type&& item)
 {
     return emplace_internal(item.first, std::move(item.second));
 }
@@ -204,11 +216,11 @@ inline size_t HashMap<TKey, TValue, THash, TEqual, TAllocator>::erase(const TKey
 }
 
 template <typename TKey, typename TValue, typename THash, typename TEqual, typename TAllocator>
-inline typename HashMap<TKey, TValue, THash, TEqual, TAllocator>::iterator HashMap<TKey, TValue, THash, TEqual, TAllocator>::erase(const const_iterator& it)
+inline typename HashMap<TKey, TValue, THash, TEqual, TAllocator>::iterator HashMap<TKey, TValue, THash, TEqual, TAllocator>::erase(const const_iterator& position)
 {
-    iterator result(it);
+    iterator result(position);
     ++result;
-    erase_internal(it._index);
+    erase_internal(position._index);
     return result;
 }
 
@@ -313,9 +325,9 @@ inline void HashMap<TKey, TValue, THash, TEqual, TAllocator>::swap(HashMap& hash
 }
 
 template <typename TKey, typename TValue, typename THash, typename TEqual, typename TAllocator>
-inline void swap(HashMap<TKey, TValue, THash, TEqual, TAllocator>& HashMap1, HashMap<TKey, TValue, THash, TEqual, TAllocator>& HashMap2) noexcept
+inline void swap(HashMap<TKey, TValue, THash, TEqual, TAllocator>& hashmap1, HashMap<TKey, TValue, THash, TEqual, TAllocator>& hashmap2) noexcept
 {
-    HashMap1.swap(HashMap2);
+    hashmap1.swap(hashmap2);
 }
 
 template <class TContainer, typename TKey, typename TValue>

@@ -57,6 +57,12 @@ protected:
             values.push_back(i);
     }
 
+    void Initialize(CppBenchmark::Context& context) override
+    {
+        std::default_random_engine random;
+        std::shuffle(values.begin(), values.end(), random);
+    }
+
     void Cleanup(CppBenchmark::Context& context) override
     {
         set.clear();
@@ -74,7 +80,6 @@ protected:
     void Initialize(CppBenchmark::Context& context) override
     {
         std::default_random_engine random;
-
         std::shuffle(this->values.begin(), this->values.end(),  random);
         for (auto& value : this->values)
         {
@@ -99,6 +104,15 @@ BENCHMARK_FIXTURE(InsertFixture<BinTree<MyBinTreeNode>>, "Insert: std::unordered
 {
     for (auto& value : this->values)
         this->unordered_set.insert(value);
+
+    // Update benchmark metrics
+    context.metrics().AddIterations(items - 1);
+}
+
+BENCHMARK_FIXTURE(InsertFixture<BinTree<MyBinTreeNode>>, "Insert: BinTree")
+{
+    for (auto& value : this->values)
+        this->tree.insert(*this->allocator.Create(value));
 
     // Update benchmark metrics
     context.metrics().AddIterations(items - 1);

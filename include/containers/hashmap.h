@@ -30,9 +30,9 @@ class HashMapConstReverseIterator;
 
 //! Hash map container
 /*!
-    Hash map is an efficient  structure  for  associative  keys/value  storing
-    and accessing. It uses  hash function  to  convert  string  key  into  the
-    integer and use the index to quick access value data.
+    Hash map is an efficient  structure  for  associative  keys/value  storing  and
+    accessing without keeping order. It uses hash function to  convert  string  key
+    into the integer and use the index to quick access value data.
 
     Open  address  hash map resolves collisions of the  same  hash  values  by
     inserting new item into the next free place (probing with step 1).
@@ -74,12 +74,12 @@ public:
     explicit HashMap(size_t capacity = 128, const TKey& blank = TKey(), const THash& hash = THash(), const TEqual& equal = TEqual(), const TAllocator& allocator = TAllocator());
     template <class InputIterator>
     HashMap(InputIterator first, InputIterator last, bool unused, size_t capacity = 128, const TKey& blank = TKey(), const THash& hash = THash(), const TEqual& equal = TEqual(), const TAllocator& allocator = TAllocator());
-    HashMap(const HashMap& hash);
-    HashMap(const HashMap& hash, size_t capacity);
+    HashMap(const HashMap& hashmap);
+    HashMap(const HashMap& hashmap, size_t capacity);
     HashMap(HashMap&&) noexcept = default;
     ~HashMap() = default;
 
-    HashMap& operator=(const HashMap& hash);
+    HashMap& operator=(const HashMap& hashmap);
     HashMap& operator=(HashMap&&) noexcept = default;
 
     //! Check if the hash map is not empty
@@ -123,9 +123,13 @@ public:
     const_reverse_iterator rend() const noexcept;
     const_reverse_iterator crend() const noexcept;
 
-    //! Find the iterator which points to the first equal item in the hash map or return end iterator
+    //! Find the iterator which points to the first item with the given key in the hash map or return end iterator
     iterator find(const TKey& key) noexcept;
     const_iterator find(const TKey& key) const noexcept;
+
+    //! Find the bounds of a range that includes all the elements in the hash map with the given key
+    std::pair<iterator, iterator> equal_range(const TKey& key) noexcept;
+    std::pair<const_iterator, const_iterator> equal_range(const TKey& key) const noexcept;
 
     //! Find the count of items with the given key
     size_t count(const TKey& key) const noexcept { return (find(key) == end()) ? 0 : 1; }
@@ -148,13 +152,13 @@ public:
         \param item - Item to insert as a key/value pair
         \return Pair with the iterator to the given key and success flag
     */
-    std::pair<iterator, bool> insert(const std::pair<TKey, TValue>& item);
+    std::pair<iterator, bool> insert(const value_type& item);
     //! Insert a new item into the hash map
     /*!
         \param item - Item to insert as a key/value pair
         \return Pair with the iterator to the given key and success flag
     */
-    std::pair<iterator, bool> insert(std::pair<TKey, TValue>&& item);
+    std::pair<iterator, bool> insert(value_type&& item);
 
     //! Emplace a new item into the hash map
     /*!
@@ -172,10 +176,10 @@ public:
     size_t erase(const TKey& key);
     //! Erase the item by its iterator from the hash map
     /*!
-        \param it - Iterator to the erased item
+        \param position - Iterator position to the erased item
         \return Iterator pointing to the position immediately following the last of the elements erased
     */
-    iterator erase(const const_iterator& it);
+    iterator erase(const const_iterator& position);
 
     //! Rehash the hash map to the given capacity or more
     /*!

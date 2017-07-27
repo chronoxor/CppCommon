@@ -212,7 +212,7 @@ public:
     iterator find(const T& item) noexcept;
     const_iterator find(const T& item) const noexcept;
 
-    //! Find the iterator which points to the first item not less than the given item in the binary tree or return end iterator
+    //! Find the iterator which points to the first item that not less than the given item in the binary tree or return end iterator
     iterator lower_bound(const T& item) noexcept;
     const_iterator lower_bound(const T& item) const noexcept;
     //! Find the iterator which points to the first item that greater than the given item in the binary tree or return end iterator

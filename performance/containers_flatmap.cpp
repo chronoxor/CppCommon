@@ -1,23 +1,21 @@
 //
-// Created by Ivan Shynkarenka on 13.07.2017
+// Created by Ivan Shynkarenka on 27.07.2017
 //
 
 #include "benchmark/cppbenchmark.h"
 
-#include "containers/hashmap.h"
+#include "containers/flatmap.h"
 
 #include <algorithm>
 #include <map>
 #include <random>
-#include <unordered_map>
 
 using namespace CppCommon;
 
-const int items = 1000000;
+const int items = 10000;
 
 typedef std::map<int, int> Map;
-typedef std::unordered_map<int, int> UnorderedMap;
-typedef HashMap<int, int> Hash;
+typedef FlatMap<int, int> Flat;
 
 template <class T>
 class InsertFixture : public virtual CppBenchmark::Fixture
@@ -67,16 +65,7 @@ BENCHMARK_FIXTURE(InsertFixture<Map>, "Insert: std::map")
     context.metrics().AddIterations(items - 1);
 }
 
-BENCHMARK_FIXTURE(InsertFixture<UnorderedMap>, "Insert: std::unordered_map")
-{
-    for (auto& value : this->values)
-        this->map.emplace(value, value);
-
-    // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
-}
-
-BENCHMARK_FIXTURE(InsertFixture<Hash>, "Insert: HashMap")
+BENCHMARK_FIXTURE(InsertFixture<Flat>, "Insert: FlatMap")
 {
     for (auto& value : this->values)
         this->map.emplace(value, value);
@@ -97,19 +86,7 @@ BENCHMARK_FIXTURE(FindFixture<Map>, "Find: std::map")
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK_FIXTURE(FindFixture<UnorderedMap>, "Find: std::unordered_map")
-{
-    uint64_t crc = 0;
-
-    for (auto& value : this->values)
-        crc += this->map.find(value)->second;
-
-    // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
-    context.metrics().SetCustom("CRC", crc);
-}
-
-BENCHMARK_FIXTURE(FindFixture<Hash>, "Find: HashMap")
+BENCHMARK_FIXTURE(FindFixture<Flat>, "Find: FlatMap")
 {
     uint64_t crc = 0;
 
@@ -133,19 +110,7 @@ BENCHMARK_FIXTURE(FindFixture<Map>, "Remove: std::map")
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK_FIXTURE(FindFixture<UnorderedMap>, "Remove: std::unordered_map")
-{
-    uint64_t crc = 0;
-
-    for (auto& value : this->values)
-        crc += this->map.erase(value);
-
-    // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
-    context.metrics().SetCustom("CRC", crc);
-}
-
-BENCHMARK_FIXTURE(FindFixture<Hash>, "Remove: HashMap")
+BENCHMARK_FIXTURE(FindFixture<Flat>, "Remove: FlatMap")
 {
     uint64_t crc = 0;
 

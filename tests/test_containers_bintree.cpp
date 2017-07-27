@@ -89,17 +89,17 @@ void test()
     }
     REQUIRE(sum == 45);
 
-    REQUIRE(!bintree.find(0));
-    REQUIRE(bintree.find(1));
-    REQUIRE(bintree.find(2));
-    REQUIRE(bintree.find(3));
-    REQUIRE(bintree.find(4));
-    REQUIRE(bintree.find(5));
-    REQUIRE(bintree.find(6));
-    REQUIRE(bintree.find(7));
-    REQUIRE(bintree.find(8));
-    REQUIRE(bintree.find(9));
-    REQUIRE(!bintree.find(10));
+    REQUIRE(bintree.find(0) == bintree.end());
+    REQUIRE(bintree.find(1) != bintree.end());
+    REQUIRE(bintree.find(2) != bintree.end());
+    REQUIRE(bintree.find(3) != bintree.end());
+    REQUIRE(bintree.find(4) != bintree.end());
+    REQUIRE(bintree.find(5) != bintree.end());
+    REQUIRE(bintree.find(6) != bintree.end());
+    REQUIRE(bintree.find(7) != bintree.end());
+    REQUIRE(bintree.find(8) != bintree.end());
+    REQUIRE(bintree.find(9) != bintree.end());
+    REQUIRE(bintree.find(10) == bintree.end());
 
     REQUIRE(bintree.lower_bound(0)->value == 1);
     REQUIRE(bintree.lower_bound(1)->value == 1);
@@ -111,7 +111,7 @@ void test()
     REQUIRE(bintree.lower_bound(7)->value == 7);
     REQUIRE(bintree.lower_bound(8)->value == 8);
     REQUIRE(bintree.lower_bound(9)->value == 9);
-    REQUIRE(!bintree.lower_bound(10));
+    REQUIRE(bintree.lower_bound(10) == bintree.end());
 
     REQUIRE(bintree.upper_bound(0)->value == 1);
     REQUIRE(bintree.upper_bound(1)->value == 2);
@@ -122,7 +122,7 @@ void test()
     REQUIRE(bintree.upper_bound(6)->value == 7);
     REQUIRE(bintree.upper_bound(7)->value == 8);
     REQUIRE(bintree.upper_bound(8)->value == 9);
-    REQUIRE(!bintree.upper_bound(9));
+    REQUIRE(bintree.upper_bound(9) == bintree.end());
 
     REQUIRE(!bintree.erase(0));
     REQUIRE(!bintree.erase(10));
@@ -139,17 +139,17 @@ void test()
     REQUIRE(bintree.lowest()->value == 2);
     REQUIRE(bintree.highest()->value == 8);
 
-    REQUIRE(!bintree.find(0));
-    REQUIRE(!bintree.find(1));
-    REQUIRE(bintree.find(2));
-    REQUIRE(!bintree.find(3));
-    REQUIRE(bintree.find(4));
-    REQUIRE(bintree.find(5));
-    REQUIRE(!bintree.find(6));
-    REQUIRE(bintree.find(7));
-    REQUIRE(bintree.find(8));
-    REQUIRE(!bintree.find(9));
-    REQUIRE(!bintree.find(10));
+    REQUIRE(bintree.find(0) == bintree.end());
+    REQUIRE(bintree.find(1) == bintree.end());
+    REQUIRE(bintree.find(2) != bintree.end());
+    REQUIRE(bintree.find(3) == bintree.end());
+    REQUIRE(bintree.find(4) != bintree.end());
+    REQUIRE(bintree.find(5) != bintree.end());
+    REQUIRE(bintree.find(6) == bintree.end());
+    REQUIRE(bintree.find(7) != bintree.end());
+    REQUIRE(bintree.find(8) != bintree.end());
+    REQUIRE(bintree.find(9) == bintree.end());
+    REQUIRE(bintree.find(10) == bintree.end());
 
     REQUIRE(bintree.lower_bound(0)->value == 2);
     REQUIRE(bintree.lower_bound(1)->value == 2);
@@ -160,8 +160,8 @@ void test()
     REQUIRE(bintree.lower_bound(6)->value == 7);
     REQUIRE(bintree.lower_bound(7)->value == 7);
     REQUIRE(bintree.lower_bound(8)->value == 8);
-    REQUIRE(!bintree.lower_bound(9));
-    REQUIRE(!bintree.lower_bound(10));
+    REQUIRE(bintree.lower_bound(9) == bintree.end());
+    REQUIRE(bintree.lower_bound(10) == bintree.end());
 
     REQUIRE(bintree.upper_bound(0)->value == 2);
     REQUIRE(bintree.upper_bound(1)->value == 2);
@@ -171,8 +171,8 @@ void test()
     REQUIRE(bintree.upper_bound(5)->value == 7);
     REQUIRE(bintree.upper_bound(6)->value == 7);
     REQUIRE(bintree.upper_bound(7)->value == 8);
-    REQUIRE(!bintree.upper_bound(8));
-    REQUIRE(!bintree.upper_bound(9));
+    REQUIRE(bintree.upper_bound(8) == bintree.end());
+    REQUIRE(bintree.upper_bound(9) == bintree.end());
 
     REQUIRE(bintree.erase(5));
     REQUIRE(bintree.size() == 4);

@@ -51,17 +51,17 @@ TEST_CASE("Hash map", "[CppCommon][Containers]")
     }
     REQUIRE(sum == 45);
 
-    REQUIRE(!hashmap.find(0));
-    REQUIRE(hashmap.find(1));
-    REQUIRE(hashmap.find(2));
-    REQUIRE(hashmap.find(3));
-    REQUIRE(hashmap.find(4));
-    REQUIRE(hashmap.find(5));
-    REQUIRE(hashmap.find(6));
-    REQUIRE(hashmap.find(7));
-    REQUIRE(hashmap.find(8));
-    REQUIRE(hashmap.find(9));
-    REQUIRE(!hashmap.find(10));
+    REQUIRE(hashmap.find(0) == hashmap.end());
+    REQUIRE(hashmap.find(1) != hashmap.end());
+    REQUIRE(hashmap.find(2) != hashmap.end());
+    REQUIRE(hashmap.find(3) != hashmap.end());
+    REQUIRE(hashmap.find(4) != hashmap.end());
+    REQUIRE(hashmap.find(5) != hashmap.end());
+    REQUIRE(hashmap.find(6) != hashmap.end());
+    REQUIRE(hashmap.find(7) != hashmap.end());
+    REQUIRE(hashmap.find(8) != hashmap.end());
+    REQUIRE(hashmap.find(9) != hashmap.end());
+    REQUIRE(hashmap.find(10) == hashmap.end());
 
     REQUIRE(!hashmap.erase(0));
     REQUIRE(!hashmap.erase(10));
@@ -75,17 +75,17 @@ TEST_CASE("Hash map", "[CppCommon][Containers]")
     REQUIRE(hashmap.erase(9));
     REQUIRE(hashmap.size() == 5);
 
-    REQUIRE(!hashmap.find(0));
-    REQUIRE(!hashmap.find(1));
-    REQUIRE(hashmap.find(2));
-    REQUIRE(!hashmap.find(3));
-    REQUIRE(hashmap.find(4));
-    REQUIRE(hashmap.find(5));
-    REQUIRE(!hashmap.find(6));
-    REQUIRE(hashmap.find(7));
-    REQUIRE(hashmap.find(8));
-    REQUIRE(!hashmap.find(9));
-    REQUIRE(!hashmap.find(10));
+    REQUIRE(hashmap.find(0) == hashmap.end());
+    REQUIRE(hashmap.find(1) == hashmap.end());
+    REQUIRE(hashmap.find(2) != hashmap.end());
+    REQUIRE(hashmap.find(3) == hashmap.end());
+    REQUIRE(hashmap.find(4) != hashmap.end());
+    REQUIRE(hashmap.find(5) != hashmap.end());
+    REQUIRE(hashmap.find(6) == hashmap.end());
+    REQUIRE(hashmap.find(7) != hashmap.end());
+    REQUIRE(hashmap.find(8) != hashmap.end());
+    REQUIRE(hashmap.find(9) == hashmap.end());
+    REQUIRE(hashmap.find(10) == hashmap.end());
 
     REQUIRE(hashmap.erase(5));
     REQUIRE(hashmap.size() == 4);
