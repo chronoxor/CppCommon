@@ -70,37 +70,37 @@ inline typename FlatMap<TKey, TValue, TCompare, TAllocator>::const_iterator Flat
 template <typename TKey, typename TValue, typename TCompare, typename TAllocator>
 inline typename FlatMap<TKey, TValue, TCompare, TAllocator>::iterator FlatMap<TKey, TValue, TCompare, TAllocator>::lower_bound(const TKey& key) noexcept
 {
-    return std::lower_bound(begin(), end(), key, [this](auto key1, auto key2) { return compare(key1, key2); });
+    return std::lower_bound(begin(), end(), key, [this](auto key1, auto key2) { return this->compare(key1, key2); });
 }
 
 template <typename TKey, typename TValue, typename TCompare, typename TAllocator>
 inline typename FlatMap<TKey, TValue, TCompare, TAllocator>::const_iterator FlatMap<TKey, TValue, TCompare, TAllocator>::lower_bound(const TKey& key) const noexcept
 {
-    return std::lower_bound(begin(), end(), key, [this](auto key1, auto key2) { return compare(key1, key2); });
+    return std::lower_bound(begin(), end(), key, [this](auto key1, auto key2) { return this->compare(key1, key2); });
 }
 
 template <typename TKey, typename TValue, typename TCompare, typename TAllocator>
 inline typename FlatMap<TKey, TValue, TCompare, TAllocator>::iterator FlatMap<TKey, TValue, TCompare, TAllocator>::upper_bound(const TKey& key) noexcept
 {
-    return std::upper_bound(begin(), end(), key, [this](auto key1, auto key2) { return compare(key1, key2); });
+    return std::upper_bound(begin(), end(), key, [this](auto key1, auto key2) { return this->compare(key1, key2); });
 }
 
 template <typename TKey, typename TValue, typename TCompare, typename TAllocator>
 inline typename FlatMap<TKey, TValue, TCompare, TAllocator>::const_iterator FlatMap<TKey, TValue, TCompare, TAllocator>::upper_bound(const TKey& key) const noexcept
 {
-    return std::upper_bound(begin(), end(), key, [this](auto key1, auto key2) { return compare(key1, key2); });
+    return std::upper_bound(begin(), end(), key, [this](auto key1, auto key2) { return this->compare(key1, key2); });
 }
 
 template <typename TKey, typename TValue, typename TCompare, typename TAllocator>
 inline std::pair<typename FlatMap<TKey, TValue, TCompare, TAllocator>::iterator, typename FlatMap<TKey, TValue, TCompare, TAllocator>::iterator> FlatMap<TKey, TValue, TCompare, TAllocator>::equal_range(const TKey& key) noexcept
 {
-    return std::equal_range(begin(), end(), key, [this](auto key1, auto key2) { return compare(key1, key2); });
+    return std::equal_range(begin(), end(), key, [this](auto key1, auto key2) { return this->compare(key1, key2); });
 }
 
 template <typename TKey, typename TValue, typename TCompare, typename TAllocator>
 inline std::pair<typename FlatMap<TKey, TValue, TCompare, TAllocator>::const_iterator, typename FlatMap<TKey, TValue, TCompare, TAllocator>::const_iterator> FlatMap<TKey, TValue, TCompare, TAllocator>::equal_range(const TKey& key) const noexcept
 {
-    return std::equal_range(begin(), end(), key, [this](auto key1, auto key2) { return compare(key1, key2); });
+    return std::equal_range(begin(), end(), key, [this](auto key1, auto key2) { return this->compare(key1, key2); });
 }
 
 template <typename TKey, typename TValue, typename TCompare, typename TAllocator>
