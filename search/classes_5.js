@@ -6,5 +6,6 @@ var searchData=
   ['flags',['Flags',['../class_cpp_common_1_1_flags.html',1,'CppCommon']]],
   ['flags_3c_20fileattributes_20_3e',['Flags&lt; FileAttributes &gt;',['../class_cpp_common_1_1_flags.html',1,'CppCommon']]],
   ['flags_3c_20filepermissions_20_3e',['Flags&lt; FilePermissions &gt;',['../class_cpp_common_1_1_flags.html',1,'CppCommon']]],
+  ['flatmap',['FlatMap',['../class_cpp_common_1_1_flat_map.html',1,'CppCommon']]],
   ['frame',['Frame',['../struct_cpp_common_1_1_stack_trace_1_1_frame.html',1,'CppCommon::StackTrace']]]
 ];
