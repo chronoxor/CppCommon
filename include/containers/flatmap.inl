@@ -215,7 +215,7 @@ template <typename TKey, typename TValue, typename TCompare, typename TAllocator
 template <typename... Args>
 inline typename FlatMap<TKey, TValue, TCompare, TAllocator>::iterator FlatMap<TKey, TValue, TCompare, TAllocator>::emplace_hint_internal(const const_iterator& position, const TKey& key, Args&&... args)
 {
-    if (((position == begin()) || compare((position - 1)->first, item.first)) && ((position == end()) || compare(item.first, position.first)))
+    if (((position == begin()) || compare((position - 1)->first, key)) && ((position == end()) || compare(key, position.first)))
         return _container.emplace(position, std::make_pair(key, TValue(std::forward<Args>(args)...)));
     return emplace_internal(key, std::forward<Args>(args)...).first;
 }
