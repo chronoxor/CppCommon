@@ -9,7 +9,7 @@
 #ifndef CPPCOMMON_MATH_MATH_H
 #define CPPCOMMON_MATH_MATH_H
 
-#include <stdint.h>
+#include <cstdint>
 
 namespace CppCommon {
 
