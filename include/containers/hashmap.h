@@ -222,6 +222,7 @@ private:
 template <class TContainer, typename TKey, typename TValue>
 class HashMapIterator
 {
+    friend HashMapConstIterator<TContainer, TKey, TValue>;
     friend TContainer;
 
 public:
@@ -333,6 +334,7 @@ private:
 template <class TContainer, typename TKey, typename TValue>
 class HashMapReverseIterator
 {
+    friend HashMapConstReverseIterator<TContainer, TKey, TValue>;
     friend TContainer;
 
 public:

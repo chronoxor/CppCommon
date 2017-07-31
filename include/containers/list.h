@@ -299,6 +299,8 @@ private:
 template <typename T>
 class ListIterator
 {
+    friend ListConstIterator<T>;
+
 public:
     // Standard iterator type definitions
     typedef T value_type;
@@ -402,6 +404,8 @@ private:
 template <typename T>
 class ListReverseIterator
 {
+    friend ListConstReverseIterator<T>;
+
 public:
     // Standard iterator type definitions
     typedef T value_type;

@@ -192,6 +192,8 @@ private:
 template <typename T>
 class QueueIterator
 {
+    friend QueueConstIterator<T>;
+
 public:
     // Standard iterator type definitions
     typedef T value_type;

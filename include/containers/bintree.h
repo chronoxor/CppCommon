@@ -266,6 +266,8 @@ private:
 template <class TContainer, typename T>
 class BinTreeIterator
 {
+    friend BinTreeConstIterator<TContainer, T>;
+
 public:
     // Standard iterator type definitions
     typedef T value_type;
@@ -377,6 +379,8 @@ private:
 template <class TContainer, typename T>
 class BinTreeReverseIterator
 {
+    friend BinTreeConstReverseIterator<TContainer, T>;
+
 public:
     // Standard iterator type definitions
     typedef T value_type;

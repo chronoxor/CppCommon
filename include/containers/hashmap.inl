@@ -218,7 +218,7 @@ inline size_t HashMap<TKey, TValue, THash, TEqual, TAllocator>::erase(const TKey
 template <typename TKey, typename TValue, typename THash, typename TEqual, typename TAllocator>
 inline typename HashMap<TKey, TValue, THash, TEqual, TAllocator>::iterator HashMap<TKey, TValue, THash, TEqual, TAllocator>::erase(const const_iterator& position)
 {
-    iterator result(position);
+    iterator result(this, position._index);
     ++result;
     erase_internal(position._index);
     return result;

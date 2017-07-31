@@ -190,6 +190,8 @@ private:
 template <typename T>
 class StackIterator
 {
+    friend StackConstIterator<T>;
+
 public:
     // Standard iterator type definitions
     typedef T value_type;
