@@ -120,6 +120,8 @@ public:
     struct Node
     {
         T* next;    //!< Pointer to the next stack node
+
+        Node() : next(nullptr) {}
     };
 
     Stack() noexcept : _size(0), _top(nullptr) {}

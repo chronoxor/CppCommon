@@ -120,6 +120,8 @@ public:
         T* left;            //!< Pointer to the left child binary tree node
         T* right;           //!< Pointer to the right child binary tree node
         char balance;       //!< Balance level (-1, 0, 1)
+
+        Node() : parent(nullptr), left(nullptr), right(nullptr), balance(0) {}
     };
 
     explicit BinTreeAVL(const TCompare& compare = TCompare()) noexcept

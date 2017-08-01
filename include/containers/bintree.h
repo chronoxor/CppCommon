@@ -156,6 +156,8 @@ public:
         T* parent;  //!< Pointer to the parent binary tree node
         T* left;    //!< Pointer to the left child binary tree node
         T* right;   //!< Pointer to the right child binary tree node
+
+        Node() : parent(nullptr), left(nullptr), right(nullptr) {}
     };
 
     explicit BinTree(const TCompare& compare = TCompare()) noexcept : _compare(compare), _size(0), _root(nullptr) {}

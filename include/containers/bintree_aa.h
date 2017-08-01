@@ -80,6 +80,8 @@ public:
         T* left;        //!< Pointer to the left child binary tree node
         T* right;       //!< Pointer to the right child binary tree node
         size_t level;   //!< Balance level
+
+        Node() : parent(nullptr), left(nullptr), right(nullptr), level(0) {}
     };
 
     explicit BinTreeAA(const TCompare& compare = TCompare()) noexcept

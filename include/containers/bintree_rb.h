@@ -222,6 +222,8 @@ public:
         T* left;    //!< Pointer to the left child binary tree node
         T* right;   //!< Pointer to the right child binary tree node
         bool rb;    //!< Red-Black flag
+
+        Node() : parent(nullptr), left(nullptr), right(nullptr), rb(false) {}
     };
 
     explicit BinTreeRB(const TCompare& compare = TCompare()) noexcept

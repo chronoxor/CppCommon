@@ -118,6 +118,8 @@ public:
     struct Node
     {
         T* next;    //!< Pointer to the next queue node
+
+        Node() : next(nullptr) {}
     };
 
     Queue() noexcept : _size(0), _front(nullptr), _back(nullptr) {}

@@ -173,6 +173,8 @@ public:
     {
         T* next;    //!< Pointer to the next list node
         T* prev;    //!< Pointer to the previous list node
+
+        Node() : next(nullptr), prev(nullptr) {}
     };
 
     List() noexcept : _size(0), _front(nullptr), _back(nullptr) {}
