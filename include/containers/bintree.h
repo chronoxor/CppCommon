@@ -11,6 +11,7 @@
 
 #include <cassert>
 #include <cstddef>
+#include <functional>
 #include <iterator>
 
 namespace CppCommon {
