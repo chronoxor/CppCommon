@@ -379,9 +379,15 @@ inline BinTreeRB<T, TCompare>& BinTreeRB<T, TCompare>::insert(T& item) noexcept
 template <typename T, typename TCompare>
 inline T* BinTreeRB<T, TCompare>::erase(const T& item) noexcept
 {
-    T* result = (T*)InternalFind(item);
+    return erase(find(item)).operator->();
+}
+
+template <typename T, typename TCompare>
+inline typename BinTreeRB<T, TCompare>::iterator BinTreeRB<T, TCompare>::erase(const iterator& it) noexcept
+{
+    T* result = ((iterator&)it).operator->();
     if (result == nullptr)
-        return nullptr;
+        return end();
 
     T* x;
     T* y;
@@ -435,13 +441,7 @@ inline T* BinTreeRB<T, TCompare>::erase(const T& item) noexcept
     result->left = nullptr;
     result->right = nullptr;
     --_size;
-    return result;
-}
-
-template <typename T, typename TCompare>
-inline typename BinTreeRB<T, TCompare>::iterator BinTreeRB<T, TCompare>::erase(const iterator& it) noexcept
-{
-    return iterator(this, erase(*it));
+    return iterator(this, result);
 }
 
 template <typename T, typename TCompare>

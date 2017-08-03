@@ -322,9 +322,15 @@ inline BinTreeSplay<T, TCompare>& BinTreeSplay<T, TCompare>::insert(T& item) noe
 template <typename T, typename TCompare>
 inline T* BinTreeSplay<T, TCompare>::erase(const T& item) noexcept
 {
-    T* result = (T*)InternalFind(item);
+    return erase(find(item)).operator->();
+}
+
+template <typename T, typename TCompare>
+inline typename BinTreeSplay<T, TCompare>::iterator BinTreeSplay<T, TCompare>::erase(const iterator& it) noexcept
+{
+    T* result = ((iterator&)it).operator->();
     if (result == nullptr)
-        return nullptr;
+        return end();
 
     if (result->left == nullptr)
     {
@@ -354,13 +360,7 @@ inline T* BinTreeSplay<T, TCompare>::erase(const T& item) noexcept
     result->left = nullptr;
     result->right = nullptr;
     --_size;
-    return result;
-}
-
-template <typename T, typename TCompare>
-inline typename BinTreeSplay<T, TCompare>::iterator BinTreeSplay<T, TCompare>::erase(const iterator& it) noexcept
-{
-    return iterator(this, erase(*it));
+    return iterator(this, result);
 }
 
 template <typename T, typename TCompare>
