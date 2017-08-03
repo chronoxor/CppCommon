@@ -417,13 +417,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> TCompare&gt;</div>
 <div class="line"><a name="l00332"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_bin_tree_a_a.html#af1cb7212b83a50a40ca0d487f81838c6">  332</a></span>&#160;<span class="keyword">inline</span> T* <a class="code" href="class_cpp_common_1_1_bin_tree_a_a.html#af1cb7212b83a50a40ca0d487f81838c6">BinTreeAA&lt;T, TCompare&gt;::erase</a>(<span class="keyword">const</span> T&amp; item) noexcept</div>
 <div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;{</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;    <span class="keywordflow">return</span> &amp;(*erase(find(item)));</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;    <span class="keywordflow">return</span> erase(find(item)).operator-&gt;();</div>
 <div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;}</div>
 <div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;</div>
 <div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> TCompare&gt;</div>
 <div class="line"><a name="l00338"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_bin_tree_a_a.html#ab1ca5d3cf9f2fb4cc26b8e562088737c">  338</a></span>&#160;<span class="keyword">inline</span> <span class="keyword">typename</span> <a class="code" href="class_cpp_common_1_1_bin_tree_iterator.html">BinTreeAA&lt;T, TCompare&gt;::iterator</a> <a class="code" href="class_cpp_common_1_1_bin_tree_a_a.html#af1cb7212b83a50a40ca0d487f81838c6">BinTreeAA&lt;T, TCompare&gt;::erase</a>(<span class="keyword">const</span> <a class="code" href="class_cpp_common_1_1_bin_tree_iterator.html">iterator</a>&amp; it) noexcept</div>
 <div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;{</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    T* result = &amp;(*(<a class="code" href="class_cpp_common_1_1_bin_tree_iterator.html">iterator</a>&amp;)it);</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    T* result = ((<a class="code" href="class_cpp_common_1_1_bin_tree_iterator.html">iterator</a>&amp;)it).operator-&gt;();</div>
 <div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    <span class="keywordflow">if</span> (result == <span class="keyword">nullptr</span>)</div>
 <div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;        <span class="keywordflow">return</span> end();</div>
 <div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;</div>
