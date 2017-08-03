@@ -322,13 +322,13 @@ inline BinTreeSplay<T, TCompare>& BinTreeSplay<T, TCompare>::insert(T& item) noe
 template <typename T, typename TCompare>
 inline T* BinTreeSplay<T, TCompare>::erase(const T& item) noexcept
 {
-    return &(*erase(find(item)));
+    return erase(find(item)).operator->();
 }
 
 template <typename T, typename TCompare>
 inline typename BinTreeSplay<T, TCompare>::iterator BinTreeSplay<T, TCompare>::erase(const iterator& it) noexcept
 {
-    T* result = &(*(iterator&)it);
+    T* result = ((iterator&)it).operator->();
     if (result == nullptr)
         return end();
 
