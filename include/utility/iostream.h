@@ -1,13 +1,13 @@
 /*!
-    \file stream.h
-    \brief Stream helpers definition
+    \file iostream.h
+    \brief I/O stream helpers definition
     \author Ivan Shynkarenka
     \date 04.08.2017
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_UTILITY_STREAM_H
-#define CPPCOMMON_UTILITY_STREAM_H
+#ifndef CPPCOMMON_UTILITY_IOSTREAM_H
+#define CPPCOMMON_UTILITY_IOSTREAM_H
 
 #include <iostream>
 
@@ -50,4 +50,4 @@ private:
 
 } // namespace CppCommon
 
-#endif // CPPCOMMON_UTILITY_STREAM_H
+#endif // CPPCOMMON_UTILITY_IOSTREAM_H
