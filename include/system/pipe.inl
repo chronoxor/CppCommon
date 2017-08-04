@@ -1,5 +1,5 @@
 /*!
-    \file pipe.h
+    \file pipe.inl
     \brief Pipe inline implementation
     \author Ivan Shynkarenka
     \date 30.11.2016

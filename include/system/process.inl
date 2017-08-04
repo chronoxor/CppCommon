@@ -1,5 +1,5 @@
 /*!
-    \file process.h
+    \file process.inl
     \brief Process inline implementation
     \author Ivan Shynkarenka
     \date 01.12.2016
