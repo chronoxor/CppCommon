@@ -257,10 +257,16 @@ inline const T* BinTreeAA<T, TCompare>::InternalUpperBound(const T& item) const 
 }
 
 template <typename T, typename TCompare>
-inline BinTreeAA<T, TCompare>& BinTreeAA<T, TCompare>::insert(T& item) noexcept
+inline std::pair<typename BinTreeAA<T, TCompare>::iterator, bool> BinTreeAA<T, TCompare>::insert(T& item) noexcept
 {
-    // Perform the binary tree insert from the root node
-    T* current = _root;
+    return insert(const_iterator(this, _root), item);
+}
+
+template <typename T, typename TCompare>
+inline std::pair<typename BinTreeAA<T, TCompare>::iterator, bool> BinTreeAA<T, TCompare>::insert(const const_iterator& position, T& item) noexcept
+{
+    // Perform the binary tree insert from the given node
+    T* current = (T*)position.operator->();
 
     while (current != nullptr)
     {
@@ -297,8 +303,7 @@ inline BinTreeAA<T, TCompare>& BinTreeAA<T, TCompare>::insert(T& item) noexcept
         }
 
         // Found duplicate node
-        assert(false && "Duplicate node can not be inserted into the binary tree!");
-        return *this;
+        return std::make_pair(iterator(this, current), false);
     }
 
     item.parent = current;
@@ -325,7 +330,7 @@ inline BinTreeAA<T, TCompare>& BinTreeAA<T, TCompare>::insert(T& item) noexcept
             break;
     }
 
-    return *this;
+    return std::make_pair(iterator(this, &item), true);
 }
 
 template <typename T, typename TCompare>

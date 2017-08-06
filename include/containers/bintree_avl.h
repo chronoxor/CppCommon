@@ -192,9 +192,16 @@ public:
     //! Insert a new item into the binary tree
     /*!
         \param item - Item to insert
-        \return The current binary tree collection
+        \return Pair with the iterator to the inserted item and success flag
     */
-    BinTreeAVL& insert(T& item) noexcept;
+    std::pair<iterator, bool> insert(T& item) noexcept;
+    //! Insert a new item into the binary tree with a position hint
+    /*!
+        \param position - Iterator position to the inserted item
+        \param item - Item to insert
+        \return Pair with the iterator to the inserted item and success flag
+    */
+    std::pair<iterator, bool> insert(const const_iterator& position, T& item) noexcept;
 
     //! Erase the given item from the binary tree
     /*!

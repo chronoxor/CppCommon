@@ -89,7 +89,7 @@ inline typename List<T>::const_reverse_iterator List<T>::crend() const noexcept
 }
 
 template <typename T>
-inline List<T>& List<T>::push_front(T& item) noexcept
+inline void List<T>::push_front(T& item) noexcept
 {
     if (_front != nullptr)
         _front->prev = &item;
@@ -99,11 +99,10 @@ inline List<T>& List<T>::push_front(T& item) noexcept
     if (_back == nullptr)
         _back = _front;
     ++_size;
-    return *this;
 }
 
 template <typename T>
-inline List<T>& List<T>::push_back(T& item) noexcept
+inline void List<T>::push_back(T& item) noexcept
 {
     if (_back != nullptr)
         _back->next = &item;
@@ -113,11 +112,10 @@ inline List<T>& List<T>::push_back(T& item) noexcept
     if (_front == nullptr)
         _front = _back;
     ++_size;
-    return *this;
 }
 
 template <typename T>
-inline List<T>& List<T>::push_next(T& base, T& item) noexcept
+inline void List<T>::push_next(T& base, T& item) noexcept
 {
     item.next = base.next;
     item.prev = &base;
@@ -127,11 +125,10 @@ inline List<T>& List<T>::push_next(T& base, T& item) noexcept
         base.next->prev = &item;
     base.next = &item;
     ++_size;
-    return *this;
 }
 
 template <typename T>
-inline List<T>& List<T>::push_prev(T& base, T& item) noexcept
+inline void List<T>::push_prev(T& base, T& item) noexcept
 {
     item.next = &base;
     item.prev = base.prev;
@@ -141,7 +138,6 @@ inline List<T>& List<T>::push_prev(T& base, T& item) noexcept
         base.prev->next = &item;
     base.prev = &item;
     ++_size;
-    return *this;
 }
 
 template <typename T>

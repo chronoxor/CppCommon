@@ -160,9 +160,8 @@ public:
     //! Push a new item into the back of the queue
     /*!
         \param item - Pushed item
-        \return The current queue collection
     */
-    Queue& push(T& item) noexcept;
+    void push(T& item) noexcept;
 
     //! Pop the item from the front of the queue
     /*!

@@ -53,12 +53,11 @@ inline typename Stack<T>::const_iterator Stack<T>::cend() const noexcept
 }
 
 template <typename T>
-inline Stack<T>& Stack<T>::push(T& item) noexcept
+inline void Stack<T>::push(T& item) noexcept
 {
     item.next = _top;
     _top = &item;
     ++_size;
-    return *this;
 }
 
 template <typename T>

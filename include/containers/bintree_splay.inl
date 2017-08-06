@@ -280,14 +280,20 @@ inline const T* BinTreeSplay<T, TCompare>::InternalUpperBound(const T& item) con
 }
 
 template <typename T, typename TCompare>
-inline BinTreeSplay<T, TCompare>& BinTreeSplay<T, TCompare>::insert(T& item) noexcept
+inline std::pair<typename BinTreeSplay<T, TCompare>::iterator, bool> BinTreeSplay<T, TCompare>::insert(T& item) noexcept
 {
-    T* result = (T*)InternalFind(item);
-    if (result != nullptr)
+    return insert(find(item), item);
+}
+
+template <typename T, typename TCompare>
+inline std::pair<typename BinTreeSplay<T, TCompare>::iterator, bool> BinTreeSplay<T, TCompare>::insert(const const_iterator& position, T& item) noexcept
+{
+    // Perform the binary tree insert from the given node
+    T* current = (T*)position.operator->();
+    if (current != nullptr)
     {
         // Found duplicate node
-        assert(false && "Duplicate node can not be inserted into the binary tree!");
-        return *this;
+        return std::make_pair(iterator(this, current), false);
     }
 
     item.parent = nullptr;
@@ -316,7 +322,8 @@ inline BinTreeSplay<T, TCompare>& BinTreeSplay<T, TCompare>::insert(T& item) noe
     }
     _root = &item;
     ++_size;
-    return *this;
+
+    return std::make_pair(iterator(this, &item), true);
 }
 
 template <typename T, typename TCompare>

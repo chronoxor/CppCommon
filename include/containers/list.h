@@ -224,29 +224,25 @@ public:
     //! Push a new item into the front of the list
     /*!
         \param item - Pushed item
-        \return The current list collection
     */
-    List& push_front(T& item) noexcept;
+    void push_front(T& item) noexcept;
     //! Push a new item into the back of the list
     /*!
         \param item - Pushed item
-        \return The current list collection
     */
-    List& push_back(T& item) noexcept;
+    void push_back(T& item) noexcept;
     //! Push a new item as a next to the given one
     /*!
         \param base - Base item
         \param item - Pushed item
-        \return The current list collection
     */
-    List& push_next(T& base, T& item) noexcept;
+    void push_next(T& base, T& item) noexcept;
     //! Push a new item as a previous to the given one
     /*!
         \param base - Base item
         \param item - Pushed item
-        \return The current list collection
     */
-    List& push_prev(T& base, T& item) noexcept;
+    void push_prev(T& base, T& item) noexcept;
 
     //! Pop the item from the front of the list
     /*!

@@ -159,9 +159,8 @@ public:
     //! Push a new item into the top of the stack
     /*!
         \param item - Pushed item
-        \return The current stack collection
     */
-    Stack& push(T& item) noexcept;
+    void push(T& item) noexcept;
 
     //! Pop the item from the top of the stack
     /*!

@@ -185,7 +185,7 @@ inline typename FlatMap<TKey, TValue, TCompare, TAllocator>::iterator FlatMap<TK
 {
     iterator result(position);
     ++result;
-    erase(position);
+    _container.erase(position);
     return result;
 }
 
@@ -193,7 +193,7 @@ template <typename TKey, typename TValue, typename TCompare, typename TAllocator
 inline typename FlatMap<TKey, TValue, TCompare, TAllocator>::iterator FlatMap<TKey, TValue, TCompare, TAllocator>::erase(const const_iterator& first, const const_iterator& last)
 {
     iterator result(last);
-    erase(first, last);
+    _container.erase(first, last);
     return result;
 }
 

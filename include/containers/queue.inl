@@ -53,7 +53,7 @@ inline typename Queue<T>::const_iterator Queue<T>::cend() const noexcept
 }
 
 template <typename T>
-inline Queue<T>& Queue<T>::push(T& item) noexcept
+inline void Queue<T>::push(T& item) noexcept
 {
     if (_back != nullptr)
         _back->next = &item;
@@ -62,7 +62,6 @@ inline Queue<T>& Queue<T>::push(T& item) noexcept
     if (_front == nullptr)
         _front = _back;
     ++_size;
-    return *this;
 }
 
 template <typename T>
