@@ -90,16 +90,16 @@ TEST_CASE("Flat map", "[CppCommon][Containers]")
     REQUIRE(flatmap.upper_bound(8)->second == 9);
     REQUIRE(flatmap.upper_bound(9) == flatmap.end());
 
-    REQUIRE(!flatmap.erase(0));
-    REQUIRE(!flatmap.erase(10));
+    REQUIRE(flatmap.erase(0) == 0);
+    REQUIRE(flatmap.erase(10) == 0);
 
-    REQUIRE(flatmap.erase(1));
+    REQUIRE(flatmap.erase(1) == 1);
     REQUIRE(flatmap.size() == 8);
-    REQUIRE(flatmap.erase(3));
+    REQUIRE(flatmap.erase(3) == 1);
     REQUIRE(flatmap.size() == 7);
-    REQUIRE(flatmap.erase(6));
+    REQUIRE(flatmap.erase(6) == 1);
     REQUIRE(flatmap.size() == 6);
-    REQUIRE(flatmap.erase(9));
+    REQUIRE(flatmap.erase(9) == 1);
     REQUIRE(flatmap.size() == 5);
 
     REQUIRE(flatmap.find(0) == flatmap.end());
@@ -137,15 +137,15 @@ TEST_CASE("Flat map", "[CppCommon][Containers]")
     REQUIRE(flatmap.upper_bound(8) == flatmap.end());
     REQUIRE(flatmap.upper_bound(9) == flatmap.end());
 
-    REQUIRE(flatmap.erase(5));
+    REQUIRE(flatmap.erase(5) == 1);
     REQUIRE(flatmap.size() == 4);
-    REQUIRE(flatmap.erase(2));
+    REQUIRE(flatmap.erase(2) == 1);
     REQUIRE(flatmap.size() == 3);
-    REQUIRE(flatmap.erase(7));
+    REQUIRE(flatmap.erase(7) == 1);
     REQUIRE(flatmap.size() == 2);
-    REQUIRE(flatmap.erase(8));
+    REQUIRE(flatmap.erase(8) == 1);
     REQUIRE(flatmap.size() == 1);
-    REQUIRE(flatmap.erase(4));
+    REQUIRE(flatmap.erase(4) == 1);
     REQUIRE(flatmap.size() == 0);
 
     REQUIRE(flatmap.empty());

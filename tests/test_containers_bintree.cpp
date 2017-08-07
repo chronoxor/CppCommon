@@ -133,16 +133,16 @@ void test()
     REQUIRE(bintree.upper_bound(8)->value == 9);
     REQUIRE(bintree.upper_bound(9) == bintree.end());
 
-    REQUIRE(!bintree.erase(0));
-    REQUIRE(!bintree.erase(10));
+    REQUIRE(bintree.erase(0) == nullptr);
+    REQUIRE(bintree.erase(10) == nullptr);
 
-    REQUIRE(bintree.erase(1));
+    REQUIRE(bintree.erase(1) != nullptr);
     REQUIRE(bintree.size() == 8);
-    REQUIRE(bintree.erase(3));
+    REQUIRE(bintree.erase(3) != nullptr);
     REQUIRE(bintree.size() == 7);
-    REQUIRE(bintree.erase(6));
+    REQUIRE(bintree.erase(6) != nullptr);
     REQUIRE(bintree.size() == 6);
-    REQUIRE(bintree.erase(9));
+    REQUIRE(bintree.erase(9) != nullptr);
     REQUIRE(bintree.size() == 5);
 
     REQUIRE(bintree.lowest()->value == 2);
@@ -183,15 +183,15 @@ void test()
     REQUIRE(bintree.upper_bound(8) == bintree.end());
     REQUIRE(bintree.upper_bound(9) == bintree.end());
 
-    REQUIRE(bintree.erase(5));
+    REQUIRE(bintree.erase(5) != nullptr);
     REQUIRE(bintree.size() == 4);
-    REQUIRE(bintree.erase(2));
+    REQUIRE(bintree.erase(2) != nullptr);
     REQUIRE(bintree.size() == 3);
-    REQUIRE(bintree.erase(7));
+    REQUIRE(bintree.erase(7) != nullptr);
     REQUIRE(bintree.size() == 2);
-    REQUIRE(bintree.erase(8));
+    REQUIRE(bintree.erase(8) != nullptr);
     REQUIRE(bintree.size() == 1);
-    REQUIRE(bintree.erase(4));
+    REQUIRE(bintree.erase(4) != nullptr);
     REQUIRE(bintree.size() == 0);
 
     REQUIRE(!bintree.root());
