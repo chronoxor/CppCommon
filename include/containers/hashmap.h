@@ -177,9 +177,8 @@ public:
     //! Erase the item by its iterator from the hash map
     /*!
         \param position - Iterator position to the erased item
-        \return Iterator pointing to the position immediately following the last of the elements erased
     */
-    iterator erase(const const_iterator& position);
+    void erase(const const_iterator& position);
 
     //! Rehash the hash map to the given capacity or more
     /*!
