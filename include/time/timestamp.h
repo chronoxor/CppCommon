@@ -19,6 +19,9 @@ namespace CppCommon {
     hours, minutes, seconds, milliseconds, microseconds or nanoseconds. Also it is possible
     to get difference between two timestamps as a timespan.
 
+    Nanosecond timestamp based on 64-bit integer can represent each nanosecond in the time
+    range of ~584.554531 years. Therefore timestamp bounds from 01.01.1970 to 31.12.2553.
+
     Timestamp epoch January 1, 1970 at 00:00:00
 
     Not thread-safe.
