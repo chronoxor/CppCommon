@@ -210,7 +210,7 @@ int64_t CPU::ClockSpeed()
     {
         std::smatch matches;
         if (std::regex_match(line, matches, pattern))
-            return (int64_t)(atof(matches[2].str().c_str()) * 1000 * 1000);
+            return (int64_t)(atof(matches[2].str().c_str()) * 1000000);
     }
 
     return -1;
@@ -229,7 +229,7 @@ int64_t CPU::ClockSpeed()
     if (lError != ERROR_SUCCESS)
         return -1;
 
-    return dwMHz * 1000 * 1000;
+    return dwMHz * 1000000;
 #else
     #error Unsupported platform
 #endif

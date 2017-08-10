@@ -6,6 +6,7 @@
     \copyright MIT License
 */
 
+#include "math/math.h"
 #include "time/timestamp.h"
 
 #if defined(__APPLE__)
@@ -106,12 +107,12 @@ uint64_t Timestamp::utc()
     struct timeval timestamp;
     if (gettimeofday(&timestamp, NULL) != 0)
         throwex SystemException("Cannot get time of day!");
-    return (timestamp.tv_sec * 1000 * 1000 * 1000) + (timestamp.tv_usec * 1000);
+    return (timestamp.tv_sec * 1000000000) + (timestamp.tv_usec * 1000);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     struct timespec timestamp;
     if (clock_gettime(CLOCK_REALTIME, &timestamp) != 0)
         throwex SystemException("Cannot get value of CLOCK_REALTIME timer!");
-    return (timestamp.tv_sec * 1000 * 1000 * 1000) + timestamp.tv_nsec;
+    return (timestamp.tv_sec * 1000000000) + timestamp.tv_nsec;
 #elif defined(_WIN32) || defined(_WIN64)
     FILETIME ft;
     GetSystemTimePreciseAsFileTime(&ft);
@@ -130,10 +131,10 @@ uint64_t Timestamp::local()
 
     // Adjust UTC time with local timezone offset
     struct tm local;
-    time_t seconds = timestamp / (1000 * 1000 * 1000);
+    time_t seconds = timestamp / (1000000000);
     if (localtime_r(&seconds, &local) != &local)
         throwex SystemException("Cannot convert CLOCK_REALTIME time to local date & time structure!");
-    return timestamp + (local.tm_gmtoff * 1000 * 1000 * 1000);
+    return timestamp + (local.tm_gmtoff * 1000000000);
 #elif defined(_WIN32) || defined(_WIN64)
     FILETIME ft;
     GetSystemTimePreciseAsFileTime(&ft);
@@ -159,7 +160,7 @@ uint64_t Timestamp::nano()
     struct timespec timestamp = { 0 };
     if (clock_gettime(CLOCK_MONOTONIC, &timestamp) != 0)
         throwex SystemException("Cannot get value of CLOCK_MONOTONIC timer!");
-    return (timestamp.tv_sec * 1000 * 1000 * 1000) + timestamp.tv_nsec;
+    return (timestamp.tv_sec * 1000000000) + timestamp.tv_nsec;
 #elif defined(_WIN32) || defined(_WIN64)
     static uint64_t offset = 0;
     static LARGE_INTEGER first = { 0 };
@@ -192,7 +193,7 @@ uint64_t Timestamp::nano()
         LARGE_INTEGER timestamp = { 0 };
         QueryPerformanceCounter(&timestamp);
         timestamp.QuadPart -= first.QuadPart;
-        return offset + ((timestamp.QuadPart * 1000 * 1000 * 1000) / frequency.QuadPart);
+        return offset + Math::MulDiv64(timestamp.QuadPart, 1000000000, frequency.QuadPart);
     }
     else
         return offset;

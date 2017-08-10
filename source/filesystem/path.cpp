@@ -546,9 +546,9 @@ UtcTimestamp Path::created() const
     if (result != 0)
         throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
 #if defined(__APPLE__)
-    return UtcTimestamp(Timestamp((status.st_mtimespec.tv_sec * 1000 * 1000 * 1000) + status.st_mtimespec.tv_nsec));
+    return UtcTimestamp(Timestamp((status.st_mtimespec.tv_sec * 1000000000) + status.st_mtimespec.tv_nsec));
 #else
-    return UtcTimestamp(Timestamp((status.st_mtim.tv_sec * 1000 * 1000 * 1000) + status.st_mtim.tv_nsec));
+    return UtcTimestamp(Timestamp((status.st_mtim.tv_sec * 1000000000) + status.st_mtim.tv_nsec));
 #endif
 #elif defined(_WIN32) || defined(_WIN64)
     HANDLE hFile = CreateFileW(wstring().c_str(), 0, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
@@ -583,9 +583,9 @@ UtcTimestamp Path::modified() const
         throwex FileSystemException("Cannot get the status of the path!").Attach(*this);
 
 #if defined(__APPLE__)
-    return UtcTimestamp(Timestamp((status.st_mtimespec.tv_sec * 1000 * 1000 * 1000) + status.st_mtimespec.tv_nsec));
+    return UtcTimestamp(Timestamp((status.st_mtimespec.tv_sec * 1000000000) + status.st_mtimespec.tv_nsec));
 #else
-    return UtcTimestamp(Timestamp((status.st_mtim.tv_sec * 1000 * 1000 * 1000) + status.st_mtim.tv_nsec));
+    return UtcTimestamp(Timestamp((status.st_mtim.tv_sec * 1000000000) + status.st_mtim.tv_nsec));
 #endif
 #elif defined(_WIN32) || defined(_WIN64)
     HANDLE hFile = CreateFileW(wstring().c_str(), 0, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
