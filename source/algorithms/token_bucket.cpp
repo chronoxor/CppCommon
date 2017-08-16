@@ -1,18 +1,18 @@
 /*!
     \file token_bucket.cpp
-    \brief Token bucket implementation
+    \brief Token bucket rate limit algorithm implementation
     \author Ivan Shynkarenka
     \date 07.12.2016
     \copyright MIT License
 */
 
-#include "threads/token_bucket.h"
+#include "algorithms/token_bucket.h"
 
 #include "time/timestamp.h"
 
 namespace CppCommon {
 
-bool TokenBucket::consume(uint64_t tokens)
+bool TokenBucket::Consume(uint64_t tokens)
 {
     uint64_t now = Timestamp::nano();
     uint64_t delay = tokens * _time_per_token.load(std::memory_order_relaxed);

@@ -148,30 +148,30 @@ public:
     uint64_t nanoseconds() const noexcept
     { return _timestamp; }
 
-    //! Set total days of the current timestamp
-    static Timestamp days(int64_t days) noexcept
-    { return Timestamp(days * 24 * 60 * 60 * 1000000000ull); }
-    //! Set total hours of the current timestamp
-    static Timestamp hours(int64_t hours) noexcept
-    { return Timestamp(hours * 60 * 60 * 1000000000ull); }
-    //! Set total minutes of the current timestamp
-    static Timestamp minutes(int64_t minutes) noexcept
-    { return Timestamp(minutes * 60 * 1000000000ull); }
-    //! Set total seconds of the current timestamp
-    static Timestamp seconds(int64_t seconds) noexcept
-    { return Timestamp(seconds * 1000000000); }
-    //! Set total milliseconds of the current timestamp
-    static Timestamp milliseconds(int64_t milliseconds) noexcept
-    { return Timestamp(milliseconds * 1000000); }
-    //! Set total microseconds of the current timestamp
-    static Timestamp microseconds(int64_t microseconds) noexcept
-    { return Timestamp(microseconds * 1000); }
-    //! Set total nanoseconds of the current timestamp
-    static Timestamp nanoseconds(int64_t nanoseconds) noexcept
-    { return Timestamp(nanoseconds); }
-
     //! Get total value of the current timestamp (total nanoseconds)
     uint64_t total() const noexcept { return _timestamp; }
+
+    //! Create the timestamp based on the given days value
+    static Timestamp days(int64_t days) noexcept
+    { return Timestamp(days * 24 * 60 * 60 * 1000000000ull); }
+    //! Create the timestamp based on the given hours value
+    static Timestamp hours(int64_t hours) noexcept
+    { return Timestamp(hours * 60 * 60 * 1000000000ull); }
+    //! Create the timestamp based on the given minutes value
+    static Timestamp minutes(int64_t minutes) noexcept
+    { return Timestamp(minutes * 60 * 1000000000ull); }
+    //! Create the timestamp based on the given seconds value
+    static Timestamp seconds(int64_t seconds) noexcept
+    { return Timestamp(seconds * 1000000000); }
+    //! Create the timestamp based on the given milliseconds value
+    static Timestamp milliseconds(int64_t milliseconds) noexcept
+    { return Timestamp(milliseconds * 1000000); }
+    //! Create the timestamp based on the given microseconds value
+    static Timestamp microseconds(int64_t microseconds) noexcept
+    { return Timestamp(microseconds * 1000); }
+    //! Create the timestamp based on the given nanoseconds value
+    static Timestamp nanoseconds(int64_t nanoseconds) noexcept
+    { return Timestamp(nanoseconds); }
 
     //! Get the epoch timestamp
     /*!

@@ -1,6 +1,6 @@
 /*!
     \file token_bucket.inl
-    \brief Token bucket inline implementation
+    \brief Token bucket rate limit algorithm inline implementation
     \author Ivan Shynkarenka
     \date 07.12.2016
     \copyright MIT License
@@ -10,9 +10,10 @@ namespace CppCommon {
 
 inline TokenBucket::TokenBucket(uint64_t rate, uint64_t burst)
     : _time(0),
-      _time_per_token(0),
-      _time_per_burst(0)
+      _time_per_token(1000000000 / rate),
+      _time_per_burst(burst * _time_per_token)
 {
+
 }
 
 inline TokenBucket::TokenBucket(const TokenBucket& tb)

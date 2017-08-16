@@ -1,21 +1,21 @@
 /*!
     \file token_bucket.h
-    \brief Token bucket definition
+    \brief Token bucket rate limit algorithm definition
     \author Ivan Shynkarenka
     \date 07.12.2016
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_THREADS_TOKEN_BUCKET_H
-#define CPPCOMMON_THREADS_TOKEN_BUCKET_H
+#ifndef CPPCOMMON_ALGORITHMS_TOKEN_BUCKET_H
+#define CPPCOMMON_ALGORITHMS_TOKEN_BUCKET_H
 
 #include <atomic>
 
 namespace CppCommon {
 
-//! Token bucket
+//! Token bucket rate limit algorithm
 /*!
-    Lock-free implementation of the token bucket algorithm.
+    Lock-free implementation of the token bucket rate limit algorithm.
 
     \image html TokenBucket.png "Token bucket"
 
@@ -32,7 +32,7 @@ namespace CppCommon {
 class TokenBucket
 {
 public:
-    //!
+    //! Initialize the token bucket
     /*!
         Initializes the token bucket to accumulate the given count of tokens
         per second, with a maximum of burst tokens.
@@ -50,10 +50,10 @@ public:
 
     //! Try to consume the given count of tokens
     /*!
-        \param tokens - Tokens to consume
+        \param tokens - Tokens to consume (default is 1)
         \return 'true' if all tokens were successfully consumed, 'false' if the token bucket is lack of required count of tokens
     */
-    bool consume(uint64_t tokens);
+    bool Consume(uint64_t tokens = 1);
 
 private:
     std::atomic<uint64_t> _time;
@@ -61,8 +61,10 @@ private:
     std::atomic<uint64_t> _time_per_burst;
 };
 
+/*! \example algorithms_threads_token_bucket.cpp Token bucket rate limit algorithm example */
+
 } // namespace CppCommon
 
 #include "token_bucket.inl"
 
-#endif // CPPCOMMON_THREADS_TOKEN_BUCKET_H
+#endif // CPPCOMMON_ALGORITHMS_TOKEN_BUCKET_H

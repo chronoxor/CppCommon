@@ -143,31 +143,31 @@ public:
     int64_t nanoseconds() const noexcept
     { return _duration; }
 
-    //! Set total days of the current timespan
-    static Timespan days(int64_t days) noexcept
-    { return Timespan(days * 24 * 60 * 60 * 1000000000ll); }
-    //! Set total hours of the current timespan
-    static Timespan hours(int64_t hours) noexcept
-    { return Timespan(hours * 60 * 60 * 1000000000ll); }
-    //! Set total minutes of the current timespan
-    static Timespan minutes(int64_t minutes) noexcept
-    { return Timespan(minutes * 60 * 1000000000ll); }
-    //! Set total seconds of the current timespan
-    static Timespan seconds(int64_t seconds) noexcept
-    { return Timespan(seconds * 1000000000); }
-    //! Set total milliseconds of the current timespan
-    static Timespan milliseconds(int64_t milliseconds) noexcept
-    { return Timespan(milliseconds * 1000000); }
-    //! Set total microseconds of the current timespan
-    static Timespan microseconds(int64_t microseconds) noexcept
-    { return Timespan(microseconds * 1000); }
-    //! Set total nanoseconds of the current timespan
-    static Timespan nanoseconds(int64_t nanoseconds) noexcept
-    { return Timespan(nanoseconds); }
-
     //! Get total value of the current timespan (total nanoseconds)
     int64_t total() const noexcept
     { return _duration; }
+
+    //! Create the timespan based on the given days value
+    static Timespan days(int64_t days) noexcept
+    { return Timespan(days * 24 * 60 * 60 * 1000000000ll); }
+    //! Create the timespan based on the given hours value
+    static Timespan hours(int64_t hours) noexcept
+    { return Timespan(hours * 60 * 60 * 1000000000ll); }
+    //! Create the timespan based on the given minutes value
+    static Timespan minutes(int64_t minutes) noexcept
+    { return Timespan(minutes * 60 * 1000000000ll); }
+    //! Create the timespan based on the given seconds value
+    static Timespan seconds(int64_t seconds) noexcept
+    { return Timespan(seconds * 1000000000); }
+    //! Create the timespan based on the given milliseconds value
+    static Timespan milliseconds(int64_t milliseconds) noexcept
+    { return Timespan(milliseconds * 1000000); }
+    //! Create the timespan based on the given microseconds value
+    static Timespan microseconds(int64_t microseconds) noexcept
+    { return Timespan(microseconds * 1000); }
+    //! Create the timespan based on the given nanoseconds value
+    static Timespan nanoseconds(int64_t nanoseconds) noexcept
+    { return Timespan(nanoseconds); }
 
     //! Get zero timespan
     /*!
