@@ -82,7 +82,7 @@ public:
 
     //! Acquire spin-lock with block
     /*!
-        Will block.
+        Will block in a spin loop.
     */
     void Lock() noexcept;
 
