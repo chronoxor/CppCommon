@@ -26,7 +26,7 @@ TEST_CASE("SeqLock base", "[CppCommon][Threads]")
 {
     Data data = { 0, 0, 0 };
 
-    SeqLock<Data> lock = data;
+    SeqLock<Data> lock(data);
     REQUIRE(lock.Read() == data);
 
     data = { 123, 456, 789 };

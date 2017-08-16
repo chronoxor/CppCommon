@@ -22,7 +22,7 @@ struct Data
 
 int main(int argc, char** argv)
 {
-    CppCommon::SeqLock<Data> lock = Data{ 0, 0, 0 };
+    CppCommon::SeqLock<Data> lock(Data{ 0, 0, 0 });
 
     std::cout << "Press Enter to stop..." << std::endl;
 
