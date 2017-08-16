@@ -31,7 +31,7 @@ class SeqLock
 {
 public:
     SeqLock();
-    SeqLock(const T& data);
+    explicit SeqLock(const T& data);
     SeqLock(const SeqLock&) = delete;
     SeqLock(SeqLock&&) = default;
     ~SeqLock() = default;
