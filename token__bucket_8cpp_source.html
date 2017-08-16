@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>CppCommon: source/threads/token_bucket.cpp Source File</title>
+<title>CppCommon: source/algorithms/token_bucket.cpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -83,7 +83,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_b2f33c71d4aa5e7af42a1ca61ff5af1b.html">source</a></li><li class="navelem"><a class="el" href="dir_c829109f373708aaf4be2efe6b27f08b.html">threads</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_b2f33c71d4aa5e7af42a1ca61ff5af1b.html">source</a></li><li class="navelem"><a class="el" href="dir_1f1e02da0ed68619c8cd86756bb8077c.html">algorithms</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -92,13 +92,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <a href="token__bucket_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="token__bucket_8h.html">threads/token_bucket.h</a>&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="token__bucket_8h.html">algorithms/token_bucket.h</a>&quot;</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="timestamp_8h.html">time/timestamp.h</a>&quot;</span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">namespace </span>CppCommon {</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
-<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_token_bucket.html#ab5223bccf7f609e2bd08dfbdabe90c15">   15</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_cpp_common_1_1_token_bucket.html#ab5223bccf7f609e2bd08dfbdabe90c15">TokenBucket::consume</a>(uint64_t tokens)</div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_token_bucket.html#a43b80fd731c5d112162cfa474243b3ad">   15</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_cpp_common_1_1_token_bucket.html#a43b80fd731c5d112162cfa474243b3ad">TokenBucket::Consume</a>(uint64_t tokens)</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;{</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    uint64_t now = <a class="code" href="class_cpp_common_1_1_timestamp.html#a91db0d5e7723fd8c634997d094aa393a">Timestamp::nano</a>();</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    uint64_t delay = tokens * _time_per_token.load(std::memory_order_relaxed);</div>
@@ -135,8 +135,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;} <span class="comment">// namespace CppCommon</span></div>
 <div class="ttc" id="class_cpp_common_1_1_timestamp_html_a91db0d5e7723fd8c634997d094aa393a"><div class="ttname"><a href="class_cpp_common_1_1_timestamp.html#a91db0d5e7723fd8c634997d094aa393a">CppCommon::Timestamp::nano</a></div><div class="ttdeci">static uint64_t nano()</div><div class="ttdoc">Get the high resolution timestamp. </div><div class="ttdef"><b>Definition:</b> <a href="timestamp_8cpp_source.html#l00154">timestamp.cpp:154</a></div></div>
 <div class="ttc" id="timestamp_8h_html"><div class="ttname"><a href="timestamp_8h.html">timestamp.h</a></div><div class="ttdoc">Timestamp definition. </div></div>
-<div class="ttc" id="token__bucket_8h_html"><div class="ttname"><a href="token__bucket_8h.html">token_bucket.h</a></div><div class="ttdoc">Token bucket definition. </div></div>
-<div class="ttc" id="class_cpp_common_1_1_token_bucket_html_ab5223bccf7f609e2bd08dfbdabe90c15"><div class="ttname"><a href="class_cpp_common_1_1_token_bucket.html#ab5223bccf7f609e2bd08dfbdabe90c15">CppCommon::TokenBucket::consume</a></div><div class="ttdeci">bool consume(uint64_t tokens)</div><div class="ttdoc">Try to consume the given count of tokens. </div><div class="ttdef"><b>Definition:</b> <a href="token__bucket_8cpp_source.html#l00015">token_bucket.cpp:15</a></div></div>
+<div class="ttc" id="token__bucket_8h_html"><div class="ttname"><a href="token__bucket_8h.html">token_bucket.h</a></div><div class="ttdoc">Token bucket rate limit algorithm definition. </div></div>
+<div class="ttc" id="class_cpp_common_1_1_token_bucket_html_a43b80fd731c5d112162cfa474243b3ad"><div class="ttname"><a href="class_cpp_common_1_1_token_bucket.html#a43b80fd731c5d112162cfa474243b3ad">CppCommon::TokenBucket::Consume</a></div><div class="ttdeci">bool Consume(uint64_t tokens=1)</div><div class="ttdoc">Try to consume the given count of tokens. </div><div class="ttdef"><b>Definition:</b> <a href="token__bucket_8cpp_source.html#l00015">token_bucket.cpp:15</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

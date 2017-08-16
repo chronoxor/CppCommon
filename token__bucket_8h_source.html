@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>CppCommon: include/threads/token_bucket.h Source File</title>
+<title>CppCommon: include/algorithms/token_bucket.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -83,7 +83,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_8661c181a5e32e4691154f1e13423251.html">threads</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_6b92e76864548cad5abed9ff7db49a2b.html">algorithms</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -92,12 +92,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <a href="token__bucket_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#ifndef CPPCOMMON_THREADS_TOKEN_BUCKET_H</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define CPPCOMMON_THREADS_TOKEN_BUCKET_H</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#ifndef CPPCOMMON_ALGORITHMS_TOKEN_BUCKET_H</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define CPPCOMMON_ALGORITHMS_TOKEN_BUCKET_H</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;atomic&gt;</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">namespace </span>CppCommon {</div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="namespace_cpp_common.html">   14</a></span>&#160;<span class="keyword">namespace </span>CppCommon {</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
 <div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_token_bucket.html">   32</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_cpp_common_1_1_token_bucket.html">TokenBucket</a></div>
@@ -113,7 +113,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <a class="code" href="class_cpp_common_1_1_token_bucket.html">TokenBucket</a>&amp; <a class="code" href="class_cpp_common_1_1_token_bucket.html#a70b26e54774ec29eb6037ef5d456b3ed">operator=</a>(<a class="code" href="class_cpp_common_1_1_token_bucket.html">TokenBucket</a>&amp;&amp;) = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_cpp_common_1_1_token_bucket.html#ab5223bccf7f609e2bd08dfbdabe90c15">consume</a>(uint64_t tokens);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_cpp_common_1_1_token_bucket.html#a43b80fd731c5d112162cfa474243b3ad">Consume</a>(uint64_t tokens = 1);</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keyword">private</span>:</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    std::atomic&lt;uint64_t&gt; _time;</div>
@@ -121,16 +121,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    std::atomic&lt;uint64_t&gt; _time_per_burst;</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;};</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;} <span class="comment">// namespace CppCommon</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="token__bucket_8inl.html">token_bucket.inl</a>&quot;</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;} <span class="comment">// namespace CppCommon</span></div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">#endif // CPPCOMMON_THREADS_TOKEN_BUCKET_H</span></div>
-<div class="ttc" id="token__bucket_8inl_html"><div class="ttname"><a href="token__bucket_8inl.html">token_bucket.inl</a></div><div class="ttdoc">Token bucket inline implementation. </div></div>
-<div class="ttc" id="class_cpp_common_1_1_token_bucket_html_a6919fb78860a9c3bf73f94f924aa6cc6"><div class="ttname"><a href="class_cpp_common_1_1_token_bucket.html#a6919fb78860a9c3bf73f94f924aa6cc6">CppCommon::TokenBucket::TokenBucket</a></div><div class="ttdeci">TokenBucket(uint64_t rate, uint64_t burst)</div><div class="ttdef"><b>Definition:</b> <a href="token__bucket_8inl_source.html#l00011">token_bucket.inl:11</a></div></div>
-<div class="ttc" id="class_cpp_common_1_1_token_bucket_html_ab5223bccf7f609e2bd08dfbdabe90c15"><div class="ttname"><a href="class_cpp_common_1_1_token_bucket.html#ab5223bccf7f609e2bd08dfbdabe90c15">CppCommon::TokenBucket::consume</a></div><div class="ttdeci">bool consume(uint64_t tokens)</div><div class="ttdoc">Try to consume the given count of tokens. </div><div class="ttdef"><b>Definition:</b> <a href="token__bucket_8cpp_source.html#l00015">token_bucket.cpp:15</a></div></div>
-<div class="ttc" id="class_cpp_common_1_1_token_bucket_html_a70b26e54774ec29eb6037ef5d456b3ed"><div class="ttname"><a href="class_cpp_common_1_1_token_bucket.html#a70b26e54774ec29eb6037ef5d456b3ed">CppCommon::TokenBucket::operator=</a></div><div class="ttdeci">TokenBucket &amp; operator=(const TokenBucket &amp;tb)</div><div class="ttdef"><b>Definition:</b> <a href="token__bucket_8inl_source.html#l00025">token_bucket.inl:25</a></div></div>
-<div class="ttc" id="class_cpp_common_1_1_token_bucket_html"><div class="ttname"><a href="class_cpp_common_1_1_token_bucket.html">CppCommon::TokenBucket</a></div><div class="ttdoc">Token bucket. </div><div class="ttdef"><b>Definition:</b> <a href="token__bucket_8h_source.html#l00032">token_bucket.h:32</a></div></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="token__bucket_8inl.html">token_bucket.inl</a>&quot;</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">#endif // CPPCOMMON_ALGORITHMS_TOKEN_BUCKET_H</span></div>
+<div class="ttc" id="token__bucket_8inl_html"><div class="ttname"><a href="token__bucket_8inl.html">token_bucket.inl</a></div><div class="ttdoc">Token bucket rate limit algorithm inline implementation. </div></div>
+<div class="ttc" id="class_cpp_common_1_1_token_bucket_html_a6919fb78860a9c3bf73f94f924aa6cc6"><div class="ttname"><a href="class_cpp_common_1_1_token_bucket.html#a6919fb78860a9c3bf73f94f924aa6cc6">CppCommon::TokenBucket::TokenBucket</a></div><div class="ttdeci">TokenBucket(uint64_t rate, uint64_t burst)</div><div class="ttdoc">Initialize the token bucket. </div><div class="ttdef"><b>Definition:</b> <a href="token__bucket_8inl_source.html#l00011">token_bucket.inl:11</a></div></div>
+<div class="ttc" id="class_cpp_common_1_1_token_bucket_html_a70b26e54774ec29eb6037ef5d456b3ed"><div class="ttname"><a href="class_cpp_common_1_1_token_bucket.html#a70b26e54774ec29eb6037ef5d456b3ed">CppCommon::TokenBucket::operator=</a></div><div class="ttdeci">TokenBucket &amp; operator=(const TokenBucket &amp;tb)</div><div class="ttdef"><b>Definition:</b> <a href="token__bucket_8inl_source.html#l00026">token_bucket.inl:26</a></div></div>
+<div class="ttc" id="class_cpp_common_1_1_token_bucket_html"><div class="ttname"><a href="class_cpp_common_1_1_token_bucket.html">CppCommon::TokenBucket</a></div><div class="ttdoc">Token bucket rate limit algorithm. </div><div class="ttdef"><b>Definition:</b> <a href="token__bucket_8h_source.html#l00032">token_bucket.h:32</a></div></div>
+<div class="ttc" id="class_cpp_common_1_1_token_bucket_html_a43b80fd731c5d112162cfa474243b3ad"><div class="ttname"><a href="class_cpp_common_1_1_token_bucket.html#a43b80fd731c5d112162cfa474243b3ad">CppCommon::TokenBucket::Consume</a></div><div class="ttdeci">bool Consume(uint64_t tokens=1)</div><div class="ttdoc">Try to consume the given count of tokens. </div><div class="ttdef"><b>Definition:</b> <a href="token__bucket_8cpp_source.html#l00015">token_bucket.cpp:15</a></div></div>
 <div class="ttc" id="class_cpp_common_1_1_token_bucket_html_a4a0af9f6aa12944a3a8eaa99c05b92a4"><div class="ttname"><a href="class_cpp_common_1_1_token_bucket.html#a4a0af9f6aa12944a3a8eaa99c05b92a4">CppCommon::TokenBucket::~TokenBucket</a></div><div class="ttdeci">~TokenBucket()=default</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
