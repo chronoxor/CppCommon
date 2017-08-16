@@ -71,6 +71,7 @@ var searchData=
   ['_7ereadlocker',['~ReadLocker',['../class_cpp_common_1_1_read_locker.html#a00a07cb97513053204978ec7080ddf1f',1,'CppCommon::ReadLocker']]],
   ['_7erwlock',['~RWLock',['../class_cpp_common_1_1_r_w_lock.html#acbc0b1651a1430f775fd37c430c36530',1,'CppCommon::RWLock']]],
   ['_7esemaphore',['~Semaphore',['../class_cpp_common_1_1_semaphore.html#adab7132f60b21e0c49caeda631ecc8e0',1,'CppCommon::Semaphore']]],
+  ['_7eseqlock',['~SeqLock',['../class_cpp_common_1_1_seq_lock.html#a10eb08c3413c51153290f4d22493b6cc',1,'CppCommon::SeqLock']]],
   ['_7esharedmemory',['~SharedMemory',['../class_cpp_common_1_1_shared_memory.html#ac8af1899e550d636ba096d77d8059231',1,'CppCommon::SharedMemory']]],
   ['_7esharedtype',['~SharedType',['../class_cpp_common_1_1_shared_type.html#a5fcc19ae6cb9cc8d10f092726a475046',1,'CppCommon::SharedType']]],
   ['_7esourcelocation',['~SourceLocation',['../class_cpp_common_1_1_source_location.html#a442518e9da74ecf52a89d727de734c48',1,'CppCommon::SourceLocation']]],
