@@ -86,7 +86,7 @@ inline bool MPMCRingQueue<T>::Enqueue(T&& item)
         }
     }
 
-    // Never taken
+    // Never happens...
     return false;
 }
 
@@ -130,7 +130,7 @@ inline bool MPMCRingQueue<T>::Dequeue(T& item)
         }
     }
 
-    // Never taken
+    // Never happens...
     return false;
 }
 

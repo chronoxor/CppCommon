@@ -737,7 +737,7 @@ inline void BinTreeAVL<T, TCompare>::Unlink(T* node)
             continue;
         }
 
-        // Never appears...
+        // Never happens...
         break;
     }
 }

@@ -6,8 +6,9 @@
     \copyright MIT License
 */
 
-#include "math/math.h"
 #include "time/timestamp.h"
+
+#include "math/math.h"
 
 #if defined(__APPLE__)
 #include <mach/mach.h>
