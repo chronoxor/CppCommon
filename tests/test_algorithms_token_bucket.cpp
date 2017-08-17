@@ -22,14 +22,14 @@ TEST_CASE("Token bucket", "[CppCommon][Algorithms]")
 
     // Sleep for one second...
     Thread::SleepFor(Timespan::seconds(1));
-    Thread::SleepFor(Timespan::milliseconds(1));
+    Thread::SleepFor(Timespan::milliseconds(100));
 
     REQUIRE(tb.Consume());
     REQUIRE(!tb.Consume());
 
     // Sleep for one second...
     Thread::SleepFor(Timespan::seconds(1));
-    Thread::SleepFor(Timespan::milliseconds(1));
+    Thread::SleepFor(Timespan::milliseconds(100));
 
     REQUIRE(tb.Consume());
     REQUIRE(!tb.Consume());
