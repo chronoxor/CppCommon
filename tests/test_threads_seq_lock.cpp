@@ -45,7 +45,7 @@ TEST_CASE("SeqLock random", "[CppCommon][Threads]")
     int items_to_produce = 1000000;
     int consumers_count = 4;
 
-    SeqLock<Data> lock;
+    SeqLock<Data> lock(Data{ 0, 100, 200 });
 
     // Start producer thread
     std::thread producer = std::thread([&lock, items_to_produce]()
