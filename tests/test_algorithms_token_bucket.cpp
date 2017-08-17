@@ -19,8 +19,6 @@ TEST_CASE("Token bucket", "[CppCommon][Algorithms]")
 
     // Failed to consume tokens at the current second
     REQUIRE(!tb.Consume());
-    REQUIRE(!tb.Consume(1));
-    REQUIRE(!tb.Consume(10));
 
     // Sleep for one second...
     Thread::SleepFor(Timespan::seconds(1));
@@ -28,8 +26,6 @@ TEST_CASE("Token bucket", "[CppCommon][Algorithms]")
 
     REQUIRE(tb.Consume());
     REQUIRE(!tb.Consume());
-    REQUIRE(!tb.Consume(1));
-    REQUIRE(!tb.Consume(10));
 
     // Sleep for one second...
     Thread::SleepFor(Timespan::seconds(1));
@@ -37,6 +33,4 @@ TEST_CASE("Token bucket", "[CppCommon][Algorithms]")
 
     REQUIRE(tb.Consume());
     REQUIRE(!tb.Consume());
-    REQUIRE(!tb.Consume(1));
-    REQUIRE(!tb.Consume(10));
 }
