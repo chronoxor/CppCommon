@@ -106,7 +106,7 @@ uint64_t Timestamp::utc()
 {
 #if defined(__APPLE__)
     struct timeval timestamp;
-    if (gettimeofday(&timestamp, NULL) != 0)
+    if (gettimeofday(&timestamp, nullptr) != 0)
         throwex SystemException("Cannot get time of day!");
     return (timestamp.tv_sec * 1000000000) + (timestamp.tv_usec * 1000);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
