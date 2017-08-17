@@ -156,7 +156,7 @@ uint64_t Timestamp::nano()
 #if defined(__APPLE__)
     static mach_timebase_info_data_t info;
     static uint64_t bias = Internals::PrepareTimebaseInfo(info);
-    return (mach_absolute_time() - bias) * info.numer / info.denom;
+    return (mach_absolute_time() * info.numer) / info.denom;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
     struct timespec timestamp = { 0 };
     if (clock_gettime(CLOCK_MONOTONIC, &timestamp) != 0)
