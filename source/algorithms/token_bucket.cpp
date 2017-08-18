@@ -41,9 +41,6 @@ bool TokenBucket::Consume(uint64_t tokens)
         // Failed... Then retry consume tokens with a new time value
         newTime = oldTime;
     }
-
-    // Never happens...
-    return false;
 }
 
 } // namespace CppCommon

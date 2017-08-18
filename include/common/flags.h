@@ -120,7 +120,8 @@ public:
 
     //! Swap two instances
     void swap(Flags& flags) noexcept;
-    friend void swap(Flags& flags1, Flags& flag2) noexcept;
+    template <typename UEnum>
+    friend void swap(Flags<UEnum>& flags1, Flags<UEnum>& flag2) noexcept;
 
 private:
     type _value;
