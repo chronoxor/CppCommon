@@ -16,7 +16,7 @@ inline Function<R(Args...), Capacity>::Function() noexcept
 }
 
 template <class R, class... Args, size_t Capacity>
-inline Function<R(Args...), Capacity>::Function(nullptr_t) noexcept
+inline Function<R(Args...), Capacity>::Function(std::nullptr_t) noexcept
     : Function<R(Args...), Capacity>()
 {
 }
@@ -61,7 +61,7 @@ inline Function<R(Args...), Capacity>::~Function() noexcept
 }
 
 template <class R, class... Args, size_t Capacity>
-inline Function<R(Args...), Capacity>& Function<R(Args...), Capacity>::operator=(nullptr_t) noexcept
+inline Function<R(Args...), Capacity>& Function<R(Args...), Capacity>::operator=(std::nullptr_t) noexcept
 {
     if (_manager)
     {

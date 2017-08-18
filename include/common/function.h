@@ -31,14 +31,14 @@ class Function<R(Args...), Capacity>
 {
 public:
     Function() noexcept;
-    Function(nullptr_t) noexcept;
+    Function(std::nullptr_t) noexcept;
     Function(const Function& function) noexcept;
     Function(Function&& function) noexcept;
     template <class TFunction>
     Function(TFunction&& function) noexcept;
     ~Function() noexcept;
 
-    Function& operator=(nullptr_t) noexcept;
+    Function& operator=(std::nullptr_t) noexcept;
     Function& operator=(const Function& function) noexcept;
     Function& operator=(Function&& function) noexcept;
     template <typename TFunction>
