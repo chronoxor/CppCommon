@@ -27,7 +27,7 @@ BENCHMARK("std::function: create & invoke", 100000000)
     // Call the function
     function(context.metrics().total_iterations());
 }
-/*
+
 BENCHMARK("std::function: invoke", 100000000)
 {
     static Class instance;
@@ -56,5 +56,5 @@ BENCHMARK("CppCommon::Function: invoke", 100000000)
     // Call the function
     function(context.metrics().total_iterations());
 }
-*/
+
 BENCHMARK_MAIN()
