@@ -61,7 +61,7 @@ private:
     std::atomic<uint64_t> _time_per_burst;
 };
 
-/*! \example algorithms_threads_token_bucket.cpp Token bucket rate limit algorithm example */
+/*! \example algorithms_token_bucket.cpp Token bucket rate limit algorithm example */
 
 } // namespace CppCommon
 
