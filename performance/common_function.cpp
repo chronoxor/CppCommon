@@ -8,87 +8,53 @@
 
 using namespace CppCommon;
 
-struct Data
+class Class
 {
-    int64_t a;
-    int64_t b;
-    int64_t c;
+public:
+    void test(int64_t data) { _data = data; }
+
+private:
+    volatile int64_t _data;
 };
 
 BENCHMARK("std::function: create & invoke", 100000000)
 {
-    auto iteration = context.metrics().total_iterations();
+    static Class instance;
 
     // Create the function
-    volatile int64_t data1 = 0;
-    volatile Data data2 = { 0, 0, 0};
-    std::function<void ()> function = [&data1, &data2, iteration]
-    {
-        data1 = iteration;
-        data2.a = iteration;
-        data2.b = iteration;
-        data2.c = iteration;
-    };
+    std::function<void (int64_t)> function = std::bind(&Class::test, &instance, std::placeholders::_1);
 
     // Call the function
-    function();
+    function(context.metrics().total_iterations());
 }
-
+/*
 BENCHMARK("std::function: invoke", 100000000)
 {
-    // Create the function once
-    volatile int64_t data1 = 0;
-    volatile Data data2 = { 0, 0, 0};
-    static std::function<void (int64_t)> function = [&data1, &data2](int64_t iteration)
-    {
-        data1 = iteration;
-        data2.a = iteration;
-        data2.b = iteration;
-        data2.c = iteration;
-    };
-
-    auto iteration = context.metrics().total_iterations();
+    static Class instance;
+    static std::function<void (int64_t)> function = std::bind(&Class::test, &instance, std::placeholders::_1);
 
     // Call the function
-    function(iteration);
+    function(context.metrics().total_iterations());
 }
 
 BENCHMARK("CppCommon::Function: create & invoke", 100000000)
 {
-    auto iteration = context.metrics().total_iterations();
+    static Class instance;
 
     // Create the function
-    volatile int64_t data1 = 0;
-    volatile Data data2 = { 0, 0, 0};
-    CppCommon::Function<void ()> function = [&data1, &data2, iteration]
-    {
-        data1 = iteration;
-        data2.a = iteration;
-        data2.b = iteration;
-        data2.c = iteration;
-    };
+    CppCommon::Function<void (int64_t)> function = std::bind(&Class::test, &instance, std::placeholders::_1);
 
     // Call the function
-    function();
+    function(context.metrics().total_iterations());
 }
 
 BENCHMARK("CppCommon::Function: invoke", 100000000)
 {
-    // Create the function once
-    volatile int64_t data1 = 0;
-    volatile Data data2 = { 0, 0, 0};
-    static CppCommon::Function<void (int64_t)> function = [&data1, &data2](int64_t iteration)
-    {
-        data1 = iteration;
-        data2.a = iteration;
-        data2.b = iteration;
-        data2.c = iteration;
-    };
-
-    auto iteration = context.metrics().total_iterations();
+    static Class instance;
+    static CppCommon::Function<void (int64_t)> function = std::bind(&Class::test, &instance, std::placeholders::_1);
 
     // Call the function
-    function(iteration);
+    function(context.metrics().total_iterations());
 }
-
+*/
 BENCHMARK_MAIN()
