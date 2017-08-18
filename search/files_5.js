@@ -13,5 +13,7 @@ var searchData=
   ['flatmap_2eh',['flatmap.h',['../flatmap_8h.html',1,'']]],
   ['flatmap_2einl',['flatmap.inl',['../flatmap_8inl.html',1,'']]],
   ['format_2eh',['format.h',['../format_8h.html',1,'']]],
-  ['format_2einl',['format.inl',['../format_8inl.html',1,'']]]
+  ['format_2einl',['format.inl',['../format_8inl.html',1,'']]],
+  ['function_2eh',['function.h',['../function_8h.html',1,'']]],
+  ['function_2einl',['function.inl',['../function_8inl.html',1,'']]]
 ];
