@@ -54,7 +54,8 @@ public:
 
     //! Swap two instances
     void swap(Function& function) noexcept;
-    friend void swap(Function& function1, Function& function2) noexcept;
+    template <class UR, class... UArgs, size_t UCapacity>
+    friend void swap(Function<UR(UArgs...), UCapacity>& function1, Function<UR(UArgs...), UCapacity>& function2) noexcept;
 
 private:
     enum class Operation { Clone, Destroy };
