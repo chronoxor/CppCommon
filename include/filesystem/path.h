@@ -9,9 +9,9 @@
 #ifndef CPPCOMMON_FILESYSTEM_PATH_H
 #define CPPCOMMON_FILESYSTEM_PATH_H
 
+#include "common/flags.h"
 #include "string/encoding.h"
 #include "time/timestamp.h"
-#include "utility/flags.h"
 
 #include <string>
 

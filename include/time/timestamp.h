@@ -218,6 +218,10 @@ public:
     */
     static uint64_t rdts();
 
+    //! Swap two instances
+    void swap(Timestamp& timestamp) noexcept;
+    friend void swap(Timestamp& timestamp1, Timestamp& timestamp2) noexcept;
+
 protected:
     //! Timestamp value
     uint64_t _timestamp;

@@ -8,6 +8,8 @@
 
 using namespace CppCommon;
 
+namespace {
+
 class TestConstructor
 {
 public:
@@ -52,6 +54,8 @@ private:
 };
 
 int TestDestructor::value = 0;
+
+} // namespace
 
 TEST_CASE("Static constructor", "[CppCommon][Utility]")
 {

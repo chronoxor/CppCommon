@@ -142,6 +142,10 @@ public:
     static Time epoch()
     { return Time(1970, 1, 1); }
 
+    //! Swap two instances
+    void swap(Time& time) noexcept;
+    friend void swap(Time& time1, Time& time2) noexcept;
+
 protected:
     //! Year value
     int _year;

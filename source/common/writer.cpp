@@ -6,7 +6,7 @@
     \copyright MIT License
 */
 
-#include "utility/writer.h"
+#include "common/writer.h"
 
 #include "system/environment.h"
 

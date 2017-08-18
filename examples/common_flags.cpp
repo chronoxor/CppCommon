@@ -1,12 +1,12 @@
 /*!
-    \file utility_flags.cpp
+    \file common_flags.cpp
     \brief Enum-based flags example
     \author Ivan Shynkarenka
     \date 25.08.2016
     \copyright MIT License
 */
 
-#include "utility/flags.h"
+#include "common/flags.h"
 
 #include <iostream>
 

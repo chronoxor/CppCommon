@@ -8,11 +8,15 @@
 
 using namespace CppCommon;
 
+namespace {
+
 struct MyListNode : public List<MyListNode>::Node
 {
     int value;
     MyListNode(int v) : value(v) {}
 };
+
+} // namespace
 
 TEST_CASE("Intrusive list", "[CppCommon][Containers]")
 {

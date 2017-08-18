@@ -210,6 +210,25 @@ inline bool operator<=(const Time& time1, const Time& time2) noexcept
     return true;
 }
 
+inline void Time::swap(Time& time) noexcept
+{
+    using std::swap;
+    swap(_year, time._year);
+    swap(_month, time._month);
+    swap(_day, time._day);
+    swap(_hour, time._hour);
+    swap(_minute, time._minute);
+    swap(_second, time._second);
+    swap(_millisecond, time._millisecond);
+    swap(_microsecond, time._microsecond);
+    swap(_nanosecond, time._nanosecond);
+}
+
+inline void swap(Time& time1, Time& time2) noexcept
+{
+    time1.swap(time2);
+}
+
 inline UtcTime::UtcTime(const LocalTime& time) : UtcTime(time.localstamp())
 {}
 

@@ -9,9 +9,9 @@
 #ifndef CPPCOMMON_FILESYSTEM_FILE_H
 #define CPPCOMMON_FILESYSTEM_FILE_H
 
+#include "common/reader.h"
+#include "common/writer.h"
 #include "filesystem/path.h"
-#include "utility/reader.h"
-#include "utility/writer.h"
 
 #include <memory>
 #include <vector>

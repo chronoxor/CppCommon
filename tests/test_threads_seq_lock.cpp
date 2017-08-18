@@ -12,6 +12,8 @@
 
 using namespace CppCommon;
 
+namespace {
+
 struct Data
 {
     int a;
@@ -21,6 +23,8 @@ struct Data
     friend bool operator==(const Data& data1, const Data& data2)
     { return ((data1.a == data2.a) && (data1.b == data2.b) && (data1.c == data2.c)); }
 };
+
+} // namespace
 
 TEST_CASE("SeqLock base", "[CppCommon][Threads]")
 {

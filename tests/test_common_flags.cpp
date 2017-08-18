@@ -4,7 +4,7 @@
 
 #include "catch.hpp"
 
-#include "utility/flags.h"
+#include "common/flags.h"
 
 using namespace CppCommon;
 
@@ -19,7 +19,7 @@ enum class MyFlags
 
 ENUM_FLAGS(MyFlags)
 
-TEST_CASE("Enum-based flags", "[CppCommon][Utility]")
+TEST_CASE("Enum-based flags", "[CppCommon][Common]")
 {
     Flags<MyFlags> init;
     REQUIRE(init.value() == MyFlags::None);

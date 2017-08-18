@@ -9,9 +9,9 @@
 #ifndef CPPCOMMON_SYSTEM_PIPE_H
 #define CPPCOMMON_SYSTEM_PIPE_H
 
+#include "common/reader.h"
+#include "common/writer.h"
 #include "errors/exceptions.h"
-#include "utility/reader.h"
-#include "utility/writer.h"
 
 #include <memory>
 

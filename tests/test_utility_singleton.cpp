@@ -8,6 +8,8 @@
 
 using namespace CppCommon;
 
+namespace {
+
 class TestSingleton : public Singleton<TestSingleton>
 {
    friend Singleton<TestSingleton>;
@@ -20,6 +22,8 @@ private:
     TestSingleton() : _init(true) {}
     ~TestSingleton() { _init = false; }
 };
+
+} // namespace
 
 TEST_CASE("Singleton", "[CppCommon][Utility]")
 {

@@ -8,11 +8,15 @@
 
 using namespace CppCommon;
 
+namespace {
+
 struct MyQueueNode : public Queue<MyQueueNode>::Node
 {
     int value;
     MyQueueNode(int v) : value(v) {}
 };
+
+} // namespace
 
 TEST_CASE("Intrusive queue", "[CppCommon][Containers]")
 {

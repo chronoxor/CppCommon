@@ -9,9 +9,9 @@
 #ifndef CPPCOMMON_SYSTEM_STREAM_H
 #define CPPCOMMON_SYSTEM_STREAM_H
 
+#include "common/reader.h"
+#include "common/writer.h"
 #include "errors/exceptions.h"
-#include "utility/reader.h"
-#include "utility/writer.h"
 
 #include <memory>
 
@@ -33,7 +33,7 @@ public:
     StdInput& operator=(StdInput&& stream) noexcept;
 
     //! Check if the stream is valid
-    explicit operator bool() const { return IsValid(); }
+    explicit operator bool() const noexcept { return IsValid(); }
 
     //! Get the native stream handler
     void* stream() const noexcept;
@@ -78,7 +78,7 @@ public:
     StdOutput& operator=(StdOutput&& stream) noexcept;
 
     //! Check if the stream is valid
-    explicit operator bool() const { return IsValid(); }
+    explicit operator bool() const noexcept { return IsValid(); }
 
     //! Get the native stream handler
     void* stream() const noexcept;

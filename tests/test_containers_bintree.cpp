@@ -12,6 +12,8 @@
 
 using namespace CppCommon;
 
+namespace {
+
 struct MyBinTreeNode
 {
     int value;
@@ -200,6 +202,8 @@ void test()
 
     REQUIRE(bintree.empty());
 }
+
+} // namespace
 
 TEST_CASE("Intrusive non balanced binary tree", "[CppCommon][Containers]")
 {

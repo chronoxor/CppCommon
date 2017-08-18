@@ -6,8 +6,8 @@
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_UTILITY_WRITER_H
-#define CPPCOMMON_UTILITY_WRITER_H
+#ifndef CPPCOMMON_WRITER_H
+#define CPPCOMMON_WRITER_H
 
 #include <string>
 #include <vector>
@@ -57,4 +57,4 @@ public:
 
 } // namespace CppCommon
 
-#endif // CPPCOMMON_UTILITY_WRITER_H
+#endif // CPPCOMMON_WRITER_H

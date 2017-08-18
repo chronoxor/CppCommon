@@ -177,6 +177,10 @@ public:
     */
     static Timespan zero() noexcept { return Timespan(0); }
 
+    //! Swap two instances
+    void swap(Timespan& timespan) noexcept;
+    friend void swap(Timespan& timespan1, Timespan& timespan2) noexcept;
+
 private:
     int64_t _duration;
 };

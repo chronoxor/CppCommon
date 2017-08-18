@@ -99,6 +99,10 @@ public:
     static Timezone local()
     { return Timezone(); }
 
+    //! Swap two instances
+    void swap(Timezone& timezone) noexcept;
+    friend void swap(Timezone& timezone1, Timezone& timezone2) noexcept;
+
 protected:
     //! Time zone name
     std::string _name;
@@ -111,5 +115,7 @@ protected:
 /*! \example time_timezone.cpp Time zone example */
 
 } // namespace CppCommon
+
+#include "timezone.inl"
 
 #endif // CPPCOMMON_TIME_TIMEZONE_H

@@ -6,6 +6,10 @@
 
 #include "string/format.h"
 
+using namespace CppCommon;
+
+namespace {
+
 class Date
 {
 public:
@@ -18,7 +22,7 @@ private:
     int _year, _month, _day;
 };
 
-using namespace CppCommon;
+} // namespace
 
 TEST_CASE("Format", "[CppCommon][String]")
 {

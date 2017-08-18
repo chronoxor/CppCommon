@@ -11,6 +11,8 @@
 
 using namespace CppCommon;
 
+namespace {
+
 StackTrace function1()
 {
     return __STACK__;
@@ -46,6 +48,8 @@ void equal(const std::vector<StackTrace::Frame>& frames1, const std::vector<Stac
         REQUIRE(frames1[i].line == frames2[i].line);
     }
 }
+
+} // namespace
 
 TEST_CASE("Stack trace snapshot provider", "[CppCommon][System]")
 {

@@ -6,8 +6,8 @@
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_UTILITY_READER_H
-#define CPPCOMMON_UTILITY_READER_H
+#ifndef CPPCOMMON_READER_H
+#define CPPCOMMON_READER_H
 
 #include <string>
 #include <vector>
@@ -57,4 +57,4 @@ public:
 
 } // namespace CppCommon
 
-#endif // CPPCOMMON_UTILITY_READER_H
+#endif // CPPCOMMON_READER_H

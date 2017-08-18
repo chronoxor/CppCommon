@@ -6,8 +6,8 @@
     \copyright MIT License
 */
 
-#ifndef CPPCOMMON_UTILITY_FLAGS_H
-#define CPPCOMMON_UTILITY_FLAGS_H
+#ifndef CPPCOMMON_FLAGS_H
+#define CPPCOMMON_FLAGS_H
 
 #include <bitset>
 #include <type_traits>
@@ -118,14 +118,18 @@ public:
     //! Get the bitset value
     std::bitset<sizeof(type) * 8> bitset() const noexcept { return {_value}; }
 
+    //! Swap two instances
+    void swap(Flags& flags) noexcept;
+    friend void swap(Flags& flags1, Flags& flag2) noexcept;
+
 private:
     type _value;
 };
 
-/*! \example utility_flags.cpp Enum-based flags example */
+/*! \example common_flags.cpp Enum-based flags example */
 
 } // namespace CppCommon
 
 #include "flags.inl"
 
-#endif // CPPCOMMON_UTILITY_FLAGS_H
+#endif // CPPCOMMON_FLAGS_H

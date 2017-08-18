@@ -6,7 +6,7 @@
     \copyright MIT License
 */
 
-#include "utility/reader.h"
+#include "common/reader.h"
 
 #include "utility/countof.h"
 

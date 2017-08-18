@@ -8,6 +8,8 @@
 
 using namespace CppCommon;
 
+namespace {
+
 void test(const std::string& utf8, const std::u16string& utf16, const std::u32string& utf32)
 {
     REQUIRE(Encoding::UTF8toUTF16(utf8) == utf16);
@@ -22,6 +24,7 @@ void test(const std::string& utf8, const std::u16string& utf16, const std::u32st
     REQUIRE(str == utf8);
 }
 
+} // namespace
 
 TEST_CASE("Encoding", "[CppCommon][String]")
 {
