@@ -47,6 +47,12 @@ public:
     uint128_t& operator--() noexcept { return *this -= 1; }
     uint128_t operator--(int) noexcept { uint128_t temp(*this); --*this; return temp; }
 
+    uint128_t& operator+=(const uint128_t& value) noexcept { return *this = *this + value; }
+    uint128_t& operator-=(const uint128_t& value) noexcept { return *this = *this - value; }
+    uint128_t& operator*=(const uint128_t& value) noexcept { return *this = *this * value; }
+    uint128_t& operator/=(const uint128_t& value) noexcept { return *this = *this / value; }
+    uint128_t& operator%=(const uint128_t& value) noexcept { return *this = *this % value; }
+
     template <typename T>
     uint128_t& operator+=(const T& value) noexcept { return *this = *this + uint128_t(value); }
     template <typename T>
@@ -101,6 +107,10 @@ public:
 
     // Bit operators
     uint128_t operator~() const noexcept { return uint128_t(~_upper, ~_lower); }
+
+    uint128_t& operator&=(const uint128_t& value) noexcept { return *this = *this & value; }
+    uint128_t& operator|=(const uint128_t& value) noexcept { return *this = *this | value; }
+    uint128_t& operator^=(const uint128_t& value) noexcept { return *this = *this ^ value; }
 
     template <typename T>
     uint128_t& operator&=(const T& value) noexcept { return *this = *this & uint128_t(value); }
@@ -187,6 +197,9 @@ public:
     friend bool operator||(const uint128_t& value1, const uint128_t& value2) noexcept;
 
     // Shift operators
+    uint128_t& operator<<=(const uint128_t& value) noexcept { return *this = *this << value; }
+    uint128_t& operator>>=(const uint128_t& value) noexcept { return *this = *this >> value; }
+
     template <typename T>
     uint128_t& operator<<=(const T& value) noexcept { return *this = *this << uint128_t(value); }
     template <typename T>
