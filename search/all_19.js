@@ -97,6 +97,8 @@ var searchData=
   ['_7etimestamp',['~Timestamp',['../class_cpp_common_1_1_timestamp.html#acb9047604076cc0b90500b9d7206991b',1,'CppCommon::Timestamp']]],
   ['_7etimezone',['~Timezone',['../class_cpp_common_1_1_timezone.html#ab87676ed9f4e3a19acd5c261d596b96a',1,'CppCommon::Timezone']]],
   ['_7etokenbucket',['~TokenBucket',['../class_cpp_common_1_1_token_bucket.html#a4a0af9f6aa12944a3a8eaa99c05b92a4',1,'CppCommon::TokenBucket']]],
+  ['_7euint128_5ft',['~uint128_t',['../class_cpp_common_1_1uint128__t.html#abae5199abc10ff8497287444af6b2d0c',1,'CppCommon::uint128_t']]],
+  ['_7euint256_5ft',['~uint256_t',['../class_cpp_common_1_1uint256__t.html#a93c466d22550e8f35a409d3b454d3b9a',1,'CppCommon::uint256_t']]],
   ['_7euuid',['~UUID',['../class_cpp_common_1_1_u_u_i_d.html#ae289d7b1bf0569ddce2c514de02b4b77',1,'CppCommon::UUID']]],
   ['_7ewaitqueue',['~WaitQueue',['../class_cpp_common_1_1_wait_queue.html#a11e794d823a5f45214135da0a4df7c71',1,'CppCommon::WaitQueue']]],
   ['_7ewaitring',['~WaitRing',['../class_cpp_common_1_1_wait_ring.html#a7ce2d74779a9c2222aa47aae5fc9a11e',1,'CppCommon::WaitRing']]],
