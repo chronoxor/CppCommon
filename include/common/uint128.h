@@ -29,14 +29,14 @@ public:
     uint128_t(const T& value) noexcept;
     template <typename TUpper, typename TLower>
     uint128_t(const TUpper& upper, const TLower& lower) noexcept;
-    uint128_t(const uint128_t&) noexcept = default;
-    uint128_t(uint128_t&&) noexcept = default;
+    uint128_t(const uint128_t& value) noexcept = default;
+    uint128_t(uint128_t&& value) noexcept = default;
     ~uint128_t() noexcept = default;
 
     template <typename T>
     uint128_t& operator=(const T& value) noexcept;
-    uint128_t& operator=(const uint128_t&) noexcept = default;
-    uint128_t& operator=(uint128_t&&) noexcept = default;
+    uint128_t& operator=(const uint128_t& value) noexcept = default;
+    uint128_t& operator=(uint128_t&& value) noexcept = default;
 
     // Arithmetic operators
     uint128_t operator+() const noexcept { return *this; }
@@ -277,7 +277,7 @@ namespace std
     template <> struct is_arithmetic<CppCommon::uint128_t> : std::true_type {};
     template <> struct is_integral<CppCommon::uint128_t> : std::true_type {};
     template <> struct is_unsigned<CppCommon::uint128_t> : std::true_type {};
-};
+}
 
 #include "uint128.inl"
 
