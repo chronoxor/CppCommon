@@ -20,9 +20,9 @@ namespace CppCommon {
 class uint256_t
 {
 public:
-    uint256_t() noexcept = default;
-    template <typename TValue>
-    uint256_t(const TValue& value) noexcept;
+    uint256_t() noexcept;
+    template <typename T>
+    uint256_t(const T& value) noexcept;
     template <typename TUpper, typename TLower>
     uint256_t(const TUpper& upper, const TLower& lower) noexcept;
     template <typename TUpperUpper, typename TUpperLower, typename TLowerUpper, typename TLowerLower>
@@ -31,10 +31,102 @@ public:
     uint256_t(uint256_t&&) noexcept = default;
     ~uint256_t() noexcept = default;
 
-    template <typename TValue>
-    uint256_t& operator=(const TValue& value) noexcept;
+    template <typename T>
+    uint256_t& operator=(const T& value) noexcept;
     uint256_t& operator=(const uint256_t&) noexcept = default;
     uint256_t& operator=(uint256_t&&) noexcept = default;
+
+    // Type cast
+    operator bool() const noexcept { return (bool)(_upper || _lower); }
+    operator uint8_t() const noexcept { return (uint8_t)_lower; }
+    operator uint16_t() const noexcept { return (uint16_t)_lower; }
+    operator uint32_t() const noexcept { return (uint32_t)_lower; }
+    operator uint64_t() const noexcept { return (uint64_t)_lower; }
+    operator uint128_t() const noexcept { return _lower; }
+
+    // Logical operators
+    bool operator!() const noexcept { return !(bool)(_upper | _lower); }
+
+    bool operator&&(const uint128_t& value) const noexcept;
+    bool operator&&(const uint256_t& value) const noexcept;
+    bool operator||(const uint128_t& value) const noexcept;
+    bool operator||(const uint256_t& value) const noexcept;
+    template <typename T>
+    bool operator&&(const T& value) const noexcept;
+    template <typename T>
+    bool operator||(const T& value) const noexcept;
+    template <typename T>
+    friend bool operator&&(const T& value1, const uint256_t& value2) noexcept;
+    template <typename T>
+    friend bool operator||(const T& value1, const uint256_t& value2) noexcept;
+
+    // Bit operators
+    uint256_t operator~() const noexcept { return uint256_t(~_upper, ~_lower); }
+
+    uint256_t& operator&=(const uint128_t& value) noexcept;
+    uint256_t& operator&=(const uint256_t& value) noexcept;
+    uint256_t& operator|=(const uint128_t& value) noexcept;
+    uint256_t& operator|=(const uint256_t& value) noexcept;
+    uint256_t& operator^=(const uint128_t& value) noexcept;
+    uint256_t& operator^=(const uint256_t& value) noexcept;
+    template <typename T>
+    uint256_t& operator&=(const T& value) noexcept;
+    template <typename T>
+    uint256_t& operator|=(const T& value) noexcept;
+    template <typename T>
+    uint256_t& operator^=(const T& value) noexcept;
+    template <typename T>
+    friend T& operator&=(T& value1, const uint256_t& value2) noexcept;
+    template <typename T>
+    friend T& operator|=(T& value1, const uint256_t& value2) noexcept;
+    template <typename T>
+    friend T& operator^=(T& value1, const uint256_t& value2) noexcept;
+
+    uint256_t operator&(const uint128_t& value) const noexcept;
+    uint256_t operator&(const uint256_t& value) const noexcept;
+    uint256_t operator|(const uint128_t& value) const noexcept;
+    uint256_t operator|(const uint256_t& value) const noexcept;
+    uint256_t operator^(const uint128_t& value) const noexcept;
+    uint256_t operator^(const uint256_t& value) const noexcept;
+    template <typename T>
+    uint256_t operator&(const T& value) const noexcept;
+    template <typename T>
+    uint256_t operator|(const T& value) const noexcept;
+    template <typename T>
+    uint256_t operator^(const T& value) const noexcept;
+    template <typename T>
+    friend uint256_t operator&(const T& value1, const uint256_t& value2) noexcept;
+    template <typename T>
+    friend uint256_t operator|(const T& value1, const uint256_t& value2) noexcept;
+    template <typename T>
+    friend uint256_t operator^(const T& value1, const uint256_t& value2) noexcept;
+
+    // Shift operators
+    uint256_t& operator<<=(const uint128_t& value) noexcept;
+    uint256_t& operator<<=(const uint256_t& value) noexcept;
+    uint256_t& operator>>=(const uint128_t& value) noexcept;
+    uint256_t& operator>>=(const uint256_t& value) noexcept;
+    template <typename T>
+    uint256_t& operator<<=(const T& value) noexcept;
+    template <typename T>
+    uint256_t& operator>>=(const T& value) noexcept;
+    template <typename T>
+    friend T& operator<<=(T& value1, const uint256_t& value2) noexcept;
+    template <typename T>
+    friend T& operator>>=(T& value1, const uint256_t& value2) noexcept;
+
+    uint256_t operator<<(const uint128_t& value) const noexcept;
+    uint256_t operator<<(const uint256_t& value) const noexcept;
+    uint256_t operator>>(const uint128_t& value) const noexcept;
+    uint256_t operator>>(const uint256_t& value) const noexcept;
+    template <typename T>
+    uint256_t operator<<(const T& value) const noexcept;
+    template <typename T>
+    uint256_t operator>>(const T& value) const noexcept;
+    template <typename T>
+    friend uint256_t operator<<(const T& value1, const uint256_t& value2) noexcept;
+    template <typename T>
+    friend uint256_t operator>>(const T& value1, const uint256_t& value2) noexcept;
 
     //! Get the upper part of the 256-bit integer
     uint128_t upper() const noexcept { return _upper; }
