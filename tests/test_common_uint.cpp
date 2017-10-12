@@ -16,7 +16,6 @@ TEST_CASE("uint256: Constructors simple", "[CppCommon][Common]")
     REQUIRE(uint256_t() == 0);
     REQUIRE(value == original);
     REQUIRE(uint256_t(std::move(value)) == original);
-    REQUIRE(value == 0);
 }
 
 TEST_CASE("uint256: Constructors one", "[CppCommon][Common]")
@@ -49,15 +48,15 @@ TEST_CASE("uint256: Constructors two", "[CppCommon][Common]")
         }
     }
 
-    REQUIRE(uint256_t((uint8_t)0x01ull, (uint8_t)0x01ull).upper(), (uint8_t)0x01ull);
-    REQUIRE(uint256_t((uint16_t)0x0123ull, (uint16_t)0x0123ull).upper(), (uint16_t)0x0123ull);
-    REQUIRE(uint256_t((uint32_t)0x01234567ull, (uint32_t)0x01234567ull).upper(), (uint32_t)0x01234567ull);
-    REQUIRE(uint256_t((uint64_t)0x0123456789ABCDEFull, (uint64_t)0x0123456789ABCDEFull).upper(), (uint64_t) 0x0123456789ABCDEFull);
+    REQUIRE(uint256_t((uint8_t)0x01ull, (uint8_t)0x01ull).upper() == (uint8_t)0x01ull);
+    REQUIRE(uint256_t((uint16_t)0x0123ull, (uint16_t)0x0123ull).upper() == (uint16_t)0x0123ull);
+    REQUIRE(uint256_t((uint32_t)0x01234567ull, (uint32_t)0x01234567ull).upper() == (uint32_t)0x01234567ull);
+    REQUIRE(uint256_t((uint64_t)0x0123456789ABCDEFull, (uint64_t)0x0123456789ABCDEFull).upper() == (uint64_t)0x0123456789ABCDEFull);
 
-    REQUIRE(uint256_t((uint8_t)0x01ull, (uint8_t)0x01ull).lower(), (uint8_t)0x01ull);
-    REQUIRE(uint256_t((uint16_t)0x0123ull, (uint16_t)0x0123ull).lower(), (uint16_t)0x0123ull);
-    REQUIRE(uint256_t((uint32_t)0x01234567ull, (uint32_t)0x01234567ull).lower(), (uint32_t)0x01234567ull);
-    REQUIRE(uint256_t((uint64_t)0x0123456789ABCDEFull, (uint64_t) 0x0123456789ABCDEFull).lower(), (uint64_t) 0x0123456789ABCDEFull);
+    REQUIRE(uint256_t((uint8_t)0x01ull, (uint8_t)0x01ull).lower() == (uint8_t)0x01ull);
+    REQUIRE(uint256_t((uint16_t)0x0123ull, (uint16_t)0x0123ull).lower() == (uint16_t)0x0123ull);
+    REQUIRE(uint256_t((uint32_t)0x01234567ull, (uint32_t)0x01234567ull).lower() == (uint32_t)0x01234567ull);
+    REQUIRE(uint256_t((uint64_t)0x0123456789ABCDEFull, (uint64_t)0x0123456789ABCDEFull).lower() == (uint64_t)0x0123456789ABCDEFull);
 }
 
 TEST_CASE("uint256: Constructors four", "[CppCommon][Common]")

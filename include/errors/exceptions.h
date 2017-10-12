@@ -57,8 +57,8 @@ public:
     virtual std::string string() const;
 
     //! Output exception into the given output stream
-    friend std::ostream& operator<<(std::ostream& os, const Exception& instance)
-    { os << instance.string(); return os; }
+    friend std::ostream& operator<<(std::ostream& os, const Exception& ex)
+    { os << ex.string(); return os; }
 
     //! Link exception with source location
     template<class T>

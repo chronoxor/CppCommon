@@ -357,11 +357,11 @@ public:
     static void SetCurrent(const Path& path);
 
     //! Input instance from the given input stream
-    friend std::istream& operator>>(std::istream& is, Path& instance)
-    { is >> instance._path; return is; }
+    friend std::istream& operator>>(std::istream& is, Path& path)
+    { is >> path._path; return is; }
     //! Output instance into the given output stream
-    friend std::ostream& operator<<(std::ostream& os, const Path& instance)
-    { os << instance._path; return os; }
+    friend std::ostream& operator<<(std::ostream& os, const Path& path)
+    { os << path._path; return os; }
 
     //! Swap two instances
     void swap(Path& path) noexcept;

@@ -76,8 +76,8 @@ public:
     static UUID Generate();
 
     //! Output instance into the given output stream
-    friend std::ostream& operator<<(std::ostream& os, const UUID& instance)
-    { os << instance.string(); return os; }
+    friend std::ostream& operator<<(std::ostream& os, const UUID& uuid)
+    { os << uuid.string(); return os; }
 
     //! Swap two instances
     void swap(UUID& uuid) noexcept;

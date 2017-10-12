@@ -8,12 +8,12 @@
 
 namespace CppCommon {
 
-inline std::ostream& operator<<(std::ostream& os, const SourceLocation& instance)
+inline std::ostream& operator<<(std::ostream& os, const SourceLocation& source_location)
 {
-    if ((instance.filename() == nullptr) || (instance.line() == 0))
+    if ((source_location.filename() == nullptr) || (source_location.line() == 0))
         return os;
 
-    return os << instance.filename() << ':' << instance.line();
+    return os << source_location.filename() << ':' << source_location.line();
 }
 
 } // namespace CppCommon

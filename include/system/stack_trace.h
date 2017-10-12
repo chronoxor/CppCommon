@@ -44,7 +44,7 @@ public:
         { std::stringstream ss; ss << *this; return ss.str(); }
 
         //! Output stack trace frame into the given output stream
-        friend std::ostream& operator<<(std::ostream& os, const Frame& instance);
+        friend std::ostream& operator<<(std::ostream& os, const Frame& frame);
     };
 
 public:
@@ -68,7 +68,7 @@ public:
     { std::stringstream ss; ss << *this; return ss.str(); }
 
     //! Output stack trace into the given output stream
-    friend std::ostream& operator<<(std::ostream& os, const StackTrace& instance);
+    friend std::ostream& operator<<(std::ostream& os, const StackTrace& stack_trace);
 
 private:
     std::vector<Frame> _frames;

@@ -54,7 +54,7 @@ public:
     { std::stringstream ss; ss << *this; return ss.str(); }
 
     //! Output source location into the given output stream
-    friend std::ostream& operator<<(std::ostream& os, const SourceLocation& instance);
+    friend std::ostream& operator<<(std::ostream& os, const SourceLocation& source_location);
 
 private:
     const char* _filename;

@@ -40,18 +40,18 @@
 
 namespace CppCommon {
 
-std::ostream& operator<<(std::ostream& os, const StackTrace::Frame& instance)
+std::ostream& operator<<(std::ostream& os, const StackTrace::Frame& frame)
 {
     // Format stack trace frame address
     std::ios_base::fmtflags flags = os.flags();
-    os << "0x" << std::hex << std::uppercase << std::setfill('0') << std::setw(2 * sizeof(uintptr_t)) << (uintptr_t)instance.address << ": ";
+    os << "0x" << std::hex << std::uppercase << std::setfill('0') << std::setw(2 * sizeof(uintptr_t)) << (uintptr_t)frame.address << ": ";
     os.flags(flags);
     // Format stack trace frame other fields
-    os << (instance.module.empty() ? "<unknown>" : instance.module) << '!';
-    os << (instance.function.empty() ? "??" : instance.function) << ' ';
-    os << instance.filename;
-    if (instance.line > 0)
-        os << '(' << instance.line << ')';
+    os << (frame.module.empty() ? "<unknown>" : frame.module) << '!';
+    os << (frame.function.empty() ? "??" : frame.function) << ' ';
+    os << frame.filename;
+    if (frame.line > 0)
+        os << '(' << frame.line << ')';
     return os;
 }
 
@@ -254,9 +254,9 @@ cleanup:
 #endif
 }
 
-std::ostream& operator<<(std::ostream& os, const StackTrace& instance)
+std::ostream& operator<<(std::ostream& os, const StackTrace& stack_trace)
 {
-    for (auto& frame : instance.frames())
+    for (auto& frame : stack_trace.frames())
         os << frame << std::endl;
     return os;
 }
