@@ -1,5 +1,5 @@
 /*!
-    \file Function.inl
+    \file function.inl
     \brief Allocation free function inline implementation
     \author Ivan Shynkarenka
     \date 18.08.2017

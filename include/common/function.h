@@ -1,5 +1,5 @@
 /*!
-    \file Function.h
+    \file function.h
     \brief Allocation free function definition
     \author Ivan Shynkarenka
     \date 18.08.2017
