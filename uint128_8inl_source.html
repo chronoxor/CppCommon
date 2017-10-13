@@ -321,7 +321,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;        <span class="keywordflow">do</span></div>
 <div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;        {</div>
 <div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;            qr = <a class="code" href="class_cpp_common_1_1uint128__t.html#a004b7a4b0ae8fca5948ae6552041314f">uint128_t::divmod</a>(qr.first, base);</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;            out = <span class="stringliteral">&quot;0123456789abcdef&quot;</span>[(size_t)qr.second] + out;</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;            out = <span class="stringliteral">&quot;0123456789abcdef&quot;</span>[(uint8_t)qr.second] + out;</div>
 <div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;        } <span class="keywordflow">while</span> (qr.first != 0);</div>
 <div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    }</div>
 <div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;</div>
