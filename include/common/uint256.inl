@@ -232,7 +232,7 @@ inline std::string uint256_t::string(size_t base, size_t length) const
         do
         {
             qr = uint256_t::divmod(qr.first, base);
-            out = "0123456789abcdef"[(size_t)qr.second] + out;
+            out = "0123456789abcdef"[(uint8_t)qr.second] + out;
         } while (qr.first != 0);
     }
 
@@ -254,7 +254,7 @@ inline std::pair<uint256_t, uint256_t> uint256_t::divmod(const uint256_t& x, con
         return std::pair<uint256_t, uint256_t>(0, x);
 
     std::pair<uint256_t, uint256_t> result(0, x);
-	uint256_t delta = x.bits() - y.bits();
+    uint256_t delta = x.bits() - y.bits();
     uint256_t copyd = y << delta;
     uint256_t adder = 1 << delta;
 

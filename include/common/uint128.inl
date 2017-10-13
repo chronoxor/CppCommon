@@ -235,7 +235,7 @@ inline std::string uint128_t::string(size_t base, size_t length) const
         do
         {
             qr = uint128_t::divmod(qr.first, base);
-            out = "0123456789abcdef"[(size_t)qr.second] + out;
+            out = "0123456789abcdef"[(uint8_t)qr.second] + out;
         } while (qr.first != 0);
     }
 
