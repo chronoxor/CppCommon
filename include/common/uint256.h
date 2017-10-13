@@ -283,6 +283,7 @@ public:
 
     // Type cast
     operator bool() const noexcept { return (bool)(_upper | _lower); }
+    operator size_t() const noexcept { return (size_t)_lower; }
     operator uint8_t() const noexcept { return (uint8_t)_lower; }
     operator uint16_t() const noexcept { return (uint16_t)_lower; }
     operator uint32_t() const noexcept { return (uint32_t)_lower; }
