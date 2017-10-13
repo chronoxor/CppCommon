@@ -328,6 +328,8 @@ private:
     uint128_t _lower;
 };
 
+/*! \example common_uint256.cpp Unsigned 256-bit integer type example */
+
 } // namespace CppCommon
 
 // Type traits
