@@ -48,8 +48,8 @@ public:
     uint256_t& operator+=(const uint256_t& value) noexcept { return *this = *this + value; }
     uint256_t& operator-=(const uint256_t& value) noexcept { return *this = *this - value; }
     uint256_t& operator*=(const uint256_t& value) noexcept { return *this = *this * value; }
-    uint256_t& operator/=(const uint256_t& value) noexcept { return *this = *this / value; }
-    uint256_t& operator%=(const uint256_t& value) noexcept { return *this = *this % value; }
+    uint256_t& operator/=(const uint256_t& value) { return *this = *this / value; }
+    uint256_t& operator%=(const uint256_t& value) { return *this = *this % value; }
 
     template <typename T>
     uint256_t& operator+=(const T& value) noexcept { return *this = *this + uint256_t(value); }
@@ -58,26 +58,26 @@ public:
     template <typename T>
     uint256_t& operator*=(const T& value) noexcept { return *this = *this * uint256_t(value); }
     template <typename T>
-    uint256_t& operator/=(const T& value) noexcept { return *this = *this / uint256_t(value); }
+    uint256_t& operator/=(const T& value) { return *this = *this / uint256_t(value); }
     template <typename T>
-    uint256_t& operator%=(const T& value) noexcept { return *this = *this % uint256_t(value); }
+    uint256_t& operator%=(const T& value) { return *this = *this % uint256_t(value); }
 
     friend uint128_t& operator+=(uint128_t& value1, const uint256_t& value2) noexcept { return value1 = (uint256_t(value1) + value2).lower(); }
     friend uint128_t& operator-=(uint128_t& value1, const uint256_t& value2) noexcept { return value1 = (uint256_t(value1) - value2).lower(); }
     friend uint128_t& operator*=(uint128_t& value1, const uint256_t& value2) noexcept { return value1 = (uint256_t(value1) * value2).lower(); }
-    friend uint128_t& operator/=(uint128_t& value1, const uint256_t& value2) noexcept { return value1 = (uint256_t(value1) / value2).lower(); }
-    friend uint128_t& operator%=(uint128_t& value1, const uint256_t& value2) noexcept { return value1 = (uint256_t(value1) % value2).lower(); }
+    friend uint128_t& operator/=(uint128_t& value1, const uint256_t& value2) { return value1 = (uint256_t(value1) / value2).lower(); }
+    friend uint128_t& operator%=(uint128_t& value1, const uint256_t& value2) { return value1 = (uint256_t(value1) % value2).lower(); }
 
     template <typename T>
     friend T& operator+=(T& value1, const uint256_t& value2) noexcept { return value1 = (T)(uint256_t(value1) + value2); }
     template <typename T>
     friend T& operator-=(T& value1, const uint256_t& value2) noexcept { return value1 = (T)(uint256_t(value1) - value2); }
     template <typename T>
-    friend T& operator*=(T& value1, const uint256_t& value2) noexcept { return value1 = (T)(uint256_t(value1) * value2); }
+    friend T& operator*=(T& value1, const uint256_t& value2) noexcept { return value1 = static_cast<T>(uint256_t(value1) * value2); }
     template <typename T>
-    friend T& operator/=(T& value1, const uint256_t& value2) noexcept { return value1 = (T)(uint256_t(value1) / value2); }
+    friend T& operator/=(T& value1, const uint256_t& value2) { return value1 = (T)(uint256_t(value1) / value2); }
     template <typename T>
-    friend T& operator%=(T& value1, const uint256_t& value2) noexcept { return value1 = (T)(uint256_t(value1) % value2); }
+    friend T& operator%=(T& value1, const uint256_t& value2) { return value1 = (T)(uint256_t(value1) % value2); }
 
     template <typename T>
     friend uint256_t operator+(const T& value1, const uint256_t& value2) noexcept { return uint256_t(value1) + value2; }
@@ -104,20 +104,20 @@ public:
     friend uint256_t operator*(const uint256_t& value1, const uint256_t& value2) noexcept;
 
     template <typename T>
-    friend uint256_t operator/(const T& value1, const uint256_t& value2) noexcept { return uint256_t(value1) / value2; }
+    friend uint256_t operator/(const T& value1, const uint256_t& value2) { return uint256_t(value1) / value2; }
     template <typename T>
-    friend uint256_t operator/(const uint256_t& value1, const T& value2) noexcept { return value1 / uint256_t(value2); }
-    friend uint256_t operator/(const uint128_t& value1, const uint256_t& value2) noexcept { return uint256_t(value1) / value2; }
-    friend uint256_t operator/(const uint256_t& value1, const uint128_t& value2) noexcept { return value1 / uint256_t(value2); }
-    friend uint256_t operator/(const uint256_t& value1, const uint256_t& value2) noexcept;
+    friend uint256_t operator/(const uint256_t& value1, const T& value2) { return value1 / uint256_t(value2); }
+    friend uint256_t operator/(const uint128_t& value1, const uint256_t& value2) { return uint256_t(value1) / value2; }
+    friend uint256_t operator/(const uint256_t& value1, const uint128_t& value2) { return value1 / uint256_t(value2); }
+    friend uint256_t operator/(const uint256_t& value1, const uint256_t& value2);
 
     template <typename T>
-    friend uint256_t operator%(const T& value1, const uint256_t& value2) noexcept { return uint256_t(value1) % value2; }
+    friend uint256_t operator%(const T& value1, const uint256_t& value2) { return uint256_t(value1) % value2; }
     template <typename T>
-    friend uint256_t operator%(const uint256_t& value1, const T& value2) noexcept { return value1 % uint256_t(value2); }
-    friend uint256_t operator%(const uint128_t& value1, const uint256_t& value2) noexcept { return uint256_t(value1) % value2; }
-    friend uint256_t operator%(const uint256_t& value1, const uint128_t& value2) noexcept { return value1 % uint256_t(value2); }
-    friend uint256_t operator%(const uint256_t& value1, const uint256_t& value2) noexcept;
+    friend uint256_t operator%(const uint256_t& value1, const T& value2) { return value1 % uint256_t(value2); }
+    friend uint256_t operator%(const uint128_t& value1, const uint256_t& value2) { return uint256_t(value1) % value2; }
+    friend uint256_t operator%(const uint256_t& value1, const uint128_t& value2) { return value1 % uint256_t(value2); }
+    friend uint256_t operator%(const uint256_t& value1, const uint256_t& value2);
 
     // Bit operators
     uint256_t operator~() const noexcept { return uint256_t(~_upper, ~_lower); }
@@ -282,7 +282,7 @@ public:
     friend uint256_t operator>>(const uint256_t& value1, const uint256_t& value2) noexcept;
 
     // Type cast
-    operator bool() const noexcept { return (bool)(_upper || _lower); }
+    operator bool() const noexcept { return (bool)(_upper | _lower); }
     operator uint8_t() const noexcept { return (uint8_t)_lower; }
     operator uint16_t() const noexcept { return (uint16_t)_lower; }
     operator uint32_t() const noexcept { return (uint32_t)_lower; }

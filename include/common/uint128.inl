@@ -92,12 +92,12 @@ inline uint128_t operator*(const uint128_t& value1, const uint128_t& value2) noe
     return uint128_t((first32 << 32) | second32, (third32 << 32) | fourth32);
 }
 
-inline uint128_t operator/(const uint128_t& value1, const uint128_t& value2) noexcept
+inline uint128_t operator/(const uint128_t& value1, const uint128_t& value2)
 {
     return uint128_t::divmod(value1, value2).first;
 }
 
-inline uint128_t operator%(const uint128_t& value1, const uint128_t& value2) noexcept
+inline uint128_t operator%(const uint128_t& value1, const uint128_t& value2)
 {
     return uint128_t::divmod(value1, value2).second;
 }

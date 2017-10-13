@@ -85,23 +85,18 @@ inline uint256_t operator*(const uint256_t& value1, const uint256_t& value2) noe
     // Fourth row
     first64  += uint128_t(products[3][3].lower());
 
-    // Move carry to the next digit
-    third64  += fourth64 >> 32;
-    second64 += third64  >> 32;
-    first64  += second64 >> 32;
-
     // Combines the values, taking care of carry over
     return uint256_t(first64 << 64, 0) + uint256_t(third64.upper(), third64 << 64) + uint256_t(second64, 0) + uint256_t(fourth64);
 }
 
-inline uint256_t operator/(const uint256_t& value1, const uint256_t& value2) noexcept
+inline uint256_t operator/(const uint256_t& value1, const uint256_t& value2)
 {
-    return uint128_t::divmod(value1, value2).first;
+    return uint256_t::divmod(value1, value2).first;
 }
 
-inline uint256_t operator%(const uint256_t& value1, const uint256_t& value2) noexcept
+inline uint256_t operator%(const uint256_t& value1, const uint256_t& value2)
 {
-    return uint128_t::divmod(value1, value2).second;
+    return uint256_t::divmod(value1, value2).second;
 }
 
 inline uint256_t operator&(const uint256_t& value1, const uint256_t& value2) noexcept
@@ -202,7 +197,7 @@ inline size_t uint256_t::bits() const noexcept
     if (_upper)
     {
         result = 128;
-        uint64_t upper = _upper;
+        uint128_t upper = _upper;
         while (upper)
         {
             upper >>= 1;
@@ -211,7 +206,7 @@ inline size_t uint256_t::bits() const noexcept
     }
     else
     {
-        uint64_t lower = _lower;
+        uint128_t lower = _lower;
         while (lower)
         {
             lower >>= 1;
@@ -236,7 +231,7 @@ inline std::string uint256_t::string(size_t base, size_t length) const
         std::pair<uint256_t, uint256_t> qr(*this, 0);
         do
         {
-            qr = uint128_t::divmod(qr.first, base);
+            qr = uint256_t::divmod(qr.first, base);
             out = "0123456789abcdef"[(size_t)qr.second] + out;
         } while (qr.first != 0);
     }
