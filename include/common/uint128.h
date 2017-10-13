@@ -12,6 +12,7 @@
 #include <cstdint>
 #include <iostream>
 #include <stdexcept>
+#include <string>
 #include <type_traits>
 #include <utility>
 
@@ -281,6 +282,8 @@ private:
     uint64_t _upper;
     uint64_t _lower;
 };
+
+/*! \example common_uint128.cpp Unsigned 128-bit integer type example */
 
 } // namespace CppCommon
 

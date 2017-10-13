@@ -146,12 +146,12 @@ inline bool operator>=(const uint256_t& value1, const uint256_t& value2) noexcep
 
 inline bool operator&&(const uint256_t& value1, const uint256_t& value2) noexcept
 {
-    return ((value1._upper == value2._upper) && (value1._lower == value2._lower));
+    return ((bool)value1 && (bool)value2);
 }
 
 inline bool operator||(const uint256_t& value1, const uint256_t& value2) noexcept
 {
-    return ((value1._upper != value2._upper) || (value1._lower != value2._lower));
+    return ((bool)value1 || (bool)value2);
 }
 
 inline uint256_t operator<<(const uint256_t& value1, const uint256_t& value2) noexcept
@@ -254,7 +254,7 @@ inline std::pair<uint256_t, uint256_t> uint256_t::divmod(const uint256_t& x, con
         return std::pair<uint256_t, uint256_t>(0, x);
 
     std::pair<uint256_t, uint256_t> result(0, x);
-    size_t delta = x.bits() - y.bits();
+	uint256_t delta = x.bits() - y.bits();
     uint256_t copyd = y << delta;
     uint256_t adder = 1 << delta;
 

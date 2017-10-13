@@ -149,12 +149,12 @@ inline bool operator>=(const uint128_t& value1, const uint128_t& value2) noexcep
 
 inline bool operator&&(const uint128_t& value1, const uint128_t& value2) noexcept
 {
-    return ((value1._upper == value2._upper) && (value1._lower == value2._lower));
+    return ((bool)value1 && (bool)value2);
 }
 
 inline bool operator||(const uint128_t& value1, const uint128_t& value2) noexcept
 {
-    return ((value1._upper != value2._upper) || (value1._lower != value2._lower));
+    return ((bool)value1 || (bool)value2);
 }
 
 inline uint128_t operator<<(const uint128_t& value1, const uint128_t& value2) noexcept
