@@ -93,11 +93,6 @@ void GenerateTerminate()
     std::terminate();
 }
 
-void GenerateUnexpected()
-{
-    std::unexpected();
-}
-
 void GenerateExceptionThrow()
 {
     throw std::exception();
@@ -199,25 +194,22 @@ void GenerateCustomException(int type)
             GenerateTerminate();
             break;
         case 9:
-            GenerateUnexpected();
-            break;
-        case 10:
             GenerateExceptionThrow();
             break;
 #if defined(_WIN32) || defined(_WIN64)
-        case 11:
+        case 10:
             GenerateInvalidParameter();
             break;
-        case 12:
+        case 11:
             GenerateRecurseAlloc();
             break;
-        case 13:
+        case 12:
             GeneratePureVirtualMethodCall();
             break;
-        case 14:
+        case 13:
             GenerateSEH();
             break;
-        case 15:
+        case 14:
             GenerateRaiseException();
             break;
 #endif
@@ -242,14 +234,13 @@ int main(int argc, char** argv)
     std::cout << "6 - SIGTERM" << std::endl;
     std::cout << "7 - exit" << std::endl;
     std::cout << "8 - terminate" << std::endl;
-    std::cout << "9 - unexpected" << std::endl;
-    std::cout << "10 - exception throw" << std::endl;
+    std::cout << "9 - exception throw" << std::endl;
 #if defined(_WIN32) || defined(_WIN64)
-    std::cout << "11 - invalid parameter" << std::endl;
-    std::cout << "12 - new operator fault" << std::endl;
-    std::cout << "13 - pure virtual method call" << std::endl;
-    std::cout << "14 - SEH exception" << std::endl;
-    std::cout << "15 - RaiseException()" << std::endl;
+    std::cout << "10 - invalid parameter" << std::endl;
+    std::cout << "11 - new operator fault" << std::endl;
+    std::cout << "12 - pure virtual method call" << std::endl;
+    std::cout << "13 - SEH exception" << std::endl;
+    std::cout << "14 - RaiseException()" << std::endl;
 #endif
     std::cout << "Choose an exception type: ";
 
