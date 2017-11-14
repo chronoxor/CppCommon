@@ -6,6 +6,7 @@
 
 #include "common/uint256.h"
 
+#include <limits>
 #include <map>
 
 using namespace CppCommon;
