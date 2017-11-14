@@ -50,7 +50,7 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
             else
             {
                 // Dequeue using the given waiting strategy
-                T item;
+                T item = 0;
                 while (!queue.Dequeue(item))
                     wait_strategy();
 
