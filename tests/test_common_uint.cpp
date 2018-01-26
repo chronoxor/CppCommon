@@ -8,6 +8,7 @@
 
 #include <limits>
 #include <map>
+#include <sstream>
 
 using namespace CppCommon;
 
