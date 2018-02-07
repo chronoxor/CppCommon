@@ -99,11 +99,6 @@ void GenerateExceptionThrow()
 }
 
 #if defined(_WIN32) || defined(_WIN64)
-void GenerateInvalidParameter()
-{
-    char* format = nullptr;
-    printf(format);
-}
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -163,6 +158,15 @@ void GenerateRaiseException()
 {
     RaiseException(123, EXCEPTION_NONCONTINUABLE, 0, nullptr);
 }
+
+#if defined(_MSC_VER)
+void GenerateInvalidParameter()
+{
+    char* format = nullptr;
+    printf(format);
+}
+#endif
+
 #endif
 
 void GenerateCustomException(int type)
@@ -198,20 +202,22 @@ void GenerateCustomException(int type)
             break;
 #if defined(_WIN32) || defined(_WIN64)
         case 10:
-            GenerateInvalidParameter();
-            break;
-        case 11:
             GenerateRecurseAlloc();
             break;
-        case 12:
+        case 11:
             GeneratePureVirtualMethodCall();
             break;
-        case 13:
+        case 12:
             GenerateSEH();
             break;
-        case 14:
+        case 13:
             GenerateRaiseException();
             break;
+#if defined(_MSC_VER)
+        case 14:
+            GenerateInvalidParameter();
+            break;
+#endif
 #endif
     }
 }
@@ -236,11 +242,13 @@ int main(int argc, char** argv)
     std::cout << "8 - terminate" << std::endl;
     std::cout << "9 - exception throw" << std::endl;
 #if defined(_WIN32) || defined(_WIN64)
-    std::cout << "10 - invalid parameter" << std::endl;
-    std::cout << "11 - new operator fault" << std::endl;
-    std::cout << "12 - pure virtual method call" << std::endl;
-    std::cout << "13 - SEH exception" << std::endl;
-    std::cout << "14 - RaiseException()" << std::endl;
+    std::cout << "10 - new operator fault" << std::endl;
+    std::cout << "11 - pure virtual method call" << std::endl;
+    std::cout << "12 - SEH exception" << std::endl;
+    std::cout << "13 - RaiseException()" << std::endl;
+#if defined(_MSC_VER)
+    std::cout << "14 - invalid parameter" << std::endl;
+#endif
 #endif
     std::cout << "Choose an exception type: ";
 
