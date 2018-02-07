@@ -59,7 +59,7 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     std::vector<std::thread> producers;
     for (int producer = 0; producer < producers_count; ++producer)
     {
-        producers.push_back(std::thread([&buffer, &wait_strategy, item_size, items_to_produce, producer, producers_count]()
+        producers.push_back(std::thread([&buffer, &wait_strategy, item_size, items_to_produce, producers_count]()
         {
             uint8_t item[item_size_to];
 
