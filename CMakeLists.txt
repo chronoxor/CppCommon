@@ -25,9 +25,6 @@ include(SetCompilerFeatures)
 include(SetCompilerWarnings)
 include(SetPlatformFeatures)
 
-# Modules
-add_subdirectory("modules")
-
 # External packages
 find_package(Threads REQUIRED)
 if(UNIX)
@@ -53,6 +50,9 @@ if(WIN32)
   list(APPEND LINKLIBS ${DBGHELP_LIBRARIES})
   list(APPEND LINKLIBS ${USERENV_LIBRARIES})
 endif()
+
+# Modules
+add_subdirectory("modules")
 
 # Library
 file(GLOB_RECURSE SOURCE_FILES "source/*.cpp")
