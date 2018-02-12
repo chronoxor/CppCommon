@@ -24,9 +24,9 @@ std::wstring format(const std::wstring& pattern, const Args&... args)
 
 //! @cond INTERNALS
 
-inline fmt::internal::UdlArg<char> operator"" _a(const char* str, std::size_t) { return { str }; }
-inline fmt::internal::UdlArg<wchar_t> operator"" _a(const wchar_t* str, std::size_t) { return { str }; }
-inline fmt::internal::UdlFormat<char> operator"" _format(const char* str, std::size_t) { return { str }; }
-inline fmt::internal::UdlFormat<wchar_t> operator"" _format(const wchar_t* str, std::size_t) { return { str }; }
+inline fmt::internal::udl_arg<char> operator"" _a(const char* str, std::size_t) { return { str }; }
+inline fmt::internal::udl_arg<wchar_t> operator"" _a(const wchar_t* str, std::size_t) { return { str }; }
+inline fmt::internal::udl_formatter<char> operator"" _format(const char* str, std::size_t) { return { str }; }
+inline fmt::internal::udl_formatter<wchar_t> operator"" _format(const wchar_t* str, std::size_t) { return { str }; }
 
 //! @endcond
