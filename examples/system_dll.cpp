@@ -9,7 +9,7 @@
 #include "system/dll.h"
 
 // Plugins definitions
-#include "interface/interface.h"
+#include "plugins/interface/interface.h"
 
 #include <iostream>
 
