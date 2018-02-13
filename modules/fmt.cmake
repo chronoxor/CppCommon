@@ -3,7 +3,7 @@ if(NOT TARGET fmt)
   # Module library
   file(GLOB SOURCE_FILES "fmt/include/fmt/*.cc")
   if(NOT MSVC)
-    set_source_files_properties(${SOURCE_FILES} PROPERTIES COMPILE_FLAGS "${PEDANTIC_COMPILE_FLAGS}")
+    set_source_files_properties(${SOURCE_FILES} PROPERTIES COMPILE_FLAGS "${PEDANTIC_COMPILE_FLAGS} -Wno-shadow")
   else()
     # C4244: 'conversion' conversion from 'type1' to 'type2', possible loss of data
     # C4267: conversion from 'size_t' to 'type', possible loss of data
