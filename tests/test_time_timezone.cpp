@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 18.07.2016
 //
 
-#include "catch.hpp"
+#include "test.h"
 
 #include "time/timezone.h"
 

@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 19.08.2016
 //
 
-#include "catch.hpp"
+#include "test.h"
 
 #include "system/uuid.h"
 

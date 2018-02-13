@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 09.02.2016
 //
 
-#include "catch.hpp"
+#include "test.h"
 
 #include "system/source_location.h"
 

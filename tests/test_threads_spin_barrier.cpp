@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 17.03.2016
 //
 
-#include "catch.hpp"
+#include "test.h"
 
 #include "threads/spin_barrier.h"
 #include "threads/thread.h"

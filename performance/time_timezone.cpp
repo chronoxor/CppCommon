@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 18.07.2016
 //
 
-#include "benchmark/cppbenchmark.h"
+#include <benchmark/cppbenchmark.h>
 
 #include "time/timezone.h"
 

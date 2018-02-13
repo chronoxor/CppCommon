@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 11.02.2016
 //
 
-#include "catch.hpp"
+#include "test.h"
 
 #include "system/stack_trace.h"
 #include "system/stack_trace_manager.h"

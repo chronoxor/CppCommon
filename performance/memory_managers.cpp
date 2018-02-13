@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 17.05.2017
 //
 
-#include "benchmark/cppbenchmark.h"
+#include <benchmark/cppbenchmark.h>
 
 #include "memory/allocator.h"
 #include "memory/allocator_arena.h"

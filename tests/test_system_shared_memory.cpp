@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 19.04.2016
 //
 
-#include "catch.hpp"
+#include "test.h"
 
 #include "system/shared_memory.h"
 

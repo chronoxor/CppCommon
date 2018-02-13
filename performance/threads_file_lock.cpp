@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 02.09.2016
 //
 
-#include "benchmark/cppbenchmark.h"
+#include <benchmark/cppbenchmark.h>
 
 #include "threads/file_lock.h"
 

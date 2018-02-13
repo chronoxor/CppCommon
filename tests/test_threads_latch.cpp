@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 25.03.2016
 //
 
-#include "catch.hpp"
+#include "test.h"
 
 #include "threads/latch.h"
 #include "threads/thread.h"

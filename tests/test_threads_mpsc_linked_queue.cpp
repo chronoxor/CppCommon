@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 18.01.2016
 //
 
-#include "catch.hpp"
+#include "test.h"
 
 #include "threads/mpsc_linked_queue.h"
 

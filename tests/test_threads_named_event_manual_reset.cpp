@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 24.05.2016
 //
 
-#include "catch.hpp"
+#include "test.h"
 
 #include "threads/named_event_manual_reset.h"
 #include "threads/thread.h"

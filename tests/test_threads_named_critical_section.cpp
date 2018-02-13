@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 26.05.2016
 //
 
-#include "catch.hpp"
+#include "test.h"
 
 #include "threads/named_critical_section.h"
 

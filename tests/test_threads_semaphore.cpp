@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 12.04.2016
 //
 
-#include "catch.hpp"
+#include "test.h"
 
 #include "threads/semaphore.h"
 

@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 01.09.2016
 //
 
-#include "catch.hpp"
+#include "test.h"
 
 #include "math/math.h"
 

@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 18.08.2018
 //
 
-#include "catch.hpp"
+#include "test.h"
 
 #include "common/function.h"
 

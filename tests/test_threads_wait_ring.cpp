@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 05.10.2016
 //
 
-#include "catch.hpp"
+#include "test.h"
 
 #include "threads/wait_ring.h"
 

@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 01.12.2016
 //
 
-#include "catch.hpp"
+#include "test.h"
 
 #include "system/process.h"
 

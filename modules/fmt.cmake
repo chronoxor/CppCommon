@@ -1,7 +1,7 @@
 if(NOT TARGET fmt)
 
   # Module library
-  file(GLOB SOURCE_FILES "fmt/fmt/*.cc")
+  file(GLOB SOURCE_FILES "fmt/include/fmt/*.cc")
   if(NOT MSVC)
     set_source_files_properties(${SOURCE_FILES} PROPERTIES COMPILE_FLAGS "${PEDANTIC_COMPILE_FLAGS}")
   else()

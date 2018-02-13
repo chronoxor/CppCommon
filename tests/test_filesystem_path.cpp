@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 15.08.2016
 //
 
-#include "catch.hpp"
+#include "test.h"
 
 #include "filesystem/filesystem.h"
 

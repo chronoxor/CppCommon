@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 08.06.2017
 //
 
-#include "catch.hpp"
+#include "test.h"
 
 #include "system/dll.h"
 

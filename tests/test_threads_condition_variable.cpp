@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 03.10.2016
 //
 
-#include "catch.hpp"
+#include "test.h"
 
 #include "threads/condition_variable.h"
 

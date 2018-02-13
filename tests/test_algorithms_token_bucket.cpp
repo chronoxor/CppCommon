@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 16.08.2017
 //
 
-#include "catch.hpp"
+#include "test.h"
 
 #include "algorithms/token_bucket.h"
 #include "threads/thread.h"

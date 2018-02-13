@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 22.06.2017
 //
 
-#include "catch.hpp"
+#include "test.h"
 
 #include "containers/flatmap.h"
 

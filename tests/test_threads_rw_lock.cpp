@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 08.04.2016
 //
 
-#include "catch.hpp"
+#include "test.h"
 
 #include "threads/rw_lock.h"
 #include "threads/thread.h"

@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 13.08.2016
 //
 
-#include "catch.hpp"
+#include "test.h"
 
 #include "string/encoding.h"
 

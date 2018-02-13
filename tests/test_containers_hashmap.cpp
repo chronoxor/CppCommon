@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 13.07.2017
 //
 
-#include "catch.hpp"
+#include "test.h"
 
 #include "containers/hashmap.h"
 

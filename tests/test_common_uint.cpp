@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 11.10.2017
 //
 
-#include "catch.hpp"
+#include "test.h"
 
 #include "common/uint256.h"
 

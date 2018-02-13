@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 27.07.2016
 //
 
-#include "catch.hpp"
+#include "test.h"
 
 #include "memory/memory.h"
 

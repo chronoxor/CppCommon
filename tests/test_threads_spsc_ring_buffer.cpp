@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 16.01.2016
 //
 
-#include "catch.hpp"
+#include "test.h"
 
 #include "threads/spsc_ring_buffer.h"
 

@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 26.01.2016
 //
 
-#include "catch.hpp"
+#include "test.h"
 
 #include "threads/mpsc_ring_buffer.h"
 

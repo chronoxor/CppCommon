@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 21.07.2017
 //
 
-#include "catch.hpp"
+#include "test.h"
 
 #include "system/environment.h"
 #include "utility/endian.h"

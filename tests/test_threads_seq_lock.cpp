@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 17.08.2017
 //
 
-#include "catch.hpp"
+#include "test.h"
 
 #include "threads/seq_lock.h"
 #include "threads/thread.h"
