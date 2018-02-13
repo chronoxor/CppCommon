@@ -24,9 +24,14 @@ std::wstring format(const std::wstring& pattern, const Args&... args)
 
 //! @cond INTERNALS
 
-inline fmt::internal::udl_arg<char> operator"" _a(const char* str, std::size_t) { return { str }; }
-inline fmt::internal::udl_arg<wchar_t> operator"" _a(const wchar_t* str, std::size_t) { return { str }; }
-inline fmt::internal::udl_formatter<char> operator"" _format(const char* str, std::size_t) { return { str }; }
-inline fmt::internal::udl_formatter<wchar_t> operator"" _format(const wchar_t* str, std::size_t) { return { str }; }
+inline fmt::internal::udl_arg<char> operator""_a(const char* str, std::size_t) { return { str }; }
+inline fmt::internal::udl_arg<wchar_t> operator""_a(const wchar_t* str, std::size_t) { return { str }; }
+#if defined(_MSC_VER)
+inline fmt::internal::udl_formatter<char> operator""_format(const char* str, std::size_t) { return { str }; }
+inline fmt::internal::udl_formatter<wchar_t> operator""_format(const wchar_t* str, std::size_t) { return { str }; }
+#else
+template <typename TChar, TChar... CHARS>
+FMT_CONSTEXPR fmt::internal::udl_formatter<TChar, CHARS...> operator""_format() { return {}; }
+#endif
 
 //! @endcond
