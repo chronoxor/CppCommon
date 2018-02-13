@@ -39,11 +39,11 @@ public:
     */
     explicit Exception(const std::string& message = "") : _message(message), _location() {}
     Exception(const Exception&) = default;
-    Exception(Exception&&) noexcept = default;
+    Exception(Exception&&) = default;
     virtual ~Exception() = default;
 
     Exception& operator=(const Exception&) = default;
-    Exception& operator=(Exception&&) noexcept = default;
+    Exception& operator=(Exception&&) = default;
 
     //! Get exception message
     const std::string& message() const noexcept { return _message; }
