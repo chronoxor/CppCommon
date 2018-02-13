@@ -56,6 +56,7 @@ endif()
 
 # System directories
 include_directories(SYSTEM "${CMAKE_CURRENT_SOURCE_DIR}/modules")
+include_directories(SYSTEM "${CMAKE_CURRENT_SOURCE_DIR}/plugins")
 
 # Library
 file(GLOB_RECURSE SOURCE_FILES "source/*.cpp")
