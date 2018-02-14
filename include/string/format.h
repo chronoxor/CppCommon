@@ -9,6 +9,14 @@
 #ifndef CPPCOMMON_STRING_FORMAT_H
 #define CPPCOMMON_STRING_FORMAT_H
 
+#if defined(__clang__)
+#pragma clang system_header
+#elif defined(__GNUC__)
+#pragma GCC system_header
+#elif defined(_MSC_VER)
+#pragma system_header
+#endif
+
 #include <fmt/format.h>
 #include <fmt/ostream.h>
 
