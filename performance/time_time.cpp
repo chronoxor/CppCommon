@@ -2,7 +2,7 @@
 // Created by Ivan Shynkarenka on 13.07.2016
 //
 
-#include <benchmark/cppbenchmark.h>
+#include "benchmark/cppbenchmark.h"
 
 #include "time/time.h"
 

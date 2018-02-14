@@ -116,7 +116,7 @@ if(NOT CPPCOMMON_MODULE)
   # Tests
   file(GLOB TESTS_SOURCE_FILES "tests/*.cpp")
   set_source_files_properties(${TESTS_SOURCE_FILES} PROPERTIES COMPILE_FLAGS "${PEDANTIC_COMPILE_FLAGS}")
-  add_executable(cppcommon-tests ${CATCH} ${TESTS_SOURCE_FILES})
+  add_executable(cppcommon-tests ${CATCH2} ${TESTS_SOURCE_FILES})
   target_link_libraries(cppcommon-tests ${LINKLIBS})
   set_target_properties(cppcommon-tests PROPERTIES FOLDER tests)
   add_dependencies(cppcommon-tests ${PLUGINS})
