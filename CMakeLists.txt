@@ -68,23 +68,23 @@ set_target_properties(cppcommon PROPERTIES FOLDER libraries)
 list(APPEND INSTALL_TARGETS cppcommon)
 list(APPEND LINKLIBS cppcommon)
 
-# Plugins
-file(GLOB PLUGIN_NAMES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/plugins" "plugins/*")
-foreach(PLUGIN_NAME ${PLUGIN_NAMES})
-  file(GLOB PLUGIN_FILES "${CMAKE_CURRENT_SOURCE_DIR}/plugins/${PLUGIN_NAME}/*.cpp")
-  set_source_files_properties(${PLUGIN_FILES} PROPERTIES COMPILE_DEFINITIONS "EXPORTS")
-  set_source_files_properties(${PLUGIN_FILES} PROPERTIES COMPILE_FLAGS "${PEDANTIC_COMPILE_FLAGS}")
-  set(PLUGIN_TARGET "plugin-${PLUGIN_NAME}")
-  add_library(${PLUGIN_TARGET} SHARED ${PLUGIN_FILES})
-  target_link_libraries(${PLUGIN_TARGET} ${LINKLIBS})
-  set_target_properties(${PLUGIN_TARGET} PROPERTIES FOLDER plugins)
-  list(APPEND PLUGINS ${PLUGIN_TARGET})
-  list(APPEND INSTALL_TARGETS ${PLUGIN_TARGET})
-  list(APPEND INSTALL_TARGETS_PDB ${PLUGIN_TARGET})
-endforeach()
-
-# Additional module components: examples, performance benchmarks, tests, tools and install
+# Additional module components: benchmarks, examples, plugins, tests, tools and install
 if(NOT CPPCOMMON_MODULE)
+
+  # Plugins
+  file(GLOB PLUGIN_NAMES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/plugins" "plugins/*")
+  foreach(PLUGIN_NAME ${PLUGIN_NAMES})
+    file(GLOB PLUGIN_FILES "${CMAKE_CURRENT_SOURCE_DIR}/plugins/${PLUGIN_NAME}/*.cpp")
+    set_source_files_properties(${PLUGIN_FILES} PROPERTIES COMPILE_DEFINITIONS "EXPORTS")
+    set_source_files_properties(${PLUGIN_FILES} PROPERTIES COMPILE_FLAGS "${PEDANTIC_COMPILE_FLAGS}")
+    set(PLUGIN_TARGET "plugin-${PLUGIN_NAME}")
+    add_library(${PLUGIN_TARGET} SHARED ${PLUGIN_FILES})
+    target_link_libraries(${PLUGIN_TARGET} ${LINKLIBS})
+    set_target_properties(${PLUGIN_TARGET} PROPERTIES FOLDER plugins)
+    list(APPEND PLUGINS ${PLUGIN_TARGET})
+    list(APPEND INSTALL_TARGETS ${PLUGIN_TARGET})
+    list(APPEND INSTALL_TARGETS_PDB ${PLUGIN_TARGET})
+  endforeach()
 
   # Examples
   file(GLOB EXAMPLE_FILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/examples" "examples/*.cpp")
@@ -100,7 +100,7 @@ if(NOT CPPCOMMON_MODULE)
     list(APPEND INSTALL_TARGETS_PDB ${EXAMPLE_TARGET})
   endforeach()
 
-  # Performance benchmarks
+  # Benchmarks
   file(GLOB BENCHMARK_FILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/performance" "performance/*.cpp")
   foreach(BENCHMARK_FILE ${BENCHMARK_FILES})
     string(REGEX REPLACE "(.*)\\.cpp" "\\1" BENCHMARK_NAME ${BENCHMARK_FILE})
