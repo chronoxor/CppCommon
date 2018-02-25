@@ -18,8 +18,10 @@
 #endif
 
 //! @cond INTERNALS
+#if defined(_MSC_VER)
 #define VLD_FORCE_ENABLE
 #include <vld.h>
+#endif
 //! @endcond
 
 /*! \example memory_leaks.cpp Memory leaks detection example */

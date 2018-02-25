@@ -18,7 +18,9 @@
 #endif
 
 //! @cond INTERNALS
+#if defined(_MSC_VER)
 #include <vld.h>
+#endif
 //! @endcond
 
 #endif // CPPCOMMON_MEMORY_MEMORY_LEAKS_DEBUG_H
