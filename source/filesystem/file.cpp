@@ -387,7 +387,7 @@ public:
             // Read remaining data form the local read buffer
             size_t remain = _size - _index;
             size_t num = (size < remain) ? size : remain;
-            std::memcpy(bytes, _buffer.data(), num);
+            std::memcpy(bytes, _buffer.data() + _index, num);
             counter += num;
             _index += num;
             bytes += num;
@@ -470,6 +470,12 @@ public:
         assert(IsFileOpened() && "File is not opened!");
         if (!IsFileOpened())
             throwex FileSystemException("File is not opened!").Attach(path());
+        // Flush write buffers
+        if (IsFileWriteOpened())
+            FlushBuffer();
+        // Reset the buffer cursor
+        _index = 0;
+        _size = 0;
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         off_t result = lseek(_file, (off_t)offset, SEEK_SET);
         if (result == (off_t)-1)
