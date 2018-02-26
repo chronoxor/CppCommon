@@ -91,8 +91,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">{</div>
 <div class="line">    <span class="keywordtype">int</span>* ptr = <span class="keyword">nullptr</span>;</div>
 <div class="line"></div>
+<div class="line">    <span class="comment">// Make some memory leaks</span></div>
 <div class="line">    ptr = <span class="keyword">new</span> int;</div>
 <div class="line">    ptr = <span class="keyword">new</span> <span class="keywordtype">int</span>[100];</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Get rid of the unused variable warning</span></div>
+<div class="line">    (void)ptr;</div>
 <div class="line"></div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
