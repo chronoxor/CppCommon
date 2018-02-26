@@ -14,8 +14,12 @@ int main(int argc, char** argv)
 {
     int* ptr = nullptr;
 
+    // Make some memory leaks
     ptr = new int;
     ptr = new int[100];
+
+    // Get rid of the unused variable warning
+    (void)ptr;
 
     return 0;
 }
