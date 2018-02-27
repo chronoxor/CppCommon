@@ -13,7 +13,7 @@
 
 #if defined(_MSC_VER)
 #pragma warning(push)
-#pragma warning(disable: 4996) // C4996: The compiler encountered a deprecated declaration.
+#pragma warning(disable: 4996) // C4996: The compiler encountered a deprecated declaration
 #endif
 
 namespace CppCommon {
