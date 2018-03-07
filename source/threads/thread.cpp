@@ -167,12 +167,6 @@ std::bitset<64> Thread::GetAffinity()
             affinity.set(i);
     return affinity;
 #elif defined(_WIN32) || defined(_WIN64)
-    typedef struct
-    {
-        HANDLE UniqueProcess;
-        HANDLE UniqueThread;
-    } CLIENT_ID;
-
     typedef LONG KPRIORITY;
 
     typedef struct _THREAD_BASIC_INFORMATION
@@ -218,12 +212,6 @@ std::bitset<64> Thread::GetAffinity(std::thread& thread)
             affinity.set(i);
     return affinity;
 #elif defined(_WIN32) || defined(_WIN64)
-    typedef struct
-    {
-        HANDLE UniqueProcess;
-        HANDLE UniqueThread;
-    } CLIENT_ID;
-
     typedef LONG KPRIORITY;
 
     typedef struct _THREAD_BASIC_INFORMATION

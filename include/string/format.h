@@ -14,7 +14,7 @@
 #elif defined(__GNUC__)
 #pragma GCC system_header
 #elif defined(_MSC_VER)
-//#pragma system_header
+#pragma system_header
 #endif
 
 #include <fmt/format.h>
