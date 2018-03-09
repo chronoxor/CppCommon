@@ -11,6 +11,11 @@
 #include <codecvt>
 #include <locale>
 
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable: 4996) // C4996: 'function': was declared deprecated
+#endif
+
 namespace CppCommon {
 
 std::string Encoding::ToUTF8(const std::wstring& wstr)
@@ -129,3 +134,8 @@ std::u16string Encoding::UTF32toUTF16(const std::u32string& str)
 }
 
 } // namespace CppCommon
+
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif
+
