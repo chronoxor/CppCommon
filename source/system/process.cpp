@@ -374,7 +374,7 @@ public:
         if (si.hStdError != nullptr)
             CloseHandle(si.hStdError);
 
-        // Close unused thread handle
+        // Close thread handle
         CloseHandle(pi.hThread);
 
         // Return result process
