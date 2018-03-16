@@ -395,9 +395,9 @@ inline void BinTreeSplay<T, TCompare>::Zig(T* x) const
     T* p = x->parent;
     if (p->left == x)
     {
-        T* a = x->left;
-        T* b = x->right;
-        T* c = p->right;
+        [[maybe_unused]] T* a = x->left;
+        [[maybe_unused]] T* b = x->right;
+        [[maybe_unused]] T* c = p->right;
 
         x->parent = nullptr;
         x->right = p;
@@ -407,16 +407,12 @@ inline void BinTreeSplay<T, TCompare>::Zig(T* x) const
 
         if (b != nullptr)
             b->parent = p;
-
-        (void)a;
-        (void)b;
-        (void)c;
     }
     else
     {
-        T* a = p->left;
-        T* b = x->left;
-        T* c = x->right;
+        [[maybe_unused]] T* a = p->left;
+        [[maybe_unused]] T* b = x->left;
+        [[maybe_unused]] T* c = x->right;
 
         x->parent = nullptr;
         x->left = p;
@@ -426,10 +422,6 @@ inline void BinTreeSplay<T, TCompare>::Zig(T* x) const
 
         if (b != nullptr)
             b->parent = p;
-
-        (void)a;
-        (void)b;
-        (void)c;
     }
 }
 
@@ -440,10 +432,10 @@ inline void BinTreeSplay<T, TCompare>::ZigZig(T* x) const
     T* g = p->parent;
     if (p->left == x)
     {
-        T* a = x->left;
-        T* b = x->right;
-        T* c = p->right;
-        T* d = g->right;
+        [[maybe_unused]] T* a = x->left;
+        [[maybe_unused]] T* b = x->right;
+        [[maybe_unused]] T* c = p->right;
+        [[maybe_unused]] T* d = g->right;
 
         x->parent = g->parent;
         x->right = p;
@@ -468,18 +460,13 @@ inline void BinTreeSplay<T, TCompare>::ZigZig(T* x) const
 
         if (c != nullptr)
             c->parent = g;
-
-        (void)a;
-        (void)b;
-        (void)c;
-        (void)d;
     }
     else
     {
-        T* a = g->left;
-        T* b = p->left;
-        T* c = x->left;
-        T* d = x->right;
+        [[maybe_unused]] T* a = g->left;
+        [[maybe_unused]] T* b = p->left;
+        [[maybe_unused]] T* c = x->left;
+        [[maybe_unused]] T* d = x->right;
 
         x->parent = g->parent;
         x->left = p;
@@ -504,11 +491,6 @@ inline void BinTreeSplay<T, TCompare>::ZigZig(T* x) const
 
         if (c != nullptr)
             c->parent = p;
-
-        (void)a;
-        (void)b;
-        (void)c;
-        (void)d;
     }
 }
 
@@ -519,10 +501,10 @@ inline void BinTreeSplay<T, TCompare>::ZigZag(T* x) const
     T* g = p->parent;
     if (p->right == x)
     {
-        T* a = p->left;
-        T* b = x->left;
-        T* c = x->right;
-        T* d = g->right;
+        [[maybe_unused]] T* a = p->left;
+        [[maybe_unused]] T* b = x->left;
+        [[maybe_unused]] T* c = x->right;
+        [[maybe_unused]] T* d = g->right;
 
         x->parent = g->parent;
         x->left = p;
@@ -547,18 +529,13 @@ inline void BinTreeSplay<T, TCompare>::ZigZag(T* x) const
 
         if (c != nullptr)
             c->parent = g;
-
-        (void)a;
-        (void)b;
-        (void)c;
-        (void)d;
     }
     else
     {
-        T* a = g->left;
-        T* b = x->left;
-        T* c = x->right;
-        T* d = p->right;
+        [[maybe_unused]] T* a = g->left;
+        [[maybe_unused]] T* b = x->left;
+        [[maybe_unused]] T* c = x->right;
+        [[maybe_unused]] T* d = p->right;
 
         x->parent = g->parent;
         x->left = g;
@@ -583,11 +560,6 @@ inline void BinTreeSplay<T, TCompare>::ZigZag(T* x) const
 
         if (c != nullptr)
             c->parent = p;
-
-        (void)a;
-        (void)b;
-        (void)c;
-        (void)d;
     }
 }
 

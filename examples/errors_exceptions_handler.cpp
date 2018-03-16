@@ -106,8 +106,7 @@ void GenerateExceptionThrow()
 #endif
 void GenerateRecurseAlloc()
 {
-    uint8_t* buffer = new uint8_t[0x1FFFFFFF];
-    (void)buffer;
+    [[maybe_unused]] uint8_t* buffer = new uint8_t[0x1FFFFFFF];
     GenerateRecurseAlloc();
 }
 #if defined(_MSC_VER)
