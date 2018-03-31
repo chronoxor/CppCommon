@@ -36,11 +36,11 @@ public:
         : _name(name), _offset(offset), _dstoffset(dstoffset)
     {}
     Timezone(const Timezone&) = default;
-    Timezone(Timezone&&) noexcept = default;
+    Timezone(Timezone&&) = default;
     ~Timezone() = default;
 
     Timezone& operator=(const Timezone&) = default;
-    Timezone& operator=(Timezone&&) noexcept = default;
+    Timezone& operator=(Timezone&&) = default;
 
     // Timezone comparison
     friend bool operator==(const Timezone& timezone1, const Timezone& timezone2) noexcept
