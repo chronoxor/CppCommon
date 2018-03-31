@@ -8,8 +8,8 @@
 
 #include "string/encoding.h"
 
-#include <codecvt>
-#include <locale>
+//#include <codecvt>
+//#include <locale>
 
 namespace CppCommon {
 
