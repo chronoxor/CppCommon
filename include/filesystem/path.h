@@ -111,11 +111,11 @@ public:
     */
     Path(const std::wstring& path) : _path(Encoding::ToUTF8(path)) {}
     Path(const Path&) = default;
-    Path(Path&&) noexcept = default;
+    Path(Path&&) = default;
     ~Path() = default;
 
     Path& operator=(const Path&) = default;
-    Path& operator=(Path&&) noexcept = default;
+    Path& operator=(Path&&) = default;
 
     // Append the given path with a path separator
     Path& operator/=(const Path& path)

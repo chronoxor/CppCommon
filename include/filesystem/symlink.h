@@ -31,13 +31,13 @@ public:
     */
     Symlink(const Path& path) : Path(path) {}
     Symlink(const Symlink&) = default;
-    Symlink(Symlink&&) noexcept = default;
+    Symlink(Symlink&&) = default;
     ~Symlink() = default;
 
     Symlink& operator=(const Path& path)
     { Assign(path); return *this; }
     Symlink& operator=(const Symlink&) = default;
-    Symlink& operator=(Symlink&&) noexcept = default;
+    Symlink& operator=(Symlink&&) = default;
 
     //! Read symlink target path
     Path target() const;
