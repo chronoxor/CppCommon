@@ -15,6 +15,8 @@ namespace CppCommon {
 
 std::string Encoding::ToUTF8(const std::wstring& wstr)
 {
+    return std::string();
+/*
 #if defined(__CYGWIN__) || defined(__MINGW32__) || defined(__MINGW64__)
     std::wstring_convert<std::codecvt_utf8_utf16<char16_t>, char16_t> convert;
     return convert.to_bytes((char16_t*)wstr.data(), (char16_t*)wstr.data() + wstr.size());
@@ -25,10 +27,13 @@ std::string Encoding::ToUTF8(const std::wstring& wstr)
     std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> convert;
     return convert.to_bytes(wstr);
 #endif
+*/
 }
 
 std::wstring Encoding::FromUTF8(const std::string& str)
 {
+    return std::wstring();
+/*
 #if defined(__CYGWIN__) || defined(__MINGW32__) || defined(__MINGW64__)
     std::wstring_convert<std::codecvt_utf8_utf16<char16_t>, char16_t> convert;
     auto tmp = convert.from_bytes(str);
@@ -40,10 +45,13 @@ std::wstring Encoding::FromUTF8(const std::string& str)
     std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> convert;
     return convert.from_bytes(str);
 #endif
+*/
 }
 
 std::u16string Encoding::UTF8toUTF16(const std::string& str)
 {
+    return std::u16string();
+/*
 #if defined(_MSC_VER)
     std::wstring_convert<std::codecvt_utf8_utf16<uint16_t>, uint16_t> convert;
     auto tmp = convert.from_bytes(str);
@@ -52,10 +60,13 @@ std::u16string Encoding::UTF8toUTF16(const std::string& str)
     std::wstring_convert<std::codecvt_utf8_utf16<char16_t>, char16_t> convert;
     return convert.from_bytes(str);
 #endif
+*/
 }
 
 std::u32string Encoding::UTF8toUTF32(const std::string& str)
 {
+    return std::u32string();
+/*
 #if defined(_MSC_VER)
     std::wstring_convert<std::codecvt_utf8<uint32_t>, uint32_t> convert;
     auto tmp = convert.from_bytes(str);
@@ -64,10 +75,13 @@ std::u32string Encoding::UTF8toUTF32(const std::string& str)
     std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> convert;
     return convert.from_bytes(str);
 #endif
+*/
 }
 
 std::string Encoding::UTF16toUTF8(const std::u16string& str)
 {
+    return std::string();
+/*
 #if defined(_MSC_VER)
     std::wstring_convert<std::codecvt_utf8_utf16<uint16_t>, uint16_t> convert;
     return convert.to_bytes((uint16_t*)str.data(), (uint16_t*)str.data() + str.size());
@@ -75,10 +89,13 @@ std::string Encoding::UTF16toUTF8(const std::u16string& str)
     std::wstring_convert<std::codecvt_utf8_utf16<char16_t>, char16_t> convert;
     return convert.to_bytes(str);
 #endif
+*/
 }
 
 std::u32string Encoding::UTF16toUTF32(const std::u16string& str)
 {
+    return std::u32string();
+/*
     std::string bytes;
     bytes.reserve(str.size() * 2);
 
@@ -96,10 +113,13 @@ std::u32string Encoding::UTF16toUTF32(const std::u16string& str)
     std::wstring_convert<std::codecvt_utf16<char32_t>, char32_t> convert;
     return convert.from_bytes(bytes);
 #endif
+*/
 }
 
 std::string Encoding::UTF32toUTF8(const std::u32string& str)
 {
+    return std::string();
+/*
 #if defined(_MSC_VER)
     std::wstring_convert<std::codecvt_utf8<uint32_t>, uint32_t> convert;
     return convert.to_bytes((uint32_t*)str.data(), (uint32_t*)str.data() + str.size());
@@ -107,10 +127,13 @@ std::string Encoding::UTF32toUTF8(const std::u32string& str)
     std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> convert;
     return convert.to_bytes(str);
 #endif
+*/
 }
 
 std::u16string Encoding::UTF32toUTF16(const std::u32string& str)
 {
+    return std::u16string();
+/*
 #if defined(_MSC_VER)
     std::wstring_convert<std::codecvt_utf16<uint32_t>, uint32_t> convert;
     std::string bytes = convert.to_bytes((uint32_t*)str.data(), (uint32_t*)str.data() + str.size());
@@ -126,6 +149,7 @@ std::u16string Encoding::UTF32toUTF16(const std::u32string& str)
         result.push_back((char16_t)((uint8_t)(bytes[i]) * 256 + (uint8_t)(bytes[i + 1])));
 
     return result;
+*/
 }
 
 } // namespace CppCommon
