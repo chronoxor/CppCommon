@@ -38,13 +38,13 @@ public:
     */
     Directory(const Path& path) : Path(path) {}
     Directory(const Directory&) = default;
-    Directory(Directory&&) noexcept = default;
+    Directory(Directory&&) = default;
     ~Directory() = default;
 
     Directory& operator=(const Path& path)
     { Assign(path); return *this; }
     Directory& operator=(const Directory&) = default;
-    Directory& operator=(Directory&&) noexcept = default;
+    Directory& operator=(Directory&&) = default;
 
     //! Is the directory exists?
     bool IsDirectoryExists() const;

@@ -38,14 +38,14 @@ public:
 
     DirectoryIterator();
     DirectoryIterator(DirectoryIterator& it);
-    DirectoryIterator(DirectoryIterator&& it) noexcept;
+    DirectoryIterator(DirectoryIterator&& it);
     ~DirectoryIterator();
 
     DirectoryIterator& operator=(DirectoryIterator& it);
-    DirectoryIterator& operator=(DirectoryIterator&& it) noexcept;
+    DirectoryIterator& operator=(DirectoryIterator&& it);
 
-    friend bool operator==(const DirectoryIterator& it1, const DirectoryIterator& it2);
-    friend bool operator!=(const DirectoryIterator& it1, const DirectoryIterator& it2);
+    friend bool operator==(const DirectoryIterator& it1, const DirectoryIterator& it2) noexcept;
+    friend bool operator!=(const DirectoryIterator& it1, const DirectoryIterator& it2) noexcept;
 
     DirectoryIterator& operator++();
     DirectoryIterator operator++(int);

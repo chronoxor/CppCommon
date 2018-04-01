@@ -230,7 +230,7 @@ DirectoryIterator::DirectoryIterator(DirectoryIterator& it) : _pimpl(it._pimpl.r
 {
 }
 
-DirectoryIterator::DirectoryIterator(DirectoryIterator&& it) noexcept : _pimpl(std::move(it._pimpl)), _current(std::move(it._current))
+DirectoryIterator::DirectoryIterator(DirectoryIterator&& it) : _pimpl(std::move(it._pimpl)), _current(std::move(it._current))
 {
 }
 
@@ -245,11 +245,21 @@ DirectoryIterator& DirectoryIterator::operator=(DirectoryIterator& it)
     return *this;
 }
 
-DirectoryIterator& DirectoryIterator::operator=(DirectoryIterator&& it) noexcept
+DirectoryIterator& DirectoryIterator::operator=(DirectoryIterator&& it)
 {
     _pimpl = std::move(it._pimpl);
     _current = std::move(it._current);
     return *this;
+}
+
+bool operator==(const DirectoryIterator& it1, const DirectoryIterator& it2) noexcept
+{
+    return (it1._current == it2._current);
+}
+
+bool operator!=(const DirectoryIterator& it1, const DirectoryIterator& it2) noexcept
+{
+    return (it1._current != it2._current);
 }
 
 DirectoryIterator& DirectoryIterator::operator++()
