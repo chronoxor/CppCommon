@@ -50,8 +50,8 @@ public:
     DirectoryIterator& operator++();
     DirectoryIterator operator++(int);
 
-    const Path& operator*() const;
-    const Path* operator->() const;
+    const Path& operator*() const noexcept;
+    const Path* operator->() const noexcept;
 
     //! Swap two instances
     void swap(DirectoryIterator& it) noexcept;
