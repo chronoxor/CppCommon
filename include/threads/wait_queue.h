@@ -31,11 +31,11 @@ class WaitQueue
 public:
     WaitQueue();
     WaitQueue(const WaitQueue&) = delete;
-    WaitQueue(WaitQueue&&) noexcept = default;
+    WaitQueue(WaitQueue&&) = default;
     ~WaitQueue();
 
     WaitQueue& operator=(const WaitQueue&) = delete;
-    WaitQueue& operator=(WaitQueue&&) noexcept = default;
+    WaitQueue& operator=(WaitQueue&&) = default;
 
     //! Is queue closed?
     bool closed() const;

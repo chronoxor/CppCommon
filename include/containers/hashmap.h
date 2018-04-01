@@ -76,11 +76,11 @@ public:
     HashMap(InputIterator first, InputIterator last, bool unused, size_t capacity = 128, const TKey& blank = TKey(), const THash& hash = THash(), const TEqual& equal = TEqual(), const TAllocator& allocator = TAllocator());
     HashMap(const HashMap& hashmap);
     HashMap(const HashMap& hashmap, size_t capacity);
-    HashMap(HashMap&&) noexcept = default;
+    HashMap(HashMap&&) = default;
     ~HashMap() = default;
 
     HashMap& operator=(const HashMap& hashmap);
-    HashMap& operator=(HashMap&&) noexcept = default;
+    HashMap& operator=(HashMap&&) = default;
 
     //! Check if the hash map is not empty
     explicit operator bool() const noexcept { return !empty(); }
