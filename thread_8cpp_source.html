@@ -253,7 +253,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
 <div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="preprocessor"></span>    <span class="keyword">typedef</span> LONG KPRIORITY;</div>
 <div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;<span class="preprocessor">#if defined(_WIN32_SDK) &amp;&amp; (_WIN32_SDK != &quot;10.0.16299&quot;)</span></div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;<span class="preprocessor">#if defined(_WIN32_SDK) &amp;&amp; (_WIN32_SDK &lt; 16299)</span></div>
 <div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;<span class="preprocessor"></span>    <span class="keyword">typedef</span> <span class="keyword">struct </span>_CLIENT_ID</div>
 <div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    {</div>
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;        HANDLE UniqueProcess;</div>
@@ -306,7 +306,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
 <div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;<span class="preprocessor"></span>    <span class="keyword">typedef</span> LONG KPRIORITY;</div>
 <div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;<span class="preprocessor">#if defined(_WIN32_SDK) &amp;&amp; (_WIN32_SDK != &quot;10.0.16299&quot;)</span></div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;<span class="preprocessor">#if defined(_WIN32_SDK) &amp;&amp; (_WIN32_SDK &lt; 16299)</span></div>
 <div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;<span class="preprocessor"></span>    <span class="keyword">typedef</span> <span class="keyword">struct </span>_CLIENT_ID</div>
 <div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    {</div>
 <div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;        HANDLE UniqueProcess;</div>
