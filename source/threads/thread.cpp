@@ -169,6 +169,14 @@ std::bitset<64> Thread::GetAffinity()
 #elif defined(_WIN32) || defined(_WIN64)
     typedef LONG KPRIORITY;
 
+#if defined(_WIN32_SDK) && (_WIN32_SDK != "10.0.16299")
+    typedef struct _CLIENT_ID
+    {
+        HANDLE UniqueProcess;
+        HANDLE UniqueThread;
+    } CLIENT_ID;
+#endif
+
     typedef struct _THREAD_BASIC_INFORMATION
     {
         NTSTATUS ExitStatus;
@@ -213,6 +221,14 @@ std::bitset<64> Thread::GetAffinity(std::thread& thread)
     return affinity;
 #elif defined(_WIN32) || defined(_WIN64)
     typedef LONG KPRIORITY;
+
+#if defined(_WIN32_SDK) && (_WIN32_SDK != "10.0.16299")
+    typedef struct _CLIENT_ID
+    {
+        HANDLE UniqueProcess;
+        HANDLE UniqueThread;
+    } CLIENT_ID;
+#endif
 
     typedef struct _THREAD_BASIC_INFORMATION
     {
