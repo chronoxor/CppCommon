@@ -40,10 +40,10 @@ install:
   # Chocolatey
   - choco upgrade chocolatey
   # Doxygen
-  - choco install --cache "C:\ProgramData\chocolatey\cache" --force doxygen.portable
-  - choco install --cache "C:\ProgramData\chocolatey\cache" --force ghostscript
-  - choco install --cache "C:\ProgramData\chocolatey\cache" --force graphviz
-  - choco install --cache "C:\ProgramData\chocolatey\cache" --force miktex
+#  - choco install --cache "C:\ProgramData\chocolatey\cache" --force doxygen.portable
+#  - choco install --cache "C:\ProgramData\chocolatey\cache" --force ghostscript
+#  - choco install --cache "C:\ProgramData\chocolatey\cache" --force graphviz
+#  - choco install --cache "C:\ProgramData\chocolatey\cache" --force miktex
   # Cygwin
   - if "%type%"=="Cygwin" if not exist "C:\cygwin64" mkdir "C:\cygwin64"
   - if "%type%"=="Cygwin" appveyor DownloadFile "http://cygwin.com/setup-x86_64.exe" -FileName "C:\cygwin64\setup-x86_64.exe"
