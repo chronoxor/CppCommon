@@ -169,7 +169,7 @@ std::bitset<64> Thread::GetAffinity()
 #elif defined(_WIN32) || defined(_WIN64)
     typedef LONG KPRIORITY;
 
-#if defined(_WIN32_SDK) && (_WIN32_SDK != "10.0.16299")
+#if defined(_WIN32_SDK) && (_WIN32_SDK < 16299)
     typedef struct _CLIENT_ID
     {
         HANDLE UniqueProcess;
@@ -222,7 +222,7 @@ std::bitset<64> Thread::GetAffinity(std::thread& thread)
 #elif defined(_WIN32) || defined(_WIN64)
     typedef LONG KPRIORITY;
 
-#if defined(_WIN32_SDK) && (_WIN32_SDK != "10.0.16299")
+#if defined(_WIN32_SDK) && (_WIN32_SDK < 16299)
     typedef struct _CLIENT_ID
     {
         HANDLE UniqueProcess;
