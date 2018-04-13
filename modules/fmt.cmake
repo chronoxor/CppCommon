@@ -12,7 +12,7 @@ if(NOT TARGET fmt)
     set_source_files_properties(${SOURCE_FILES} PROPERTIES COMPILE_FLAGS "${PEDANTIC_COMPILE_FLAGS} /wd4244 /wd4267 /wd4459 /wd4702")
   endif()
   add_library(fmt ${SOURCE_FILES} ${ASSEMBLER_FILES})
-  target_include_directories(fmt PRIVATE "fmt")
+  target_include_directories(fmt PUBLIC "fmt")
   target_link_libraries(fmt)
 
   # Module folder
