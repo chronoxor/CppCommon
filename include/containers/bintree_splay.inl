@@ -395,9 +395,9 @@ inline void BinTreeSplay<T, TCompare>::Zig(T* x) const
     T* p = x->parent;
     if (p->left == x)
     {
-        [[maybe_unused]] T* a = x->left;
-        [[maybe_unused]] T* b = x->right;
-        [[maybe_unused]] T* c = p->right;
+        MAYBE_UNUSED T* a = x->left;
+        MAYBE_UNUSED T* b = x->right;
+        MAYBE_UNUSED T* c = p->right;
 
         x->parent = nullptr;
         x->right = p;
@@ -410,9 +410,9 @@ inline void BinTreeSplay<T, TCompare>::Zig(T* x) const
     }
     else
     {
-        [[maybe_unused]] T* a = p->left;
-        [[maybe_unused]] T* b = x->left;
-        [[maybe_unused]] T* c = x->right;
+        MAYBE_UNUSED T* a = p->left;
+        MAYBE_UNUSED T* b = x->left;
+        MAYBE_UNUSED T* c = x->right;
 
         x->parent = nullptr;
         x->left = p;
@@ -432,10 +432,10 @@ inline void BinTreeSplay<T, TCompare>::ZigZig(T* x) const
     T* g = p->parent;
     if (p->left == x)
     {
-        [[maybe_unused]] T* a = x->left;
-        [[maybe_unused]] T* b = x->right;
-        [[maybe_unused]] T* c = p->right;
-        [[maybe_unused]] T* d = g->right;
+        MAYBE_UNUSED T* a = x->left;
+        MAYBE_UNUSED T* b = x->right;
+        MAYBE_UNUSED T* c = p->right;
+        MAYBE_UNUSED T* d = g->right;
 
         x->parent = g->parent;
         x->right = p;
@@ -463,10 +463,10 @@ inline void BinTreeSplay<T, TCompare>::ZigZig(T* x) const
     }
     else
     {
-        [[maybe_unused]] T* a = g->left;
-        [[maybe_unused]] T* b = p->left;
-        [[maybe_unused]] T* c = x->left;
-        [[maybe_unused]] T* d = x->right;
+        MAYBE_UNUSED T* a = g->left;
+        MAYBE_UNUSED T* b = p->left;
+        MAYBE_UNUSED T* c = x->left;
+        MAYBE_UNUSED T* d = x->right;
 
         x->parent = g->parent;
         x->left = p;
@@ -501,10 +501,10 @@ inline void BinTreeSplay<T, TCompare>::ZigZag(T* x) const
     T* g = p->parent;
     if (p->right == x)
     {
-        [[maybe_unused]] T* a = p->left;
-        [[maybe_unused]] T* b = x->left;
-        [[maybe_unused]] T* c = x->right;
-        [[maybe_unused]] T* d = g->right;
+        MAYBE_UNUSED T* a = p->left;
+        MAYBE_UNUSED T* b = x->left;
+        MAYBE_UNUSED T* c = x->right;
+        MAYBE_UNUSED T* d = g->right;
 
         x->parent = g->parent;
         x->left = p;
@@ -532,10 +532,10 @@ inline void BinTreeSplay<T, TCompare>::ZigZag(T* x) const
     }
     else
     {
-        [[maybe_unused]] T* a = g->left;
-        [[maybe_unused]] T* b = x->left;
-        [[maybe_unused]] T* c = x->right;
-        [[maybe_unused]] T* d = p->right;
+        MAYBE_UNUSED T* a = g->left;
+        MAYBE_UNUSED T* b = x->left;
+        MAYBE_UNUSED T* c = x->right;
+        MAYBE_UNUSED T* d = p->right;
 
         x->parent = g->parent;
         x->left = g;

@@ -10,6 +10,7 @@
 #define CPPCOMMON_CONTAINERS_BINTREE_SPLAY_H
 
 #include "bintree.h"
+#include "temp/maybe_unused.h"
 
 namespace CppCommon {
 
