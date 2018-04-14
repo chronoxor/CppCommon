@@ -14,6 +14,7 @@
 int main(int argc, char** argv)
 {
     MAYBE_UNUSED int* ptr = nullptr;
+    (void)ptr;
 
     // Make some memory leaks
     ptr = new int;

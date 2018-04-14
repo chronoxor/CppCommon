@@ -108,6 +108,7 @@ void GenerateExceptionThrow()
 void GenerateRecurseAlloc()
 {
     MAYBE_UNUSED uint8_t* buffer = new uint8_t[0x1FFFFFFF];
+    (void)buffer;
     GenerateRecurseAlloc();
 }
 #if defined(_MSC_VER)

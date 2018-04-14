@@ -398,6 +398,9 @@ inline void BinTreeSplay<T, TCompare>::Zig(T* x) const
         MAYBE_UNUSED T* a = x->left;
         MAYBE_UNUSED T* b = x->right;
         MAYBE_UNUSED T* c = p->right;
+        (void)a;
+        (void)b;
+        (void)c;
 
         x->parent = nullptr;
         x->right = p;
@@ -413,6 +416,9 @@ inline void BinTreeSplay<T, TCompare>::Zig(T* x) const
         MAYBE_UNUSED T* a = p->left;
         MAYBE_UNUSED T* b = x->left;
         MAYBE_UNUSED T* c = x->right;
+        (void)a;
+        (void)b;
+        (void)c;
 
         x->parent = nullptr;
         x->left = p;
@@ -436,6 +442,10 @@ inline void BinTreeSplay<T, TCompare>::ZigZig(T* x) const
         MAYBE_UNUSED T* b = x->right;
         MAYBE_UNUSED T* c = p->right;
         MAYBE_UNUSED T* d = g->right;
+        (void)a;
+        (void)b;
+        (void)c;
+        (void)d;
 
         x->parent = g->parent;
         x->right = p;
@@ -467,6 +477,10 @@ inline void BinTreeSplay<T, TCompare>::ZigZig(T* x) const
         MAYBE_UNUSED T* b = p->left;
         MAYBE_UNUSED T* c = x->left;
         MAYBE_UNUSED T* d = x->right;
+        (void)a;
+        (void)b;
+        (void)c;
+        (void)d;
 
         x->parent = g->parent;
         x->left = p;
@@ -505,6 +519,10 @@ inline void BinTreeSplay<T, TCompare>::ZigZag(T* x) const
         MAYBE_UNUSED T* b = x->left;
         MAYBE_UNUSED T* c = x->right;
         MAYBE_UNUSED T* d = g->right;
+        (void)a;
+        (void)b;
+        (void)c;
+        (void)d;
 
         x->parent = g->parent;
         x->left = p;
@@ -536,6 +554,10 @@ inline void BinTreeSplay<T, TCompare>::ZigZag(T* x) const
         MAYBE_UNUSED T* b = x->left;
         MAYBE_UNUSED T* c = x->right;
         MAYBE_UNUSED T* d = p->right;
+        (void)a;
+        (void)b;
+        (void)c;
+        (void)d;
 
         x->parent = g->parent;
         x->left = g;
