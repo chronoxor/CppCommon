@@ -8,8 +8,8 @@
 
 #include "errors/exceptions_handler.h"
 #include "system/stack_trace_manager.h"
-#include "temp/maybe_unused.h"
 #include "threads/thread.h"
+#include "utility/maybe_unused.h"
 
 #include <cfloat>
 #include <csignal>
