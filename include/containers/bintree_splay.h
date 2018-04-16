@@ -11,6 +11,8 @@
 
 #include "bintree.h"
 
+#include "utility/maybe_unused.h"
+
 namespace CppCommon {
 
 //! Intrusive balanced Splay binary tree container

@@ -20,6 +20,7 @@ if(NOT TARGET vld)
   if(LIBVLD_FOUND)
     add_definitions(-DLIBVLD_SUPPORT)
     set(LIBVLD_LIBRARIES ${LIBVLD_LIBRARY})
+    set(vld ${LIBVLD_INCLUDE_DIR} PARENT_SCOPE)
   endif()
-  
+ 
 endif()

@@ -9,6 +9,7 @@
 #include "errors/exceptions_handler.h"
 #include "system/stack_trace_manager.h"
 #include "threads/thread.h"
+#include "utility/maybe_unused.h"
 
 #include <cfloat>
 #include <csignal>
@@ -106,7 +107,8 @@ void GenerateExceptionThrow()
 #endif
 void GenerateRecurseAlloc()
 {
-    [[maybe_unused]] uint8_t* buffer = new uint8_t[0x1FFFFFFF];
+    MAYBE_UNUSED uint8_t* buffer = new uint8_t[0x1FFFFFFF];
+    (void)buffer;
     GenerateRecurseAlloc();
 }
 #if defined(_MSC_VER)
