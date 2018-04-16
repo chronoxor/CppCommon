@@ -134,7 +134,7 @@ public:
         return _write;
     }
 
-    void Create(bool read, bool write, bool truncate = false, const Flags<FileAttributes>& attributes = File::DEFAULT_ATTRIBUTES, const Flags<FilePermissions>& permissions = File::DEFAULT_PERMISSIONS, size_t buffer = File::DEFAULT_BUFFER)
+    void Create(bool read, bool write, const Flags<FileAttributes>& attributes = File::DEFAULT_ATTRIBUTES, const Flags<FilePermissions>& permissions = File::DEFAULT_PERMISSIONS, size_t buffer = File::DEFAULT_BUFFER)
     {
         // Close previously opened file
         assert(!IsFileOpened() && "File is already opened!");
@@ -167,7 +167,7 @@ public:
         if (permissions & FilePermissions::ISVTX)
             mode |= S_ISVTX;
 
-        _file = open(path().string().c_str(), O_CREAT | O_EXCL | ((read && write) ? O_RDWR : (read ? O_RDONLY : (write ? O_WRONLY : 0))) | (truncate ? O_TRUNC : 0), mode);
+        _file = open(path().string().c_str(), O_CREAT | O_EXCL | ((read && write) ? O_RDWR : (read ? O_RDONLY : (write ? O_WRONLY : 0))), mode);
         if (_file < 0)
             throwex FileSystemException("Cannot create a new file!").Attach(path());
 #elif defined(_WIN32) || defined(_WIN64)
@@ -720,9 +720,9 @@ bool File::IsFileWriteOpened() const
     return _pimpl->IsFileWriteOpened();
 }
 
-void File::Create(bool read, bool write, bool truncate, const Flags<FileAttributes>& attributes, const Flags<FilePermissions>& permissions, size_t buffer)
+void File::Create(bool read, bool write, const Flags<FileAttributes>& attributes, const Flags<FilePermissions>& permissions, size_t buffer)
 {
-    return _pimpl->Create(read, write, truncate, attributes, permissions, buffer);
+    return _pimpl->Create(read, write, attributes, permissions, buffer);
 }
 
 void File::Open(bool read, bool write, bool truncate, const Flags<FileAttributes>& attributes, const Flags<FilePermissions>& permissions, size_t buffer)

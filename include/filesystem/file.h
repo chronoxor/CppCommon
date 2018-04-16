@@ -74,12 +74,11 @@ public:
 
         \param read - Read mode
         \param write - Write mode
-        \param truncate - Truncate file (default is false)
         \param attributes - File attributes (default is File::DEFAULT_ATTRIBUTES)
         \param permissions - File permissions (default is File::DEFAULT_PERMISSIONS)
         \param buffer - File buffer size (default is File::DEFAULT_BUFFER)
     */
-    void Create(bool read, bool write, bool truncate = false, const Flags<FileAttributes>& attributes = File::DEFAULT_ATTRIBUTES, const Flags<FilePermissions>& permissions = File::DEFAULT_PERMISSIONS, size_t buffer = File::DEFAULT_BUFFER);
+    void Create(bool read, bool write, const Flags<FileAttributes>& attributes = File::DEFAULT_ATTRIBUTES, const Flags<FilePermissions>& permissions = File::DEFAULT_PERMISSIONS, size_t buffer = File::DEFAULT_BUFFER);
     //! Open an existing file
     /*!
         If the file with the same name is not exist the method will raise

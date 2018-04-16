@@ -18,7 +18,7 @@ TEST_CASE("File common", "[CppCommon][FileSystem]")
     File test("test.tmp");
     REQUIRE(!test.IsFileExists());
     REQUIRE(!test.IsFileOpened());
-    test.Create(false, true, false, File::DEFAULT_ATTRIBUTES, File::DEFAULT_PERMISSIONS, 0);
+    test.Create(false, true, File::DEFAULT_ATTRIBUTES, File::DEFAULT_PERMISSIONS, 0);
     REQUIRE(test.IsFileExists());
     REQUIRE(test.IsFileOpened());
     REQUIRE(!test.IsFileReadOpened());
