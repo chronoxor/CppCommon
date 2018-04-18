@@ -26,6 +26,8 @@ namespace CppCommon {
 class Timespan
 {
 public:
+    //! Initialize timespan with a zero time duration
+    Timespan() noexcept : _duration(0) {}
     //! Initialize timespan with a given time duration value in nanoseconds
     /*!
         \param duration - Time duration value in nanoseconds

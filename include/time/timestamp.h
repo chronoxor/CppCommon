@@ -29,6 +29,8 @@ namespace CppCommon {
 class Timestamp
 {
 public:
+    //! Initialize timestamp with an epoch time
+    Timestamp() noexcept : _timestamp(epoch()) {}
     //! Initialize timestamp with a given time moment in nanoseconds
     /*!
         \param timestamp - Time moment in nanoseconds

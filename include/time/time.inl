@@ -8,6 +8,19 @@
 
 namespace CppCommon {
 
+inline Time::Time() noexcept
+    : _year(1970),
+      _month(1),
+      _day(1),
+      _hour(0),
+      _minute(0),
+      _second(0),
+      _millisecond(0),
+      _microsecond(0),
+      _nanosecond(0)
+{
+}
+
 inline bool operator==(const Time& time1, const Time& time2) noexcept
 {
     return ((time1._year == time2._year) && (time1._month == time2._month) && (time1._day == time2._day) &&

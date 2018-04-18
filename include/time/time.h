@@ -26,6 +26,8 @@ namespace CppCommon {
 class Time
 {
 public:
+    //! Initialize time with an epoch time
+    Time() noexcept;
     //! Initialize time with a given date & time components (year, month, day, hour, minute, second, etc.)
     /*!
         \param year - Year value (1970-2038 for 32-bit or 1970-3000 for 64-bit)
@@ -166,8 +168,6 @@ protected:
     //! Nanosecond value
     int _nanosecond;
 
-    //! Protected default constructor
-    Time() noexcept = default;
     //! Protected initialize time with a timestamp
     /*!
         \param timestamp - Timestamp
