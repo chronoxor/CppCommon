@@ -122,9 +122,9 @@ public:
     std::bitset<sizeof(type) * 8> bitset() const noexcept { return {_value}; }
 
     //! Swap two instances
-    void swap(Flags& flags) noexcept;
+    void swap(Flags& flags) noexcept { using std::swap; swap(_value, flags._value); }
     template <typename UEnum>
-    friend void swap(Flags<UEnum>& flags1, Flags<UEnum>& flag2) noexcept;
+    friend void swap(Flags<UEnum>& flags1, Flags<UEnum>& flag2) noexcept { flags1.swap(flags2); }
 
 private:
     type _value;

@@ -26,17 +26,4 @@ constexpr auto operator^(TEnum value1, TEnum value2) noexcept -> typename std::e
     return Flags<TEnum>(value1) ^ value2;
 }
 
-template <typename TEnum>
-inline void Flags<TEnum>::swap(Flags& flags) noexcept
-{
-    using std::swap;
-    swap(_value, flags._value);
-}
-
-template <typename TEnum>
-inline void swap(Flags<TEnum>& flags1, Flags<TEnum>& flags2) noexcept
-{
-    flags1.swap(flags2);
-}
-
 } // namespace CppCommon
