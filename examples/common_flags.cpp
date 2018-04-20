@@ -24,7 +24,7 @@ ENUM_FLAGS(MyFlags)
 
 int main(int argc, char** argv)
 {
-    auto mask = MyFlags::One | MyFlags::Two;
+    auto mask = MyFlags::One | MyFlags::Two | MyFlags::Three;
     if (mask & MyFlags::One)
         std::cout << "MyFlags::One is set" << std::endl;
     if (mask & MyFlags::Two)

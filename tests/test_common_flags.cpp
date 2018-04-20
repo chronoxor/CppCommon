@@ -31,19 +31,19 @@ TEST_CASE("Enum-based flags", "[CppCommon][Common]")
     REQUIRE(single.underlying() == 2u);
     REQUIRE(single.bitset().to_ulong() == 2u);
 
-    Flags<MyFlags> combination = MyFlags::One | MyFlags::Three;
+    Flags<MyFlags> combination = MyFlags::One | MyFlags::Two | MyFlags::Three;
     REQUIRE((combination & MyFlags::One));
-    REQUIRE(!(combination & MyFlags::Two));
+    REQUIRE((combination & MyFlags::Two));
     REQUIRE((combination & MyFlags::Three));
     REQUIRE(!(combination & MyFlags::Four));
-    REQUIRE(combination.underlying() == 5u);
-    REQUIRE(combination.bitset().to_ulong() == 5u);
+    REQUIRE(combination.underlying() == 7u);
+    REQUIRE(combination.bitset().to_ulong() == 7u);
 
     combination = ~combination;
     REQUIRE(!(combination & MyFlags::One));
-    REQUIRE((combination & MyFlags::Two));
+    REQUIRE(!(combination & MyFlags::Two));
     REQUIRE(!(combination & MyFlags::Three));
     REQUIRE((combination & MyFlags::Four));
-    REQUIRE(combination.underlying() == ~5u);
-    REQUIRE(combination.bitset().to_ulong() == ~5u);
+    REQUIRE(combination.underlying() == ~7u);
+    REQUIRE(combination.bitset().to_ulong() == ~7u);
 }
