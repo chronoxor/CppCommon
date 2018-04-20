@@ -111,6 +111,9 @@ public:
     friend bool operator!=(const Flags& flags1, const Flags& flags2) noexcept
     { return flags1._value != flags2._value; }
 
+    //! Convert to the enum value
+    operator TEnum() const noexcept { return (TEnum)_value; }
+
     //! Get the enum value
     TEnum value() const noexcept { return (TEnum)_value; }
     //! Get the underlying enum value
