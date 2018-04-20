@@ -124,7 +124,7 @@ public:
     //! Swap two instances
     void swap(Flags& flags) noexcept { using std::swap; swap(_value, flags._value); }
     template <typename UEnum>
-    friend void swap(Flags<UEnum>& flags1, Flags<UEnum>& flag2) noexcept { flags1.swap(flags2); }
+    friend void swap(Flags<UEnum>& flags1, Flags<UEnum>& flags2) noexcept { flags1.swap(flags2); }
 
 private:
     type _value;
