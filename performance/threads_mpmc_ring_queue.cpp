@@ -45,7 +45,7 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     std::vector<std::thread> producers;
     for (int producer = 0; producer < producers_count; ++producer)
     {
-        producers.push_back(std::thread([&queue, &wait_strategy, producer, producers_count]()
+        producers.emplace_back([&queue, &wait_strategy, producer, producers_count]()
         {
             uint64_t items = (items_to_produce / producers_count);
             for (uint64_t i = 0; i < items; ++i)
@@ -54,7 +54,7 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
                 while (!queue.Enqueue((T)(items * producer + i)))
                     wait_strategy();
             }
-        }));
+        });
     }
 
     // Wait for the consumer thread

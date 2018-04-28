@@ -29,7 +29,7 @@ int main(int argc, char** argv)
     std::vector<std::thread> threads;
     for (int thread = 0; thread < concurrency; ++thread)
     {
-        threads.push_back(std::thread([thread]()
+        threads.emplace_back([thread]()
         {
             // Named manual-reset event slave
             CppCommon::NamedEventManualReset event_slave("named_manual_event_example");
@@ -45,7 +45,7 @@ int main(int argc, char** argv)
             event_slave.Wait();
 
             std::cout << "Thread " << thread << " signaled!" << std::endl;
-        }));
+        });
     }
 
     // Perform text input

@@ -30,7 +30,7 @@ int main(int argc, char** argv)
     std::vector<std::thread> threads;
     for (int thread = 0; thread < 4; ++thread)
     {
-        threads.push_back(std::thread([&lock, thread]()
+        threads.emplace_back([&lock, thread]()
         {
             for (;;)
             {
@@ -41,7 +41,7 @@ int main(int argc, char** argv)
                     return;
                 }
             }
-        }));
+        });
     }
 
     // Wait for input

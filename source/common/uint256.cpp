@@ -112,7 +112,7 @@ std::string uint256_t::string(size_t base, size_t length) const
     if ((base < 2) || (base > 16))
         throw std::invalid_argument("Base must be in the range [2, 16]");
 
-    std::string out = "";
+    std::string out;
 
     if (!(*this))
         out = "0";

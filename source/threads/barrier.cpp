@@ -27,7 +27,7 @@ namespace CppCommon {
 class Barrier::Impl
 {
 public:
-    Impl(int threads) : _threads(threads)
+    explicit Impl(int threads) : _threads(threads)
     {
         assert((threads > 0) && "Barrier threads counter must be greater than zero!");
 

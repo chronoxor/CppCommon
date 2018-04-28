@@ -45,7 +45,7 @@ void produce_consume(CppBenchmark::Context& context)
     std::vector<std::thread> producers;
     for (int producer = 0; producer < producers_count; ++producer)
     {
-        producers.push_back(std::thread([&ring, producer, producers_count]()
+        producers.emplace_back([&ring, producer, producers_count]()
         {
             uint64_t items = (items_to_produce / producers_count);
             for (uint64_t i = 0; i < items; ++i)
@@ -54,7 +54,7 @@ void produce_consume(CppBenchmark::Context& context)
                 if (!ring.Enqueue((T)(items * producer + i)))
                     break;
             }
-        }));
+        });
     }
 
     // Wait for the consumer thread

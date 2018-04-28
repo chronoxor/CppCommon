@@ -36,7 +36,7 @@ void produce(CppBenchmark::Context& context)
     std::vector<std::thread> readers;
     for (int reader = 0; reader < readers_count; ++reader)
     {
-        readers.push_back(std::thread([&lock]()
+        readers.emplace_back([&lock]()
         {
             for (;;)
             {
@@ -45,7 +45,7 @@ void produce(CppBenchmark::Context& context)
                     return;
                 Thread::Yield();
             }
-        }));
+        });
     }
 
     // Start writer threads

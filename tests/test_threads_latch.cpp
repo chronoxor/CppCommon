@@ -45,7 +45,7 @@ TEST_CASE("Latch one thread to wait for multiple threads", "[CppCommon][Threads]
     std::vector<std::thread> threads;
     for (int thread = 0; thread < concurrency; ++thread)
     {
-        threads.push_back(std::thread([&latch, &count, thread]()
+        threads.emplace_back([&latch, &count, thread]()
         {
             // Increment threads counter
             ++count;
@@ -55,7 +55,7 @@ TEST_CASE("Latch one thread to wait for multiple threads", "[CppCommon][Threads]
 
             // Count down the latch
             latch.CountDown();
-        }));
+        });
     }
 
     // Wait until work is done
@@ -80,7 +80,7 @@ TEST_CASE("Latch multiple threads to wait for the one initialization thread", "[
     std::vector<std::thread> threads;
     for (int thread = 0; thread < concurrency; ++thread)
     {
-        threads.push_back(std::thread([&latch, &count, thread]()
+        threads.emplace_back([&latch, &count, thread]()
         {
             // Wait for the latch
             latch.Wait();
@@ -90,7 +90,7 @@ TEST_CASE("Latch multiple threads to wait for the one initialization thread", "[
 
             // Sleep for a while...
             Thread::Sleep(thread * 100);
-        }));
+        });
     }
 
     // Perform some initialization

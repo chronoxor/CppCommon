@@ -13,7 +13,8 @@
 struct MyQueueNode : public CppCommon::Queue<MyQueueNode>::Node
 {
     int value;
-    MyQueueNode(int v) : value(v) {}
+
+    explicit MyQueueNode(int v) : value(v) {}
 };
 
 int main(int argc, char** argv)

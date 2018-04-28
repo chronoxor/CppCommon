@@ -23,8 +23,8 @@
 #include <signal.h>
 #include <unistd.h>
 #elif defined(_WIN32) || defined(_WIN64)
+#include <csignal>
 #include <new.h>
-#include <signal.h>
 #include <windows.h>
 #if defined(DBGHELP_SUPPORT)
 #include "string/format.h"

@@ -33,7 +33,7 @@ void produce(CppBenchmark::Context& context)
     std::vector<std::thread> readers;
     for (int reader = 0; reader < readers_count; ++reader)
     {
-        readers.push_back(std::thread([&lock, &readers_crc, reader, readers_count]()
+        readers.emplace_back([&lock, &readers_crc, reader, readers_count]()
         {
             uint64_t items = (items_to_produce / readers_count);
             for (uint64_t i = 0; i < items; ++i)
@@ -41,14 +41,14 @@ void produce(CppBenchmark::Context& context)
                 ReadLocker<RWLock> locker(lock);
                 readers_crc += (reader * items) + i;
             }
-        }));
+        });
     }
 
     // Start writers threads
     std::vector<std::thread> writers;
     for (int writer = 0; writer < writers_count; ++writer)
     {
-        writers.push_back(std::thread([&lock, &writers_crc, writer, writers_count]()
+        writers.emplace_back([&lock, &writers_crc, writer, writers_count]()
         {
             uint64_t items = (items_to_produce / writers_count);
             for (uint64_t i = 0; i < items; ++i)
@@ -56,7 +56,7 @@ void produce(CppBenchmark::Context& context)
                 WriteLocker<RWLock> locker(lock);
                 writers_crc += (writer * items) + i;
             }
-        }));
+        });
     }
 
     // Wait for all readers threads

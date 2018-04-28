@@ -31,7 +31,7 @@ int main(int argc, char** argv)
     std::vector<std::thread> threads;
     for (int thread = 0; thread < concurrency; ++thread)
     {
-        threads.push_back(std::thread([&cs, &cv, &finish, thread]()
+        threads.emplace_back([&cs, &cv, &finish, thread]()
         {
             std::cout << "Thread " << thread << " initialized!" << std::endl;
 
@@ -56,7 +56,7 @@ int main(int argc, char** argv)
             cs.Unlock();
 
             std::cout << "Thread " << thread << " finished!" << std::endl;
-        }));
+        });
     }
 
     // Perform text input

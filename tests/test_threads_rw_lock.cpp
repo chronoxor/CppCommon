@@ -79,7 +79,7 @@ TEST_CASE("Read/Write locker", "[CppCommon][Threads]")
     std::vector<std::thread> consumers;
     for (int consumer = 0; consumer < consumers_count; ++consumer)
     {
-        consumers.push_back(std::thread([&lock, &crcs, &current, consumer, items_to_produce]()
+        consumers.emplace_back([&lock, &crcs, &current, consumer, items_to_produce]()
         {
             int item = 0;
             while (item < (items_to_produce - 1))
@@ -100,7 +100,7 @@ TEST_CASE("Read/Write locker", "[CppCommon][Threads]")
                 // Yield to another thread...
                 Thread::Yield();
             }
-        }));
+        });
     }
 
     // Wait for producer thread

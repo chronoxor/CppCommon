@@ -14,7 +14,7 @@ TEST_CASE("Shared memory manager", "[CppCommon][System]")
 {
     const char* name = "shared_memory_test";
     const char* message = "shared message";
-    int size = 14;
+    size_t size = 14;
 
     // Create new shared memory manager with the given name and size
     SharedMemory shared1(name, size);

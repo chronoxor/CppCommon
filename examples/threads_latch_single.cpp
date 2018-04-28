@@ -23,7 +23,7 @@ int main(int argc, char** argv)
     std::vector<std::thread> threads;
     for (int thread = 0; thread < concurrency; ++thread)
     {
-        threads.push_back(std::thread([&latch, thread]()
+        threads.emplace_back([&latch, thread]()
         {
             std::cout << "Thread " << thread << " waiting for the latch..." << std::endl;
 
@@ -34,7 +34,7 @@ int main(int argc, char** argv)
 
             // Sleep for a while...
             CppCommon::Thread::SleepFor(CppCommon::Timespan::milliseconds(thread * 10));
-        }));
+        });
     }
 
     // Perform some initialization

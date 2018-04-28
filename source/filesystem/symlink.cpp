@@ -129,10 +129,7 @@ bool Symlink::IsSymlinkExists() const
     if (attributes == INVALID_FILE_ATTRIBUTES)
         return false;
 
-    if (attributes & FILE_ATTRIBUTE_REPARSE_POINT)
-        return true;
-    else
-        return false;
+    return (attributes & FILE_ATTRIBUTE_REPARSE_POINT) != 0;
 #endif
 }
 

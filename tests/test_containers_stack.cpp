@@ -13,7 +13,8 @@ namespace {
 struct MyStackNode : public Stack<MyStackNode>::Node
 {
     int value;
-    MyStackNode(int v) : value(v) {}
+
+    explicit MyStackNode(int v) : value(v) {}
 };
 
 } // namespace

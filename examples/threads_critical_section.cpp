@@ -24,7 +24,7 @@ int main(int argc, char** argv)
     std::vector<std::thread> threads;
     for (int thread = 0; thread < 4; ++thread)
     {
-        threads.push_back(std::thread([&lock, &stop, thread]()
+        threads.emplace_back([&lock, &stop, thread]()
         {
             while (!stop)
             {
@@ -33,7 +33,7 @@ int main(int argc, char** argv)
 
                 std::cout << "Random value from thread " << thread << ": " << rand() << std::endl;
             }
-        }));
+        });
     }
 
     // Wait for input

@@ -27,7 +27,7 @@ int main(int argc, char** argv)
     std::vector<std::thread> producers;
     for (int producer = 0; producer < 4; ++producer)
     {
-        producers.push_back(std::thread([&lock, &stop, &current, producer]()
+        producers.emplace_back([&lock, &stop, &current, producer]()
         {
             while (!stop)
             {
@@ -42,14 +42,14 @@ int main(int argc, char** argv)
                 // Sleep for a while...
                 CppCommon::Thread::SleepFor(CppCommon::Timespan::milliseconds((producer + 1) * 1000));
             }
-        }));
+        });
     }
 
     // Start some consumers threads
     std::vector<std::thread> consumers;
     for (int consumer = 0; consumer < 4; ++consumer)
     {
-        consumers.push_back(std::thread([&lock, &stop, &current, consumer]()
+        consumers.emplace_back([&lock, &stop, &current, consumer]()
         {
             while (!stop)
             {
@@ -63,7 +63,7 @@ int main(int argc, char** argv)
                 // Sleep for a while...
                 CppCommon::Thread::SleepFor(CppCommon::Timespan::milliseconds(100));
             }
-        }));
+        });
     }
 
     // Wait for input

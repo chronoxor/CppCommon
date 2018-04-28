@@ -26,7 +26,7 @@ TEST_CASE("Named manual-reset event", "[CppCommon][Threads]")
     std::vector<std::thread> threads;
     for (int thread = 0; thread < concurrency; ++thread)
     {
-        threads.push_back(std::thread([&count, thread]()
+        threads.emplace_back([&count, thread]()
         {
             // Named manual-reset event slave
             NamedEventManualReset event_slave("named_manual_event_test");
@@ -39,7 +39,7 @@ TEST_CASE("Named manual-reset event", "[CppCommon][Threads]")
 
             // Increment threads counter
             ++count;
-        }));
+        });
     }
 
     // Allow threads to start

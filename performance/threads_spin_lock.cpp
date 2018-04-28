@@ -28,7 +28,7 @@ void produce(CppBenchmark::Context& context)
     std::vector<std::thread> producers;
     for (int producer = 0; producer < producers_count; ++producer)
     {
-        producers.push_back(std::thread([&lock, &crc, producer, producers_count]()
+        producers.emplace_back([&lock, &crc, producer, producers_count]()
         {
             uint64_t items = (items_to_produce / producers_count);
             for (uint64_t i = 0; i < items; ++i)
@@ -36,7 +36,7 @@ void produce(CppBenchmark::Context& context)
                 Locker<SpinLock> locker(lock);
                 crc += (producer * items) + i;
             }
-        }));
+        });
     }
 
     // Wait for all producers threads

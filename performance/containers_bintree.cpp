@@ -33,7 +33,7 @@ struct MyBinTreeNode
     size_t level;
     bool rb;
 
-    MyBinTreeNode(int v) : value(v) {}
+    explicit MyBinTreeNode(int v) : value(v) {}
     friend bool operator<(const MyBinTreeNode& node1, const MyBinTreeNode& node2)
     { return node1.value < node2.value; }
 };

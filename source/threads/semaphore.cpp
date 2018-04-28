@@ -31,7 +31,7 @@ namespace CppCommon {
 class Semaphore::Impl
 {
 public:
-    Impl(int resources) : _resources(resources)
+    explicit Impl(int resources) : _resources(resources)
     {
         assert((resources > 0) && "Semaphore resources counter must be greater than zero!");
 

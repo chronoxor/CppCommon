@@ -23,7 +23,7 @@ int main(int argc, char** argv)
     std::vector<std::thread> threads;
     for (int thread = 0; thread < concurrency; ++thread)
     {
-        threads.push_back(std::thread([&event, thread]()
+        threads.emplace_back([&event, thread]()
         {
             std::cout << "Thread " << thread << " initialized!" << std::endl;
 
@@ -36,7 +36,7 @@ int main(int argc, char** argv)
             event.Wait();
 
             std::cout << "Thread " << thread << " signaled!" << std::endl;
-        }));
+        });
     }
 
     // Allow threads to start

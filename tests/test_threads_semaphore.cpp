@@ -57,7 +57,7 @@ TEST_CASE("Semaphore locker", "[CppCommon][Threads]")
     std::vector<std::thread> producers;
     for (int producer = 0; producer < producers_count; ++producer)
     {
-        producers.push_back(std::thread([&lock, &crc, producer, items_to_produce, producers_count]()
+        producers.emplace_back([&lock, &crc, producer, items_to_produce, producers_count]()
         {
             int items = (items_to_produce / producers_count);
             for (int i = 0; i < items; ++i)
@@ -65,7 +65,7 @@ TEST_CASE("Semaphore locker", "[CppCommon][Threads]")
                 Locker<Semaphore> locker(lock);
                 crc += (producer * items) + i;
             }
-        }));
+        });
     }
 
     // Wait for all producers threads

@@ -174,7 +174,7 @@ std::vector<Directory> Directory::GetDirectories(const std::string& pattern)
         // Special check for directory
         if (target.IsDirectory())
             if (pattern.empty() || std::regex_match(it->filename().string(), matcher))
-                result.push_back(*it);
+                result.emplace_back(*it);
     }
     return result;
 }
@@ -193,7 +193,7 @@ std::vector<Directory> Directory::GetDirectoriesRecurse(const std::string& patte
         // Special check for directory
         if (target.IsDirectory())
             if (pattern.empty() || std::regex_match(it->filename().string(), matcher))
-                result.push_back(*it);
+                result.emplace_back(*it);
     }
     return result;
 }
@@ -212,7 +212,7 @@ std::vector<File> Directory::GetFiles(const std::string& pattern)
         // Special check for directory
         if (!target.IsDirectory())
             if (pattern.empty() || std::regex_match(it->filename().string(), matcher))
-                result.push_back(*it);
+                result.emplace_back(*it);
     }
     return result;
 }
@@ -231,7 +231,7 @@ std::vector<File> Directory::GetFilesRecurse(const std::string& pattern)
         // Special check for directory
         if (!target.IsDirectory())
             if (pattern.empty() || std::regex_match(it->filename().string(), matcher))
-                result.push_back(*it);
+                result.emplace_back(*it);
     }
     return result;
 }
@@ -245,7 +245,7 @@ std::vector<Symlink> Directory::GetSymlinks(const std::string& pattern)
         // Special check for symbolic link
         if (it->IsSymlink())
             if (pattern.empty() || std::regex_match(it->filename().string(), matcher))
-                result.push_back(Symlink(*it));
+                result.emplace_back(*it);
     }
     return result;
 }
@@ -259,7 +259,7 @@ std::vector<Symlink> Directory::GetSymlinksRecurse(const std::string& pattern)
         // Special check for symbolic link
         if (it->IsSymlink())
             if (pattern.empty() || std::regex_match(it->filename().string(), matcher))
-                result.push_back(Symlink(*it));
+                result.emplace_back(*it);
     }
     return result;
 }

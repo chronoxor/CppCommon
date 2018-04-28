@@ -23,14 +23,14 @@ TEST_CASE("Condition variable notify one", "[CppCommon][Threads]")
     std::vector<std::thread> threads;
     for (int thread = 0; thread < concurrency; ++thread)
     {
-        threads.push_back(std::thread([&cs, &cv1, &cv2, &result]()
+        threads.emplace_back([&cs, &cv1, &cv2, &result]()
         {
             cs.Lock();
             ++result;
             cv1.NotifyOne();
             cv2.Wait(cs);
             cs.Unlock();
-        }));
+        });
     }
 
     // Wait for all threads are started and waiting for notifications
@@ -67,14 +67,14 @@ TEST_CASE("Condition variable notify all", "[CppCommon][Threads]")
     std::vector<std::thread> threads;
     for (int thread = 0; thread < concurrency; ++thread)
     {
-        threads.push_back(std::thread([&cs, &cv1, &cv2, &result]()
+        threads.emplace_back([&cs, &cv1, &cv2, &result]()
         {
             cs.Lock();
             ++result;
             cv1.NotifyOne();
             cv2.Wait(cs);
             cs.Unlock();
-        }));
+        });
     }
 
     // Wait for all threads are started and waiting for notifications

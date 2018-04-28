@@ -28,7 +28,7 @@ void produce(CppBenchmark::Context& context)
     std::vector<std::thread> producers;
     for (int producer = 0; producer < producers_count; ++producer)
     {
-        producers.push_back(std::thread([&crc, producer, producers_count]()
+        producers.emplace_back([&crc, producer, producers_count]()
         {
             // Create named critical section slave
             NamedCriticalSection lock_slave("named_critical_section_perf");
@@ -39,7 +39,7 @@ void produce(CppBenchmark::Context& context)
                 Locker<NamedCriticalSection> locker(lock_slave);
                 crc += (producer * items) + i;
             }
-        }));
+        });
     }
 
     // Wait for all producers threads

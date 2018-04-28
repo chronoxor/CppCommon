@@ -32,7 +32,7 @@ void produce(CppBenchmark::Context& context)
     std::vector<std::thread> producers;
     for (int producer = 0; producer < producers_count; ++producer)
     {
-        producers.push_back(std::thread([&crc, producer, producers_count, semaphore_count]()
+        producers.emplace_back([&crc, producer, producers_count, semaphore_count]()
         {
             // Create named semaphore slave
             NamedSemaphore lock_slave("named_semaphore_perf", semaphore_count);
@@ -43,7 +43,7 @@ void produce(CppBenchmark::Context& context)
                 Locker<NamedSemaphore> locker(lock_slave);
                 crc += (producer * items) + i;
             }
-        }));
+        });
     }
 
     // Wait for all producers threads

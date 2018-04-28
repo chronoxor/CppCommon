@@ -29,7 +29,7 @@ TEST_CASE("Named semaphore locker", "[CppCommon][Threads]")
     std::vector<std::thread> producers;
     for (int producer = 0; producer < producers_count; ++producer)
     {
-        producers.push_back(std::thread([&crc, producer, items_to_produce, producers_count]()
+        producers.emplace_back([&crc, producer, items_to_produce, producers_count]()
         {
             // Named semaphore slave
             NamedSemaphore lock_slave("named_semaphore_test", 4);
@@ -40,7 +40,7 @@ TEST_CASE("Named semaphore locker", "[CppCommon][Threads]")
                 Locker<NamedSemaphore> locker(lock_slave);
                 crc += (producer * items) + i;
             }
-        }));
+        });
     }
 
     // Wait for all producers threads

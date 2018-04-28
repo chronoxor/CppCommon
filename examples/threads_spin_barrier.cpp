@@ -23,7 +23,7 @@ int main(int argc, char** argv)
     std::vector<std::thread> threads;
     for (int thread = 0; thread < concurrency; ++thread)
     {
-        threads.push_back(std::thread([&barrier, thread]()
+        threads.emplace_back([&barrier, thread]()
         {
             std::cout << "Thread " << thread << " initialized!" << std::endl;
 
@@ -36,7 +36,7 @@ int main(int argc, char** argv)
             bool last = barrier.Wait();
 
             std::cout << "Thread " << thread << " after barrier!" << (last ? " Last one!" : "") << std::endl;
-        }));
+        });
     }
 
     // Wait for all threads

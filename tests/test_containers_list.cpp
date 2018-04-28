@@ -13,7 +13,8 @@ namespace {
 struct MyListNode : public List<MyListNode>::Node
 {
     int value;
-    MyListNode(int v) : value(v) {}
+
+    explicit MyListNode(int v) : value(v) {}
 };
 
 } // namespace

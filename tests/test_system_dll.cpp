@@ -53,7 +53,7 @@ TEST_CASE("DLL plugin interface", "[CppCommon][System]")
     REQUIRE(release != nullptr);
 
     // Create the plugin interface
-    IRandom* pRandom;
+    IRandom *pRandom = nullptr;
     REQUIRE(create(&pRandom));
 
     // Call the plugin interface method

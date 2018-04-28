@@ -100,7 +100,7 @@ TEST_CASE("Named read/write locker", "[CppCommon][Threads]")
     std::vector<std::thread> consumers;
     for (int consumer = 0; consumer < consumers_count; ++consumer)
     {
-        consumers.push_back(std::thread([&crcs, &current, consumer, items_to_produce]()
+        consumers.emplace_back([&crcs, &current, consumer, items_to_produce]()
         {
             // Named read/write lock slave
             NamedRWLock lock_slave("named_rw_lock_test");
@@ -124,7 +124,7 @@ TEST_CASE("Named read/write locker", "[CppCommon][Threads]")
                 // Yield to another thread...
                 Thread::Yield();
             }
-        }));
+        });
     }
 
     // Wait for producer thread

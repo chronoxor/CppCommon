@@ -282,7 +282,7 @@ public:
         \return Copied path
     */
     static Path CopyIf(const Path& src, const Path& dst, const std::string& pattern = "", bool overwrite = false);
-    //! Recursively ñopy the given source path to destination path (files, directories, symlinks, etc)
+    //! Recursively ?opy the given source path to destination path (files, directories, symlinks, etc)
     /*!
         \param src - Source path
         \param dst - Destination path

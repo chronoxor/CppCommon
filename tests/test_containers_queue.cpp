@@ -13,7 +13,8 @@ namespace {
 struct MyQueueNode : public Queue<MyQueueNode>::Node
 {
     int value;
-    MyQueueNode(int v) : value(v) {}
+
+    explicit MyQueueNode(int v) : value(v) {}
 };
 
 } // namespace

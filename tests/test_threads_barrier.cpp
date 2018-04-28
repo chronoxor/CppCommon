@@ -33,7 +33,7 @@ TEST_CASE("Barrier multiple threads", "[CppCommon][Threads]")
     std::vector<std::thread> threads;
     for (int thread = 0; thread < concurrency; ++thread)
     {
-        threads.push_back(std::thread([&barrier, &count, &last, &failed, concurrency, thread]()
+        threads.emplace_back([&barrier, &count, &last, &failed, concurrency, thread]()
         {
             // Increment threads counter
             ++count;
@@ -48,7 +48,7 @@ TEST_CASE("Barrier multiple threads", "[CppCommon][Threads]")
             // Check result in each thread
             if (count != concurrency)
                 failed = true;
-        }));
+        });
     }
 
     // Wait for all threads to complete

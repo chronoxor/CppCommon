@@ -68,7 +68,7 @@ TEST_CASE("SeqLock random", "[CppCommon][Threads]")
     std::vector<std::thread> consumers;
     for (int consumer = 0; consumer < consumers_count; ++consumer)
     {
-        consumers.push_back(std::thread([&lock]()
+        consumers.emplace_back([&lock]()
         {
             Data data = lock.Read();
             REQUIRE(data.b == data.a + 100);
@@ -76,7 +76,7 @@ TEST_CASE("SeqLock random", "[CppCommon][Threads]")
 
             // Yield to another thread...
             Thread::Yield();
-        }));
+        });
     }
 
     // Wait for producer thread

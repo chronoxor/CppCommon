@@ -82,7 +82,7 @@ TEST_CASE("File-locker", "[CppCommon][Threads]")
     std::vector<std::thread> consumers;
     for (int consumer = 0; consumer < consumers_count; ++consumer)
     {
-        consumers.push_back(std::thread([&crcs, &current, consumer, items_to_produce]()
+        consumers.emplace_back([&crcs, &current, consumer, items_to_produce]()
         {
             FileLock lock_slave(".lock");
 
@@ -105,7 +105,7 @@ TEST_CASE("File-locker", "[CppCommon][Threads]")
                 // Yield to another thread...
                 Thread::Yield();
             }
-        }));
+        });
     }
 
     // Wait for producer thread

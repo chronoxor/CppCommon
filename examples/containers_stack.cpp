@@ -13,7 +13,8 @@
 struct MyStackNode : public CppCommon::Stack<MyStackNode>::Node
 {
     int value;
-    MyStackNode(int v) : value(v) {}
+
+    explicit MyStackNode(int v) : value(v) {}
 };
 
 int main(int argc, char** argv)

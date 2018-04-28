@@ -30,7 +30,7 @@ class File::Impl
     friend class File;
 
 public:
-    Impl(const Path* path) : _path(path), _read(false), _write(false), _index(0), _size(0), _buffer()
+    explicit Impl(const Path* path) : _path(path), _read(false), _write(false), _index(0), _size(0), _buffer()
     {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         _file = -1;
@@ -632,7 +632,7 @@ File::File(const File& file) : Path(file), _pimpl(std::make_unique<Impl>(this))
 {
 }
 
-File::File(File&& file) : Path(std::move(file)), _pimpl(std::move(file._pimpl))
+File::File(File&& file) noexcept : Path(std::move(file)), _pimpl(std::move(file._pimpl))
 {
     _pimpl->_path = this;
 }
@@ -648,7 +648,7 @@ File& File::operator=(const File& file)
     return *this;
 }
 
-File& File::operator=(File&& file)
+File& File::operator=(File&& file) noexcept
 {
     Path::operator=(std::move(file));
     _pimpl = std::move(file._pimpl);
@@ -698,10 +698,7 @@ bool File::IsFileExists() const
     if (attributes == INVALID_FILE_ATTRIBUTES)
         return false;
 
-    if (attributes & FILE_ATTRIBUTE_DIRECTORY)
-        return false;
-    else
-        return true;
+    return (attributes & FILE_ATTRIBUTE_DIRECTORY) == 0;
 #endif
 }
 

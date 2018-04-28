@@ -33,7 +33,7 @@ void produce(CppBenchmark::Context& context)
     std::vector<std::thread> readers;
     for (int reader = 0; reader < readers_count; ++reader)
     {
-        readers.push_back(std::thread([&readers_crc, reader, readers_count]()
+        readers.emplace_back([&readers_crc, reader, readers_count]()
         {
             // Create named read/write lock slave
             NamedRWLock lock_slave("named_rw_lock_perf");
@@ -44,14 +44,14 @@ void produce(CppBenchmark::Context& context)
                 ReadLocker<NamedRWLock> locker(lock_slave);
                 readers_crc += (reader * items) + i;
             }
-        }));
+        });
     }
 
     // Start writers threads
     std::vector<std::thread> writers;
     for (int writer = 0; writer < writers_count; ++writer)
     {
-        writers.push_back(std::thread([&writers_crc, writer, writers_count]()
+        writers.emplace_back([&writers_crc, writer, writers_count]()
         {
             // Create named read/write lock slave
             NamedRWLock lock("named_rw_lock_perf");
@@ -62,7 +62,7 @@ void produce(CppBenchmark::Context& context)
                 WriteLocker<NamedRWLock> locker(lock);
                 writers_crc += (writer * items) + i;
             }
-        }));
+        });
     }
 
     // Wait for all readers threads

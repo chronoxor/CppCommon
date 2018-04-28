@@ -31,7 +31,7 @@ int main(int argc, char** argv)
     std::vector<std::thread> threads;
     for (int thread = 0; thread < concurrency; ++thread)
     {
-        threads.push_back(std::thread([&finish, thread]()
+        threads.emplace_back([&finish, thread]()
         {
             // Named condition variable slave
             CppCommon::NamedConditionVariable cv_slave("named_cv_example");
@@ -53,7 +53,7 @@ int main(int argc, char** argv)
             }
 
             std::cout << "Thread " << thread << " finished!" << std::endl;
-        }));
+        });
     }
 
     // Perform text input

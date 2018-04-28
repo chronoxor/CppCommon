@@ -273,13 +273,13 @@ TEST_CASE("Arena allocator with stl associative containers", "[CppCommon][Memory
     ArenaMemoryManager<DefaultMemoryManager> manger(auxiliary);
     ArenaAllocator<std::pair<const int, int>, DefaultMemoryManager> alloc(manger);
 
-    std::map<int, int, std::less<int>, decltype(alloc)> m(alloc);
+    std::map<int, int, std::less<>, decltype(alloc)> m(alloc);
     m[0] = 0;
     m[1] = 10;
     m[2] = 20;
     m.clear();
 
-    std::unordered_map<int, int, std::hash<int>, std::equal_to<int>, decltype(alloc)> u(alloc);
+    std::unordered_map<int, int, std::hash<int>, std::equal_to<>, decltype(alloc)> u(alloc);
     u[0] = 0;
     u[1] = 10;
     u[2] = 20;
@@ -430,13 +430,13 @@ TEST_CASE("Pool allocator with stl associative containers", "[CppCommon][Memory]
     PoolMemoryManager<DefaultMemoryManager> manger(auxiliary);
     PoolAllocator<std::pair<const int, int>, DefaultMemoryManager> alloc(manger);
 
-    std::map<int, int, std::less<int>, decltype(alloc)> m(alloc);
+    std::map<int, int, std::less<>, decltype(alloc)> m(alloc);
     m[0] = 0;
     m[1] = 10;
     m[2] = 20;
     m.clear();
 
-    std::unordered_map<int, int, std::hash<int>, std::equal_to<int>, decltype(alloc)> u(alloc);
+    std::unordered_map<int, int, std::hash<int>, std::equal_to<>, decltype(alloc)> u(alloc);
     u[0] = 0;
     u[1] = 10;
     u[2] = 20;

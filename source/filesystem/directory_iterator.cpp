@@ -31,7 +31,7 @@ class DirectoryIterator::Impl
     friend class RecurseImpl;
 
 public:
-    Impl(const Path& parent) : _parent(parent), _current() {}
+    explicit Impl(const Path& parent) : _parent(parent), _current() {}
     virtual ~Impl() = default;
 
     const Path& parent() const noexcept { return _parent; }
@@ -47,7 +47,7 @@ protected:
 class DirectoryIterator::SimpleImpl : public DirectoryIterator::Impl
 {
 public:
-    SimpleImpl(const Path& parent) : DirectoryIterator::Impl(parent), _next(false), _end(false)
+    explicit SimpleImpl(const Path& parent) : DirectoryIterator::Impl(parent), _next(false), _end(false)
     {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         _directory = opendir(_parent.string().c_str());
@@ -165,7 +165,7 @@ private:
 class DirectoryIterator::RecurseImpl : public DirectoryIterator::Impl
 {
 public:
-    RecurseImpl(const Path& parent) : DirectoryIterator::Impl(parent), _current(parent) {}
+    explicit RecurseImpl(const Path& parent) : DirectoryIterator::Impl(parent), _current(parent) {}
     ~RecurseImpl() = default;
 
     Path Next() override
@@ -230,7 +230,7 @@ DirectoryIterator::DirectoryIterator(DirectoryIterator& it) : _pimpl(it._pimpl.r
 {
 }
 
-DirectoryIterator::DirectoryIterator(DirectoryIterator&& it) : _pimpl(std::move(it._pimpl)), _current(std::move(it._current))
+DirectoryIterator::DirectoryIterator(DirectoryIterator&& it) noexcept : _pimpl(std::move(it._pimpl)), _current(std::move(it._current))
 {
 }
 
@@ -240,12 +240,12 @@ DirectoryIterator::~DirectoryIterator()
 
 DirectoryIterator& DirectoryIterator::operator=(DirectoryIterator& it)
 {
-    _pimpl.reset(it._pimpl.release());
+    _pimpl = std::move(it._pimpl);
     _current = it._current;
     return *this;
 }
 
-DirectoryIterator& DirectoryIterator::operator=(DirectoryIterator&& it)
+DirectoryIterator& DirectoryIterator::operator=(DirectoryIterator&& it) noexcept
 {
     _pimpl = std::move(it._pimpl);
     _current = std::move(it._current);

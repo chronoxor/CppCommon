@@ -42,13 +42,13 @@ public:
     */
     File(const Path& path);
     File(const File& file);
-    File(File&& file);
+    File(File&& file) noexcept;
     virtual ~File();
 
     File& operator=(const Path& path)
     { Assign(path); return *this; }
     File& operator=(const File& file);
-    File& operator=(File&& file);
+    File& operator=(File&& file) noexcept;
 
     //! Get the current read/write offset of the opened file
     uint64_t offset() const;
