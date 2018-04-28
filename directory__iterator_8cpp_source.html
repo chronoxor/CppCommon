@@ -116,7 +116,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class </span>RecurseImpl;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    Impl(<span class="keyword">const</span> Path&amp; parent) : _parent(parent), _current() {}</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keyword">explicit</span> Impl(<span class="keyword">const</span> Path&amp; parent) : _parent(parent), _current() {}</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keyword">virtual</span> ~Impl() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keyword">const</span> Path&amp; parent() const noexcept { <span class="keywordflow">return</span> _parent; }</div>
@@ -132,7 +132,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keyword">class </span>DirectoryIterator::SimpleImpl : <span class="keyword">public</span> DirectoryIterator::Impl</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;{</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    SimpleImpl(<span class="keyword">const</span> Path&amp; parent) : <a class="code" href="class_cpp_common_1_1_directory_iterator.html#a9861f44890a06c41ba777989b40d1d5b">DirectoryIterator</a>::Impl(parent), _next(false), _end(false)</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keyword">explicit</span> SimpleImpl(<span class="keyword">const</span> Path&amp; parent) : <a class="code" href="class_cpp_common_1_1_directory_iterator.html#a9861f44890a06c41ba777989b40d1d5b">DirectoryIterator</a>::Impl(parent), _next(false), _end(false)</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    {</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)</span></div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor"></span>        _directory = opendir(_parent.string().c_str());</div>
@@ -250,7 +250,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="keyword">class </span>DirectoryIterator::RecurseImpl : <span class="keyword">public</span> DirectoryIterator::Impl</div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;{</div>
 <div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    RecurseImpl(<span class="keyword">const</span> Path&amp; parent) : <a class="code" href="class_cpp_common_1_1_directory_iterator.html#a9861f44890a06c41ba777989b40d1d5b">DirectoryIterator</a>::Impl(parent), _current(parent) {}</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    <span class="keyword">explicit</span> RecurseImpl(<span class="keyword">const</span> Path&amp; parent) : <a class="code" href="class_cpp_common_1_1_directory_iterator.html#a9861f44890a06c41ba777989b40d1d5b">DirectoryIterator</a>::Impl(parent), _current(parent) {}</div>
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    ~RecurseImpl() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;</div>
 <div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    Path Next()<span class="keyword"> override</span></div>
@@ -314,7 +314,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;{</div>
 <div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;}</div>
 <div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;</div>
-<div class="line"><a name="l00233"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_directory_iterator.html#adf581fd1b3fd93ea004f41ff166fbdd4">  233</a></span>&#160;<a class="code" href="class_cpp_common_1_1_directory_iterator.html#a9861f44890a06c41ba777989b40d1d5b">DirectoryIterator::DirectoryIterator</a>(<a class="code" href="class_cpp_common_1_1_directory_iterator.html">DirectoryIterator</a>&amp;&amp; it) : _pimpl(std::move(it._pimpl)), _current(std::move(it._current))</div>
+<div class="line"><a name="l00233"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_directory_iterator.html#aa09ab3ccd83fdf6ec8cdc51230786e02">  233</a></span>&#160;<a class="code" href="class_cpp_common_1_1_directory_iterator.html#a9861f44890a06c41ba777989b40d1d5b">DirectoryIterator::DirectoryIterator</a>(<a class="code" href="class_cpp_common_1_1_directory_iterator.html">DirectoryIterator</a>&amp;&amp; it) noexcept : _pimpl(std::move(it._pimpl)), _current(std::move(it._current))</div>
 <div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;{</div>
 <div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;}</div>
 <div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;</div>
@@ -324,12 +324,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;</div>
 <div class="line"><a name="l00241"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_directory_iterator.html#a27b04346e90fd0c377b7349b44203570">  241</a></span>&#160;<a class="code" href="class_cpp_common_1_1_directory_iterator.html">DirectoryIterator</a>&amp; <a class="code" href="class_cpp_common_1_1_directory_iterator.html#a27b04346e90fd0c377b7349b44203570">DirectoryIterator::operator=</a>(<a class="code" href="class_cpp_common_1_1_directory_iterator.html">DirectoryIterator</a>&amp; it)</div>
 <div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;{</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;    _pimpl.reset(it._pimpl.release());</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;    _pimpl = std::move(it._pimpl);</div>
 <div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    _current = it._current;</div>
 <div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
 <div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;}</div>
 <div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;</div>
-<div class="line"><a name="l00248"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_directory_iterator.html#a8c876cf685180a9166ff969f13409e26">  248</a></span>&#160;<a class="code" href="class_cpp_common_1_1_directory_iterator.html">DirectoryIterator</a>&amp; <a class="code" href="class_cpp_common_1_1_directory_iterator.html#a27b04346e90fd0c377b7349b44203570">DirectoryIterator::operator=</a>(<a class="code" href="class_cpp_common_1_1_directory_iterator.html">DirectoryIterator</a>&amp;&amp; it)</div>
+<div class="line"><a name="l00248"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_directory_iterator.html#a1ee9c77d93dd60255baef164f080b4ec">  248</a></span>&#160;<a class="code" href="class_cpp_common_1_1_directory_iterator.html">DirectoryIterator</a>&amp; <a class="code" href="class_cpp_common_1_1_directory_iterator.html#a27b04346e90fd0c377b7349b44203570">DirectoryIterator::operator=</a>(<a class="code" href="class_cpp_common_1_1_directory_iterator.html">DirectoryIterator</a>&amp;&amp; it) noexcept</div>
 <div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;{</div>
 <div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;    _pimpl = std::move(it._pimpl);</div>
 <div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;    _current = std::move(it._current);</div>

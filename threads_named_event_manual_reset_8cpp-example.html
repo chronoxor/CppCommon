@@ -106,7 +106,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">    std::vector&lt;std::thread&gt; threads;</div>
 <div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> thread = 0; thread &lt; concurrency; ++thread)</div>
 <div class="line">    {</div>
-<div class="line">        threads.push_back(std::thread([thread]()</div>
+<div class="line">        threads.emplace_back([thread]()</div>
 <div class="line">        {</div>
 <div class="line">            <span class="comment">// Named manual-reset event slave</span></div>
 <div class="line">            <a class="code" href="class_cpp_common_1_1_named_event_manual_reset.html">CppCommon::NamedEventManualReset</a> event_slave(<span class="stringliteral">&quot;named_manual_event_example&quot;</span>);</div>
@@ -122,7 +122,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">            event_slave.<a name="a3"></a><a class="code" href="class_cpp_common_1_1_named_event_manual_reset.html#a9182c98aa3067b63c4e247c49c999fa4">Wait</a>();</div>
 <div class="line"></div>
 <div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;Thread &quot;</span> &lt;&lt; thread &lt;&lt; <span class="stringliteral">&quot; signaled!&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line">        }));</div>
+<div class="line">        });</div>
 <div class="line">    }</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">// Perform text input</span></div>

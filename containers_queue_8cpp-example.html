@@ -90,7 +90,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><span class="keyword">struct </span>MyQueueNode : <span class="keyword">public</span> <a name="_a0"></a><a class="code" href="class_cpp_common_1_1_queue.html">CppCommon::Queue</a>&lt;MyQueueNode&gt;::Node</div>
 <div class="line">{</div>
 <div class="line">    <span class="keywordtype">int</span> value;</div>
-<div class="line">    MyQueueNode(<span class="keywordtype">int</span> v) : value(v) {}</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">explicit</span> MyQueueNode(<span class="keywordtype">int</span> v) : value(v) {}</div>
 <div class="line">};</div>
 <div class="line"></div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv)</div>

@@ -104,7 +104,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">    std::vector&lt;std::thread&gt; producers;</div>
 <div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> producer = 0; producer &lt; 4; ++producer)</div>
 <div class="line">    {</div>
-<div class="line">        producers.push_back(std::thread([&amp;stop, &amp;current, producer]()</div>
+<div class="line">        producers.emplace_back([&amp;stop, &amp;current, producer]()</div>
 <div class="line">        {</div>
 <div class="line">            <a class="code" href="class_cpp_common_1_1_file_lock.html">CppCommon::FileLock</a> lock_slave(<span class="stringliteral">&quot;.lock&quot;</span>);</div>
 <div class="line"></div>
@@ -121,14 +121,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">                <span class="comment">// Sleep for a while...</span></div>
 <div class="line">                <a name="a2"></a><a class="code" href="class_cpp_common_1_1_thread.html#a5eb92ba966bf088ee5d3609ed06c1296">CppCommon::Thread::SleepFor</a>(<a name="a3"></a><a class="code" href="class_cpp_common_1_1_timespan.html#a98db92c00187d33f0233bc41b7f32328">CppCommon::Timespan::milliseconds</a>((producer + 1) * 1000));</div>
 <div class="line">            }</div>
-<div class="line">        }));</div>
+<div class="line">        });</div>
 <div class="line">    }</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">// Start some consumers threads</span></div>
 <div class="line">    std::vector&lt;std::thread&gt; consumers;</div>
 <div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> consumer = 0; consumer &lt; 4; ++consumer)</div>
 <div class="line">    {</div>
-<div class="line">        consumers.push_back(std::thread([&amp;stop, &amp;current, consumer]()</div>
+<div class="line">        consumers.emplace_back([&amp;stop, &amp;current, consumer]()</div>
 <div class="line">        {</div>
 <div class="line">            <a class="code" href="class_cpp_common_1_1_file_lock.html">CppCommon::FileLock</a> lock_slave(<span class="stringliteral">&quot;.lock&quot;</span>);</div>
 <div class="line"></div>
@@ -144,7 +144,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">                <span class="comment">// Sleep for a while...</span></div>
 <div class="line">                <a class="code" href="class_cpp_common_1_1_thread.html#a5eb92ba966bf088ee5d3609ed06c1296">CppCommon::Thread::SleepFor</a>(<a class="code" href="class_cpp_common_1_1_timespan.html#a98db92c00187d33f0233bc41b7f32328">CppCommon::Timespan::milliseconds</a>(100));</div>
 <div class="line">            }</div>
-<div class="line">        }));</div>
+<div class="line">        });</div>
 <div class="line">    }</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">// Wait for input</span></div>

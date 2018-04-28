@@ -100,7 +100,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">    std::vector&lt;std::thread&gt; threads;</div>
 <div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> thread = 0; thread &lt; concurrency; ++thread)</div>
 <div class="line">    {</div>
-<div class="line">        threads.push_back(std::thread([&amp;event, thread]()</div>
+<div class="line">        threads.emplace_back([&amp;event, thread]()</div>
 <div class="line">        {</div>
 <div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;Thread &quot;</span> &lt;&lt; thread &lt;&lt; <span class="stringliteral">&quot; initialized!&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line"></div>
@@ -113,7 +113,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">            <span class="keyword">event</span>.Wait();</div>
 <div class="line"></div>
 <div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;Thread &quot;</span> &lt;&lt; thread &lt;&lt; <span class="stringliteral">&quot; signaled!&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line">        }));</div>
+<div class="line">        });</div>
 <div class="line">    }</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">// Allow threads to start</span></div>

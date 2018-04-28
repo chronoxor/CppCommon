@@ -100,7 +100,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">    std::vector&lt;std::thread&gt; threads;</div>
 <div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> thread = 0; thread &lt; concurrency; ++thread)</div>
 <div class="line">    {</div>
-<div class="line">        threads.push_back(std::thread([&amp;barrier, thread]()</div>
+<div class="line">        threads.emplace_back([&amp;barrier, thread]()</div>
 <div class="line">        {</div>
 <div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;Thread &quot;</span> &lt;&lt; thread &lt;&lt; <span class="stringliteral">&quot; initialized!&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line"></div>
@@ -113,7 +113,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">            <span class="keywordtype">bool</span> last = barrier.<a name="a3"></a><a class="code" href="class_cpp_common_1_1_barrier.html#ae5d6c33df84832a3b7b3a2aae08ffae7">Wait</a>();</div>
 <div class="line"></div>
 <div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;Thread &quot;</span> &lt;&lt; thread &lt;&lt; <span class="stringliteral">&quot; after barrier!&quot;</span> &lt;&lt; (last ? <span class="stringliteral">&quot; Last one!&quot;</span> : <span class="stringliteral">&quot;&quot;</span>) &lt;&lt; std::endl;</div>
-<div class="line">        }));</div>
+<div class="line">        });</div>
 <div class="line">    }</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">// Wait for all threads</span></div>

@@ -249,7 +249,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="preprocessor"></span>        OVERLAPPED overlapped;</div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;        ZeroMemory(&amp;overlapped, <span class="keyword">sizeof</span>(OVERLAPPED));</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        <span class="keywordflow">return</span> LockFileEx(_file, LOCKFILE_FAIL_IMMEDIATELY, 0, MAXDWORD, MAXDWORD, &amp;overlapped) ? <span class="keyword">true</span> : <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        <span class="keywordflow">return</span> LockFileEx(_file, LOCKFILE_FAIL_IMMEDIATELY, 0, MAXDWORD, MAXDWORD, &amp;overlapped) != 0;</div>
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="preprocessor"></span>    }</div>
 <div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;</div>
@@ -286,7 +286,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;<span class="preprocessor"></span>        OVERLAPPED overlapped;</div>
 <div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;        ZeroMemory(&amp;overlapped, <span class="keyword">sizeof</span>(OVERLAPPED));</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;        <span class="keywordflow">return</span> LockFileEx(_file, LOCKFILE_EXCLUSIVE_LOCK | LOCKFILE_FAIL_IMMEDIATELY, 0, MAXDWORD, MAXDWORD, &amp;overlapped) ? <span class="keyword">true</span> : <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;        <span class="keywordflow">return</span> LockFileEx(_file, LOCKFILE_EXCLUSIVE_LOCK | LOCKFILE_FAIL_IMMEDIATELY, 0, MAXDWORD, MAXDWORD, &amp;overlapped) != 0;</div>
 <div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;<span class="preprocessor"></span>    }</div>
 <div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;</div>
