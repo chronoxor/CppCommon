@@ -60,6 +60,11 @@ public:
     //! Get text end line separator
     static std::string EndLine();
 
+    //! Get Unix text end line separator
+    static std::string UnixEndLine();
+    //! Get Windows text end line separator
+    static std::string WindowsEndLine();
+
     //! Get all environment variables
     /*!
         \return Environment variables collection

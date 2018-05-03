@@ -387,6 +387,16 @@ std::string Environment::EndLine()
 #endif
 }
 
+std::string Environment::UnixEndLine()
+{
+    return "\n";
+}
+
+std::string Environment::WindowsEndLine()
+{
+    return "\r\n";
+}
+
 std::map<std::string, std::string> Environment::envars()
 {
     std::map<std::string, std::string> result;
