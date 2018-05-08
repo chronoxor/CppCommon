@@ -86,7 +86,7 @@ public:
     ~Impl()
     {
 #if defined(__APPLE__)
-        fatality(throwex SystemException("Named condition variable is not supported!"));
+        fatality(SystemException("Named condition variable is not supported!"));
 #elif (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__CYGWIN__)
         // Only the owner should destroy a named condition variable
         if (_shared.owner())
