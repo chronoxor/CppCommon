@@ -171,7 +171,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    ~Impl()</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    {</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="preprocessor">#if defined(__APPLE__)</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor"></span>        <a class="code" href="fatal_8h.html#a58f99c4783afc0f169f7b232d1659577">fatality</a>(<a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> SystemException(<span class="stringliteral">&quot;Named condition variable is not supported!&quot;</span>));</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor"></span>        <a class="code" href="fatal_8h.html#a58f99c4783afc0f169f7b232d1659577">fatality</a>(SystemException(<span class="stringliteral">&quot;Named condition variable is not supported!&quot;</span>));</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="preprocessor">#elif (defined(unix) || defined(__unix) || defined(__unix__)) &amp;&amp; !defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor"></span>        <span class="comment">// Only the owner should destroy a named condition variable</span></div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        <span class="keywordflow">if</span> (_shared.owner())</div>
