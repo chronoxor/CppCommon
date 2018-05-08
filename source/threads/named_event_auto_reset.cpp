@@ -79,7 +79,7 @@ public:
     ~Impl()
     {
 #if defined(__APPLE__)
-        throwex SystemException("Named auto-reset event is not supported!");
+        fatality(SystemException("Named auto-reset event is not supported!"));
 #elif (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__CYGWIN__)
         // Only the owner should destroy a named auto-reset event
         if (_shared.owner())
