@@ -10,7 +10,7 @@ C++ Common Library contains reusable components and patterns for error and
 exceptions handling, filesystem manipulations, math, string format and
 encoding, shared memory, threading, time management and others.
 
-[CppCommon API reference](http://chronoxor.github.io/CppCommon/index.html)
+[CppCommon API reference](https://chronoxor.github.io/CppCommon/index.html)
 
 # Contents
   * [Features](#features)
@@ -46,15 +46,15 @@ encoding, shared memory, threading, time management and others.
 * Linux
 * OSX
 * Windows 7 / Windows 10
-* [CMake](http://www.cmake.org)
+* [CMake](https://www.cmake.org)
 * [GIT](https://git-scm.com)
 * [GCC](https://gcc.gnu.org)
 
 Optional:
-* [Clang](http://clang.llvm.org)
+* [Clang](https://clang.llvm.org)
 * [Clion](https://www.jetbrains.com/clion)
 * [Cygwin](https://cygwin.com)
-* [MinGW](http://mingw-w64.org/doku.php)
+* [MinGW](https://mingw-w64.org/doku.php)
 * [Visual Studio](https://www.visualstudio.com)
 
 # How to build?
