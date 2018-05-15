@@ -23,6 +23,7 @@ var searchData=
   ['stderror',['StdError',['../class_cpp_common_1_1_std_error.html',1,'CppCommon']]],
   ['stdinput',['StdInput',['../class_cpp_common_1_1_std_input.html',1,'CppCommon']]],
   ['stdoutput',['StdOutput',['../class_cpp_common_1_1_std_output.html',1,'CppCommon']]],
+  ['stringutils',['StringUtils',['../class_cpp_common_1_1_string_utils.html',1,'CppCommon']]],
   ['symlink',['Symlink',['../class_cpp_common_1_1_symlink.html',1,'CppCommon']]],
   ['systemerror',['SystemError',['../class_cpp_common_1_1_system_error.html',1,'CppCommon']]],
   ['systemexception',['SystemException',['../class_cpp_common_1_1_system_exception.html',1,'CppCommon']]]

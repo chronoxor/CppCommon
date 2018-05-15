@@ -89,6 +89,7 @@ var searchData=
   ['_7estderror',['~StdError',['../class_cpp_common_1_1_std_error.html#a605e7b111c6ca44b6f39e5a4832a7c8c',1,'CppCommon::StdError']]],
   ['_7estdinput',['~StdInput',['../class_cpp_common_1_1_std_input.html#a29c05e480e0e87c58be8a890319860fb',1,'CppCommon::StdInput']]],
   ['_7estdoutput',['~StdOutput',['../class_cpp_common_1_1_std_output.html#a40fb841b82db971f77f135b0a9f8b05b',1,'CppCommon::StdOutput']]],
+  ['_7estringutils',['~StringUtils',['../class_cpp_common_1_1_string_utils.html#af5c4f55bed207e796ff325bf70210af5',1,'CppCommon::StringUtils']]],
   ['_7esymlink',['~Symlink',['../class_cpp_common_1_1_symlink.html#a044d35e4ed8ff78a0cd1a1c3d1212f57',1,'CppCommon::Symlink']]],
   ['_7esystemerror',['~SystemError',['../class_cpp_common_1_1_system_error.html#a472d30779bbe34bb77b2436e395922e8',1,'CppCommon::SystemError']]],
   ['_7ethread',['~Thread',['../class_cpp_common_1_1_thread.html#a7d8aed17287b11ab906340370de6d0bf',1,'CppCommon::Thread']]],
