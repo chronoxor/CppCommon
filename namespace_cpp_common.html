@@ -765,6 +765,9 @@ Functions</h2></td></tr>
 <tr class="separator:a7bf300e6f11dfa279b2b6bdd9472f74c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acf4c6a35d7fbf6d97fe67ba3216f1ac9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_cpp_common.html#acf4c6a35d7fbf6d97fe67ba3216f1ac9">swap</a> (<a class="el" href="class_cpp_common_1_1_symlink.html">Symlink</a> &amp;symlink1, <a class="el" href="class_cpp_common_1_1_symlink.html">Symlink</a> &amp;symlink2) noexcept</td></tr>
 <tr class="separator:acf4c6a35d7fbf6d97fe67ba3216f1ac9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ff0145e06b73fe37e111c2b58c6dcf7"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a2ff0145e06b73fe37e111c2b58c6dcf7"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_cpp_common.html#a2ff0145e06b73fe37e111c2b58c6dcf7">GCD</a> (T a, T b)</td></tr>
+<tr class="separator:a2ff0145e06b73fe37e111c2b58c6dcf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abf9141d59cb4fc0563740837cce47665"><td class="memTemplParams" colspan="2">template&lt;typename T , typename U , class TMemoryManager , bool nothrow&gt; </td></tr>
 <tr class="memitem:abf9141d59cb4fc0563740837cce47665"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_cpp_common.html#abf9141d59cb4fc0563740837cce47665">operator==</a> (const <a class="el" href="class_cpp_common_1_1_allocator.html">Allocator</a>&lt; T, TMemoryManager, nothrow &gt; &amp;alloc1, const <a class="el" href="class_cpp_common_1_1_allocator.html">Allocator</a>&lt; U, TMemoryManager, nothrow &gt; &amp;alloc2) noexcept</td></tr>
 <tr class="separator:abf9141d59cb4fc0563740837cce47665"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -821,10 +824,14 @@ Functions</h2></td></tr>
 <tr class="separator:a82e3bb1d59f15b757df754631c31a56b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a752f7c0afc648859dac16768474c2b91"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_cpp_common.html#a752f7c0afc648859dac16768474c2b91">swap</a> (<a class="el" href="class_cpp_common_1_1_timezone.html">Timezone</a> &amp;timezone1, <a class="el" href="class_cpp_common_1_1_timezone.html">Timezone</a> &amp;timezone2) noexcept</td></tr>
 <tr class="separator:a752f7c0afc648859dac16768474c2b91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeef48facde75d2a6f2b46747baed0601"><td class="memTemplParams" colspan="2">template&lt;typename T , std::size_t N&gt; </td></tr>
-<tr class="memitem:aeef48facde75d2a6f2b46747baed0601"><td class="memTemplItemLeft" align="right" valign="top">constexpr std::size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_cpp_common.html#aeef48facde75d2a6f2b46747baed0601">countof</a> (const T(&amp;)[N]) noexcept</td></tr>
-<tr class="memdesc:aeef48facde75d2a6f2b46747baed0601"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of elements in static array.  <a href="#aeef48facde75d2a6f2b46747baed0601">More...</a><br/></td></tr>
-<tr class="separator:aeef48facde75d2a6f2b46747baed0601"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e13c75fa3c6c905191a70aacef4ed72"><td class="memTemplParams" colspan="2">template&lt;typename T , size_t N&gt; </td></tr>
+<tr class="memitem:a5e13c75fa3c6c905191a70aacef4ed72"><td class="memTemplItemLeft" align="right" valign="top">constexpr size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_cpp_common.html#a5e13c75fa3c6c905191a70aacef4ed72">countof</a> (const T(&amp;)[N]) noexcept</td></tr>
+<tr class="memdesc:a5e13c75fa3c6c905191a70aacef4ed72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of elements in static array.  <a href="#a5e13c75fa3c6c905191a70aacef4ed72">More...</a><br/></td></tr>
+<tr class="separator:a5e13c75fa3c6c905191a70aacef4ed72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbfae32713b7c80d6dc8354f6516113a"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:abbfae32713b7c80d6dc8354f6516113a"><td class="memTemplItemLeft" align="right" valign="top">size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_cpp_common.html#abbfae32713b7c80d6dc8354f6516113a">countof</a> (const T &amp;container) noexcept</td></tr>
+<tr class="memdesc:abbfae32713b7c80d6dc8354f6516113a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of elements in any other STL container.  <a href="#abbfae32713b7c80d6dc8354f6516113a">More...</a><br/></td></tr>
+<tr class="separator:abbfae32713b7c80d6dc8354f6516113a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a551f50579f87df9152013786f9167aa4"><td class="memTemplParams" colspan="2">template&lt;typename T , typename TCleaner &gt; </td></tr>
 <tr class="memitem:a551f50579f87df9152013786f9167aa4"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_cpp_common.html#a551f50579f87df9152013786f9167aa4">resource</a> (T handle, TCleaner cleaner)</td></tr>
 <tr class="memdesc:a551f50579f87df9152013786f9167aa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resource smart cleaner pattern.  <a href="#a551f50579f87df9152013786f9167aa4">More...</a><br/></td></tr>
@@ -1227,17 +1234,17 @@ template&lt;typename T , size_t N, bool nothrow = false&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="aeef48facde75d2a6f2b46747baed0601"></a>
+<a class="anchor" id="a5e13c75fa3c6c905191a70aacef4ed72"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , std::size_t N&gt; </div>
+template&lt;typename T , size_t N&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr std::size_t CppCommon::countof </td>
+          <td class="memname">constexpr size_t CppCommon::countof </td>
           <td>(</td>
           <td class="paramtype">const &#160;</td>
           <td class="paramname"><em>T</em>(&amp;)[N]</td><td>)</td>
@@ -1255,6 +1262,36 @@ template&lt;typename T , std::size_t N&gt; </div>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="filesystem_file_8cpp-example.html#a3">filesystem_file.cpp</a>.</dd>
 </dl>
 <p>Definition at line <a class="el" href="countof_8h_source.html#l00016">16</a> of file <a class="el" href="countof_8h_source.html">countof.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abbfae32713b7c80d6dc8354f6516113a"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t CppCommon::countof </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>container</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Count of elements in any other STL container. </p>
+
+<p>Definition at line <a class="el" href="countof_8h_source.html#l00020">20</a> of file <a class="el" href="countof_8h_source.html">countof.h</a>.</p>
 
 </div>
 </div>
@@ -1455,6 +1492,44 @@ template&lt;typename... Args&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>Formatted wide string </dd></dl>
 
 <p>Definition at line <a class="el" href="format_8inl_source.html#l00018">18</a> of file <a class="el" href="format_8inl_source.html">format.inl</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2ff0145e06b73fe37e111c2b58c6dcf7"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T CppCommon::GCD </td>
+          <td>(</td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>b</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="math_8inl_source.html#l00012">12</a> of file <a class="el" href="math_8inl_source.html">math.inl</a>.</p>
 
 </div>
 </div>
@@ -3635,6 +3710,42 @@ template&lt;typename TEnum &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="a76c0ba7d01f131ca440b9ed1733dd022"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CppCommon::swap </td>
+          <td>(</td>
+          <td class="paramtype">UUID &amp;&#160;</td>
+          <td class="paramname"><em>uuid1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">UUID &amp;&#160;</td>
+          <td class="paramname"><em>uuid2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="uuid_8inl_source.html#l00017">17</a> of file <a class="el" href="uuid_8inl_source.html">uuid.inl</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a9b645800d1f0e984ee29ab972fe4d93b"></a>
 <div class="memitem">
 <div class="memproto">
@@ -3776,42 +3887,6 @@ template&lt;typename TEnum &gt; </div>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="stream_8inl_source.html#l00017">17</a> of file <a class="el" href="stream_8inl_source.html">stream.inl</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a76c0ba7d01f131ca440b9ed1733dd022"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CppCommon::swap </td>
-          <td>(</td>
-          <td class="paramtype">UUID &amp;&#160;</td>
-          <td class="paramname"><em>uuid1</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">UUID &amp;&#160;</td>
-          <td class="paramname"><em>uuid2</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="uuid_8inl_source.html#l00017">17</a> of file <a class="el" href="uuid_8inl_source.html">uuid.inl</a>.</p>
 
 </div>
 </div>

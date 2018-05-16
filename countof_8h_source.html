@@ -97,16 +97,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">namespace </span>CppCommon {</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, std::<span class="keywordtype">size_t</span> N&gt;</div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="namespace_cpp_common.html#aeef48facde75d2a6f2b46747baed0601">   16</a></span>&#160;constexpr std::size_t <a class="code" href="namespace_cpp_common.html#aeef48facde75d2a6f2b46747baed0601">countof</a>(<span class="keyword">const</span> T (&amp;)[N]) noexcept</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;{</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keywordflow">return</span> N;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;}</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;} <span class="comment">// namespace CppCommon</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#endif // CPPCOMMON_UTILITY_COUNTOF_H</span></div>
-<div class="ttc" id="namespace_cpp_common_html_aeef48facde75d2a6f2b46747baed0601"><div class="ttname"><a href="namespace_cpp_common.html#aeef48facde75d2a6f2b46747baed0601">CppCommon::countof</a></div><div class="ttdeci">constexpr std::size_t countof(const T(&amp;)[N]) noexcept</div><div class="ttdoc">Count of elements in static array. </div><div class="ttdef"><b>Definition:</b> <a href="countof_8h_source.html#l00016">countof.h:16</a></div></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keywordtype">size_t</span> N&gt;</div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="namespace_cpp_common.html#a5e13c75fa3c6c905191a70aacef4ed72">   16</a></span>&#160;constexpr <span class="keywordtype">size_t</span> <a class="code" href="namespace_cpp_common.html#a5e13c75fa3c6c905191a70aacef4ed72">countof</a>(<span class="keyword">const</span> T (&amp;)[N]) noexcept { <span class="keywordflow">return</span> N; }</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="namespace_cpp_common.html#abbfae32713b7c80d6dc8354f6516113a">   20</a></span>&#160;<span class="keywordtype">size_t</span> <a class="code" href="namespace_cpp_common.html#a5e13c75fa3c6c905191a70aacef4ed72">countof</a>(<span class="keyword">const</span> T&amp; container) noexcept { <span class="keywordflow">return</span> container.size(); }</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;} <span class="comment">// namespace CppCommon</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#endif // CPPCOMMON_UTILITY_COUNTOF_H</span></div>
+<div class="ttc" id="namespace_cpp_common_html_a5e13c75fa3c6c905191a70aacef4ed72"><div class="ttname"><a href="namespace_cpp_common.html#a5e13c75fa3c6c905191a70aacef4ed72">CppCommon::countof</a></div><div class="ttdeci">constexpr size_t countof(const T(&amp;)[N]) noexcept</div><div class="ttdoc">Count of elements in static array. </div><div class="ttdef"><b>Definition:</b> <a href="countof_8h_source.html#l00016">countof.h:16</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -112,16 +112,29 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <a class="code" href="class_cpp_common_1_1_math.html">Math</a>&amp; <a class="code" href="class_cpp_common_1_1_math.html#a32d1ded91c20d9016a5e16d9acc2be36">operator=</a>(<a class="code" href="class_cpp_common_1_1_math.html">Math</a>&amp;&amp;) noexcept = <span class="keyword">delete</span>;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keyword">static</span> uint64_t <a class="code" href="class_cpp_common_1_1_math.html#a1b83492c0a63ab05cf3f8cd8f8b06ffe">MulDiv64</a>(uint64_t operant, uint64_t multiplier, uint64_t divider);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;};</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;} <span class="comment">// namespace CppCommon</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#endif // CPPCOMMON_MATH_MATH_H</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keyword">static</span> T <a class="code" href="class_cpp_common_1_1_math.html#a2d057b102d732ea73470ecc869b580a3">GCD</a>(T a, T b);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">static</span> T <a class="code" href="class_cpp_common_1_1_math.html#a691b0d494af21c6bd002d116eeec0b04">RoundUp</a>(T a, T k);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keyword">static</span> uint64_t <a class="code" href="class_cpp_common_1_1_math.html#a1b83492c0a63ab05cf3f8cd8f8b06ffe">MulDiv64</a>(uint64_t operant, uint64_t multiplier, uint64_t divider);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;};</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;} <span class="comment">// namespace CppCommon</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="math_8inl.html">math.inl</a>&quot;</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#endif // CPPCOMMON_MATH_MATH_H</span></div>
+<div class="ttc" id="math_8inl_html"><div class="ttname"><a href="math_8inl.html">math.inl</a></div><div class="ttdoc">Math inline implementation. </div></div>
 <div class="ttc" id="class_cpp_common_1_1_math_html_a32d1ded91c20d9016a5e16d9acc2be36"><div class="ttname"><a href="class_cpp_common_1_1_math.html#a32d1ded91c20d9016a5e16d9acc2be36">CppCommon::Math::operator=</a></div><div class="ttdeci">Math &amp; operator=(const Math &amp;)=delete</div></div>
+<div class="ttc" id="class_cpp_common_1_1_math_html_a691b0d494af21c6bd002d116eeec0b04"><div class="ttname"><a href="class_cpp_common_1_1_math.html#a691b0d494af21c6bd002d116eeec0b04">CppCommon::Math::RoundUp</a></div><div class="ttdeci">static T RoundUp(T a, T k)</div><div class="ttdoc">Finds the smallest value x &gt;= a such that x % k == 0. </div><div class="ttdef"><b>Definition:</b> <a href="math_8inl_source.html#l00027">math.inl:27</a></div></div>
 <div class="ttc" id="class_cpp_common_1_1_math_html_adfd36c436a9f45ea879a2e4c29f18679"><div class="ttname"><a href="class_cpp_common_1_1_math.html#adfd36c436a9f45ea879a2e4c29f18679">CppCommon::Math::~Math</a></div><div class="ttdeci">~Math()=delete</div></div>
 <div class="ttc" id="class_cpp_common_1_1_math_html"><div class="ttname"><a href="class_cpp_common_1_1_math.html">CppCommon::Math</a></div><div class="ttdoc">Math static class. </div><div class="ttdef"><b>Definition:</b> <a href="math_8h_source.html#l00022">math.h:22</a></div></div>
 <div class="ttc" id="class_cpp_common_1_1_math_html_ab3b1b56af1c48098d9a4da017650fd96"><div class="ttname"><a href="class_cpp_common_1_1_math.html#ab3b1b56af1c48098d9a4da017650fd96">CppCommon::Math::Math</a></div><div class="ttdeci">Math()=delete</div></div>
+<div class="ttc" id="class_cpp_common_1_1_math_html_a2d057b102d732ea73470ecc869b580a3"><div class="ttname"><a href="class_cpp_common_1_1_math.html#a2d057b102d732ea73470ecc869b580a3">CppCommon::Math::GCD</a></div><div class="ttdeci">static T GCD(T a, T b)</div><div class="ttdoc">Computes the greatest common divisor of a and b. </div></div>
 <div class="ttc" id="class_cpp_common_1_1_math_html_a1b83492c0a63ab05cf3f8cd8f8b06ffe"><div class="ttname"><a href="class_cpp_common_1_1_math.html#a1b83492c0a63ab05cf3f8cd8f8b06ffe">CppCommon::Math::MulDiv64</a></div><div class="ttdeci">static uint64_t MulDiv64(uint64_t operant, uint64_t multiplier, uint64_t divider)</div><div class="ttdoc">Calculate (operant * multiplier / divider) with 64-bit unsigned integer values. </div><div class="ttdef"><b>Definition:</b> <a href="math_8cpp_source.html#l00017">math.cpp:17</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
