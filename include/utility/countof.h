@@ -12,10 +12,24 @@
 namespace CppCommon {
 
 //! Count of elements in static array
-template <typename T, std::size_t N>
-constexpr std::size_t countof(const T (&)[N]) noexcept
+template <typename T, size_t N>
+constexpr size_t countof(const T (&)[N]) noexcept
 {
     return N;
+}
+
+//! Count of elements in zero static array
+template <typename T>
+constexpr size_t countof(const T (&)[0]) noexcept
+{
+    return 0;
+}
+
+//! Count of elements in any other STL container
+template <typename T>
+size_t countof(const T& container) noexcept
+{
+    return container.size();
 }
 
 } // namespace CppCommon

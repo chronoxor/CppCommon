@@ -30,6 +30,24 @@ public:
     Math& operator=(const Math&) = delete;
     Math& operator=(Math&&) noexcept = delete;
 
+    //! Computes the greatest common divisor of a and b
+    /*!
+        \param a - Value a
+        \param b - Value b
+        \return Greatest common divisor of a and b
+    */
+    template <typename T>
+    static T GCD(T a, T b);
+
+    //! Finds the smallest value x >= a such that x % k == 0
+    /*!
+        \param a - Value a
+        \param k - Value k
+        \return Value x
+    */
+    template <typename T>
+    static T RoundUp(T a, T k);
+
     //! Calculate (operant * multiplier / divider) with 64-bit unsigned integer values
     /*!
         \param operant - Operant
@@ -43,5 +61,7 @@ public:
 /*! \example math_math.cpp Math example */
 
 } // namespace CppCommon
+
+#include "math.inl"
 
 #endif // CPPCOMMON_MATH_MATH_H

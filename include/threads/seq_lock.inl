@@ -32,8 +32,8 @@ template <typename T>
 inline T SeqLock<T>::Read() const noexcept
 {
     T data;
-    std::size_t seq0;
-    std::size_t seq1;
+    size_t seq0;
+    size_t seq1;
 
     do
     {
@@ -50,7 +50,7 @@ inline T SeqLock<T>::Read() const noexcept
 template <typename T>
 inline void SeqLock<T>::Write(const T& data) noexcept
 {
-    std::size_t seq0 = _seq.load(std::memory_order_relaxed);
+    size_t seq0 = _seq.load(std::memory_order_relaxed);
     _seq.store(seq0 + 1, std::memory_order_release);
     std::atomic_signal_fence(std::memory_order_acq_rel);
     _data = data;

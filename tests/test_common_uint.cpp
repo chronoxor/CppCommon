@@ -1031,7 +1031,7 @@ TEST_CASE("uint256: String", "[CppCommon][Common]")
     };
 
     // Number of leading 0s
-    const std::string::size_type leading = 5;
+    const size_t leading = 5;
 
     // Make sure all of the test strings create the ASCII version of the string
     const uint256_t original(2216002924);
