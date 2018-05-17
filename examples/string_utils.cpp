@@ -17,23 +17,18 @@ int main(int argc, char** argv)
     std::cout << CppCommon::StringUtils::ToLower("aBcDeFg") << std::endl;
     std::cout << CppCommon::StringUtils::ToUpper("aBcDeFg") << std::endl;
 
+    std::cout << '"' << CppCommon::StringUtils::ToLTrim("  foobar  ") << '"' << std::endl;
+    std::cout << '"' << CppCommon::StringUtils::ToRTrim("  foobar  ") << '"' << std::endl;
+    std::cout << '"' << CppCommon::StringUtils::ToTrim("  foobar  ") << '"' << std::endl;
+
+    std::cout << CppCommon::StringUtils::Contains("a foo a bar a baz", '!') << std::endl;
+    std::cout << CppCommon::StringUtils::Contains("a foo a bar a baz", 'z') << std::endl;
+    std::cout << CppCommon::StringUtils::Contains("a foo a bar a baz", "foo") << std::endl;
+    std::cout << CppCommon::StringUtils::Contains("a foo a bar a baz", "foobar") << std::endl;
+
+    std::cout << CppCommon::StringUtils::CountAll("a foo a bar a baz", "a ") << std::endl;
+
     std::string str;
-
-    str = "  foobar  ";
-    std::cout << '"' << CppCommon::StringUtils::LTrim(str) << '"' << std::endl;
-    str = "  foobar  ";
-    std::cout << '"' << CppCommon::StringUtils::RTrim(str) << '"' << std::endl;
-    str = "  foobar  ";
-    std::cout << '"' << CppCommon::StringUtils::Trim(str) << '"' << std::endl;
-
-    str = "a foo a bar a baz";
-    std::cout << CppCommon::StringUtils::Contains(str, '!') << std::endl;
-    std::cout << CppCommon::StringUtils::Contains(str, 'z') << std::endl;
-    std::cout << CppCommon::StringUtils::Contains(str, "foo") << std::endl;
-    std::cout << CppCommon::StringUtils::Contains(str, "foobar") << std::endl;
-
-    str = "a foo a bar a baz";
-    std::cout << CppCommon::StringUtils::CountAll(str, "a ") << std::endl;
 
     str = "a foo a bar a baz";
     CppCommon::StringUtils::ReplaceFirst(str, "a ", "the ");
@@ -47,10 +42,8 @@ int main(int argc, char** argv)
     CppCommon::StringUtils::ReplaceAll(str, "a ", "the ");
     std::cout << str << std::endl;
 
-    str = "a foo a bar a baz";
-    std::cout << CppCommon::StringUtils::Join(CppCommon::StringUtils::Split(str, ' '), '+') << std::endl;
-    str = "a foo a bar a baz";
-    std::cout << CppCommon::StringUtils::Join(CppCommon::StringUtils::Split(str, "a "), "the ") << std::endl;
+    std::cout << CppCommon::StringUtils::Join(CppCommon::StringUtils::Split("a foo a bar a baz", ' '), '+') << std::endl;
+    std::cout << CppCommon::StringUtils::Join(CppCommon::StringUtils::Split("a foo a bar a baz", "a "), "the ") << std::endl;
 
     std::cout << CppCommon::StringUtils::ToString(true) << std::endl;
     std::cout << CppCommon::StringUtils::ToString(false) << std::endl;

@@ -24,23 +24,49 @@ TEST_CASE("String utilities", "[CppCommon][String]")
     StringUtils::Upper(str);
     REQUIRE(str == "ABCDEFG");
 
+    REQUIRE(CppCommon::StringUtils::ToLTrim("    ") == "");
+    REQUIRE(CppCommon::StringUtils::ToLTrim("  foobar  ") == "foobar  ");
+    REQUIRE(CppCommon::StringUtils::ToLTrim("foobar  ") == "foobar  ");
+    REQUIRE(CppCommon::StringUtils::ToRTrim("    ") == "");
+    REQUIRE(CppCommon::StringUtils::ToRTrim("  foobar  ") == "  foobar");
+    REQUIRE(CppCommon::StringUtils::ToRTrim("  foobar") == "  foobar");
+    REQUIRE(CppCommon::StringUtils::ToTrim("    ") == "");
+    REQUIRE(CppCommon::StringUtils::ToTrim("  foobar  ") == "foobar");
+    REQUIRE(CppCommon::StringUtils::ToTrim("  foobar") == "foobar");
+    REQUIRE(CppCommon::StringUtils::ToTrim("foobar  ") == "foobar");
+    REQUIRE(CppCommon::StringUtils::ToTrim("foobar") == "foobar");
+
+    str = "    ";
+    REQUIRE(CppCommon::StringUtils::LTrim(str) == "");
     str = "  foobar  ";
     REQUIRE(CppCommon::StringUtils::LTrim(str) == "foobar  ");
+    str = "foobar  ";
+    REQUIRE(CppCommon::StringUtils::LTrim(str) == "foobar  ");
+    str = "    ";
+    REQUIRE(CppCommon::StringUtils::RTrim(str) == "");
     str = "  foobar  ";
     REQUIRE(CppCommon::StringUtils::RTrim(str) == "  foobar");
+    str = "  foobar";
+    REQUIRE(CppCommon::StringUtils::RTrim(str) == "  foobar");
+    str = "    ";
+    REQUIRE(CppCommon::StringUtils::Trim(str) == "");
     str = "  foobar  ";
     REQUIRE(CppCommon::StringUtils::Trim(str) == "foobar");
+    str = "  foobar";
+    REQUIRE(CppCommon::StringUtils::Trim(str) == "foobar");
+    str = "foobar  ";
+    REQUIRE(CppCommon::StringUtils::Trim(str) == "foobar");
+    str = "foobar";
+    REQUIRE(CppCommon::StringUtils::Trim(str) == "foobar");
 
-    str = "a foo a bar a baz";
-    REQUIRE(!CppCommon::StringUtils::Contains(str, '!'));
-    REQUIRE(CppCommon::StringUtils::Contains(str, 'z'));
-    REQUIRE(CppCommon::StringUtils::Contains(str, "foo"));
-    REQUIRE(!CppCommon::StringUtils::Contains(str, "foobar"));
+    REQUIRE(!CppCommon::StringUtils::Contains("a foo a bar a baz", '!'));
+    REQUIRE(CppCommon::StringUtils::Contains("a foo a bar a baz", 'z'));
+    REQUIRE(CppCommon::StringUtils::Contains("a foo a bar a baz", "foo"));
+    REQUIRE(!CppCommon::StringUtils::Contains("a foo a bar a baz", "foobar"));
 
-    str = "a foo a bar a baz";
-    REQUIRE(CppCommon::StringUtils::CountAll(str, "test") == 0);
-    REQUIRE(CppCommon::StringUtils::CountAll(str, "foo") == 1);
-    REQUIRE(CppCommon::StringUtils::CountAll(str, "a ") == 3);
+    REQUIRE(CppCommon::StringUtils::CountAll("a foo a bar a baz", "test") == 0);
+    REQUIRE(CppCommon::StringUtils::CountAll("a foo a bar a baz", "foo") == 1);
+    REQUIRE(CppCommon::StringUtils::CountAll("a foo a bar a baz", "a ") == 3);
 
     str = "a foo a bar a baz";
     CppCommon::StringUtils::ReplaceFirst(str, "a ", "the ");
@@ -59,10 +85,8 @@ TEST_CASE("String utilities", "[CppCommon][String]")
     REQUIRE(!StringUtils::EndsWith("Cool", "Test"));
     REQUIRE(StringUtils::EndsWith("CoolTest", "Test"));
 
-    str = "a foo a bar a baz";
-    REQUIRE(CppCommon::StringUtils::Join(CppCommon::StringUtils::Split(str, ' '), '+') == "a+foo+a+bar+a+baz");
-    str = "a foo a bar a baz";
-    REQUIRE(CppCommon::StringUtils::Join(CppCommon::StringUtils::Split(str, "a "), "the ") == "the foo the bar the baz");
+    REQUIRE(CppCommon::StringUtils::Join(CppCommon::StringUtils::Split("a foo a bar a baz", ' '), '+') == "a+foo+a+bar+a+baz");
+    REQUIRE(CppCommon::StringUtils::Join(CppCommon::StringUtils::Split("a foo a bar a baz", "a "), "the ") == "the foo the bar the baz");
 
     REQUIRE(CppCommon::StringUtils::FromString<bool>("true"));
     REQUIRE(CppCommon::StringUtils::FromString<bool>("yes"));

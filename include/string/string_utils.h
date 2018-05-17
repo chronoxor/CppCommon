@@ -42,6 +42,12 @@ public:
         \return 'true' if given character is blank, 'false' if given character is not blank
     */
     static bool IsBlank(char ch);
+    //! Is the given C-string blank (empty or contains only space characters)?
+    /*!
+        \param str - C-string to check
+        \return 'true' if given C-string is blank, 'false' if given C-string is not blank
+    */
+    static bool IsBlank(const char* str);
     //! Is the given string blank (empty or contains only space characters)?
     /*!
         \param str - String to check
@@ -60,13 +66,13 @@ public:
     */
     static char ToUpper(char ch);
 
-    //! Convert the given string converted to lower case
+    //! Convert the given constant string converted to lower case
     /*!
         \param str - String to convert
         \return String converted to lower case
     */
     static std::string ToLower(const std::string& str);
-    //! Convert the the given string converted to UPPER case
+    //! Convert the the given constant string converted to UPPER case
     /*!
         \param str - String to convert
         \return String converted to UPPER case
@@ -76,27 +82,51 @@ public:
     //! Convert the given string to lower case
     /*!
         \param str - String to convert
+        \return The same converted string
     */
     static std::string& Lower(std::string& str);
     //! Convert the given string to UPPER case
     /*!
         \param str - String to convert
+        \return The same converted string
     */
     static std::string& Upper(std::string& str);
 
-    //! Trims space characters from the start
+    //! Trims space characters from the start of the given constant string
     /*!
         \param str - String to trim
+        \return Trimmed string
+    */
+    static std::string ToLTrim(const std::string str);
+    //! Trims space characters from the end of the given constant string
+    /*!
+        \param str - String to trim
+        \return Trimmed string
+    */
+    static std::string ToRTrim(const std::string str);
+    //! Trims space characters from the both sides of the given constant string
+    /*!
+        \param str - String to trim
+        \return Trimmed string
+    */
+    static std::string ToTrim(const std::string str);
+
+    //! Trims space characters from the start of the given string
+    /*!
+        \param str - String to trim
+        \return The same trimmed string
     */
     static std::string& LTrim(std::string& str);
-    //! Trims space characters from the end
+    //! Trims space characters from the end of the given string
     /*!
         \param str - String to trim
+        \return The same trimmed string
     */
     static std::string& RTrim(std::string& str);
-    //! Trims space characters from the both sides
+    //! Trims space characters from the both sides of the given string
     /*!
         \param str - String to trim
+        \return The same trimmed string
     */
     static std::string& Trim(std::string& str);
 

@@ -10,6 +10,15 @@
 
 namespace CppCommon {
 
+bool StringUtils::IsBlank(const char* str)
+{
+    for (size_t i = 0; str[i] != 0; ++i)
+        if (!IsBlank(str[i]))
+            return false;
+
+    return true;
+}
+
 bool StringUtils::IsBlank(const std::string& str)
 {
     if (str.empty())
@@ -20,6 +29,24 @@ bool StringUtils::IsBlank(const std::string& str)
             return false;
 
     return true;
+}
+
+std::string StringUtils::ToLTrim(const std::string str)
+{
+    return std::string(std::find_if(str.begin(), str.end(), [](int c) { return !std::isspace(c); }), str.end());
+}
+
+std::string StringUtils::ToRTrim(const std::string str)
+{
+    return std::string(str.begin(), std::find_if(str.rbegin(), str.rend(), [](int c) { return !std::isspace(c); }).base());
+}
+
+std::string StringUtils::ToTrim(const std::string str)
+{
+    auto start = std::find_if(str.begin(), str.end(), [](int c) { return !std::isspace(c); });
+    auto end = std::find_if(str.rbegin(), str.rend(), [](int c) { return !std::isspace(c); }).base();
+
+    return (start != str.end()) ? std::string(start, end) : std::string();
 }
 
 std::string& StringUtils::LTrim(std::string& str)
