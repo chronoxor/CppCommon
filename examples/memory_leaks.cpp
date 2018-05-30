@@ -7,14 +7,12 @@
 */
 
 #include "memory/memory_leaks.h"
-#include "utility/maybe_unused.h"
 
 #include <iostream>
 
 int main(int argc, char** argv)
 {
-    MAYBE_UNUSED int* ptr = nullptr;
-    (void)ptr;
+    [[maybe_unused]] int* ptr = nullptr;
 
     // Make some memory leaks
     ptr = new int;
