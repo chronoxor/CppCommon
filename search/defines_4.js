@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['maybe_5funused',['MAYBE_UNUSED',['../maybe__unused_8h.html#a07d932791f722cd5b75c111e51ef2023',1,'maybe_unused.h']]]
+  ['throwex',['throwex',['../errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d',1,'exceptions.h']]]
 ];
