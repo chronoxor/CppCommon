@@ -11,13 +11,25 @@
 #include <random>
 #include <unordered_map>
 
-using namespace CppCommon;
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable: 4244) // C4244: 'conversion' conversion from 'type1' to 'type2', possible loss of data
+#pragma warning(disable: 4310) // C4310: cast truncates constant value
+#pragma warning(disable: 4458) // C4458: declaration of 'identifier' hides class member
+#endif
+#include "flat_hash_map/flat_hash_map.hpp"
+#include "flat_hash_map/bytell_hash_map.hpp"
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif
 
 const int items = 1000000;
 
 typedef std::map<int, int> Map;
 typedef std::unordered_map<int, int> UnorderedMap;
-typedef HashMap<int, int> Hash;
+typedef CppCommon::HashMap<int, int> HashMap;
+typedef ska::flat_hash_map<int, int> FlatHash;
+typedef ska::bytell_hash_map<int, int> BytellHash;
 
 template <class T>
 class InsertFixture : public virtual CppBenchmark::Fixture
@@ -76,7 +88,25 @@ BENCHMARK_FIXTURE(InsertFixture<UnorderedMap>, "Insert: std::unordered_map")
     context.metrics().AddIterations(items - 1);
 }
 
-BENCHMARK_FIXTURE(InsertFixture<Hash>, "Insert: HashMap")
+BENCHMARK_FIXTURE(InsertFixture<HashMap>, "Insert: HashMap")
+{
+    for (auto& value : this->values)
+        this->map.emplace(value, value);
+
+    // Update benchmark metrics
+    context.metrics().AddIterations(items - 1);
+}
+
+BENCHMARK_FIXTURE(InsertFixture<FlatHash>, "Insert: FlatHash")
+{
+    for (auto& value : this->values)
+        this->map.emplace(value, value);
+
+    // Update benchmark metrics
+    context.metrics().AddIterations(items - 1);
+}
+
+BENCHMARK_FIXTURE(InsertFixture<BytellHash>, "Insert: BytellHash")
 {
     for (auto& value : this->values)
         this->map.emplace(value, value);
@@ -109,7 +139,31 @@ BENCHMARK_FIXTURE(FindFixture<UnorderedMap>, "Find: std::unordered_map")
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK_FIXTURE(FindFixture<Hash>, "Find: HashMap")
+BENCHMARK_FIXTURE(FindFixture<HashMap>, "Find: HashMap")
+{
+    uint64_t crc = 0;
+
+    for (auto& value : this->values)
+        crc += this->map.find(value)->second;
+
+    // Update benchmark metrics
+    context.metrics().AddIterations(items - 1);
+    context.metrics().SetCustom("CRC", crc);
+}
+
+BENCHMARK_FIXTURE(FindFixture<FlatHash>, "Find: FlatHash")
+{
+    uint64_t crc = 0;
+
+    for (auto& value : this->values)
+        crc += this->map.find(value)->second;
+
+    // Update benchmark metrics
+    context.metrics().AddIterations(items - 1);
+    context.metrics().SetCustom("CRC", crc);
+}
+
+BENCHMARK_FIXTURE(FindFixture<BytellHash>, "Find: BytellHash")
 {
     uint64_t crc = 0;
 
@@ -145,7 +199,31 @@ BENCHMARK_FIXTURE(FindFixture<UnorderedMap>, "Remove: std::unordered_map")
     context.metrics().SetCustom("CRC", crc);
 }
 
-BENCHMARK_FIXTURE(FindFixture<Hash>, "Remove: HashMap")
+BENCHMARK_FIXTURE(FindFixture<HashMap>, "Remove: HashMap")
+{
+    uint64_t crc = 0;
+
+    for (auto& value : this->values)
+        crc += this->map.erase(value);
+
+    // Update benchmark metrics
+    context.metrics().AddIterations(items - 1);
+    context.metrics().SetCustom("CRC", crc);
+}
+
+BENCHMARK_FIXTURE(FindFixture<FlatHash>, "Remove: FlatHash")
+{
+    uint64_t crc = 0;
+
+    for (auto& value : this->values)
+        crc += this->map.erase(value);
+
+    // Update benchmark metrics
+    context.metrics().AddIterations(items - 1);
+    context.metrics().SetCustom("CRC", crc);
+}
+
+BENCHMARK_FIXTURE(FindFixture<BytellHash>, "Remove: BytellHash")
 {
     uint64_t crc = 0;
 
