@@ -11,7 +11,10 @@
 #include <random>
 #include <unordered_map>
 
-#if defined(_MSC_VER)
+#if defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wshadow"
+#elif defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable: 4244) // C4244: 'conversion' conversion from 'type1' to 'type2', possible loss of data
 #pragma warning(disable: 4310) // C4310: cast truncates constant value
@@ -19,7 +22,9 @@
 #endif
 #include "flat_hash_map/flat_hash_map.hpp"
 #include "flat_hash_map/bytell_hash_map.hpp"
-#if defined(_MSC_VER)
+#if defined(__GNUC__)
+#pragma GCC diagnostic pop
+#elif defined(_MSC_VER)
 #pragma warning(pop)
 #endif
 
