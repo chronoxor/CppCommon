@@ -67,7 +67,7 @@ void produce_consume(CppBenchmark::Context& context)
     producer.join();
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items_to_produce - 1);
+    context.metrics().AddOperations(items_to_produce - 1);
     context.metrics().AddItems(items_to_produce);
     context.metrics().AddBytes(bytes_to_produce);
     context.metrics().SetCustom("CRC", crc);

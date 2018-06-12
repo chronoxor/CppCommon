@@ -72,7 +72,7 @@ void produce(CppBenchmark::Context& context)
         writer.join();
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items_to_produce - 1);
+    context.metrics().AddOperations(items_to_produce - 1);
     context.metrics().SetCustom("CRC-Readers", readers_crc);
     context.metrics().SetCustom("CRC-Writers", writers_crc);
 }

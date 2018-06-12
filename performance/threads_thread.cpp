@@ -9,12 +9,12 @@
 
 using namespace CppCommon;
 
-const uint64_t sleep_iterations = 10;
-const uint64_t yield_iterations = 1000000;
+const uint64_t sleep_operations = 10;
+const uint64_t yield_operations = 1000000;
 
 BENCHMARK("Thread::Sleep()")
 {
-    uint64_t iterations = sleep_iterations;
+    uint64_t operations = sleep_operations;
     uint64_t crc = 0;
 
     double maxlatency = std::numeric_limits<double>::min();
@@ -22,7 +22,7 @@ BENCHMARK("Thread::Sleep()")
     int64_t previous = Timestamp::nano();
     int64_t count = 0;
 
-    for (uint64_t i = 0; i < iterations; ++i)
+    for (uint64_t i = 0; i < operations; ++i)
     {
         Thread::Sleep(100);
 
@@ -49,13 +49,13 @@ BENCHMARK("Thread::Sleep()")
     }
 
     // Update benchmark metrics
-    context.metrics().AddIterations(iterations - 1);
+    context.metrics().AddOperations(operations - 1);
     context.metrics().SetCustom("CRC", crc);
 }
 
 BENCHMARK("Thread::Yield()")
 {
-    uint64_t iterations = yield_iterations;
+    uint64_t operations = yield_operations;
     uint64_t crc = 0;
 
     double maxlatency = std::numeric_limits<double>::min();
@@ -63,7 +63,7 @@ BENCHMARK("Thread::Yield()")
     int64_t previous = Timestamp::nano();
     int64_t count = 0;
 
-    for (uint64_t i = 0; i < iterations; ++i)
+    for (uint64_t i = 0; i < operations; ++i)
     {
         Thread::Yield();
 
@@ -90,7 +90,7 @@ BENCHMARK("Thread::Yield()")
     }
 
     // Update benchmark metrics
-    context.metrics().AddIterations(iterations - 1);
+    context.metrics().AddOperations(operations - 1);
     context.metrics().SetCustom("CRC", crc);
 }
 

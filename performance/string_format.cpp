@@ -10,12 +10,12 @@ using namespace CppCommon;
 
 BENCHMARK("format(int)", 10000000)
 {
-    context.metrics().AddBytes(format("test {} test", context.metrics().total_iterations()).size());
+    context.metrics().AddBytes(format("test {} test", context.metrics().total_operations()).size());
 }
 
 BENCHMARK("format(double)", 10000000)
 {
-    context.metrics().AddBytes(format("test {} test", context.metrics().total_iterations() / 1000.0).size());
+    context.metrics().AddBytes(format("test {} test", context.metrics().total_operations() / 1000.0).size());
 }
 
 BENCHMARK("format(string)", 10000000)
@@ -25,7 +25,7 @@ BENCHMARK("format(string)", 10000000)
 
 BENCHMARK("format(int, double, string)", 10000000)
 {
-    context.metrics().AddBytes(format("test {}.{}.{} test", context.metrics().total_iterations(), context.metrics().total_iterations() / 1000.0, context.name()).size());
+    context.metrics().AddBytes(format("test {}.{}.{} test", context.metrics().total_operations(), context.metrics().total_operations() / 1000.0, context.name()).size());
 }
 
 BENCHMARK_MAIN()

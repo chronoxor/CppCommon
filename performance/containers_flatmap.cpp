@@ -62,7 +62,7 @@ BENCHMARK_FIXTURE(InsertFixture<Map>, "Insert: std::map")
         this->map.emplace(value, value);
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
 }
 
 BENCHMARK_FIXTURE(InsertFixture<Flat>, "Insert: FlatMap")
@@ -71,7 +71,7 @@ BENCHMARK_FIXTURE(InsertFixture<Flat>, "Insert: FlatMap")
         this->map.emplace(value, value);
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
 }
 
 BENCHMARK_FIXTURE(FindFixture<Map>, "Find: std::map")
@@ -82,7 +82,7 @@ BENCHMARK_FIXTURE(FindFixture<Map>, "Find: std::map")
         crc += this->map.find(value)->second;
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
     context.metrics().SetCustom("CRC", crc);
 }
 
@@ -94,7 +94,7 @@ BENCHMARK_FIXTURE(FindFixture<Flat>, "Find: FlatMap")
         crc += this->map.find(value)->second;
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
     context.metrics().SetCustom("CRC", crc);
 }
 
@@ -106,7 +106,7 @@ BENCHMARK_FIXTURE(FindFixture<Map>, "Remove: std::map")
         crc += this->map.erase(value);
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
     context.metrics().SetCustom("CRC", crc);
 }
 
@@ -118,7 +118,7 @@ BENCHMARK_FIXTURE(FindFixture<Flat>, "Remove: FlatMap")
         crc += this->map.erase(value);
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
     context.metrics().SetCustom("CRC", crc);
 }
 

@@ -65,7 +65,7 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
         producer.join();
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items_to_produce - 1);
+    context.metrics().AddOperations(items_to_produce - 1);
     context.metrics().AddItems(items_to_produce);
     context.metrics().AddBytes(items_to_produce * sizeof(T));
     context.metrics().SetCustom("MPMCRingQueue.capacity", N);

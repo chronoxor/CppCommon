@@ -44,7 +44,7 @@ void produce(CppBenchmark::Context& context)
         producer.join();
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items_to_produce - 1);
+    context.metrics().AddOperations(items_to_produce - 1);
     context.metrics().SetCustom("CRC", crc);
 }
 

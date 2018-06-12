@@ -97,7 +97,7 @@ BENCHMARK_FIXTURE(InsertFixture<BinTree<MyBinTreeNode>>, "Insert: std::set")
         this->set.insert(value);
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
 }
 
 BENCHMARK_FIXTURE(InsertFixture<BinTree<MyBinTreeNode>>, "Insert: std::unordered_set")
@@ -106,7 +106,7 @@ BENCHMARK_FIXTURE(InsertFixture<BinTree<MyBinTreeNode>>, "Insert: std::unordered
         this->unordered_set.insert(value);
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
 }
 
 BENCHMARK_FIXTURE(InsertFixture<BinTree<MyBinTreeNode>>, "Insert: BinTree")
@@ -115,7 +115,7 @@ BENCHMARK_FIXTURE(InsertFixture<BinTree<MyBinTreeNode>>, "Insert: BinTree")
         this->tree.insert(*this->allocator.Create(value));
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
 }
 
 BENCHMARK_FIXTURE(InsertFixture<BinTreeAA<MyBinTreeNode>>, "Insert: BinTreeAA")
@@ -124,7 +124,7 @@ BENCHMARK_FIXTURE(InsertFixture<BinTreeAA<MyBinTreeNode>>, "Insert: BinTreeAA")
         this->tree.insert(*this->allocator.Create(value));
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
 }
 
 BENCHMARK_FIXTURE(InsertFixture<BinTreeAVL<MyBinTreeNode>>, "Insert: BinTreeAVL")
@@ -133,7 +133,7 @@ BENCHMARK_FIXTURE(InsertFixture<BinTreeAVL<MyBinTreeNode>>, "Insert: BinTreeAVL"
         this->tree.insert(*this->allocator.Create(value));
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
 }
 
 BENCHMARK_FIXTURE(InsertFixture<BinTreeRB<MyBinTreeNode>>, "Insert: BinTreeRB")
@@ -142,7 +142,7 @@ BENCHMARK_FIXTURE(InsertFixture<BinTreeRB<MyBinTreeNode>>, "Insert: BinTreeRB")
         this->tree.insert(*this->allocator.Create(value));
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
 }
 
 BENCHMARK_FIXTURE(FindFixture<BinTree<MyBinTreeNode>>, "Find: std::set")
@@ -153,7 +153,7 @@ BENCHMARK_FIXTURE(FindFixture<BinTree<MyBinTreeNode>>, "Find: std::set")
         crc += *this->set.find(value);
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
     context.metrics().SetCustom("CRC", crc);
 }
 
@@ -165,7 +165,7 @@ BENCHMARK_FIXTURE(FindFixture<BinTree<MyBinTreeNode>>, "Find: std::unordered_set
         crc += *this->unordered_set.find(value);
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
     context.metrics().SetCustom("CRC", crc);
 }
 
@@ -180,7 +180,7 @@ BENCHMARK_FIXTURE(FindFixture<BinTree<MyBinTreeNode>>, "Find: BinTree")
     }
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
     context.metrics().SetCustom("CRC", crc);
 }
 
@@ -195,7 +195,7 @@ BENCHMARK_FIXTURE(FindFixture<BinTreeAA<MyBinTreeNode>>, "Find: BinTreeAA")
     }
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
     context.metrics().SetCustom("CRC", crc);
 }
 
@@ -210,7 +210,7 @@ BENCHMARK_FIXTURE(FindFixture<BinTreeAVL<MyBinTreeNode>>, "Find: BinTreeAVL")
     }
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
     context.metrics().SetCustom("CRC", crc);
 }
 
@@ -225,7 +225,7 @@ BENCHMARK_FIXTURE(FindFixture<BinTreeRB<MyBinTreeNode>>, "Find: BinTreeRB")
     }
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
     context.metrics().SetCustom("CRC", crc);
 }
 
@@ -240,7 +240,7 @@ BENCHMARK_FIXTURE(FindFixture<BinTreeSplay<MyBinTreeNode>>, "Find: BinTreeSplay"
     }
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
     context.metrics().SetCustom("CRC", crc);
 }
 
@@ -256,7 +256,7 @@ BENCHMARK_FIXTURE(FindFixture<BinTree<MyBinTreeNode>>, "Remove: std::set")
     }
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
     context.metrics().SetCustom("CRC", crc);
 }
 
@@ -272,7 +272,7 @@ BENCHMARK_FIXTURE(FindFixture<BinTree<MyBinTreeNode>>, "Remove: std::unordered_s
     }
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
     context.metrics().SetCustom("CRC", crc);
 }
 
@@ -287,7 +287,7 @@ BENCHMARK_FIXTURE(FindFixture<BinTreeAA<MyBinTreeNode>>, "Remove: BinTreeAA")
     }
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
     context.metrics().SetCustom("CRC", crc);
 }
 
@@ -302,7 +302,7 @@ BENCHMARK_FIXTURE(FindFixture<BinTreeAVL<MyBinTreeNode>>, "Remove: BinTreeAVL")
     }
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
     context.metrics().SetCustom("CRC", crc);
 }
 
@@ -317,7 +317,7 @@ BENCHMARK_FIXTURE(FindFixture<BinTreeRB<MyBinTreeNode>>, "Remove: BinTreeRB")
     }
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
     context.metrics().SetCustom("CRC", crc);
 }
 

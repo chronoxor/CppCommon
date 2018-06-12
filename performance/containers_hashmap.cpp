@@ -81,7 +81,7 @@ BENCHMARK_FIXTURE(InsertFixture<Map>, "Insert: std::map")
         this->map.emplace(value, value);
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
 }
 
 BENCHMARK_FIXTURE(InsertFixture<UnorderedMap>, "Insert: std::unordered_map")
@@ -90,7 +90,7 @@ BENCHMARK_FIXTURE(InsertFixture<UnorderedMap>, "Insert: std::unordered_map")
         this->map.emplace(value, value);
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
 }
 
 BENCHMARK_FIXTURE(InsertFixture<HashMap>, "Insert: HashMap")
@@ -99,7 +99,7 @@ BENCHMARK_FIXTURE(InsertFixture<HashMap>, "Insert: HashMap")
         this->map.emplace(value, value);
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
 }
 
 BENCHMARK_FIXTURE(InsertFixture<FlatHash>, "Insert: FlatHash")
@@ -108,7 +108,7 @@ BENCHMARK_FIXTURE(InsertFixture<FlatHash>, "Insert: FlatHash")
         this->map.emplace(value, value);
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
 }
 
 BENCHMARK_FIXTURE(InsertFixture<BytellHash>, "Insert: BytellHash")
@@ -117,7 +117,7 @@ BENCHMARK_FIXTURE(InsertFixture<BytellHash>, "Insert: BytellHash")
         this->map.emplace(value, value);
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
 }
 
 BENCHMARK_FIXTURE(FindFixture<Map>, "Find: std::map")
@@ -128,7 +128,7 @@ BENCHMARK_FIXTURE(FindFixture<Map>, "Find: std::map")
         crc += this->map.find(value)->second;
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
     context.metrics().SetCustom("CRC", crc);
 }
 
@@ -140,7 +140,7 @@ BENCHMARK_FIXTURE(FindFixture<UnorderedMap>, "Find: std::unordered_map")
         crc += this->map.find(value)->second;
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
     context.metrics().SetCustom("CRC", crc);
 }
 
@@ -152,7 +152,7 @@ BENCHMARK_FIXTURE(FindFixture<HashMap>, "Find: HashMap")
         crc += this->map.find(value)->second;
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
     context.metrics().SetCustom("CRC", crc);
 }
 
@@ -164,7 +164,7 @@ BENCHMARK_FIXTURE(FindFixture<FlatHash>, "Find: FlatHash")
         crc += this->map.find(value)->second;
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
     context.metrics().SetCustom("CRC", crc);
 }
 
@@ -176,7 +176,7 @@ BENCHMARK_FIXTURE(FindFixture<BytellHash>, "Find: BytellHash")
         crc += this->map.find(value)->second;
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
     context.metrics().SetCustom("CRC", crc);
 }
 
@@ -188,7 +188,7 @@ BENCHMARK_FIXTURE(FindFixture<Map>, "Remove: std::map")
         crc += this->map.erase(value);
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
     context.metrics().SetCustom("CRC", crc);
 }
 
@@ -200,7 +200,7 @@ BENCHMARK_FIXTURE(FindFixture<UnorderedMap>, "Remove: std::unordered_map")
         crc += this->map.erase(value);
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
     context.metrics().SetCustom("CRC", crc);
 }
 
@@ -212,7 +212,7 @@ BENCHMARK_FIXTURE(FindFixture<HashMap>, "Remove: HashMap")
         crc += this->map.erase(value);
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
     context.metrics().SetCustom("CRC", crc);
 }
 
@@ -224,7 +224,7 @@ BENCHMARK_FIXTURE(FindFixture<FlatHash>, "Remove: FlatHash")
         crc += this->map.erase(value);
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
     context.metrics().SetCustom("CRC", crc);
 }
 
@@ -236,7 +236,7 @@ BENCHMARK_FIXTURE(FindFixture<BytellHash>, "Remove: BytellHash")
         crc += this->map.erase(value);
 
     // Update benchmark metrics
-    context.metrics().AddIterations(items - 1);
+    context.metrics().AddOperations(items - 1);
     context.metrics().SetCustom("CRC", crc);
 }
 

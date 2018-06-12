@@ -10,7 +10,7 @@
 
 using namespace CppCommon;
 
-const uint64_t iterations = 100000;
+const uint64_t operations = 100000;
 const int chunk = 8192;
 
 class FileWriteFixture : public virtual CppBenchmark::Fixture
@@ -53,19 +53,19 @@ private:
     void CreateTestFile()
     {
         file.Create(false, true);
-        for (uint64_t i = 0; i < iterations; ++i)
+        for (uint64_t i = 0; i < operations; ++i)
             file.Write(buffer.data(), buffer.size());
         file.Close();
     }
 };
 
-BENCHMARK_FIXTURE(FileWriteFixture, "File::Write()", iterations)
+BENCHMARK_FIXTURE(FileWriteFixture, "File::Write()", operations)
 {
     file.Write(buffer.data(), buffer.size());
     context.metrics().AddBytes(buffer.size());
 }
 
-BENCHMARK_FIXTURE(FileReadFixture, "File::Read()", iterations)
+BENCHMARK_FIXTURE(FileReadFixture, "File::Read()", operations)
 {
     file.Read(buffer.data(), buffer.size());
     context.metrics().AddBytes(buffer.size());

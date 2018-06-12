@@ -25,7 +25,7 @@ BENCHMARK("std::function: create & invoke", 100000000)
     std::function<void (int64_t)> function = std::bind(&Class::test, &instance, std::placeholders::_1);
 
     // Call the function
-    function(context.metrics().total_iterations());
+    function(context.metrics().total_operations());
 }
 
 BENCHMARK("std::function: invoke", 100000000)
@@ -34,7 +34,7 @@ BENCHMARK("std::function: invoke", 100000000)
     static std::function<void (int64_t)> function = std::bind(&Class::test, &instance, std::placeholders::_1);
 
     // Call the function
-    function(context.metrics().total_iterations());
+    function(context.metrics().total_operations());
 }
 
 BENCHMARK("CppCommon::Function: create & invoke", 100000000)
@@ -45,7 +45,7 @@ BENCHMARK("CppCommon::Function: create & invoke", 100000000)
     CppCommon::Function<void (int64_t)> function = std::bind(&Class::test, &instance, std::placeholders::_1);
 
     // Call the function
-    function(context.metrics().total_iterations());
+    function(context.metrics().total_operations());
 }
 
 BENCHMARK("CppCommon::Function: invoke", 100000000)
@@ -54,7 +54,7 @@ BENCHMARK("CppCommon::Function: invoke", 100000000)
     static CppCommon::Function<void (int64_t)> function = std::bind(&Class::test, &instance, std::placeholders::_1);
 
     // Call the function
-    function(context.metrics().total_iterations());
+    function(context.metrics().total_operations());
 }
 
 BENCHMARK_MAIN()
