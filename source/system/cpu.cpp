@@ -59,7 +59,7 @@ std::string CPU::Architecture()
 
     std::string line;
     std::ifstream stream("/proc/cpuinfo");
-    while (getline(stream, line, '\n'))
+    while (getline(stream, line))
     {
         std::smatch matches;
         if (std::regex_match(line, matches, pattern))
@@ -206,7 +206,7 @@ int64_t CPU::ClockSpeed()
 
     std::string line;
     std::ifstream stream("/proc/cpuinfo");
-    while (getline(stream, line, '\n'))
+    while (getline(stream, line))
     {
         std::smatch matches;
         if (std::regex_match(line, matches, pattern))
