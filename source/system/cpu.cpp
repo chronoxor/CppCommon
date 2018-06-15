@@ -58,8 +58,8 @@ std::string CPU::Architecture()
     static std::regex pattern("model name(.*): (.*)");
 
     std::string line;
-    std::ifstream stream("/proc/cpuinfo", '\n');
-    while (getline(stream, line))
+    std::ifstream stream("/proc/cpuinfo");
+    while (getline(stream, line, '\n'))
     {
         std::smatch matches;
         if (std::regex_match(line, matches, pattern))
@@ -205,8 +205,8 @@ int64_t CPU::ClockSpeed()
     static std::regex pattern("cpu MHz(.*): (.*)");
 
     std::string line;
-    std::ifstream stream("/proc/cpuinfo", '\n');
-    while (getline(stream, line))
+    std::ifstream stream("/proc/cpuinfo");
+    while (getline(stream, line, '\n'))
     {
         std::smatch matches;
         if (std::regex_match(line, matches, pattern))
