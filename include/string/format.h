@@ -17,8 +17,17 @@
 #pragma system_header
 #endif
 
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable: 4127) // C4127: conditional expression is constant
+#endif
+
 #include <fmt/format.h>
 #include <fmt/ostream.h>
+
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif
 
 namespace CppCommon {
 
@@ -47,6 +56,56 @@ std::string format(const std::string& pattern, const Args&... args);
 */
 template <typename... Args>
 std::wstring format(const std::wstring& pattern, const Args&... args);
+
+//! Format string and print it into the std::cout
+/*!
+    Format string with the help of {fmt} library (http://fmtlib.net)
+
+    Not thread-safe.
+
+    \param pattern - Format string pattern
+    \param args - Format arguments
+*/
+template <typename... Args>
+void print(const std::string& pattern, const Args&... args);
+
+//! Format wide string and print it into the std::wcout
+/*!
+    Format wide string with the help of {fmt} library (http://fmtlib.net)
+
+    Not thread-safe.
+
+    \param pattern - Format wide string pattern
+    \param args - Format arguments
+*/
+template <typename... Args>
+void print(const std::wstring& pattern, const Args&... args);
+
+//! Format string and print it into the given std::ostream
+/*!
+    Format string with the help of {fmt} library (http://fmtlib.net)
+
+    Not thread-safe.
+
+    \param stream - Output stream
+    \param pattern - Format string pattern
+    \param args - Format arguments
+*/
+template <typename... Args>
+void print(std::ostream& stream, const std::string& pattern, const Args&... args);
+
+//! Format wide string and print it into the given std::wostream
+/*!
+    Format wide string with the help of {fmt} library (http://fmtlib.net)
+
+    Not thread-safe.
+
+    \param stream - Output wide stream
+    \param pattern - Format wide string pattern
+    \param args - Format arguments
+*/
+template <typename... Args>
+void print(std::wostream& stream, const std::wstring& pattern, const Args&... args);
 
 /*! \example string_format.cpp Format string example */
 
