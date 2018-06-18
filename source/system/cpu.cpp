@@ -24,19 +24,6 @@ namespace CppCommon {
 //! @cond INTERNALS
 namespace Internals {
 
-#if defined(__CYGWIN__)
-
-std::istream& getline_workaround(std::istream& stream, std::string& str)
-{
-    char ch;
-    str.clear();
-    while (stream.get(ch) && (ch != '\n'))
-        str.push_back(ch);
-    return stream;
-}
-
-#endif
-
 #if defined(_WIN32) || defined(_WIN64)
 
 // Helper function to count set bits in the processor mask
@@ -74,11 +61,7 @@ std::string CPU::Architecture()
 
     std::string line;
     std::ifstream stream("/proc/cpuinfo");
-#if defined(__CYGWIN__)
-    while (Internals::getline_workaround(stream, line))
-#else
     while (getline(stream, line))
-#endif
     {
         std::smatch matches;
         if (std::regex_match(line, matches, pattern))
@@ -225,11 +208,7 @@ int64_t CPU::ClockSpeed()
 
     std::string line;
     std::ifstream stream("/proc/cpuinfo");
-#if defined(__CYGWIN__)
-    while (Internals::getline_workaround(stream, line))
-#else
     while (getline(stream, line))
-#endif
     {
         std::smatch matches;
         if (std::regex_match(line, matches, pattern))
