@@ -111,7 +111,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#if defined(__CYGWIN__)</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;std::istream&amp; getline_workaround(std::istream&amp; is, std::string&amp; str)</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;std::istream&amp; getline_workaround(std::istream&amp; stream, std::string&amp; str)</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;{</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keywordtype">char</span> ch;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    str.clear();</div>
@@ -159,7 +159,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    std::string line;</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    std::ifstream stream(<span class="stringliteral">&quot;/proc/cpuinfo&quot;</span>);</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor">#if defined(__CYGWIN__)</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor"></span>    <span class="keywordflow">while</span> (getline_workaround(stream, line))</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor"></span>    <span class="keywordflow">while</span> (Internals::getline_workaround(stream, line))</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="preprocessor">#else</span></div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor"></span>    <span class="keywordflow">while</span> (getline(stream, line))</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor">#endif</span></div>
