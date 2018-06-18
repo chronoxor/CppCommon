@@ -75,7 +75,7 @@ std::string CPU::Architecture()
     std::string line;
     std::ifstream stream("/proc/cpuinfo");
 #if defined(__CYGWIN__)
-    while (getline_workaround(stream, line))
+    while (Internals::getline_workaround(stream, line))
 #else
     while (getline(stream, line))
 #endif
