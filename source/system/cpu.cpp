@@ -26,7 +26,7 @@ namespace Internals {
 
 #if defined(__CYGWIN__)
 
-std::istream& getline_workaround(std::istream& is, std::string& str)
+std::istream& getline_workaround(std::istream& stream, std::string& str)
 {
     char ch;
     str.clear();
