@@ -21,11 +21,6 @@
 #include <windows.h>
 #endif
 
-#if defined(__GNUC__)
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wstringop-truncation"
-#endif
-
 namespace CppCommon {
 
 //! @cond INTERNALS
@@ -224,7 +219,3 @@ bool SharedMemory::owner() const
 }
 
 } // namespace CppCommon
-
-#if defined(__GNUC__)
-#pragma GCC diagnostic pop
-#endif
