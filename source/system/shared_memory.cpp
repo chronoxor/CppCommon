@@ -95,7 +95,10 @@ public:
         if (_owner)
         {
             // Fill shared memory header
-            std::strncpy(((SharedMemoryHeader*)_ptr)->prefix, SHARED_MEMORY_HEADER_PREFIX, 4 );
+            ((SharedMemoryHeader*)_ptr)->prefix[0] = SHARED_MEMORY_HEADER_PREFIX[0];
+            ((SharedMemoryHeader*)_ptr)->prefix[1] = SHARED_MEMORY_HEADER_PREFIX[1];
+            ((SharedMemoryHeader*)_ptr)->prefix[2] = SHARED_MEMORY_HEADER_PREFIX[2];
+            ((SharedMemoryHeader*)_ptr)->prefix[3] = SHARED_MEMORY_HEADER_PREFIX[3];
             ((SharedMemoryHeader*)_ptr)->size = size;
         }
         else
