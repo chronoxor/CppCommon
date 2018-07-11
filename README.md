@@ -60,38 +60,38 @@ Optional:
 # How to build?
 
 ## Clone repository with submodules
-```
+```shell
 git clone https://github.com/chronoxor/CppCommon.git CppCommon
 cd CppCommon
 git submodule update --init --recursive --remote
 ```
 
 ## Linux
-```
+```shell
 cd build
 ./unix.sh
 ```
 
 ## OSX
-```
+```shell
 cd build
 ./unix.sh
 ```
 
 ## Windows (Cygwin)
-```
+```shell
 cd build
 cygwin.bat
 ```
 
 ## Windows (MinGW)
-```
+```shell
 cd build
 mingw.bat
 ```
 
 ## Windows (Visual Studio)
-```
+```shell
 cd build
 vs.bat
 ```
