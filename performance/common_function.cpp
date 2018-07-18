@@ -17,7 +17,7 @@ private:
     volatile int64_t _data;
 };
 
-BENCHMARK("std::function: create & invoke", 100000000)
+BENCHMARK("std::function: create & invoke")
 {
     static Class instance;
 
@@ -28,7 +28,7 @@ BENCHMARK("std::function: create & invoke", 100000000)
     function(context.metrics().total_operations());
 }
 
-BENCHMARK("std::function: invoke", 100000000)
+BENCHMARK("std::function: invoke")
 {
     static Class instance;
     static std::function<void (int64_t)> function = std::bind(&Class::test, &instance, std::placeholders::_1);
@@ -37,7 +37,7 @@ BENCHMARK("std::function: invoke", 100000000)
     function(context.metrics().total_operations());
 }
 
-BENCHMARK("CppCommon::Function: create & invoke", 100000000)
+BENCHMARK("CppCommon::Function: create & invoke")
 {
     static Class instance;
 
@@ -48,7 +48,7 @@ BENCHMARK("CppCommon::Function: create & invoke", 100000000)
     function(context.metrics().total_operations());
 }
 
-BENCHMARK("CppCommon::Function: invoke", 100000000)
+BENCHMARK("CppCommon::Function: invoke")
 {
     static Class instance;
     static CppCommon::Function<void (int64_t)> function = std::bind(&Class::test, &instance, std::placeholders::_1);

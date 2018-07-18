@@ -8,7 +8,7 @@
 
 using namespace CppCommon;
 
-BENCHMARK("UUID::Generate()", 10000000)
+BENCHMARK("UUID::Generate()")
 {
     UUID::Generate();
 }
