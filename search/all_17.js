@@ -28,5 +28,5 @@ var searchData=
   ['writer_2eh',['writer.h',['../writer_8h.html',1,'']]],
   ['writestring',['WriteString',['../class_cpp_common_1_1_write_string.html',1,'CppCommon']]],
   ['writestring',['WriteString',['../class_cpp_common_1_1_write_string.html#a7a310db477edbe9334504f6e16121c9a',1,'CppCommon::WriteString']]],
-  ['wstring',['wstring',['../class_cpp_common_1_1_path.html#a3d6d799bd82f62c847227174a861ef54',1,'CppCommon::Path']]]
+  ['wstring',['wstring',['../class_cpp_common_1_1uint128__t.html#a95c8e00726987153470f1680085fcaee',1,'CppCommon::uint128_t::wstring()'],['../class_cpp_common_1_1uint256__t.html#afba679b91046a5783e8b89e7bce75094',1,'CppCommon::uint256_t::wstring()'],['../class_cpp_common_1_1_path.html#a3d6d799bd82f62c847227174a861ef54',1,'CppCommon::Path::wstring()'],['../class_cpp_common_1_1_u_u_i_d.html#aace4562f21404d52b516a68f2d6b899b',1,'CppCommon::UUID::wstring()']]]
 ];

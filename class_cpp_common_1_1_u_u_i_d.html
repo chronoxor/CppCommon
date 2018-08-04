@@ -135,6 +135,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad0d0a94802f77b7f3d96ec3f305db430"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_u_u_i_d.html#ad0d0a94802f77b7f3d96ec3f305db430">string</a> () const </td></tr>
 <tr class="memdesc:ad0d0a94802f77b7f3d96ec3f305db430"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get string from the current <a class="el" href="class_cpp_common_1_1_u_u_i_d.html" title="Universally unique identifier (UUID) ">UUID</a> in format "00000000-0000-0000-0000-000000000000".  <a href="#ad0d0a94802f77b7f3d96ec3f305db430">More...</a><br/></td></tr>
 <tr class="separator:ad0d0a94802f77b7f3d96ec3f305db430"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aace4562f21404d52b516a68f2d6b899b"><td class="memItemLeft" align="right" valign="top">std::wstring&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_u_u_i_d.html#aace4562f21404d52b516a68f2d6b899b">wstring</a> () const </td></tr>
+<tr class="memdesc:aace4562f21404d52b516a68f2d6b899b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get wide string from the current <a class="el" href="class_cpp_common_1_1_u_u_i_d.html" title="Universally unique identifier (UUID) ">UUID</a> in format "00000000-0000-0000-0000-000000000000".  <a href="#aace4562f21404d52b516a68f2d6b899b">More...</a><br/></td></tr>
+<tr class="separator:aace4562f21404d52b516a68f2d6b899b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa2ce557e57977c85705ac07e07f8e702"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_u_u_i_d.html#aa2ce557e57977c85705ac07e07f8e702">swap</a> (<a class="el" href="class_cpp_common_1_1_u_u_i_d.html">UUID</a> &amp;uuid) noexcept</td></tr>
 <tr class="memdesc:aa2ce557e57977c85705ac07e07f8e702"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swap two instances.  <a href="#aa2ce557e57977c85705ac07e07f8e702">More...</a><br/></td></tr>
 <tr class="separator:aa2ce557e57977c85705ac07e07f8e702"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -162,6 +165,9 @@ Friends</h2></td></tr>
 <tr class="memitem:a5485d570c503ea3bc6fef010ea6fd98f"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_u_u_i_d.html#a5485d570c503ea3bc6fef010ea6fd98f">operator&lt;&lt;</a> (std::ostream &amp;os, const <a class="el" href="class_cpp_common_1_1_u_u_i_d.html">UUID</a> &amp;uuid)</td></tr>
 <tr class="memdesc:a5485d570c503ea3bc6fef010ea6fd98f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output instance into the given output stream.  <a href="#a5485d570c503ea3bc6fef010ea6fd98f">More...</a><br/></td></tr>
 <tr class="separator:a5485d570c503ea3bc6fef010ea6fd98f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72cc2f65ed568dd99a303b36726ef67a"><td class="memItemLeft" align="right" valign="top">std::wostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_u_u_i_d.html#a72cc2f65ed568dd99a303b36726ef67a">operator&lt;&lt;</a> (std::wostream &amp;os, const <a class="el" href="class_cpp_common_1_1_u_u_i_d.html">UUID</a> &amp;uuid)</td></tr>
+<tr class="memdesc:a72cc2f65ed568dd99a303b36726ef67a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output instance into the given wide output stream.  <a href="#a72cc2f65ed568dd99a303b36726ef67a">More...</a><br/></td></tr>
+<tr class="separator:a72cc2f65ed568dd99a303b36726ef67a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a189238cded4b9406830bd498c7b7998d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_u_u_i_d.html#a189238cded4b9406830bd498c7b7998d">swap</a> (<a class="el" href="class_cpp_common_1_1_u_u_i_d.html">UUID</a> &amp;uuid1, <a class="el" href="class_cpp_common_1_1_u_u_i_d.html">UUID</a> &amp;uuid2) noexcept</td></tr>
 <tr class="separator:a189238cded4b9406830bd498c7b7998d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -391,7 +397,7 @@ Friends</h2></td></tr>
 <p>Generate a new <a class="el" href="class_cpp_common_1_1_u_u_i_d.html" title="Universally unique identifier (UUID) ">UUID</a> value. </p>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="system_uuid_8cpp-example.html#a0">system_uuid.cpp</a>.</dd>
 </dl>
-<p>Definition at line <a class="el" href="uuid_8cpp_source.html#l00083">83</a> of file <a class="el" href="uuid_8cpp_source.html">uuid.cpp</a>.</p>
+<p>Definition at line <a class="el" href="uuid_8cpp_source.html#l00101">101</a> of file <a class="el" href="uuid_8cpp_source.html">uuid.cpp</a>.</p>
 
 </div>
 </div>
@@ -542,6 +548,25 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="aace4562f21404d52b516a68f2d6b899b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::wstring CppCommon::UUID::wstring </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get wide string from the current <a class="el" href="class_cpp_common_1_1_u_u_i_d.html" title="Universally unique identifier (UUID) ">UUID</a> in format "00000000-0000-0000-0000-000000000000". </p>
+
+<p>Definition at line <a class="el" href="uuid_8cpp_source.html#l00083">83</a> of file <a class="el" href="uuid_8cpp_source.html">uuid.cpp</a>.</p>
+
+</div>
+</div>
 <h2 class="groupheader">Friends And Related Function Documentation</h2>
 <a class="anchor" id="abb83084bf6bd999d2877149e61b4ea97"></a>
 <div class="memitem">
@@ -649,7 +674,45 @@ Friends</h2></td></tr>
 
 <p>Output instance into the given output stream. </p>
 
-<p>Definition at line <a class="el" href="uuid_8h_source.html#l00079">79</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
+<p>Definition at line <a class="el" href="uuid_8h_source.html#l00081">81</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a72cc2f65ed568dd99a303b36726ef67a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::wostream&amp; operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::wostream &amp;&#160;</td>
+          <td class="paramname"><em>os</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_cpp_common_1_1_u_u_i_d.html">UUID</a> &amp;&#160;</td>
+          <td class="paramname"><em>uuid</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Output instance into the given wide output stream. </p>
+
+<p>Definition at line <a class="el" href="uuid_8h_source.html#l00084">84</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
 
 </div>
 </div>
