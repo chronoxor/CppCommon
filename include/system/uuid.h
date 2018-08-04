@@ -71,6 +71,8 @@ public:
 
     //! Get string from the current UUID in format "00000000-0000-0000-0000-000000000000"
     std::string string() const;
+    //! Get wide string from the current UUID in format "00000000-0000-0000-0000-000000000000"
+    std::wstring wstring() const;
 
     //! Generate a new UUID value
     static UUID Generate();
@@ -78,6 +80,9 @@ public:
     //! Output instance into the given output stream
     friend std::ostream& operator<<(std::ostream& os, const UUID& uuid)
     { os << uuid.string(); return os; }
+    //! Output instance into the given wide output stream
+    friend std::wostream& operator<<(std::wostream& os, const UUID& uuid)
+    { os << uuid.wstring(); return os; }
 
     //! Swap two instances
     void swap(UUID& uuid) noexcept;

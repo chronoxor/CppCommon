@@ -267,6 +267,13 @@ public:
         \return Result string
     */
     std::string string(size_t base = 10, size_t length = 0) const;
+    //! Get wide string from the current 128-bit integer
+    /*!
+        \param base - Conversion base in range [2, 16] (default is 10)
+        \param length - Minimal string length (default is 0)
+        \return Result wide string
+    */
+    std::wstring wstring(size_t base = 10, size_t length = 0) const;
 
     //! Calculate quotient and remainder when dividing X by Y
     /*!
@@ -279,8 +286,13 @@ public:
     //! Input instance from the given input stream
     friend std::istream& operator>>(std::istream& is, uint128_t& value)
     { is >> value._upper >> value._lower; return is; }
+    //! Input instance from the given wide input stream
+    friend std::wistream& operator>>(std::wistream& is, uint128_t& value)
+    { is >> value._upper >> value._lower; return is; }
     //! Output instance into the given output stream
     friend std::ostream& operator<<(std::ostream& os, const uint128_t& value);
+    //! Output instance into the given wide output stream
+    friend std::wostream& operator<<(std::wostream& os, const uint128_t& value);
 
     //! Swap two instances
     void swap(uint128_t& value) noexcept;

@@ -176,6 +176,17 @@ inline std::ostream& operator<<(std::ostream& os, const uint256_t& value)
     return os;
 }
 
+inline std::wostream& operator<<(std::wostream& os, const uint256_t& value)
+{
+    if (os.flags() & os.oct)
+        os << value.wstring(8);
+    else if (os.flags() & os.dec)
+        os << value.wstring(10);
+    else if (os.flags() & os.hex)
+        os << value.wstring(16);
+    return os;
+}
+
 inline void uint256_t::swap(uint256_t& value) noexcept
 {
     using std::swap;

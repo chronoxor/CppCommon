@@ -143,6 +143,31 @@ std::string uint128_t::string(size_t base, size_t length) const
     return out;
 }
 
+std::wstring uint128_t::wstring(size_t base, size_t length) const
+{
+    if ((base < 2) || (base > 16))
+        throw std::invalid_argument("Base must be in the range [2, 16]");
+
+    std::wstring out;
+
+    if (!(*this))
+        out = L"0";
+    else
+    {
+        std::pair<uint128_t, uint128_t> qr(*this, 0);
+        do
+        {
+            qr = uint128_t::divmod(qr.first, uint128_t(base));
+            out = L"0123456789abcdef"[(uint8_t)qr.second] + out;
+        } while (qr.first != 0);
+    }
+
+    if (out.size() < length)
+        out = std::wstring(length - out.size(), L'0') + out;
+
+    return out;
+}
+
 std::pair<uint128_t, uint128_t> uint128_t::divmod(const uint128_t& x, const uint128_t& y)
 {
     if (y == 0)
