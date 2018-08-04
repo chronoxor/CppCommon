@@ -144,7 +144,7 @@ std::pair<uint256_t, uint256_t> uint256_t::divmod(const uint256_t& x, const uint
         return std::pair<uint256_t, uint256_t>(0, x);
 
     std::pair<uint256_t, uint256_t> result(0, x);
-    uint256_t delta = x.bits() - y.bits();
+    uint256_t delta = uint256_t(x.bits() - y.bits());
     uint256_t copyd = y << delta;
     uint256_t adder = 1 << delta;
 
