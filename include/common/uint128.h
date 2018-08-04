@@ -26,8 +26,16 @@ class uint128_t
 {
 public:
     uint128_t() noexcept;
+    uint128_t(int8_t value) noexcept;
+    uint128_t(uint8_t value) noexcept;
+    uint128_t(int16_t value) noexcept;
+    uint128_t(uint16_t value) noexcept;
+    uint128_t(int32_t value) noexcept;
+    uint128_t(uint32_t value) noexcept;
+    uint128_t(int64_t value) noexcept;
+    uint128_t(uint64_t value) noexcept;
     template <typename T>
-    uint128_t(const T& value) noexcept;
+    explicit uint128_t(const T& value) noexcept;
     template <typename TUpper, typename TLower>
     uint128_t(const TUpper& upper, const TLower& lower) noexcept;
     uint128_t(const uint128_t& value) noexcept = default;

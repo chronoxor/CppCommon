@@ -13,6 +13,46 @@ inline uint128_t::uint128_t() noexcept
 {
 }
 
+inline uint128_t::uint128_t(int8_t value) noexcept
+    : _upper(0), _lower(value)
+{
+}
+
+inline uint128_t::uint128_t(uint8_t value) noexcept
+    : _upper(0), _lower(value)
+{
+}
+
+inline uint128_t::uint128_t(int16_t value) noexcept
+    : _upper(0), _lower(value)
+{
+}
+
+inline uint128_t::uint128_t(uint16_t value) noexcept
+    : _upper(0), _lower(value)
+{
+}
+
+inline uint128_t::uint128_t(int32_t value) noexcept
+    : _upper(0), _lower(value)
+{
+}
+
+inline uint128_t::uint128_t(uint32_t value) noexcept
+    : _upper(0), _lower(value)
+{
+}
+
+inline uint128_t::uint128_t(int64_t value) noexcept
+    : _upper(0), _lower(value)
+{
+}
+
+inline uint128_t::uint128_t(uint64_t value) noexcept
+    : _upper(0), _lower(value)
+{
+}
+
 template <typename T>
 inline uint128_t::uint128_t(const T& value) noexcept
     : _upper(0), _lower(value)

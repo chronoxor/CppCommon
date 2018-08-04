@@ -13,6 +13,51 @@ inline uint256_t::uint256_t() noexcept
 {
 }
 
+inline uint256_t::uint256_t(int8_t value) noexcept
+    : _upper(0), _lower(value)
+{
+}
+
+inline uint256_t::uint256_t(uint8_t value) noexcept
+    : _upper(0), _lower(value)
+{
+}
+
+inline uint256_t::uint256_t(int16_t value) noexcept
+    : _upper(0), _lower(value)
+{
+}
+
+inline uint256_t::uint256_t(uint16_t value) noexcept
+    : _upper(0), _lower(value)
+{
+}
+
+inline uint256_t::uint256_t(int32_t value) noexcept
+    : _upper(0), _lower(value)
+{
+}
+
+inline uint256_t::uint256_t(uint32_t value) noexcept
+    : _upper(0), _lower(value)
+{
+}
+
+inline uint256_t::uint256_t(int64_t value) noexcept
+    : _upper(0), _lower(value)
+{
+}
+
+inline uint256_t::uint256_t(uint64_t value) noexcept
+    : _upper(0), _lower(value)
+{
+}
+
+inline uint256_t::uint256_t(uint128_t value) noexcept
+    : _upper(0), _lower(value)
+{
+}
+
 template <typename T>
 inline uint256_t::uint256_t(const T& value) noexcept
     : _upper(0), _lower(value)

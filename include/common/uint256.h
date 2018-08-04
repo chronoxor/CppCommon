@@ -21,8 +21,17 @@ class uint256_t
 {
 public:
     uint256_t() noexcept;
+    uint256_t(int8_t value) noexcept;
+    uint256_t(uint8_t value) noexcept;
+    uint256_t(int16_t value) noexcept;
+    uint256_t(uint16_t value) noexcept;
+    uint256_t(int32_t value) noexcept;
+    uint256_t(uint32_t value) noexcept;
+    uint256_t(int64_t value) noexcept;
+    uint256_t(uint64_t value) noexcept;
+    uint256_t(uint128_t value) noexcept;
     template <typename T>
-    uint256_t(const T& value) noexcept;
+    explicit uint256_t(const T& value) noexcept;
     template <typename TUpper, typename TLower>
     uint256_t(const TUpper& upper, const TLower& lower) noexcept;
     template <typename TUpperUpper, typename TUpperLower, typename TLowerUpper, typename TLowerLower>
