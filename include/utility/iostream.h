@@ -20,9 +20,9 @@ public:
     explicit WriteChar(char ch) : _ch(ch) {}
 
     friend std::ostream& operator<<(std::ostream& stream, const WriteChar& writer)
-    {
-        return stream << '\'' << writer._ch << '\'';
-    }
+    { return stream << '\'' << writer._ch << '\''; }
+    friend std::wostream& operator<<(std::wostream& stream, const WriteChar& writer)
+    { return stream << L'\'' << writer._ch << L'\''; }
 
 private:
     char _ch;
@@ -40,6 +40,13 @@ public:
         stream << '"';
         stream.write(writer._str, writer._size);
         stream << '"';
+        return stream;
+    }
+    friend std::wostream& operator<<(std::wostream& stream, const WriteString& writer)
+    {
+        stream << L'"';
+        stream.write(writer._str, writer._size);
+        stream << L'"';
         return stream;
     }
 
