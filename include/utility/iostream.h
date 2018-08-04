@@ -22,7 +22,7 @@ public:
     friend std::ostream& operator<<(std::ostream& stream, const WriteChar& writer)
     { return stream << '\'' << writer._ch << '\''; }
     friend std::wostream& operator<<(std::wostream& stream, const WriteChar& writer)
-    { return stream << L'\'' << writer._ch << L'\''; }
+    { return stream << '\'' << writer._ch << '\''; }
 
 private:
     char _ch;
@@ -44,9 +44,10 @@ public:
     }
     friend std::wostream& operator<<(std::wostream& stream, const WriteString& writer)
     {
-        stream << L'"';
-        stream.write(writer._str, writer._size);
-        stream << L'"';
+        stream << '"';
+        for (size_t i = 0; i < writer._size; ++i)
+            stream << writer._str[i];
+        stream << '"';
         return stream;
     }
 
