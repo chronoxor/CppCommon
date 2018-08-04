@@ -88,10 +88,10 @@ TEST_CASE("uint256: Assignment", "[CppCommon][Common]")
 {
     const uint256_t t_1 = true;
     const uint256_t f_1 = false;
-    const uint256_t u8_1 = 0x01;
-    const uint256_t u16_1 = 0x0123;
-    const uint256_t u32_1 = 0x01234567;
-    const uint256_t u64_1 = 0x0123456789ABCDEF;
+    const uint256_t u8_1 = 0x01ull;
+    const uint256_t u16_1 = 0x0123ull;
+    const uint256_t u32_1 = 0x01234567ull;
+    const uint256_t u64_1 = 0x0123456789ABCDEFull;
 
     uint256_t t_2 = 0;
     uint256_t f_2 = 0;
