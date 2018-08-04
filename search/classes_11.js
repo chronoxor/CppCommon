@@ -5,5 +5,7 @@ var searchData=
   ['writechar',['WriteChar',['../class_cpp_common_1_1_write_char.html',1,'CppCommon']]],
   ['writelocker',['WriteLocker',['../class_cpp_common_1_1_write_locker.html',1,'CppCommon']]],
   ['writer',['Writer',['../class_cpp_common_1_1_writer.html',1,'CppCommon']]],
-  ['writestring',['WriteString',['../class_cpp_common_1_1_write_string.html',1,'CppCommon']]]
+  ['writestring',['WriteString',['../class_cpp_common_1_1_write_string.html',1,'CppCommon']]],
+  ['writewchar',['WriteWChar',['../class_cpp_common_1_1_write_w_char.html',1,'CppCommon']]],
+  ['writewstring',['WriteWString',['../class_cpp_common_1_1_write_w_string.html',1,'CppCommon']]]
 ];
