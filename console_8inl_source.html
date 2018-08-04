@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>CppCommon: source/system/console.cpp File Reference</title>
+<title>CppCommon: include/system/console.inl Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -83,37 +83,36 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_b2f33c71d4aa5e7af42a1ca61ff5af1b.html">source</a></li><li class="navelem"><a class="el" href="dir_770ba6fa46f3bfe7608bb8b841a04fae.html">system</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_062dd3d6849305887aa6c2f56ce95494.html">system</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
-  <div class="summary">
-<a href="#namespaces">Namespaces</a>  </div>
   <div class="headertitle">
-<div class="title">console.cpp File Reference</div>  </div>
+<div class="title">console.inl</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Console management implementation.  
-<a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="console_8h_source.html">system/console.h</a>&quot;</code><br/>
-</div>
-<p><a href="console_8cpp_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:namespace_cpp_common"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_cpp_common.html">CppCommon</a></td></tr>
-<tr class="memdesc:namespace_cpp_common"><td class="mdescLeft">&#160;</td><td class="mdescRight">C++ Common project definitions. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Console management implementation. </p>
-<dl class="section author"><dt>Author</dt><dd>Ivan Shynkarenka </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>27.07.2016 </dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>MIT License </dd></dl>
-
-<p>Definition in file <a class="el" href="console_8cpp_source.html">console.cpp</a>.</p>
-</div></div><!-- contents -->
+<a href="console_8inl.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">namespace </span>CppCommon {</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">class</span> TOutputStream&gt;</div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="namespace_cpp_common.html#af9c153c2e37163262f65756cd183de50">   12</a></span>&#160;<span class="keyword">inline</span> TOutputStream&amp; <a class="code" href="namespace_cpp_common.html#a0d7f3241f60ad5779fb85f314085a3e2">operator&lt;&lt;</a>(TOutputStream&amp; stream, <a class="code" href="namespace_cpp_common.html#ac1ca6affe95577c60f18950cd8682db4">Color</a> color)</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;{</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <a class="code" href="class_cpp_common_1_1_console.html#a090b77d598579ae4f9194007e8b3f7c8">Console::SetColor</a>(color);</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keywordflow">return</span> stream;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;}</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">class</span> TOutputStream&gt;</div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="namespace_cpp_common.html#aee284eeaaecbc1f13d803d236f34f570">   19</a></span>&#160;<span class="keyword">inline</span> TOutputStream&amp; operator&lt;&lt;(TOutputStream&amp; stream, std::pair&lt;Color, Color&gt; colors)</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;{</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <a class="code" href="class_cpp_common_1_1_console.html#a090b77d598579ae4f9194007e8b3f7c8">Console::SetColor</a>(colors.first, colors.second);</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keywordflow">return</span> stream;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;}</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;} <span class="comment">// namespace CppCommon</span></div>
+<div class="ttc" id="namespace_cpp_common_html_ac1ca6affe95577c60f18950cd8682db4"><div class="ttname"><a href="namespace_cpp_common.html#ac1ca6affe95577c60f18950cd8682db4">CppCommon::Color</a></div><div class="ttdeci">Color</div><div class="ttdoc">Supported console colors. </div><div class="ttdef"><b>Definition:</b> <a href="console_8h_source.html#l00017">console.h:17</a></div></div>
+<div class="ttc" id="namespace_cpp_common_html_a0d7f3241f60ad5779fb85f314085a3e2"><div class="ttname"><a href="namespace_cpp_common.html#a0d7f3241f60ad5779fb85f314085a3e2">CppCommon::operator&lt;&lt;</a></div><div class="ttdeci">std::ostream &amp; operator&lt;&lt;(std::ostream &amp;os, const uint128_t &amp;value)</div><div class="ttdef"><b>Definition:</b> <a href="uint128_8inl_source.html#l00155">uint128.inl:155</a></div></div>
+<div class="ttc" id="class_cpp_common_1_1_console_html_a090b77d598579ae4f9194007e8b3f7c8"><div class="ttname"><a href="class_cpp_common_1_1_console.html#a090b77d598579ae4f9194007e8b3f7c8">CppCommon::Console::SetColor</a></div><div class="ttdeci">static void SetColor(Color color, Color background=Color::BLACK)</div><div class="ttdoc">Set console text color. </div><div class="ttdef"><b>Definition:</b> <a href="console_8cpp_source.html#l00019">console.cpp:19</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
