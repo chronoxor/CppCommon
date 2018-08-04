@@ -53,13 +53,6 @@ inline uint128_t::uint128_t(uint64_t value) noexcept
 {
 }
 
-#if defined(__clang__)
-inline uint128_t::uint128_t(size_t value) noexcept
-    : _upper(0), _lower(value)
-{
-}
-#endif
-
 template <typename T>
 inline uint128_t::uint128_t(const T& value) noexcept
     : _upper(0), _lower(value)

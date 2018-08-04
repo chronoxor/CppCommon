@@ -34,9 +34,6 @@ public:
     uint128_t(uint32_t value) noexcept;
     uint128_t(int64_t value) noexcept;
     uint128_t(uint64_t value) noexcept;
-#if defined(__clang__)
-    uint128_t(size_t value) noexcept;
-#endif
     template <typename T>
     explicit uint128_t(const T& value) noexcept;
     template <typename TUpper, typename TLower>

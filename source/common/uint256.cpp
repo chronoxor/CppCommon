@@ -121,7 +121,7 @@ std::string uint256_t::string(size_t base, size_t length) const
         std::pair<uint256_t, uint256_t> qr(*this, 0);
         do
         {
-            qr = uint256_t::divmod(qr.first, base);
+            qr = uint256_t::divmod(qr.first, uint256_t(base));
             out = "0123456789abcdef"[(uint8_t)qr.second] + out;
         } while (qr.first != 0);
     }

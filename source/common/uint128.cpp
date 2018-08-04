@@ -132,7 +132,7 @@ std::string uint128_t::string(size_t base, size_t length) const
         std::pair<uint128_t, uint128_t> qr(*this, 0);
         do
         {
-            qr = uint128_t::divmod(qr.first, base);
+            qr = uint128_t::divmod(qr.first, uint128_t(base));
             out = "0123456789abcdef"[(uint8_t)qr.second] + out;
         } while (qr.first != 0);
     }
