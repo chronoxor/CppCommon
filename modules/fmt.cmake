@@ -6,7 +6,7 @@ if(NOT TARGET fmt)
     # C4127: conditional expression is constant
     set_source_files_properties(${SOURCE_FILES} PROPERTIES COMPILE_FLAGS "${PEDANTIC_COMPILE_FLAGS} /wd4127")
   else()
-    set_source_files_properties(${SOURCE_FILES} PROPERTIES COMPILE_FLAGS "${PEDANTIC_COMPILE_FLAGS} -Wno-gnu-string-literal-operator-template")
+    set_source_files_properties(${SOURCE_FILES} PROPERTIES COMPILE_FLAGS "${PEDANTIC_COMPILE_FLAGS} -Wno-gnu-string-literal-operator-template -Wno-shadow")
   endif()
   add_library(fmt ${SOURCE_FILES})
   target_include_directories(fmt PUBLIC "fmt/include")
