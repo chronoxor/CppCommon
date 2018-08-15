@@ -29,7 +29,7 @@ inline size_t SPSCRingBuffer::size() const noexcept
 
 inline bool SPSCRingBuffer::Enqueue(const void* chunk, size_t size)
 {
-    assert((chunk != nullptr) && "Pointer to the chunk should not be equal to 'nullptr'!");
+    assert((chunk != nullptr) && "Pointer to the chunk should not be null!");
     assert((size <= _capacity) && "Chunk size should not be greater than ring buffer capacity!");
     if ((chunk == nullptr) || (size > _capacity))
         return false;
@@ -61,7 +61,7 @@ inline bool SPSCRingBuffer::Enqueue(const void* chunk, size_t size)
 
 inline bool SPSCRingBuffer::Dequeue(void* chunk, size_t& size)
 {
-    assert((chunk != nullptr) && "Pointer to the chunk should not be equal to 'nullptr'!");
+    assert((chunk != nullptr) && "Pointer to the chunk should not be null!");
     if (chunk == nullptr)
         return false;
 
