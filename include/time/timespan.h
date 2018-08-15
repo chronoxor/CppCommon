@@ -116,8 +116,8 @@ public:
     { return timespan1.total() <= timespan2.total(); }
 
     //! Convert timespan to the std::chrono nanoseconds duration
-    std::chrono::duration<int64_t, std::nano> chrono() const noexcept
-    { return std::chrono::nanoseconds(_duration); }
+    std::chrono::system_clock::duration chrono() const noexcept
+    { return std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::nanoseconds(_duration)); }
     //! Convert std::chrono duration to timespan
     template <class Rep, class Period>
     static Timespan chrono(const std::chrono::duration<Rep, Period>& duration) noexcept

@@ -121,8 +121,8 @@ public:
     { return timestamp1.total() <= timestamp2.total(); }
 
     //! Convert timestamp to the std::chrono time point
-    std::chrono::time_point<std::chrono::system_clock, std::chrono::duration<uint64_t, std::nano>> chrono() const noexcept
-    { return std::chrono::time_point<std::chrono::system_clock>() + std::chrono::nanoseconds(_timestamp); }
+    std::chrono::system_clock::time_point chrono() const noexcept
+    { return std::chrono::time_point_cast<std::chrono::system_clock::duration>((std::chrono::time_point<std::chrono::system_clock>() + std::chrono::nanoseconds(_timestamp))); }
     //! Convert std::chrono time point to timestamp
     template <class Clock, class Duration>
     static Timestamp chrono(const std::chrono::time_point<Clock, Duration>& time_point) noexcept

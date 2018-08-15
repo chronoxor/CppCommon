@@ -108,7 +108,7 @@ public:
     friend bool operator<=(const Time& time1, const Time& time2) noexcept;
 
     //! Convert date & time to the std::chrono time point
-    std::chrono::time_point<std::chrono::system_clock, std::chrono::duration<uint64_t, std::nano>> chrono() const
+    std::chrono::time_point<std::chrono::system_clock> chrono() const
     { return utcstamp().chrono(); }
 
     //! Get year value (1970-2038 for 32-bit or 1970-3000 for 64-bit)
