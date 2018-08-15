@@ -170,7 +170,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordtype">size_t</span> <a class="code" href="class_cpp_common_1_1_pipe.html#a7a6bbbf3dcd95aef840bf9a575623939">Read</a>(<span class="keywordtype">void</span>* buffer, <span class="keywordtype">size_t</span> size)</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    {</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        assert((buffer != <span class="keyword">nullptr</span>) &amp;&amp; <span class="stringliteral">&quot;Pointer to the buffer should not be equal to &#39;nullptr&#39;!&quot;</span>);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        assert((buffer != <span class="keyword">nullptr</span>) &amp;&amp; <span class="stringliteral">&quot;Pointer to the buffer should not be null!&quot;</span>);</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <span class="keywordflow">if</span> ((buffer == <span class="keyword">nullptr</span>) || (size == 0))</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
@@ -192,7 +192,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keywordtype">size_t</span> <a class="code" href="class_cpp_common_1_1_pipe.html#aa20e4a9b3fa546e24bf60be9f531edb0">Write</a>(<span class="keyword">const</span> <span class="keywordtype">void</span>* buffer, <span class="keywordtype">size_t</span> size)</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    {</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        assert((buffer != <span class="keyword">nullptr</span>) &amp;&amp; <span class="stringliteral">&quot;Pointer to the buffer should not be equal to &#39;nullptr&#39;!&quot;</span>);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        assert((buffer != <span class="keyword">nullptr</span>) &amp;&amp; <span class="stringliteral">&quot;Pointer to the buffer should not be null!&quot;</span>);</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <span class="keywordflow">if</span> ((buffer == <span class="keyword">nullptr</span>) || (size == 0))</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
