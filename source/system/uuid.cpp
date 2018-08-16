@@ -28,7 +28,7 @@ uint8_t unhex(char ch)
     else if ((ch >= 'A') && (ch <= 'F'))
         return 10 + ch - 'A';
     else
-        return 0;
+        return 255;
 }
 
 } // namespace Internals
@@ -39,8 +39,9 @@ UUID::UUID(const std::string& uuid)
     char v1 = 0;
     char v2 = 0;
     bool pack = false;
-    int index = 0;
+    size_t index = 0;
 
+    // Parse UUID string
     for (auto ch : uuid)
     {
         if ((ch == '-') || (ch == '{') || (ch == '}'))
@@ -50,7 +51,11 @@ UUID::UUID(const std::string& uuid)
         {
             v2 = ch;
             pack = false;
-            _data[index++] = Internals::unhex(v1) * 16 + Internals::unhex(v2);
+            uint8_t ui1 = Internals::unhex(v1);
+            uint8_t ui2 = Internals::unhex(v2);
+            if ((ui1 > 15) || (ui2 > 15))
+                throwex ArgumentException("Invalid UUID string: " + uuid);
+            _data[index++] = ui1 * 16 + ui2;
             if (index >= 16)
                 break;
         }
@@ -60,6 +65,10 @@ UUID::UUID(const std::string& uuid)
             pack = true;
         }
     }
+
+    // Fill remaining data with zeros
+    for (; index < 16; ++index)
+        _data[index++] = 0;
 }
 
 std::string UUID::string() const
