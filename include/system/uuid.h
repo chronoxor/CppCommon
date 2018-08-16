@@ -30,7 +30,7 @@ class UUID
 {
 public:
     //! Default constructor
-    UUID() : _data() {}
+    UUID() : _data() { _data.fill(0); }
     //! Initialize UUID with a given string
     /*!
         \param uuid - UUID string
@@ -67,6 +67,8 @@ public:
     { return uuid1._data >= uuid2._data; }
 
     //! Get the UUID data buffer
+    std::array<uint8_t, 16>& data() noexcept { return _data; }
+    //! Get the UUID data buffer
     const std::array<uint8_t, 16>& data() const noexcept { return _data; }
 
     //! Get string from the current UUID in format "00000000-0000-0000-0000-000000000000"
@@ -74,7 +76,9 @@ public:
     //! Get wide string from the current UUID in format "00000000-0000-0000-0000-000000000000"
     std::wstring wstring() const;
 
-    //! Generate a new UUID value
+    //! Generate an empty UUID
+    static UUID Empty() { return UUID(); }
+    //! Generate a new UUID
     static UUID Generate();
 
     //! Output instance into the given output stream
