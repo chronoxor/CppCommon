@@ -52,7 +52,7 @@ UUID::UUID(const std::string& uuid)
             pack = false;
             _data[index++] = Internals::unhex(v1) * 16 + Internals::unhex(v2);
             if (index >= 16)
-                throwex ArgumentException("Invalid UUID string: " + uuid);
+                break;
         }
         else
         {
