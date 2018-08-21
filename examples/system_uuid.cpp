@@ -12,6 +12,8 @@
 
 int main(int argc, char** argv)
 {
-    std::cout << "UUID::Generate(): " << CppCommon::UUID::Generate() << std::endl;
+    std::cout << "UUID::Empty(): " << CppCommon::UUID::Empty() << std::endl;
+    std::cout << "UUID::Sequential(): " << CppCommon::UUID::Sequential() << std::endl;
+    std::cout << "UUID::Random(): " << CppCommon::UUID::Random() << std::endl;
     return 0;
 }

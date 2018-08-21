@@ -107,7 +107,7 @@ std::wstring UUID::wstring() const
     return result;
 }
 
-UUID UUID::Generate()
+UUID UUID::Sequential()
 {
     UUID result;
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
@@ -135,30 +135,86 @@ UUID UUID::Generate()
     result._data[14] = uuid[14];
     result._data[15] = uuid[15];
 #elif defined(_WIN32) || defined(_WIN64)
-    GUID guid;
-    if (CoCreateGuid(&guid) != S_OK)
-        throwex SystemException("Cannot generate UUID using CoCreateGuid() function!");
+    ::UUID uuid;
+    if (UuidCreateSequential(&uuid) != RPC_S_OK)
+        throwex SystemException("Cannot generate sequential UUID!");
 
-    result._data[0] = (guid.Data1 >> 24) & 0xFF;
-    result._data[1] = (guid.Data1 >> 16) & 0xFF;
-    result._data[2] = (guid.Data1 >>  8) & 0xFF;
-    result._data[3] = (guid.Data1 >>  0) & 0xFF;
+    result._data[0] = (uuid.Data1 >> 24) & 0xFF;
+    result._data[1] = (uuid.Data1 >> 16) & 0xFF;
+    result._data[2] = (uuid.Data1 >>  8) & 0xFF;
+    result._data[3] = (uuid.Data1 >>  0) & 0xFF;
 
-    result._data[4] = (guid.Data2 >>  8) & 0xFF;
-    result._data[5] = (guid.Data2 >>  0) & 0xFF;
+    result._data[4] = (uuid.Data2 >>  8) & 0xFF;
+    result._data[5] = (uuid.Data2 >>  0) & 0xFF;
 
-    result._data[6] = (guid.Data3 >>  8) & 0xFF;
-    result._data[7] = (guid.Data3 >>  0) & 0xFF;
+    result._data[6] = (uuid.Data3 >>  8) & 0xFF;
+    result._data[7] = (uuid.Data3 >>  0) & 0xFF;
 
-    result._data[8] = guid.Data4[0];
-    result._data[9] = guid.Data4[1];
+    result._data[8] = uuid.Data4[0];
+    result._data[9] = uuid.Data4[1];
 
-    result._data[10] = guid.Data4[2];
-    result._data[11] = guid.Data4[3];
-    result._data[12] = guid.Data4[4];
-    result._data[13] = guid.Data4[5];
-    result._data[14] = guid.Data4[6];
-    result._data[15] = guid.Data4[7];
+    result._data[10] = uuid.Data4[2];
+    result._data[11] = uuid.Data4[3];
+    result._data[12] = uuid.Data4[4];
+    result._data[13] = uuid.Data4[5];
+    result._data[14] = uuid.Data4[6];
+    result._data[15] = uuid.Data4[7];
+#endif
+    return result;
+}
+
+UUID UUID::Random()
+{
+    UUID result;
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+    uuid_t uuid;
+    uuid_generate_random(uuid);
+
+    result._data[0] = uuid[0];
+    result._data[1] = uuid[1];
+    result._data[2] = uuid[2];
+    result._data[3] = uuid[3];
+
+    result._data[4] = uuid[4];
+    result._data[5] = uuid[5];
+
+    result._data[6] = uuid[6];
+    result._data[7] = uuid[7];
+
+    result._data[8] = uuid[8];
+    result._data[9] = uuid[9];
+
+    result._data[10] = uuid[10];
+    result._data[11] = uuid[11];
+    result._data[12] = uuid[12];
+    result._data[13] = uuid[13];
+    result._data[14] = uuid[14];
+    result._data[15] = uuid[15];
+#elif defined(_WIN32) || defined(_WIN64)
+    ::UUID uuid;
+    if (UuidCreate(&uuid) != RPC_S_OK)
+        throwex SystemException("Cannot generate random UUID!");
+
+    result._data[0] = (uuid.Data1 >> 24) & 0xFF;
+    result._data[1] = (uuid.Data1 >> 16) & 0xFF;
+    result._data[2] = (uuid.Data1 >>  8) & 0xFF;
+    result._data[3] = (uuid.Data1 >>  0) & 0xFF;
+
+    result._data[4] = (uuid.Data2 >>  8) & 0xFF;
+    result._data[5] = (uuid.Data2 >>  0) & 0xFF;
+
+    result._data[6] = (uuid.Data3 >>  8) & 0xFF;
+    result._data[7] = (uuid.Data3 >>  0) & 0xFF;
+
+    result._data[8] = uuid.Data4[0];
+    result._data[9] = uuid.Data4[1];
+
+    result._data[10] = uuid.Data4[2];
+    result._data[11] = uuid.Data4[3];
+    result._data[12] = uuid.Data4[4];
+    result._data[13] = uuid.Data4[5];
+    result._data[14] = uuid.Data4[6];
+    result._data[15] = uuid.Data4[7];
 #endif
     return result;
 }

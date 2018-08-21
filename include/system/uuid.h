@@ -78,8 +78,10 @@ public:
 
     //! Generate an empty UUID
     static UUID Empty() { return UUID(); }
-    //! Generate a new UUID
-    static UUID Generate();
+    //! Generate a sequential UUID1 (time based version)
+    static UUID Sequential();
+    //! Generate a random UUID4 (Randomly or pseudo-randomly generated version)
+    static UUID Random();
 
     //! Output instance into the given output stream
     friend std::ostream& operator<<(std::ostream& os, const UUID& uuid)

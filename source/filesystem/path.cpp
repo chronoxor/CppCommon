@@ -1011,7 +1011,7 @@ Path Path::temp()
 
 Path Path::unique()
 {
-    return Path(UUID::Generate().string());
+    return Path(UUID::Random().string());
 }
 
 Path Path::Copy(const Path& src, const Path& dst, bool overwrite)

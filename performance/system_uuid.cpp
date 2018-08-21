@@ -8,9 +8,19 @@
 
 using namespace CppCommon;
 
-BENCHMARK("UUID::Generate()")
+BENCHMARK("UUID::Empty()")
 {
-    UUID::Generate();
+    UUID::Empty();
+}
+
+BENCHMARK("UUID::Sequential()")
+{
+    UUID::Sequential();
+}
+
+BENCHMARK("UUID::Random()")
+{
+    UUID::Random();
 }
 
 BENCHMARK_MAIN()
