@@ -19,8 +19,10 @@ namespace CppCommon {
 //! Universally unique identifier (UUID)
 /*!
     A universally unique identifier (UUID) is an identifier standard used
-    in software construction. This implementation generates UUID with the
-    system provided functionality (CoCreateGuid(), uuid_generate(), etc).
+    in software construction. This implementation generates the following
+    UUID types:
+    - Sequential UUID1 (time based version)
+    - Random UUID4 (randomly or pseudo-randomly generated version)
 
     A UUID is simply a 128-bit value: "123e4567-e89b-12d3-a456-426655440000"
 
