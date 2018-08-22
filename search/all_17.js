@@ -32,5 +32,5 @@ var searchData=
   ['writewchar',['WriteWChar',['../class_cpp_common_1_1_write_w_char.html#a74bde61086c2e57909fecb0f8f1a154c',1,'CppCommon::WriteWChar']]],
   ['writewstring',['WriteWString',['../class_cpp_common_1_1_write_w_string.html#a306580bbd5721afc34e58f966b7a7bd6',1,'CppCommon::WriteWString']]],
   ['writewstring',['WriteWString',['../class_cpp_common_1_1_write_w_string.html',1,'CppCommon']]],
-  ['wstring',['wstring',['../class_cpp_common_1_1uint128__t.html#a95c8e00726987153470f1680085fcaee',1,'CppCommon::uint128_t::wstring()'],['../class_cpp_common_1_1uint256__t.html#afba679b91046a5783e8b89e7bce75094',1,'CppCommon::uint256_t::wstring()'],['../class_cpp_common_1_1_path.html#a3d6d799bd82f62c847227174a861ef54',1,'CppCommon::Path::wstring()'],['../class_cpp_common_1_1_u_u_i_d.html#aace4562f21404d52b516a68f2d6b899b',1,'CppCommon::UUID::wstring()']]]
+  ['wstring',['wstring',['../class_cpp_common_1_1uint128__t.html#a95c8e00726987153470f1680085fcaee',1,'CppCommon::uint128_t::wstring()'],['../class_cpp_common_1_1uint256__t.html#afba679b91046a5783e8b89e7bce75094',1,'CppCommon::uint256_t::wstring()'],['../class_cpp_common_1_1_path.html#a3d6d799bd82f62c847227174a861ef54',1,'CppCommon::Path::wstring()']]]
 ];
