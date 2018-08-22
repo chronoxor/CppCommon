@@ -8,9 +8,9 @@
 
 using namespace CppCommon;
 
-BENCHMARK("UUID::Empty()")
+BENCHMARK("UUID::Nil()")
 {
-    UUID::Empty();
+    UUID::Nil();
 }
 
 BENCHMARK("UUID::Sequential()")

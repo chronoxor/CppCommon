@@ -21,12 +21,16 @@ namespace CppCommon {
     A universally unique identifier (UUID) is an identifier standard used
     in software construction. This implementation generates the following
     UUID types:
+    - Nil UUID0 (all bits set to zero)
     - Sequential UUID1 (time based version)
     - Random UUID4 (randomly or pseudo-randomly generated version)
 
     A UUID is simply a 128-bit value: "123e4567-e89b-12d3-a456-426655440000"
 
     Not thread-safe.
+
+    https://en.wikipedia.org/wiki/Universally_unique_identifier
+    https://www.ietf.org/rfc/rfc4122.txt
 */
 class UUID
 {
@@ -78,11 +82,11 @@ public:
     //! Get wide string from the current UUID in format "00000000-0000-0000-0000-000000000000"
     std::wstring wstring() const;
 
-    //! Generate an empty UUID
-    static UUID Empty() { return UUID(); }
-    //! Generate a sequential UUID1 (time based version)
+    //! Generate nil UUID0 (all bits set to zero)
+    static UUID Nil() { return UUID(); }
+    //! Generate sequential UUID1 (time based version)
     static UUID Sequential();
-    //! Generate a random UUID4 (Randomly or pseudo-randomly generated version)
+    //! Generate random UUID4 (randomly or pseudo-randomly generated version)
     static UUID Random();
 
     //! Output instance into the given output stream

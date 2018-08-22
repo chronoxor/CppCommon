@@ -12,7 +12,7 @@
 
 int main(int argc, char** argv)
 {
-    std::cout << "UUID::Empty(): " << CppCommon::UUID::Empty() << std::endl;
+    std::cout << "UUID::Nil(): " << CppCommon::UUID::Nil() << std::endl;
     std::cout << "UUID::Sequential(): " << CppCommon::UUID::Sequential() << std::endl;
     std::cout << "UUID::Random(): " << CppCommon::UUID::Random() << std::endl;
     return 0;
