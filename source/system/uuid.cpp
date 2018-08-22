@@ -75,25 +75,7 @@ std::string UUID::string() const
 {
     std::string result(36, '0');
 
-    const char* digits = "0123456789ABCDEF";
-
-    int index = 0;
-    for (auto value : _data)
-    {
-        result[index++] = digits[(value >> 4) & 0x0F];
-        result[index++] = digits[(value >> 0) & 0x0F];
-        if ((index == 8) || (index == 13) || (index == 18) || (index == 23))
-            result[index++] = '-';
-    }
-
-    return result;
-}
-
-std::wstring UUID::wstring() const
-{
-    std::wstring result(36, L'0');
-
-    const wchar_t* digits = L"0123456789ABCDEF";
+    const char* digits = "0123456789abcdef";
 
     int index = 0;
     for (auto value : _data)
