@@ -147,14 +147,14 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a25d936484019b77aebb50c60cdcb3cae"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_cpp_common_1_1_u_u_i_d.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_u_u_i_d.html#a25d936484019b77aebb50c60cdcb3cae">Empty</a> ()</td></tr>
-<tr class="memdesc:a25d936484019b77aebb50c60cdcb3cae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate an empty <a class="el" href="class_cpp_common_1_1_u_u_i_d.html" title="Universally unique identifier (UUID) ">UUID</a>.  <a href="#a25d936484019b77aebb50c60cdcb3cae">More...</a><br/></td></tr>
-<tr class="separator:a25d936484019b77aebb50c60cdcb3cae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a185199c6a496f2d3b02625446970ceb9"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_cpp_common_1_1_u_u_i_d.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_u_u_i_d.html#a185199c6a496f2d3b02625446970ceb9">Nil</a> ()</td></tr>
+<tr class="memdesc:a185199c6a496f2d3b02625446970ceb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate nil UUID0 (all bits set to zero)  <a href="#a185199c6a496f2d3b02625446970ceb9">More...</a><br/></td></tr>
+<tr class="separator:a185199c6a496f2d3b02625446970ceb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa48a221aed0e5396743c47f8504728ca"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_cpp_common_1_1_u_u_i_d.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_u_u_i_d.html#aa48a221aed0e5396743c47f8504728ca">Sequential</a> ()</td></tr>
-<tr class="memdesc:aa48a221aed0e5396743c47f8504728ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a sequential UUID1 (time based version)  <a href="#aa48a221aed0e5396743c47f8504728ca">More...</a><br/></td></tr>
+<tr class="memdesc:aa48a221aed0e5396743c47f8504728ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate sequential UUID1 (time based version)  <a href="#aa48a221aed0e5396743c47f8504728ca">More...</a><br/></td></tr>
 <tr class="separator:aa48a221aed0e5396743c47f8504728ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6bf136f6889974a2f6a573885626c105"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_cpp_common_1_1_u_u_i_d.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_u_u_i_d.html#a6bf136f6889974a2f6a573885626c105">Random</a> ()</td></tr>
-<tr class="memdesc:a6bf136f6889974a2f6a573885626c105"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a random UUID4 (Randomly or pseudo-randomly generated version)  <a href="#a6bf136f6889974a2f6a573885626c105">More...</a><br/></td></tr>
+<tr class="memdesc:a6bf136f6889974a2f6a573885626c105"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate random UUID4 (randomly or pseudo-randomly generated version)  <a href="#a6bf136f6889974a2f6a573885626c105">More...</a><br/></td></tr>
 <tr class="separator:a6bf136f6889974a2f6a573885626c105"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
@@ -184,13 +184,15 @@ Friends</h2></td></tr>
 <div class="textblock"><p>Universally unique identifier (<a class="el" href="class_cpp_common_1_1_u_u_i_d.html" title="Universally unique identifier (UUID) ">UUID</a>) </p>
 <p>A universally unique identifier (<a class="el" href="class_cpp_common_1_1_u_u_i_d.html" title="Universally unique identifier (UUID) ">UUID</a>) is an identifier standard used in software construction. This implementation generates the following <a class="el" href="class_cpp_common_1_1_u_u_i_d.html" title="Universally unique identifier (UUID) ">UUID</a> types:</p>
 <ul>
+<li>Nil UUID0 (all bits set to zero)</li>
 <li>Sequential UUID1 (time based version)</li>
 <li>Random UUID4 (randomly or pseudo-randomly generated version)</li>
 </ul>
 <p>A <a class="el" href="class_cpp_common_1_1_u_u_i_d.html" title="Universally unique identifier (UUID) ">UUID</a> is simply a 128-bit value: "123e4567-e89b-12d3-a456-426655440000"</p>
-<p>Not thread-safe. </p>
+<p>Not thread-safe.</p>
+<p><a href="https://en.wikipedia.org/wiki/Universally_unique_identifier">https://en.wikipedia.org/wiki/Universally_unique_identifier</a> <a href="https://www.ietf.org/rfc/rfc4122.txt">https://www.ietf.org/rfc/rfc4122.txt</a> </p>
 
-<p>Definition at line <a class="el" href="uuid_8h_source.html#l00031">31</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
+<p>Definition at line <a class="el" href="uuid_8h_source.html#l00035">35</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a6715aef441d55d001b348ccdf9f97a7e"></a>
 <div class="memitem">
@@ -215,7 +217,7 @@ Friends</h2></td></tr>
 
 <p>Default constructor. </p>
 
-<p>Definition at line <a class="el" href="uuid_8h_source.html#l00035">35</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
+<p>Definition at line <a class="el" href="uuid_8h_source.html#l00039">39</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
 
 </div>
 </div>
@@ -283,7 +285,7 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="uuid_8h_source.html#l00045">45</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
+<p>Definition at line <a class="el" href="uuid_8h_source.html#l00049">49</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
 
 </div>
 </div>
@@ -382,7 +384,7 @@ Friends</h2></td></tr>
 
 <p>Get the <a class="el" href="class_cpp_common_1_1_u_u_i_d.html" title="Universally unique identifier (UUID) ">UUID</a> data buffer. </p>
 
-<p>Definition at line <a class="el" href="uuid_8h_source.html#l00072">72</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
+<p>Definition at line <a class="el" href="uuid_8h_source.html#l00076">76</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
 
 </div>
 </div>
@@ -409,11 +411,11 @@ Friends</h2></td></tr>
 
 <p>Get the <a class="el" href="class_cpp_common_1_1_u_u_i_d.html" title="Universally unique identifier (UUID) ">UUID</a> data buffer. </p>
 
-<p>Definition at line <a class="el" href="uuid_8h_source.html#l00074">74</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
+<p>Definition at line <a class="el" href="uuid_8h_source.html#l00078">78</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a25d936484019b77aebb50c60cdcb3cae"></a>
+<a class="anchor" id="a185199c6a496f2d3b02625446970ceb9"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -421,7 +423,7 @@ Friends</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="class_cpp_common_1_1_u_u_i_d.html">UUID</a> CppCommon::UUID::Empty </td>
+          <td class="memname">static <a class="el" href="class_cpp_common_1_1_u_u_i_d.html">UUID</a> CppCommon::UUID::Nil </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -434,10 +436,10 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Generate an empty <a class="el" href="class_cpp_common_1_1_u_u_i_d.html" title="Universally unique identifier (UUID) ">UUID</a>. </p>
+<p>Generate nil UUID0 (all bits set to zero) </p>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="system_uuid_8cpp-example.html#a0">system_uuid.cpp</a>.</dd>
 </dl>
-<p>Definition at line <a class="el" href="uuid_8h_source.html#l00082">82</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
+<p>Definition at line <a class="el" href="uuid_8h_source.html#l00086">86</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
 
 </div>
 </div>
@@ -463,7 +465,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="uuid_8h_source.html#l00050">50</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
+<p>Definition at line <a class="el" href="uuid_8h_source.html#l00054">54</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
 
 </div>
 </div>
@@ -489,7 +491,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="uuid_8h_source.html#l00052">52</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
+<p>Definition at line <a class="el" href="uuid_8h_source.html#l00056">56</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
 
 </div>
 </div>
@@ -562,7 +564,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Generate a random UUID4 (Randomly or pseudo-randomly generated version) </p>
+<p>Generate random UUID4 (randomly or pseudo-randomly generated version) </p>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="system_uuid_8cpp-example.html#a2">system_uuid.cpp</a>.</dd>
 </dl>
 <p>Definition at line <a class="el" href="uuid_8cpp_source.html#l00166">166</a> of file <a class="el" href="uuid_8cpp_source.html">uuid.cpp</a>.</p>
@@ -590,7 +592,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Generate a sequential UUID1 (time based version) </p>
+<p>Generate sequential UUID1 (time based version) </p>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="system_uuid_8cpp-example.html#a1">system_uuid.cpp</a>.</dd>
 </dl>
 <p>Definition at line <a class="el" href="uuid_8cpp_source.html#l00110">110</a> of file <a class="el" href="uuid_8cpp_source.html">uuid.cpp</a>.</p>
@@ -696,7 +698,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="uuid_8h_source.html#l00060">60</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
+<p>Definition at line <a class="el" href="uuid_8h_source.html#l00064">64</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
 
 </div>
 </div>
@@ -732,7 +734,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="uuid_8h_source.html#l00062">62</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
+<p>Definition at line <a class="el" href="uuid_8h_source.html#l00066">66</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
 
 </div>
 </div>
@@ -770,7 +772,7 @@ Friends</h2></td></tr>
 
 <p>Output instance into the given output stream. </p>
 
-<p>Definition at line <a class="el" href="uuid_8h_source.html#l00089">89</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
+<p>Definition at line <a class="el" href="uuid_8h_source.html#l00093">93</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
 
 </div>
 </div>
@@ -808,7 +810,7 @@ Friends</h2></td></tr>
 
 <p>Output instance into the given wide output stream. </p>
 
-<p>Definition at line <a class="el" href="uuid_8h_source.html#l00092">92</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
+<p>Definition at line <a class="el" href="uuid_8h_source.html#l00096">96</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
 
 </div>
 </div>
@@ -844,7 +846,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="uuid_8h_source.html#l00066">66</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
+<p>Definition at line <a class="el" href="uuid_8h_source.html#l00070">70</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
 
 </div>
 </div>
@@ -880,7 +882,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="uuid_8h_source.html#l00058">58</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
+<p>Definition at line <a class="el" href="uuid_8h_source.html#l00062">62</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
 
 </div>
 </div>
@@ -916,7 +918,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="uuid_8h_source.html#l00064">64</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
+<p>Definition at line <a class="el" href="uuid_8h_source.html#l00068">68</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
 
 </div>
 </div>
@@ -952,7 +954,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="uuid_8h_source.html#l00068">68</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
+<p>Definition at line <a class="el" href="uuid_8h_source.html#l00072">72</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
 
 </div>
 </div>
