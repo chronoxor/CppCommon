@@ -83,10 +83,10 @@ public:
         if (_end)
             return _current;
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+
         struct dirent* pentry;
 
-        int result;
-        while (((result = readdir_r(_directory, &_entry, &pentry)) == 0) && (pentry != nullptr))
+        while ((pentry = readdir(_directory)) != nullptr)
         {
             if (std::strncmp(pentry->d_name, ".", sizeof(pentry->d_name)) == 0)
                 continue;
