@@ -67,7 +67,8 @@ bool Directory::IsDirectoryEmpty() const
     // Smart resource cleaner pattern
     auto directory = resource(dir, [](DIR* dirp) { closedir(dirp); });
 
-    while ((struct dirent* pentry = readdir(dir)) != nullptr)
+    struct dirent* pentry;
+    while ((pentry = readdir(dir)) != nullptr)
     {
         if (std::strncmp(pentry->d_name, ".", sizeof(pentry->d_name)) == 0)
             continue;
