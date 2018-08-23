@@ -83,10 +83,7 @@ public:
         if (_end)
             return _current;
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-
-        struct dirent* pentry;
-
-        while ((pentry = readdir(_directory)) != nullptr)
+        while ((struct dirent* pentry = readdir(_directory)) != nullptr)
         {
             if (std::strncmp(pentry->d_name, ".", sizeof(pentry->d_name)) == 0)
                 continue;
@@ -95,9 +92,6 @@ public:
             _current = _parent / pentry->d_name;
             return _current;
         }
-
-        if (result != 0)
-            throwex FileSystemException("Cannot read directory entries!").Attach(_parent);
 #elif defined(_WIN32) || defined(_WIN64)
         do
         {

@@ -67,9 +67,7 @@ bool Directory::IsDirectoryEmpty() const
     // Smart resource cleaner pattern
     auto directory = resource(dir, [](DIR* dirp) { closedir(dirp); });
 
-    struct dirent* pentry;
-
-    while ((pentry = readdir(dir)) != nullptr)
+    while ((struct dirent* pentry = readdir(dir)) != nullptr)
     {
         if (std::strncmp(pentry->d_name, ".", sizeof(pentry->d_name)) == 0)
             continue;
@@ -78,11 +76,8 @@ bool Directory::IsDirectoryEmpty() const
         return false;
     }
 
-    if (result != 0)
-        throwex FileSystemException("Cannot read directory entries!").Attach(*this);
-
     // Release the resource manually
-    result = closedir(dir);
+    int result = closedir(dir);
     if (result != 0)
         throwex FileSystemException("Cannot close a directory!").Attach(*this);
     directory.release();
