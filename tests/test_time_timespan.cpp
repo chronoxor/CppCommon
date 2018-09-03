@@ -40,7 +40,7 @@ TEST_CASE("Timespan", "[CppCommon][Time]")
     REQUIRE(span2.nanoseconds() == (span1.microseconds() * 1000 + 789));
 
     // Compatibility with std::chrono
-    Timespan span3 = Timespan::chrono(std::chrono::milliseconds(10));
+    Timespan span3(std::chrono::milliseconds(10));
     REQUIRE(span3.milliseconds() == 10);
     std::this_thread::sleep_for(span3.chrono());
 }

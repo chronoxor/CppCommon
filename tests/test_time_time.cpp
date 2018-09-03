@@ -42,6 +42,6 @@ TEST_CASE("Time", "[CppCommon][Time]")
     REQUIRE(std::abs((time6 - time7).hours()) < 24);
 
     // Compatibility with std::chrono
-    UtcTime time9 = UtcTime::chrono(std::chrono::system_clock::now() + std::chrono::milliseconds(10));
+    UtcTime time9(std::chrono::system_clock::now() + std::chrono::milliseconds(10));
     std::this_thread::sleep_until(time9.chrono());
 }

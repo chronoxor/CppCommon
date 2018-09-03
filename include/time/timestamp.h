@@ -36,6 +36,12 @@ public:
         \param timestamp - Time moment in nanoseconds
     */
     explicit Timestamp(uint64_t timestamp) noexcept : _timestamp(timestamp) {}
+    //! Initialize timestamp with a given std::chrono time point
+    /*!
+        \param time_point - std::chrono time point
+    */
+    template <class Clock, class Duration>
+    explicit Timestamp(const std::chrono::time_point<Clock, Duration>& time_point) noexcept : _timestamp(std::chrono::duration_cast<std::chrono::nanoseconds>(time_point.time_since_epoch()).count()) {}
     Timestamp(const Timestamp&) noexcept = default;
     Timestamp(Timestamp&&) noexcept = default;
     ~Timestamp() noexcept = default;
@@ -123,10 +129,6 @@ public:
     //! Convert timestamp to the std::chrono time point
     std::chrono::system_clock::time_point chrono() const noexcept
     { return std::chrono::time_point_cast<std::chrono::system_clock::duration>((std::chrono::time_point<std::chrono::system_clock>() + std::chrono::nanoseconds(_timestamp))); }
-    //! Convert std::chrono time point to timestamp
-    template <class Clock, class Duration>
-    static Timestamp chrono(const std::chrono::time_point<Clock, Duration>& time_point) noexcept
-    { return Timestamp(std::chrono::duration_cast<std::chrono::nanoseconds>(time_point.time_since_epoch()).count()); }
 
     //! Get total days of the current timestamp
     uint64_t days() const noexcept

@@ -33,6 +33,12 @@ public:
         \param duration - Time duration value in nanoseconds
     */
     explicit Timespan(int64_t duration) noexcept : _duration(duration) {}
+    //! Initialize timespan with a given std::chrono duration
+    /*!
+        \param duration - std::chrono duration
+    */
+    template <class Rep, class Period>
+    explicit Timespan(const std::chrono::duration<Rep, Period>& duration) noexcept : _duration(std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count()) {}
     Timespan(const Timespan&) noexcept = default;
     Timespan(Timespan&&) noexcept = default;
     ~Timespan() noexcept = default;
@@ -118,10 +124,6 @@ public:
     //! Convert timespan to the std::chrono nanoseconds duration
     std::chrono::system_clock::duration chrono() const noexcept
     { return std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::nanoseconds(_duration)); }
-    //! Convert std::chrono duration to timespan
-    template <class Rep, class Period>
-    static Timespan chrono(const std::chrono::duration<Rep, Period>& duration) noexcept
-    { return Timespan(std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count()); }
 
     //! Get total days of the current timespan
     int64_t days() const noexcept

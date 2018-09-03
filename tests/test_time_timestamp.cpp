@@ -39,6 +39,6 @@ TEST_CASE("Timestamp", "[CppCommon][Time]")
     }
 
     // Compatibility with std::chrono
-    Timestamp timestamp = Timestamp::chrono(std::chrono::system_clock::now() + std::chrono::milliseconds(10));
+    Timestamp timestamp(std::chrono::system_clock::now() + std::chrono::milliseconds(10));
     std::this_thread::sleep_until(timestamp.chrono());
 }

@@ -193,15 +193,16 @@ public:
         \param timestamp - Timestamp
     */
     explicit UtcTime(const Timestamp& timestamp);
+    //! Initialize UTC time with a given std::chrono time point
+    /*!
+        \param time_point - std::chrono time point
+    */
+    template <class Clock, class Duration>
+    explicit UtcTime(const std::chrono::time_point<Clock, Duration>& time_point) : UtcTime(Timestamp(time_point)) {}
     //! Initialize UTC time with another time value
     UtcTime(const Time& time) : Time(time) {}
     //! Initialize UTC time with another local time value
     UtcTime(const LocalTime& time);
-
-    //! Convert std::chrono time point to UTC date & time
-    template <class Clock, class Duration>
-    static UtcTime chrono(const std::chrono::time_point<Clock, Duration>& time_point)
-    { return UtcTime(Timestamp::chrono(time_point)); }
 };
 
 //! Local time
@@ -218,15 +219,16 @@ public:
         \param timestamp - Timestamp
     */
     explicit LocalTime(const Timestamp& timestamp);
+    //! Initialize local time with a given std::chrono time point
+    /*!
+        \param timestamp - std::chrono time point
+    */
+    template <class Clock, class Duration>
+    explicit LocalTime(const std::chrono::time_point<Clock, Duration>& time_point) : LocalTime(Timestamp(time_point)) {}
     //! Initialize local time with another time value
     LocalTime(const Time& time) : Time(time) {}
     //! Initialize local time with another UTC time value
     LocalTime(const UtcTime& time);
-
-    //! Convert std::chrono time point to local date & time
-    template <class Clock, class Duration>
-    static LocalTime chrono(const std::chrono::time_point<Clock, Duration>& time_point)
-    { return LocalTime(Timestamp::chrono(time_point)); }
 };
 
 /*! \example time_time.cpp Time example */
