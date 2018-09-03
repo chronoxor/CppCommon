@@ -133,7 +133,11 @@ uint64_t Timestamp::local()
     return timestamp + (local.tm_gmtoff * 1000000000);
 #elif defined(_WIN32) || defined(_WIN64)
     FILETIME ft;
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
     GetSystemTimePreciseAsFileTime(&ft);
+#else
+    GetSystemTimeAsFileTime(&ft);
+#endif
 
     FILETIME ft_local;
     if (!FileTimeToLocalFileTime(&ft, &ft_local))

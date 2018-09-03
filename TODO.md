@@ -1,5 +1,5 @@
 # CppCommon todo
 
 General
-  * Documentation
-  * Release
+- [x] Documentation
+- [x] Release
