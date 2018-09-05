@@ -16,13 +16,6 @@ encoding, shared memory, threading, time management and others.
   * [Features](#features)
   * [Requirements](#requirements)
   * [How to build?](#how-to-build)
-    * [Clone repository with submodules](#clone-repository-with-submodules)
-    * [Linux](#linux)
-    * [OSX](#osx)
-    * [Windows (Cygwin)](#windows-cygwin)
-    * [Windows (MinGW)](#windows-mingw)
-    * [Windows (MinGW with MSYS)](#windows-mingw-with-msys)
-    * [Windows (Visual Studio)](#windows-visual-studio)
 
 # Features
 * Cross platform (Linux, OSX, Windows)
@@ -59,38 +52,38 @@ Optional:
 
 # How to build?
 
-## Clone repository with submodules
+### Clone repository with submodules
 ```shell
 git clone https://github.com/chronoxor/CppCommon.git
 cd CppCommon
 git submodule update --init --recursive --remote
 ```
 
-## Linux
+### Linux
 ```shell
 cd build
 ./unix.sh
 ```
 
-## OSX
+### OSX
 ```shell
 cd build
 ./unix.sh
 ```
 
-## Windows (Cygwin)
+### Windows (Cygwin)
 ```shell
 cd build
 cygwin.bat
 ```
 
-## Windows (MinGW)
+### Windows (MinGW)
 ```shell
 cd build
 mingw.bat
 ```
 
-## Windows (Visual Studio)
+### Windows (Visual Studio)
 ```shell
 cd build
 vs.bat
