@@ -32,5 +32,11 @@ int main(int argc, char** argv)
     std::cout << "Local time:" << std::endl;
     show(CppCommon::LocalTime());
 
+    std::cout << "Min time:" << std::endl;
+    show(CppCommon::UtcTime(CppCommon::Timestamp(0)));
+
+    std::cout << "Max time:" << std::endl;
+    show(CppCommon::UtcTime(CppCommon::Timestamp(0xFFFFFFFFFFFFFFFF)));
+
     return 0;
 }
