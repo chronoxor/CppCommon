@@ -221,7 +221,7 @@ public:
     explicit LocalTime(const Timestamp& timestamp);
     //! Initialize local time with a given std::chrono time point
     /*!
-        \param timestamp - std::chrono time point
+        \param time_point - std::chrono time point
     */
     template <class Clock, class Duration>
     explicit LocalTime(const std::chrono::time_point<Clock, Duration>& time_point) : LocalTime(Timestamp(time_point)) {}
