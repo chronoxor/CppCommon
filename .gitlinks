@@ -1,4 +1,3 @@
-#Test
 # Modules
 Catch2 modules/Catch2 https://github.com/catchorg/Catch2.git master
 CppBenchmark modules/CppBenchmark https://github.com/chronoxor/CppBenchmark.git master
