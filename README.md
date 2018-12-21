@@ -36,12 +36,13 @@ encoding, shared memory, threading, time management and others.
 * Utilities
 
 # Requirements
-* Linux (gcc g++ cmake doxygen graphviz binutils-dev uuid-dev)
-* OSX (clang cmake doxygen graphviz)
+* Linux (binutils-dev uuid-dev)
+* OSX
 * Windows 10
 * [cmake](https://www.cmake.org)
-* [git](https://git-scm.com)
 * [gcc](https://gcc.gnu.org)
+* [git](https://git-scm.com)
+* [gil](https://github.com/chronoxor/gil.git)
 
 Optional:
 * [clang](https://clang.llvm.org)
@@ -52,11 +53,11 @@ Optional:
 
 # How to build?
 
-### Clone repository with submodules
+### Setup repository with [gil (git links) tool](https://github.com/chronoxor/gil#setup)
 ```shell
 git clone https://github.com/chronoxor/CppCommon.git
 cd CppCommon
-git submodule update --init --recursive --remote
+gil update
 ```
 
 ### Linux
