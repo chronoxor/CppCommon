@@ -23,6 +23,8 @@ namespace CppCommon {
 
     FIFO order is guaranteed!
 
+    Thread-safe.
+
     C++ implementation of Dmitry Vyukov's non-intrusive lock free unbound MPSC queue
     http://www.1024cores.net/home/lock-free-algorithms/queues/non-intrusive-mpsc-node-based-queue
 */

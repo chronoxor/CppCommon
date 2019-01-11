@@ -29,6 +29,8 @@ namespace CppCommon {
     limited to the capacity provided in the constructor.
 
     FIFO order is not guaranteed!
+
+    Thread-safe.
 */
 class MPSCRingBuffer
 {

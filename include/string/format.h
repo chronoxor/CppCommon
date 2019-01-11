@@ -61,7 +61,7 @@ std::wstring format(const std::wstring& pattern, const Args&... args);
 /*!
     Format string with the help of {fmt} library (http://fmtlib.net)
 
-    Not thread-safe.
+    Thread-safe.
 
     \param pattern - Format string pattern
     \param args - Format arguments
@@ -73,7 +73,7 @@ void print(const std::string& pattern, const Args&... args);
 /*!
     Format wide string with the help of {fmt} library (http://fmtlib.net)
 
-    Not thread-safe.
+    Thread-safe.
 
     \param pattern - Format wide string pattern
     \param args - Format arguments
@@ -85,7 +85,7 @@ void print(const std::wstring& pattern, const Args&... args);
 /*!
     Format string with the help of {fmt} library (http://fmtlib.net)
 
-    Not thread-safe.
+    Thread-safe.
 
     \param stream - Output stream
     \param pattern - Format string pattern
@@ -98,7 +98,7 @@ void print(std::ostream& stream, const std::string& pattern, const Args&... args
 /*!
     Format wide string with the help of {fmt} library (http://fmtlib.net)
 
-    Not thread-safe.
+    Thread-safe.
 
     \param stream - Output wide stream
     \param pattern - Format wide string pattern

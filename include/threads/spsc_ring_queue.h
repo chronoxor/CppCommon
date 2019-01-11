@@ -24,6 +24,8 @@ namespace CppCommon {
 
     FIFO order is guaranteed!
 
+    Thread-safe.
+
     A combination of the algorithms described by the circular buffers documentation found in the Linux kernel, and the
     bounded MPMC queue by Dmitry Vyukov. Implemented in pure C++11. Should work across most CPU architectures.
     http://www.1024cores.net/home/lock-free-algorithms/queues/bounded-mpmc-queue

@@ -31,6 +31,8 @@ namespace CppCommon {
     limited to the capacity provided in the constructor.
 
     FIFO order is not guaranteed!
+
+    Thread-safe.
 */
 template<typename T>
 class MPSCRingQueue
