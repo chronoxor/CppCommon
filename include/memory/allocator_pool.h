@@ -20,7 +20,8 @@ namespace CppCommon {
     allows to allocate and free memory.
 
     During the allocation memory pool manager will return a first-fit memory
-    block in the free list!
+    block in the free list with concatenating joint blocks to avoid memory
+    defragmentation.
 
     If the allocated block is huge and does not fit into the memory pool chunk
     then it will be allocated directly from auxiliary memory manager.

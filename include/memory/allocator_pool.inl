@@ -125,6 +125,22 @@ inline void* PoolMemoryManager<TAuxMemoryManager>::malloc(size_t size, size_t al
         // Calculate aligned block size
         size_t aligned_size = size + adjustment;
 
+        // Concatenate joint free blocks
+        while (current_free_block->next != nullptr)
+        {
+            FreeBlock* base_free_block = current_free_block;
+            FreeBlock* next_free_block = current_free_block->next;
+
+            // Right joint
+            if (((uint8_t*)base_free_block + base_free_block->size) == (uint8_t*)next_free_block)
+            {
+                current_free_block->size += next_free_block->size;
+                current_free_block->next = next_free_block->next;
+            }
+            else
+                break;
+        }
+
         // If there is no enough free space in the current free block use the next one
         if (current_free_block->size < aligned_size)
         {

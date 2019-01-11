@@ -20,6 +20,9 @@ namespace CppCommon {
     space to allocate the required block then an auxiliary memory manager will
     be used.
 
+    Arena memory manager is suitable for multiple allocations during long
+    operations with a single reset at the end (e.g. HTTP request processing).
+
     Not thread-safe.
 */
 template <class TAuxMemoryManager = DefaultMemoryManager>
