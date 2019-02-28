@@ -261,16 +261,16 @@ struct hash<CppCommon::Time>
     result_type operator () (const argument_type& value) const
     {
         result_type result = 17;
-        std::hash<int> hash;
-        result = result * 31 + hash(value.year());
-        result = result * 31 + hash(value.month());
-        result = result * 31 + hash(value.day());
-        result = result * 31 + hash(value.hour());
-        result = result * 31 + hash(value.minute());
-        result = result * 31 + hash(value.second());
-        result = result * 31 + hash(value.millisecond());
-        result = result * 31 + hash(value.microsecond());
-        result = result * 31 + hash(value.nanosecond());
+        std::hash<int> hasher;
+        result = result * 31 + hasher(value.year());
+        result = result * 31 + hasher(value.month());
+        result = result * 31 + hasher(value.day());
+        result = result * 31 + hasher(value.hour());
+        result = result * 31 + hasher(value.minute());
+        result = result * 31 + hasher(value.second());
+        result = result * 31 + hasher(value.millisecond());
+        result = result * 31 + hasher(value.microsecond());
+        result = result * 31 + hasher(value.nanosecond());
         return result;
     }
 };

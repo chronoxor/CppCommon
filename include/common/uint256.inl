@@ -212,9 +212,9 @@ struct hash<CppCommon::uint256_t>
     result_type operator () (const argument_type& value) const
     {
         result_type result = 17;
-        std::hash<CppCommon::uint128_t> hash;
-        result = result * 31 + hash(value.upper());
-        result = result * 31 + hash(value.lower());
+        std::hash<CppCommon::uint128_t> hasher;
+        result = result * 31 + hasher(value.upper());
+        result = result * 31 + hasher(value.lower());
         return result;
     }
 };
