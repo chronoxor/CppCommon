@@ -22,3 +22,23 @@ inline void swap(Timezone& timezone1, Timezone& timezone2) noexcept
 }
 
 } // namespace CppCommon
+
+namespace std {
+
+template <>
+struct hash<CppCommon::Timezone>
+{
+    typedef CppCommon::Timezone argument_type;
+    typedef size_t result_type;
+
+    result_type operator () (const argument_type& value) const
+    {
+        result_type result = 17;
+        result = result * 31 + std::hash<std::string>()(value.name());
+        result = result * 31 + std::hash<CppCommon::Timespan>()(value.offset());
+        result = result * 31 + std::hash<CppCommon::Timespan>()(value.daylight());
+        return result;
+    }
+};
+
+} // namespace std

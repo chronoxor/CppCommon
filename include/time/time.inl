@@ -249,3 +249,30 @@ inline LocalTime::LocalTime(const UtcTime& time) : LocalTime(time.utcstamp())
 {}
 
 } // namespace CppCommon
+
+namespace std {
+
+template <>
+struct hash<CppCommon::Time>
+{
+    typedef CppCommon::Time argument_type;
+    typedef size_t result_type;
+
+    result_type operator () (const argument_type& value) const
+    {
+        result_type result = 17;
+        std::hash<int> hash;
+        result = result * 31 + hash(value.year());
+        result = result * 31 + hash(value.month());
+        result = result * 31 + hash(value.day());
+        result = result * 31 + hash(value.hour());
+        result = result * 31 + hash(value.minute());
+        result = result * 31 + hash(value.second());
+        result = result * 31 + hash(value.millisecond());
+        result = result * 31 + hash(value.microsecond());
+        result = result * 31 + hash(value.nanosecond());
+        return result;
+    }
+};
+
+} // namespace std

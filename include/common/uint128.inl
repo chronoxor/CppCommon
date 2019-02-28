@@ -187,3 +187,23 @@ inline void swap(uint128_t& value1, uint128_t& value2) noexcept
 }
 
 } // namespace CppCommon
+
+namespace std {
+
+template <>
+struct hash<CppCommon::uint128_t>
+{
+    typedef CppCommon::uint128_t argument_type;
+    typedef size_t result_type;
+
+    result_type operator () (const argument_type& value) const
+    {
+        result_type result = 17;
+        std::hash<uint64_t> hash;
+        result = result * 31 + hash(value.upper());
+        result = result * 31 + hash(value.lower());
+        return result;
+    }
+};
+
+} // namespace std

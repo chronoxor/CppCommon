@@ -193,4 +193,6 @@ private:
 
 } // namespace CppCommon
 
+#include "timespan.inl"
+
 #endif // CPPCOMMON_TIME_TIMESPAN_H

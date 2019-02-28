@@ -283,4 +283,6 @@ public:
 
 } // namespace CppCommon
 
+#include "timestamp.inl"
+
 #endif // CPPCOMMON_TIME_TIMESTAMP_H

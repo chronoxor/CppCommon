@@ -20,3 +20,23 @@ inline void swap(UUID& uuid1, UUID& uuid2) noexcept
 }
 
 } // namespace CppCommon
+
+namespace std {
+
+template <>
+struct hash<CppCommon::UUID>
+{
+    typedef CppCommon::UUID argument_type;
+    typedef size_t result_type;
+
+    result_type operator () (const argument_type& value) const
+    {
+        result_type result = 17;
+        std::hash<uint8_t> hash;
+        for (size_t i = 0; i < value.data().size(); ++i)
+            result = result * 31 + hash(value.data()[i]);
+        return result;
+    }
+};
+
+} // namespace std
