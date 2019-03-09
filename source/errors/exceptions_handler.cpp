@@ -53,6 +53,10 @@ public:
 
     void SetupHandler(const std::function<void (const SystemException&, const StackTrace&)>& handler)
     {
+        assert((handler) && "Exceptions handler function must be valid!");
+        if (!handler)
+            return;
+
         _handler = handler;
     }
 

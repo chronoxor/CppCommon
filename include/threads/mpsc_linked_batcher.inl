@@ -51,6 +51,8 @@ inline bool MPSCLinkedBatcher<T>::Enqueue(T&& item)
 template<typename T>
 inline bool MPSCLinkedBatcher<T>::Dequeue(const std::function<void(const T&)>& handler)
 {
+    assert((handler) && "Batch handler must be valid!");
+
     Node* last = _head.exchange(nullptr, std::memory_order_acq_rel);
     Node* first = nullptr;
 

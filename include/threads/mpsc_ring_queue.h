@@ -13,6 +13,7 @@
 #include "threads/spsc_ring_queue.h"
 #include "time/timestamp.h"
 
+#include <cassert>
 #include <cstdio>
 #include <functional>
 #include <memory>

@@ -13,6 +13,7 @@
 #include "system/stack_trace.h"
 #include "utility/singleton.h"
 
+#include <cassert>
 #include <functional>
 #include <memory>
 

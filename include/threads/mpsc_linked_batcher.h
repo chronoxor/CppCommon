@@ -10,6 +10,7 @@
 #define CPPCOMMON_THREADS_MPSC_LINKED_BATCHER_H
 
 #include <atomic>
+#include <cassert>
 #include <functional>
 #include <utility>
 

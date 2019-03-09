@@ -61,6 +61,8 @@ inline bool MPSCRingQueue<T>::Dequeue(T& item)
 template<typename T>
 inline bool MPSCRingQueue<T>::Dequeue(const std::function<void(const T&)>& handler)
 {
+    assert((handler) && "Batch handler must be valid!");
+
     bool result = false;
 
     // Consume all available items from producers' ring queues
