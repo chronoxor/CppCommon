@@ -52,7 +52,7 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     });
 
     // Start producer thread
-    auto producer = std::thread([&buffer, &wait_strategy, item_size, items_to_produce, &consumer]()
+    auto producer = std::thread([&buffer, &wait_strategy, item_size, items_to_produce]()
     {
         uint8_t item[item_size_to];
 

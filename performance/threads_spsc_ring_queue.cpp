@@ -37,7 +37,7 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
     });
 
     // Start producer thread
-    auto producer = std::thread([&queue, &wait_strategy, &consumer]()
+    auto producer = std::thread([&queue, &wait_strategy]()
     {
         for (uint64_t i = 0; i < items_to_produce; ++i)
         {
