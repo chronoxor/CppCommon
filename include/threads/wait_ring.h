@@ -42,14 +42,14 @@ public:
     WaitRing& operator=(const WaitRing&) = delete;
     WaitRing& operator=(WaitRing&&) noexcept = default;
 
-    //! Is ring closed?
+    //! Is wait ring closed?
     bool closed() const;
 
-    //! Is ring empty?
+    //! Is wait ring empty?
     bool empty() const { return (size() == 0); }
-    //! Get ring capacity
+    //! Get wait ring capacity
     size_t capacity() const { return _capacity; }
-    //! Get ring size
+    //! Get wait ring size
     size_t size() const;
 
     //! Enqueue an item into the wait ring

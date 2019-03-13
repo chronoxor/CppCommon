@@ -46,7 +46,10 @@ int main(int argc, char** argv)
             break;
 
         if (item == 0)
+        {
+            queue.Close();
             break;
+        }
     }
 
     // Wait for the consumer thread

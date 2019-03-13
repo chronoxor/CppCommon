@@ -37,12 +37,12 @@ public:
     WaitQueue& operator=(const WaitQueue&) = delete;
     WaitQueue& operator=(WaitQueue&&) = default;
 
-    //! Is queue closed?
+    //! Is wait queue closed?
     bool closed() const;
 
-    //! Is queue empty?
+    //! Is wait queue empty?
     bool empty() const { return (size() == 0); }
-    //! Get queue size
+    //! Get wait queue size
     size_t size() const;
 
     //! Enqueue an item into the wait queue
