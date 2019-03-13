@@ -44,6 +44,7 @@ int main(int argc, char** argv)
 
         if (line.empty())
         {
+            // Close the wait batcher
             batcher.Close();
             break;
         }

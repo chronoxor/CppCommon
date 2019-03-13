@@ -58,6 +58,19 @@ TEST_CASE("Multiple producers / multiple consumers wait ring threads", "[CppComm
     for (int i = 0; i < items_to_produce; ++i)
         result += i;
 
+    // Start consumer thread
+    auto consumer = std::thread([&ring, &crc, items_to_produce]()
+    {
+        // Consume items
+        for (int i = 0; i < items_to_produce; ++i)
+        {
+            int item;
+            if (!ring.Dequeue(item))
+                break;
+            crc += item;
+        }
+    });
+
     // Start producers threads
     std::vector<std::thread> producers;
     for (int producer = 0; producer < producers_count; ++producer)
@@ -71,18 +84,15 @@ TEST_CASE("Multiple producers / multiple consumers wait ring threads", "[CppComm
         });
     }
 
-    // Consume items
-    for (int i = 0; i < items_to_produce; ++i)
-    {
-        int item;
-        if (!ring.Dequeue(item))
-            break;
-        crc += item;
-    }
-
     // Wait for all producers threads
     for (auto& producer : producers)
         producer.join();
+
+    // Close the wait ring
+    ring.Close();
+
+    // Wait for the consumer thread
+    consumer.join();
 
     // Check result
     REQUIRE(crc == result);

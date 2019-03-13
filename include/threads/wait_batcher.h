@@ -31,7 +31,11 @@ template<typename T>
 class WaitBatcher
 {
 public:
-    WaitBatcher();
+    //! Default class constructor
+    /*!
+        \param capacity - wait batcher capacity (default is 0)
+    */
+    explicit WaitBatcher(size_t capacity = 0);
     WaitBatcher(const WaitBatcher&) = delete;
     WaitBatcher(WaitBatcher&&) noexcept = default;
     ~WaitBatcher();
@@ -44,6 +48,8 @@ public:
 
     //! Is wait batcher empty?
     bool empty() const { return (size() == 0); }
+    //! Get wait batcher capacity
+    size_t capacity() const;
     //! Get wait batcher size
     size_t size() const;
 

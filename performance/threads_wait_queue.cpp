@@ -57,12 +57,15 @@ void produce_consume(CppBenchmark::Context& context)
         });
     }
 
-    // Wait for the consumer thread
-    consumer.join();
-
     // Wait for all producers threads
     for (auto& producer : producers)
         producer.join();
+
+    // Close the wait queue
+    queue.Close();
+
+    // Wait for the consumer thread
+    consumer.join();
 
     // Update benchmark metrics
     context.metrics().AddOperations(items_to_produce - 1);

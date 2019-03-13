@@ -47,6 +47,7 @@ int main(int argc, char** argv)
 
         if (item == 0)
         {
+            // Close the wait queue
             queue.Close();
             break;
         }

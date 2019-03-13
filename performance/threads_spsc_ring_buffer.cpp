@@ -66,13 +66,13 @@ void produce_consume(CppBenchmark::Context& context, const std::function<void()>
             while (!buffer.Enqueue(item, item_size))
                 wait_strategy();
         }
-
-        // Wait for the consumer thread
-        consumer.join();
     });
 
     // Wait for the producer thread
     producer.join();
+
+    // Wait for the consumer thread
+    consumer.join();
 
     // Update benchmark metrics
     context.metrics().AddOperations(items_to_produce - 1);

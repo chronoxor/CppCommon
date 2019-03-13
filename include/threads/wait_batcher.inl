@@ -9,8 +9,9 @@
 namespace CppCommon {
 
 template<typename T>
-inline WaitBatcher<T>::WaitBatcher() : _closed(false)
+inline WaitBatcher<T>::WaitBatcher(size_t capacity) : _closed(false)
 {
+    _batch.reserve(capacity);
 }
 
 template<typename T>
@@ -24,6 +25,13 @@ inline bool WaitBatcher<T>::closed() const
 {
     Locker<CriticalSection> locker(_cs);
     return _closed;
+}
+
+template<typename T>
+inline size_t WaitBatcher<T>::capacity() const
+{
+    Locker<CriticalSection> locker(_cs);
+    return _batch.capacity();
 }
 
 template<typename T>
