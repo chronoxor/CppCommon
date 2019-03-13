@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['waitbatcher',['WaitBatcher',['../class_cpp_common_1_1_wait_batcher.html',1,'CppCommon']]],
   ['waitqueue',['WaitQueue',['../class_cpp_common_1_1_wait_queue.html',1,'CppCommon']]],
   ['waitring',['WaitRing',['../class_cpp_common_1_1_wait_ring.html',1,'CppCommon']]],
   ['writechar',['WriteChar',['../class_cpp_common_1_1_write_char.html',1,'CppCommon']]],

@@ -101,6 +101,7 @@ var searchData=
   ['_7euint128_5ft',['~uint128_t',['../class_cpp_common_1_1uint128__t.html#abae5199abc10ff8497287444af6b2d0c',1,'CppCommon::uint128_t']]],
   ['_7euint256_5ft',['~uint256_t',['../class_cpp_common_1_1uint256__t.html#a93c466d22550e8f35a409d3b454d3b9a',1,'CppCommon::uint256_t']]],
   ['_7euuid',['~UUID',['../class_cpp_common_1_1_u_u_i_d.html#ae289d7b1bf0569ddce2c514de02b4b77',1,'CppCommon::UUID']]],
+  ['_7ewaitbatcher',['~WaitBatcher',['../class_cpp_common_1_1_wait_batcher.html#a2cddbbb1dd6c637823dd3f9160d0a55f',1,'CppCommon::WaitBatcher']]],
   ['_7ewaitqueue',['~WaitQueue',['../class_cpp_common_1_1_wait_queue.html#a11e794d823a5f45214135da0a4df7c71',1,'CppCommon::WaitQueue']]],
   ['_7ewaitring',['~WaitRing',['../class_cpp_common_1_1_wait_ring.html#a7ce2d74779a9c2222aa47aae5fc9a11e',1,'CppCommon::WaitRing']]],
   ['_7ewritelocker',['~WriteLocker',['../class_cpp_common_1_1_write_locker.html#aa65a3ecd2e9b81ed0616f128cfaef789',1,'CppCommon::WriteLocker']]],
