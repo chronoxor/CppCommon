@@ -22,7 +22,6 @@
 #include <windows.h>
 #undef max
 #undef min
-#undef Yield
 #endif
 
 namespace CppCommon {
