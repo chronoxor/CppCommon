@@ -84,7 +84,7 @@ public:
         std::wstring wpath = _path.wstring();
 
         // Retries in CreateFile, see http://support.microsoft.com/kb/316609
-        const int attempts = 100;
+        const int attempts = 10;
         const int sleep = 100;
         for (int attempt = 0; attempt < attempts; ++attempt)
         {
@@ -101,13 +101,8 @@ public:
                     _file = CreateFileW(wpath.c_str(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_HIDDEN, nullptr);
                     if (_file == INVALID_HANDLE_VALUE)
                     {
-                        if (GetLastError() == ERROR_SHARING_VIOLATION)
-                        {
-                            Sleep(sleep);
-                            continue;
-                        }
-                        else
-                            break;
+                        Sleep(sleep);
+                        continue;
                     }
                     else
                     {
