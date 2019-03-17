@@ -49,8 +49,9 @@ public:
     //! Assign a new file-lock path
     /*!
         \param path - File-lock path
+        \return 'true' if the file-lock path was successfully assigned, 'false' if failed to assign a new file-lock path
     */
-    void Assign(const Path& path);
+    bool Assign(const Path& path);
 
     //! Reset file-lock
     void Reset();
