@@ -361,7 +361,7 @@ FileLock::~FileLock()
 FileLock& FileLock::operator=(const Path& path)
 {
     if (!Assign(path))
-        throwex FileSystemException("Cannot create or open file-lock! file").Attach(_path);
+        throwex FileSystemException("Cannot create or open file-lock! file").Attach(path);
     return *this;
 }
 
