@@ -34,7 +34,11 @@ namespace CppCommon {
 class FileLock::Impl
 {
 public:
-    Impl() = default;
+#if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
+    Impl() : _file(0), _owner(false) {}
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
+    Impl() : _file(nullptr), _owner(false) {}
+#endif
 
     ~Impl()
     {
@@ -131,6 +135,7 @@ public:
         int result = close(_file);
         if (result != 0)
             fatality(FileSystemException("Cannot close the file-lock descriptor!").Attach(_path));
+        _file = 0;
 
         // Remove the file-lock file (owner only)
         if (_owner)
@@ -142,6 +147,7 @@ public:
 #elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         if (!CloseHandle(_file))
             fatality(FileSystemException("Cannot close the file-lock handle!").Attach(_path));
+        _file = nullptr;
 
         // Remove the file-lock file (owner only)
         if (_owner)
