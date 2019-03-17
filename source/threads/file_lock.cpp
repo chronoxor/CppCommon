@@ -54,7 +54,7 @@ public:
 
     const Path& path() const noexcept { return _path; }
 
-    bool Assign(const Path& path)
+    void Assign(const Path& path)
     {
         // Reset the previous file-lock
         Reset();
@@ -70,22 +70,22 @@ public:
                 if (_file >= 0)
                 {
                     _owner = false;
-                    return true;
+                    return;
                 }
             }
         }
         else
         {
             _owner = true;
-            return true;
+            return;
         }
-        return false;
+        throwex FileSystemException("Cannot create or open file-lock file!").Attach(path);
 #elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         std::wstring wpath = _path.wstring();
 
         // Retries in CreateFile, see http://support.microsoft.com/kb/316609
-        const int attempts = 5;
-        const int sleep = 250;
+        const int attempts = 100;
+        const int sleep = 100;
         for (int attempt = 0; attempt < attempts; ++attempt)
         {
             _file = CreateFileW(wpath.c_str(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, CREATE_NEW, FILE_ATTRIBUTE_HIDDEN, nullptr);
@@ -112,17 +112,17 @@ public:
                     else
                     {
                         _owner = false;
-                        return true;
+                        return;
                     }
                 }
             }
             else
             {
                 _owner = true;
-                return true;
+                return;
             }
         }
-        return false;
+        throwex FileSystemException("Cannot create or open file-lock file!").Attach(path);
 #endif
     }
 
@@ -346,8 +346,7 @@ FileLock::FileLock() : _pimpl(std::make_unique<Impl>())
 
 FileLock::FileLock(const Path& path) : FileLock()
 {
-    if (!Assign(path))
-        throwex FileSystemException("Cannot create or open file-lock! file").Attach(path);
+    Assign(path);
 }
 
 FileLock::FileLock(FileLock&& lock) noexcept : _pimpl(std::move(lock._pimpl))
@@ -360,8 +359,7 @@ FileLock::~FileLock()
 
 FileLock& FileLock::operator=(const Path& path)
 {
-    if (!Assign(path))
-        throwex FileSystemException("Cannot create or open file-lock! file").Attach(path);
+    Assign(path);
     return *this;
 }
 
@@ -376,9 +374,9 @@ const Path& FileLock::path() const noexcept
     return _pimpl->path();
 }
 
-bool FileLock::Assign(const Path& path)
+void FileLock::Assign(const Path& path)
 {
-    return _pimpl->Assign(path);
+    _pimpl->Assign(path);
 }
 
 void FileLock::Reset()
