@@ -34,8 +34,28 @@ namespace CppCommon {
 class FileLock::Impl
 {
 public:
-    Impl(const Path& path) : _path(path)
+    Impl() = default;
+
+    ~Impl()
     {
+        try
+        {
+            Reset();
+        }
+        catch (SystemException& ex)
+        {
+            fatality(SystemException(ex.string()));
+        }
+    }
+
+    const Path& path() const noexcept { return _path; }
+
+    void Assign(const Path& path)
+    {
+        // Reset the previous file-lock
+        Reset();
+
+        _path = path;
 #if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
         _file = open(_path.string().c_str(), O_CREAT | O_EXCL | O_RDWR, 0644);
         if (_file < 0)
@@ -102,8 +122,11 @@ public:
 #endif
     }
 
-    ~Impl()
+    void Reset()
     {
+        if (!_file)
+            return;
+
 #if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
         int result = close(_file);
         if (result != 0)
@@ -128,8 +151,6 @@ public:
         }
 #endif
     }
-
-    const Path& path() const noexcept { return _path; }
 
     bool TryLockRead()
     {
@@ -313,8 +334,13 @@ private:
 
 //! @endcond
 
-FileLock::FileLock(const Path& path) : _pimpl(std::make_unique<Impl>(path))
+FileLock::FileLock() : _pimpl(std::make_unique<Impl>())
 {
+}
+
+FileLock::FileLock(const Path& path) : FileLock()
+{
+    Assign(path);
 }
 
 FileLock::FileLock(FileLock&& lock) noexcept : _pimpl(std::move(lock._pimpl))
@@ -323,6 +349,12 @@ FileLock::FileLock(FileLock&& lock) noexcept : _pimpl(std::move(lock._pimpl))
 
 FileLock::~FileLock()
 {
+}
+
+FileLock& FileLock::operator=(const Path& path)
+{
+    Assign(path);
+    return *this;
 }
 
 FileLock& FileLock::operator=(FileLock&& lock) noexcept
@@ -334,6 +366,16 @@ FileLock& FileLock::operator=(FileLock&& lock) noexcept
 const Path& FileLock::path() const noexcept
 {
     return _pimpl->path();
+}
+
+void FileLock::Assign(const Path& path)
+{
+    _pimpl->Assign(path);
+}
+
+void FileLock::Reset()
+{
+    _pimpl->Reset();
 }
 
 bool FileLock::TryLockRead()

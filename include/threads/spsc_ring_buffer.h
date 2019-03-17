@@ -44,6 +44,9 @@ public:
     SPSCRingBuffer& operator=(const SPSCRingBuffer&) = delete;
     SPSCRingBuffer& operator=(SPSCRingBuffer&&) = default;
 
+    //! Check if the buffer is not empty
+    explicit operator bool() const noexcept { return !empty(); }
+
     //! Is ring buffer empty?
     bool empty() const noexcept { return (size() == 0); }
     //! Get ring buffer capacity in bytes

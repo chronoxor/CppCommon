@@ -46,6 +46,9 @@ public:
     Directory& operator=(const Directory&) = default;
     Directory& operator=(Directory&&) = default;
 
+    //! Check if the directory exist
+    explicit operator bool() const noexcept { return IsDirectoryExists(); }
+
     //! Is the directory exists?
     bool IsDirectoryExists() const;
     //! Is the directory empty?

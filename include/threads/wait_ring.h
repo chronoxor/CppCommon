@@ -42,6 +42,9 @@ public:
     WaitRing& operator=(const WaitRing&) = delete;
     WaitRing& operator=(WaitRing&&) noexcept = default;
 
+    //! Check if the wait ring is not empty
+    explicit operator bool() const noexcept { return !closed() && !empty(); }
+
     //! Is wait ring closed?
     bool closed() const;
 

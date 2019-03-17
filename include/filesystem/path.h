@@ -117,6 +117,9 @@ public:
     Path& operator=(const Path&) = default;
     Path& operator=(Path&&) = default;
 
+    //! Check if the path is not empty
+    explicit operator bool() const noexcept { return !empty(); }
+
     // Append the given path with a path separator
     Path& operator/=(const Path& path)
     { return Append(path); }

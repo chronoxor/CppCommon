@@ -39,6 +39,9 @@ public:
     Symlink& operator=(const Symlink&) = default;
     Symlink& operator=(Symlink&&) = default;
 
+    //! Check if the symlink is present
+    explicit operator bool() const noexcept { return IsSymlinkExists() && IsTargetExists(); }
+
     //! Read symlink target path
     Path target() const;
 

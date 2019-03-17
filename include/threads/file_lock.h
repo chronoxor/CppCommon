@@ -33,16 +33,27 @@ namespace CppCommon {
 class FileLock
 {
 public:
+    FileLock();
     explicit FileLock(const Path& path);
     FileLock(const FileLock&) = delete;
     FileLock(FileLock&& lock) noexcept;
     ~FileLock();
 
+    FileLock& operator=(const Path& path);
     FileLock& operator=(const FileLock&) = delete;
     FileLock& operator=(FileLock&& lock) noexcept;
 
     //! Get the file-lock path
     const Path& path() const noexcept;
+
+    //! Assign a new file-lock path
+    /*!
+        \param path - File-lock path
+    */
+    void Assign(const Path& path);
+
+    //! Reset file-lock
+    void Reset();
 
     //! Try to acquire read lock without block
     /*!

@@ -43,6 +43,9 @@ public:
     WaitBatcher& operator=(const WaitBatcher&) = delete;
     WaitBatcher& operator=(WaitBatcher&&) noexcept = default;
 
+    //! Check if the wait batcher is not empty
+    explicit operator bool() const noexcept { return !closed() && !empty(); }
+
     //! Is wait batcher closed?
     bool closed() const;
 

@@ -50,6 +50,9 @@ public:
     File& operator=(const File& file);
     File& operator=(File&& file) noexcept;
 
+    //! Check if the file opened
+    explicit operator bool() const noexcept { return IsFileOpened(); }
+
     //! Get the current read/write offset of the opened file
     uint64_t offset() const;
     //! Get the current file size

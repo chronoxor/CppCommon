@@ -37,6 +37,9 @@ public:
     WaitQueue& operator=(const WaitQueue&) = delete;
     WaitQueue& operator=(WaitQueue&&) = default;
 
+    //! Check if the wait queue is not empty
+    explicit operator bool() const noexcept { return !closed() && !empty(); }
+
     //! Is wait queue closed?
     bool closed() const;
 

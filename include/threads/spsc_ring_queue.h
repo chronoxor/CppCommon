@@ -46,6 +46,9 @@ public:
     SPSCRingQueue& operator=(const SPSCRingQueue&) = delete;
     SPSCRingQueue& operator=(SPSCRingQueue&&) = default;
 
+    //! Check if the queue is not empty
+    explicit operator bool() const noexcept { return !empty(); }
+
     //! Is ring queue empty?
     bool empty() const noexcept { return (size() == 0); }
     //! Get ring queue capacity
