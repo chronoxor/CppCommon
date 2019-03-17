@@ -124,9 +124,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7a7cbfb9ef164a8e30776773e3632e2d"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="class_cpp_common_1_1_path.html">Path</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_file_lock.html#a7a7cbfb9ef164a8e30776773e3632e2d">path</a> () const noexcept</td></tr>
 <tr class="memdesc:a7a7cbfb9ef164a8e30776773e3632e2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the file-lock path.  <a href="#a7a7cbfb9ef164a8e30776773e3632e2d">More...</a><br /></td></tr>
 <tr class="separator:a7a7cbfb9ef164a8e30776773e3632e2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ade086bc5fb24e76026ee1cb9c76f7834"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_file_lock.html#ade086bc5fb24e76026ee1cb9c76f7834">Assign</a> (const <a class="el" href="class_cpp_common_1_1_path.html">Path</a> &amp;<a class="el" href="class_cpp_common_1_1_file_lock.html#a7a7cbfb9ef164a8e30776773e3632e2d">path</a>)</td></tr>
-<tr class="memdesc:ade086bc5fb24e76026ee1cb9c76f7834"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign a new file-lock path.  <a href="#ade086bc5fb24e76026ee1cb9c76f7834">More...</a><br /></td></tr>
-<tr class="separator:ade086bc5fb24e76026ee1cb9c76f7834"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7557ececbcbbb24110fecea476e4fc0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_file_lock.html#aa7557ececbcbbb24110fecea476e4fc0">Assign</a> (const <a class="el" href="class_cpp_common_1_1_path.html">Path</a> &amp;<a class="el" href="class_cpp_common_1_1_file_lock.html#a7a7cbfb9ef164a8e30776773e3632e2d">path</a>)</td></tr>
+<tr class="memdesc:aa7557ececbcbbb24110fecea476e4fc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign a new file-lock path.  <a href="#aa7557ececbcbbb24110fecea476e4fc0">More...</a><br /></td></tr>
+<tr class="separator:aa7557ececbcbbb24110fecea476e4fc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abfa9ff4d4578b94b9500e8bf00dbf0fb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_file_lock.html#abfa9ff4d4578b94b9500e8bf00dbf0fb">Reset</a> ()</td></tr>
 <tr class="memdesc:abfa9ff4d4578b94b9500e8bf00dbf0fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset file-lock.  <a href="#abfa9ff4d4578b94b9500e8bf00dbf0fb">More...</a><br /></td></tr>
 <tr class="separator:abfa9ff4d4578b94b9500e8bf00dbf0fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -259,7 +259,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="file__lock_8cpp_source.html#l00352">352</a> of file <a class="el" href="file__lock_8cpp_source.html">file_lock.cpp</a>.</p>
+<p>Definition at line <a class="el" href="file__lock_8cpp_source.html#l00353">353</a> of file <a class="el" href="file__lock_8cpp_source.html">file_lock.cpp</a>.</p>
 
 </div>
 </div>
@@ -276,17 +276,17 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="file__lock_8cpp_source.html#l00356">356</a> of file <a class="el" href="file__lock_8cpp_source.html">file_lock.cpp</a>.</p>
+<p>Definition at line <a class="el" href="file__lock_8cpp_source.html#l00357">357</a> of file <a class="el" href="file__lock_8cpp_source.html">file_lock.cpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="ade086bc5fb24e76026ee1cb9c76f7834"></a>
+<a class="anchor" id="aa7557ececbcbbb24110fecea476e4fc0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void CppCommon::FileLock::Assign </td>
+          <td class="memname">bool CppCommon::FileLock::Assign </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="class_cpp_common_1_1_path.html">Path</a> &amp;&#160;</td>
           <td class="paramname"><em>path</em></td><td>)</td>
@@ -302,8 +302,9 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>'true' if the file-lock path was successfully assigned, 'false' if failed to assign a new file-lock path </dd></dl>
 
-<p>Definition at line <a class="el" href="file__lock_8cpp_source.html#l00377">377</a> of file <a class="el" href="file__lock_8cpp_source.html">file_lock.cpp</a>.</p>
+<p>Definition at line <a class="el" href="file__lock_8cpp_source.html#l00379">379</a> of file <a class="el" href="file__lock_8cpp_source.html">file_lock.cpp</a>.</p>
 
 </div>
 </div>
@@ -323,7 +324,7 @@ Public Member Functions</h2></td></tr>
 <p>Acquire read lock with block. </p>
 <p>Will block. </p>
 
-<p>Definition at line <a class="el" href="file__lock_8cpp_source.html#l00445">445</a> of file <a class="el" href="file__lock_8cpp_source.html">file_lock.cpp</a>.</p>
+<p>Definition at line <a class="el" href="file__lock_8cpp_source.html#l00447">447</a> of file <a class="el" href="file__lock_8cpp_source.html">file_lock.cpp</a>.</p>
 
 </div>
 </div>
@@ -343,7 +344,7 @@ Public Member Functions</h2></td></tr>
 <p>Acquire write lock with block. </p>
 <p>Will block. </p>
 
-<p>Definition at line <a class="el" href="file__lock_8cpp_source.html#l00450">450</a> of file <a class="el" href="file__lock_8cpp_source.html">file_lock.cpp</a>.</p>
+<p>Definition at line <a class="el" href="file__lock_8cpp_source.html#l00452">452</a> of file <a class="el" href="file__lock_8cpp_source.html">file_lock.cpp</a>.</p>
 
 </div>
 </div>
@@ -361,7 +362,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="file__lock_8cpp_source.html#l00360">360</a> of file <a class="el" href="file__lock_8cpp_source.html">file_lock.cpp</a>.</p>
+<p>Definition at line <a class="el" href="file__lock_8cpp_source.html#l00361">361</a> of file <a class="el" href="file__lock_8cpp_source.html">file_lock.cpp</a>.</p>
 
 </div>
 </div>
@@ -411,7 +412,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="file__lock_8cpp_source.html#l00366">366</a> of file <a class="el" href="file__lock_8cpp_source.html">file_lock.cpp</a>.</p>
+<p>Definition at line <a class="el" href="file__lock_8cpp_source.html#l00368">368</a> of file <a class="el" href="file__lock_8cpp_source.html">file_lock.cpp</a>.</p>
 
 </div>
 </div>
@@ -438,7 +439,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Get the file-lock path. </p>
 
-<p>Definition at line <a class="el" href="file__lock_8cpp_source.html#l00372">372</a> of file <a class="el" href="file__lock_8cpp_source.html">file_lock.cpp</a>.</p>
+<p>Definition at line <a class="el" href="file__lock_8cpp_source.html#l00374">374</a> of file <a class="el" href="file__lock_8cpp_source.html">file_lock.cpp</a>.</p>
 
 </div>
 </div>
@@ -457,7 +458,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Reset file-lock. </p>
 
-<p>Definition at line <a class="el" href="file__lock_8cpp_source.html#l00382">382</a> of file <a class="el" href="file__lock_8cpp_source.html">file_lock.cpp</a>.</p>
+<p>Definition at line <a class="el" href="file__lock_8cpp_source.html#l00384">384</a> of file <a class="el" href="file__lock_8cpp_source.html">file_lock.cpp</a>.</p>
 
 </div>
 </div>
@@ -478,7 +479,7 @@ Public Member Functions</h2></td></tr>
 <p>Will not block.</p>
 <dl class="section return"><dt>Returns</dt><dd>'true' if the read lock was successfully acquired, 'false' if the read lock is busy </dd></dl>
 
-<p>Definition at line <a class="el" href="file__lock_8cpp_source.html#l00387">387</a> of file <a class="el" href="file__lock_8cpp_source.html">file_lock.cpp</a>.</p>
+<p>Definition at line <a class="el" href="file__lock_8cpp_source.html#l00389">389</a> of file <a class="el" href="file__lock_8cpp_source.html">file_lock.cpp</a>.</p>
 
 </div>
 </div>
@@ -506,7 +507,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>'true' if the read lock was successfully acquired, 'false' if the read lock is busy </dd></dl>
 
-<p>Definition at line <a class="el" href="file__lock_8cpp_source.html#l00397">397</a> of file <a class="el" href="file__lock_8cpp_source.html">file_lock.cpp</a>.</p>
+<p>Definition at line <a class="el" href="file__lock_8cpp_source.html#l00399">399</a> of file <a class="el" href="file__lock_8cpp_source.html">file_lock.cpp</a>.</p>
 
 </div>
 </div>
@@ -542,7 +543,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>'true' if the read lock was successfully acquired, 'false' if the read lock is busy </dd></dl>
 
-<p>Definition at line <a class="el" href="file__lock_8h_source.html#l00096">96</a> of file <a class="el" href="file__lock_8h_source.html">file_lock.h</a>.</p>
+<p>Definition at line <a class="el" href="file__lock_8h_source.html#l00097">97</a> of file <a class="el" href="file__lock_8h_source.html">file_lock.h</a>.</p>
 
 </div>
 </div>
@@ -563,7 +564,7 @@ Public Member Functions</h2></td></tr>
 <p>Will not block.</p>
 <dl class="section return"><dt>Returns</dt><dd>'true' if the write lock was successfully acquired, 'false' if the write lock is busy </dd></dl>
 
-<p>Definition at line <a class="el" href="file__lock_8cpp_source.html#l00392">392</a> of file <a class="el" href="file__lock_8cpp_source.html">file_lock.cpp</a>.</p>
+<p>Definition at line <a class="el" href="file__lock_8cpp_source.html#l00394">394</a> of file <a class="el" href="file__lock_8cpp_source.html">file_lock.cpp</a>.</p>
 
 </div>
 </div>
@@ -591,7 +592,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>'true' if the write lock was successfully acquired, 'false' if the write lock is busy </dd></dl>
 
-<p>Definition at line <a class="el" href="file__lock_8cpp_source.html#l00421">421</a> of file <a class="el" href="file__lock_8cpp_source.html">file_lock.cpp</a>.</p>
+<p>Definition at line <a class="el" href="file__lock_8cpp_source.html#l00423">423</a> of file <a class="el" href="file__lock_8cpp_source.html">file_lock.cpp</a>.</p>
 
 </div>
 </div>
@@ -627,7 +628,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>'true' if the write lock was successfully acquired, 'false' if the write lock is busy </dd></dl>
 
-<p>Definition at line <a class="el" href="file__lock_8h_source.html#l00105">105</a> of file <a class="el" href="file__lock_8h_source.html">file_lock.h</a>.</p>
+<p>Definition at line <a class="el" href="file__lock_8h_source.html#l00106">106</a> of file <a class="el" href="file__lock_8h_source.html">file_lock.h</a>.</p>
 
 </div>
 </div>
@@ -647,7 +648,7 @@ Public Member Functions</h2></td></tr>
 <p>Release read lock. </p>
 <p>Will not block. </p>
 
-<p>Definition at line <a class="el" href="file__lock_8cpp_source.html#l00455">455</a> of file <a class="el" href="file__lock_8cpp_source.html">file_lock.cpp</a>.</p>
+<p>Definition at line <a class="el" href="file__lock_8cpp_source.html#l00457">457</a> of file <a class="el" href="file__lock_8cpp_source.html">file_lock.cpp</a>.</p>
 
 </div>
 </div>
@@ -667,7 +668,7 @@ Public Member Functions</h2></td></tr>
 <p>Release write lock. </p>
 <p>Will not block. </p>
 
-<p>Definition at line <a class="el" href="file__lock_8cpp_source.html#l00460">460</a> of file <a class="el" href="file__lock_8cpp_source.html">file_lock.cpp</a>.</p>
+<p>Definition at line <a class="el" href="file__lock_8cpp_source.html#l00462">462</a> of file <a class="el" href="file__lock_8cpp_source.html">file_lock.cpp</a>.</p>
 
 </div>
 </div>
