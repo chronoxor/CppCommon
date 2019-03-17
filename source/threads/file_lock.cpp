@@ -54,7 +54,7 @@ public:
 
     const Path& path() const noexcept { return _path; }
 
-    void Assign(const Path& path)
+    bool Assign(const Path& path)
     {
         // Reset the previous file-lock
         Reset();
