@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- $Id -->
+<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
+    <noInheritable />
+    <assemblyIdentity type="win32" name="Microsoft.Windows.DebuggersAndTools" version="1.0.0.0" processorArchitecture="amd64" />
+    <file name="dbghelp.dll" />
+</assembly>
