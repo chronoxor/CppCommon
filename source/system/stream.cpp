@@ -56,7 +56,7 @@ public:
 
     size_t Read(void* buffer, size_t size)
     {
-        assert((buffer != nullptr) && "Pointer to the buffer should not be null!");
+        assert(((buffer != nullptr) && (size > 0)) && "Pointer to the buffer should not be null!");
         if ((buffer == nullptr) || (size == 0))
             return 0;
 
@@ -118,7 +118,7 @@ public:
 
     size_t Write(const void* buffer, size_t size)
     {
-        assert((buffer != nullptr) && "Pointer to the buffer should not be null!");
+        assert(((buffer != nullptr) && (size > 0)) && "Pointer to the buffer should not be null!");
         if ((buffer == nullptr) || (size == 0))
             return 0;
 
@@ -192,7 +192,7 @@ public:
 
     size_t Write(const void* buffer, size_t size)
     {
-        assert((buffer != nullptr) && "Pointer to the buffer should not be null!");
+        assert(((buffer != nullptr) && (size > 0)) && "Pointer to the buffer should not be null!");
         if ((buffer == nullptr) || (size == 0))
             return 0;
 
