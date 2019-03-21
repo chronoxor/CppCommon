@@ -1395,16 +1395,16 @@ void Path::SetCreated(const Path& path, const UtcTimestamp& timestamp)
     if (result != 0)
         throwex FileSystemException("Cannot get the status of the path!").Attach(path);
 
-    struct timeval times[2];
+    struct timespec times[2];
 #if defined(__APPLE__)
-    TIMESPEC_TO_TIMEVAL(&times[0], &status.st_atimespec);
+    times[0] = status.st_atimespec;
 #else
-    TIMESPEC_TO_TIMEVAL(&times[0], &status.st_atim);
+    times[0] = status.st_atim;
 #endif
     times[1].tv_sec = timestamp.seconds();
-    times[1].tv_usec = timestamp.microseconds() % 1000000;
+    times[1].tv_nsec = timestamp.nanoseconds() % 1000000000;
 
-    result = utimes(path.string().c_str(), times);
+    result = utimensat(AT_FDCWD, path.string().c_str(), times, 0);
     if (result != 0)
         throwex FileSystemException("Cannot set file created time of the path!").Attach(path);
 #elif defined(_WIN32) || defined(_WIN64)
@@ -1439,16 +1439,16 @@ void Path::SetModified(const Path& path, const UtcTimestamp& timestamp)
     if (result != 0)
         throwex FileSystemException("Cannot get the status of the path!").Attach(path);
 
-    struct timeval times[2];
+    struct timespec times[2];
 #if defined(__APPLE__)
-    TIMESPEC_TO_TIMEVAL(&times[0], &status.st_atimespec);
+    times[0] = status.st_atimespec;
 #else
-    TIMESPEC_TO_TIMEVAL(&times[0], &status.st_atim);
+    times[0] = status.st_atim;
 #endif
     times[1].tv_sec = timestamp.seconds();
-    times[1].tv_usec = timestamp.microseconds() % 1000000;
+    times[1].tv_nsec = timestamp.nanoseconds() % 1000000000;
 
-    result = utimes(path.string().c_str(), times);
+    result = utimensat(AT_FDCWD, path.string().c_str(), times, 0);
     if (result != 0)
         throwex FileSystemException("Cannot set file modified time of the path!").Attach(path);
 #elif defined(_WIN32) || defined(_WIN64)
