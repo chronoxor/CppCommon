@@ -42,7 +42,7 @@ namespace CppCommon {
     \return Formatted string
 */
 template <typename... Args>
-std::string format(const std::string& pattern, const Args&... args);
+std::string format(std::string_view pattern, const Args&... args);
 
 //! Format wide string
 /*!
@@ -55,7 +55,7 @@ std::string format(const std::string& pattern, const Args&... args);
     \return Formatted wide string
 */
 template <typename... Args>
-std::wstring format(const std::wstring& pattern, const Args&... args);
+std::wstring format(std::wstring_view pattern, const Args&... args);
 
 //! Format string and print it into the std::cout
 /*!
@@ -67,7 +67,7 @@ std::wstring format(const std::wstring& pattern, const Args&... args);
     \param args - Format arguments
 */
 template <typename... Args>
-void print(const std::string& pattern, const Args&... args);
+void print(std::string_view pattern, const Args&... args);
 
 //! Format wide string and print it into the std::wcout
 /*!
@@ -79,7 +79,7 @@ void print(const std::string& pattern, const Args&... args);
     \param args - Format arguments
 */
 template <typename... Args>
-void print(const std::wstring& pattern, const Args&... args);
+void print(std::wstring_view pattern, const Args&... args);
 
 //! Format string and print it into the given std::ostream
 /*!
@@ -92,7 +92,7 @@ void print(const std::wstring& pattern, const Args&... args);
     \param args - Format arguments
 */
 template <typename... Args>
-void print(std::ostream& stream, const std::string& pattern, const Args&... args);
+void print(std::ostream& stream, std::string_view pattern, const Args&... args);
 
 //! Format wide string and print it into the given std::wostream
 /*!
@@ -105,7 +105,7 @@ void print(std::ostream& stream, const std::string& pattern, const Args&... args
     \param args - Format arguments
 */
 template <typename... Args>
-void print(std::wostream& stream, const std::wstring& pattern, const Args&... args);
+void print(std::wostream& stream, std::wstring_view pattern, const Args&... args);
 
 /*! \example string_format.cpp Format string example */
 

@@ -9,37 +9,37 @@
 namespace CppCommon {
 
 template <typename... Args>
-inline std::string format(const std::string& pattern, const Args&... args)
+inline std::string format(std::string_view pattern, const Args&... args)
 {
     return fmt::format(pattern, args...);
 }
 
 template <typename... Args>
-inline std::wstring format(const std::wstring& pattern, const Args&... args)
+inline std::wstring format(std::wstring_view pattern, const Args&... args)
 {
     return fmt::format(pattern, args...);
 }
 
 template <typename... Args>
-inline void print(const std::string& pattern, const Args&... args)
+inline void print(std::string_view pattern, const Args&... args)
 {
     return fmt::print(pattern, args...);
 }
 
 template <typename... Args>
-inline void print(const std::wstring& pattern, const Args&... args)
+inline void print(std::wstring_view pattern, const Args&... args)
 {
     return fmt::print(pattern, args...);
 }
 
 template <typename... Args>
-inline void print(std::ostream& stream, const std::string& pattern, const Args&... args)
+inline void print(std::ostream& stream, std::string_view pattern, const Args&... args)
 {
     return fmt::print(stream, pattern, args...);
 }
 
 template <typename... Args>
-inline void print(std::wostream& stream, const std::wstring& pattern, const Args&... args)
+inline void print(std::wostream& stream, std::wstring_view pattern, const Args&... args)
 {
     return fmt::print(stream, pattern, args...);
 }
