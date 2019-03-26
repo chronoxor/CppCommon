@@ -73,9 +73,9 @@ UUID::UUID(const std::string& uuid)
 
 std::string UUID::string() const
 {
-    std::string result(36, '0');
-
     const char* digits = "0123456789abcdef";
+
+    std::string result(36, '0');
 
     int index = 0;
     for (auto value : _data)
