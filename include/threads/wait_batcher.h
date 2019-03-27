@@ -33,9 +33,10 @@ class WaitBatcher
 public:
     //! Default class constructor
     /*!
-        \param capacity - wait batcher capacity (default is 0)
+        \param capacity - Wait batcher capacity (default is 0 for unlimited capacity)
+        \param initial - Initial wait batcher capacity (default is 0)
     */
-    explicit WaitBatcher(size_t capacity = 0);
+    explicit WaitBatcher(size_t capacity = 0, size_t initial = 0);
     WaitBatcher(const WaitBatcher&) = delete;
     WaitBatcher(WaitBatcher&&) noexcept = default;
     ~WaitBatcher();
@@ -106,8 +107,10 @@ public:
 
 private:
     bool _closed;
+    const size_t _capacity;
     mutable CriticalSection _cs;
-    ConditionVariable _cv;
+    ConditionVariable _cv1;
+    ConditionVariable _cv2;
     std::vector<T> _batch;
 };
 

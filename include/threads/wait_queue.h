@@ -29,7 +29,11 @@ template<typename T>
 class WaitQueue
 {
 public:
-    WaitQueue();
+    //! Default class constructor
+    /*!
+        \param capacity - Wait queue capacity (default is 0 for unlimited capacity)
+    */
+    explicit WaitQueue(size_t capacity = 0);
     WaitQueue(const WaitQueue&) = delete;
     WaitQueue(WaitQueue&&) = default;
     ~WaitQueue();
@@ -45,6 +49,8 @@ public:
 
     //! Is wait queue empty?
     bool empty() const { return (size() == 0); }
+    //! Get wait queue capacity
+    size_t capacity() const;
     //! Get wait queue size
     size_t size() const;
 
@@ -88,8 +94,10 @@ public:
 
 private:
     bool _closed;
+    const size_t _capacity;
     mutable CriticalSection _cs;
-    ConditionVariable _cv;
+    ConditionVariable _cv1;
+    ConditionVariable _cv2;
     std::queue<T> _queue;
 };
 
