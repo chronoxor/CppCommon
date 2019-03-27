@@ -189,7 +189,7 @@ public:
         if (attributes & FileAttributes::TEMPORARY)
             dwFlagsAndAttributes |= FILE_ATTRIBUTE_TEMPORARY;
 
-        _file = CreateFileW(path().wstring().c_str(), (read ? GENERIC_READ : 0) | (write ? GENERIC_WRITE : 0), FILE_SHARE_READ, nullptr, CREATE_NEW, dwFlagsAndAttributes, nullptr);
+        _file = CreateFileW(path().wstring().c_str(), (read ? GENERIC_READ : 0) | (write ? GENERIC_WRITE : 0), FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, CREATE_NEW, dwFlagsAndAttributes, nullptr);
         if (_file == INVALID_HANDLE_VALUE)
             throwex FileSystemException("Cannot create a new file!").Attach(path());
 #endif
@@ -255,7 +255,7 @@ public:
         if (attributes & FileAttributes::TEMPORARY)
             dwFlagsAndAttributes |= FILE_ATTRIBUTE_TEMPORARY;
 
-        _file = CreateFileW(path().wstring().c_str(), (read ? GENERIC_READ : 0) | (write ? GENERIC_WRITE : 0), FILE_SHARE_READ, nullptr, (truncate ? TRUNCATE_EXISTING : OPEN_EXISTING), dwFlagsAndAttributes, nullptr);
+        _file = CreateFileW(path().wstring().c_str(), (read ? GENERIC_READ : 0) | (write ? GENERIC_WRITE : 0), FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, (truncate ? TRUNCATE_EXISTING : OPEN_EXISTING), dwFlagsAndAttributes, nullptr);
         if (_file == INVALID_HANDLE_VALUE)
             throwex FileSystemException("Cannot open existing file!").Attach(path());
 #endif
@@ -321,7 +321,7 @@ public:
         if (attributes & FileAttributes::TEMPORARY)
             dwFlagsAndAttributes |= FILE_ATTRIBUTE_TEMPORARY;
 
-        _file = CreateFileW(path().wstring().c_str(), (read ? GENERIC_READ : 0) | (write ? GENERIC_WRITE : 0), FILE_SHARE_READ, nullptr, (truncate ? CREATE_ALWAYS : OPEN_ALWAYS), dwFlagsAndAttributes, nullptr);
+        _file = CreateFileW(path().wstring().c_str(), (read ? GENERIC_READ : 0) | (write ? GENERIC_WRITE : 0), FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, (truncate ? CREATE_ALWAYS : OPEN_ALWAYS), dwFlagsAndAttributes, nullptr);
         if (_file == INVALID_HANDLE_VALUE)
             throwex FileSystemException("Cannot open existing file!").Attach(path());
 #endif
