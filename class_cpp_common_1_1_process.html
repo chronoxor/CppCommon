@@ -104,8 +104,14 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a4b95a88b0c70b6a4ea1c4f567a176df9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kill the process.  <a href="#a4b95a88b0c70b6a4ea1c4f567a176df9">More...</a><br /></td></tr>
 <tr class="separator:a4b95a88b0c70b6a4ea1c4f567a176df9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a68f5a1fe7e824f4d3236f845ee28fe7a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_process.html#a68f5a1fe7e824f4d3236f845ee28fe7a">Wait</a> ()</td></tr>
-<tr class="memdesc:a68f5a1fe7e824f4d3236f845ee28fe7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for the process to exit.  <a href="#a68f5a1fe7e824f4d3236f845ee28fe7a">More...</a><br /></td></tr>
+<tr class="memdesc:a68f5a1fe7e824f4d3236f845ee28fe7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait the process to exit.  <a href="#a68f5a1fe7e824f4d3236f845ee28fe7a">More...</a><br /></td></tr>
 <tr class="separator:a68f5a1fe7e824f4d3236f845ee28fe7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae588bb4a4bb10e9b9676f152b2cf9a34"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_process.html#ae588bb4a4bb10e9b9676f152b2cf9a34">WaitFor</a> (const <a class="el" href="class_cpp_common_1_1_timespan.html">Timespan</a> &amp;timespan)</td></tr>
+<tr class="memdesc:ae588bb4a4bb10e9b9676f152b2cf9a34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait the process to exit for the given timespan.  <a href="#ae588bb4a4bb10e9b9676f152b2cf9a34">More...</a><br /></td></tr>
+<tr class="separator:ae588bb4a4bb10e9b9676f152b2cf9a34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56ea71637077967cf8a0c7f50742297d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_process.html#a56ea71637077967cf8a0c7f50742297d">WaitUntil</a> (const <a class="el" href="class_cpp_common_1_1_utc_timestamp.html">UtcTimestamp</a> &amp;timestamp)</td></tr>
+<tr class="memdesc:a56ea71637077967cf8a0c7f50742297d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait the process to exit until the given timestamp.  <a href="#a56ea71637077967cf8a0c7f50742297d">More...</a><br /></td></tr>
+<tr class="separator:a56ea71637077967cf8a0c7f50742297d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a928ebf124fecd9bd2f0f4c2ad7b407be"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_process.html#a928ebf124fecd9bd2f0f4c2ad7b407be">swap</a> (<a class="el" href="class_cpp_common_1_1_process.html">Process</a> &amp;process) noexcept</td></tr>
 <tr class="memdesc:a928ebf124fecd9bd2f0f4c2ad7b407be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swap two instances.  <a href="#a928ebf124fecd9bd2f0f4c2ad7b407be">More...</a><br /></td></tr>
 <tr class="separator:a928ebf124fecd9bd2f0f4c2ad7b407be"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -143,7 +149,7 @@ Friends</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="system_process_8cpp-example.html#_a0">system_process.cpp</a>, and <a class="el" href="system_process_pipes_8cpp-example.html#_a2">system_process_pipes.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="process_8h_source.html#l00035">35</a> of file <a class="el" href="process_8h_source.html">process.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="process_8h_source.html#l00037">37</a> of file <a class="el" href="process_8h_source.html">process.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ad252789d44bd084c086db69e6455c27c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad252789d44bd084c086db69e6455c27c">&#9670;&nbsp;</a></span>Process() <span class="overload">[1/2]</span></h2>
@@ -161,7 +167,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="process_8cpp_source.html#l00492">492</a> of file <a class="el" href="process_8cpp_source.html">process.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="process_8cpp_source.html#l00538">538</a> of file <a class="el" href="process_8cpp_source.html">process.cpp</a>.</p>
 
 </div>
 </div>
@@ -189,7 +195,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="process_8cpp_source.html#l00496">496</a> of file <a class="el" href="process_8cpp_source.html">process.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="process_8cpp_source.html#l00542">542</a> of file <a class="el" href="process_8cpp_source.html">process.cpp</a>.</p>
 
 </div>
 </div>
@@ -208,7 +214,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="process_8cpp_source.html#l00500">500</a> of file <a class="el" href="process_8cpp_source.html">process.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="process_8cpp_source.html#l00546">546</a> of file <a class="el" href="process_8cpp_source.html">process.cpp</a>.</p>
 
 </div>
 </div>
@@ -271,7 +277,7 @@ Friends</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="system_process_8cpp-example.html#a3">system_process.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="process_8cpp_source.html#l00536">536</a> of file <a class="el" href="process_8cpp_source.html">process.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="process_8cpp_source.html#l00587">587</a> of file <a class="el" href="process_8cpp_source.html">process.cpp</a>.</p>
 
 </div>
 </div>
@@ -357,7 +363,7 @@ Friends</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="system_process_8cpp-example.html#a1">system_process.cpp</a>, and <a class="el" href="system_process_pipes_8cpp-example.html#a3">system_process_pipes.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="process_8cpp_source.html#l00551">551</a> of file <a class="el" href="process_8cpp_source.html">process.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="process_8cpp_source.html#l00602">602</a> of file <a class="el" href="process_8cpp_source.html">process.cpp</a>.</p>
 
 </div>
 </div>
@@ -393,7 +399,7 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="process_8cpp_source.html#l00546">546</a> of file <a class="el" href="process_8cpp_source.html">process.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="process_8cpp_source.html#l00597">597</a> of file <a class="el" href="process_8cpp_source.html">process.cpp</a>.</p>
 
 </div>
 </div>
@@ -414,7 +420,7 @@ Friends</h2></td></tr>
 
 <p>Is the process is running? </p>
 
-<p class="definition">Definition at line <a class="el" href="process_8cpp_source.html#l00521">521</a> of file <a class="el" href="process_8cpp_source.html">process.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="process_8cpp_source.html#l00567">567</a> of file <a class="el" href="process_8cpp_source.html">process.cpp</a>.</p>
 
 </div>
 </div>
@@ -435,7 +441,7 @@ Friends</h2></td></tr>
 
 <p>Kill the process. </p>
 
-<p class="definition">Definition at line <a class="el" href="process_8cpp_source.html#l00526">526</a> of file <a class="el" href="process_8cpp_source.html">process.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="process_8cpp_source.html#l00572">572</a> of file <a class="el" href="process_8cpp_source.html">process.cpp</a>.</p>
 
 </div>
 </div>
@@ -455,7 +461,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="process_8cpp_source.html#l00504">504</a> of file <a class="el" href="process_8cpp_source.html">process.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="process_8cpp_source.html#l00550">550</a> of file <a class="el" href="process_8cpp_source.html">process.cpp</a>.</p>
 
 </div>
 </div>
@@ -483,7 +489,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="process_8cpp_source.html#l00510">510</a> of file <a class="el" href="process_8cpp_source.html">process.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="process_8cpp_source.html#l00556">556</a> of file <a class="el" href="process_8cpp_source.html">process.cpp</a>.</p>
 
 </div>
 </div>
@@ -545,7 +551,7 @@ Friends</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="system_process_8cpp-example.html#a4">system_process.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="process_8cpp_source.html#l00541">541</a> of file <a class="el" href="process_8cpp_source.html">process.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="process_8cpp_source.html#l00592">592</a> of file <a class="el" href="process_8cpp_source.html">process.cpp</a>.</p>
 
 </div>
 </div>
@@ -574,7 +580,7 @@ Friends</h2></td></tr>
 
 <p>Get the process Id. </p>
 
-<p class="definition">Definition at line <a class="el" href="process_8cpp_source.html#l00516">516</a> of file <a class="el" href="process_8cpp_source.html">process.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="process_8cpp_source.html#l00562">562</a> of file <a class="el" href="process_8cpp_source.html">process.cpp</a>.</p>
 
 </div>
 </div>
@@ -623,13 +629,81 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Wait for the process to exit. </p>
+<p>Wait the process to exit. </p>
 <p>Will block.</p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cpp_common_1_1_process.html" title="Process abstraction.">Process</a> exit result </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="system_process_8cpp-example.html#a2">system_process.cpp</a>, and <a class="el" href="system_process_pipes_8cpp-example.html#a6">system_process_pipes.cpp</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="process_8cpp_source.html#l00531">531</a> of file <a class="el" href="process_8cpp_source.html">process.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="process_8cpp_source.html#l00577">577</a> of file <a class="el" href="process_8cpp_source.html">process.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ae588bb4a4bb10e9b9676f152b2cf9a34"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae588bb4a4bb10e9b9676f152b2cf9a34">&#9670;&nbsp;</a></span>WaitFor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int CppCommon::Process::WaitFor </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_cpp_common_1_1_timespan.html">Timespan</a> &amp;&#160;</td>
+          <td class="paramname"><em>timespan</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Wait the process to exit for the given timespan. </p>
+<p>Will block for the given timespan in the worst case.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timespan</td><td>- <a class="el" href="class_cpp_common_1_1_timespan.html" title="Timespan.">Timespan</a> to wait for the process </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cpp_common_1_1_process.html" title="Process abstraction.">Process</a> exit result (std::numeric_limits&lt;int&gt;::min() in case of timeout) </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="process_8cpp_source.html#l00582">582</a> of file <a class="el" href="process_8cpp_source.html">process.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a56ea71637077967cf8a0c7f50742297d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56ea71637077967cf8a0c7f50742297d">&#9670;&nbsp;</a></span>WaitUntil()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int CppCommon::Process::WaitUntil </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_cpp_common_1_1_utc_timestamp.html">UtcTimestamp</a> &amp;&#160;</td>
+          <td class="paramname"><em>timestamp</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Wait the process to exit until the given timestamp. </p>
+<p>Will block until the given timestamp in the worst case.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timestamp</td><td>- <a class="el" href="class_cpp_common_1_1_timestamp.html" title="Timestamp.">Timestamp</a> to stop wait for the process </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_cpp_common_1_1_process.html" title="Process abstraction.">Process</a> exit result (std::numeric_limits&lt;int&gt;::min() in case of timeout) </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="process_8h_source.html#l00079">79</a> of file <a class="el" href="process_8h_source.html">process.h</a>.</p>
 
 </div>
 </div>
