@@ -11,6 +11,7 @@
 #include "errors/fatal.h"
 #include "string/encoding.h"
 #include "string/format.h"
+#include "threads/thread.h"
 #include "utility/resource.h"
 
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
@@ -21,6 +22,8 @@
 #elif defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
 #include <tlhelp32.h>
+#undef max
+#undef min
 #endif
 
 namespace CppCommon {
@@ -132,6 +135,49 @@ public:
         DWORD result = WaitForSingleObject(_process, INFINITE);
         if (result != WAIT_OBJECT_0)
             throwex SystemException("Failed to wait for a process with Id {}!"_format(pid()));
+
+        DWORD dwExitCode;
+        if (!GetExitCodeProcess(_process, &dwExitCode))
+            throwex SystemException("Failed to get exit code for a process with Id {}!"_format(pid()));
+
+        return (int)dwExitCode;
+#endif
+    }
+
+    int WaitFor(const Timespan& timespan)
+    {
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+        int status;
+        pid_t result;
+
+        do
+        {
+            result = waitpid(_pid, &status, WNOHANG);
+            if (result == 0)
+                Thread::Yield();
+        }
+        while ((result == 0) || ((result < 0) && (errno == EINTR)));
+
+        if (result == -1)
+            throwex SystemException("Failed to wait for a process with Id {}!"_format(pid()));
+
+        if (WIFEXITED(status))
+            return WEXITSTATUS(status);
+        else if (WIFSIGNALED(status))
+            throwex SystemException("Process with Id {} was killed by signal {}!"_format(pid(), WTERMSIG(status)));
+        else if (WIFSTOPPED(status))
+            throwex SystemException("Process with Id {} was stopped by signal {}!"_format(pid(), WSTOPSIG(status)));
+        else if (WIFCONTINUED(status))
+            throwex SystemException("Process with Id {} was continued by signal SIGCONT!"_format(pid()));
+        else
+            throwex SystemException("Process with Id {} has unknown wait status!"_format(pid()));
+#elif defined(_WIN32) || defined(_WIN64)
+        if (_process == nullptr)
+            throwex SystemException("Failed to wait for a process with Id {}!"_format(pid()));
+
+        DWORD result = WaitForSingleObject(_process, std::max((DWORD)1, (DWORD)timespan.milliseconds()));
+        if (result != WAIT_OBJECT_0)
+            return std::numeric_limits<int>::min();
 
         DWORD dwExitCode;
         if (!GetExitCodeProcess(_process, &dwExitCode))
@@ -531,6 +577,11 @@ void Process::Kill()
 int Process::Wait()
 {
     return _pimpl->Wait();
+}
+
+int Process::WaitFor(const Timespan& timespan)
+{
+    return _pimpl->WaitFor(timespan);
 }
 
 uint64_t Process::CurrentProcessId() noexcept

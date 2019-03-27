@@ -11,7 +11,9 @@
 
 #include "errors/exceptions.h"
 #include "system/pipe.h"
+#include "time/timestamp.h"
 
+#include <limits>
 #include <map>
 #include <memory>
 #include <string>
@@ -51,13 +53,31 @@ public:
     //! Kill the process
     void Kill();
 
-    //! Wait for the process to exit
+    //! Wait the process to exit
     /*!
         Will block.
 
         \return Process exit result
     */
     int Wait();
+
+    //! Wait the process to exit for the given timespan
+    /*!
+        Will block for the given timespan in the worst case.
+
+        \param timespan - Timespan to wait for the process
+        \return Process exit result (std::numeric_limits<int>::min() in case of timeout)
+    */
+    int WaitFor(const Timespan& timespan);
+    //! Wait the process to exit until the given timestamp
+    /*!
+        Will block until the given timestamp in the worst case.
+
+        \param timestamp - Timestamp to stop wait for the process
+        \return Process exit result (std::numeric_limits<int>::min() in case of timeout)
+    */
+    int WaitUntil(const UtcTimestamp& timestamp)
+    { return WaitFor(timestamp - UtcTimestamp()); }
 
     //! Get the current process Id
     /*!
