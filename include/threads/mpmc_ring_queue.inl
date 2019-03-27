@@ -120,7 +120,7 @@ inline bool MPMCRingQueue<T>::Dequeue(T& item)
         }
         else if (diff < 0)
         {
-            // if seq is less than head seq then it means this slot is full and therefore the buffer is full
+            // If seq is less than head seq then it means this slot is full and therefore the buffer is full
             return false;
         }
         else
