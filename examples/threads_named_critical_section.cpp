@@ -39,7 +39,7 @@ int main(int argc, char** argv)
                 lock.Unlock();
                 std::cout << "Critical section successfully unlocked!" << std::endl;
             }
-            catch (CppCommon::SystemException&)
+            catch (const CppCommon::SystemException&)
             {
                 std::cout << "Failed to unlock critical section!" << std::endl;
             }

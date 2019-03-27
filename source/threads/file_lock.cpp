@@ -46,7 +46,7 @@ public:
         {
             Reset();
         }
-        catch (SystemException& ex)
+        catch (const SystemException& ex)
         {
             fatality(SystemException(ex.string()));
         }

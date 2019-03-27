@@ -35,7 +35,7 @@ public:
             if (IsLoaded())
                 Unload();
         }
-        catch (DLLException& ex)
+        catch (const DLLException& ex)
         {
             fatality(DLLException(ex.string()).Attach(_path));
         }

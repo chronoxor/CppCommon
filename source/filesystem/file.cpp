@@ -46,7 +46,7 @@ public:
             if (IsFileOpened())
                 Close();
         }
-        catch (FileSystemException& ex)
+        catch (const FileSystemException& ex)
         {
             fatality(FileSystemException(ex.string()).Attach(path()));
         }

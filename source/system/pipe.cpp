@@ -44,7 +44,7 @@ public:
             if (IsPipeOpened())
                 Close();
         }
-        catch (SystemException& ex)
+        catch (const SystemException& ex)
         {
             fatality(SystemException(ex.string()));
         }

@@ -42,7 +42,7 @@ int main(int argc, char** argv)
                 semaphore.Unlock();
                 std::cout << "Semaphore successfully unlocked!" << std::endl;
             }
-            catch (CppCommon::SystemException&)
+            catch (const CppCommon::SystemException&)
             {
                 std::cout << "Failed to unlock semaphore! Semaphore is fully unlocked..." << std::endl;
             }
