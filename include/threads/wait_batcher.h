@@ -33,7 +33,7 @@ class WaitBatcher
 public:
     //! Default class constructor
     /*!
-        \param capacity - Wait batcher capacity (default is 0 for unlimited capacity)
+        \param capacity - Wait batcher capacity (0 for unlimited capacity, default is 0)
         \param initial - Initial wait batcher capacity (default is 0)
     */
     explicit WaitBatcher(size_t capacity = 0, size_t initial = 0);
