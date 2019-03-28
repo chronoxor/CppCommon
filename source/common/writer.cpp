@@ -22,7 +22,7 @@ size_t Writer::Write(const std::vector<std::string>& lines)
     static std::string endline = Environment::EndLine();
 
     size_t result = 0;
-    for (auto& line : lines)
+    for (const auto& line : lines)
     {
         if (Write(line.data(), line.size()) != line.size())
             break;

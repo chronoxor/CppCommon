@@ -256,7 +256,7 @@ cleanup:
 
 std::ostream& operator<<(std::ostream& os, const StackTrace& stack_trace)
 {
-    for (auto& frame : stack_trace.frames())
+    for (const auto& frame : stack_trace.frames())
         os << frame << std::endl;
     return os;
 }

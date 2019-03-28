@@ -80,7 +80,7 @@ protected:
     {
         std::default_random_engine random;
         std::shuffle(this->values.begin(), this->values.end(), random);
-        for (auto& value : this->values)
+        for (const auto& value : this->values)
             this->map.emplace(value, value);
         std::shuffle(this->values.begin(), this->values.end(), random);
     }
@@ -88,7 +88,7 @@ protected:
 
 BENCHMARK_FIXTURE(InsertFixture<Map>, "Insert: std::map")
 {
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         this->map.emplace(value, value);
 
     // Update benchmark metrics
@@ -97,7 +97,7 @@ BENCHMARK_FIXTURE(InsertFixture<Map>, "Insert: std::map")
 
 BENCHMARK_FIXTURE(InsertFixture<UnorderedMap>, "Insert: std::unordered_map")
 {
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         this->map.emplace(value, value);
 
     // Update benchmark metrics
@@ -106,7 +106,7 @@ BENCHMARK_FIXTURE(InsertFixture<UnorderedMap>, "Insert: std::unordered_map")
 
 BENCHMARK_FIXTURE(InsertFixture<HashMap>, "Insert: HashMap")
 {
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         this->map.emplace(value, value);
 
     // Update benchmark metrics
@@ -115,7 +115,7 @@ BENCHMARK_FIXTURE(InsertFixture<HashMap>, "Insert: HashMap")
 
 BENCHMARK_FIXTURE(InsertFixture<FlatHash>, "Insert: FlatHash")
 {
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         this->map.emplace(value, value);
 
     // Update benchmark metrics
@@ -124,7 +124,7 @@ BENCHMARK_FIXTURE(InsertFixture<FlatHash>, "Insert: FlatHash")
 
 BENCHMARK_FIXTURE(InsertFixture<BytellHash>, "Insert: BytellHash")
 {
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         this->map.emplace(value, value);
 
     // Update benchmark metrics
@@ -133,7 +133,7 @@ BENCHMARK_FIXTURE(InsertFixture<BytellHash>, "Insert: BytellHash")
 
 BENCHMARK_FIXTURE(InsertFixture<BHopscotchHash>, "Insert: BHopscotchHash")
 {
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         this->map.emplace(value, value);
 
     // Update benchmark metrics
@@ -142,7 +142,7 @@ BENCHMARK_FIXTURE(InsertFixture<BHopscotchHash>, "Insert: BHopscotchHash")
 
 BENCHMARK_FIXTURE(InsertFixture<HopscotchHash>, "Insert: HopscotchHash")
 {
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         this->map.emplace(value, value);
 
     // Update benchmark metrics
@@ -151,7 +151,7 @@ BENCHMARK_FIXTURE(InsertFixture<HopscotchHash>, "Insert: HopscotchHash")
 
 BENCHMARK_FIXTURE(InsertFixture<OrderedHash>, "Insert: OrderedHash")
 {
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         this->map.emplace(value, value);
 
     // Update benchmark metrics
@@ -160,7 +160,7 @@ BENCHMARK_FIXTURE(InsertFixture<OrderedHash>, "Insert: OrderedHash")
 
 BENCHMARK_FIXTURE(InsertFixture<RobinHash>, "Insert: RobinHash")
 {
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         this->map.emplace(value, value);
 
     // Update benchmark metrics
@@ -169,7 +169,7 @@ BENCHMARK_FIXTURE(InsertFixture<RobinHash>, "Insert: RobinHash")
 
 BENCHMARK_FIXTURE(InsertFixture<SparseHash>, "Insert: SparseHash")
 {
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         this->map.emplace(value, value);
 
     // Update benchmark metrics
@@ -180,7 +180,7 @@ BENCHMARK_FIXTURE(FindFixture<Map>, "Find: std::map")
 {
     uint64_t crc = 0;
 
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         crc += this->map.find(value)->second;
 
     // Update benchmark metrics
@@ -192,7 +192,7 @@ BENCHMARK_FIXTURE(FindFixture<UnorderedMap>, "Find: std::unordered_map")
 {
     uint64_t crc = 0;
 
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         crc += this->map.find(value)->second;
 
     // Update benchmark metrics
@@ -204,7 +204,7 @@ BENCHMARK_FIXTURE(FindFixture<HashMap>, "Find: HashMap")
 {
     uint64_t crc = 0;
 
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         crc += this->map.find(value)->second;
 
     // Update benchmark metrics
@@ -216,7 +216,7 @@ BENCHMARK_FIXTURE(FindFixture<FlatHash>, "Find: FlatHash")
 {
     uint64_t crc = 0;
 
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         crc += this->map.find(value)->second;
 
     // Update benchmark metrics
@@ -228,7 +228,7 @@ BENCHMARK_FIXTURE(FindFixture<BytellHash>, "Find: BytellHash")
 {
     uint64_t crc = 0;
 
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         crc += this->map.find(value)->second;
 
     // Update benchmark metrics
@@ -240,7 +240,7 @@ BENCHMARK_FIXTURE(FindFixture<BHopscotchHash>, "Find: BHopscotchHash")
 {
     uint64_t crc = 0;
 
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         crc += this->map.find(value)->second;
 
     // Update benchmark metrics
@@ -252,7 +252,7 @@ BENCHMARK_FIXTURE(FindFixture<HopscotchHash>, "Find: HopscotchHash")
 {
     uint64_t crc = 0;
 
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         crc += this->map.find(value)->second;
 
     // Update benchmark metrics
@@ -264,7 +264,7 @@ BENCHMARK_FIXTURE(FindFixture<OrderedHash>, "Find: OrderedHash")
 {
     uint64_t crc = 0;
 
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         crc += this->map.find(value)->second;
 
     // Update benchmark metrics
@@ -276,7 +276,7 @@ BENCHMARK_FIXTURE(FindFixture<RobinHash>, "Find: RobinHash")
 {
     uint64_t crc = 0;
 
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         crc += this->map.find(value)->second;
 
     // Update benchmark metrics
@@ -288,7 +288,7 @@ BENCHMARK_FIXTURE(FindFixture<SparseHash>, "Find: SparseHash")
 {
     uint64_t crc = 0;
 
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         crc += this->map.find(value)->second;
 
     // Update benchmark metrics
@@ -300,7 +300,7 @@ BENCHMARK_FIXTURE(FindFixture<Map>, "Remove: std::map")
 {
     uint64_t crc = 0;
 
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         crc += this->map.erase(value);
 
     // Update benchmark metrics
@@ -312,7 +312,7 @@ BENCHMARK_FIXTURE(FindFixture<UnorderedMap>, "Remove: std::unordered_map")
 {
     uint64_t crc = 0;
 
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         crc += this->map.erase(value);
 
     // Update benchmark metrics
@@ -324,7 +324,7 @@ BENCHMARK_FIXTURE(FindFixture<HashMap>, "Remove: HashMap")
 {
     uint64_t crc = 0;
 
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         crc += this->map.erase(value);
 
     // Update benchmark metrics
@@ -336,7 +336,7 @@ BENCHMARK_FIXTURE(FindFixture<FlatHash>, "Remove: FlatHash")
 {
     uint64_t crc = 0;
 
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         crc += this->map.erase(value);
 
     // Update benchmark metrics
@@ -348,7 +348,7 @@ BENCHMARK_FIXTURE(FindFixture<BytellHash>, "Remove: BytellHash")
 {
     uint64_t crc = 0;
 
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         crc += this->map.erase(value);
 
     // Update benchmark metrics
@@ -360,7 +360,7 @@ BENCHMARK_FIXTURE(FindFixture<BHopscotchHash>, "Remove: BHopscotchHash")
 {
     uint64_t crc = 0;
 
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         crc += this->map.erase(value);
 
     // Update benchmark metrics
@@ -372,7 +372,7 @@ BENCHMARK_FIXTURE(FindFixture<HopscotchHash>, "Remove: HopscotchHash")
 {
     uint64_t crc = 0;
 
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         crc += this->map.erase(value);
 
     // Update benchmark metrics
@@ -384,7 +384,7 @@ BENCHMARK_FIXTURE(FindFixture<OrderedHash>, "Remove: OrderedHash")
 {
     uint64_t crc = 0;
 
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         crc += this->map.erase(value);
 
     // Update benchmark metrics
@@ -396,7 +396,7 @@ BENCHMARK_FIXTURE(FindFixture<RobinHash>, "Remove: RobinHash")
 {
     uint64_t crc = 0;
 
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         crc += this->map.erase(value);
 
     // Update benchmark metrics
@@ -408,7 +408,7 @@ BENCHMARK_FIXTURE(FindFixture<SparseHash>, "Remove: SparseHash")
 {
     uint64_t crc = 0;
 
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         crc += this->map.erase(value);
 
     // Update benchmark metrics

@@ -16,7 +16,7 @@ int main(int argc, char** argv)
     CppCommon::Directory current(".");
 
     // Iterate through all directory entries
-    for (auto& entry : current)
+    for (const auto& entry : current)
         std::cout << entry.filename() << std::endl;
 
     return 0;

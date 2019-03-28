@@ -26,7 +26,7 @@ int main(int argc, char** argv)
     hashmap["item5"] = 5;
 
     std::cout << "hashmap:" << std::endl;
-    for (auto& item : hashmap)
+    for (const auto& item : hashmap)
         std::cout << item.first << " => " << item.second << std::endl;
 
     return 0;

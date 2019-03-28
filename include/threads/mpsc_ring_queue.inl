@@ -20,7 +20,7 @@ template<typename T>
 inline size_t MPSCRingQueue<T>::size() const noexcept
 {
     size_t size = 0;
-    for (auto& producer : _producers)
+    for (const auto& producer : _producers)
         size += producer->queue.size();
     return size;
 }

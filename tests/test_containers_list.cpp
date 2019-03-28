@@ -38,7 +38,7 @@ TEST_CASE("Intrusive list", "[CppCommon][Containers]")
     REQUIRE(!list.empty());
 
     int sum = 0;
-    for (auto& item : list)
+    for (const auto& item : list)
         sum += item.value;
     REQUIRE(sum == 6);
 

@@ -27,7 +27,7 @@ template <typename TKey, typename TValue, typename TCompare, typename TAllocator
 inline FlatMap<TKey, TValue, TCompare, TAllocator>::FlatMap(const FlatMap& flatmap)
     : FlatMap(flatmap.capacity(), flatmap._compare, flatmap._container.get_allocator())
 {
-    for (auto& item : flatmap)
+    for (const auto& item : flatmap)
         insert(item);
 }
 
@@ -35,7 +35,7 @@ template <typename TKey, typename TValue, typename TCompare, typename TAllocator
 inline FlatMap<TKey, TValue, TCompare, TAllocator>::FlatMap(const FlatMap& flatmap, size_t capacity)
     : FlatMap(capacity, flatmap._compare, flatmap._container.get_allocator())
 {
-    for (auto& item : flatmap)
+    for (const auto& item : flatmap)
         insert(item);
 }
 
@@ -44,7 +44,7 @@ inline FlatMap<TKey, TValue, TCompare, TAllocator>& FlatMap<TKey, TValue, TCompa
 {
     clear();
     reserve(flatmap.size());
-    for (auto& item : flatmap)
+    for (const auto& item : flatmap)
         insert(item);
     return *this;
 }

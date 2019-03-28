@@ -26,7 +26,7 @@ int main(int argc, char** argv)
     flatmap["item5"] = 5;
 
     std::cout << "flatmap:" << std::endl;
-    for (auto& item : flatmap)
+    for (const auto& item : flatmap)
         std::cout << item.first << " => " << item.second << std::endl;
 
     return 0;

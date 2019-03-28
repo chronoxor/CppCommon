@@ -50,7 +50,7 @@ protected:
     {
         std::default_random_engine random;
         std::shuffle(this->values.begin(), this->values.end(), random);
-        for (auto& value : this->values)
+        for (const auto& value : this->values)
             this->map.emplace(value, value);
         std::shuffle(this->values.begin(), this->values.end(), random);
     }
@@ -58,7 +58,7 @@ protected:
 
 BENCHMARK_FIXTURE(InsertFixture<Map>, "Insert: std::map")
 {
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         this->map.emplace(value, value);
 
     // Update benchmark metrics
@@ -67,7 +67,7 @@ BENCHMARK_FIXTURE(InsertFixture<Map>, "Insert: std::map")
 
 BENCHMARK_FIXTURE(InsertFixture<Flat>, "Insert: FlatMap")
 {
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         this->map.emplace(value, value);
 
     // Update benchmark metrics
@@ -78,7 +78,7 @@ BENCHMARK_FIXTURE(FindFixture<Map>, "Find: std::map")
 {
     uint64_t crc = 0;
 
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         crc += this->map.find(value)->second;
 
     // Update benchmark metrics
@@ -90,7 +90,7 @@ BENCHMARK_FIXTURE(FindFixture<Flat>, "Find: FlatMap")
 {
     uint64_t crc = 0;
 
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         crc += this->map.find(value)->second;
 
     // Update benchmark metrics
@@ -102,7 +102,7 @@ BENCHMARK_FIXTURE(FindFixture<Map>, "Remove: std::map")
 {
     uint64_t crc = 0;
 
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         crc += this->map.erase(value);
 
     // Update benchmark metrics
@@ -114,7 +114,7 @@ BENCHMARK_FIXTURE(FindFixture<Flat>, "Remove: FlatMap")
 {
     uint64_t crc = 0;
 
-    for (auto& value : this->values)
+    for (const auto& value : this->values)
         crc += this->map.erase(value);
 
     // Update benchmark metrics

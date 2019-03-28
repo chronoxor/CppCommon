@@ -24,7 +24,7 @@ TEST_CASE("Environment variables", "[CppCommon][System]")
 {
     auto envars = Environment::envars();
     REQUIRE(envars.size() > 0);
-    for (auto& envar : envars)
+    for (const auto& envar : envars)
         REQUIRE(!envar.first.empty());
 
     REQUIRE(Environment::GetEnvar("TestEnvar") == "");

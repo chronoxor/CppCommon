@@ -413,7 +413,7 @@ Path Path::validate(char placeholder) const
 {
     Path result(*this);
 
-    for (auto& ch : result._path)
+    for (auto ch : result._path)
         if ((ch != '\\') && (ch != '/') && deprecated(ch))
             ch = placeholder;
 

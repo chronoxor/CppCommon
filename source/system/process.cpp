@@ -245,7 +245,7 @@ public:
         argv[index++] = (char*)command.c_str();
         if (arguments != nullptr)
         {
-            for (auto& argument : *arguments)
+            for (const auto& argument : *arguments)
             {
                 argv[index++] = (char*)argument.c_str();
             }
@@ -332,7 +332,7 @@ public:
         std::wstring command_line = Encoding::FromUTF8(command);
         if (arguments != nullptr)
         {
-            for (auto& argument : *arguments)
+            for (const auto& argument : *arguments)
             {
                 command_line.append(L" ");
                 command_line.append(EscapeArgument(Encoding::FromUTF8(argument)));
@@ -497,7 +497,7 @@ public:
         if (envars == nullptr)
             return result;
 
-        for (auto& envar : *envars)
+        for (const auto& envar : *envars)
         {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
             std::string key = envar.first;

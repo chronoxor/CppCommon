@@ -31,7 +31,7 @@ template <typename TKey, typename TValue, typename THash, typename TEqual, typen
 inline HashMap<TKey, TValue, THash, TEqual, TAllocator>::HashMap(const HashMap& hashmap)
     : HashMap(hashmap.bucket_count(), hashmap._blank, hashmap._hash, hashmap._equal, hashmap._buckets.get_allocator())
 {
-    for (auto& item : hashmap)
+    for (const auto& item : hashmap)
         insert(item);
 }
 
@@ -39,7 +39,7 @@ template <typename TKey, typename TValue, typename THash, typename TEqual, typen
 inline HashMap<TKey, TValue, THash, TEqual, TAllocator>::HashMap(const HashMap& hashmap, size_t capacity)
     : HashMap(capacity, hashmap._blank, hashmap._hash, hashmap._equal, hashmap._buckets.get_allocator())
 {
-    for (auto& item : hashmap)
+    for (const auto& item : hashmap)
         insert(item);
 }
 
@@ -48,7 +48,7 @@ inline HashMap<TKey, TValue, THash, TEqual, TAllocator>& HashMap<TKey, TValue, T
 {
     clear();
     reserve(hashmap.size());
-    for (auto& item : hashmap)
+    for (const auto& item : hashmap)
         insert(item);
     return *this;
 }

@@ -38,7 +38,7 @@ TEST_CASE("Intrusive stack", "[CppCommon][Containers]")
     REQUIRE(!stack.empty());
 
     int sum = 0;
-    for (auto& item : stack)
+    for (const auto& item : stack)
         sum += item.value;
     REQUIRE(sum == 6);
 

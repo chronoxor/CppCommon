@@ -38,7 +38,7 @@ TEST_CASE("Intrusive queue", "[CppCommon][Containers]")
     REQUIRE(!queue.empty());
 
     int sum = 0;
-    for (auto& item : queue)
+    for (const auto& item : queue)
         sum += item.value;
     REQUIRE(sum == 6);
 
