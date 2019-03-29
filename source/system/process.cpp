@@ -335,7 +335,7 @@ public:
             for (const auto& argument : *arguments)
             {
                 command_line.append(L" ");
-                command_line.append(EscapeArgument(Encoding::FromUTF8(argument)));
+                command_line.append(Encoding::FromUTF8(argument));
             }
         }
 
@@ -430,57 +430,6 @@ public:
         return result;
 #endif
     }
-
-#if defined(_WIN32) || defined(_WIN64)
-    static std::wstring EscapeArgument(const std::wstring& argument)
-    {
-        // For more details please follow the link
-        // https://blogs.msdn.microsoft.com/twistylittlepassagesallalike/2011/04/23/everyone-quotes-command-line-arguments-the-wrong-way/
-
-        // Check for special characters for quote
-        bool required = argument.find_first_of(L" \t\n\v\"") != std::wstring::npos;
-        // Check if already quoted
-        bool quoted = !argument.empty() && (argument[0] == '\"') && (argument[argument.size() - 1] == '\"');
-
-        // Skip escape operation
-        if (!required || quoted)
-            return argument;
-
-        std::wstring result;
-
-        // Quote argument
-        result.push_back('"');
-        for (auto it = argument.begin(); ; ++it)
-        {
-            size_t backslashes = 0;
-
-            while ((it != argument.end()) && (*it == '\\'))
-            {
-                ++it;
-                ++backslashes;
-            }
-
-            if (it == argument.end())
-            {
-                result.append(2 * backslashes, '\\');
-                break;
-            }
-            else if (*it == '"')
-            {
-                result.append(2 * backslashes + 1, '\\');
-                result.push_back('"');
-            }
-            else
-            {
-                result.append(backslashes, '\\');
-                result.push_back(*it);
-            }
-        }
-        result.push_back('"');
-
-        return result;
-    }
-#endif
 
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     static std::vector<char> PrepareEnvars(const std::map<std::string, std::string>* envars)
