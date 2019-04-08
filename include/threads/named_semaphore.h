@@ -36,11 +36,11 @@ public:
     */
     explicit NamedSemaphore(const std::string& name, int resources);
     NamedSemaphore(const NamedSemaphore&) = delete;
-    NamedSemaphore(NamedSemaphore&& semaphore) noexcept;
+    NamedSemaphore(NamedSemaphore&& semaphore) = delete;
     ~NamedSemaphore();
 
     NamedSemaphore& operator=(const NamedSemaphore&) = delete;
-    NamedSemaphore& operator=(NamedSemaphore&& semaphore) noexcept;
+    NamedSemaphore& operator=(NamedSemaphore&& semaphore) = delete;
 
     //! Get the semaphore name
     const std::string& name() const;

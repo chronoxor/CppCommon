@@ -36,12 +36,12 @@ public:
     FileLock();
     explicit FileLock(const Path& path);
     FileLock(const FileLock&) = delete;
-    FileLock(FileLock&& lock) noexcept;
+    FileLock(FileLock&& lock) = delete;
     ~FileLock();
 
     FileLock& operator=(const Path& path);
     FileLock& operator=(const FileLock&) = delete;
-    FileLock& operator=(FileLock&& lock) noexcept;
+    FileLock& operator=(FileLock&& lock) = delete;
 
     //! Get the file-lock path
     const Path& path() const noexcept;

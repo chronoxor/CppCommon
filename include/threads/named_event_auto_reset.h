@@ -35,11 +35,11 @@ public:
     */
     explicit NamedEventAutoReset(const std::string& name, bool signaled = false);
     NamedEventAutoReset(const NamedEventAutoReset&) = delete;
-    NamedEventAutoReset(NamedEventAutoReset&& event) noexcept;
+    NamedEventAutoReset(NamedEventAutoReset&& event) = delete;
     ~NamedEventAutoReset();
 
     NamedEventAutoReset& operator=(const NamedEventAutoReset&) = delete;
-    NamedEventAutoReset& operator=(NamedEventAutoReset&& event) noexcept;
+    NamedEventAutoReset& operator=(NamedEventAutoReset&& event) = delete;
 
     //! Get the event name
     const std::string& name() const;

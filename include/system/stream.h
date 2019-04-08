@@ -26,11 +26,11 @@ class StdInput : public Reader
 public:
     StdInput();
     StdInput(const StdInput&) = delete;
-    StdInput(StdInput&& stream) noexcept;
+    StdInput(StdInput&& stream) = delete;
     virtual ~StdInput();
 
     StdInput& operator=(const StdInput&) = delete;
-    StdInput& operator=(StdInput&& stream) noexcept;
+    StdInput& operator=(StdInput&& stream) = delete;
 
     //! Check if the stream is valid
     explicit operator bool() const noexcept { return IsValid(); }
@@ -71,11 +71,11 @@ class StdOutput : public Writer
 public:
     StdOutput();
     StdOutput(const StdOutput&) = delete;
-    StdOutput(StdOutput&& stream) noexcept;
+    StdOutput(StdOutput&& stream) = delete;
     virtual ~StdOutput();
 
     StdOutput& operator=(const StdOutput&) = delete;
-    StdOutput& operator=(StdOutput&& stream) noexcept;
+    StdOutput& operator=(StdOutput&& stream) = delete;
 
     //! Check if the stream is valid
     explicit operator bool() const noexcept { return IsValid(); }
@@ -117,11 +117,11 @@ class StdError : public Writer
 public:
     StdError();
     StdError(const StdError&) = delete;
-    StdError(StdError&& stream) noexcept;
+    StdError(StdError&& stream) = delete;
     virtual ~StdError();
 
     StdError& operator=(const StdError&) = delete;
-    StdError& operator=(StdError&& stream) noexcept;
+    StdError& operator=(StdError&& stream) = delete;
 
     //! Check if the stream is valid
     explicit operator bool() const { return IsValid(); }

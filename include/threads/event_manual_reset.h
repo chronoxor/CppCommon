@@ -34,11 +34,11 @@ public:
     */
     explicit EventManualReset(bool signaled = false);
     EventManualReset(const EventManualReset&) = delete;
-    EventManualReset(EventManualReset&& event) noexcept;
+    EventManualReset(EventManualReset&& event) = delete;
     ~EventManualReset();
 
     EventManualReset& operator=(const EventManualReset&) = delete;
-    EventManualReset& operator=(EventManualReset&& event) noexcept;
+    EventManualReset& operator=(EventManualReset&& event) = delete;
 
     //! Reset the event
     /*!

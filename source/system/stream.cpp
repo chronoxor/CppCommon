@@ -235,18 +235,8 @@ StdInput::StdInput() : _pimpl(std::make_unique<Impl>())
 {
 }
 
-StdInput::StdInput(StdInput&& stream) noexcept : _pimpl(std::move(stream._pimpl))
-{
-}
-
 StdInput::~StdInput()
 {
-}
-
-StdInput& StdInput::operator=(StdInput&& stream) noexcept
-{
-    _pimpl = std::move(stream._pimpl);
-    return *this;
 }
 
 void* StdInput::stream() const noexcept
@@ -268,18 +258,8 @@ StdOutput::StdOutput() : _pimpl(std::make_unique<Impl>())
 {
 }
 
-StdOutput::StdOutput(StdOutput&& stream) noexcept : _pimpl(std::move(stream._pimpl))
-{
-}
-
 StdOutput::~StdOutput()
 {
-}
-
-StdOutput& StdOutput::operator=(StdOutput&& stream) noexcept
-{
-    _pimpl = std::move(stream._pimpl);
-    return *this;
 }
 
 void* StdOutput::stream() const noexcept
@@ -306,18 +286,8 @@ StdError::StdError() : _pimpl(std::make_unique<Impl>())
 {
 }
 
-StdError::StdError(StdError&& stream) noexcept : _pimpl(std::move(stream._pimpl))
-{
-}
-
 StdError::~StdError()
 {
-}
-
-StdError& StdError::operator=(StdError&& stream) noexcept
-{
-    _pimpl = std::move(stream._pimpl);
-    return *this;
 }
 
 void* StdError::stream() const noexcept

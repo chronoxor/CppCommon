@@ -32,11 +32,11 @@ public:
     */
     explicit NamedConditionVariable(const std::string& name);
     NamedConditionVariable(const NamedConditionVariable&) = delete;
-    NamedConditionVariable(NamedConditionVariable&& cv) noexcept;
+    NamedConditionVariable(NamedConditionVariable&& cv) = delete;
     ~NamedConditionVariable();
 
     NamedConditionVariable& operator=(const NamedConditionVariable&) = delete;
-    NamedConditionVariable& operator=(NamedConditionVariable&& cv) noexcept;
+    NamedConditionVariable& operator=(NamedConditionVariable&& cv) = delete;
 
     //! Get the condition variable name
     const std::string& name() const;

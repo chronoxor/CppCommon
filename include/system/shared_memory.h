@@ -35,11 +35,11 @@ public:
     */
     explicit SharedMemory(const std::string& name, size_t size);
     SharedMemory(const SharedMemory&) = delete;
-    SharedMemory(SharedMemory&& shmem) noexcept;
+    SharedMemory(SharedMemory&& shmem) = delete;
     ~SharedMemory();
 
     SharedMemory& operator=(const SharedMemory&) = delete;
-    SharedMemory& operator=(SharedMemory&& shmem) noexcept;
+    SharedMemory& operator=(SharedMemory&& shmem) = delete;
 
     //! Check if the shared memory block is valid
     explicit operator bool() const { return (ptr() != nullptr); }

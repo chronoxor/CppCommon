@@ -33,11 +33,11 @@ public:
     */
     explicit Barrier(int threads);
     Barrier(const Barrier&) = delete;
-    Barrier(Barrier&& barrier) noexcept;
+    Barrier(Barrier&& barrier) = delete;
     ~Barrier();
 
     Barrier& operator=(const Barrier&) = delete;
-    Barrier& operator=(Barrier&& barrier) noexcept;
+    Barrier& operator=(Barrier&& barrier) = delete;
 
     //! Get the count of threads to wait at the barrier
     int threads() const noexcept;

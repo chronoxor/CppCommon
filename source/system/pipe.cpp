@@ -181,18 +181,8 @@ Pipe::Pipe() : _pimpl(std::make_unique<Impl>())
 {
 }
 
-Pipe::Pipe(Pipe&& pipe) noexcept : _pimpl(std::move(pipe._pimpl))
-{
-}
-
 Pipe::~Pipe()
 {
-}
-
-Pipe& Pipe::operator=(Pipe&& pipe) noexcept
-{
-    _pimpl = std::move(pipe._pimpl);
-    return *this;
 }
 
 void* Pipe::reader() const noexcept

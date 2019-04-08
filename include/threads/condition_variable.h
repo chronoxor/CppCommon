@@ -34,11 +34,11 @@ class ConditionVariable
 public:
     ConditionVariable();
     ConditionVariable(const ConditionVariable&) = delete;
-    ConditionVariable(ConditionVariable&& cv) noexcept;
+    ConditionVariable(ConditionVariable&& cv) = delete;
     ~ConditionVariable();
 
     ConditionVariable& operator=(const ConditionVariable&) = delete;
-    ConditionVariable& operator=(ConditionVariable&& cv) noexcept;
+    ConditionVariable& operator=(ConditionVariable&& cv) = delete;
 
     //! Notify one of waiting thread about event occurred
     /*!

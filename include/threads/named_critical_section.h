@@ -35,11 +35,11 @@ public:
     */
     explicit NamedCriticalSection(const std::string& name);
     NamedCriticalSection(const NamedCriticalSection&) = delete;
-    NamedCriticalSection(NamedCriticalSection&& cs) noexcept;
+    NamedCriticalSection(NamedCriticalSection&& cs) = delete;
     ~NamedCriticalSection();
 
     NamedCriticalSection& operator=(const NamedCriticalSection&) = delete;
-    NamedCriticalSection& operator=(NamedCriticalSection&& cs) noexcept;
+    NamedCriticalSection& operator=(NamedCriticalSection&& cs) = delete;
 
     //! Get the critical section name
     const std::string& name() const;

@@ -33,11 +33,11 @@ class CriticalSection
 public:
     CriticalSection();
     CriticalSection(const CriticalSection&) = delete;
-    CriticalSection(CriticalSection&& cs) noexcept;
+    CriticalSection(CriticalSection&& cs) = delete;
     ~CriticalSection();
 
     CriticalSection& operator=(const CriticalSection&) = delete;
-    CriticalSection& operator=(CriticalSection&& cs) noexcept;
+    CriticalSection& operator=(CriticalSection&& cs) = delete;
 
     //! Try to acquire critical section without block
     /*!

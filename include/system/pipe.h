@@ -32,11 +32,11 @@ class Pipe : public Reader, public Writer
 public:
     Pipe();
     Pipe(const Pipe&) = delete;
-    Pipe(Pipe&& pipe) noexcept;
+    Pipe(Pipe&& pipe) = delete;
     virtual ~Pipe();
 
     Pipe& operator=(const Pipe&) = delete;
-    Pipe& operator=(Pipe&& pipe) noexcept;
+    Pipe& operator=(Pipe&& pipe) = delete;
 
     //! Get the native read endpoint handler
     void* reader() const noexcept;

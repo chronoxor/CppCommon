@@ -183,18 +183,8 @@ EventManualReset::EventManualReset(bool signaled) : _pimpl(std::make_unique<Impl
 {
 }
 
-EventManualReset::EventManualReset(EventManualReset&& event) noexcept : _pimpl(std::move(event._pimpl))
-{
-}
-
 EventManualReset::~EventManualReset()
 {
-}
-
-EventManualReset& EventManualReset::operator=(EventManualReset&& event) noexcept
-{
-    _pimpl = std::move(event._pimpl);
-    return *this;
 }
 
 void EventManualReset::Reset()

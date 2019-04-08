@@ -243,18 +243,8 @@ NamedConditionVariable::NamedConditionVariable(const std::string& name) : _pimpl
 {
 }
 
-NamedConditionVariable::NamedConditionVariable(NamedConditionVariable&& cv) noexcept : _pimpl(std::move(cv._pimpl))
-{
-}
-
 NamedConditionVariable::~NamedConditionVariable()
 {
-}
-
-NamedConditionVariable& NamedConditionVariable::operator=(NamedConditionVariable&& cv) noexcept
-{
-    _pimpl = std::move(cv._pimpl);
-    return *this;
 }
 
 const std::string& NamedConditionVariable::name() const

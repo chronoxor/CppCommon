@@ -170,18 +170,8 @@ EventAutoReset::EventAutoReset(bool signaled) : _pimpl(std::make_unique<Impl>(si
 {
 }
 
-EventAutoReset::EventAutoReset(EventAutoReset&& event) noexcept : _pimpl(std::move(event._pimpl))
-{
-}
-
 EventAutoReset::~EventAutoReset()
 {
-}
-
-EventAutoReset& EventAutoReset::operator=(EventAutoReset&& event) noexcept
-{
-    _pimpl = std::move(event._pimpl);
-    return *this;
 }
 
 void EventAutoReset::Signal()

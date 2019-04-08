@@ -119,18 +119,8 @@ ConditionVariable::ConditionVariable() : _pimpl(std::make_unique<Impl>())
 {
 }
 
-ConditionVariable::ConditionVariable(ConditionVariable&& cv) noexcept : _pimpl(std::move(cv._pimpl))
-{
-}
-
 ConditionVariable::~ConditionVariable()
 {
-}
-
-ConditionVariable& ConditionVariable::operator=(ConditionVariable&& cv) noexcept
-{
-    _pimpl = std::move(cv._pimpl);
-    return *this;
 }
 
 void ConditionVariable::NotifyOne()

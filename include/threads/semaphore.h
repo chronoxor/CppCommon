@@ -35,11 +35,11 @@ public:
     */
     explicit Semaphore(int resources);
     Semaphore(const Semaphore&) = delete;
-    Semaphore(Semaphore&& semaphore) noexcept;
+    Semaphore(Semaphore&& semaphore) = delete;
     ~Semaphore();
 
     Semaphore& operator=(const Semaphore&) = delete;
-    Semaphore& operator=(Semaphore&& semaphore) noexcept;
+    Semaphore& operator=(Semaphore&& semaphore) = delete;
 
     //! Get the semaphore resources counter
     int resources() const noexcept;

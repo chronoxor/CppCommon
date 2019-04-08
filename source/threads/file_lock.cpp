@@ -344,10 +344,6 @@ FileLock::FileLock(const Path& path) : FileLock()
     Assign(path);
 }
 
-FileLock::FileLock(FileLock&& lock) noexcept : _pimpl(std::move(lock._pimpl))
-{
-}
-
 FileLock::~FileLock()
 {
 }
@@ -355,12 +351,6 @@ FileLock::~FileLock()
 FileLock& FileLock::operator=(const Path& path)
 {
     Assign(path);
-    return *this;
-}
-
-FileLock& FileLock::operator=(FileLock&& lock) noexcept
-{
-    _pimpl = std::move(lock._pimpl);
     return *this;
 }
 

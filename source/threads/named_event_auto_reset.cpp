@@ -229,18 +229,8 @@ NamedEventAutoReset::NamedEventAutoReset(const std::string& name, bool signaled)
 {
 }
 
-NamedEventAutoReset::NamedEventAutoReset(NamedEventAutoReset&& event) noexcept : _pimpl(std::move(event._pimpl))
-{
-}
-
 NamedEventAutoReset::~NamedEventAutoReset()
 {
-}
-
-NamedEventAutoReset& NamedEventAutoReset::operator=(NamedEventAutoReset&& event) noexcept
-{
-    _pimpl = std::move(event._pimpl);
-    return *this;
 }
 
 const std::string& NamedEventAutoReset::name() const

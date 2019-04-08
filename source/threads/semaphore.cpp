@@ -156,18 +156,8 @@ Semaphore::Semaphore(int resources) : _pimpl(std::make_unique<Impl>(resources))
 {
 }
 
-Semaphore::Semaphore(Semaphore&& semaphore) noexcept : _pimpl(std::move(semaphore._pimpl))
-{
-}
-
 Semaphore::~Semaphore()
 {
-}
-
-Semaphore& Semaphore::operator=(Semaphore&& semaphore) noexcept
-{
-    _pimpl = std::move(semaphore._pimpl);
-    return *this;
 }
 
 int Semaphore::resources() const noexcept
