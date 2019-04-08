@@ -42,11 +42,11 @@ public:
     */
     explicit MPSCRingBuffer(size_t capacity, size_t concurrency = std::thread::hardware_concurrency());
     MPSCRingBuffer(const MPSCRingBuffer&) = delete;
-    MPSCRingBuffer(MPSCRingBuffer&&) noexcept = default;
+    MPSCRingBuffer(MPSCRingBuffer&&) = delete;
     ~MPSCRingBuffer() = default;
 
     MPSCRingBuffer& operator=(const MPSCRingBuffer&) = delete;
-    MPSCRingBuffer& operator=(MPSCRingBuffer&&) noexcept = default;
+    MPSCRingBuffer& operator=(MPSCRingBuffer&&) = delete;
 
     //! Check if the buffer is not empty
     explicit operator bool() const noexcept { return !empty(); }

@@ -38,11 +38,11 @@ public:
     */
     explicit WaitBatcher(size_t capacity = 0, size_t initial = 0);
     WaitBatcher(const WaitBatcher&) = delete;
-    WaitBatcher(WaitBatcher&&) noexcept = default;
+    WaitBatcher(WaitBatcher&&) = delete;
     ~WaitBatcher();
 
     WaitBatcher& operator=(const WaitBatcher&) = delete;
-    WaitBatcher& operator=(WaitBatcher&&) noexcept = default;
+    WaitBatcher& operator=(WaitBatcher&&) = delete;
 
     //! Check if the wait batcher is not empty
     explicit operator bool() const noexcept { return !closed() && !empty(); }

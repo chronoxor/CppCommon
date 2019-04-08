@@ -24,12 +24,12 @@ class NullMemoryManager
 {
 public:
     NullMemoryManager() noexcept : _allocated(0), _allocations(0) {}
-    NullMemoryManager(const NullMemoryManager&) noexcept = default;
-    NullMemoryManager(NullMemoryManager&&) noexcept = default;
+    NullMemoryManager(const NullMemoryManager&) = delete;
+    NullMemoryManager(NullMemoryManager&&) = delete;
     ~NullMemoryManager() noexcept { reset(); }
 
-    NullMemoryManager& operator=(const NullMemoryManager&) noexcept = default;
-    NullMemoryManager& operator=(NullMemoryManager&&) noexcept = default;
+    NullMemoryManager& operator=(const NullMemoryManager&) = delete;
+    NullMemoryManager& operator=(NullMemoryManager&&) = delete;
 
     //! Allocated memory in bytes
     size_t allocated() const noexcept { return _allocated; }

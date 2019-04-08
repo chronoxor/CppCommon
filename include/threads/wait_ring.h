@@ -36,11 +36,11 @@ public:
     */
     explicit WaitRing(size_t capacity);
     WaitRing(const WaitRing&) = delete;
-    WaitRing(WaitRing&&) noexcept = default;
+    WaitRing(WaitRing&&) = delete;
     ~WaitRing();
 
     WaitRing& operator=(const WaitRing&) = delete;
-    WaitRing& operator=(WaitRing&&) noexcept = default;
+    WaitRing& operator=(WaitRing&&) = delete;
 
     //! Check if the wait ring is not empty
     explicit operator bool() const noexcept { return !closed() && !empty(); }

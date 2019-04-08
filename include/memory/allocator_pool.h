@@ -53,12 +53,12 @@ public:
         \param capacity - Pool buffer capacity
     */
     explicit PoolMemoryManager(TAuxMemoryManager& auxiliary, void* buffer, size_t capacity);
-    PoolMemoryManager(const PoolMemoryManager&) noexcept = delete;
-    PoolMemoryManager(PoolMemoryManager&&) noexcept = default;
+    PoolMemoryManager(const PoolMemoryManager&) = delete;
+    PoolMemoryManager(PoolMemoryManager&&) = delete;
     ~PoolMemoryManager() { clear(); }
 
-    PoolMemoryManager& operator=(const PoolMemoryManager&) noexcept = delete;
-    PoolMemoryManager& operator=(PoolMemoryManager&&) noexcept = default;
+    PoolMemoryManager& operator=(const PoolMemoryManager&) = delete;
+    PoolMemoryManager& operator=(PoolMemoryManager&&) = delete;
 
     //! Allocated memory in bytes
     size_t allocated() const noexcept { return _allocated; }

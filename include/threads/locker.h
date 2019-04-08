@@ -28,11 +28,11 @@ public:
     */
     explicit Locker(T& primitive) : _primitive(primitive) { _primitive.Lock(); }
     Locker(const Locker&) = delete;
-    Locker(Locker&&) noexcept = default;
+    Locker(Locker&&) = delete;
     ~Locker() { _primitive.Unlock(); }
 
     Locker& operator=(const Locker&) = delete;
-    Locker& operator=(Locker&&) noexcept = default;
+    Locker& operator=(Locker&&) = delete;
 
 private:
     T& _primitive;
@@ -55,11 +55,11 @@ public:
     */
     explicit ReadLocker(T& primitive) : _primitive(primitive) { _primitive.LockRead(); }
     ReadLocker(const ReadLocker&) = delete;
-    ReadLocker(ReadLocker&&) noexcept = default;
+    ReadLocker(ReadLocker&&) = delete;
     ~ReadLocker() { _primitive.UnlockRead(); }
 
     ReadLocker& operator=(const ReadLocker&) = delete;
-    ReadLocker& operator=(ReadLocker&&) noexcept = default;
+    ReadLocker& operator=(ReadLocker&&) = delete;
 
 private:
     T& _primitive;
@@ -82,11 +82,11 @@ public:
     */
     explicit WriteLocker(T& primitive) : _primitive(primitive) { _primitive.LockWrite(); }
     WriteLocker(const WriteLocker&) = delete;
-    WriteLocker(WriteLocker&&) noexcept = default;
+    WriteLocker(WriteLocker&&) = delete;
     ~WriteLocker() { _primitive.UnlockWrite(); }
 
     WriteLocker& operator=(const WriteLocker&) = delete;
-    WriteLocker& operator=(WriteLocker&&) noexcept = default;
+    WriteLocker& operator=(WriteLocker&&) = delete;
 
 private:
     T& _primitive;

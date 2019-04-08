@@ -46,11 +46,11 @@ public:
     */
     explicit MPSCRingQueue(size_t capacity, size_t concurrency = std::thread::hardware_concurrency());
     MPSCRingQueue(const MPSCRingQueue&) = delete;
-    MPSCRingQueue(MPSCRingQueue&&) noexcept = default;
+    MPSCRingQueue(MPSCRingQueue&&) = delete;
     ~MPSCRingQueue() = default;
 
     MPSCRingQueue& operator=(const MPSCRingQueue&) = delete;
-    MPSCRingQueue& operator=(MPSCRingQueue&&) noexcept = default;
+    MPSCRingQueue& operator=(MPSCRingQueue&&) = delete;
 
     //! Check if the queue is not empty
     explicit operator bool() const noexcept { return !empty(); }
