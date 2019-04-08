@@ -33,11 +33,11 @@ public:
     */
     explicit SharedType(const std::string& name);
     SharedType(const SharedType<T>&) = delete;
-    SharedType(SharedType<T>&&) noexcept = default;
+    SharedType(SharedType<T>&&) = delete;
     ~SharedType() = default;
 
     SharedType<T>& operator=(const SharedType<T>&) = delete;
-    SharedType<T>& operator=(SharedType<T>&&) noexcept = default;
+    SharedType<T>& operator=(SharedType<T>&&) = delete;
 
     //! Check if the shared memory type is valid
     explicit operator bool() const { return (_shared.ptr() != nullptr); }
