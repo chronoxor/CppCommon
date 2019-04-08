@@ -74,6 +74,7 @@ Path Symlink::target() const
     if (size < 0)
         throwex FileSystemException("Cannot read symlink target of the path!").Attach(*this);
 
+    // Return symbolic link target path
     return Path(std::string(buffer.data(), size));
 #elif defined(_WIN32) || defined(_WIN64)
     HANDLE hSymlink = CreateFileW(wstring().c_str(), GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OPEN_REPARSE_POINT, nullptr);
@@ -99,11 +100,15 @@ Path Symlink::target() const
         throwex FileSystemException("Cannot close a symlink!").Attach(*this);
     file.release();
 
-    return Path(std::string((wchar_t*)info.rdb.SymbolicLinkReparseBuffer.PathBuffer +
-                                     (info.rdb.SymbolicLinkReparseBuffer.PrintNameOffset / sizeof(WCHAR)),
-                            (wchar_t*)info.rdb.SymbolicLinkReparseBuffer.PathBuffer +
-                                     (info.rdb.SymbolicLinkReparseBuffer.PrintNameOffset / sizeof(WCHAR)) +
-                                     (info.rdb.SymbolicLinkReparseBuffer.PrintNameLength / sizeof(WCHAR))));
+    // Get symbolic link target path
+    std::wstring result((wchar_t*)info.rdb.SymbolicLinkReparseBuffer.PathBuffer +
+                                 (info.rdb.SymbolicLinkReparseBuffer.PrintNameOffset / sizeof(WCHAR)),
+                        (wchar_t*)info.rdb.SymbolicLinkReparseBuffer.PathBuffer +
+                                 (info.rdb.SymbolicLinkReparseBuffer.PrintNameOffset / sizeof(WCHAR)) +
+                                 (info.rdb.SymbolicLinkReparseBuffer.PrintNameLength / sizeof(WCHAR)));
+
+    // Return symbolic link target path
+    return Path(Encoding::ToUTF8(path));
 #endif
 }
 
