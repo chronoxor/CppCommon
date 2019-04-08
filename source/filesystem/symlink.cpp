@@ -108,7 +108,7 @@ Path Symlink::target() const
                                  (info.rdb.SymbolicLinkReparseBuffer.PrintNameLength / sizeof(WCHAR)));
 
     // Return symbolic link target path
-    return Path(Encoding::ToUTF8(path));
+    return Path(Encoding::ToUTF8(result));
 #endif
 }
 
