@@ -39,11 +39,11 @@ public:
     */
     explicit MPMCRingQueue(size_t capacity);
     MPMCRingQueue(const MPMCRingQueue&) = delete;
-    MPMCRingQueue(MPMCRingQueue&&) = default;
+    MPMCRingQueue(MPMCRingQueue&&) = delete;
     ~MPMCRingQueue() { delete[] _buffer; }
 
     MPMCRingQueue& operator=(const MPMCRingQueue&) = delete;
-    MPMCRingQueue& operator=(MPMCRingQueue&&) = default;
+    MPMCRingQueue& operator=(MPMCRingQueue&&) = delete;
 
     //! Check if the queue is not empty
     explicit operator bool() const noexcept { return !empty(); }

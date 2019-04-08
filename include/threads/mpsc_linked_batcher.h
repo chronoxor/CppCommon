@@ -35,11 +35,11 @@ class MPSCLinkedBatcher
 public:
     MPSCLinkedBatcher();
     MPSCLinkedBatcher(const MPSCLinkedBatcher&) = delete;
-    MPSCLinkedBatcher(MPSCLinkedBatcher&&) = default;
+    MPSCLinkedBatcher(MPSCLinkedBatcher&&) = delete;
     ~MPSCLinkedBatcher();
 
     MPSCLinkedBatcher& operator=(const MPSCLinkedBatcher&) = delete;
-    MPSCLinkedBatcher& operator=(MPSCLinkedBatcher&&) = default;
+    MPSCLinkedBatcher& operator=(MPSCLinkedBatcher&&) = delete;
 
     //! Enqueue an item into the linked batcher (multiple producers threads method)
     /*!

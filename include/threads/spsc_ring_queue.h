@@ -40,11 +40,11 @@ public:
     */
     explicit SPSCRingQueue(size_t capacity);
     SPSCRingQueue(const SPSCRingQueue&) = delete;
-    SPSCRingQueue(SPSCRingQueue&&) = default;
+    SPSCRingQueue(SPSCRingQueue&&) = delete;
     ~SPSCRingQueue() { delete[] _buffer; }
 
     SPSCRingQueue& operator=(const SPSCRingQueue&) = delete;
-    SPSCRingQueue& operator=(SPSCRingQueue&&) = default;
+    SPSCRingQueue& operator=(SPSCRingQueue&&) = delete;
 
     //! Check if the queue is not empty
     explicit operator bool() const noexcept { return !empty(); }

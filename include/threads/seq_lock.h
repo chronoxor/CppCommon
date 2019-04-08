@@ -38,7 +38,7 @@ public:
 
     SeqLock& operator=(const T& data) noexcept;
     SeqLock& operator=(const SeqLock&) = delete;
-    SeqLock& operator=(SeqLock&&) = default;
+    SeqLock& operator=(SeqLock&&) = delete;
 
     //! Read data under the sequential lock
     /*!

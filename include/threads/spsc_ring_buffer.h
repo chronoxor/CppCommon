@@ -38,11 +38,11 @@ public:
     */
     explicit SPSCRingBuffer(size_t capacity);
     SPSCRingBuffer(const SPSCRingBuffer&) = delete;
-    SPSCRingBuffer(SPSCRingBuffer&&) = default;
+    SPSCRingBuffer(SPSCRingBuffer&&) = delete;
     ~SPSCRingBuffer() { delete[] _buffer; }
 
     SPSCRingBuffer& operator=(const SPSCRingBuffer&) = delete;
-    SPSCRingBuffer& operator=(SPSCRingBuffer&&) = default;
+    SPSCRingBuffer& operator=(SPSCRingBuffer&&) = delete;
 
     //! Check if the buffer is not empty
     explicit operator bool() const noexcept { return !empty(); }
