@@ -91,11 +91,11 @@ public:
     {}
     template <class InputIterator>
     BinTreeAA(InputIterator first, InputIterator last, const TCompare& compare = TCompare()) noexcept;
-    BinTreeAA(const BinTreeAA&) noexcept = delete;
+    BinTreeAA(const BinTreeAA&) noexcept = default;
     BinTreeAA(BinTreeAA&&) noexcept = default;
     ~BinTreeAA() noexcept = default;
 
-    BinTreeAA& operator=(const BinTreeAA&) noexcept = delete;
+    BinTreeAA& operator=(const BinTreeAA&) noexcept = default;
     BinTreeAA& operator=(BinTreeAA&&) noexcept = default;
 
     //! Check if the binary tree is not empty

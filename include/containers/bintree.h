@@ -165,11 +165,11 @@ public:
     explicit BinTree(const TCompare& compare = TCompare()) noexcept : _compare(compare), _size(0), _root(nullptr) {}
     template <class InputIterator>
     BinTree(InputIterator first, InputIterator last, const TCompare& compare = TCompare()) noexcept;
-    BinTree(const BinTree&) noexcept = delete;
+    BinTree(const BinTree&) noexcept = default;
     BinTree(BinTree&&) noexcept = default;
     ~BinTree() noexcept = default;
 
-    BinTree& operator=(const BinTree&) noexcept = delete;
+    BinTree& operator=(const BinTree&) noexcept = default;
     BinTree& operator=(BinTree&&) noexcept = default;
 
     //! Check if the binary tree is not empty

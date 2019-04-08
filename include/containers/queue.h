@@ -125,11 +125,11 @@ public:
     Queue() noexcept : _size(0), _front(nullptr), _back(nullptr) {}
     template <class InputIterator>
     Queue(InputIterator first, InputIterator last) noexcept;
-    Queue(const Queue&) noexcept = delete;
+    Queue(const Queue&) noexcept = default;
     Queue(Queue&&) noexcept = default;
     ~Queue() noexcept = default;
 
-    Queue& operator=(const Queue&) noexcept = delete;
+    Queue& operator=(const Queue&) noexcept = default;
     Queue& operator=(Queue&&) noexcept = default;
 
     //! Check if the queue is not empty

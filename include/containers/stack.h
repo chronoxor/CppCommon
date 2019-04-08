@@ -127,11 +127,11 @@ public:
     Stack() noexcept : _size(0), _top(nullptr) {}
     template <class InputIterator>
     Stack(InputIterator first, InputIterator last) noexcept;
-    Stack(const Stack&) noexcept = delete;
+    Stack(const Stack&) noexcept = default;
     Stack(Stack&&) noexcept = default;
     ~Stack() noexcept = default;
 
-    Stack& operator=(const Stack&) noexcept = delete;
+    Stack& operator=(const Stack&) noexcept = default;
     Stack& operator=(Stack&&) noexcept = default;
 
     //! Check if the stack is not empty

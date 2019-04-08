@@ -180,11 +180,11 @@ public:
     List() noexcept : _size(0), _front(nullptr), _back(nullptr) {}
     template <class InputIterator>
     List(InputIterator first, InputIterator last) noexcept;
-    List(const List&) noexcept = delete;
+    List(const List&) noexcept = default;
     List(List&&) noexcept = default;
     ~List() noexcept = default;
 
-    List& operator=(const List&) noexcept = delete;
+    List& operator=(const List&) noexcept = default;
     List& operator=(List&&) noexcept = default;
 
     //! Check if the list is not empty
