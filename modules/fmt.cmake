@@ -4,7 +4,8 @@ if(NOT TARGET fmt)
   file(GLOB SOURCE_FILES "fmt/src/*.cc")
   if(MSVC)
     # C4127: conditional expression is constant
-    set_source_files_properties(${SOURCE_FILES} PROPERTIES COMPILE_FLAGS "${PEDANTIC_COMPILE_FLAGS} /wd4127")
+    # C4702: unreachable code
+    set_source_files_properties(${SOURCE_FILES} PROPERTIES COMPILE_FLAGS "${PEDANTIC_COMPILE_FLAGS} /wd4127 /wd4702")
   else()
     set_source_files_properties(${SOURCE_FILES} PROPERTIES COMPILE_FLAGS "${PEDANTIC_COMPILE_FLAGS} -Wno-gnu-string-literal-operator-template -Wno-shadow")
   endif()
