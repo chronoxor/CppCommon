@@ -6,11 +6,6 @@
     \copyright MIT License
 */
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable: 4702) // C4702: unreachable code
-#endif
-
 namespace CppCommon {
 
 template<typename T>
@@ -135,7 +130,3 @@ inline bool MPMCRingQueue<T>::Dequeue(T& item)
 }
 
 } // namespace CppCommon
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif
