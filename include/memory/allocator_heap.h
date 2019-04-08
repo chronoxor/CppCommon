@@ -35,11 +35,11 @@ class HeapMemoryManager
 {
 public:
     HeapMemoryManager() noexcept : _allocated(0), _allocations(0) {}
-    HeapMemoryManager(const HeapMemoryManager&) = delete;
+    HeapMemoryManager(const HeapMemoryManager&) noexcept = delete;
     HeapMemoryManager(HeapMemoryManager&&) noexcept = default;
     ~HeapMemoryManager() noexcept { reset(); }
 
-    HeapMemoryManager& operator=(const HeapMemoryManager&) = delete;
+    HeapMemoryManager& operator=(const HeapMemoryManager&) noexcept = delete;
     HeapMemoryManager& operator=(HeapMemoryManager&&) noexcept = default;
 
     //! Allocated memory in bytes
