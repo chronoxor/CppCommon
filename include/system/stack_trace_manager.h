@@ -28,11 +28,11 @@ class StackTraceManager : public CppCommon::Singleton<StackTraceManager>
 
 public:
     StackTraceManager(const StackTraceManager&) = delete;
-    StackTraceManager(StackTraceManager&&) noexcept = delete;
+    StackTraceManager(StackTraceManager&&) = delete;
     ~StackTraceManager();
 
     StackTraceManager& operator=(const StackTraceManager&) = delete;
-    StackTraceManager& operator=(StackTraceManager&&) noexcept = delete;
+    StackTraceManager& operator=(StackTraceManager&&) = delete;
 
     //! Initialize stack trace manager
     /*!

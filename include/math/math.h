@@ -24,11 +24,11 @@ class Math
 public:
     Math() = delete;
     Math(const Math&) = delete;
-    Math(Math&&) noexcept = delete;
+    Math(Math&&) = delete;
     ~Math() = delete;
 
     Math& operator=(const Math&) = delete;
-    Math& operator=(Math&&) noexcept = delete;
+    Math& operator=(Math&&) = delete;
 
     //! Computes the greatest common divisor of a and b
     /*!

@@ -24,11 +24,11 @@ class Encoding
 public:
     Encoding() = delete;
     Encoding(const Encoding&) = delete;
-    Encoding(Encoding&&) noexcept = delete;
+    Encoding(Encoding&&) = delete;
     ~Encoding() = delete;
 
     Encoding& operator=(const Encoding&) = delete;
-    Encoding& operator=(Encoding&&) noexcept = delete;
+    Encoding& operator=(Encoding&&) = delete;
 
     //! Convert system wide-string to UTF-8 encoded string
     /*!

@@ -30,11 +30,11 @@ class StringUtils
 public:
     StringUtils() = delete;
     StringUtils(const StringUtils&) = delete;
-    StringUtils(StringUtils&&) noexcept = delete;
+    StringUtils(StringUtils&&) = delete;
     ~StringUtils() = delete;
 
     StringUtils& operator=(const StringUtils&) = delete;
-    StringUtils& operator=(StringUtils&&) noexcept = delete;
+    StringUtils& operator=(StringUtils&&) = delete;
 
     //! Is the given character blank (empty or contains only space characters)?
     /*!

@@ -49,11 +49,11 @@ public:
         \param capacity - Arena buffer capacity
     */
     explicit ArenaMemoryManager(TAuxMemoryManager& auxiliary, void* buffer, size_t capacity);
-    ArenaMemoryManager(const ArenaMemoryManager&) noexcept = delete;
+    ArenaMemoryManager(const ArenaMemoryManager&) = delete;
     ArenaMemoryManager(ArenaMemoryManager&&) noexcept = default;
     ~ArenaMemoryManager() { clear(); }
 
-    ArenaMemoryManager& operator=(const ArenaMemoryManager&) noexcept = delete;
+    ArenaMemoryManager& operator=(const ArenaMemoryManager&) = delete;
     ArenaMemoryManager& operator=(ArenaMemoryManager&&) noexcept = default;
 
     //! Allocated memory in bytes
