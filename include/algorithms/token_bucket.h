@@ -42,11 +42,11 @@ public:
     */
     TokenBucket(uint64_t rate, uint64_t burst);
     TokenBucket(const TokenBucket& tb);
-    TokenBucket(TokenBucket&&) = default;
+    TokenBucket(TokenBucket&&) = delete;
     ~TokenBucket() = default;
 
     TokenBucket& operator=(const TokenBucket& tb);
-    TokenBucket& operator=(TokenBucket&&) = default;
+    TokenBucket& operator=(TokenBucket&&) = delete;
 
     //! Try to consume the given count of tokens
     /*!
