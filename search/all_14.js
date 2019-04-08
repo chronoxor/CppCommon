@@ -32,7 +32,7 @@ var searchData=
   ['token_5fbucket_2ecpp',['token_bucket.cpp',['../token__bucket_8cpp.html',1,'']]],
   ['token_5fbucket_2eh',['token_bucket.h',['../token__bucket_8h.html',1,'']]],
   ['token_5fbucket_2einl',['token_bucket.inl',['../token__bucket_8inl.html',1,'']]],
-  ['tokenbucket',['TokenBucket',['../class_cpp_common_1_1_token_bucket.html#a6919fb78860a9c3bf73f94f924aa6cc6',1,'CppCommon::TokenBucket::TokenBucket(uint64_t rate, uint64_t burst)'],['../class_cpp_common_1_1_token_bucket.html#aaae23cf054e04f8730131d1c586003e7',1,'CppCommon::TokenBucket::TokenBucket(const TokenBucket &amp;tb)'],['../class_cpp_common_1_1_token_bucket.html#ac4f4974901ed8b5c73afe5dec4f9073a',1,'CppCommon::TokenBucket::TokenBucket(TokenBucket &amp;&amp;)=default']]],
+  ['tokenbucket',['TokenBucket',['../class_cpp_common_1_1_token_bucket.html#a6919fb78860a9c3bf73f94f924aa6cc6',1,'CppCommon::TokenBucket::TokenBucket(uint64_t rate, uint64_t burst)'],['../class_cpp_common_1_1_token_bucket.html#aaae23cf054e04f8730131d1c586003e7',1,'CppCommon::TokenBucket::TokenBucket(const TokenBucket &amp;tb)'],['../class_cpp_common_1_1_token_bucket.html#a01a9ed2992cef1f56b0bc99f379a3054',1,'CppCommon::TokenBucket::TokenBucket(TokenBucket &amp;&amp;)=delete']]],
   ['tokenbucket',['TokenBucket',['../class_cpp_common_1_1_token_bucket.html',1,'CppCommon']]],
   ['tolower',['ToLower',['../class_cpp_common_1_1_string_utils.html#a88e0de9d3fb26b3e40f584b1a75e0881',1,'CppCommon::StringUtils::ToLower(char ch)'],['../class_cpp_common_1_1_string_utils.html#abaffabc8dd3d91608771c6a616e32277',1,'CppCommon::StringUtils::ToLower(const std::string &amp;str)']]],
   ['toltrim',['ToLTrim',['../class_cpp_common_1_1_string_utils.html#a9bfb7383bfb74622b20ac1169a241869',1,'CppCommon::StringUtils']]],
