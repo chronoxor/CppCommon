@@ -54,11 +54,11 @@ public:
     */
     explicit PoolMemoryManager(TAuxMemoryManager& auxiliary, void* buffer, size_t capacity);
     PoolMemoryManager(const PoolMemoryManager&) = delete;
-    PoolMemoryManager(PoolMemoryManager&&) noexcept = default;
+    PoolMemoryManager(PoolMemoryManager&&) = delete;
     ~PoolMemoryManager() { clear(); }
 
     PoolMemoryManager& operator=(const PoolMemoryManager&) = delete;
-    PoolMemoryManager& operator=(PoolMemoryManager&&) noexcept = default;
+    PoolMemoryManager& operator=(PoolMemoryManager&&) = delete;
 
     //! Allocated memory in bytes
     size_t allocated() const noexcept { return _allocated; }
