@@ -34,11 +34,11 @@ class StackMemoryManager
 public:
     StackMemoryManager();
     StackMemoryManager(const StackMemoryManager&) = delete;
-    StackMemoryManager(StackMemoryManager&&) = delete;
+    StackMemoryManager(StackMemoryManager&&) noexcept = default;
     ~StackMemoryManager() noexcept { reset(); }
 
     StackMemoryManager& operator=(const StackMemoryManager&) = delete;
-    StackMemoryManager& operator=(StackMemoryManager&&) = delete;
+    StackMemoryManager& operator=(StackMemoryManager&&) noexcept = default;
 
     //! Allocated memory in bytes
     size_t allocated() const noexcept { return _allocated; }
