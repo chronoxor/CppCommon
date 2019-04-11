@@ -97,9 +97,10 @@ public:
             throwex SystemException("Cannot read from the pipe!");
         return (size_t)result;
 #elif defined(_WIN32) || defined(_WIN64)
-        DWORD result;
+        DWORD result = 0;
         if (!ReadFile(_pipe[0], buffer, (DWORD)size, &result, nullptr))
-            throwex SystemException("Cannot read from the pipe!");
+            if (GetLastError() != ERROR_BROKEN_PIPE)
+                throwex SystemException("Cannot read from the pipe!");
         return (size_t)result;
 #endif
     }
@@ -118,9 +119,10 @@ public:
             throwex SystemException("Cannot write into the pipe!");
         return (size_t)result;
 #elif defined(_WIN32) || defined(_WIN64)
-        DWORD result;
+        DWORD result = 0;
         if (!WriteFile(_pipe[1], buffer, (DWORD)size, &result, nullptr))
-            throwex SystemException("Cannot write into the pipe!");
+            if (GetLastError() != ERROR_BROKEN_PIPE)
+                throwex SystemException("Cannot write into the pipe!");
         return (size_t)result;
 #endif
     }
