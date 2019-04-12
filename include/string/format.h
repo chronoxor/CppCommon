@@ -17,17 +17,8 @@
 #pragma system_header
 #endif
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable: 4702) // C4702: unreachable code
-#endif
-
 #include <fmt/format.h>
 #include <fmt/ostream.h>
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif
 
 namespace CppCommon {
 
