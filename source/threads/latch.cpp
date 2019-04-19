@@ -14,7 +14,7 @@ void Latch::Reset(int threads) noexcept
 {
     assert((threads > 0) && "Latch threads counter must be greater than zero!");
 
-    std::lock_guard<std::mutex> lock(_mutex);
+    std::scoped_lock lock(_mutex);
 
     // Reset the latch threads counter with a new value
     _threads = threads;
