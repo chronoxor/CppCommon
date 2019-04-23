@@ -8,6 +8,7 @@
 
 #include "string/encoding.h"
 
+#include <algorithm>
 #include <codecvt>
 #include <locale>
 
