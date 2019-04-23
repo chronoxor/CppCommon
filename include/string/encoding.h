@@ -86,6 +86,19 @@ public:
         \return UTF-16 encoded string
     */
     static std::u16string UTF32toUTF16(const std::u32string& str);
+
+    //! URL encode string
+    /*!
+        \param str - String to encode
+        \return URL encoded string
+    */
+    static std::string URLEncode(const std::string& str);
+    //! URL decode string
+    /*!
+        \param str - URL encoded string
+        \return Decoded string
+    */
+    static std::string URLDecode(const std::string& str);
 };
 
 /*! \example string_encoding.cpp Encoding utilities example */

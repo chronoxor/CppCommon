@@ -128,4 +128,72 @@ std::u16string Encoding::UTF32toUTF16(const std::u32string& str)
     return result;
 }
 
+std::string Encoding::URLEncode(const std::string& str)
+{
+    std::string result;
+    result.reserve(str.size());
+
+    for (char ch : str)
+    {
+        if (isalnum(ch) || (ch == '-') || (ch == '.') || (ch == '/') || (ch == '_') || (ch == '~'))
+            result.push_back(ch);
+        else if (ch == ' ')
+            result.push_back('+');
+        else
+        {
+            const char hex[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+            result.push_back('%');
+            result.push_back(hex[(ch >> 4) & 0x0F]);
+            result.push_back(hex[(ch >> 0) & 0x0F]);
+        }
+    }
+
+    return result;
+}
+
+std::string Encoding::URLDecode(const std::string& str)
+{
+    std::string result;
+    result.reserve(str.size());
+
+    for (size_t i = 0; i < str.size(); ++i)
+    {
+        char ch = str[i];
+        if (ch == '%')
+        {
+            const char hex[] = "0123456789ABCDEF";
+
+            if (++i == str.size())
+            {
+                result.push_back('?');
+                break;
+            }
+
+            int hi = (int)(std::find(hex, hex + 16, toupper(str[i])) - hex);
+
+            if (++i == str.size())
+            {
+                result.push_back('?');
+                break;
+            }
+
+            int lo = (int)(std::find(hex, hex + 16, toupper(str[i])) - hex);
+
+            if ((hi >= 16) || (lo >= 16))
+            {
+                result.push_back('?');
+                break;
+            }
+
+            result.push_back((char)((hi << 4) + lo));
+        }
+        else if (ch == '+')
+            result.push_back(' ');
+        else
+            result.push_back(ch);
+    }
+
+    return result;
+}
+
 } // namespace CppCommon
