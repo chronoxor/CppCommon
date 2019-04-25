@@ -39,7 +39,7 @@ public:
         HANDLE hProcess = GetCurrentProcess();
 
         // Initializes symbol handler for the current process
-        if (!InitializeSymbols())
+        if (!InitializeSymbols(hProcess))
             throwex SystemException("Cannot initialize symbol handler for the current process!");
 #endif
 #endif
@@ -72,7 +72,7 @@ private:
 
 #if defined(_WIN32) || defined(_WIN64)
 #if defined(DBGHELP_SUPPORT)
-    bool InitializeSymbols()
+    bool InitializeSymbols(HANDLE hProcess)
     {
         const int attempts = 10;
         const int sleep = 100;
