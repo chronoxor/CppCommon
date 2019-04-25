@@ -78,10 +78,10 @@ private:
         const int sleep = 100;
         for (int attempt = 0; attempt < attempts; ++attempt)
         {
-            printf("Fixed!\n");
-
             if (SymInitialize(hProcess, nullptr, TRUE))
                 return true;
+
+            printf("Fixed!\n");
 
             Sleep(sleep);
         }
