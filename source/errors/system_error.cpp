@@ -61,7 +61,7 @@ std::string SystemError::Description(int error)
 #elif defined(_WIN32) || defined(_WIN64)
     WCHAR buffer[capacity];
     DWORD size = FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, nullptr, error, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), buffer, capacity, nullptr);
-    return Encoding::ToUTF8(std::wstring(buffer, (size - 2)));
+    return Encoding::ToUTF8((size >= 2) ? std::wstring(buffer, (size - 2)) : std::wstring(L"Unknown system error!"));
 #endif
 }
 
