@@ -81,8 +81,6 @@ private:
             if (SymInitialize(hProcess, nullptr, TRUE))
                 return true;
 
-            printf("Fixed!\n");
-
             Sleep(sleep);
         }
         return false;
