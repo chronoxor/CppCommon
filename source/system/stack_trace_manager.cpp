@@ -11,7 +11,14 @@
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
 #if defined(DBGHELP_SUPPORT)
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable:4091)
+#endif
 #include <dbghelp.h>
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif
 #endif
 #endif
 
