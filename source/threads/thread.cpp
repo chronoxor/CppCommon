@@ -169,17 +169,17 @@ std::bitset<64> Thread::GetAffinity()
 #elif defined(_WIN32) || defined(_WIN64)
     typedef LONG KPRIORITY;
 
-    typedef struct _MY_CLIENT_ID
+    typedef struct _NT_CLIENT_ID
     {
         HANDLE UniqueProcess;
         HANDLE UniqueThread;
-    } MY_CLIENT_ID;
+    } NT_CLIENT_ID;
 
     typedef struct _THREAD_BASIC_INFORMATION
     {
         NTSTATUS ExitStatus;
         PTEB TebBaseAddress;
-        MY_CLIENT_ID ClientId;
+        NT_CLIENT_ID ClientId;
         ULONG_PTR AffinityMask;
         KPRIORITY Priority;
         LONG BasePriority;
@@ -220,17 +220,17 @@ std::bitset<64> Thread::GetAffinity(std::thread& thread)
 #elif defined(_WIN32) || defined(_WIN64)
     typedef LONG KPRIORITY;
 
-    typedef struct _MY_CLIENT_ID
+    typedef struct _NT_CLIENT_ID
     {
         HANDLE UniqueProcess;
         HANDLE UniqueThread;
-    } MY_CLIENT_ID;
+    } NT_CLIENT_ID;
 
     typedef struct _THREAD_BASIC_INFORMATION
     {
         NTSTATUS ExitStatus;
         PTEB TebBaseAddress;
-        MY_CLIENT_ID ClientId;
+        NT_CLIENT_ID ClientId;
         ULONG_PTR AffinityMask;
         KPRIORITY Priority;
         LONG BasePriority;

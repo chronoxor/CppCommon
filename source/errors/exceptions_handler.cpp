@@ -33,7 +33,7 @@
 #include "string/format.h"
 #if defined(_MSC_VER)
 #pragma warning(push)
-#pragma warning(disable:4091)
+#pragma warning(disable:4091) // C4091: 'keyword' : ignored on left of 'type' when no variable is declared
 #endif
 #include <dbghelp.h>
 #if defined(_MSC_VER)
