@@ -23,12 +23,22 @@
 #include <signal.h>
 #include <unistd.h>
 #elif defined(_WIN32) || defined(_WIN64)
+#if defined(_MSC_VER)
+#include <intrin.h>
+#endif
 #include <csignal>
 #include <new.h>
 #include <windows.h>
 #if defined(DBGHELP_SUPPORT)
 #include "string/format.h"
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable:4091)
+#endif
 #include <dbghelp.h>
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif
 #endif
 #endif
 
