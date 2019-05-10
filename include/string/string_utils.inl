@@ -33,16 +33,16 @@ inline char StringUtils::ToUpper(char ch)
     return ToUpperInternal(ch);
 }
 
-inline std::string StringUtils::ToLower(const std::string& str)
+inline std::string StringUtils::ToLower(std::string_view str)
 {
-    std::string result = str;
+    std::string result(str);
     Lower(result);
     return result;
 }
 
-inline std::string StringUtils::ToUpper(const std::string& str)
+inline std::string StringUtils::ToUpper(std::string_view str)
 {
-    std::string result = str;
+    std::string result(str);
     Upper(result);
     return result;
 }
@@ -64,27 +64,27 @@ inline std::string& StringUtils::Trim(std::string& str)
     return LTrim(RTrim(str));
 }
 
-inline bool StringUtils::Contains(const std::string& str, const char ch)
+inline bool StringUtils::Contains(std::string_view str, const char ch)
 {
     return (str.find(ch) != std::string::npos);
 }
 
-inline bool StringUtils::Contains(const std::string& str, const char* substr)
+inline bool StringUtils::Contains(std::string_view str, const char* substr)
 {
     return (str.find(substr) != std::string::npos);
 }
 
-inline bool StringUtils::Contains(const std::string& str, const std::string& substr)
+inline bool StringUtils::Contains(std::string_view str, std::string_view substr)
 {
     return (str.find(substr) != std::string::npos);
 }
 
-inline bool StringUtils::StartsWith(const std::string& str, const std::string& prefix)
+inline bool StringUtils::StartsWith(std::string_view str, std::string_view prefix)
 {
     return (str.size() >= prefix.size()) && (str.compare(0, prefix.size(), prefix) == 0);
 }
 
-inline bool StringUtils::EndsWith(const std::string& str, const std::string& suffix)
+inline bool StringUtils::EndsWith(std::string_view str, std::string_view suffix)
 {
     return (str.size() >= suffix.size()) && (str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0);
 }
@@ -98,7 +98,7 @@ inline std::string StringUtils::ToString(const T& value)
 }
 
 template <typename T>
-inline T StringUtils::FromString(const std::string& str)
+inline T StringUtils::FromString(std::string_view str)
 {
     T result;
     std::istringstream(str) >> result;
@@ -106,19 +106,25 @@ inline T StringUtils::FromString(const std::string& str)
 }
 
 template <>
-inline std::string StringUtils::FromString(const std::string& str)
+inline const char* StringUtils::FromString(std::string_view str)
+{
+    return std::string(str).c_str();
+}
+
+template <>
+inline std::string StringUtils::FromString(std::string_view str)
+{
+    return std::string(str);
+}
+
+template <>
+inline std::string_view StringUtils::FromString(std::string_view str)
 {
     return str;
 }
 
 template <>
-inline const char* StringUtils::FromString(const std::string& str)
-{
-    return str.c_str();
-}
-
-template <>
-inline bool StringUtils::FromString(const std::string& str)
+inline bool StringUtils::FromString(std::string_view str)
 {
     std::string value = ToLower(str);
     if ((value == "true") || (value == "yes") || (value == "on") || (value == "1"))

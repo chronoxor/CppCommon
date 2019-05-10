@@ -37,7 +37,7 @@ public:
         \param wstr - System wide-string to convert
         \return UTF-8 encoded string
     */
-    static std::string ToUTF8(const std::wstring& wstr);
+    static std::string ToUTF8(std::wstring_view wstr);
 
     //! Convert UTF-8 encoded string to system wide-string
     /*!
@@ -46,59 +46,59 @@ public:
         \param str - UTF-8 encoded string to convert
         \return System wide-string
     */
-    static std::wstring FromUTF8(const std::string& str);
+    static std::wstring FromUTF8(std::string_view str);
 
     //! Convert UTF-8 encoded string to UTF-16 encoded string
     /*!
         \param str - UTF-8 encoded string to convert
         \return UTF-16 encoded string
     */
-    static std::u16string UTF8toUTF16(const std::string& str);
+    static std::u16string UTF8toUTF16(std::string_view str);
     //! Convert UTF-8 encoded string to UTF-32 encoded string
     /*!
         \param str - UTF-8 encoded string to convert
         \return UTF-32 encoded string
     */
-    static std::u32string UTF8toUTF32(const std::string& str);
+    static std::u32string UTF8toUTF32(std::string_view str);
 
     //! Convert UTF-16 encoded string to UTF-8 encoded string
     /*!
         \param str - UTF-16 encoded string to convert
         \return UTF-8 encoded string
     */
-    static std::string UTF16toUTF8(const std::u16string& str);
+    static std::string UTF16toUTF8(std::u16string_view str);
     //! Convert UTF-16 encoded string to UTF-32 encoded string
     /*!
         \param str - UTF-16 encoded string to convert
         \return UTF-32 encoded string
     */
-    static std::u32string UTF16toUTF32(const std::u16string& str);
+    static std::u32string UTF16toUTF32(std::u16string_view str);
 
     //! Convert UTF-32 encoded string to UTF-8 encoded string
     /*!
         \param str - UTF-32 encoded string to convert
         \return UTF-8 encoded string
     */
-    static std::string UTF32toUTF8(const std::u32string& str);
+    static std::string UTF32toUTF8(std::u32string_view str);
     //! Convert UTF-32 encoded string to UTF-16 encoded string
     /*!
         \param str - UTF-32 encoded string to convert
         \return UTF-16 encoded string
     */
-    static std::u16string UTF32toUTF16(const std::u32string& str);
+    static std::u16string UTF32toUTF16(std::u32string_view str);
 
     //! URL encode string
     /*!
         \param str - String to encode
         \return URL encoded string
     */
-    static std::string URLEncode(const std::string& str);
+    static std::string URLEncode(std::string_view str);
     //! URL decode string
     /*!
         \param str - URL encoded string
         \return Decoded string
     */
-    static std::string URLDecode(const std::string& str);
+    static std::string URLDecode(std::string_view str);
 };
 
 /*! \example string_encoding.cpp Encoding utilities example */

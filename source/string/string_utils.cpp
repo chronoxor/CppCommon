@@ -19,7 +19,7 @@ bool StringUtils::IsBlank(const char* str)
     return true;
 }
 
-bool StringUtils::IsBlank(const std::string& str)
+bool StringUtils::IsBlank(std::string_view str)
 {
     if (str.empty())
         return true;
@@ -31,17 +31,17 @@ bool StringUtils::IsBlank(const std::string& str)
     return true;
 }
 
-std::string StringUtils::ToLTrim(const std::string str)
+std::string StringUtils::ToLTrim(std::string_view str)
 {
     return std::string(std::find_if(str.begin(), str.end(), [](int c) { return !std::isspace(c); }), str.end());
 }
 
-std::string StringUtils::ToRTrim(const std::string str)
+std::string StringUtils::ToRTrim(std::string_view str)
 {
     return std::string(str.begin(), std::find_if(str.rbegin(), str.rend(), [](int c) { return !std::isspace(c); }).base());
 }
 
-std::string StringUtils::ToTrim(const std::string str)
+std::string StringUtils::ToTrim(std::string_view str)
 {
     auto start = std::find_if(str.begin(), str.end(), [](int c) { return !std::isspace(c); });
     auto end = std::find_if(str.rbegin(), str.rend(), [](int c) { return !std::isspace(c); }).base();
@@ -61,7 +61,7 @@ std::string& StringUtils::RTrim(std::string& str)
     return str;
 }
 
-size_t StringUtils::CountAll(const std::string& str, const std::string& substr)
+size_t StringUtils::CountAll(std::string_view str, std::string_view substr)
 {
     size_t count=0;
 
@@ -75,7 +75,7 @@ size_t StringUtils::CountAll(const std::string& str, const std::string& substr)
     return count;
 }
 
-bool StringUtils::ReplaceFirst(std::string& str, const std::string& substr, const std::string& with)
+bool StringUtils::ReplaceFirst(std::string& str, std::string_view substr, std::string_view with)
 {
     size_t pos = str.find(substr);
     if (pos == std::string::npos)
@@ -85,7 +85,7 @@ bool StringUtils::ReplaceFirst(std::string& str, const std::string& substr, cons
     return true;
 }
 
-bool StringUtils::ReplaceLast(std::string& str, const std::string& substr, const std::string& with)
+bool StringUtils::ReplaceLast(std::string& str, std::string_view substr, std::string_view with)
 {
     size_t pos = str.rfind(substr);
     if (pos == std::string::npos)
@@ -95,7 +95,7 @@ bool StringUtils::ReplaceLast(std::string& str, const std::string& substr, const
     return true;
 }
 
-bool StringUtils::ReplaceAll(std::string& str, const std::string& substr, const std::string& with)
+bool StringUtils::ReplaceAll(std::string& str, std::string_view substr, std::string_view with)
 {
     bool result = false;
 
@@ -110,7 +110,7 @@ bool StringUtils::ReplaceAll(std::string& str, const std::string& substr, const 
     return result;
 }
 
-std::vector<std::string> StringUtils::Split(const std::string& str, char delimiter, bool skip_empty)
+std::vector<std::string> StringUtils::Split(std::string_view str, char delimiter, bool skip_empty)
 {
     std::vector<std::string> tokens;
 
@@ -137,7 +137,7 @@ std::vector<std::string> StringUtils::Split(const std::string& str, char delimit
     return tokens;
 }
 
-std::vector<std::string> StringUtils::Split(const std::string& str, const std::string& delimiter, bool skip_empty)
+std::vector<std::string> StringUtils::Split(std::string_view str, std::string_view delimiter, bool skip_empty)
 {
     std::vector<std::string> tokens;
 
@@ -164,7 +164,7 @@ std::vector<std::string> StringUtils::Split(const std::string& str, const std::s
     return tokens;
 }
 
-std::vector<std::string> StringUtils::SplitByAny(const std::string& str, const std::string& delimiters, bool skip_empty)
+std::vector<std::string> StringUtils::SplitByAny(std::string_view str, std::string_view delimiters, bool skip_empty)
 {
     std::vector<std::string> tokens;
 
@@ -239,7 +239,7 @@ std::string StringUtils::Join(const std::vector<std::string>& tokens, const char
     return result.str();
 }
 
-std::string StringUtils::Join(const std::vector<std::string>& tokens, const std::string& delimiter, bool skip_empty, bool skip_blank)
+std::string StringUtils::Join(const std::vector<std::string>& tokens, std::string_view delimiter, bool skip_empty, bool skip_blank)
 {
     if (tokens.empty())
         return "";

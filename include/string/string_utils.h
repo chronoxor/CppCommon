@@ -53,7 +53,7 @@ public:
         \param str - String to check
         \return 'true' if given string is blank, 'false' if given string is not blank
     */
-    static bool IsBlank(const std::string& str);
+    static bool IsBlank(std::string_view str);
 
     //! Convert the given character to lower case
     /*!
@@ -71,13 +71,13 @@ public:
         \param str - String to convert
         \return String converted to lower case
     */
-    static std::string ToLower(const std::string& str);
+    static std::string ToLower(std::string_view str);
     //! Convert the the given constant string converted to UPPER case
     /*!
         \param str - String to convert
         \return String converted to UPPER case
     */
-    static std::string ToUpper(const std::string& str);
+    static std::string ToUpper(std::string_view str);
 
     //! Convert the given string to lower case
     /*!
@@ -97,19 +97,19 @@ public:
         \param str - String to trim
         \return Trimmed string
     */
-    static std::string ToLTrim(const std::string str);
+    static std::string ToLTrim(std::string_view str);
     //! Trims space characters from the end of the given constant string
     /*!
         \param str - String to trim
         \return Trimmed string
     */
-    static std::string ToRTrim(const std::string str);
+    static std::string ToRTrim(std::string_view str);
     //! Trims space characters from the both sides of the given constant string
     /*!
         \param str - String to trim
         \return Trimmed string
     */
-    static std::string ToTrim(const std::string str);
+    static std::string ToTrim(std::string_view str);
 
     //! Trims space characters from the start of the given string
     /*!
@@ -136,21 +136,21 @@ public:
         \param ch - Character to find
         \return 'true' if the substring was found, 'false' if the substring was not found
     */
-    static bool Contains(const std::string& str, const char ch);
+    static bool Contains(std::string_view str, const char ch);
     //! Is the given string contains the given C-string?
     /*!
         \param str - String to search in
         \param substr - Substring to find
         \return 'true' if the substring was found, 'false' if the substring was not found
     */
-    static bool Contains(const std::string& str, const char* substr);
+    static bool Contains(std::string_view str, const char* substr);
     //! Is the given string contains the given substring?
     /*!
         \param str - String to search in
         \param substr - Substring to find
         \return 'true' if the substring was found, 'false' if the substring was not found
     */
-    static bool Contains(const std::string& str, const std::string& substr);
+    static bool Contains(std::string_view str, std::string_view substr);
 
     //! Count all occurrences of substring
     /*!
@@ -158,7 +158,7 @@ public:
         \param substr - Substring to find
         \return Count of all substring occurrences
     */
-    static size_t CountAll(const std::string& str, const std::string& substr);
+    static size_t CountAll(std::string_view str, std::string_view substr);
 
     //! Replace the first occurrence of substring with another substring
     /*!
@@ -167,7 +167,7 @@ public:
         \param with - Substring to replace
         \return 'true' if first occurrence of substring was found and relapsed, 'false' if the substring was not found
     */
-    static bool ReplaceFirst(std::string& str, const std::string& substr, const std::string& with);
+    static bool ReplaceFirst(std::string& str, std::string_view substr, std::string_view with);
     //! Replace the last occurrence of substring with another substring
     /*!
         \param str - Modifying string
@@ -175,7 +175,7 @@ public:
         \param with - Substring to replace
         \return 'true' if last occurrence of substring was found and relapsed, 'false' if the substring was not found
     */
-    static bool ReplaceLast(std::string& str, const std::string& substr, const std::string& with);
+    static bool ReplaceLast(std::string& str, std::string_view substr, std::string_view with);
     //! Replace all occurrences of substring with another substring
     /*!
         \param str - Modifying string
@@ -183,7 +183,7 @@ public:
         \param with - Substring to replace
         \return 'true' if all occurrences of substring were found and relapsed, 'false' if the substring was not found
     */
-    static bool ReplaceAll(std::string& str, const std::string& substr, const std::string& with);
+    static bool ReplaceAll(std::string& str, std::string_view substr, std::string_view with);
 
     //! Checks the given string for specific prefix
     /*!
@@ -191,14 +191,14 @@ public:
         \param prefix - Prefix to check
         \return 'true' if the given string starts with the specific prefix, 'false' if the given string does not start with the specific prefix
     */
-    static bool StartsWith(const std::string& str, const std::string& prefix);
+    static bool StartsWith(std::string_view str, std::string_view prefix);
     //! Checks the given string for specific suffix
     /*!
         \param str - String to check
         \param suffix - Suffix to check
         \return 'true' if the given string ends with the specific suffix, 'false' if the given string does not end with the specific suffix
     */
-    static bool EndsWith(const std::string& str, const std::string& suffix);
+    static bool EndsWith(std::string_view str, std::string_view suffix);
 
     //! Split the string into tokens by the given delimiter character
     /*!
@@ -207,7 +207,7 @@ public:
         \param skip_empty - Skip empty substrings flag (default is false)
         \return Vector of tokens
     */
-    static std::vector<std::string> Split(const std::string& str, char delimiter, bool skip_empty = false);
+    static std::vector<std::string> Split(std::string_view str, char delimiter, bool skip_empty = false);
     //! Split the string into tokens by the given delimiter string
     /*!
         \param str - String to split
@@ -215,7 +215,7 @@ public:
         \param skip_empty - Skip empty substrings flag (default is false)
         \return Vector of tokens
     */
-    static std::vector<std::string> Split(const std::string& str, const std::string& delimiter, bool skip_empty = false);
+    static std::vector<std::string> Split(std::string_view str, std::string_view delimiter, bool skip_empty = false);
     //! Split the string into tokens by the any character in the given delimiter string
     /*!
         \param str - String to split
@@ -223,7 +223,7 @@ public:
         \param skip_empty - Skip empty substrings flag (default is false)
         \return Vector of string tokens
     */
-    static std::vector<std::string> SplitByAny(const std::string& str, const std::string& delimiters, bool skip_empty = false);
+    static std::vector<std::string> SplitByAny(std::string_view str, std::string_view delimiters, bool skip_empty = false);
 
     //! Join tokens into the string
     /*!
@@ -259,7 +259,7 @@ public:
         \param skip_blank - Skip blank tokens flag (default is false)
         \return Joined string
     */
-    static std::string Join(const std::vector<std::string>& tokens, const std::string& delimiter, bool skip_empty = false, bool skip_blank = false);
+    static std::string Join(const std::vector<std::string>& tokens, std::string_view delimiter, bool skip_empty = false, bool skip_blank = false);
 
     //! Converts arbitrary datatypes into string using std::ostringstream
     /*!
@@ -274,7 +274,7 @@ public:
         \return Result converted value
     */
     template <typename T>
-    static T FromString(const std::string& str);
+    static T FromString(std::string_view str);
 
 private:
     static char ToLowerInternal(char ch);
