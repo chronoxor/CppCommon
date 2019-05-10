@@ -101,7 +101,7 @@ template <typename T>
 inline T StringUtils::FromString(std::string_view str)
 {
     T result;
-    std::istringstream(str) >> result;
+    std::istringstream(std::string(str)) >> result;
     return result;
 }
 
