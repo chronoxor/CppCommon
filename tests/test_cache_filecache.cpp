@@ -18,7 +18,7 @@ TEST_CASE("File cache", "[CppCommon][Cache]")
     // Fill the memory cache
     cache.insert("123", "123");
     cache.insert("456", "456", CppCommon::Timespan::milliseconds(100));
-    cache.emplace("789", "789", CppCommon::Timespan::milliseconds(300));
+    cache.emplace("789", "789", CppCommon::Timespan::milliseconds(1000));
 
     std::pair<bool, std::string_view> result;
     Timestamp timeout;
