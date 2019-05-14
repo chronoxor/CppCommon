@@ -111,7 +111,8 @@ public:
 
     //! Swap two instances
     void swap(MemCache& cache) noexcept;
-    friend void swap(MemCache& cache1, MemCache& cache2) noexcept;
+    template <typename UKey, typename UValue>
+    friend void swap(MemCache<UKey, UValue>& cache1, MemCache<UKey, UValue>& cache2) noexcept;
 
 private:
     std::shared_mutex _lock;
@@ -123,8 +124,8 @@ private:
         Timespan timespan;
         TValue value;
 
-        MemCacheEntry(const TValue& value, const Timestamp& timestamp = Timestamp(), const Timespan& timespan = Timespan()) : timestamp(timestamp), timespan(timespan), value(value) {}
-        MemCacheEntry(TValue&& value, const Timestamp& timestamp = Timestamp(), const Timespan& timespan = Timespan()) : timestamp(timestamp), timespan(timespan), value(value) {}
+        MemCacheEntry(const TValue& v, const Timestamp& stamp = Timestamp(), const Timespan& span = Timespan()) : timestamp(stamp), timespan(span), value(v) {}
+        MemCacheEntry(TValue&& v, const Timestamp& stamp = Timestamp(), const Timespan& span = Timespan()) : timestamp(stamp), timespan(span), value(v) {}
     };
 
     std::unordered_map<TKey, MemCacheEntry> _entries_by_key;
