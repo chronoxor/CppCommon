@@ -28,6 +28,7 @@ var searchData=
   ['_7eexception',['~Exception',['../class_cpp_common_1_1_exception.html#ab7ef6e64560da3c0bcea0b3597b1b717',1,'CppCommon::Exception']]],
   ['_7eexceptionshandler',['~ExceptionsHandler',['../class_cpp_common_1_1_exceptions_handler.html#a2b15986bf041a47e77cf4aba900fbc1f',1,'CppCommon::ExceptionsHandler']]],
   ['_7efile',['~File',['../class_cpp_common_1_1_file.html#a65494c1f50a8c989b1ef19ac6ab15175',1,'CppCommon::File']]],
+  ['_7efilecache',['~FileCache',['../class_cpp_common_1_1_file_cache.html#a86a16a1f854f6b5ec3d5c40c9017dd09',1,'CppCommon::FileCache']]],
   ['_7efilelock',['~FileLock',['../class_cpp_common_1_1_file_lock.html#aea0067462a9b1160b6327f80343e2bba',1,'CppCommon::FileLock']]],
   ['_7eflags',['~Flags',['../class_cpp_common_1_1_flags.html#a918b854c67f2d0a2ee056cbd7893d4bb',1,'CppCommon::Flags']]],
   ['_7eflatmap',['~FlatMap',['../class_cpp_common_1_1_flat_map.html#a216edfde8a23c4d4ea5dd1109df52e3c',1,'CppCommon::FlatMap']]],
