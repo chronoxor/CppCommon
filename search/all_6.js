@@ -13,7 +13,7 @@ var searchData=
   ['file_5flock_2ecpp',['file_lock.cpp',['../file__lock_8cpp.html',1,'']]],
   ['file_5flock_2eh',['file_lock.h',['../file__lock_8h.html',1,'']]],
   ['fileattributes',['FileAttributes',['../namespace_cpp_common.html#af3227fe73424d43d02a24275b3177a6d',1,'CppCommon']]],
-  ['filecache',['FileCache',['../class_cpp_common_1_1_file_cache.html#af4c636721e19b4695c3cc9323e822dc0',1,'CppCommon::FileCache::FileCache()=default'],['../class_cpp_common_1_1_file_cache.html#a60763f06cb84e4a755cbc4c6d8a055a5',1,'CppCommon::FileCache::FileCache(const FileCache &amp;)=default'],['../class_cpp_common_1_1_file_cache.html#aad7b2c64ccccfcddb4976c9c6bc2e02b',1,'CppCommon::FileCache::FileCache(FileCache &amp;&amp;)=default']]],
+  ['filecache',['FileCache',['../class_cpp_common_1_1_file_cache.html#af4c636721e19b4695c3cc9323e822dc0',1,'CppCommon::FileCache::FileCache()=default'],['../class_cpp_common_1_1_file_cache.html#a56329989f088ad58c24939150cbe29ab',1,'CppCommon::FileCache::FileCache(const FileCache &amp;)=delete'],['../class_cpp_common_1_1_file_cache.html#af50c3a31639d07c3d6f0cba9156c0665',1,'CppCommon::FileCache::FileCache(FileCache &amp;&amp;)=delete']]],
   ['filecache',['FileCache',['../class_cpp_common_1_1_file_cache.html',1,'CppCommon']]],
   ['filecache_2ecpp',['filecache.cpp',['../filecache_8cpp.html',1,'']]],
   ['filecache_2eh',['filecache.h',['../filecache_8h.html',1,'']]],
