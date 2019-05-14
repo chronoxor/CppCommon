@@ -31,12 +31,12 @@ class FileCache
 {
 public:
     FileCache() = default;
-    FileCache(const FileCache&) = default;
-    FileCache(FileCache&&) = default;
+    FileCache(const FileCache&) = delete;
+    FileCache(FileCache&&) = delete;
     ~FileCache() = default;
 
-    FileCache& operator=(const FileCache&) = default;
-    FileCache& operator=(FileCache&&) = default;
+    FileCache& operator=(const FileCache&) = delete;
+    FileCache& operator=(FileCache&&) = delete;
 
     //! Check if the file cache is not empty
     explicit operator bool() const { return !empty(); }
