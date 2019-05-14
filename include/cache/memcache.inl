@@ -184,8 +184,8 @@ inline void MemCache<TKey, TValue>::watchdog(const UtcTimestamp& utc)
 template <typename TKey, typename TValue>
 inline void MemCache<TKey, TValue>::swap(MemCache& cache) noexcept
 {
-    std::unique_lock<std::shared_mutex> locker(_lock);
-    std::unique_lock<std::shared_mutex> locker(cache._lock);
+    std::unique_lock<std::shared_mutex> locker1(_lock);
+    std::unique_lock<std::shared_mutex> locker2(cache._lock);
 
     using std::swap;
     swap(_timestamp, cache._timestamp);
