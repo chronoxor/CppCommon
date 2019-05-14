@@ -30,12 +30,12 @@ class MemCache
 {
 public:
     MemCache() = default;
-    MemCache(const MemCache&) = default;
-    MemCache(MemCache&&) = default;
+    MemCache(const MemCache&) = delete;
+    MemCache(MemCache&&) = delete;
     ~MemCache() = default;
 
-    MemCache& operator=(const MemCache&) = default;
-    MemCache& operator=(MemCache&&) = default;
+    MemCache& operator=(const MemCache&) = delete;
+    MemCache& operator=(MemCache&&) = delete;
 
     //! Check if the memory cache is not empty
     explicit operator bool() const { return !empty(); }
