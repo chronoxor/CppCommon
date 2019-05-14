@@ -19,13 +19,13 @@ int main(int argc, char** argv)
     cache.insert("123", 123);
     cache.insert("456", 456, CppCommon::Timespan::milliseconds(100));
 
-    int value;
+    int result;
 
     // Get the memory cache values
-    if (cache.find("123", value))
-        std::cout << "Found: " << value << std::endl;
-    if (cache.find("456", value))
-        std::cout << "Found: " << value << std::endl;
+    if (cache.find("123", result))
+        std::cout << "Found: " << result << std::endl;
+    if (cache.find("456", result))
+        std::cout << "Found: " << result << std::endl;
 
     // Sleep for a while...
     CppCommon::Thread::SleepFor(CppCommon::Timespan::milliseconds(200));
@@ -34,10 +34,10 @@ int main(int argc, char** argv)
     cache.watchdog();
 
     // Get the memory cache values
-    if (cache.find("123", value))
-        std::cout << "Found: " << value << std::endl;
-    if (cache.find("456", value))
-        std::cout << "Found: " << value << std::endl;
+    if (cache.find("123", result))
+        std::cout << "Found: " << result << std::endl;
+    if (cache.find("456", result))
+        std::cout << "Found: " << result << std::endl;
 
     return 0;
 }

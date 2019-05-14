@@ -20,19 +20,19 @@ TEST_CASE("Memory cache", "[CppCommon][Cache]")
     cache.insert("456", 456, CppCommon::Timespan::milliseconds(100));
     cache.emplace("789", 789, CppCommon::Timespan::milliseconds(300));
 
-    int value;
+    int result;
     Timestamp timeout;
 
     // Get the memory cache values
     REQUIRE(cache.find("123"));
-    REQUIRE(cache.find("123", value));
-    REQUIRE(value == 123);
+    REQUIRE(cache.find("123", result));
+    REQUIRE(result == 123);
     REQUIRE(cache.find("456"));
-    REQUIRE(cache.find("456", value));
-    REQUIRE(value == 456);
+    REQUIRE(cache.find("456", result));
+    REQUIRE(result == 456);
     REQUIRE(cache.find("789"));
-    REQUIRE(cache.find("789", value, timeout));
-    REQUIRE(value == 789);
+    REQUIRE(cache.find("789", result, timeout));
+    REQUIRE(result == 789);
     REQUIRE(timeout > UtcTimestamp());
 
     // Sleep for a while...
@@ -43,12 +43,12 @@ TEST_CASE("Memory cache", "[CppCommon][Cache]")
 
     // Get the memory cache values
     REQUIRE(cache.find("123"));
-    REQUIRE(cache.find("123", value));
-    REQUIRE(value == 123);
+    REQUIRE(cache.find("123", result));
+    REQUIRE(result == 123);
     REQUIRE(!cache.find("456"));
     REQUIRE(cache.find("789"));
-    REQUIRE(cache.find("789", value, timeout));
-    REQUIRE(value == 789);
+    REQUIRE(cache.find("789", result, timeout));
+    REQUIRE(result == 789);
     REQUIRE(timeout > UtcTimestamp());
 
     // Remove the memory cache values
