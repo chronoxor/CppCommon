@@ -19,8 +19,9 @@ int main(int argc, char** argv)
     cache.insert("123", 123);
     cache.insert("456", 456, CppCommon::Timespan::milliseconds(100));
 
-    // Get the memory cache values
     int value;
+
+    // Get the memory cache values
     if (cache.find("123", value))
         std::cout << "Found: " << value << std::endl;
     if (cache.find("456", value))

@@ -119,8 +119,8 @@ inline bool MemCache<TKey, TValue>::find(const TKey& key, TValue& value, Timesta
     if (it == _entries_by_key.end())
         return false;
 
-    value = it.second.value;
-    timeout = Timestamp((it.second.timestamp + it.second.timespan).total());
+    value = it->second.value;
+    timeout = Timestamp((it->second.timestamp + it->second.timespan).total());
     return true;
 }
 

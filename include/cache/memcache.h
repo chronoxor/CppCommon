@@ -115,7 +115,7 @@ public:
     friend void swap(MemCache<UKey, UValue>& cache1, MemCache<UKey, UValue>& cache2) noexcept;
 
 private:
-    std::shared_mutex _lock;
+    mutable std::shared_mutex _lock;
     Timestamp _timestamp;
 
     struct MemCacheEntry
