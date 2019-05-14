@@ -9,21 +9,21 @@
 namespace CppCommon {
 
 template <typename TKey, typename TValue>
-inline bool MemCache<TKey, TValue>::empty() const noexcept
+inline bool MemCache<TKey, TValue>::empty() const
 {
     std::shared_lock<std::shared_mutex> locker(_lock);
     return _entries_by_key.empty();
 }
 
 template <typename TKey, typename TValue>
-inline size_t MemCache<TKey, TValue>::size() const noexcept
+inline size_t MemCache<TKey, TValue>::size() const
 {
     std::shared_lock<std::shared_mutex> locker(_lock);
     return _entries_by_key.size();
 }
 
 template <typename TKey, typename TValue>
-inline void MemCache<TKey, TValue>::insert(const TKey& key, const TValue& value) noexcept
+inline void MemCache<TKey, TValue>::insert(const TKey& key, const TValue& value)
 {
     std::unique_lock<std::shared_mutex> locker(_lock);
 
@@ -34,7 +34,7 @@ inline void MemCache<TKey, TValue>::insert(const TKey& key, const TValue& value)
 }
 
 template <typename TKey, typename TValue>
-inline void MemCache<TKey, TValue>::insert(const TKey& key, const TValue& value, const Timespan& timeout) noexcept
+inline void MemCache<TKey, TValue>::insert(const TKey& key, const TValue& value, const Timespan& timeout)
 {
     std::unique_lock<std::shared_mutex> locker(_lock);
 
@@ -53,7 +53,7 @@ inline void MemCache<TKey, TValue>::insert(const TKey& key, const TValue& value,
 }
 
 template <typename TKey, typename TValue>
-inline void MemCache<TKey, TValue>::emplace(TKey&& key, TValue&& value) noexcept
+inline void MemCache<TKey, TValue>::emplace(TKey&& key, TValue&& value)
 {
     std::unique_lock<std::shared_mutex> locker(_lock);
 
@@ -64,7 +64,7 @@ inline void MemCache<TKey, TValue>::emplace(TKey&& key, TValue&& value) noexcept
 }
 
 template <typename TKey, typename TValue>
-inline void MemCache<TKey, TValue>::emplace(TKey&& key, TValue&& value, const Timespan& timeout) noexcept
+inline void MemCache<TKey, TValue>::emplace(TKey&& key, TValue&& value, const Timespan& timeout)
 {
     std::unique_lock<std::shared_mutex> locker(_lock);
 
@@ -83,7 +83,7 @@ inline void MemCache<TKey, TValue>::emplace(TKey&& key, TValue&& value, const Ti
 }
 
 template <typename TKey, typename TValue>
-inline bool MemCache<TKey, TValue>::find(const TKey& key) noexcept
+inline bool MemCache<TKey, TValue>::find(const TKey& key)
 {
     std::shared_lock<std::shared_mutex> locker(_lock);
 
@@ -96,7 +96,7 @@ inline bool MemCache<TKey, TValue>::find(const TKey& key) noexcept
 }
 
 template <typename TKey, typename TValue>
-inline bool MemCache<TKey, TValue>::find(const TKey& key, TValue& value) noexcept
+inline bool MemCache<TKey, TValue>::find(const TKey& key, TValue& value)
 {
     std::shared_lock<std::shared_mutex> locker(_lock);
 
@@ -110,7 +110,7 @@ inline bool MemCache<TKey, TValue>::find(const TKey& key, TValue& value) noexcep
 }
 
 template <typename TKey, typename TValue>
-inline bool MemCache<TKey, TValue>::find(const TKey& key, TValue& value, Timestamp& timeout) noexcept
+inline bool MemCache<TKey, TValue>::find(const TKey& key, TValue& value, Timestamp& timeout)
 {
     std::shared_lock<std::shared_mutex> locker(_lock);
 
@@ -125,7 +125,7 @@ inline bool MemCache<TKey, TValue>::find(const TKey& key, TValue& value, Timesta
 }
 
 template <typename TKey, typename TValue>
-inline bool MemCache<TKey, TValue>::remove(const TKey& key) noexcept
+inline bool MemCache<TKey, TValue>::remove(const TKey& key)
 {
     std::unique_lock<std::shared_mutex> locker(_lock);
 
@@ -133,7 +133,7 @@ inline bool MemCache<TKey, TValue>::remove(const TKey& key) noexcept
 }
 
 template <typename TKey, typename TValue>
-inline bool MemCache<TKey, TValue>::remove_internal(const TKey& key) noexcept
+inline bool MemCache<TKey, TValue>::remove_internal(const TKey& key)
 {
     // Try to find the given key
     auto it = _entries_by_key.find(key);
@@ -151,7 +151,7 @@ inline bool MemCache<TKey, TValue>::remove_internal(const TKey& key) noexcept
 }
 
 template <typename TKey, typename TValue>
-inline void MemCache<TKey, TValue>::clear() noexcept
+inline void MemCache<TKey, TValue>::clear()
 {
     std::unique_lock<std::shared_mutex> locker(_lock);
 
@@ -161,7 +161,7 @@ inline void MemCache<TKey, TValue>::clear() noexcept
 }
 
 template <typename TKey, typename TValue>
-inline void MemCache<TKey, TValue>::watchdog(const UtcTimestamp& utc) noexcept
+inline void MemCache<TKey, TValue>::watchdog(const UtcTimestamp& utc)
 {
     auto it_by_timestamp = _entries_by_timestamp.begin();
     while (it_by_timestamp != _entries_by_timestamp.end())
