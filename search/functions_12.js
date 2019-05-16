@@ -17,6 +17,7 @@ var searchData=
   ['setmodified',['SetModified',['../class_cpp_common_1_1_path.html#a9a54edb1eeff4fd99b84368e3dccbd2d',1,'CppCommon::Path']]],
   ['setpermissions',['SetPermissions',['../class_cpp_common_1_1_path.html#ae21b4a0733f37ee754e73025da3a36cb',1,'CppCommon::Path']]],
   ['setpriority',['SetPriority',['../class_cpp_common_1_1_thread.html#ab8c8eac5668fde8a92759801a8f08ee2',1,'CppCommon::Thread::SetPriority(Priority priority)'],['../class_cpp_common_1_1_thread.html#a4ee7f9ba607e8275451aa2756b9cf8e8',1,'CppCommon::Thread::SetPriority(std::thread &amp;thread, Priority priority)']]],
+  ['setup',['setup',['../class_cpp_common_1_1_file_cache.html#a79777d6876ac9303eadd3ef412cabc0e',1,'CppCommon::FileCache']]],
   ['setuphandler',['SetupHandler',['../class_cpp_common_1_1_exceptions_handler.html#a778d7b222d49830b04146ac3d4875785',1,'CppCommon::ExceptionsHandler']]],
   ['setupprocess',['SetupProcess',['../class_cpp_common_1_1_exceptions_handler.html#a321550d497623deb6aedbdfce88fdea8',1,'CppCommon::ExceptionsHandler']]],
   ['setupthread',['SetupThread',['../class_cpp_common_1_1_exceptions_handler.html#a828d405af757779eb277bb5a6c0877dc',1,'CppCommon::ExceptionsHandler']]],
