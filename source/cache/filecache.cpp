@@ -59,7 +59,7 @@ bool FileCache::insert_path(const CppCommon::Path& path, const std::string& pref
         // Iterate through all directory entries
         for (const auto& entry : CppCommon::Directory(path))
         {
-            const std::string key = prefix + CppCommon::Encoding::URLDecode(entry.filename().string());
+            const std::string key = key_prefix + CppCommon::Encoding::URLDecode(entry.filename().string());
 
             if (entry.IsDirectory())
             {
