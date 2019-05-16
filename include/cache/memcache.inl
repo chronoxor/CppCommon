@@ -23,48 +23,7 @@ inline size_t MemCache<TKey, TValue>::size() const
 }
 
 template <typename TKey, typename TValue>
-inline void MemCache<TKey, TValue>::insert(const TKey& key, const TValue& value)
-{
-    std::unique_lock<std::shared_mutex> locker(_lock);
-
-    // Try to find and remove the previous key
-    remove_internal(key);
-
-    _entries_by_key.insert(std::make_pair(key, MemCacheEntry(value)));
-}
-
-template <typename TKey, typename TValue>
-inline void MemCache<TKey, TValue>::insert(const TKey& key, const TValue& value, const Timespan& timeout)
-{
-    std::unique_lock<std::shared_mutex> locker(_lock);
-
-    // Try to find and remove the previous key
-    remove_internal(key);
-
-    if (timeout.total() > 0)
-    {
-        Timestamp current = UtcTimestamp();
-        _timestamp = (current <= _timestamp) ? _timestamp + 1 : current;
-        _entries_by_key.insert(std::make_pair(key, MemCacheEntry(value, _timestamp, timeout)));
-        _entries_by_timestamp.insert(std::make_pair(_timestamp, key));
-    }
-    else
-        _entries_by_key.insert(std::make_pair(key, MemCacheEntry(value)));
-}
-
-template <typename TKey, typename TValue>
-inline void MemCache<TKey, TValue>::emplace(TKey&& key, TValue&& value)
-{
-    std::unique_lock<std::shared_mutex> locker(_lock);
-
-    // Try to find and remove the previous key
-    remove_internal(key);
-
-    _entries_by_key.emplace(std::make_pair(std::move(key), MemCacheEntry(std::move(value))));
-}
-
-template <typename TKey, typename TValue>
-inline void MemCache<TKey, TValue>::emplace(TKey&& key, TValue&& value, const Timespan& timeout)
+inline bool MemCache<TKey, TValue>::emplace(TKey&& key, TValue&& value, const Timespan& timeout)
 {
     std::unique_lock<std::shared_mutex> locker(_lock);
 
@@ -80,6 +39,29 @@ inline void MemCache<TKey, TValue>::emplace(TKey&& key, TValue&& value, const Ti
     }
     else
         _entries_by_key.emplace(std::make_pair(std::move(key), MemCacheEntry(std::move(value))));
+
+    return true;
+}
+
+template <typename TKey, typename TValue>
+inline bool MemCache<TKey, TValue>::insert(const TKey& key, const TValue& value, const Timespan& timeout)
+{
+    std::unique_lock<std::shared_mutex> locker(_lock);
+
+    // Try to find and remove the previous key
+    remove_internal(key);
+
+    if (timeout.total() > 0)
+    {
+        Timestamp current = UtcTimestamp();
+        _timestamp = (current <= _timestamp) ? _timestamp + 1 : current;
+        _entries_by_key.insert(std::make_pair(key, MemCacheEntry(value, _timestamp, timeout)));
+        _entries_by_timestamp.insert(std::make_pair(_timestamp, key));
+    }
+    else
+        _entries_by_key.insert(std::make_pair(key, MemCacheEntry(value)));
+
+    return true;
 }
 
 template <typename TKey, typename TValue>

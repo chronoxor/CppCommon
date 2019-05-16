@@ -46,33 +46,23 @@ public:
     //! Get the memory cache size
     size_t size() const;
 
-    //! Insert a new cache value into the memory cache
-    /*!
-        \param key - Key to insert
-        \param value - Value to insert
-    */
-    void insert(const TKey& key, const TValue& value);
-    //! Insert a new cache value with the given timeout into the memory cache
-    /*!
-        \param key - Key to insert
-        \param value - Value to insert
-        \param timeout - Cache timeout
-    */
-    void insert(const TKey& key, const TValue& value, const Timespan& timeout);
-
-    //! Emplace a new cache value into the memory cache
-    /*!
-        \param key - Key to emplace
-        \param value - Value to emplace
-    */
-    void emplace(TKey&& key, TValue&& value);
     //! Emplace a new cache value with the given timeout into the memory cache
     /*!
         \param key - Key to emplace
         \param value - Value to emplace
-        \param timeout - Cache timeout
+        \param timeout - Cache timeout (default is 0 - no timeout)
+        \return 'true' if the cache value was emplaced, 'false' if the given key was not emplaced
     */
-    void emplace(TKey&& key, TValue&& value, const Timespan& timeout);
+    bool emplace(TKey&& key, TValue&& value, const Timespan& timeout = Timespan(0));
+
+    //! Insert a new cache value with the given timeout into the memory cache
+    /*!
+        \param key - Key to insert
+        \param value - Value to insert
+        \param timeout - Cache timeout (default is 0 - no timeout)
+        \return 'true' if the cache value was inserted, 'false' if the given key was not inserted
+    */
+    bool insert(const TKey& key, const TValue& value, const Timespan& timeout = Timespan(0));
 
     //! Try to find the cache value by the given key
     /*!

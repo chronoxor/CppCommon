@@ -9,6 +9,9 @@
 #ifndef CPPCOMMON_CACHE_FILECACHE_H
 #define CPPCOMMON_CACHE_FILECACHE_H
 
+#include "filesystem/directory.h"
+#include "filesystem/file.h"
+#include "filesystem/path.h"
 #include "time/timespan.h"
 #include "time/timestamp.h"
 
@@ -47,33 +50,33 @@ public:
     //! Get the file cache size
     size_t size() const;
 
-    //! Insert a new cache value into the file cache
-    /*!
-        \param key - Key to insert
-        \param value - Value to insert
-    */
-    void insert(const std::string& key, const std::string& value);
-    //! Insert a new cache value with the given timeout into the file cache
-    /*!
-        \param key - Key to insert
-        \param value - Value to insert
-        \param timeout - Cache timeout
-    */
-    void insert(const std::string& key, const std::string& value, const Timespan& timeout);
-
-    //! Emplace a new cache value into the file cache
-    /*!
-        \param key - Key to emplace
-        \param value - Value to emplace
-    */
-    void emplace(std::string&& key, std::string&& value);
     //! Emplace a new cache value with the given timeout into the file cache
     /*!
         \param key - Key to emplace
         \param value - Value to emplace
-        \param timeout - Cache timeout
+        \param timeout - Cache timeout (default is 0 - no timeout)
+        \return 'true' if the cache value was emplaced, 'false' if the given key was not emplaced
     */
-    void emplace(std::string&& key, std::string&& value, const Timespan& timeout);
+    bool emplace(std::string&& key, std::string&& value, const Timespan& timeout = Timespan(0));
+
+    //! Insert a new cache value with the given timeout into the file cache
+    /*!
+        \param key - Key to insert
+        \param value - Value to insert
+        \param timeout - Cache timeout (default is 0 - no timeout)
+        \return 'true' if the cache value was inserted, 'false' if the given key was not inserted
+    */
+    bool insert(const std::string& key, const std::string& value, const Timespan& timeout = Timespan(0));
+
+    //! Insert a new cache path with the given timeout into the file cache
+    /*!
+        \param path - Path to insert
+        \param header - Cache header (default is "")
+        \param prefix - Cache prefix (default is "/")
+        \param timeout - Cache timeout (default is 0 - no timeout)
+        \return 'true' if the cache value was inserted, 'false' if the given key was not inserted
+    */
+    bool insert_path(const CppCommon::Path& path, const std::string& header = "", const std::string& prefix = "/", const Timespan& timeout = Timespan(0));
 
     //! Try to find the cache value by the given key
     /*!
@@ -123,6 +126,7 @@ private:
 
     std::unordered_map<std::string, MemCacheEntry> _entries_by_key;
     std::map<Timestamp, std::string> _entries_by_timestamp;
+    std::map<Timestamp, CppCommon::Path> _path_by_timestamp;
 
     bool remove_internal(const std::string& key);
 };

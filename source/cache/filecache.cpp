@@ -10,45 +10,7 @@
 
 namespace CppCommon {
 
-void FileCache::insert(const std::string& key, const std::string& value)
-{
-    std::unique_lock<std::shared_mutex> locker(_lock);
-
-    // Try to find and remove the previous key
-    remove_internal(key);
-
-    _entries_by_key.insert(std::make_pair(key, MemCacheEntry(value)));
-}
-
-void FileCache::insert(const std::string& key, const std::string& value, const Timespan& timeout)
-{
-    std::unique_lock<std::shared_mutex> locker(_lock);
-
-    // Try to find and remove the previous key
-    remove_internal(key);
-
-    if (timeout.total() > 0)
-    {
-        Timestamp current = UtcTimestamp();
-        _timestamp = (current <= _timestamp) ? _timestamp + 1 : current;
-        _entries_by_key.insert(std::make_pair(key, MemCacheEntry(value, _timestamp, timeout)));
-        _entries_by_timestamp.insert(std::make_pair(_timestamp, key));
-    }
-    else
-        _entries_by_key.insert(std::make_pair(key, MemCacheEntry(value)));
-}
-
-void FileCache::emplace(std::string&& key, std::string&& value)
-{
-    std::unique_lock<std::shared_mutex> locker(_lock);
-
-    // Try to find and remove the previous key
-    remove_internal(key);
-
-    _entries_by_key.emplace(std::make_pair(std::move(key), MemCacheEntry(std::move(value))));
-}
-
-void FileCache::emplace(std::string&& key, std::string&& value, const Timespan& timeout)
+bool FileCache::emplace(std::string&& key, std::string&& value, const Timespan& timeout)
 {
     std::unique_lock<std::shared_mutex> locker(_lock);
 
@@ -64,6 +26,62 @@ void FileCache::emplace(std::string&& key, std::string&& value, const Timespan& 
     }
     else
         _entries_by_key.emplace(std::make_pair(std::move(key), MemCacheEntry(std::move(value))));
+
+    return true;
+}
+
+bool FileCache::insert(const std::string& key, const std::string& value, const Timespan& timeout)
+{
+    std::unique_lock<std::shared_mutex> locker(_lock);
+
+    // Try to find and remove the previous key
+    remove_internal(key);
+
+    if (timeout.total() > 0)
+    {
+        Timestamp current = UtcTimestamp();
+        _timestamp = (current <= _timestamp) ? _timestamp + 1 : current;
+        _entries_by_key.insert(std::make_pair(key, MemCacheEntry(value, _timestamp, timeout)));
+        _entries_by_timestamp.insert(std::make_pair(_timestamp, key));
+    }
+    else
+        _entries_by_key.insert(std::make_pair(key, MemCacheEntry(value)));
+
+    return true;
+}
+
+bool FileCache::insert_path(const CppCommon::Path& path, const std::string& header, const std::string& prefix, const Timespan& timeout)
+{
+    try
+    {
+        const std::string key_prefix = (prefix.empty() || (prefix == "/")) ? "/" : (prefix + "/");
+
+        // Iterate through all directory entries
+        for (const auto& entry : CppCommon::Directory(path))
+        {
+            const std::string key = prefix + CppCommon::Encoding::URLDecode(entry.filename().string());
+
+            if (entry.IsDirectory())
+            {
+                // Recursively load sub-directory
+                insert_path(entry, header, key, timeout);
+            }
+            else
+            {
+                try
+                {
+                    // Load file content
+                    auto content = CppCommon::File::ReadAllBytes(entry);
+                    std::string value(content.begin(), content.end());
+                    insert(key, value, timeout);
+                }
+                catch (const CppCommon::FileSystemException&) {}
+            }
+        }
+
+        return true;
+    }
+    catch (const CppCommon::FileSystemException&) { return false; }
 }
 
 std::pair<bool, std::string_view> FileCache::find(const std::string& key)
