@@ -22,11 +22,11 @@ bool FileCache::emplace(std::string&& key, std::string&& value, const Timespan& 
     {
         Timestamp current = UtcTimestamp();
         _timestamp = (current <= _timestamp) ? _timestamp + 1 : current;
-        _entries_by_key.insert(std::make_pair(key, MemCacheEntry(std::move(value), _timestamp, timeout)));
-        _entries_by_timestamp.insert(std::make_pair(_timestamp, key));
+        _entries_by_key.insert(std::make_pair(key, FileCacheEntry(std::move(value), _timestamp + timeout)));
+        _entries_by_timeout.insert(std::make_pair(_timestamp + timeout, key));
     }
     else
-        _entries_by_key.emplace(std::make_pair(std::move(key), MemCacheEntry(std::move(value))));
+        _entries_by_key.emplace(std::make_pair(std::move(key), FileCacheEntry(std::move(value))));
 
     return true;
 }
@@ -43,11 +43,11 @@ bool FileCache::insert(const std::string& key, const std::string& value, const T
     {
         Timestamp current = UtcTimestamp();
         _timestamp = (current <= _timestamp) ? _timestamp + 1 : current;
-        _entries_by_key.insert(std::make_pair(key, MemCacheEntry(value, _timestamp, timeout)));
-        _entries_by_timestamp.insert(std::make_pair(_timestamp, key));
+        _entries_by_key.insert(std::make_pair(key, FileCacheEntry(value, _timestamp + timeout)));
+        _entries_by_timeout.insert(std::make_pair(_timestamp + timeout, key));
     }
     else
-        _entries_by_key.insert(std::make_pair(key, MemCacheEntry(value)));
+        _entries_by_key.insert(std::make_pair(key, FileCacheEntry(value)));
 
     return true;
 }
@@ -65,7 +65,7 @@ bool FileCache::setup(const CppCommon::Path& path, const std::string& prefix, co
     {
         Timestamp current = UtcTimestamp();
         _timestamp = (current <= _timestamp) ? _timestamp + 1 : current;
-        _path_by_timestamp.insert(std::make_pair(_timestamp, std::make_tuple(path, prefix, timeout, handler)));
+        _paths_by_timeout.insert(std::make_pair(_timestamp + timeout, std::make_tuple(path, prefix, timeout, handler)));
     }
 
     return true;
@@ -128,7 +128,7 @@ std::pair<bool, std::string_view> FileCache::find(const std::string& key, Timest
     if (it == _entries_by_key.end())
         return std::make_pair(false, std::string_view());
 
-    timeout = Timestamp((it->second.timestamp + it->second.timespan).total());
+    timeout = it->second.timeout;
     return std::make_pair(true, std::string_view(it->second.value));
 }
 
@@ -147,8 +147,8 @@ bool FileCache::remove_internal(const std::string& key)
         return false;
 
     // Try to erase cache entry by timestamp
-    if (it->second.timestamp.total() > 0)
-        _entries_by_timestamp.erase(it->second.timestamp);
+    if (it->second.timeout.total() > 0)
+        _entries_by_timeout.erase(it->second.timeout);
 
     // Erase cache entry
     _entries_by_key.erase(it);
@@ -162,23 +162,44 @@ void FileCache::clear()
 
     // Clear all cache entries
     _entries_by_key.clear();
-    _entries_by_timestamp.clear();
+    _entries_by_timeout.clear();
 }
 
 void FileCache::watchdog(const UtcTimestamp& utc)
 {
-    auto it_by_timestamp = _entries_by_timestamp.begin();
-    while (it_by_timestamp != _entries_by_timestamp.end())
+    // Watchdog for cache entries
+    auto it_entry_by_timeout = _entries_by_timeout.begin();
+    while (it_entry_by_timeout != _entries_by_timeout.end())
     {
-        auto it_by_key = _entries_by_key.find(it_by_timestamp->second);
-
         // Check for the cache entry timeout
-        if ((it_by_key->second.timestamp + it_by_key->second.timespan) <= utc)
+        if (it_entry_by_timeout->first <= utc)
         {
-            // Erase cache entry with timeout
-            _entries_by_key.erase(it_by_key);
-            _entries_by_timestamp.erase(it_by_timestamp);
-            it_by_timestamp = _entries_by_timestamp.begin();
+            // Erase the cache entry with timeout
+            auto it_entry_by_key = _entries_by_key.find(it_entry_by_timeout->second);
+            _entries_by_key.erase(it_entry_by_key);
+            _entries_by_timeout.erase(it_entry_by_timeout);
+            it_entry_by_timeout = _entries_by_timeout.begin();
+            continue;
+        }
+        else
+            break;
+    }
+
+    // Watchdog for cache paths
+    auto it_path_by_timeout = _paths_by_timeout.begin();
+    while (it_path_by_timeout != _paths_by_timeout.end())
+    {
+        // Check for the cache entry timeout
+        if (it_path_by_timeout->first <= utc)
+        {
+            // Update the cache path with timeout
+            auto path = std::get<0>(it_path_by_timeout->second);
+            auto prefix = std::get<1>(it_path_by_timeout->second);
+            auto timeout = std::get<2>(it_path_by_timeout->second);
+            auto handler = std::get<3>(it_path_by_timeout->second);
+            _paths_by_timeout.erase(it_path_by_timeout);
+            setup(path, prefix, timeout, handler);
+            it_path_by_timeout = _paths_by_timeout.begin();
             continue;
         }
         else
@@ -194,7 +215,8 @@ void FileCache::swap(FileCache& cache) noexcept
     using std::swap;
     swap(_timestamp, cache._timestamp);
     swap(_entries_by_key, cache._entries_by_key);
-    swap(_entries_by_timestamp, cache._entries_by_timestamp);
+    swap(_entries_by_timeout, cache._entries_by_timeout);
+    swap(_paths_by_timeout, cache._paths_by_timeout);
 }
 
 } // namespace CppCommon

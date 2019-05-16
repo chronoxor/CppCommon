@@ -119,19 +119,18 @@ private:
     mutable std::shared_mutex _lock;
     Timestamp _timestamp;
 
-    struct MemCacheEntry
+    struct FileCacheEntry
     {
-        Timestamp timestamp;
-        Timespan timespan;
         std::string value;
+        Timestamp timeout;
 
-        MemCacheEntry(const std::string& v, const Timestamp& stamp = Timestamp(), const Timespan& span = Timespan()) : timestamp(stamp), timespan(span), value(v) {}
-        MemCacheEntry(std::string&& v, const Timestamp& stamp = Timestamp(), const Timespan& span = Timespan()) : timestamp(stamp), timespan(span), value(v) {}
+        FileCacheEntry(const std::string& v, const Timestamp& to = Timestamp()) : value(v), timeout(to) {}
+        FileCacheEntry(std::string&& v, const Timestamp& to = Timestamp()) : value(v), timeout(to) {}
     };
 
-    std::unordered_map<std::string, MemCacheEntry> _entries_by_key;
-    std::map<Timestamp, std::string> _entries_by_timestamp;
-    std::map<Timestamp, std::tuple<CppCommon::Path, std::string, Timespan, InsertHandler>> _path_by_timestamp;
+    std::unordered_map<std::string, FileCacheEntry> _entries_by_key;
+    std::map<Timestamp, std::string> _entries_by_timeout;
+    std::map<Timestamp, std::tuple<CppCommon::Path, std::string, Timespan, InsertHandler>> _paths_by_timeout;
 
     bool remove_internal(const std::string& key);
     bool setup_internal(const CppCommon::Path& path, const std::string& prefix, const Timespan& timeout, const InsertHandler& handler);

@@ -110,16 +110,15 @@ private:
 
     struct MemCacheEntry
     {
-        Timestamp timestamp;
-        Timespan timespan;
         TValue value;
+        Timestamp timeout;
 
-        MemCacheEntry(const TValue& v, const Timestamp& stamp = Timestamp(), const Timespan& span = Timespan()) : timestamp(stamp), timespan(span), value(v) {}
-        MemCacheEntry(TValue&& v, const Timestamp& stamp = Timestamp(), const Timespan& span = Timespan()) : timestamp(stamp), timespan(span), value(v) {}
+        MemCacheEntry(const TValue& v, const Timestamp& to = Timestamp()) : value(v), timeout(to) {}
+        MemCacheEntry(TValue&& v, const Timestamp& to = Timestamp()) : value(v), timeout(to) {}
     };
 
     std::unordered_map<TKey, MemCacheEntry> _entries_by_key;
-    std::map<Timestamp, TKey> _entries_by_timestamp;
+    std::map<Timestamp, TKey> _entries_by_timeout;
 
     bool remove_internal(const TKey& key);
 };

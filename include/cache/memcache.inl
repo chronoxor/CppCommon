@@ -35,8 +35,8 @@ inline bool MemCache<TKey, TValue>::emplace(TKey&& key, TValue&& value, const Ti
     {
         Timestamp current = UtcTimestamp();
         _timestamp = (current <= _timestamp) ? _timestamp + 1 : current;
-        _entries_by_key.insert(std::make_pair(key, MemCacheEntry(std::move(value), _timestamp, timeout)));
-        _entries_by_timestamp.insert(std::make_pair(_timestamp, key));
+        _entries_by_key.insert(std::make_pair(key, MemCacheEntry(std::move(value), _timestamp + timeout)));
+        _entries_by_timeout.insert(std::make_pair(_timestamp + timeout, key));
     }
     else
         _entries_by_key.emplace(std::make_pair(std::move(key), MemCacheEntry(std::move(value))));
@@ -57,8 +57,8 @@ inline bool MemCache<TKey, TValue>::insert(const TKey& key, const TValue& value,
     {
         Timestamp current = UtcTimestamp();
         _timestamp = (current <= _timestamp) ? _timestamp + 1 : current;
-        _entries_by_key.insert(std::make_pair(key, MemCacheEntry(value, _timestamp, timeout)));
-        _entries_by_timestamp.insert(std::make_pair(_timestamp, key));
+        _entries_by_key.insert(std::make_pair(key, MemCacheEntry(value, _timestamp + timeout)));
+        _entries_by_timeout.insert(std::make_pair(_timestamp + timeout, key));
     }
     else
         _entries_by_key.insert(std::make_pair(key, MemCacheEntry(value)));
@@ -104,7 +104,7 @@ inline bool MemCache<TKey, TValue>::find(const TKey& key, TValue& value, Timesta
         return false;
 
     value = it->second.value;
-    timeout = Timestamp((it->second.timestamp + it->second.timespan).total());
+    timeout = it->second.timeout;
     return true;
 }
 
@@ -125,8 +125,8 @@ inline bool MemCache<TKey, TValue>::remove_internal(const TKey& key)
         return false;
 
     // Try to erase cache entry by timestamp
-    if (it->second.timestamp.total() > 0)
-        _entries_by_timestamp.erase(it->second.timestamp);
+    if (it->second.timeout.total() > 0)
+        _entries_by_timeout.erase(it->second.timeout);
 
     // Erase cache entry
     _entries_by_key.erase(it);
@@ -141,24 +141,24 @@ inline void MemCache<TKey, TValue>::clear()
 
     // Clear all cache entries
     _entries_by_key.clear();
-    _entries_by_timestamp.clear();
+    _entries_by_timeout.clear();
 }
 
 template <typename TKey, typename TValue>
 inline void MemCache<TKey, TValue>::watchdog(const UtcTimestamp& utc)
 {
-    auto it_by_timestamp = _entries_by_timestamp.begin();
-    while (it_by_timestamp != _entries_by_timestamp.end())
+    // Watchdog for cache entries
+    auto it_entry_by_timeout = _entries_by_timeout.begin();
+    while (it_entry_by_timeout != _entries_by_timeout.end())
     {
-        auto it_by_key = _entries_by_key.find(it_by_timestamp->second);
-
         // Check for the cache entry timeout
-        if ((it_by_key->second.timestamp + it_by_key->second.timespan) <= utc)
+        if (it_entry_by_timeout->first <= utc)
         {
-            // Erase cache entry with timeout
-            _entries_by_key.erase(it_by_key);
-            _entries_by_timestamp.erase(it_by_timestamp);
-            it_by_timestamp = _entries_by_timestamp.begin();
+            // Erase the cache entry with timeout
+            auto it_entry_by_key = _entries_by_key.find(it_entry_by_timeout->second);
+            _entries_by_key.erase(it_entry_by_key);
+            _entries_by_timeout.erase(it_entry_by_timeout);
+            it_entry_by_timeout = _entries_by_timeout.begin();
             continue;
         }
         else
@@ -175,7 +175,7 @@ inline void MemCache<TKey, TValue>::swap(MemCache& cache) noexcept
     using std::swap;
     swap(_timestamp, cache._timestamp);
     swap(_entries_by_key, cache._entries_by_key);
-    swap(_entries_by_timestamp, cache._entries_by_timestamp);
+    swap(_entries_by_timeout, cache._entries_by_timeout);
 }
 
 template <typename TKey, typename TValue>
