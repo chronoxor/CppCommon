@@ -54,11 +54,11 @@ bool FileCache::insert(const std::string& key, const std::string& value, const T
 
 bool FileCache::setup(const CppCommon::Path& path, const std::string& prefix, const Timespan& timeout, const InsertHandler& handler)
 {
-    std::unique_lock<std::shared_mutex> locker(_lock);
-
     // Setup the cache path
     if (!setup_internal(path, prefix, timeout, handler))
         return false;
+
+    std::unique_lock<std::shared_mutex> locker(_lock);
 
     // Update the cache path timeout
     if (timeout.total() > 0)
