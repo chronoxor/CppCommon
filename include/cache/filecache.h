@@ -15,6 +15,7 @@
 #include "time/timespan.h"
 #include "time/timestamp.h"
 
+#include <functional>
 #include <map>
 #include <shared_mutex>
 #include <string>
@@ -71,12 +72,12 @@ public:
     //! Insert a new cache path with the given timeout into the file cache
     /*!
         \param path - Path to insert
-        \param header - Cache header (default is "")
         \param prefix - Cache prefix (default is "/")
         \param timeout - Cache timeout (default is 0 - no timeout)
+        \param handler - Cache insert handler (default is 'return cache.insert(key, value, timeout)')
         \return 'true' if the cache value was inserted, 'false' if the given key was not inserted
     */
-    bool insert_path(const CppCommon::Path& path, const std::string& header = "", const std::string& prefix = "/", const Timespan& timeout = Timespan(0));
+    bool insert_path(const CppCommon::Path& path, const std::string& prefix = "/", const Timespan& timeout = Timespan(0), const std::function<bool (FileCache& cache, const std::string& key, const std::string& value, const Timespan& timeout)>& handler = [](FileCache& cache, const std::string& key, const std::string& value, const Timespan& timeout){ return cache.insert(key, value, timeout); });
 
     //! Try to find the cache value by the given key
     /*!

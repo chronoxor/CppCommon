@@ -50,7 +50,7 @@ bool FileCache::insert(const std::string& key, const std::string& value, const T
     return true;
 }
 
-bool FileCache::insert_path(const CppCommon::Path& path, const std::string& header, const std::string& prefix, const Timespan& timeout)
+bool FileCache::insert_path(const CppCommon::Path& path, const std::string& prefix, const Timespan& timeout, const std::function<bool (FileCache& cache, const std::string& key, const std::string& value, const Timespan& timeout)>& handler)
 {
     try
     {
@@ -64,7 +64,8 @@ bool FileCache::insert_path(const CppCommon::Path& path, const std::string& head
             if (entry.IsDirectory())
             {
                 // Recursively load sub-directory
-                insert_path(entry, header, key, timeout);
+                if (!insert_path(entry, key, timeout, handler))
+                    return false;
             }
             else
             {
@@ -73,9 +74,10 @@ bool FileCache::insert_path(const CppCommon::Path& path, const std::string& head
                     // Load file content
                     auto content = CppCommon::File::ReadAllBytes(entry);
                     std::string value(content.begin(), content.end());
-                    insert(key, value, timeout);
+                    if (!handler(*this, key, value, timeout))
+                        return false;
                 }
-                catch (const CppCommon::FileSystemException&) {}
+                catch (const CppCommon::FileSystemException&) { return false; }
             }
         }
 
