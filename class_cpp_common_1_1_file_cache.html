@@ -134,9 +134,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1255e983d7c04a0403ebca1c5f394d54"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_file_cache.html#a1255e983d7c04a0403ebca1c5f394d54">insert</a> (const std::string &amp;key, const std::string &amp;value, const <a class="el" href="class_cpp_common_1_1_timespan.html">Timespan</a> &amp;timeout=<a class="el" href="class_cpp_common_1_1_timespan.html">Timespan</a>(0))</td></tr>
 <tr class="memdesc:a1255e983d7c04a0403ebca1c5f394d54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert a new cache value with the given timeout into the file cache.  <a href="#a1255e983d7c04a0403ebca1c5f394d54">More...</a><br /></td></tr>
 <tr class="separator:a1255e983d7c04a0403ebca1c5f394d54"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d054ff749af01ccd59cf223685f5c3e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_file_cache.html#a1d054ff749af01ccd59cf223685f5c3e">insert_path</a> (const <a class="el" href="class_cpp_common_1_1_path.html">CppCommon::Path</a> &amp;path, const std::string &amp;header=&quot;&quot;, const std::string &amp;prefix=&quot;/&quot;, const <a class="el" href="class_cpp_common_1_1_timespan.html">Timespan</a> &amp;timeout=<a class="el" href="class_cpp_common_1_1_timespan.html">Timespan</a>(0))</td></tr>
-<tr class="memdesc:a1d054ff749af01ccd59cf223685f5c3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert a new cache path with the given timeout into the file cache.  <a href="#a1d054ff749af01ccd59cf223685f5c3e">More...</a><br /></td></tr>
-<tr class="separator:a1d054ff749af01ccd59cf223685f5c3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fbd4ca23e29303fb95085d291c6f813"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_file_cache.html#a6fbd4ca23e29303fb95085d291c6f813">insert_path</a> (const <a class="el" href="class_cpp_common_1_1_path.html">CppCommon::Path</a> &amp;path, const std::string &amp;prefix=&quot;/&quot;, const <a class="el" href="class_cpp_common_1_1_timespan.html">Timespan</a> &amp;timeout=<a class="el" href="class_cpp_common_1_1_timespan.html">Timespan</a>(0), const std::function&lt; bool(<a class="el" href="class_cpp_common_1_1_file_cache.html">FileCache</a> &amp;cache, const std::string &amp;key, const std::string &amp;value, const <a class="el" href="class_cpp_common_1_1_timespan.html">Timespan</a> &amp;timeout)&gt; &amp;handler=[](<a class="el" href="class_cpp_common_1_1_file_cache.html">FileCache</a> &amp;cache, const std::string &amp;key, const std::string &amp;value, const <a class="el" href="class_cpp_common_1_1_timespan.html">Timespan</a> &amp;timeout){return cache.insert(key, value, timeout);})</td></tr>
+<tr class="memdesc:a6fbd4ca23e29303fb95085d291c6f813"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert a new cache path with the given timeout into the file cache.  <a href="#a6fbd4ca23e29303fb95085d291c6f813">More...</a><br /></td></tr>
+<tr class="separator:a6fbd4ca23e29303fb95085d291c6f813"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1f4301e7ea9e7ed2bdf2ded3e6449072"><td class="memItemLeft" align="right" valign="top">std::pair&lt; bool, std::string_view &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_file_cache.html#a1f4301e7ea9e7ed2bdf2ded3e6449072">find</a> (const std::string &amp;key)</td></tr>
 <tr class="memdesc:a1f4301e7ea9e7ed2bdf2ded3e6449072"><td class="mdescLeft">&#160;</td><td class="mdescRight">Try to find the cache value by the given key.  <a href="#a1f4301e7ea9e7ed2bdf2ded3e6449072">More...</a><br /></td></tr>
 <tr class="separator:a1f4301e7ea9e7ed2bdf2ded3e6449072"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -167,7 +167,7 @@ Friends</h2></td></tr>
 <p>Thread-safe. </p>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="cache_filecache_8cpp-example.html#_a0">cache_filecache.cpp</a>.</dd>
 </dl>
-<p>Definition at line <a class="el" href="filecache_8h_source.html#l00033">33</a> of file <a class="el" href="filecache_8h_source.html">filecache.h</a>.</p>
+<p>Definition at line <a class="el" href="filecache_8h_source.html#l00034">34</a> of file <a class="el" href="filecache_8h_source.html">filecache.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="af4c636721e19b4695c3cc9323e822dc0"></a>
 <div class="memitem">
@@ -279,7 +279,7 @@ Friends</h2></td></tr>
 
 <p>Clear the memory cache. </p>
 
-<p>Definition at line <a class="el" href="filecache_8cpp_source.html#l00136">136</a> of file <a class="el" href="filecache_8cpp_source.html">filecache.cpp</a>.</p>
+<p>Definition at line <a class="el" href="filecache_8cpp_source.html#l00138">138</a> of file <a class="el" href="filecache_8cpp_source.html">filecache.cpp</a>.</p>
 
 </div>
 </div>
@@ -379,7 +379,7 @@ Friends</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>'true' if the cache value was found, 'false' if the given key was not found </dd></dl>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="cache_filecache_8cpp-example.html#a3">cache_filecache.cpp</a>.</dd>
 </dl>
-<p>Definition at line <a class="el" href="filecache_8cpp_source.html#l00087">87</a> of file <a class="el" href="filecache_8cpp_source.html">filecache.cpp</a>.</p>
+<p>Definition at line <a class="el" href="filecache_8cpp_source.html#l00089">89</a> of file <a class="el" href="filecache_8cpp_source.html">filecache.cpp</a>.</p>
 
 </div>
 </div>
@@ -418,7 +418,7 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>'true' if the cache value was found, 'false' if the given key was not found </dd></dl>
 
-<p>Definition at line <a class="el" href="filecache_8cpp_source.html#l00099">99</a> of file <a class="el" href="filecache_8cpp_source.html">filecache.cpp</a>.</p>
+<p>Definition at line <a class="el" href="filecache_8cpp_source.html#l00101">101</a> of file <a class="el" href="filecache_8cpp_source.html">filecache.cpp</a>.</p>
 
 </div>
 </div>
@@ -468,7 +468,7 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a1d054ff749af01ccd59cf223685f5c3e"></a>
+<a class="anchor" id="a6fbd4ca23e29303fb95085d291c6f813"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -482,19 +482,19 @@ Friends</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>header</em> = <code>&quot;&quot;</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>prefix</em> = <code>&quot;/&quot;</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const <a class="el" href="class_cpp_common_1_1_timespan.html">Timespan</a> &amp;&#160;</td>
-          <td class="paramname"><em>timeout</em> = <code><a class="el" href="class_cpp_common_1_1_timespan.html">Timespan</a>(0)</code>&#160;</td>
+          <td class="paramname"><em>timeout</em> = <code><a class="el" href="class_cpp_common_1_1_timespan.html">Timespan</a>(0)</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::function&lt; bool(<a class="el" href="class_cpp_common_1_1_file_cache.html">FileCache</a> &amp;cache, const std::string &amp;key, const std::string &amp;value, const <a class="el" href="class_cpp_common_1_1_timespan.html">Timespan</a> &amp;timeout)&gt; &amp;&#160;</td>
+          <td class="paramname"><em>handler</em> = <code>[](<a class="el" href="class_cpp_common_1_1_file_cache.html">FileCache</a>&amp;&#160;cache,&#160;const&#160;std::string&amp;&#160;key,&#160;const&#160;std::string&amp;&#160;value,&#160;const&#160;<a class="el" href="class_cpp_common_1_1_timespan.html">Timespan</a>&amp;&#160;timeout){&#160;return&#160;cache.insert(key,&#160;value,&#160;timeout);&#160;}</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -508,9 +508,9 @@ Friends</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">path</td><td>- <a class="el" href="class_cpp_common_1_1_path.html" title="Filesystem path. ">Path</a> to insert </td></tr>
-    <tr><td class="paramname">header</td><td>- Cache header (default is "") </td></tr>
     <tr><td class="paramname">prefix</td><td>- Cache prefix (default is "/") </td></tr>
     <tr><td class="paramname">timeout</td><td>- Cache timeout (default is 0 - no timeout) </td></tr>
+    <tr><td class="paramname">handler</td><td>- Cache insert handler (default is 'return cache.insert(key, value, timeout)') </td></tr>
   </table>
   </dd>
 </dl>
@@ -543,7 +543,7 @@ Friends</h2></td></tr>
 
 <p>Check if the file cache is not empty. </p>
 
-<p>Definition at line <a class="el" href="filecache_8h_source.html#l00045">45</a> of file <a class="el" href="filecache_8h_source.html">filecache.h</a>.</p>
+<p>Definition at line <a class="el" href="filecache_8h_source.html#l00046">46</a> of file <a class="el" href="filecache_8h_source.html">filecache.h</a>.</p>
 
 </div>
 </div>
@@ -618,7 +618,7 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>'true' if the cache value was removed, 'false' if the given key was not found </dd></dl>
 
-<p>Definition at line <a class="el" href="filecache_8cpp_source.html#l00112">112</a> of file <a class="el" href="filecache_8cpp_source.html">filecache.cpp</a>.</p>
+<p>Definition at line <a class="el" href="filecache_8cpp_source.html#l00114">114</a> of file <a class="el" href="filecache_8cpp_source.html">filecache.cpp</a>.</p>
 
 </div>
 </div>
@@ -673,7 +673,7 @@ Friends</h2></td></tr>
 
 <p>Swap two instances. </p>
 
-<p>Definition at line <a class="el" href="filecache_8cpp_source.html#l00165">165</a> of file <a class="el" href="filecache_8cpp_source.html">filecache.cpp</a>.</p>
+<p>Definition at line <a class="el" href="filecache_8cpp_source.html#l00167">167</a> of file <a class="el" href="filecache_8cpp_source.html">filecache.cpp</a>.</p>
 
 </div>
 </div>
@@ -694,7 +694,7 @@ Friends</h2></td></tr>
 <p>Watchdog the file cache. </p>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="cache_filecache_8cpp-example.html#a5">cache_filecache.cpp</a>.</dd>
 </dl>
-<p>Definition at line <a class="el" href="filecache_8cpp_source.html#l00145">145</a> of file <a class="el" href="filecache_8cpp_source.html">filecache.cpp</a>.</p>
+<p>Definition at line <a class="el" href="filecache_8cpp_source.html#l00147">147</a> of file <a class="el" href="filecache_8cpp_source.html">filecache.cpp</a>.</p>
 
 </div>
 </div>
