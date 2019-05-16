@@ -30,6 +30,7 @@ inline bool MemCache<TKey, TValue>::emplace(TKey&& key, TValue&& value, const Ti
     // Try to find and remove the previous key
     remove_internal(key);
 
+    // Update the cache entry
     if (timeout.total() > 0)
     {
         Timestamp current = UtcTimestamp();
@@ -51,6 +52,7 @@ inline bool MemCache<TKey, TValue>::insert(const TKey& key, const TValue& value,
     // Try to find and remove the previous key
     remove_internal(key);
 
+    // Update the cache entry
     if (timeout.total() > 0)
     {
         Timestamp current = UtcTimestamp();
@@ -153,6 +155,7 @@ inline void MemCache<TKey, TValue>::watchdog(const UtcTimestamp& utc)
         // Check for the cache entry timeout
         if ((it_by_key->second.timestamp + it_by_key->second.timespan) <= utc)
         {
+            // Erase cache entry with timeout
             _entries_by_key.erase(it_by_key);
             _entries_by_timestamp.erase(it_by_timestamp);
             it_by_timestamp = _entries_by_timestamp.begin();

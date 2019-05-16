@@ -17,6 +17,7 @@ bool FileCache::emplace(std::string&& key, std::string&& value, const Timespan& 
     // Try to find and remove the previous key
     remove_internal(key);
 
+    // Update the cache entry
     if (timeout.total() > 0)
     {
         Timestamp current = UtcTimestamp();
@@ -37,6 +38,7 @@ bool FileCache::insert(const std::string& key, const std::string& value, const T
     // Try to find and remove the previous key
     remove_internal(key);
 
+    // Update the cache entry
     if (timeout.total() > 0)
     {
         Timestamp current = UtcTimestamp();
@@ -50,7 +52,26 @@ bool FileCache::insert(const std::string& key, const std::string& value, const T
     return true;
 }
 
-bool FileCache::insert_path(const CppCommon::Path& path, const std::string& prefix, const Timespan& timeout, const std::function<bool (FileCache& cache, const std::string& key, const std::string& value, const Timespan& timeout)>& handler)
+bool FileCache::setup(const CppCommon::Path& path, const std::string& prefix, const Timespan& timeout, const InsertHandler& handler)
+{
+    std::unique_lock<std::shared_mutex> locker(_lock);
+
+    // Setup the cache path
+    if (!setup_internal(path, prefix, timeout, handler))
+        return false;
+
+    // Update the cache path timeout
+    if (timeout.total() > 0)
+    {
+        Timestamp current = UtcTimestamp();
+        _timestamp = (current <= _timestamp) ? _timestamp + 1 : current;
+        _path_by_timestamp.insert(std::make_pair(_timestamp, std::make_tuple(path, prefix, timeout, handler)));
+    }
+
+    return true;
+}
+
+bool FileCache::setup_internal(const CppCommon::Path& path, const std::string& prefix, const Timespan& timeout, const InsertHandler& handler)
 {
     try
     {
@@ -63,15 +84,15 @@ bool FileCache::insert_path(const CppCommon::Path& path, const std::string& pref
 
             if (entry.IsDirectory())
             {
-                // Recursively load sub-directory
-                if (!insert_path(entry, key, timeout, handler))
+                // Recursively setup sub-directory
+                if (!setup_internal(entry, key, timeout, handler))
                     return false;
             }
             else
             {
                 try
                 {
-                    // Load file content
+                    // Load the cache file content
                     auto content = CppCommon::File::ReadAllBytes(entry);
                     std::string value(content.begin(), content.end());
                     if (!handler(*this, key, value, timeout))
@@ -154,6 +175,7 @@ void FileCache::watchdog(const UtcTimestamp& utc)
         // Check for the cache entry timeout
         if ((it_by_key->second.timestamp + it_by_key->second.timespan) <= utc)
         {
+            // Erase cache entry with timeout
             _entries_by_key.erase(it_by_key);
             _entries_by_timestamp.erase(it_by_timestamp);
             it_by_timestamp = _entries_by_timestamp.begin();

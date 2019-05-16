@@ -20,6 +20,7 @@
 #include <shared_mutex>
 #include <string>
 #include <string_view>
+#include <tuple>
 #include <unordered_map>
 
 namespace CppCommon {
@@ -34,6 +35,9 @@ namespace CppCommon {
 class FileCache
 {
 public:
+    //! File cache insert hanlder type
+    typedef std::function<bool (FileCache& cache, const std::string& key, const std::string& value, const Timespan& timeout)> InsertHandler;
+
     FileCache() = default;
     FileCache(const FileCache&) = delete;
     FileCache(FileCache&&) = delete;
@@ -69,15 +73,15 @@ public:
     */
     bool insert(const std::string& key, const std::string& value, const Timespan& timeout = Timespan(0));
 
-    //! Insert a new cache path with the given timeout into the file cache
+    //! Setup a new cache path with the given timeout into the file cache
     /*!
         \param path - Path to insert
         \param prefix - Cache prefix (default is "/")
         \param timeout - Cache timeout (default is 0 - no timeout)
         \param handler - Cache insert handler (default is 'return cache.insert(key, value, timeout)')
-        \return 'true' if the cache value was inserted, 'false' if the given key was not inserted
+        \return 'true' if the cache path was setup, 'false' if failed to setup the cache path
     */
-    bool insert_path(const CppCommon::Path& path, const std::string& prefix = "/", const Timespan& timeout = Timespan(0), const std::function<bool (FileCache& cache, const std::string& key, const std::string& value, const Timespan& timeout)>& handler = [](FileCache& cache, const std::string& key, const std::string& value, const Timespan& timeout){ return cache.insert(key, value, timeout); });
+    bool setup(const CppCommon::Path& path, const std::string& prefix = "/", const Timespan& timeout = Timespan(0), const InsertHandler& handler = [](FileCache& cache, const std::string& key, const std::string& value, const Timespan& timeout){ return cache.insert(key, value, timeout); });
 
     //! Try to find the cache value by the given key
     /*!
@@ -127,9 +131,10 @@ private:
 
     std::unordered_map<std::string, MemCacheEntry> _entries_by_key;
     std::map<Timestamp, std::string> _entries_by_timestamp;
-    std::map<Timestamp, CppCommon::Path> _path_by_timestamp;
+    std::map<Timestamp, std::tuple<CppCommon::Path, std::string, Timespan, InsertHandler>> _path_by_timestamp;
 
     bool remove_internal(const std::string& key);
+    bool setup_internal(const CppCommon::Path& path, const std::string& prefix, const Timespan& timeout, const InsertHandler& handler);
 };
 
 /*! \example cache_filecache.cpp File cache example */
