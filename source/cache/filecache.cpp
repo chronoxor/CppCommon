@@ -7,7 +7,6 @@
 */
 
 #include "cache/filecache.h"
-#include "string/string_utils.h"
 
 namespace CppCommon {
 
@@ -136,7 +135,7 @@ bool FileCache::insert_path_internal(const CppCommon::Path& path, const std::str
         // Iterate through all directory entries
         for (const auto& entry : CppCommon::Directory(path))
         {
-            const std::string key = key_prefix + StringUtils::ToLower(CppCommon::Encoding::URLDecode(entry.filename().string()));
+            const std::string key = key_prefix + CppCommon::Encoding::URLDecode(entry.filename().string());
 
             if (entry.IsDirectory())
             {
