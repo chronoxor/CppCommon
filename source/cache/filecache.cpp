@@ -253,9 +253,13 @@ void FileCache::watchdog(const UtcTimestamp& utc)
         if ((it_path_by_key.timestamp + it_path_by_key.timespan) <= utc)
         {
             // Update the cache path with timeout
+            auto path = it_path_by_timestamp->second;
+            auto prefix = it_path_by_key.prefix;
+            auto timespan = it_path_by_key.timespan;
+            auto handler = it_path_by_key.handler;
             _paths_by_timestamp.erase(it_path_by_timestamp);
             locker.unlock();
-            insert_path(it_path_by_timestamp->second, it_path_by_key.prefix, it_path_by_key.timespan, it_path_by_key.handler);
+            insert_path(path, prefix, timespan, handler);
             locker.lock();
             it_path_by_timestamp = _paths_by_timestamp.begin();
             continue;
