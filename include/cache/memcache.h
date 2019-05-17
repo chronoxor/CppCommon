@@ -86,7 +86,7 @@ public:
     */
     bool find(const TKey& key, TValue& value, Timestamp& timeout);
 
-    //! Remove a cache value with the given key from the memory cache
+    //! Remove the cache value with the given key from the memory cache
     /*!
         \param key - Key to remove
         \return 'true' if the cache value was removed, 'false' if the given key was not found
@@ -111,14 +111,16 @@ private:
     struct MemCacheEntry
     {
         TValue value;
-        Timestamp timeout;
+        Timestamp timestamp;
+        Timespan timespan;
 
-        MemCacheEntry(const TValue& v, const Timestamp& to = Timestamp()) : value(v), timeout(to) {}
-        MemCacheEntry(TValue&& v, const Timestamp& to = Timestamp()) : value(v), timeout(to) {}
+        MemCacheEntry() = default;
+        MemCacheEntry(const TValue& v, const Timestamp& ts = Timestamp(), const Timespan& tp = Timespan()) : value(v), timestamp(ts), timespan(tp) {}
+        MemCacheEntry(TValue&& v, const Timestamp& ts = Timestamp(), const Timespan& tp = Timespan()) : value(v), timestamp(ts), timespan(tp) {}
     };
 
     std::unordered_map<TKey, MemCacheEntry> _entries_by_key;
-    std::map<Timestamp, TKey> _entries_by_timeout;
+    std::map<Timestamp, TKey> _entries_by_timestamp;
 
     bool remove_internal(const TKey& key);
 };
