@@ -41,8 +41,8 @@ TEST_CASE("Encoding", "[CppCommon][String]")
 
 TEST_CASE("Base64 Encoding", "[CppCommon][String]")
 {
-    REQUIRE(Encoding::Base64Encode("Sample Base64 encoding: ~`'\"!?@#$%^&*(){}[]<>,.:;-+=_|/\\") == "U2FtcGxlIEJhc2U2NCBlbmNvZGluZzogfmAnXCIhP0AjJCVeJiooKXt9W108PiwuOjstKz1ffC9cXA==");
-    REQUIRE(Encoding::Base64Decode("U2FtcGxlIEJhc2U2NCBlbmNvZGluZzogfmAnXCIhP0AjJCVeJiooKXt9W108PiwuOjstKz1ffC9cXA==") == "Sample Base64 encoding: ~`'\"!?@#$%^&*(){}[]<>,.:;-+=_|/\\");
+    REQUIRE(Encoding::Base64Encode("Sample Base64 encoding: ~`'\"!?@#$%^&*(){}[]<>,.:;-+=_|/\\") == "U2FtcGxlIEJhc2U2NCBlbmNvZGluZzogfmAnIiE/QCMkJV4mKigpe31bXTw+LC46Oy0rPV98L1w=");
+    REQUIRE(Encoding::Base64Decode("U2FtcGxlIEJhc2U2NCBlbmNvZGluZzogfmAnIiE/QCMkJV4mKigpe31bXTw+LC46Oy0rPV98L1w=") == "Sample Base64 encoding: ~`'\"!?@#$%^&*(){}[]<>,.:;-+=_|/\\");
 }
 
 TEST_CASE("URL Encoding", "[CppCommon][String]")
