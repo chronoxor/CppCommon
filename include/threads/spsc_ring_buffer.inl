@@ -29,13 +29,16 @@ inline size_t SPSCRingBuffer::size() const noexcept
 
 inline bool SPSCRingBuffer::Enqueue(const void* chunk, size_t size)
 {
-    assert((chunk != nullptr) && "Pointer to the chunk should not be null!");
     assert((size <= _capacity) && "Chunk size should not be greater than ring buffer capacity!");
-    if ((chunk == nullptr) || (size > _capacity))
+    if (size > _capacity)
         return false;
 
     if (size == 0)
         return true;
+
+    assert((chunk != nullptr) && "Pointer to the chunk should not be null!");
+    if (chunk == nullptr)
+        return false;
 
     const size_t head = _head.load(std::memory_order_relaxed);
     const size_t tail = _tail.load(std::memory_order_acquire);
@@ -61,12 +64,12 @@ inline bool SPSCRingBuffer::Enqueue(const void* chunk, size_t size)
 
 inline bool SPSCRingBuffer::Dequeue(void* chunk, size_t& size)
 {
+    if (size == 0)
+        return true;
+
     assert((chunk != nullptr) && "Pointer to the chunk should not be null!");
     if (chunk == nullptr)
         return false;
-
-    if (size == 0)
-        return true;
 
     const size_t tail = _tail.load(std::memory_order_relaxed);
     const size_t head = _head.load(std::memory_order_acquire);
