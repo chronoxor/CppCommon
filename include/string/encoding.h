@@ -87,6 +87,19 @@ public:
     */
     static std::u16string UTF32toUTF16(std::u32string_view str);
 
+    //! Base64 encode string
+    /*!
+        \param str - String to encode
+        \return Base64 encoded string
+    */
+    static std::string Base64Encode(std::string_view str);
+    //! Base64 decode string
+    /*!
+        \param str - Base64 encoded string
+        \return Decoded string
+    */
+    static std::string Base64Decode(std::string_view str);
+
     //! URL encode string
     /*!
         \param str - String to encode

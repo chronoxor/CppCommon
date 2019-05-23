@@ -39,6 +39,12 @@ TEST_CASE("Encoding", "[CppCommon][String]")
     test("\xF0\x9D\x93\x83", u"\xD835\xDCC3", U"\x0001D4C3");
 }
 
+TEST_CASE("Base64 Encoding", "[CppCommon][String]")
+{
+    REQUIRE(Encoding::Base64Encode("Sample Base64 encoding: ~`'\"!?@#$%^&*(){}[]<>,.:;-+=_|/\\") == "U2FtcGxlIEJhc2U2NCBlbmNvZGluZzogfmAnXCIhP0AjJCVeJiooKXt9W108PiwuOjstKz1ffC9cXA==");
+    REQUIRE(Encoding::Base64Decode("U2FtcGxlIEJhc2U2NCBlbmNvZGluZzogfmAnXCIhP0AjJCVeJiooKXt9W108PiwuOjstKz1ffC9cXA==") == "Sample Base64 encoding: ~`'\"!?@#$%^&*(){}[]<>,.:;-+=_|/\\");
+}
+
 TEST_CASE("URL Encoding", "[CppCommon][String]")
 {
     REQUIRE(Encoding::URLEncode("Sample URL encoding: ~`'\"!?@#$%^&*(){}[]<>,.:;-+=_|/\\") == "Sample+URL+encoding%3A+~%60%27%22%21%3F%40%23%24%25%5E%26%2A%28%29%7B%7D%5B%5D%3C%3E%2C.%3A%3B-%2B%3D_%7C/%5C");

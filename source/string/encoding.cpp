@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <codecvt>
 #include <locale>
+#include <vector>
 
 namespace CppCommon {
 
@@ -125,6 +126,62 @@ std::u16string Encoding::UTF32toUTF16(std::u32string_view str)
 
     for (size_t i = 0; i < bytes.size(); i += 2)
         result.push_back((char16_t)((uint8_t)(bytes[i]) * 256 + (uint8_t)(bytes[i + 1])));
+
+    return result;
+}
+
+std::string Encoding::Base64Encode(std::string_view str)
+{
+    const char base64[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    std::string result;
+
+    int val = 0;
+    int valb = -6;
+    for (auto c : str)
+    {
+        val = (val << 8) + c;
+        valb += 8;
+        while (valb >= 0)
+        {
+            result.push_back(base64[(val >> valb) & 0x3F]);
+            valb -= 6;
+        }
+    }
+
+    if (valb > -6)
+        result.push_back(base64[((val << 8) >> (valb + 8)) & 0x3F]);
+
+    while (result.size() % 4)
+        result.push_back('=');
+
+    return result;
+}
+
+std::string Encoding::Base64Decode(std::string_view str)
+{
+    const char base64[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    std::string result;
+
+    std::vector<int> pattern(256, -1);
+    for (int i = 0; i < 64; ++i)
+        pattern[base64[i]] = i;
+
+    int val = 0;
+    int valb = -8;
+    for (auto c : str)
+    {
+        if (pattern[c] == -1)
+            break;
+
+        val = (val << 6) + pattern[c];
+        valb += 6;
+
+        if (valb >= 0)
+        {
+            result.push_back((uint8_t)((val >> valb) & 0xFF));
+            valb -= 8;
+        }
+    }
 
     return result;
 }
