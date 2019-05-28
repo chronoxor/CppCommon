@@ -133,7 +133,7 @@ std::u16string Encoding::UTF32toUTF16(std::u32string_view str)
 std::string Encoding::Base64Encode(std::string_view str)
 {
     const char base64[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-    const int mods[] = { 0, 2, 1 };
+    const size_t mods[] = { 0, 2, 1 };
 
     size_t ilength = str.length();
     size_t olength = 4 * ((ilength + 2) / 3);
@@ -141,7 +141,7 @@ std::string Encoding::Base64Encode(std::string_view str)
     std::string result;
     result.resize(olength, 0);
 
-    for (int i = 0, j = 0; i < ilength;)
+    for (size_t i = 0, j = 0; i < ilength;)
     {
         uint32_t octet_a = i < ilength ? (unsigned char)str[i++] : 0;
         uint32_t octet_b = i < ilength ? (unsigned char)str[i++] : 0;
@@ -155,7 +155,7 @@ std::string Encoding::Base64Encode(std::string_view str)
         result[j++] = base64[(triple >> 0 * 6) & 0x3F];
     }
 
-    for (int i = 0; i < mods[ilength % 3]; i++)
+    for (size_t i = 0; i < mods[ilength % 3]; ++i)
         result[result.size() - 1 - i] = '=';
 
     return result;
@@ -163,7 +163,7 @@ std::string Encoding::Base64Encode(std::string_view str)
 
 std::string Encoding::Base64Decode(std::string_view str)
 {
-    static const char base64[256] = 
+    static const char base64[256] =
     {
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -180,7 +180,7 @@ std::string Encoding::Base64Decode(std::string_view str)
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
     };
 
     size_t ilength = str.length();
@@ -196,7 +196,7 @@ std::string Encoding::Base64Decode(std::string_view str)
     std::string result;
     result.resize(olength, 0);
 
-    for (int i = 0, j = 0; i < ilength;) {
+    for (size_t i = 0, j = 0; i < ilength;) {
 
         uint32_t sextet_a = str[i] == '=' ? 0 & i++ : base64[str[i++]];
         uint32_t sextet_b = str[i] == '=' ? 0 & i++ : base64[str[i++]];
