@@ -143,9 +143,9 @@ std::string Encoding::Base64Encode(std::string_view str)
 
     for (size_t i = 0, j = 0; i < ilength;)
     {
-        uint32_t octet_a = i < ilength ? (uint32_t)str[i++] : 0;
-        uint32_t octet_b = i < ilength ? (uint32_t)str[i++] : 0;
-        uint32_t octet_c = i < ilength ? (uint32_t)str[i++] : 0;
+        uint32_t octet_a = i < ilength ? (uint8_t)str[i++] : 0;
+        uint32_t octet_b = i < ilength ? (uint8_t)str[i++] : 0;
+        uint32_t octet_c = i < ilength ? (uint8_t)str[i++] : 0;
 
         uint32_t triple = (octet_a << 0x10) + (octet_b << 0x08) + octet_c;
 
@@ -198,10 +198,10 @@ std::string Encoding::Base64Decode(std::string_view str)
 
     for (size_t i = 0, j = 0; i < ilength;) {
 
-        uint32_t sextet_a = str[i] == '=' ? 0 & i++ : base64[str[i++]];
-        uint32_t sextet_b = str[i] == '=' ? 0 & i++ : base64[str[i++]];
-        uint32_t sextet_c = str[i] == '=' ? 0 & i++ : base64[str[i++]];
-        uint32_t sextet_d = str[i] == '=' ? 0 & i++ : base64[str[i++]];
+        uint32_t sextet_a = str[i] == '=' ? 0 & i++ : base64[(uint8_t)str[i++]];
+        uint32_t sextet_b = str[i] == '=' ? 0 & i++ : base64[(uint8_t)str[i++]];
+        uint32_t sextet_c = str[i] == '=' ? 0 & i++ : base64[(uint8_t)str[i++]];
+        uint32_t sextet_d = str[i] == '=' ? 0 & i++ : base64[(uint8_t)str[i++]];
 
         uint32_t triple = (sextet_a << 3 * 6) + (sextet_b << 2 * 6) + (sextet_c << 1 * 6) + (sextet_d << 0 * 6);
 
