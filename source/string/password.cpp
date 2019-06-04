@@ -16,7 +16,7 @@
 
 namespace CppCommon {
 
-void ZeroPasswordMemory(volatile void* buffer, size_t size) __attribute__((optimize("O0")))
+void ZeroPasswordMemory(volatile void* buffer, size_t size)
 {
 #if defined(unix) || defined(__unix) || defined(__unix__)
     memset(buffer, 0, size);
