@@ -88,6 +88,13 @@ public:
     using Exception::Exception;
 };
 
+//! Security exception
+class SecurityException : public Exception
+{
+public:
+    using Exception::Exception;
+};
+
 //! System exception
 class SystemException : public Exception
 {
