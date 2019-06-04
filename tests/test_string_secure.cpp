@@ -6,6 +6,8 @@
 
 #include "string/secure.h"
 
+#include <cstring>
+
 using namespace CppCommon;
 
 TEST_CASE("Secure string", "[CppCommon][String]")
@@ -14,7 +16,7 @@ TEST_CASE("Secure string", "[CppCommon][String]")
     {
         SecureString password("password");
         pwd = password.data();
-        REQUIRE(strcmp(pwd, "password") == 0);
+        REQUIRE(std::strcmp(pwd, "password") == 0);
     }
-    REQUIRE(strcmp(pwd, "password") != 0);
+    REQUIRE(std::strcmp(pwd, "password") != 0);
 }
