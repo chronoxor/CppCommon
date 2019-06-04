@@ -20,7 +20,7 @@ namespace CppCommon {
     \param buffer - Password memory buffer
     \param size - Password memory buffer size
 */
-void ZeroPasswordMemory(volatile void* buffer, size_t size) __attribute__((optimize("O0")));
+__attribute__((optnone)) void ZeroPasswordMemory(void* buffer, size_t size);
 
 //! Password allocator
 template <class T>
