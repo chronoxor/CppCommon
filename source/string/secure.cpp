@@ -9,6 +9,7 @@
 #include "string/secure.h"
 
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#define __STDC_WANT_LIB_EXT1__ 1
 #include <string.h>
 #elif defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
@@ -18,10 +19,8 @@ namespace CppCommon {
 
 void SecureZeroMemoryBuffer(void* buffer, size_t size)
 {
-#if defined(__APPLE__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     memset_s(buffer, size, 0, size);
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    explicit_bzero(buffer, size);
 #elif defined(_WIN32) || defined(_WIN64)
     SecureZeroMemory(buffer, size);
 #else
