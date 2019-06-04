@@ -19,7 +19,6 @@ namespace CppCommon {
 void ZeroPasswordMemory(volatile void* buffer, size_t size)
 {
 #if defined(unix) || defined(__unix) || defined(__unix__)
-    memset(buffer, 0, size);
     volatile char* ptr = (volatile char*)buffer;
     while (size--) *ptr++ = 0;
 #elif defined(_WIN32) || defined(_WIN64)
