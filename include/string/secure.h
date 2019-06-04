@@ -27,6 +27,9 @@ template <class T>
 class SecureAllocator : public std::allocator<T>
 {
 public:
+    typedef typename std::allocator<T>::pointer pointer;
+    typedef typename std::allocator<T>::size_type size_type;
+
     template<class U> struct rebind { typedef SecureAllocator<U> other; };
 
     SecureAllocator() throw() {}
