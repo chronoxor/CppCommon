@@ -16,14 +16,12 @@
 
 namespace CppCommon {
 
-void ZeroPasswordMemory(void* buffer, size_t size)
+void ZeroPasswordMemory(void* buffer, size_t size) __attribute__((optimize("O0")))
 {
-#if defined(__APPLE__)
+#if defined(unix) || defined(__unix) || defined(__unix__)
+    memset(buffer, size);
     volatile char* ptr = (volatile char*)buffer;
     while (size--) *ptr++ = 0;
-#elif defined(linux) || defined(__linux) || defined(__linux__)
-    memset(buffer, 0, size);
-    asm volatile("" ::: "memory");
 #elif defined(_WIN32) || defined(_WIN64)
     SecureZeroMemory(buffer, size);
 #else
