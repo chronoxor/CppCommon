@@ -55,7 +55,7 @@ namespace std {
 
     Not thread-safe.
 */
-typedef std::basic_string<char, std::char_traits<char>, PasswordAllocator<char>> password;
+typedef std::basic_string<char, std::char_traits<char>, CppCommon::PasswordAllocator<char>> password;
 
 }
 
