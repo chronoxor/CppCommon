@@ -141,22 +141,22 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:aa9bc062136cf930da818d2613d6dccdd"><td class="memTemplItemLeft" align="right" valign="top">static T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_memory.html#aa9bc062136cf930da818d2613d6dccdd">Align</a> (const T *address, size_t alignment=alignof(T), bool upwards=true) noexcept</td></tr>
 <tr class="memdesc:aa9bc062136cf930da818d2613d6dccdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Align pointer (upwards or downwards)  <a href="#aa9bc062136cf930da818d2613d6dccdd">More...</a><br /></td></tr>
 <tr class="separator:aa9bc062136cf930da818d2613d6dccdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa62b17f67b3e5c686e87879ae8d33cd2"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_memory.html#aa62b17f67b3e5c686e87879ae8d33cd2">ZeroFill</a> (void *buffer, size_t size) noexcept</td></tr>
-<tr class="memdesc:aa62b17f67b3e5c686e87879ae8d33cd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill the given memory buffer with zeros.  <a href="#aa62b17f67b3e5c686e87879ae8d33cd2">More...</a><br /></td></tr>
-<tr class="separator:aa62b17f67b3e5c686e87879ae8d33cd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a268d4dd298129d070c701422262480dc"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_memory.html#a268d4dd298129d070c701422262480dc">RandomFill</a> (void *buffer, size_t size) noexcept</td></tr>
-<tr class="memdesc:a268d4dd298129d070c701422262480dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill the given memory buffer with random bytes.  <a href="#a268d4dd298129d070c701422262480dc">More...</a><br /></td></tr>
-<tr class="separator:a268d4dd298129d070c701422262480dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af4ecb612ab6793ac48bba212e6ffefd7"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_memory.html#af4ecb612ab6793ac48bba212e6ffefd7">CryptoFill</a> (void *buffer, size_t size) noexcept</td></tr>
-<tr class="memdesc:af4ecb612ab6793ac48bba212e6ffefd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill the given memory buffer with cryptographic strong random bytes.  <a href="#af4ecb612ab6793ac48bba212e6ffefd7">More...</a><br /></td></tr>
-<tr class="separator:af4ecb612ab6793ac48bba212e6ffefd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef27bd11c30bf91c715eb5c1a827fde0"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_memory.html#aef27bd11c30bf91c715eb5c1a827fde0">ZeroFill</a> (void *buffer, size_t size)</td></tr>
+<tr class="memdesc:aef27bd11c30bf91c715eb5c1a827fde0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill the given memory buffer with zeros.  <a href="#aef27bd11c30bf91c715eb5c1a827fde0">More...</a><br /></td></tr>
+<tr class="separator:aef27bd11c30bf91c715eb5c1a827fde0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7f4cb4fa7ef24e8fc741049c3342a17"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_memory.html#af7f4cb4fa7ef24e8fc741049c3342a17">RandomFill</a> (void *buffer, size_t size)</td></tr>
+<tr class="memdesc:af7f4cb4fa7ef24e8fc741049c3342a17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill the given memory buffer with random bytes.  <a href="#af7f4cb4fa7ef24e8fc741049c3342a17">More...</a><br /></td></tr>
+<tr class="separator:af7f4cb4fa7ef24e8fc741049c3342a17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2adf0415f9fc7124afae587f9828edc9"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_memory.html#a2adf0415f9fc7124afae587f9828edc9">CryptoFill</a> (void *buffer, size_t size)</td></tr>
+<tr class="memdesc:a2adf0415f9fc7124afae587f9828edc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill the given memory buffer with cryptographic strong random bytes.  <a href="#a2adf0415f9fc7124afae587f9828edc9">More...</a><br /></td></tr>
+<tr class="separator:a2adf0415f9fc7124afae587f9828edc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="class_cpp_common_1_1_memory.html" title="Memory management static class. ">Memory</a> management static class. </p>
 <p>Provides memory management functionality such as total and free RAM available.</p>
 <p>Thread-safe. </p>
 
-<p>Definition at line <a class="el" href="memory_8h_source.html#l00029">29</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
+<p>Definition at line <a class="el" href="memory_8h_source.html#l00031">31</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a4fbb36e10a866ccf341d2dfd6b46e8bf"></a>
 <div class="memitem">
@@ -308,7 +308,7 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="af4ecb612ab6793ac48bba212e6ffefd7"></a>
+<a class="anchor" id="a2adf0415f9fc7124afae587f9828edc9"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -335,7 +335,7 @@ template&lt;typename T &gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -349,7 +349,7 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="memory_8cpp_source.html#l00127">127</a> of file <a class="el" href="memory_8cpp_source.html">memory.cpp</a>.</p>
+<p>Definition at line <a class="el" href="memory_8cpp_source.html#l00133">133</a> of file <a class="el" href="memory_8cpp_source.html">memory.cpp</a>.</p>
 
 </div>
 </div>
@@ -586,7 +586,7 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a268d4dd298129d070c701422262480dc"></a>
+<a class="anchor" id="af7f4cb4fa7ef24e8fc741049c3342a17"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -613,7 +613,7 @@ template&lt;typename T &gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -631,7 +631,7 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="aa62b17f67b3e5c686e87879ae8d33cd2"></a>
+<a class="anchor" id="aef27bd11c30bf91c715eb5c1a827fde0"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -658,7 +658,7 @@ template&lt;typename T &gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
