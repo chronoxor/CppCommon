@@ -127,6 +127,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a3b0bcc03213873e1828f7d0f0961a4c0"><td class="memItemLeft" align="right" valign="top">static int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_memory.html#a3b0bcc03213873e1828f7d0f0961a4c0">RamFree</a> ()</td></tr>
 <tr class="memdesc:a3b0bcc03213873e1828f7d0f0961a4c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free RAM in bytes.  <a href="#a3b0bcc03213873e1828f7d0f0961a4c0">More...</a><br /></td></tr>
 <tr class="separator:a3b0bcc03213873e1828f7d0f0961a4c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a056f6708ca3f1d954fd5ef775bb4f543"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_memory.html#a056f6708ca3f1d954fd5ef775bb4f543">IsZero</a> (const void *buffer, size_t size) noexcept</td></tr>
+<tr class="memdesc:a056f6708ca3f1d954fd5ef775bb4f543"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is the given memory buffer filled with zeros?  <a href="#a056f6708ca3f1d954fd5ef775bb4f543">More...</a><br /></td></tr>
+<tr class="separator:a056f6708ca3f1d954fd5ef775bb4f543"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a11969a7bda722b62ca1eb009afdb1994"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_memory.html#a11969a7bda722b62ca1eb009afdb1994">IsValidAlignment</a> (size_t alignment) noexcept</td></tr>
 <tr class="memdesc:a11969a7bda722b62ca1eb009afdb1994"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is the given alignment valid?  <a href="#a11969a7bda722b62ca1eb009afdb1994">More...</a><br /></td></tr>
 <tr class="separator:a11969a7bda722b62ca1eb009afdb1994"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -376,6 +379,52 @@ template&lt;typename T &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>'true' if the given alignment is valid, 'false' if the given alignment is not valid </dd></dl>
 
 <p>Definition at line <a class="el" href="memory_8inl_source.html#l00013">13</a> of file <a class="el" href="memory_8inl_source.html">memory.inl</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a056f6708ca3f1d954fd5ef775bb4f543"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CppCommon::Memory::IsZero </td>
+          <td>(</td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Is the given memory buffer filled with zeros? </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffer</td><td>- <a class="el" href="class_cpp_common_1_1_memory.html" title="Memory management static class. ">Memory</a> buffer </td></tr>
+    <tr><td class="paramname">size</td><td>- Size of memory buffer in bytes </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>'true' if the given memory buffer is filled with zeros, 'false' if the memory buffer is not filled with zeros </dd></dl>
+
+<p>Definition at line <a class="el" href="memory_8cpp_source.html#l00085">85</a> of file <a class="el" href="memory_8cpp_source.html">memory.cpp</a>.</p>
 
 </div>
 </div>

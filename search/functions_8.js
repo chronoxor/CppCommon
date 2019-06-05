@@ -39,5 +39,6 @@ var searchData=
   ['issymlinkexists',['IsSymlinkExists',['../class_cpp_common_1_1_symlink.html#afa3711102a20c7d03861add855a16307',1,'CppCommon::Symlink']]],
   ['istargetexists',['IsTargetExists',['../class_cpp_common_1_1_symlink.html#a897500eba30c50dcea564b5d04d93d25',1,'CppCommon::Symlink']]],
   ['isvalid',['IsValid',['../class_cpp_common_1_1_std_input.html#a28c5fbb4f54cb205e42dcca70904457c',1,'CppCommon::StdInput::IsValid()'],['../class_cpp_common_1_1_std_output.html#af558d12298f7517b123eb5602fd77a6a',1,'CppCommon::StdOutput::IsValid()'],['../class_cpp_common_1_1_std_error.html#af11db2daff94ec19d2ca927fc9470a75',1,'CppCommon::StdError::IsValid()']]],
-  ['isvalidalignment',['IsValidAlignment',['../class_cpp_common_1_1_memory.html#a11969a7bda722b62ca1eb009afdb1994',1,'CppCommon::Memory']]]
+  ['isvalidalignment',['IsValidAlignment',['../class_cpp_common_1_1_memory.html#a11969a7bda722b62ca1eb009afdb1994',1,'CppCommon::Memory']]],
+  ['iszero',['IsZero',['../class_cpp_common_1_1_memory.html#a056f6708ca3f1d954fd5ef775bb4f543',1,'CppCommon::Memory']]]
 ];
