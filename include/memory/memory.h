@@ -9,6 +9,8 @@
 #ifndef CPPCOMMON_MEMORY_MEMORY_H
 #define CPPCOMMON_MEMORY_MEMORY_H
 
+#include "errors/exceptions.h"
+
 #include <algorithm>
 #include <cassert>
 #include <cstddef>
@@ -81,19 +83,19 @@ public:
         \param buffer - Memory buffer to fill
         \param size - Size of memory buffer in bytes
     */
-    static void ZeroFill(void* buffer, size_t size) noexcept;
+    static void ZeroFill(void* buffer, size_t size);
     //! Fill the given memory buffer with random bytes
     /*!
         \param buffer - Memory buffer to fill
         \param size - Size of memory buffer in bytes
     */
-    static void RandomFill(void* buffer, size_t size) noexcept;
+    static void RandomFill(void* buffer, size_t size);
     //! Fill the given memory buffer with cryptographic strong random bytes
     /*!
         \param buffer - Memory buffer to fill
         \param size - Size of memory buffer in bytes
     */
-    static void CryptoFill(void* buffer, size_t size) noexcept;
+    static void CryptoFill(void* buffer, size_t size);
 };
 
 /*! \example memory_memory.cpp Memory management example */

@@ -98,7 +98,7 @@ bool Memory::IsZero(const void* buffer, size_t size) noexcept
     return true;
 }
 
-void Memory::ZeroFill(void* buffer, size_t size) noexcept
+void Memory::ZeroFill(void* buffer, size_t size)
 {
 #ifdef __STDC_LIB_EXT1__
     memset_s(buffer, size, 0, size);
@@ -111,12 +111,18 @@ void Memory::ZeroFill(void* buffer, size_t size) noexcept
 #endif
 }
 
-void Memory::RandomFill(void* buffer, size_t size) noexcept
+void Memory::RandomFill(void* buffer, size_t size)
 {
 #if defined(unix) || defined(__unix) || defined(__unix__)
     int fd = open("/dev/urandom", O_RDONLY);
-    read(fd, buffer, size);
-    close(fd);
+    if (fd < 0)
+        throwex SystemException("Cannot open '/dev/urandom' file for reading!");
+    ssize_t count = read(fd, buffer, size);
+    if (count < 0)
+        throwex SystemException("Cannot read from '/dev/urandom' file!");
+    int result = close(fd);
+    if (result != 0)
+        throwex SystemException("Cannot close '/dev/urandom' file!");
 #elif defined(_WIN32) || defined(_WIN64)
     char* ptr = (char*)buffer;
     for(size_t i = 0; i < size; ++i)
@@ -124,17 +130,26 @@ void Memory::RandomFill(void* buffer, size_t size) noexcept
 #endif
 }
 
-void Memory::CryptoFill(void* buffer, size_t size) noexcept
+void Memory::CryptoFill(void* buffer, size_t size)
 {
 #if defined(unix) || defined(__unix) || defined(__unix__)
     int fd = open("/dev/random", O_RDONLY);
-    read(fd, buffer, size);
-    close(fd);
+    if (fd < 0)
+        throwex SystemException("Cannot open '/dev/urandom' file for reading!");
+    ssize_t count = read(fd, buffer, size);
+    if (count < 0)
+        throwex SystemException("Cannot read from '/dev/urandom' file!");
+    int result = close(fd);
+    if (result != 0)
+        throwex SystemException("Cannot close '/dev/urandom' file!");
 #elif defined(_WIN32) || defined(_WIN64)
     HCRYPTPROV hCryptContext;
-    CryptAcquireContext(&hCryptContext, NULL, NULL, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT);
-    CryptGenRandom(hCryptContext, (DWORD)size, (BYTE*)buffer);
-    CryptReleaseContext(hCryptContext, 0);
+    if (!CryptAcquireContext(&hCryptContext, NULL, NULL, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT))
+        throwex SystemException("Cannot acquire cryptographic service provider context!");
+    if (!CryptGenRandom(hCryptContext, (DWORD)size, (BYTE*)buffer))
+        throwex SystemException("Cannot generate random bytes using cryptographic service provider context!");
+    if (!CryptReleaseContext(hCryptContext, 0))
+        throwex SystemException("Cannot release cryptographic service provider context!");
 #endif
 }
 
