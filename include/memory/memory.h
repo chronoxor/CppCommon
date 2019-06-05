@@ -75,6 +75,25 @@ public:
     */
     template <typename T>
     static T* Align(const T* address, size_t alignment = alignof(T), bool upwards = true) noexcept;
+
+    //! Fill the given memory buffer with zeros
+    /*!
+        \param buffer - Memory buffer to fill
+        \param size - Size of memory buffer in bytes
+    */
+    static void ZeroFill(void* buffer, size_t size) noexcept;
+    //! Fill the given memory buffer with random bytes
+    /*!
+        \param buffer - Memory buffer to fill
+        \param size - Size of memory buffer in bytes
+    */
+    static void RandomFill(void* buffer, size_t size) noexcept;
+    //! Fill the given memory buffer with cryptographic strong random bytes
+    /*!
+        \param buffer - Memory buffer to fill
+        \param size - Size of memory buffer in bytes
+    */
+    static void CryptoFill(void* buffer, size_t size) noexcept;
 };
 
 /*! \example memory_memory.cpp Memory management example */

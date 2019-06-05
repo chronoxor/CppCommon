@@ -6,12 +6,18 @@
     \copyright MIT License
 */
 
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#define __STDC_WANT_LIB_EXT1__ 1
+#include <stdlib.h>
+#include <string.h>
+#endif
+
 #include "memory/memory.h"
 
 #if defined(__APPLE__)
 #include <mach/mach.h>
 #include <sys/sysctl.h>
-#elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#elif defined(unix) || defined(__unix) || defined(__unix__)
 #include <sys/sysinfo.h>
 #include <unistd.h>
 #elif defined(_WIN32) || defined(_WIN64)
@@ -89,6 +95,46 @@ bool Memory::IsZero(const void* buffer, size_t size) noexcept
         if (ptr[i] != 0)
             return false;
     return true;
+}
+
+void Memory::ZeroFill(void* buffer, size_t size) noexcept
+{
+#ifdef __STDC_LIB_EXT1__
+    memset_s(buffer, size, 0, size);
+#elif defined(_WIN32) || defined(_WIN64)
+    SecureZeroMemory(buffer, size);
+#else
+    volatile char* ptr = (volatile char*)buffer;
+    while (size--)
+        *ptr++ = 0;
+#endif
+}
+
+void Memory::RandomFill(void* buffer, size_t size) noexcept
+{
+#if defined(unix) || defined(__unix) || defined(__unix__)
+    int fd = open("/dev/urandom", O_RDONLY);
+    read(fd, buffer, size);
+    close(fd);
+#elif defined(_WIN32) || defined(_WIN64)
+    char* ptr = (char*)buffer;
+    for(size_t i = 0; i < size; ++i)
+        ptr[i] = rand() % 256;
+#endif
+}
+
+void Memory::CryptoFill(void* buffer, size_t size) noexcept
+{
+#if defined(unix) || defined(__unix) || defined(__unix__)
+    int fd = open("/dev/random", O_RDONLY);
+    read(fd, buffer, size);
+    close(fd);
+#elif defined(_WIN32) || defined(_WIN64)
+    HCRYPTPROV hCryptContext;
+    CryptAcquireContext(&hCryptContext, NULL, NULL, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT);
+    CryptGenRandom(hCryptContext, (DWORD)size, (BYTE*)buffer);
+    CryptReleaseContext(hCryptContext, 0);
+#endif
 }
 
 } // namespace CppCommon

@@ -15,7 +15,7 @@
 #if defined(__APPLE__) || defined(__CYGWIN__)
 #include "threads/thread.h"
 #endif
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if defined(unix) || defined(__unix) || defined(__unix__)
 #include <pthread.h>
 #elif defined(_WIN32) || defined(_WIN64)
 #include <windows.h>

@@ -9,18 +9,11 @@
 #ifndef CPPCOMMON_STRING_PASSWORD_H
 #define CPPCOMMON_STRING_PASSWORD_H
 
+#include "memory/memory.h"
+
 #include <string>
 
 namespace CppCommon {
-
-//! Zero password memory
-/*!
-    Thread-safe.
-
-    \param buffer - Password memory buffer
-    \param size - Password memory buffer size
-*/
-void ZeroPasswordMemory(void* buffer, size_t size);
 
 //! Password allocator
 template <class T>
@@ -38,7 +31,7 @@ public:
 
     void deallocate(pointer p, size_type n)
     {
-        ZeroPasswordMemory(p, n * sizeof(T));
+        Memory::ZeroFill(p, n * sizeof(T));
         std::allocator<T>::deallocate(p, n);
     }
 };
@@ -59,7 +52,7 @@ class password : public std::basic_string<char, std::char_traits<char>, CppCommo
 {
 public:
     using basic_string::basic_string;
-    ~password() { CppCommon::ZeroPasswordMemory(data(), size()); }
+    ~password() { CppCommon::Memory::ZeroFill(data(), size()); }
 };
 
 }

@@ -11,7 +11,7 @@
 
 #if defined(__APPLE__)
 #include <sys/sysctl.h>
-#elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#elif defined(unix) || defined(__unix) || defined(__unix__)
 #include <unistd.h>
 #include <fstream>
 #include <regex>
