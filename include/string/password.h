@@ -55,7 +55,12 @@ namespace std {
 
     Not thread-safe.
 */
-typedef std::basic_string<char, std::char_traits<char>, CppCommon::PasswordAllocator<char>> password;
+class password : public std::basic_string<char, std::char_traits<char>, CppCommon::PasswordAllocator<char>>
+{
+public:
+    using basic_string::basic_string;
+    ~password() { CppCommon::ZeroPasswordMemory(data(), size()); }
+};
 
 }
 
