@@ -141,6 +141,15 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:aa9bc062136cf930da818d2613d6dccdd"><td class="memTemplItemLeft" align="right" valign="top">static T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_memory.html#aa9bc062136cf930da818d2613d6dccdd">Align</a> (const T *address, size_t alignment=alignof(T), bool upwards=true) noexcept</td></tr>
 <tr class="memdesc:aa9bc062136cf930da818d2613d6dccdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Align pointer (upwards or downwards)  <a href="#aa9bc062136cf930da818d2613d6dccdd">More...</a><br /></td></tr>
 <tr class="separator:aa9bc062136cf930da818d2613d6dccdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa62b17f67b3e5c686e87879ae8d33cd2"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_memory.html#aa62b17f67b3e5c686e87879ae8d33cd2">ZeroFill</a> (void *buffer, size_t size) noexcept</td></tr>
+<tr class="memdesc:aa62b17f67b3e5c686e87879ae8d33cd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill the given memory buffer with zeros.  <a href="#aa62b17f67b3e5c686e87879ae8d33cd2">More...</a><br /></td></tr>
+<tr class="separator:aa62b17f67b3e5c686e87879ae8d33cd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a268d4dd298129d070c701422262480dc"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_memory.html#a268d4dd298129d070c701422262480dc">RandomFill</a> (void *buffer, size_t size) noexcept</td></tr>
+<tr class="memdesc:a268d4dd298129d070c701422262480dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill the given memory buffer with random bytes.  <a href="#a268d4dd298129d070c701422262480dc">More...</a><br /></td></tr>
+<tr class="separator:a268d4dd298129d070c701422262480dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4ecb612ab6793ac48bba212e6ffefd7"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_memory.html#af4ecb612ab6793ac48bba212e6ffefd7">CryptoFill</a> (void *buffer, size_t size) noexcept</td></tr>
+<tr class="memdesc:af4ecb612ab6793ac48bba212e6ffefd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill the given memory buffer with cryptographic strong random bytes.  <a href="#af4ecb612ab6793ac48bba212e6ffefd7">More...</a><br /></td></tr>
+<tr class="separator:af4ecb612ab6793ac48bba212e6ffefd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="class_cpp_common_1_1_memory.html" title="Memory management static class. ">Memory</a> management static class. </p>
@@ -299,6 +308,51 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="af4ecb612ab6793ac48bba212e6ffefd7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CppCommon::Memory::CryptoFill </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Fill the given memory buffer with cryptographic strong random bytes. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffer</td><td>- <a class="el" href="class_cpp_common_1_1_memory.html" title="Memory management static class. ">Memory</a> buffer to fill </td></tr>
+    <tr><td class="paramname">size</td><td>- Size of memory buffer in bytes </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="memory_8cpp_source.html#l00127">127</a> of file <a class="el" href="memory_8cpp_source.html">memory.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a6dbc688cb0da18ce8ff800196ef79162"></a>
 <div class="memitem">
 <div class="memproto">
@@ -424,7 +478,7 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>'true' if the given memory buffer is filled with zeros, 'false' if the memory buffer is not filled with zeros </dd></dl>
 
-<p>Definition at line <a class="el" href="memory_8cpp_source.html#l00085">85</a> of file <a class="el" href="memory_8cpp_source.html">memory.cpp</a>.</p>
+<p>Definition at line <a class="el" href="memory_8cpp_source.html#l00092">92</a> of file <a class="el" href="memory_8cpp_source.html">memory.cpp</a>.</p>
 
 </div>
 </div>
@@ -500,7 +554,7 @@ template&lt;typename T &gt; </div>
 <p>Free RAM in bytes. </p>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="memory_memory_8cpp-example.html#a1">memory_memory.cpp</a>.</dd>
 </dl>
-<p>Definition at line <a class="el" href="memory_8cpp_source.html#l00049">49</a> of file <a class="el" href="memory_8cpp_source.html">memory.cpp</a>.</p>
+<p>Definition at line <a class="el" href="memory_8cpp_source.html#l00056">56</a> of file <a class="el" href="memory_8cpp_source.html">memory.cpp</a>.</p>
 
 </div>
 </div>
@@ -528,7 +582,97 @@ template&lt;typename T &gt; </div>
 <p>Total RAM in bytes. </p>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="memory_memory_8cpp-example.html#a0">memory_memory.cpp</a>.</dd>
 </dl>
-<p>Definition at line <a class="el" href="memory_8cpp_source.html#l00023">23</a> of file <a class="el" href="memory_8cpp_source.html">memory.cpp</a>.</p>
+<p>Definition at line <a class="el" href="memory_8cpp_source.html#l00030">30</a> of file <a class="el" href="memory_8cpp_source.html">memory.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a268d4dd298129d070c701422262480dc"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CppCommon::Memory::RandomFill </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Fill the given memory buffer with random bytes. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffer</td><td>- <a class="el" href="class_cpp_common_1_1_memory.html" title="Memory management static class. ">Memory</a> buffer to fill </td></tr>
+    <tr><td class="paramname">size</td><td>- Size of memory buffer in bytes </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="memory_8cpp_source.html#l00114">114</a> of file <a class="el" href="memory_8cpp_source.html">memory.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa62b17f67b3e5c686e87879ae8d33cd2"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CppCommon::Memory::ZeroFill </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Fill the given memory buffer with zeros. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffer</td><td>- <a class="el" href="class_cpp_common_1_1_memory.html" title="Memory management static class. ">Memory</a> buffer to fill </td></tr>
+    <tr><td class="paramname">size</td><td>- Size of memory buffer in bytes </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="memory_8cpp_source.html#l00101">101</a> of file <a class="el" href="memory_8cpp_source.html">memory.cpp</a>.</p>
 
 </div>
 </div>
