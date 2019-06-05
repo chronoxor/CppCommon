@@ -82,4 +82,13 @@ int64_t Memory::RamFree()
 #endif
 }
 
+bool Memory::IsZero(const void* buffer, size_t size) noexcept
+{
+    const char* ptr = (const char*)buffer;
+    for (size_t i = 0; i < size; ++i)
+        if (ptr[i] != 0)
+            return false;
+    return true;
+}
+
 } // namespace CppCommon

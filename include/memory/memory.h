@@ -42,6 +42,14 @@ public:
     //! Free RAM in bytes
     static int64_t RamFree();
 
+    //! Is the given memory buffer filled with zeros?
+    /*!
+        \param buffer - Memory buffer
+        \param size - Size of memory buffer in bytes
+        \return 'true' if the given memory buffer is filled with zeros, 'false' if the memory buffer is not filled with zeros
+    */
+    static bool IsZero(const void* buffer, size_t size) noexcept;
+
     //! Is the given alignment valid?
     /*!
         \param alignment - Alignment value. Must be a power of two.

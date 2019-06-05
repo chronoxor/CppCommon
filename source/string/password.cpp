@@ -20,7 +20,8 @@ void ZeroPasswordMemory(void* buffer, size_t size)
     SecureZeroMemory(buffer, size);
 #else
     volatile char* ptr = (volatile char*)buffer;
-    while (size--) *ptr++ = 0;
+    while (size--)
+        *ptr++ = 0;
 #endif
 }
 
