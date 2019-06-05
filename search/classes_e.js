@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['securityexception',['SecurityException',['../class_cpp_common_1_1_security_exception.html',1,'CppCommon']]],
   ['semaphore',['Semaphore',['../class_cpp_common_1_1_semaphore.html',1,'CppCommon']]],
   ['seqlock',['SeqLock',['../class_cpp_common_1_1_seq_lock.html',1,'CppCommon']]],
   ['sharedmemory',['SharedMemory',['../class_cpp_common_1_1_shared_memory.html',1,'CppCommon']]],
