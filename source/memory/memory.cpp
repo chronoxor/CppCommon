@@ -19,6 +19,7 @@
 #include <sys/sysctl.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 #include <sys/sysinfo.h>
+#include <fcntl.h>
 #include <unistd.h>
 #elif defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
