@@ -4,7 +4,6 @@
 
 #include "test.h"
 
-#include "memory/memory.h"
 #include "string/password.h"
 
 #include <cstring>
@@ -18,8 +17,6 @@ TEST_CASE("Password", "[CppCommon][String]")
         std::password password("password");
         raw = password.data();
         REQUIRE(std::strcmp(raw, "password") == 0);
-        REQUIRE(!Memory::IsZero(raw, 8));
     }
     REQUIRE(std::strcmp(raw, "password") != 0);
-    REQUIRE(Memory::IsZero(raw, 8));
 }
