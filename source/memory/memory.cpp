@@ -17,6 +17,7 @@
 #if defined(__APPLE__)
 #include <mach/mach.h>
 #include <sys/sysctl.h>
+#include <fcntl.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 #include <sys/sysinfo.h>
 #include <fcntl.h>
@@ -113,7 +114,7 @@ void Memory::ZeroFill(void* buffer, size_t size)
 
 void Memory::RandomFill(void* buffer, size_t size)
 {
-#if defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     int fd = open("/dev/urandom", O_RDONLY);
     if (fd < 0)
         throwex SystemException("Cannot open '/dev/urandom' file for reading!");
@@ -132,7 +133,7 @@ void Memory::RandomFill(void* buffer, size_t size)
 
 void Memory::CryptoFill(void* buffer, size_t size)
 {
-#if defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     int fd = open("/dev/random", O_RDONLY);
     if (fd < 0)
         throwex SystemException("Cannot open '/dev/random' file for reading!");
