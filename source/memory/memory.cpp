@@ -18,6 +18,7 @@
 #include <mach/mach.h>
 #include <sys/sysctl.h>
 #include <fcntl.h>
+#include <unistd.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 #include <sys/sysinfo.h>
 #include <fcntl.h>
