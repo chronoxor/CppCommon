@@ -41,18 +41,39 @@ TEST_CASE("Encoding", "[CppCommon][String]")
 
 TEST_CASE("Base16 Encoding", "[CppCommon][String]")
 {
+    REQUIRE(Encoding::Base16Encode("") == "");
+    REQUIRE(Encoding::Base16Encode("f") == "66");
+    REQUIRE(Encoding::Base16Encode("fo") == "666F");
+    REQUIRE(Encoding::Base16Encode("foo") == "666F6F");
+    REQUIRE(Encoding::Base16Encode("foob") == "666F6F62");
+    REQUIRE(Encoding::Base16Encode("fooba") == "666F6F6261");
+    REQUIRE(Encoding::Base16Encode("foobar") == "666F6F626172");
     REQUIRE(Encoding::Base16Encode("Sample Base16 encoding: ~`'\"!?@#$%^&*(){}[]<>,.:;-+=_|/\\") == "53616D706C652042617365313620656E636F64696E673A207E602722213F402324255E262A28297B7D5B5D3C3E2C2E3A3B2D2B3D5F7C2F5C");
     REQUIRE(Encoding::Base16Decode("53616D706C652042617365313620656E636F64696E673A207E602722213F402324255E262A28297B7D5B5D3C3E2C2E3A3B2D2B3D5F7C2F5C") == "Sample Base16 encoding: ~`'\"!?@#$%^&*(){}[]<>,.:;-+=_|/\\");
 }
 
 TEST_CASE("Base32 Encoding", "[CppCommon][String]")
 {
+    REQUIRE(Encoding::Base32Encode("") == "");
+    REQUIRE(Encoding::Base32Encode("f") == "MY======");
+    REQUIRE(Encoding::Base32Encode("fo") == "MZXQ====");
+    REQUIRE(Encoding::Base32Encode("foo") == "MZXW6===");
+    REQUIRE(Encoding::Base32Encode("foob") == "MZXW6YQ=");
+    REQUIRE(Encoding::Base32Encode("fooba") == "MZXW6YTB");
+    REQUIRE(Encoding::Base32Encode("foobar") == "MZXW6YTBOI======");
     REQUIRE(Encoding::Base32Encode("Sample Base32 encoding: ~`'\"!?@#$%^&*(){}[]<>,.:;-+=_|/\\") == "KNQW24DMMUQEEYLTMUZTEIDFNZRW6ZDJNZTTUID6MATSEIJ7IARSIJK6EYVCQKL3PVNV2PB6FQXDUOZNFM6V67BPLQ======");
     REQUIRE(Encoding::Base32Decode("KNQW24DMMUQEEYLTMUZTEIDFNZRW6ZDJNZTTUID6MATSEIJ7IARSIJK6EYVCQKL3PVNV2PB6FQXDUOZNFM6V67BPLQ======") == "Sample Base32 encoding: ~`'\"!?@#$%^&*(){}[]<>,.:;-+=_|/\\");
 }
 
 TEST_CASE("Base64 Encoding", "[CppCommon][String]")
 {
+    REQUIRE(Encoding::Base64Encode("") == "");
+    REQUIRE(Encoding::Base64Encode("f") == "Zg==");
+    REQUIRE(Encoding::Base64Encode("fo") == "Zm8=");
+    REQUIRE(Encoding::Base64Encode("foo") == "Zm9v");
+    REQUIRE(Encoding::Base64Encode("foob") == "Zm9vYg==");
+    REQUIRE(Encoding::Base64Encode("fooba") == "Zm9vYmE=");
+    REQUIRE(Encoding::Base64Encode("foobar") == "Zm9vYmFy");
     REQUIRE(Encoding::Base64Encode("Sample Base64 encoding: ~`'\"!?@#$%^&*(){}[]<>,.:;-+=_|/\\") == "U2FtcGxlIEJhc2U2NCBlbmNvZGluZzogfmAnIiE/QCMkJV4mKigpe31bXTw+LC46Oy0rPV98L1w=");
     REQUIRE(Encoding::Base64Decode("U2FtcGxlIEJhc2U2NCBlbmNvZGluZzogfmAnIiE/QCMkJV4mKigpe31bXTw+LC46Oy0rPV98L1w=") == "Sample Base64 encoding: ~`'\"!?@#$%^&*(){}[]<>,.:;-+=_|/\\");
 }
