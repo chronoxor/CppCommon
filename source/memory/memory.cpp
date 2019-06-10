@@ -135,13 +135,13 @@ void Memory::CryptoFill(void* buffer, size_t size)
 #if defined(unix) || defined(__unix) || defined(__unix__)
     int fd = open("/dev/random", O_RDONLY);
     if (fd < 0)
-        throwex SystemException("Cannot open '/dev/urandom' file for reading!");
+        throwex SystemException("Cannot open '/dev/random' file for reading!");
     ssize_t count = read(fd, buffer, size);
     if (count < 0)
-        throwex SystemException("Cannot read from '/dev/urandom' file!");
+        throwex SystemException("Cannot read from '/dev/random' file!");
     int result = close(fd);
     if (result != 0)
-        throwex SystemException("Cannot close '/dev/urandom' file!");
+        throwex SystemException("Cannot close '/dev/random' file!");
 #elif defined(_WIN32) || defined(_WIN64)
     HCRYPTPROV hCryptContext;
     if (!CryptAcquireContext(&hCryptContext, NULL, NULL, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT))
