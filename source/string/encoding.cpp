@@ -9,6 +9,7 @@
 #include "string/encoding.h"
 
 #include <algorithm>
+#include <cassert>
 #include <codecvt>
 #include <locale>
 #include <vector>
@@ -130,6 +131,259 @@ std::u16string Encoding::UTF32toUTF16(std::u32string_view str)
     return result;
 }
 
+std::string Encoding::Base16Encode(std::string_view str)
+{
+    const char base16[] = "0123456789ABCDEF";
+
+    size_t ilength = str.length();
+    size_t olength = ilength * 2;
+
+    std::string result;
+    result.resize(olength, 0);
+
+    for (size_t i = 0, j = 0; i < ilength;)
+    {
+        uint8_t ch = (uint8_t)str[i++];
+
+        result[j++] = base16[(ch & 0xF0) >> 4];
+        result[j++] = base16[(ch & 0x0F) >> 0];
+    }
+
+    return result;
+}
+
+std::string Encoding::Base16Decode(std::string_view str)
+{
+    static const unsigned char base16[128] =
+    {
+        0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+        0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+        0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+        0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+        0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+        0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+        0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+        0x08, 0x09, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+        0xFF, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0xFF,
+        0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+        0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+        0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+        0xFF, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0xFF,
+        0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+        0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+        0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF
+    };
+
+    size_t ilength = str.length();
+
+    assert(((ilength % 2) == 0) && "Invalid Base16 sting!");
+    if ((ilength % 2) != 0)
+        return "";
+
+    size_t olength = ilength / 2;
+
+    std::string result;
+    result.resize(olength, 0);
+
+    for (size_t i = 0, j = 0; i < ilength;)
+    {
+        uint8_t a = (uint8_t)str[i++];
+        uint8_t b = (uint8_t)str[i++];
+
+        // Validate ASCII
+        assert(((a < 0x80) && (b < 0x80)) && "Invalid Base16 content!");
+        if ((a >= 0x80) || (b >= 0x80))
+            return "";
+
+        // Convert ASCII to Base16
+        a = base16[a];
+        b = base16[b];
+
+        result[j++] = ((a << 4) | b);
+    }
+
+    return result;
+}
+
+std::string Encoding::Base32Encode(std::string_view str)
+{
+    const char base32[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567=";
+
+    size_t ilength = str.length();
+    size_t olength = ((ilength / 5) * 8) + ((ilength % 5) ? 8 : 0);
+
+    std::string result;
+    result.resize(olength, 0);
+
+    for (size_t i = 0, j = 0; i < ilength;)
+    {
+        size_t block = ((ilength - i) < 5 ? (ilength - i) : 5);
+        uint8_t n1, n2, n3, n4, n5, n6, n7, n8;
+        n1 = n2 = n3 = n4 = n5 = n6 = n7 = n8 = 0;
+
+        switch (block)
+        {
+            case 5:
+                n8  = (((uint8_t)str[i + 4] & 0x1F) >> 0);
+                n7  = (((uint8_t)str[i + 4] & 0xE0) >> 5);
+            case 4:
+                n7 |= (((uint8_t)str[i + 3] & 0x03) << 3);
+                n6  = (((uint8_t)str[i + 3] & 0x7C) >> 2);
+                n5  = (((uint8_t)str[i + 3] & 0x80) >> 7);
+            case 3:
+                n5 |= (((uint8_t)str[i + 2] & 0x0F) << 1);
+                n4  = (((uint8_t)str[i + 2] & 0xF0) >> 4);
+            case 2:
+                n4 |= (((uint8_t)str[i + 1] & 0x01) << 4);
+                n3  = (((uint8_t)str[i + 1] & 0x3E) >> 1);
+                n2  = (((uint8_t)str[i + 1] & 0xC0) >> 6);
+            case 1:
+                n2 |= (((uint8_t)str[i + 0] & 0x07) << 2);
+                n1  = (((uint8_t)str[i + 0] & 0xF8) >> 3);
+                break;
+            default:
+                assert(false && "Invalid Base32 operation!");
+        }
+        i += block;
+
+        // Validate
+        assert((n1 <= 31) && "Invalid Base32 n1 value!");
+        assert((n2 <= 31) && "Invalid Base32 n2 value!" );
+        assert((n3 <= 31) && "Invalid Base32 n3 value!" );
+        assert((n4 <= 31) && "Invalid Base32 n4 value!" );
+        assert((n5 <= 31) && "Invalid Base32 n5 value!" );
+        assert((n6 <= 31) && "Invalid Base32 n6 value!" );
+        assert((n7 <= 31) && "Invalid Base32 n7 value!" );
+        assert((n8 <= 31) && "Invalid Base32 n8 value!" );
+
+        // Padding
+        switch (block)
+        {
+            case 1: n3 = n4 = 32;
+            case 2: n5 = 32;
+            case 3: n6 = n7 = 32;
+            case 4: n8 = 32;
+            case 5:
+                break;
+            default:
+                assert(false && "Invalid Base32 operation!");
+        }
+
+        // 8 outputs
+        result[j++] = base32[n1];
+        result[j++] = base32[n2];
+        result[j++] = base32[n3];
+        result[j++] = base32[n4];
+        result[j++] = base32[n5];
+        result[j++] = base32[n6];
+        result[j++] = base32[n7];
+        result[j++] = base32[n8];
+    }
+
+    return result;
+}
+
+std::string Encoding::Base32Decode(std::string_view str)
+{
+    static const unsigned char base32[128] =
+    {
+        0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+        0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+        0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+        0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+        0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+        0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+        0xFF, 0xFF, 0x1a, 0x1b, 0x1c, 0x1d, 0x1e, 0x1f,
+        0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x20, 0xFF, 0xFF,
+        0xFF, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06,
+        0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e,
+        0x0f, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16,
+        0x17, 0x18, 0x19, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+        0xFF, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06,
+        0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e,
+        0x0f, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16,
+        0x17, 0x18, 0x19, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF
+    };
+
+    size_t ilength = str.length();
+
+    assert(((ilength % 8) == 0) && "Invalid Base32 sting!");
+    if ((ilength % 8) != 0)
+        return "";
+
+    size_t olength = (ilength / 8) * 5;
+
+    std::string result;
+    result.resize(olength, 0);
+
+    for (size_t i = 0, j = 0; i < ilength;)
+    {
+        // 8 inputs
+        uint8_t n1 = (uint8_t)str[i++];
+        uint8_t n2 = (uint8_t)str[i++];
+        uint8_t n3 = (uint8_t)str[i++];
+        uint8_t n4 = (uint8_t)str[i++];
+        uint8_t n5 = (uint8_t)str[i++];
+        uint8_t n6 = (uint8_t)str[i++];
+        uint8_t n7 = (uint8_t)str[i++];
+        uint8_t n8 = (uint8_t)str[i++];
+
+        // Validate ASCII
+        assert(((n1 < 0x80) && (n2 < 0x80) && (n3 < 0x80) && (n4 < 0x80) && (n5 < 0x80) && (n6 < 0x80) && (n7 < 0x80) && (n8 < 0x80)) && "Invalid Base32 content!");
+        if ((n1 >= 0x80) || (n2 >= 0x80) || (n3 >= 0x80) || (n4 >= 0x80) || (n5 >= 0x80) || (n6 >= 0x80) || (n7 >= 0x80) || (n8 >= 0x80))
+            return "";
+
+        // Convert ASCII to Base32
+        n1 = base32[n1];
+        n2 = base32[n2];
+        n3 = base32[n3];
+        n4 = base32[n4];
+        n5 = base32[n5];
+        n6 = base32[n6];
+        n7 = base32[n7];
+        n8 = base32[n8];
+
+        // Validate Base32
+        assert(((n1 <= 31) && (n2 <= 31)) && "Invalid Base32 content!");
+        if ((n1 > 31) || (n2 > 31))
+            return "";
+
+        // The following can be padding
+        assert(((n3 <= 32) && (n4 <= 32) && (n5 <= 32) && (n6 <= 32) && (n7 <= 32) && (n8 <= 32)) && "Invalid Base32 content!");
+        if ((n3 > 32) || (n4 > 32) || (n5 > 32) || (n6 > 32) || (n7 > 32) || (n8 > 32))
+            return "";
+
+        // 5 outputs
+        result[j++] = ((n1 & 0x1f) << 3) | ((n2 & 0x1c) >> 2);
+        result[j++] = ((n2 & 0x03) << 6) | ((n3 & 0x1f) << 1) | ((n4 & 0x10) >> 4);
+        result[j++] = ((n4 & 0x0f) << 4) | ((n5 & 0x1e) >> 1);
+        result[j++] = ((n5 & 0x01) << 7) | ((n6 & 0x1f) << 2) | ((n7 & 0x18) >> 3);
+        result[j++] = ((n7 & 0x07) << 5) | ((n8 & 0x1f));
+
+        // Padding
+        if (n8 == 32)
+        {
+            result.resize(result.size() - 1);
+            assert((((n7 == 32) && (n6 == 32)) || (n7 != 32)) && "Invalid Base32 content!");
+            if (n6 == 32)
+            {
+                result.resize(result.size() - 1);
+                if (n5 == 32)
+                {
+                    result.resize(result.size() - 1);
+                    assert((((n4 == 32) && (n3 == 32)) || (n4 != 32)) && "Invalid Base32 content!");
+                    if (n3 == 32)
+                    {
+                        result.resize(result.size() - 1);
+                    }
+                }
+            }
+        }
+    }
+
+    return result;
+}
+
 std::string Encoding::Base64Encode(std::string_view str)
 {
     const char base64[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
@@ -196,8 +450,8 @@ std::string Encoding::Base64Decode(std::string_view str)
     std::string result;
     result.resize(olength, 0);
 
-    for (size_t i = 0, j = 0; i < ilength;) {
-
+    for (size_t i = 0, j = 0; i < ilength;)
+    {
         uint32_t sextet_a = str[i] == '=' ? 0 & i++ : base64[(uint8_t)str[i++]];
         uint32_t sextet_b = str[i] == '=' ? 0 & i++ : base64[(uint8_t)str[i++]];
         uint32_t sextet_c = str[i] == '=' ? 0 & i++ : base64[(uint8_t)str[i++]];

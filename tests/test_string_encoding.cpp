@@ -39,6 +39,18 @@ TEST_CASE("Encoding", "[CppCommon][String]")
     test("\xF0\x9D\x93\x83", u"\xD835\xDCC3", U"\x0001D4C3");
 }
 
+TEST_CASE("Base16 Encoding", "[CppCommon][String]")
+{
+    REQUIRE(Encoding::Base16Encode("Sample Base16 encoding: ~`'\"!?@#$%^&*(){}[]<>,.:;-+=_|/\\") == "53616D706C652042617365313620656E636F64696E673A207E602722213F402324255E262A28297B7D5B5D3C3E2C2E3A3B2D2B3D5F7C2F5C");
+    REQUIRE(Encoding::Base16Decode("53616D706C652042617365313620656E636F64696E673A207E602722213F402324255E262A28297B7D5B5D3C3E2C2E3A3B2D2B3D5F7C2F5C") == "Sample Base16 encoding: ~`'\"!?@#$%^&*(){}[]<>,.:;-+=_|/\\");
+}
+
+TEST_CASE("Base32 Encoding", "[CppCommon][String]")
+{
+    REQUIRE(Encoding::Base32Encode("Sample Base32 encoding: ~`'\"!?@#$%^&*(){}[]<>,.:;-+=_|/\\") == "KNQW24DMMUQEEYLTMUZTEIDFNZRW6ZDJNZTTUID6MATSEIJ7IARSIJK6EYVCQKL3PVNV2PB6FQXDUOZNFM6V67BPLQ======");
+    REQUIRE(Encoding::Base32Decode("KNQW24DMMUQEEYLTMUZTEIDFNZRW6ZDJNZTTUID6MATSEIJ7IARSIJK6EYVCQKL3PVNV2PB6FQXDUOZNFM6V67BPLQ======") == "Sample Base32 encoding: ~`'\"!?@#$%^&*(){}[]<>,.:;-+=_|/\\");
+}
+
 TEST_CASE("Base64 Encoding", "[CppCommon][String]")
 {
     REQUIRE(Encoding::Base64Encode("Sample Base64 encoding: ~`'\"!?@#$%^&*(){}[]<>,.:;-+=_|/\\") == "U2FtcGxlIEJhc2U2NCBlbmNvZGluZzogfmAnIiE/QCMkJV4mKigpe31bXTw+LC46Oy0rPV98L1w=");
