@@ -133,8 +133,10 @@ bool FileCache::insert_path_internal(const CppCommon::Path& path, const std::str
         const std::string key_prefix = (prefix.empty() || (prefix == "/")) ? "/" : (prefix + "/");
 
         // Iterate through all directory entries
-        for (const auto& entry : CppCommon::Directory(path))
+        for (const auto& item : CppCommon::Directory(path))
         {
+            CppCommon::Path entry = item.IsSymlink() ? Symlink(entry).target() : item;
+
             const std::string key = key_prefix + CppCommon::Encoding::URLDecode(entry.filename().string());
 
             if (entry.IsDirectory())
