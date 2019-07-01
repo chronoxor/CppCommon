@@ -28,6 +28,8 @@ extern char **environ;
 #endif
 #if defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
 #include <windows.h>
+#include <winternl.h>
+#define STATUS_SUCCESS 0x00000000
 #include <map>
 #include <vector>
 #endif
@@ -144,23 +146,33 @@ std::string Environment::OSVersion()
 
     return "<linux>";
 #elif defined(_WIN32) || defined(_WIN64)
+    static NTSTATUS(__stdcall *RtlGetVersion)(OUT PRTL_OSVERSIONINFOEXW lpVersionInformation) = (NTSTATUS(__stdcall*)(PRTL_OSVERSIONINFOEXW))GetProcAddress(GetModuleHandle("ntdll.dll"), "RtlGetVersion");
     static void(__stdcall *GetNativeSystemInfo)(OUT LPSYSTEM_INFO lpSystemInfo) = (void(__stdcall*)(LPSYSTEM_INFO))GetProcAddress(GetModuleHandle("kernel32.dll"), "GetNativeSystemInfo");
     static BOOL(__stdcall *GetProductInfo)(IN DWORD dwOSMajorVersion, IN DWORD dwOSMinorVersion, IN DWORD dwSpMajorVersion, IN DWORD dwSpMinorVersion, OUT PDWORD pdwReturnedProductType) = (BOOL(__stdcall*)(DWORD, DWORD, DWORD, DWORD, PDWORD))GetProcAddress(GetModuleHandle("kernel32.dll"), "GetProductInfo");
 
-    OSVERSIONINFOEX osvi;
-    ZeroMemory(&osvi, sizeof(OSVERSIONINFOEX));
-    osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
+    OSVERSIONINFOEXW osvi;
+    ZeroMemory(&osvi, sizeof(OSVERSIONINFOEXW));
+    osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEXW);
 
+    if (RtlGetVersion != nullptr)
+    {
+        NTSTATUS ntRtlGetVersionStatus = RtlGetVersion(&osvi);
+        if (ntRtlGetVersionStatus != STATUS_SUCCESS)
+            return "<windows>";
+    }
+    else
+    {
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable: 4996) // C4996: 'function': was declared deprecated
 #endif
-    BOOL bOsVersionInfoEx = GetVersionEx((OSVERSIONINFO*)&osvi);
-    if (bOsVersionInfoEx == 0)
-        return "<windows>";
+        BOOL bOsVersionInfoEx = GetVersionExW((OSVERSIONINFOW*)&osvi);
+        if (bOsVersionInfoEx == 0)
+            return "<windows>";
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif
+    }
 
     SYSTEM_INFO si;
     ZeroMemory(&si, sizeof(SYSTEM_INFO));
@@ -178,7 +190,7 @@ std::string Environment::OSVersion()
     std::stringstream os;
 
     // Windows version
-    os << "Microsoft ";
+    os << "Microsoft";
     if (osvi.dwMajorVersion >= 6)
     {
         if (osvi.dwMajorVersion == 10)
@@ -186,9 +198,9 @@ std::string Environment::OSVersion()
             if (osvi.dwMinorVersion == 0)
             {
                 if (osvi.wProductType == VER_NT_WORKSTATION)
-                    os << "Windows 10 ";
+                    os << " Windows 10";
                 else
-                    os << "Windows Server 2016 ";
+                    os << " Windows Server 2016";
             }
         }
         else if (osvi.dwMajorVersion == 6)
@@ -196,30 +208,30 @@ std::string Environment::OSVersion()
             if (osvi.dwMinorVersion == 3)
             {
                 if (osvi.wProductType == VER_NT_WORKSTATION)
-                    os << "Windows 8.1 ";
+                    os << " Windows 8.1";
                 else
-                    os << "Windows Server 2012 R2 ";
+                    os << " Windows Server 2012 R2";
             }
             else if (osvi.dwMinorVersion == 2)
             {
                 if (osvi.wProductType == VER_NT_WORKSTATION)
-                    os << "Windows 8 ";
+                    os << " Windows 8";
                 else
-                    os << "Windows Server 2012 ";
+                    os << " Windows Server 2012";
             }
             else if (osvi.dwMinorVersion == 1)
             {
                 if (osvi.wProductType == VER_NT_WORKSTATION)
-                    os << "Windows 7 ";
+                    os << " Windows 7";
                 else
-                    os << "Windows Server 2008 R2 ";
+                    os << " Windows Server 2008 R2";
             }
             else if (osvi.dwMinorVersion == 0)
             {
                 if (osvi.wProductType == VER_NT_WORKSTATION)
-                    os << "Windows Vista ";
+                    os << " Windows Vista";
                 else
-                    os << "Windows Server 2008 ";
+                    os << " Windows Server 2008";
             }
         }
 
@@ -229,58 +241,58 @@ std::string Environment::OSVersion()
             switch (dwType)
             {
                 case PRODUCT_ULTIMATE:
-                    os << "Ultimate Edition";
+                    os << " Ultimate Edition";
                     break;
                 case PRODUCT_PROFESSIONAL:
-                    os << "Professional";
+                    os << " Professional";
                     break;
                 case PRODUCT_HOME_PREMIUM:
-                    os << "Home Premium Edition";
+                    os << " Home Premium Edition";
                     break;
                 case PRODUCT_HOME_BASIC:
-                    os << "Home Basic Edition";
+                    os << " Home Basic Edition";
                     break;
                 case PRODUCT_ENTERPRISE:
-                    os << "Enterprise Edition";
+                    os << " Enterprise Edition";
                     break;
                 case PRODUCT_BUSINESS:
-                    os << "Business Edition";
+                    os << " Business Edition";
                     break;
                 case PRODUCT_STARTER:
-                    os << "Starter Edition";
+                    os << " Starter Edition";
                     break;
                 case PRODUCT_CLUSTER_SERVER:
-                    os << "Cluster Server Edition";
+                    os << " Cluster Server Edition";
                     break;
                 case PRODUCT_DATACENTER_SERVER:
-                    os << "Datacenter Edition";
+                    os << " Datacenter Edition";
                     break;
                 case PRODUCT_DATACENTER_SERVER_CORE:
-                    os << "Datacenter Edition (core installation)";
+                    os << " Datacenter Edition (core installation)";
                     break;
                 case PRODUCT_ENTERPRISE_SERVER:
-                    os << "Enterprise Edition";
+                    os << " Enterprise Edition";
                     break;
                 case PRODUCT_ENTERPRISE_SERVER_CORE:
-                    os << "Enterprise Edition (core installation)";
+                    os << " Enterprise Edition (core installation)";
                     break;
                 case PRODUCT_ENTERPRISE_SERVER_IA64:
-                    os << "Enterprise Edition for Itanium-based Systems";
+                    os << " Enterprise Edition for Itanium-based Systems";
                     break;
                 case PRODUCT_SMALLBUSINESS_SERVER:
-                    os << "Small Business Server";
+                    os << " Small Business Server";
                     break;
                 case PRODUCT_SMALLBUSINESS_SERVER_PREMIUM:
-                    os << "Small Business Server Premium Edition";
+                    os << " Small Business Server Premium Edition";
                     break;
                 case PRODUCT_STANDARD_SERVER:
-                    os << "Standard Edition";
+                    os << " Standard Edition";
                     break;
                 case PRODUCT_STANDARD_SERVER_CORE:
-                    os << "Standard Edition (core installation)";
+                    os << " Standard Edition (core installation)";
                     break;
                 case PRODUCT_WEB_SERVER:
-                    os << "Web Server Edition";
+                    os << " Web Server Edition";
                     break;
             }
         }
@@ -288,85 +300,85 @@ std::string Environment::OSVersion()
     else if ((osvi.dwMajorVersion == 5) && (osvi.dwMinorVersion == 2))
     {
         if (GetSystemMetrics(SM_SERVERR2))
-            os << "Windows Server 2003 R2, ";
+            os << " Windows Server 2003 R2,";
         else if (osvi.wSuiteMask & VER_SUITE_STORAGE_SERVER)
-            os << "Windows Storage Server 2003";
+            os << " Windows Storage Server 2003";
         else if (osvi.wSuiteMask & VER_SUITE_WH_SERVER)
-            os << "Windows Home Server";
+            os << " Windows Home Server";
         else if ((osvi.wProductType == VER_NT_WORKSTATION) && (si.wProcessorArchitecture==PROCESSOR_ARCHITECTURE_AMD64))
-            os << "Windows XP Professional x64 Edition";
+            os << " Windows XP Professional x64 Edition";
         else
-            os << "Windows Server 2003, ";
+            os << " Windows Server 2003,";
         if (osvi.wProductType != VER_NT_WORKSTATION)
         {
             if (si.wProcessorArchitecture==PROCESSOR_ARCHITECTURE_IA64)
             {
                 if (osvi.wSuiteMask & VER_SUITE_DATACENTER)
-                    os << "Datacenter Edition for Itanium-based Systems";
+                    os << " Datacenter Edition for Itanium-based Systems";
                 else if (osvi.wSuiteMask & VER_SUITE_ENTERPRISE)
-                    os << "Enterprise Edition for Itanium-based Systems";
+                    os << " Enterprise Edition for Itanium-based Systems";
             }
             else if (si.wProcessorArchitecture==PROCESSOR_ARCHITECTURE_AMD64)
             {
                 if (osvi.wSuiteMask & VER_SUITE_DATACENTER)
-                    os << "Datacenter x64 Edition";
+                    os << " Datacenter x64 Edition";
                 else if (osvi.wSuiteMask & VER_SUITE_ENTERPRISE)
-                    os << "Enterprise x64 Edition";
+                    os << " Enterprise x64 Edition";
                 else
-                    os << "Standard x64 Edition";
+                    os << " Standard x64 Edition";
             }
             else
             {
                 if (osvi.wSuiteMask & VER_SUITE_COMPUTE_SERVER)
-                    os << "Compute Cluster Edition";
+                    os << " Compute Cluster Edition";
                 else if (osvi.wSuiteMask & VER_SUITE_DATACENTER)
-                    os << "Datacenter Edition";
+                    os << " Datacenter Edition";
                 else if (osvi.wSuiteMask & VER_SUITE_ENTERPRISE)
-                    os << "Enterprise Edition";
+                    os << " Enterprise Edition";
                 else if (osvi.wSuiteMask & VER_SUITE_BLADE)
-                    os << "Web Edition";
+                    os << " Web Edition";
                 else
-                    os << "Standard Edition";
+                    os << " Standard Edition";
             }
         }
     }
     else if ((osvi.dwMajorVersion == 5) && (osvi.dwMinorVersion == 1))
     {
-        os << "Windows XP ";
+        os << " Windows XP";
         if (osvi.wSuiteMask & VER_SUITE_PERSONAL)
-            os << "Home Edition";
+            os << " Home Edition";
         else
-            os << "Professional";
+            os << " Professional";
     }
     else if ((osvi.dwMajorVersion == 5) && (osvi.dwMinorVersion == 0))
     {
-        os << "Windows 2000 ";
+        os << " Windows 2000";
         if (osvi.wProductType == VER_NT_WORKSTATION)
-            os <<  "Professional";
+            os << " Professional";
         else
         {
             if (osvi.wSuiteMask & VER_SUITE_DATACENTER)
-                os << "Datacenter Server";
+                os << " Datacenter Server";
             else if (osvi.wSuiteMask & VER_SUITE_ENTERPRISE)
-                os << "Advanced Server";
+                os << " Advanced Server";
             else
-                os << "Server";
+                os << " Server";
         }
     }
 
     // Windows Service Pack version
-    if (std::strlen(osvi.szCSDVersion) > 0)
+    if (std::wcslen(osvi.szCSDVersion) > 0)
         os << " " << osvi.szCSDVersion;
 
     // Windows build
     os << " (build " << osvi.dwBuildNumber << ")";
 
     // Windows architecture
-    if ( osvi.dwMajorVersion >= 6 )
+    if (osvi.dwMajorVersion >= 6)
     {
-        if (si.wProcessorArchitecture==PROCESSOR_ARCHITECTURE_AMD64)
+        if (si.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_AMD64)
             os <<  ", 64-bit";
-        else if (si.wProcessorArchitecture==PROCESSOR_ARCHITECTURE_INTEL)
+        else if (si.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_INTEL)
             os << ", 32-bit";
     }
 
