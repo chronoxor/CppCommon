@@ -20,7 +20,7 @@ var searchData=
   ['relative',['relative',['../class_cpp_common_1_1_path.html#a6ce11975ef737073f4a76e7863f5a579',1,'CppCommon::Path']]],
   ['release',['Release',['../class_cpp_common_1_1_allocator.html#a1b315fb93ab2dabb3692e5c883d8183e',1,'CppCommon::Allocator']]],
   ['releasearray',['ReleaseArray',['../class_cpp_common_1_1_allocator.html#a1510165d856e64ea5d669ced45021cbb',1,'CppCommon::Allocator']]],
-  ['remove',['remove',['../class_cpp_common_1_1_file_cache.html#a3e03d2326875a440d6ba319d6cee925c',1,'CppCommon::FileCache::remove()'],['../class_cpp_common_1_1_mem_cache.html#a171360c798b1e3ca63982e91acbd8b13',1,'CppCommon::MemCache::remove()'],['../class_cpp_common_1_1_path.html#a6ee98b02fae3f5fdaf872e0bb10b146e',1,'CppCommon::Path::Remove()']]],
+  ['remove',['Remove',['../class_cpp_common_1_1_path.html#a6ee98b02fae3f5fdaf872e0bb10b146e',1,'CppCommon::Path::Remove()'],['../class_cpp_common_1_1_file_cache.html#a3e03d2326875a440d6ba319d6cee925c',1,'CppCommon::FileCache::remove()'],['../class_cpp_common_1_1_mem_cache.html#a171360c798b1e3ca63982e91acbd8b13',1,'CppCommon::MemCache::remove()']]],
   ['remove_5fpath',['remove_path',['../class_cpp_common_1_1_file_cache.html#a4538d1490748e546903f25edd4020c9c',1,'CppCommon::FileCache']]],
   ['removeall',['RemoveAll',['../class_cpp_common_1_1_path.html#a22eba9edeb6452414b8b9f83971db144',1,'CppCommon::Path']]],
   ['removeextension',['RemoveExtension',['../class_cpp_common_1_1_path.html#ab7258f03d282cb237e6643ae81738aec',1,'CppCommon::Path']]],

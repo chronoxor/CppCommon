@@ -2,6 +2,7 @@ var searchData=
 [
   ['second',['second',['../class_cpp_common_1_1_time.html#a92b3af84dc5f7af7f1e9c94750d06606',1,'CppCommon::Time']]],
   ['seconds',['seconds',['../class_cpp_common_1_1_timespan.html#a4eb3bee433c6a06b7b824d97d9909f6e',1,'CppCommon::Timespan::seconds() const noexcept'],['../class_cpp_common_1_1_timespan.html#a578b2dab8bceebfea6009c471dac4c42',1,'CppCommon::Timespan::seconds(int64_t seconds) noexcept'],['../class_cpp_common_1_1_timestamp.html#a957833bcf55208d5cbc3c6980a6fcbba',1,'CppCommon::Timestamp::seconds() const noexcept'],['../class_cpp_common_1_1_timestamp.html#ac8874f2180a6464578dac20bae35e96c',1,'CppCommon::Timestamp::seconds(int64_t seconds) noexcept']]],
+  ['secure',['Secure',['../class_cpp_common_1_1_u_u_i_d.html#ac3889aa539ed4ee47bcf5d7ec2ff229e',1,'CppCommon::UUID']]],
   ['securityexception',['SecurityException',['../class_cpp_common_1_1_security_exception.html',1,'CppCommon']]],
   ['seek',['Seek',['../class_cpp_common_1_1_file.html#ab48954ebfce9e596c4e9eded9be12bba',1,'CppCommon::File']]],
   ['semaphore',['Semaphore',['../class_cpp_common_1_1_semaphore.html',1,'CppCommon::Semaphore'],['../class_cpp_common_1_1_semaphore.html#a01eb6d7dcad4f0f9abe4270477d34c93',1,'CppCommon::Semaphore::Semaphore(int resources)'],['../class_cpp_common_1_1_semaphore.html#a1840aa4e30c99afb547fcf8e07a04729',1,'CppCommon::Semaphore::Semaphore(const Semaphore &amp;)=delete'],['../class_cpp_common_1_1_semaphore.html#a985d2ee45937bade26c7e44d0851d1bd',1,'CppCommon::Semaphore::Semaphore(Semaphore &amp;&amp;semaphore)=delete']]],
