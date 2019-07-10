@@ -86,6 +86,8 @@ public:
     static UUID Sequential();
     //! Generate random UUID4 (randomly or pseudo-randomly generated version)
     static UUID Random();
+    //! Generate secure UUID4 (secure generated version)
+    static UUID Secure();
 
     //! Output instance into the given output stream
     friend std::ostream& operator<<(std::ostream& os, const UUID& uuid)

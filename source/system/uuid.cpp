@@ -8,6 +8,8 @@
 
 #include "system/uuid.h"
 
+#include "memory/memory.h"
+
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
 #include <uuid/uuid.h>
 #elif defined(_WIN32) || defined(_WIN64)
@@ -198,6 +200,13 @@ UUID UUID::Random()
     result._data[14] = uuid.Data4[6];
     result._data[15] = uuid.Data4[7];
 #endif
+    return result;
+}
+
+UUID UUID::Secure()
+{
+    UUID result;
+    Memory::CryptoFill(result._data.data(), result._data.size());
     return result;
 }
 
