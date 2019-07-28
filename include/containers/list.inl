@@ -13,7 +13,7 @@ template <class InputIterator>
 inline List<T>::List(InputIterator first, InputIterator last) noexcept
 {
     for (auto it = first; it != last; ++it)
-        PushBack(*it);
+        push_back(*it);
 }
 
 template <typename T>
