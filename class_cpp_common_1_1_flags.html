@@ -122,6 +122,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab155d22132001b4c9aee9cc0b4f0aecc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_flags.html#ab155d22132001b4c9aee9cc0b4f0aecc">operator TEnum</a> () const noexcept</td></tr>
 <tr class="memdesc:ab155d22132001b4c9aee9cc0b4f0aecc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert to the enum value.  <a href="#ab155d22132001b4c9aee9cc0b4f0aecc">More...</a><br /></td></tr>
 <tr class="separator:ab155d22132001b4c9aee9cc0b4f0aecc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43d363a1b45c1a7864983558367de8a6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_flags.html#a43d363a1b45c1a7864983558367de8a6">set</a> () const noexcept</td></tr>
+<tr class="memdesc:a43d363a1b45c1a7864983558367de8a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is any flag set?  <a href="#a43d363a1b45c1a7864983558367de8a6">More...</a><br /></td></tr>
+<tr class="separator:a43d363a1b45c1a7864983558367de8a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56af60eb7c98e1b734ef8c033ca13973"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_flags.html#a56af60eb7c98e1b734ef8c033ca13973">set</a> (type <a class="el" href="class_cpp_common_1_1_flags.html#a821a5694817cd25cc574393116071c04">value</a>) const noexcept</td></tr>
+<tr class="memdesc:a56af60eb7c98e1b734ef8c033ca13973"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is the given flag set?  <a href="#a56af60eb7c98e1b734ef8c033ca13973">More...</a><br /></td></tr>
+<tr class="separator:a56af60eb7c98e1b734ef8c033ca13973"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3691b762f557e5b931d158ceb33d3982"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_flags.html#a3691b762f557e5b931d158ceb33d3982">set</a> (TEnum <a class="el" href="class_cpp_common_1_1_flags.html#a821a5694817cd25cc574393116071c04">value</a>) const noexcept</td></tr>
+<tr class="memdesc:a3691b762f557e5b931d158ceb33d3982"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is the given flag set?  <a href="#a3691b762f557e5b931d158ceb33d3982">More...</a><br /></td></tr>
+<tr class="separator:a3691b762f557e5b931d158ceb33d3982"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a821a5694817cd25cc574393116071c04"><td class="memItemLeft" align="right" valign="top">TEnum&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_flags.html#a821a5694817cd25cc574393116071c04">value</a> () const noexcept</td></tr>
 <tr class="memdesc:a821a5694817cd25cc574393116071c04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the enum value.  <a href="#a821a5694817cd25cc574393116071c04">More...</a><br /></td></tr>
 <tr class="separator:a821a5694817cd25cc574393116071c04"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -362,7 +371,7 @@ template&lt;typename TEnum&gt; </div>
 
 <p>Get the bitset value. </p>
 
-<p class="definition">Definition at line <a class="el" href="flags_8h_source.html#l00122">122</a> of file <a class="el" href="flags_8h_source.html">flags.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="flags_8h_source.html#l00128">128</a> of file <a class="el" href="flags_8h_source.html">flags.h</a>.</p>
 
 </div>
 </div>
@@ -698,6 +707,101 @@ template&lt;typename TEnum&gt; </div>
 
 </div>
 </div>
+<a id="a43d363a1b45c1a7864983558367de8a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43d363a1b45c1a7864983558367de8a6">&#9670;&nbsp;</a></span>set() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TEnum&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_cpp_common_1_1_flags.html">CppCommon::Flags</a>&lt; TEnum &gt;::set </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Is any flag set? </p>
+
+<p class="definition">Definition at line <a class="el" href="flags_8h_source.html#l00118">118</a> of file <a class="el" href="flags_8h_source.html">flags.h</a>.</p>
+
+</div>
+</div>
+<a id="a56af60eb7c98e1b734ef8c033ca13973"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56af60eb7c98e1b734ef8c033ca13973">&#9670;&nbsp;</a></span>set() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TEnum&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_cpp_common_1_1_flags.html">CppCommon::Flags</a>&lt; TEnum &gt;::set </td>
+          <td>(</td>
+          <td class="paramtype">type&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Is the given flag set? </p>
+
+<p class="definition">Definition at line <a class="el" href="flags_8h_source.html#l00120">120</a> of file <a class="el" href="flags_8h_source.html">flags.h</a>.</p>
+
+</div>
+</div>
+<a id="a3691b762f557e5b931d158ceb33d3982"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3691b762f557e5b931d158ceb33d3982">&#9670;&nbsp;</a></span>set() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TEnum&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_cpp_common_1_1_flags.html">CppCommon::Flags</a>&lt; TEnum &gt;::set </td>
+          <td>(</td>
+          <td class="paramtype">TEnum&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Is the given flag set? </p>
+
+<p class="definition">Definition at line <a class="el" href="flags_8h_source.html#l00122">122</a> of file <a class="el" href="flags_8h_source.html">flags.h</a>.</p>
+
+</div>
+</div>
 <a id="a5076fa0609393368a8ac667a960c12d9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5076fa0609393368a8ac667a960c12d9">&#9670;&nbsp;</a></span>swap()</h2>
 
@@ -726,7 +830,7 @@ template&lt;typename TEnum&gt; </div>
 
 <p>Swap two instances. </p>
 
-<p class="definition">Definition at line <a class="el" href="flags_8h_source.html#l00125">125</a> of file <a class="el" href="flags_8h_source.html">flags.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="flags_8h_source.html#l00131">131</a> of file <a class="el" href="flags_8h_source.html">flags.h</a>.</p>
 
 </div>
 </div>
@@ -757,7 +861,7 @@ template&lt;typename TEnum&gt; </div>
 
 <p>Get the underlying enum value. </p>
 
-<p class="definition">Definition at line <a class="el" href="flags_8h_source.html#l00120">120</a> of file <a class="el" href="flags_8h_source.html">flags.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="flags_8h_source.html#l00126">126</a> of file <a class="el" href="flags_8h_source.html">flags.h</a>.</p>
 
 </div>
 </div>
@@ -788,7 +892,7 @@ template&lt;typename TEnum&gt; </div>
 
 <p>Get the enum value. </p>
 
-<p class="definition">Definition at line <a class="el" href="flags_8h_source.html#l00118">118</a> of file <a class="el" href="flags_8h_source.html">flags.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="flags_8h_source.html#l00124">124</a> of file <a class="el" href="flags_8h_source.html">flags.h</a>.</p>
 
 </div>
 </div>
