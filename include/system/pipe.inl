@@ -8,12 +8,6 @@
 
 namespace CppCommon {
 
-inline void Pipe::swap(Pipe& pipe) noexcept
-{
-    using std::swap;
-    swap(_pimpl, pipe._pimpl);
-}
-
 inline void swap(Pipe& pipe1, Pipe& pipe2) noexcept
 {
     pipe1.swap(pipe2);

@@ -553,4 +553,10 @@ Process Process::Execute(const std::string& command, const std::vector<std::stri
     return Impl::Execute(command, arguments, envars, directory, input, output, error);
 }
 
+void Process::swap(Process& process) noexcept
+{
+    using std::swap;
+    swap(_pimpl, process._pimpl);
+}
+
 } // namespace CppCommon

@@ -237,4 +237,10 @@ void Pipe::Close()
     return _pimpl->Close();
 }
 
+void Pipe::swap(Pipe& pipe) noexcept
+{
+    using std::swap;
+    swap(_pimpl, pipe._pimpl);
+}
+
 } // namespace CppCommon

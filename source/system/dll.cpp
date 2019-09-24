@@ -221,4 +221,10 @@ void* DLL::ResolveAddress(const std::string& name) const
     return _pimpl->ResolveAddress(name);
 }
 
+void DLL::swap(DLL& dll) noexcept
+{
+    using std::swap;
+    swap(_pimpl, dll._pimpl);
+}
+
 } // namespace CppCommon

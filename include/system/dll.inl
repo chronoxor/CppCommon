@@ -38,12 +38,6 @@ inline std::string DLL::extension()
 #endif
 }
 
-inline void DLL::swap(DLL& dll) noexcept
-{
-    using std::swap;
-    swap(_pimpl, dll._pimpl);
-}
-
 inline void swap(DLL& dll1, DLL& dll2) noexcept
 {
     dll1.swap(dll2);

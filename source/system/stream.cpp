@@ -254,6 +254,12 @@ size_t StdInput::Read(void* buffer, size_t size)
     return _pimpl->Read(buffer, size);
 }
 
+void StdInput::swap(StdInput& stream) noexcept
+{
+    using std::swap;
+    swap(_pimpl, stream._pimpl);
+}
+
 StdOutput::StdOutput() : _pimpl(std::make_unique<Impl>())
 {
 }
@@ -282,6 +288,12 @@ void StdOutput::Flush()
     return _pimpl->Flush();
 }
 
+void StdOutput::swap(StdOutput& stream) noexcept
+{
+    using std::swap;
+    swap(_pimpl, stream._pimpl);
+}
+
 StdError::StdError() : _pimpl(std::make_unique<Impl>())
 {
 }
@@ -308,6 +320,12 @@ size_t StdError::Write(const void* buffer, size_t size)
 void StdError::Flush()
 {
     return _pimpl->Flush();
+}
+
+void StdError::swap(StdError& stream) noexcept
+{
+    using std::swap;
+    swap(_pimpl, stream._pimpl);
 }
 
 } // namespace CppCommon

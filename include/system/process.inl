@@ -18,12 +18,6 @@ inline Process Process::ParentProcess()
     return Process(ParentProcessId());
 }
 
-inline void Process::swap(Process& process) noexcept
-{
-    using std::swap;
-    swap(_pimpl, process._pimpl);
-}
-
 inline void swap(Process& process1, Process& process2) noexcept
 {
     process1.swap(process2);

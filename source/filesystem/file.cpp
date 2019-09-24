@@ -812,4 +812,11 @@ size_t File::WriteAllLines(const Path& path, const std::vector<std::string>& lin
     return result;
 }
 
+void File::swap(File& file) noexcept
+{
+    using std::swap;
+    Path::swap(file);
+    swap(_pimpl, file._pimpl);
+}
+
 } // namespace CppCommon
