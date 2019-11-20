@@ -104,6 +104,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a2e682f62e19150ae32c02d55d4aad7da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a65b4f989be37451c1cce013f10807952"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_cpp_common_1_1_u_u_i_d.html">UUID</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_u_u_i_d.html#a65b4f989be37451c1cce013f10807952">operator=</a> (<a class="el" href="class_cpp_common_1_1_u_u_i_d.html">UUID</a> &amp;&amp;) noexcept=default</td></tr>
 <tr class="separator:a65b4f989be37451c1cce013f10807952"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae55b9b2c9c929419186cfeb730fe0a8a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_u_u_i_d.html#ae55b9b2c9c929419186cfeb730fe0a8a">operator bool</a> () const noexcept</td></tr>
+<tr class="memdesc:ae55b9b2c9c929419186cfeb730fe0a8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the <a class="el" href="class_cpp_common_1_1_u_u_i_d.html" title="Universally unique identifier (UUID) ">UUID</a> is nil UUID0 (all bits set to zero)  <a href="#ae55b9b2c9c929419186cfeb730fe0a8a">More...</a><br /></td></tr>
+<tr class="separator:ae55b9b2c9c929419186cfeb730fe0a8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a606cc8af2e85874770b8420e97355a0b"><td class="memItemLeft" align="right" valign="top">std::array&lt; uint8_t, 16 &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_u_u_i_d.html#a606cc8af2e85874770b8420e97355a0b">data</a> () noexcept</td></tr>
 <tr class="memdesc:a606cc8af2e85874770b8420e97355a0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="class_cpp_common_1_1_u_u_i_d.html" title="Universally unique identifier (UUID) ">UUID</a> data buffer.  <a href="#a606cc8af2e85874770b8420e97355a0b">More...</a><br /></td></tr>
 <tr class="separator:a606cc8af2e85874770b8420e97355a0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -369,7 +372,7 @@ Friends</h2></td></tr>
 
 <p>Get the <a class="el" href="class_cpp_common_1_1_u_u_i_d.html" title="Universally unique identifier (UUID) ">UUID</a> data buffer. </p>
 
-<p class="definition">Definition at line <a class="el" href="uuid_8h_source.html#l00076">76</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uuid_8h_source.html#l00079">79</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
 
 </div>
 </div>
@@ -398,7 +401,7 @@ Friends</h2></td></tr>
 
 <p>Get the <a class="el" href="class_cpp_common_1_1_u_u_i_d.html" title="Universally unique identifier (UUID) ">UUID</a> data buffer. </p>
 
-<p class="definition">Definition at line <a class="el" href="uuid_8h_source.html#l00078">78</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uuid_8h_source.html#l00081">81</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
 
 </div>
 </div>
@@ -428,7 +431,36 @@ Friends</h2></td></tr>
 <p>Generate nil UUID0 (all bits set to zero) </p>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="system_uuid_8cpp-example.html#a0">system_uuid.cpp</a>.</dd>
 </dl>
-<p class="definition">Definition at line <a class="el" href="uuid_8h_source.html#l00084">84</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uuid_8h_source.html#l00087">87</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
+
+</div>
+</div>
+<a id="ae55b9b2c9c929419186cfeb730fe0a8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae55b9b2c9c929419186cfeb730fe0a8a">&#9670;&nbsp;</a></span>operator bool()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">CppCommon::UUID::operator bool </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Check if the <a class="el" href="class_cpp_common_1_1_u_u_i_d.html" title="Universally unique identifier (UUID) ">UUID</a> is nil UUID0 (all bits set to zero) </p>
+
+<p class="definition">Definition at line <a class="el" href="uuid_8h_source.html#l00076">76</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
 
 </div>
 </div>
@@ -794,7 +826,7 @@ Friends</h2></td></tr>
 
 <p>Output instance into the given output stream. </p>
 
-<p class="definition">Definition at line <a class="el" href="uuid_8h_source.html#l00093">93</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uuid_8h_source.html#l00096">96</a> of file <a class="el" href="uuid_8h_source.html">uuid.h</a>.</p>
 
 </div>
 </div>
