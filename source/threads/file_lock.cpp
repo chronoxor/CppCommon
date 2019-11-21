@@ -66,7 +66,7 @@ public:
         {
             if (errno == EEXIST)
             {
-                _file = open(_path.string().c_str(), O_CREAT | O_RDWR, 0644);
+                _file = open(_path.string().c_str(), O_RDWR, 0644);
                 if (_file >= 0)
                 {
                     _owner = false;
