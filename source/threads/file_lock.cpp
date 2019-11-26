@@ -88,7 +88,7 @@ public:
         const int sleep = 100;
         for (int attempt = 0; attempt < attempts; ++attempt)
         {
-            _file = CreateFileW(wpath.c_str(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, CREATE_NEW, FILE_ATTRIBUTE_HIDDEN, nullptr);
+            _file = CreateFileW(wpath.c_str(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, CREATE_NEW, FILE_ATTRIBUTE_HIDDEN | FILE_FLAG_DELETE_ON_CLOSE, nullptr);
             if (_file == INVALID_HANDLE_VALUE)
             {
                 if (GetLastError() == ERROR_SHARING_VIOLATION)
@@ -143,13 +143,6 @@ public:
         if (!CloseHandle(_file))
             fatality(FileSystemException("Cannot close the file-lock handle!").Attach(_path));
         _file = nullptr;
-
-        // Remove the file-lock file (owner only)
-        if (_owner)
-        {
-            if (!DeleteFileW(_path.wstring().c_str()))
-                fatality(FileSystemException("Cannot delete the file-lock file!").Attach(_path));
-        }
 #endif
     }
 
