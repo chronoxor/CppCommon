@@ -35,9 +35,9 @@ class FileLock::Impl
 {
 public:
 #if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
-    Impl() : _file(0), _owner(false) {}
+    Impl() : _file(0) {}
 #elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
-    Impl() : _file(nullptr), _owner(false) {}
+    Impl() : _file(nullptr) {}
 #endif
 
     ~Impl()
@@ -61,63 +61,13 @@ public:
 
         _path = path;
 #if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
-        _file = open(_path.string().c_str(), O_CREAT | O_EXCL | O_RDWR, 0644);
+        _file = open(_path.string().c_str(), O_CREAT | O_RDWR, 0644);
         if (_file < 0)
-        {
-            if (errno == EEXIST)
-            {
-                _file = open(_path.string().c_str(), O_RDWR, 0644);
-                if (_file >= 0)
-                {
-                    _owner = false;
-                    return;
-                }
-            }
-        }
-        else
-        {
-            _owner = true;
-            return;
-        }
-        throwex FileSystemException("Cannot create or open file-lock file!").Attach(path);
+            throwex FileSystemException("Cannot create or open file-lock file!").Attach(path);
 #elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
-        std::wstring wpath = _path.wstring();
-
-        // Retries in CreateFile, see http://support.microsoft.com/kb/316609
-        const int attempts = 10;
-        const int sleep = 100;
-        for (int attempt = 0; attempt < attempts; ++attempt)
-        {
-            _file = CreateFileW(wpath.c_str(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, CREATE_NEW, FILE_ATTRIBUTE_HIDDEN | FILE_FLAG_DELETE_ON_CLOSE, nullptr);
-            if (_file == INVALID_HANDLE_VALUE)
-            {
-                if (GetLastError() == ERROR_SHARING_VIOLATION)
-                {
-                    Sleep(sleep);
-                    continue;
-                }
-                else
-                {
-                    _file = CreateFileW(wpath.c_str(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_HIDDEN, nullptr);
-                    if (_file == INVALID_HANDLE_VALUE)
-                    {
-                        Sleep(sleep);
-                        continue;
-                    }
-                    else
-                    {
-                        _owner = false;
-                        return;
-                    }
-                }
-            }
-            else
-            {
-                _owner = true;
-                return;
-            }
-        }
-        throwex FileSystemException("Cannot create or open file-lock file!").Attach(path);
+        _file = CreateFileW(_path.wstring().c_str(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_ALWAYS, FILE_ATTRIBUTE_HIDDEN | FILE_FLAG_DELETE_ON_CLOSE, nullptr);
+        if (_file == INVALID_HANDLE_VALUE)
+            throwex FileSystemException("Cannot create or open file-lock file!").Attach(path);
 #endif
     }
 
@@ -131,14 +81,6 @@ public:
         if (result != 0)
             fatality(FileSystemException("Cannot close the file-lock descriptor!").Attach(_path));
         _file = 0;
-
-        // Remove the file-lock file (owner only)
-        if (_owner)
-        {
-            result = unlink(_path.string().c_str());
-            if (result != 0)
-                fatality(FileSystemException("Cannot unlink the file-lock file!").Attach(_path));
-        }
 #elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         if (!CloseHandle(_file))
             fatality(FileSystemException("Cannot close the file-lock handle!").Attach(_path));
@@ -323,7 +265,6 @@ private:
 #elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
     HANDLE _file;
 #endif
-    bool _owner;
 };
 
 //! @endcond
