@@ -65,9 +65,21 @@ public:
         if (_file < 0)
             throwex FileSystemException("Cannot create or open file-lock file!").Attach(path);
 #elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
-        _file = CreateFileW(_path.wstring().c_str(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_ALWAYS, FILE_ATTRIBUTE_HIDDEN | FILE_FLAG_DELETE_ON_CLOSE, nullptr);
-        if (_file == INVALID_HANDLE_VALUE)
-            throwex FileSystemException("Cannot create or open file-lock file!").Attach(path);
+        // Retries in CreateFile, see http://support.microsoft.com/kb/316609
+        const std::wstring wpath = _path.wstring();
+        const int attempts = 100;
+        const int sleep = 100;
+        for (int attempt = 0; attempt < attempts; ++attempt)
+        {
+            _file = CreateFileW(wpath.c_str(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_ALWAYS, FILE_ATTRIBUTE_HIDDEN | FILE_FLAG_DELETE_ON_CLOSE, nullptr);
+            if (_file == INVALID_HANDLE_VALUE)
+            {
+                Sleep(sleep);
+                continue;
+            }
+            return;
+        }
+        throwex FileSystemException("Cannot create or open file-lock file!").Attach(path);
 #endif
     }
 
