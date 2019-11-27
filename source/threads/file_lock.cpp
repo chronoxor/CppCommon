@@ -67,7 +67,7 @@ public:
 #elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         // Retries in CreateFile, see http://support.microsoft.com/kb/316609
         const std::wstring wpath = _path.wstring();
-        const int attempts = 100;
+        const int attempts = 1000;
         const int sleep = 100;
         for (int attempt = 0; attempt < attempts; ++attempt)
         {
