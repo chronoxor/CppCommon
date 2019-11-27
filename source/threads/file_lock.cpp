@@ -67,15 +67,28 @@ public:
 #elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         // Retries in CreateFile, see http://support.microsoft.com/kb/316609
         const std::wstring wpath = _path.wstring();
-        const int attempts = 100;
+        const int attempts = 10;
         const int sleep = 100;
         for (int attempt = 0; attempt < attempts; ++attempt)
         {
-            _file = CreateFileW(wpath.c_str(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_ALWAYS, FILE_ATTRIBUTE_HIDDEN | FILE_FLAG_DELETE_ON_CLOSE, nullptr);
+            _file = CreateFileW(wpath.c_str(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, CREATE_NEW, FILE_ATTRIBUTE_HIDDEN | FILE_FLAG_DELETE_ON_CLOSE, nullptr);
             if (_file == INVALID_HANDLE_VALUE)
             {
-                Sleep(sleep);
-                continue;
+                if (GetLastError() == ERROR_SHARING_VIOLATION)
+                {
+                    Sleep(sleep);
+                    continue;
+                }
+                else
+                {
+                    _file = CreateFileW(wpath.c_str(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_HIDDEN | FILE_FLAG_DELETE_ON_CLOSE, nullptr);
+                    if (_file == INVALID_HANDLE_VALUE)
+                    {
+                        Sleep(sleep);
+                        continue;
+                    }
+                    return;
+                }
             }
             return;
         }
@@ -93,6 +106,9 @@ public:
         if (result != 0)
             fatality(FileSystemException("Cannot close the file-lock descriptor!").Attach(_path));
         _file = 0;
+
+        // Remove the file-lock file
+        unlink(_path.string().c_str());
 #elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
         if (!CloseHandle(_file))
             fatality(FileSystemException("Cannot close the file-lock handle!").Attach(_path));
