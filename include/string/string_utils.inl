@@ -106,12 +106,6 @@ inline T StringUtils::FromString(std::string_view str)
 }
 
 template <>
-inline const char* StringUtils::FromString(std::string_view str)
-{
-    return std::string(str).c_str();
-}
-
-template <>
 inline std::string StringUtils::FromString(std::string_view str)
 {
     return std::string(str);
