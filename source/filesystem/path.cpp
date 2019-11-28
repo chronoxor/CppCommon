@@ -1200,7 +1200,7 @@ Path Path::Rename(const Path& src, const Path& dst)
     if (result != 0)
         throwex FileSystemException("Cannot rename the path!").Attach(src, dst);
 #elif defined(_WIN32) || defined(_WIN64)
-    if (!MoveFileW(src.wstring().c_str(), dst.wstring().c_str()))
+    if (!MoveFileExW(src.wstring().c_str(), dst.wstring().c_str(), MOVEFILE_COPY_ALLOWED | MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH))
         throwex FileSystemException("Cannot move the path!").Attach(src, dst);
 #endif
     return dst;
