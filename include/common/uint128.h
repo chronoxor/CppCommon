@@ -307,14 +307,6 @@ private:
 
 } // namespace CppCommon
 
-// Type traits
-namespace std
-{
-    template <> struct is_arithmetic<CppCommon::uint128_t> : std::true_type {};
-    template <> struct is_integral<CppCommon::uint128_t> : std::true_type {};
-    template <> struct is_unsigned<CppCommon::uint128_t> : std::true_type {};
-}
-
 #include "uint128.inl"
 
 #endif // CPPCOMMON_UINT128_H

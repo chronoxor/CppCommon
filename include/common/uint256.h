@@ -353,14 +353,6 @@ private:
 
 } // namespace CppCommon
 
-// Type traits
-namespace std
-{
-    template <> struct is_arithmetic<CppCommon::uint256_t> : std::true_type {};
-    template <> struct is_integral<CppCommon::uint256_t> : std::true_type {};
-    template <> struct is_unsigned<CppCommon::uint256_t> : std::true_type {};
-}
-
 #include "uint256.inl"
 
 #endif // CPPCOMMON_UINT256_H

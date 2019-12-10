@@ -62,16 +62,15 @@ template <typename T>
 inline uint256_t::uint256_t(const T& value) noexcept
     : _upper(0), _lower(value)
 {
-    static_assert(std::is_integral<T>::value, "Input argument type must be an integer!");
+    static_assert((std::is_integral<T>::value || std::is_same<T, uint128_t>::value || std::is_same<T, uint256_t>::value), "Input argument type must be an integer!");
 }
 
 template <typename TUpper, typename TLower>
 inline uint256_t::uint256_t(const TUpper& upper, const TLower& lower) noexcept
     : _upper(upper), _lower(lower)
 {
-    static_assert((std::is_integral<TUpper>::value && std::is_integral<TLower>::value), "Input argument types must be integers!");
+    static_assert(((std::is_integral<TUpper>::value || std::is_same<TUpper, uint128_t>::value || std::is_same<TUpper, uint256_t>::value) && (std::is_integral<TLower>::value || std::is_same<TLower, uint128_t>::value || std::is_same<TLower, uint256_t>::value)), "Input argument types must be integers!");
 }
-
 
 template <typename TUpperUpper, typename TUpperLower, typename TLowerUpper, typename TLowerLower>
 inline uint256_t::uint256_t(const TUpperUpper& upper_upper, const TUpperLower& upper_lower, const TLowerUpper& lower_upper, const TLowerLower& lower_lower) noexcept
@@ -83,7 +82,7 @@ inline uint256_t::uint256_t(const TUpperUpper& upper_upper, const TUpperLower& u
 template <typename T>
 inline uint256_t& uint256_t::operator=(const T& value) noexcept
 {
-    static_assert(std::is_integral<T>::value, "Input argument type must be an integer!");
+    static_assert((std::is_integral<T>::value || std::is_same<T, uint128_t>::value || std::is_same<T, uint256_t>::value), "Input argument type must be an integer!");
 
     _upper = 0;
     _lower = value;
