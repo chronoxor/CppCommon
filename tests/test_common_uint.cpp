@@ -1075,14 +1075,3 @@ TEST_CASE("uint256: Type cast", "[CppCommon][Common]")
     REQUIRE(static_cast<uint32_t>(val) == (uint32_t)0xAAAAAAAAull);
     REQUIRE(static_cast<uint64_t>(val) == (uint64_t)0xAAAAAAAAAAAAAAAAull);
 }
-
-TEST_CASE("uint256: Type traits", "[CppCommon][Common]")
-{
-    REQUIRE(std::is_arithmetic<uint128_t>::value == true);
-    REQUIRE(std::is_integral<uint128_t>::value == true);
-    REQUIRE(std::is_unsigned<uint128_t>::value == true);
-
-    REQUIRE(std::is_arithmetic<uint256_t>::value == true);
-    REQUIRE(std::is_integral<uint256_t>::value == true);
-    REQUIRE(std::is_unsigned<uint256_t>::value == true);
-}
