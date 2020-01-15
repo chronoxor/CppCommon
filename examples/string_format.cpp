@@ -43,7 +43,7 @@ int main(int argc, char** argv)
     SHOW(CppCommon::format("int: {0:d};  hex: {0:x};  oct: {0:o}; bin: {0:b}", 42));
     SHOW(CppCommon::format("int: {0:d};  hex: {0:#x};  oct: {0:#o};  bin: {0:#b}", 42));
     SHOW(CppCommon::format("The date is {}", Date(2012, 12, 9)));
-    //SHOW(CppCommon::format("Elapsed time: {s:.2f} seconds", "s"_a = 1.23));
+    SHOW(CppCommon::format("Elapsed time: {s:.2f} seconds", "s"_a = 1.23));
     SHOW("The answer is {}"_format(42));
     return 0;
 }
