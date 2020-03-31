@@ -1,12 +1,12 @@
-\_form#0:$2^{bh(v)} - 1 = 20 - 1 = 1 - 1 = 0$
-\_form#1:$2^{bh(v)} - 1$
-\_form#2:$2^{bh(v')} - 1$
-\_form#3:$2^{bh(v)} - 1 - 1$
-\_form#4:\[2^{bh(v)} - 1 - 1 + 2^{bh(v')} - 1 - 1 + 1 = 2^{bh(v')} - 1\]
-\_form#5:$h(root) \over 2$
-\_form#6:\[n \geq 2^{{h(root) \over 2}} - 1 \leftrightarrow \; \log{(n+1)} \geq {h(root) \over 2} \leftrightarrow \; h(root) \leq 2\log{(n+1)}\]
-\_form#7:$O\left(m + (\log n + 1) + n\log(n) \right)$
-\_form#8:$O\left(m+\sum_{i=1}^n q_i\log\frac{m}{q_i}\right)$
-\_form#9:$O\left(m+n\log n+\sum_{j=1}^m \log(|i_j-f|+1) \right)$
-\_form#10:$O\left(m+n\log n+\sum_{j=1}^m \log(t(j)+1) \right)$
-\_form#11:$O\left(m+n\log n+\sum_{j=1}^m \log(|i_{j+1}-i_j|+1) \right)$
+\form#0:$2^{bh(v)} - 1 = 20 - 1 = 1 - 1 = 0$
+\form#1:$2^{bh(v)} - 1$
+\form#2:$2^{bh(v')} - 1$
+\form#3:$2^{bh(v)} - 1 - 1$
+\form#4:\[2^{bh(v)} - 1 - 1 + 2^{bh(v')} - 1 - 1 + 1 = 2^{bh(v')} - 1\]
+\form#5:$h(root) \over 2$
+\form#6:\[n \geq 2^{{h(root) \over 2}} - 1 \leftrightarrow \; \log{(n+1)} \geq {h(root) \over 2} \leftrightarrow \; h(root) \leq 2\log{(n+1)}\]
+\form#7:$O\left(m + (\log n + 1) + n\log(n) \right)$
+\form#8:$O\left(m+\sum_{i=1}^n q_i\log\frac{m}{q_i}\right)$
+\form#9:$O\left(m+n\log n+\sum_{j=1}^m \log(|i_j-f|+1) \right)$
+\form#10:$O\left(m+n\log n+\sum_{j=1}^m \log(t(j)+1) \right)$
+\form#11:$O\left(m+n\log n+\sum_{j=1}^m \log(|i_{j+1}-i_j|+1) \right)$
