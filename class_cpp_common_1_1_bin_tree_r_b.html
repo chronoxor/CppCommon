@@ -271,13 +271,17 @@ Read-only operations on a red-black tree require no modification from those used
 <p>Proof of Lemma (by induction height):</p>
 <p>Basis: h(v) = 0</p>
 <p>If v has a height of zero then it must be nil, therefore bh(v) = 0. So:</p>
-<p><img class="formulaInl" alt="" src=".png"/></p>
-<p>Inductive Hypothesis: v such that h(v) = k, has <img class="formulaInl" alt="" src=".png"/> internal nodes implies that v' such that h(v') = k+1 has <img class="formulaInl" alt="" src=".png"/> internal nodes.</p>
-<p>Since v' has h(v') &gt; 0 it is an internal node. As such it has two children which have a black-height of either bh(v') or bh(v')-1 (depending on whether v' is red or black). By the inductive hypothesis each child has at least <img class="formulaInl" alt="" src=".png"/> internal nodes, so v' has:</p>
-<p><img class="formulaInl" alt="" src=".png"/></p>
+<p><img class="formulaInl" alt="$2^{bh(v)} - 1 = 20 - 1 = 1 - 1 = 0$" src="form_0.png"/></p>
+<p>Inductive Hypothesis: v such that h(v) = k, has <img class="formulaInl" alt="$2^{bh(v)} - 1$" src="form_1.png"/> internal nodes implies that v' such that h(v') = k+1 has <img class="formulaInl" alt="$2^{bh(v')} - 1$" src="form_2.png"/> internal nodes.</p>
+<p>Since v' has h(v') &gt; 0 it is an internal node. As such it has two children which have a black-height of either bh(v') or bh(v')-1 (depending on whether v' is red or black). By the inductive hypothesis each child has at least <img class="formulaInl" alt="$2^{bh(v)} - 1 - 1$" src="form_3.png"/> internal nodes, so v' has:</p>
+<p class="formulaDsp">
+<img class="formulaDsp" alt="\[2^{bh(v)} - 1 - 1 + 2^{bh(v')} - 1 - 1 + 1 = 2^{bh(v')} - 1\]" src="form_4.png"/>
+</p>
 <p>internal nodes.</p>
-<p>Using this lemma we can now show that the height of the tree is logarithmic. Since at least half of the nodes on any path from the root to a leaf are black (property 4 of a red black tree), the black- height of the root is at least <img class="formulaInl" alt="" src=".png"/>. By the lemma we get:</p>
-<p><img class="formulaInl" alt="" src=".png"/></p>
+<p>Using this lemma we can now show that the height of the tree is logarithmic. Since at least half of the nodes on any path from the root to a leaf are black (property 4 of a red black tree), the black- height of the root is at least <img class="formulaInl" alt="$h(root) \over 2$" src="form_5.png"/>. By the lemma we get:</p>
+<p class="formulaDsp">
+<img class="formulaDsp" alt="\[n \geq 2^{{h(root) \over 2}} - 1 \leftrightarrow \; \log{(n+1)} \geq {h(root) \over 2} \leftrightarrow \; h(root) \leq 2\log{(n+1)}\]" src="form_6.png"/>
+</p>
 <p>Therefore the height of the root is O(log(n)).</p>
 <p><b>Usage</b><br />
 Reb-Black trees have as a first advantage that their performance is easier to predict, making them a good data structure for libraries. Reb-Black tree win AVL trees in cases when there are lots of inserts / deletes and comparisons are chap. Reb-Black tree will be faster because on average Reb-Black tree use less rotation.</p>
