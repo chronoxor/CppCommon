@@ -265,19 +265,19 @@ Zig step</div></div>
 <p><b>Performance theorems</b><br />
 There are several theorems and conjectures regarding the worst-case runtime for performing a sequence S of m accesses in a splay tree containing n elements.</p>
 <ul>
-<li><b>Balance Theorem:</b> The cost of performing the sequence S is <img class="formulaInl" alt="" src=".png"/>. In other words, splay trees perform as well as static balanced binary search trees on sequences of at least n accesses.</li>
+<li><b>Balance Theorem:</b> The cost of performing the sequence S is <img class="formulaInl" alt="$O\left(m + (\log n + 1) + n\log(n) \right)$" src="form_7.png"/>. In other words, splay trees perform as well as static balanced binary search trees on sequences of at least n accesses.</li>
 </ul>
 <ul>
-<li><b>Static Optimality Theorem:</b> Let qi be the number of times element i is accessed in S. The cost of performing S is <img class="formulaInl" alt="" src=".png"/>. In other words, splay trees perform as well as optimum static binary search trees on sequences of at least n accesses.</li>
+<li><b>Static Optimality Theorem:</b> Let qi be the number of times element i is accessed in S. The cost of performing S is <img class="formulaInl" alt="$O\left(m+\sum_{i=1}^n q_i\log\frac{m}{q_i}\right)$" src="form_8.png"/>. In other words, splay trees perform as well as optimum static binary search trees on sequences of at least n accesses.</li>
 </ul>
 <ul>
-<li><b>Static Finger Theorem:</b> Let ij be the element accessed in the jth access of S and let f be any fixed element (the finger). The cost of performing S is <img class="formulaInl" alt="" src=".png"/>.</li>
+<li><b>Static Finger Theorem:</b> Let ij be the element accessed in the jth access of S and let f be any fixed element (the finger). The cost of performing S is <img class="formulaInl" alt="$O\left(m+n\log n+\sum_{j=1}^m \log(|i_j-f|+1) \right)$" src="form_9.png"/>.</li>
 </ul>
 <ul>
-<li><b>Working Set Theorem:</b> Let t(j) be the number of distinct elements accessed between access j and the previous time element ij was accessed. The cost of performing S is <img class="formulaInl" alt="" src=".png"/>.</li>
+<li><b>Working Set Theorem:</b> Let t(j) be the number of distinct elements accessed between access j and the previous time element ij was accessed. The cost of performing S is <img class="formulaInl" alt="$O\left(m+n\log n+\sum_{j=1}^m \log(t(j)+1) \right)$" src="form_10.png"/>.</li>
 </ul>
 <ul>
-<li><b>Dynamic Finger Theorem:</b> The cost of performing S is <img class="formulaInl" alt="" src=".png"/>.</li>
+<li><b>Dynamic Finger Theorem:</b> The cost of performing S is <img class="formulaInl" alt="$O\left(m+n\log n+\sum_{j=1}^m \log(|i_{j+1}-i_j|+1) \right)$" src="form_11.png"/>.</li>
 </ul>
 <ul>
 <li><b>Scanning Theorem:</b> Also known as the Sequential Access Theorem. Accessing the n elements of a splay tree in symmetric order takes O(n) time, regardles of the initial structure of the splay tree. The tightest upper bound proven so far is 4.5n.</li>
