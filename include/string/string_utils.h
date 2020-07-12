@@ -130,6 +130,21 @@ public:
     */
     static std::string& Trim(std::string& str);
 
+    //! Compare two strings case sensitive version
+    /*!
+        \param str1 - First string to compare
+        \param str2 - Second string to compare
+        \return 'true' if two strings are equal, 'false' if two strings are different
+    */
+    static bool Compare(std::string_view str1, std::string_view str2);
+    //! Compare two strings case insensitive version
+    /*!
+        \param str1 - First string to compare
+        \param str2 - Second string to compare
+        \return 'true' if two strings are equal, 'false' if two strings are different
+    */
+    static bool CompareNoCase(std::string_view str1, std::string_view str2);
+
     //! Is the given string contains the given character?
     /*!
         \param str - String to search in
