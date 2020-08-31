@@ -159,14 +159,14 @@ StackTrace::StackTrace(int skip)
             if (found)
                 break;
 
-            if ((bfd_get_section_flags(abfd, section) & SEC_ALLOC) == 0)
+            if ((bfd_section_flags(section) & SEC_ALLOC) == 0)
                 continue;
 
-            bfd_vma vma = bfd_get_section_vma(abfd, section);
+            bfd_vma vma = bfd_section_vma(section);
             if (pc < vma)
                 continue;
 
-            bfd_size_type secsize = bfd_get_section_size(section);
+            bfd_size_type secsize = bfd_section_size(section);
             if (pc >= vma + secsize)
                 continue;
 
