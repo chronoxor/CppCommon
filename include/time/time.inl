@@ -258,7 +258,7 @@ struct hash<CppCommon::Time>
     typedef CppCommon::Time argument_type;
     typedef size_t result_type;
 
-    result_type operator () (const argument_type& value) const
+    result_type operator() (const argument_type& value) const
     {
         result_type result = 17;
         std::hash<int> hasher;

@@ -196,7 +196,7 @@ struct hash<CppCommon::uint128_t>
     typedef CppCommon::uint128_t argument_type;
     typedef size_t result_type;
 
-    result_type operator () (const argument_type& value) const
+    result_type operator() (const argument_type& value) const
     {
         result_type result = 17;
         std::hash<uint64_t> hasher;

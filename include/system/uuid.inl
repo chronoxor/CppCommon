@@ -29,7 +29,7 @@ struct hash<CppCommon::UUID>
     typedef CppCommon::UUID argument_type;
     typedef size_t result_type;
 
-    result_type operator () (const argument_type& value) const
+    result_type operator() (const argument_type& value) const
     {
         result_type result = 17;
         std::hash<uint8_t> hasher;

@@ -31,7 +31,7 @@ struct hash<CppCommon::Timezone>
     typedef CppCommon::Timezone argument_type;
     typedef size_t result_type;
 
-    result_type operator () (const argument_type& value) const
+    result_type operator() (const argument_type& value) const
     {
         result_type result = 17;
         result = result * 31 + std::hash<std::string>()(value.name());
