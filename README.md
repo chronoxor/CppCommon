@@ -1,8 +1,9 @@
 # CppCommon
 
-[![Linux build status](https://img.shields.io/travis/chronoxor/CppCommon/master.svg?label=Linux)](https://travis-ci.org/chronoxor/CppCommon)
-[![OSX build status](https://img.shields.io/travis/chronoxor/CppCommon/master.svg?label=OSX)](https://travis-ci.org/chronoxor/CppCommon)
+[![Linux build status](https://img.shields.io/travis/chronoxor/CppCommon/master.svg?label=Linux)](https://travis-ci.com/chronoxor/CppCommon)
+[![OSX build status](https://img.shields.io/travis/chronoxor/CppCommon/master.svg?label=OSX)](https://travis-ci.com/chronoxor/CppCommon)
 [![Cygwin build status](https://img.shields.io/appveyor/ci/chronoxor/CppCommon/master.svg?label=Cygwin)](https://ci.appveyor.com/project/chronoxor/CppCommon)
+[![MSYS2 build status](https://img.shields.io/appveyor/ci/chronoxor/CppCommon/master.svg?label=MSYS2)](https://ci.appveyor.com/project/chronoxor/CppCommon)
 [![MinGW build status](https://img.shields.io/appveyor/ci/chronoxor/CppCommon/master.svg?label=MinGW)](https://ci.appveyor.com/project/chronoxor/CppCommon)
 [![Windows build status](https://img.shields.io/appveyor/ci/chronoxor/CppCommon/master.svg?label=Windows)](https://ci.appveyor.com/project/chronoxor/CppCommon)
 
