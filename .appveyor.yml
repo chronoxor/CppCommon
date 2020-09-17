@@ -43,6 +43,8 @@ install:
   - if "%type%"=="Cygwin" C:\cygwin64\setup-x86_64.exe --quiet-mode --no-desktop --no-shortcuts --upgrade-also --root "C:\cygwin64" --local-package-dir "C:\cache\cygwin" --site "http://mirrors.kernel.org/sourceware/cygwin" --packages cmake,automake,make,gcc-core,gcc-g++,libjsoncpp19,librhash0,libuuid-devel,libuv1,doxygen,graphviz
   # MSYS2
   - if "%type%"=="MSYS2" set MSYSTEM=MINGW64
+  - if "%type%"=="MSYS2" set INCLUDE=C:\msys64\usr\include\w32api;%INCLUDE%
+  - if "%type%"=="MSYS2" set LIB=C:\msys64\usr\lib\w32api;%LIB%
 #  - if "%type%"=="MSYS2" C:\msys64\usr\bin\bash -lc "pacman --noconfirm -Syuu"
 #  - if "%type%"=="MSYS2" C:\msys64\usr\bin\bash -lc "pacman --noconfirm -Syuu"
   # MinGW
