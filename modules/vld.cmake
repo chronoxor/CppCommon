@@ -1,4 +1,4 @@
-if(NOT TARGET vld)
+if(WIN32 AND NOT TARGET vld)
 
   # Try to find VLD library and include path.
   # Once done this will define
