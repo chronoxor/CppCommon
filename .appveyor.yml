@@ -20,7 +20,7 @@ environment:
 #      build: C:\cygwin64\bin\bash -lc "cd $APPVEYOR_BUILD_FOLDER/build; exec 0</dev/null; ./unix.sh"
 #      command: C:\cygwin64\bin\bash -lc
     - type: MSYS2
-      build: C:\msys64\msys2.exe $APPVEYOR_BUILD_FOLDER/build/unix.sh
+      build: C:\msys64\msys2.exe "$APPVEYOR_BUILD_FOLDER/build/unix.sh"
       command: C:\msys64\msys2.exe
     - type: MinGW
       build: call mingw.bat
@@ -61,6 +61,8 @@ install:
 
 # Build scripts
 build_script:
+  - cd C:\msys64
+  - dir
   - cd build
   - '%build%'
 
