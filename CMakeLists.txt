@@ -28,7 +28,7 @@ include(SystemInformation)
 
 # External packages
 find_package(Threads REQUIRED)
-if(UNIX AND NOT APPLE AND NOT CYGWIN AND NOT MSYS)
+if(UNIX AND NOT APPLE AND NOT MSYS)
   find_package(LibBFD)
   find_package(LibDL)
   find_package(LibRT)
@@ -45,7 +45,7 @@ add_subdirectory("modules")
 
 # Link libraries
 list(APPEND LINKLIBS Threads::Threads)
-if(UNIX AND NOT APPLE AND NOT CYGWIN AND NOT MSYS)
+if(UNIX AND NOT APPLE AND NOT MSYS)
   list(APPEND LINKLIBS ${LIBBFD_LIBRARIES})
   list(APPEND LINKLIBS ${LIBDL_LIBRARIES})
   list(APPEND LINKLIBS ${LIBRT_LIBRARIES})
