@@ -106,23 +106,25 @@ private:
 
 //! @endcond
 
-CriticalSection::CriticalSection() : _pimpl(std::make_unique<Impl>())
+CriticalSection::CriticalSection()
 {
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "CriticalSection::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "CriticalSection::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl();
 }
 
 CriticalSection::~CriticalSection()
 {
+    // Delete the implementation instance
+    reinterpret_cast<Impl*>(&_storage)->~Impl();
 }
 
-void* CriticalSection::native() noexcept
-{
-    return _pimpl->native();
-}
+void* CriticalSection::native() noexcept { return impl().native(); }
 
-bool CriticalSection::TryLock()
-{
-    return _pimpl->TryLock();
-}
+bool CriticalSection::TryLock() { return impl().TryLock(); }
 
 bool CriticalSection::TryLockFor(const Timespan& timespan)
 {
@@ -148,14 +150,7 @@ bool CriticalSection::TryLockFor(const Timespan& timespan)
     }
 }
 
-void CriticalSection::Lock()
-{
-    _pimpl->Lock();
-}
-
-void CriticalSection::Unlock()
-{
-    _pimpl->Unlock();
-}
+void CriticalSection::Lock() { impl().Lock(); }
+void CriticalSection::Unlock() { impl().Unlock(); }
 
 } // namespace CppCommon

@@ -179,68 +179,40 @@ private:
 
 //! @endcond
 
-Pipe::Pipe() : _pimpl(std::make_unique<Impl>())
+Pipe::Pipe()
 {
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "Pipe::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "Pipe::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl();
 }
 
 Pipe::~Pipe()
 {
+    // Delete the implementation instance
+    reinterpret_cast<Impl*>(&_storage)->~Impl();
 }
 
-void* Pipe::reader() const noexcept
-{
-    return _pimpl->reader();
-}
+void* Pipe::reader() const noexcept { return impl().reader(); }
+void* Pipe::writer() const noexcept { return impl().writer(); }
 
-void* Pipe::writer() const noexcept
-{
-    return _pimpl->writer();
-}
+bool Pipe::IsPipeOpened() const noexcept { return impl().IsPipeOpened(); }
+bool Pipe::IsPipeReadOpened() const noexcept { return impl().IsPipeReadOpened(); }
+bool Pipe::IsPipeWriteOpened() const noexcept { return impl().IsPipeWriteOpened(); }
 
-bool Pipe::IsPipeOpened() const noexcept
-{
-    return _pimpl->IsPipeOpened();
-}
+size_t Pipe::Read(void* buffer, size_t size) { return impl().Read(buffer, size); }
+size_t Pipe::Write(const void* buffer, size_t size) { return impl().Write(buffer, size); }
 
-bool Pipe::IsPipeReadOpened() const noexcept
-{
-    return _pimpl->IsPipeReadOpened();
-}
-
-bool Pipe::IsPipeWriteOpened() const noexcept
-{
-    return _pimpl->IsPipeWriteOpened();
-}
-
-size_t Pipe::Read(void* buffer, size_t size)
-{
-    return _pimpl->Read(buffer, size);
-}
-
-size_t Pipe::Write(const void* buffer, size_t size)
-{
-    return _pimpl->Write(buffer, size);
-}
-
-void Pipe::CloseRead()
-{
-    return _pimpl->CloseRead();
-}
-
-void Pipe::CloseWrite()
-{
-    return _pimpl->CloseWrite();
-}
-
-void Pipe::Close()
-{
-    return _pimpl->Close();
-}
+void Pipe::CloseRead() { return impl().CloseRead(); }
+void Pipe::CloseWrite() { return impl().CloseWrite(); }
+void Pipe::Close() { return impl().Close(); }
 
 void Pipe::swap(Pipe& pipe) noexcept
 {
     using std::swap;
-    swap(_pimpl, pipe._pimpl);
+    swap(_storage, pipe._storage);
 }
 
 } // namespace CppCommon

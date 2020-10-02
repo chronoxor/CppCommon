@@ -115,32 +115,27 @@ private:
 
 //! @endcond
 
-ConditionVariable::ConditionVariable() : _pimpl(std::make_unique<Impl>())
+ConditionVariable::ConditionVariable()
 {
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "ConditionVariable::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "ConditionVariable::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl();
 }
 
 ConditionVariable::~ConditionVariable()
 {
+    // Delete the implementation instance
+    reinterpret_cast<Impl*>(&_storage)->~Impl();
 }
 
-void ConditionVariable::NotifyOne()
-{
-    _pimpl->NotifyOne();
-}
+void ConditionVariable::NotifyOne() { impl().NotifyOne(); }
+void ConditionVariable::NotifyAll() { impl().NotifyAll(); }
 
-void ConditionVariable::NotifyAll()
-{
-    _pimpl->NotifyAll();
-}
+void ConditionVariable::Wait(CriticalSection& cs) { impl().Wait(cs); }
 
-void ConditionVariable::Wait(CriticalSection& cs)
-{
-    _pimpl->Wait(cs);
-}
-
-bool ConditionVariable::TryWaitFor(CriticalSection& cs, const Timespan& timespan)
-{
-    return _pimpl->TryWaitFor(cs, timespan);
-}
+bool ConditionVariable::TryWaitFor(CriticalSection& cs, const Timespan& timespan) { return impl().TryWaitFor(cs, timespan); }
 
 } // namespace CppCommon

@@ -84,7 +84,13 @@ public:
 
 private:
     class Impl;
-    std::unique_ptr<Impl> _pimpl;
+
+    Impl& impl() noexcept { return reinterpret_cast<Impl&>(_storage); }
+    const Impl& impl() const noexcept { return reinterpret_cast<Impl const&>(_storage); }
+
+    static const size_t StorageSize = 64;
+    static const size_t StorageAlign = 8;
+    std::aligned_storage<StorageSize, StorageAlign>::type _storage;
 };
 
 /*! \example threads_named_mutex.cpp Named mutex synchronization primitive example */

@@ -52,7 +52,7 @@ public:
     Impl() : _initialized(false), _handler(ExceptionsHandler::Impl::DefaultHandler) {}
 
     static ExceptionsHandler::Impl& GetInstance()
-    { return *ExceptionsHandler::GetInstance()._pimpl; }
+    { return ExceptionsHandler::GetInstance().impl(); }
 
     void SetupHandler(const std::function<void (const SystemException&, const StackTrace&)>& handler)
     {
@@ -633,27 +633,24 @@ private:
 
 //! @endcond
 
-ExceptionsHandler::ExceptionsHandler() : _pimpl(std::make_unique<Impl>())
+ExceptionsHandler::ExceptionsHandler()
 {
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "ExceptionsHandler::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "ExceptionsHandler::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl();
 }
 
 ExceptionsHandler::~ExceptionsHandler()
 {
+    // Delete the implementation instance
+    reinterpret_cast<Impl*>(&_storage)->~Impl();
 }
 
-void ExceptionsHandler::SetupHandler(const std::function<void (const SystemException&, const StackTrace&)>& handler)
-{
-    GetInstance()._pimpl->SetupHandler(handler);
-}
-
-void ExceptionsHandler::SetupProcess()
-{
-    GetInstance()._pimpl->SetupProcess();
-}
-
-void ExceptionsHandler::SetupThread()
-{
-    GetInstance()._pimpl->SetupThread();
-}
+void ExceptionsHandler::SetupHandler(const std::function<void (const SystemException&, const StackTrace&)>& handler) { GetInstance().impl().SetupHandler(handler); }
+void ExceptionsHandler::SetupProcess() { GetInstance().impl().SetupProcess(); }
+void ExceptionsHandler::SetupThread() { GetInstance().impl().SetupThread(); }
 
 } // namespace CppCommon

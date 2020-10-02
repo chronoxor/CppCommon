@@ -172,37 +172,28 @@ private:
 
 //! @endcond
 
-NamedMutex::NamedMutex(const std::string& name) : _pimpl(std::make_unique<Impl>(name))
+NamedMutex::NamedMutex(const std::string& name)
 {
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "NamedMutex::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "NamedMutex::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl(name);
 }
 
 NamedMutex::~NamedMutex()
 {
+    // Delete the implementation instance
+    reinterpret_cast<Impl*>(&_storage)->~Impl();
 }
 
-const std::string& NamedMutex::name() const
-{
-    return _pimpl->name();
-}
+const std::string& NamedMutex::name() const { return impl().name(); }
 
-bool NamedMutex::TryLock()
-{
-    return _pimpl->TryLock();
-}
+bool NamedMutex::TryLock() { return impl().TryLock(); }
+bool NamedMutex::TryLockFor(const Timespan& timespan) { return impl().TryLockFor(timespan); }
 
-bool NamedMutex::TryLockFor(const Timespan& timespan)
-{
-    return _pimpl->TryLockFor(timespan);
-}
-
-void NamedMutex::Lock()
-{
-    _pimpl->Lock();
-}
-
-void NamedMutex::Unlock()
-{
-    _pimpl->Unlock();
-}
+void NamedMutex::Lock() { impl().Lock(); }
+void NamedMutex::Unlock() { impl().Unlock(); }
 
 } // namespace CppCommon

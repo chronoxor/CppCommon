@@ -503,33 +503,27 @@ private:
 
 //! @endcond
 
-NamedRWLock::NamedRWLock(const std::string& name) : _pimpl(std::make_unique<Impl>(name, 4000))
+NamedRWLock::NamedRWLock(const std::string& name)
 {
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "NamedRWLock::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "NamedRWLock::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl(name, 4000);
 }
 
 NamedRWLock::~NamedRWLock()
 {
+    // Delete the implementation instance
+    reinterpret_cast<Impl*>(&_storage)->~Impl();
 }
 
-const std::string& NamedRWLock::name() const
-{
-    return _pimpl->name();
-}
+const std::string& NamedRWLock::name() const { return impl().name(); }
 
-bool NamedRWLock::TryLockRead()
-{
-    return _pimpl->TryLockRead();
-}
-
-bool NamedRWLock::TryLockWrite()
-{
-    return _pimpl->TryLockWrite();
-}
-
-bool NamedRWLock::TryConvertWriteToRead()
-{
-    return _pimpl->TryConvertWriteToRead();
-}
+bool NamedRWLock::TryLockRead() { return impl().TryLockRead(); }
+bool NamedRWLock::TryLockWrite() { return impl().TryLockWrite(); }
+bool NamedRWLock::TryConvertWriteToRead() { return impl().TryConvertWriteToRead(); }
 
 bool NamedRWLock::TryLockReadFor(const Timespan& timespan)
 {
@@ -603,29 +597,10 @@ bool NamedRWLock::TryConvertWriteToReadFor(const Timespan& timespan)
     }
 }
 
-void NamedRWLock::LockRead()
-{
-    _pimpl->LockRead();
-}
-
-void NamedRWLock::LockWrite()
-{
-    _pimpl->LockWrite();
-}
-
-void NamedRWLock::UnlockRead()
-{
-    _pimpl->UnlockRead();
-}
-
-void NamedRWLock::UnlockWrite()
-{
-    _pimpl->UnlockWrite();
-}
-
-void NamedRWLock::ConvertWriteToRead()
-{
-    _pimpl->ConvertWriteToRead();
-}
+void NamedRWLock::LockRead() { impl().LockRead(); }
+void NamedRWLock::LockWrite() { impl().LockWrite(); }
+void NamedRWLock::UnlockRead() { impl().UnlockRead(); }
+void NamedRWLock::UnlockWrite() { impl().UnlockWrite(); }
+void NamedRWLock::ConvertWriteToRead() { impl().ConvertWriteToRead(); }
 
 } // namespace CppCommon

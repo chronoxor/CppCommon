@@ -179,37 +179,28 @@ private:
 
 //! @endcond
 
-EventManualReset::EventManualReset(bool signaled) : _pimpl(std::make_unique<Impl>(signaled))
+EventManualReset::EventManualReset(bool signaled)
 {
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "EventManualReset::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "EventManualReset::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl(signaled);
 }
 
 EventManualReset::~EventManualReset()
 {
+    // Delete the implementation instance
+    reinterpret_cast<Impl*>(&_storage)->~Impl();
 }
 
-void EventManualReset::Reset()
-{
-    _pimpl->Reset();
-}
+void EventManualReset::Reset() { impl().Reset(); }
+void EventManualReset::Signal() { impl().Signal(); }
 
-void EventManualReset::Signal()
-{
-    _pimpl->Signal();
-}
+bool EventManualReset::TryWait() { return impl().TryWait(); }
+bool EventManualReset::TryWaitFor(const Timespan& timespan) { return impl().TryWaitFor(timespan); }
 
-bool EventManualReset::TryWait()
-{
-    return _pimpl->TryWait();
-}
-
-bool EventManualReset::TryWaitFor(const Timespan& timespan)
-{
-    return _pimpl->TryWaitFor(timespan);
-}
-
-void EventManualReset::Wait()
-{
-    _pimpl->Wait();
-}
+void EventManualReset::Wait() { impl().Wait(); }
 
 } // namespace CppCommon

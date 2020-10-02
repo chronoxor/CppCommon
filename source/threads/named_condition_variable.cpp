@@ -239,37 +239,29 @@ private:
 
 //! @endcond
 
-NamedConditionVariable::NamedConditionVariable(const std::string& name) : _pimpl(std::make_unique<Impl>(name))
+NamedConditionVariable::NamedConditionVariable(const std::string& name)
 {
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "NamedConditionVariable::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "NamedConditionVariable::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl(name);
 }
 
 NamedConditionVariable::~NamedConditionVariable()
 {
+    // Delete the implementation instance
+    reinterpret_cast<Impl*>(&_storage)->~Impl();
 }
 
-const std::string& NamedConditionVariable::name() const
-{
-    return _pimpl->name();
-}
+const std::string& NamedConditionVariable::name() const { return impl().name(); }
 
-void NamedConditionVariable::NotifyOne()
-{
-    _pimpl->NotifyOne();
-}
+void NamedConditionVariable::NotifyOne() { impl().NotifyOne(); }
+void NamedConditionVariable::NotifyAll() { impl().NotifyAll(); }
 
-void NamedConditionVariable::NotifyAll()
-{
-    _pimpl->NotifyAll();
-}
+void NamedConditionVariable::Wait() { impl().Wait(); }
 
-void NamedConditionVariable::Wait()
-{
-    _pimpl->Wait();
-}
-
-bool NamedConditionVariable::TryWaitFor(const Timespan& timespan)
-{
-    return _pimpl->TryWaitFor(timespan);
-}
+bool NamedConditionVariable::TryWaitFor(const Timespan& timespan) { return impl().TryWaitFor(timespan); }
 
 } // namespace CppCommon

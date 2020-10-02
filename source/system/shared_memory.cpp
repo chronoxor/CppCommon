@@ -183,27 +183,24 @@ private:
 
 //! @endcond
 
-SharedMemory::SharedMemory(const std::string& name, size_t size) : _pimpl(std::make_unique<Impl>(name, size)), _name(name), _size(size)
+SharedMemory::SharedMemory(const std::string& name, size_t size) : _name(name), _size(size)
 {
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "SharedMemory::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "SharedMemory::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl(name, size);
 }
 
 SharedMemory::~SharedMemory()
 {
+    // Delete the implementation instance
+    reinterpret_cast<Impl*>(&_storage)->~Impl();
 }
 
-void* SharedMemory::ptr()
-{
-    return _pimpl->ptr();
-}
-
-const void* SharedMemory::ptr() const
-{
-    return _pimpl->ptr();
-}
-
-bool SharedMemory::owner() const
-{
-    return _pimpl->owner();
-}
+void* SharedMemory::ptr() { return impl().ptr(); }
+const void* SharedMemory::ptr() const { return impl().ptr(); }
+bool SharedMemory::owner() const { return impl().owner(); }
 
 } // namespace CppCommon

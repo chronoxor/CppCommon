@@ -143,88 +143,94 @@ private:
 
 //! @endcond
 
-DLL::DLL() : _pimpl(std::make_unique<Impl>())
+DLL::DLL()
 {
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "DLL::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "DLL::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl();
 }
 
-DLL::DLL(const Path& path, bool load) : _pimpl(std::make_unique<Impl>())
+DLL::DLL(const Path& path, bool load)
 {
-    _pimpl->Assign(path);
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "DLL::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "DLL::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl();
+
+    impl().Assign(path);
 
     if (load)
-        _pimpl->Load();
+        impl().Load();
 }
 
-DLL::DLL(const DLL& dll) : _pimpl(std::make_unique<Impl>())
+DLL::DLL(const DLL& dll)
 {
-    _pimpl->Assign(dll.path());
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "DLL::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "DLL::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl();
+
+    impl().Assign(dll.path());
 }
 
-DLL::DLL(DLL&& dll) noexcept : _pimpl(std::move(dll._pimpl))
+DLL::DLL(DLL&& dll) noexcept
 {
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "DLL::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "DLL::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl();
+
+     _storage = std::move(dll._storage);
 }
 
 DLL::~DLL()
 {
+    // Delete the implementation instance
+    reinterpret_cast<Impl*>(&_storage)->~Impl();
 }
 
 DLL& DLL::operator=(const Path& path)
 {
-    _pimpl->Assign(path);
+    impl().Assign(path);
     return *this;
 }
 
 DLL& DLL::operator=(const DLL& dll)
 {
-    _pimpl->Assign(dll.path());
+    impl().Assign(dll.path());
     return *this;
 }
 
 DLL& DLL::operator=(DLL&& dll) noexcept
 {
-    _pimpl = std::move(dll._pimpl);
+    _storage = std::move(dll._storage);
     return *this;
 }
 
-const Path DLL::path() const
-{
-    return _pimpl->path();
-}
+const Path DLL::path() const { return impl().path(); }
 
-bool DLL::IsLoaded() const
-{
-    return _pimpl->IsLoaded();
-}
+bool DLL::IsLoaded() const { return impl().IsLoaded(); }
+bool DLL::IsResolve(const std::string& name) const { return impl().IsResolve(name); }
 
-bool DLL::IsResolve(const std::string& name) const
-{
-    return _pimpl->IsResolve(name);
-}
+bool DLL::Load() { return impl().Load(); }
+bool DLL::Load(const Path& path) { return impl().Load(path); }
+void DLL::Unload() { impl().Unload(); }
 
-bool DLL::Load()
-{
-    return _pimpl->Load();
-}
-
-bool DLL::Load(const Path& path)
-{
-    return _pimpl->Load(path);
-}
-
-void DLL::Unload()
-{
-    _pimpl->Unload();
-}
-
-void* DLL::ResolveAddress(const std::string& name) const
-{
-    return _pimpl->ResolveAddress(name);
-}
+void* DLL::ResolveAddress(const std::string& name) const { return impl().ResolveAddress(name); }
 
 void DLL::swap(DLL& dll) noexcept
 {
     using std::swap;
-    swap(_pimpl, dll._pimpl);
+    swap(_storage, dll._storage);
 }
 
 } // namespace CppCommon

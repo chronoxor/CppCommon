@@ -225,37 +225,29 @@ private:
 
 //! @endcond
 
-NamedEventAutoReset::NamedEventAutoReset(const std::string& name, bool signaled) : _pimpl(std::make_unique<Impl>(name, signaled))
+NamedEventAutoReset::NamedEventAutoReset(const std::string& name, bool signaled)
 {
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "NamedEventAutoReset::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "NamedEventAutoReset::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl(name, signaled);
 }
 
 NamedEventAutoReset::~NamedEventAutoReset()
 {
+    // Delete the implementation instance
+    reinterpret_cast<Impl*>(&_storage)->~Impl();
 }
 
-const std::string& NamedEventAutoReset::name() const
-{
-    return _pimpl->name();
-}
+const std::string& NamedEventAutoReset::name() const { return impl().name(); }
 
-void NamedEventAutoReset::Signal()
-{
-    _pimpl->Signal();
-}
+void NamedEventAutoReset::Signal() { impl().Signal(); }
 
-bool NamedEventAutoReset::TryWait()
-{
-    return _pimpl->TryWait();
-}
+bool NamedEventAutoReset::TryWait() { return impl().TryWait(); }
+bool NamedEventAutoReset::TryWaitFor(const Timespan& timespan) { return impl().TryWaitFor(timespan); }
 
-bool NamedEventAutoReset::TryWaitFor(const Timespan& timespan)
-{
-    return _pimpl->TryWaitFor(timespan);
-}
-
-void NamedEventAutoReset::Wait()
-{
-    _pimpl->Wait();
-}
+void NamedEventAutoReset::Wait() { impl().Wait(); }
 
 } // namespace CppCommon

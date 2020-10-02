@@ -284,17 +284,32 @@ private:
 
 //! @endcond
 
-FileLock::FileLock() : _pimpl(std::make_unique<Impl>())
+FileLock::FileLock()
 {
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "FileLock::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "FileLock::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl();
 }
 
 FileLock::FileLock(const Path& path) : FileLock()
 {
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "FileLock::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "FileLock::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl();
+
     Assign(path);
 }
 
 FileLock::~FileLock()
 {
+    // Delete the implementation instance
+    reinterpret_cast<Impl*>(&_storage)->~Impl();
 }
 
 FileLock& FileLock::operator=(const Path& path)
@@ -303,30 +318,13 @@ FileLock& FileLock::operator=(const Path& path)
     return *this;
 }
 
-const Path& FileLock::path() const noexcept
-{
-    return _pimpl->path();
-}
+const Path& FileLock::path() const noexcept { return impl().path(); }
 
-void FileLock::Assign(const Path& path)
-{
-    _pimpl->Assign(path);
-}
+void FileLock::Assign(const Path& path) { impl().Assign(path); }
+void FileLock::Reset() { impl().Reset(); }
 
-void FileLock::Reset()
-{
-    _pimpl->Reset();
-}
-
-bool FileLock::TryLockRead()
-{
-    return _pimpl->TryLockRead();
-}
-
-bool FileLock::TryLockWrite()
-{
-    return _pimpl->TryLockWrite();
-}
+bool FileLock::TryLockRead() { return impl().TryLockRead(); }
+bool FileLock::TryLockWrite() { return impl().TryLockWrite(); }
 
 bool FileLock::TryLockReadFor(const Timespan& timespan)
 {
@@ -376,24 +374,9 @@ bool FileLock::TryLockWriteFor(const Timespan& timespan)
     }
 }
 
-void FileLock::LockRead()
-{
-    _pimpl->LockRead();
-}
-
-void FileLock::LockWrite()
-{
-    _pimpl->LockWrite();
-}
-
-void FileLock::UnlockRead()
-{
-    _pimpl->UnlockRead();
-}
-
-void FileLock::UnlockWrite()
-{
-    _pimpl->UnlockWrite();
-}
+void FileLock::LockRead() { impl().LockRead(); }
+void FileLock::LockWrite() { impl().LockWrite(); }
+void FileLock::UnlockRead() { impl().UnlockRead(); }
+void FileLock::UnlockWrite() { impl().UnlockWrite(); }
 
 } // namespace CppCommon

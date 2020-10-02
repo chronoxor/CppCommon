@@ -231,101 +231,84 @@ private:
 
 //! @endcond
 
-StdInput::StdInput() : _pimpl(std::make_unique<Impl>())
+StdInput::StdInput()
 {
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "StdInput::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "StdInput::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl();
 }
 
 StdInput::~StdInput()
 {
+    // Delete the implementation instance
+    reinterpret_cast<Impl*>(&_storage)->~Impl();
 }
 
-void* StdInput::stream() const noexcept
-{
-    return _pimpl->stream();
-}
-
-bool StdInput::IsValid() const noexcept
-{
-    return _pimpl->IsValid();
-}
-
-size_t StdInput::Read(void* buffer, size_t size)
-{
-    return _pimpl->Read(buffer, size);
-}
+void* StdInput::stream() const noexcept { return impl().stream(); }
+bool StdInput::IsValid() const noexcept { return impl().IsValid(); }
+size_t StdInput::Read(void* buffer, size_t size) { return impl().Read(buffer, size); }
 
 void StdInput::swap(StdInput& stream) noexcept
 {
     using std::swap;
-    swap(_pimpl, stream._pimpl);
+    swap(_storage, stream._storage);
 }
 
-StdOutput::StdOutput() : _pimpl(std::make_unique<Impl>())
+StdOutput::StdOutput()
 {
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "StdOutput::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "StdOutput::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl();
 }
 
 StdOutput::~StdOutput()
 {
+    // Delete the implementation instance
+    reinterpret_cast<Impl*>(&_storage)->~Impl();
 }
 
-void* StdOutput::stream() const noexcept
-{
-    return _pimpl->stream();
-}
-
-bool StdOutput::IsValid() const noexcept
-{
-    return _pimpl->IsValid();
-}
-
-size_t StdOutput::Write(const void* buffer, size_t size)
-{
-    return _pimpl->Write(buffer, size);
-}
-
-void StdOutput::Flush()
-{
-    return _pimpl->Flush();
-}
+void* StdOutput::stream() const noexcept { return impl().stream(); }
+bool StdOutput::IsValid() const noexcept { return impl().IsValid(); }
+size_t StdOutput::Write(const void* buffer, size_t size) { return impl().Write(buffer, size); }
+void StdOutput::Flush() { return impl().Flush(); }
 
 void StdOutput::swap(StdOutput& stream) noexcept
 {
     using std::swap;
-    swap(_pimpl, stream._pimpl);
+    swap(_storage, stream._storage);
 }
 
-StdError::StdError() : _pimpl(std::make_unique<Impl>())
+StdError::StdError()
 {
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "StdError::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "StdError::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl();
 }
 
 StdError::~StdError()
 {
+    // Delete the implementation instance
+    reinterpret_cast<Impl*>(&_storage)->~Impl();
 }
 
-void* StdError::stream() const noexcept
-{
-    return _pimpl->stream();
-}
-
-bool StdError::IsValid() const noexcept
-{
-    return _pimpl->IsValid();
-}
-
-size_t StdError::Write(const void* buffer, size_t size)
-{
-    return _pimpl->Write(buffer, size);
-}
-
-void StdError::Flush()
-{
-    return _pimpl->Flush();
-}
+void* StdError::stream() const noexcept { return impl().stream(); }
+bool StdError::IsValid() const noexcept { return impl().IsValid(); }
+size_t StdError::Write(const void* buffer, size_t size) { return impl().Write(buffer, size); }
+void StdError::Flush() { return impl().Flush(); }
 
 void StdError::swap(StdError& stream) noexcept
 {
     using std::swap;
-    swap(_pimpl, stream._pimpl);
+    swap(_storage, stream._storage);
 }
 
 } // namespace CppCommon

@@ -125,23 +125,24 @@ private:
 
 //! @endcond
 
-RWLock::RWLock() : _pimpl(std::make_unique<Impl>())
+RWLock::RWLock()
 {
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "RWLock::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "RWLock::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl();
 }
 
 RWLock::~RWLock()
 {
+    // Delete the implementation instance
+    reinterpret_cast<Impl*>(&_storage)->~Impl();
 }
 
-bool RWLock::TryLockRead()
-{
-    return _pimpl->TryLockRead();
-}
-
-bool RWLock::TryLockWrite()
-{
-    return _pimpl->TryLockWrite();
-}
+bool RWLock::TryLockRead() { return impl().TryLockRead(); }
+bool RWLock::TryLockWrite() { return impl().TryLockWrite(); }
 
 bool RWLock::TryLockReadFor(const Timespan& timespan)
 {
@@ -191,24 +192,9 @@ bool RWLock::TryLockWriteFor(const Timespan& timespan)
     }
 }
 
-void RWLock::LockRead()
-{
-    _pimpl->LockRead();
-}
-
-void RWLock::LockWrite()
-{
-    _pimpl->LockWrite();
-}
-
-void RWLock::UnlockRead()
-{
-    _pimpl->UnlockRead();
-}
-
-void RWLock::UnlockWrite()
-{
-    _pimpl->UnlockWrite();
-}
+void RWLock::LockRead() { impl().LockRead(); }
+void RWLock::LockWrite() { impl().LockWrite(); }
+void RWLock::UnlockRead() { impl().UnlockRead(); }
+void RWLock::UnlockWrite() { impl().UnlockWrite(); }
 
 } // namespace CppCommon

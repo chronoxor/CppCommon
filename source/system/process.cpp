@@ -323,7 +323,7 @@ public:
 
         // Return result process
         Process result;
-        result._pimpl->_pid = pid;
+        result.impl()._pid = pid;
         return result;
 #elif defined(_WIN32) || defined(_WIN64)
         BOOL bInheritHandles = FALSE;
@@ -425,8 +425,8 @@ public:
 
         // Return result process
         Process result;
-        result._pimpl->_pid = pi.dwProcessId;
-        result._pimpl->_process = pi.hProcess;
+        result.impl()._pid = pi.dwProcessId;
+        result.impl()._process = pi.hProcess;
         return result;
 #endif
     }
@@ -476,77 +476,81 @@ private:
 
 //! @endcond
 
-Process::Process() : _pimpl(std::make_unique<Impl>())
+Process::Process()
 {
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "Process::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "Process::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl();
 }
 
-Process::Process(uint64_t id) : _pimpl(std::make_unique<Impl>(id))
+Process::Process(uint64_t id)
 {
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "Process::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "Process::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl(id);
 }
 
-Process::Process(const Process& process) : _pimpl(std::make_unique<Impl>(process._pimpl->pid()))
+Process::Process(const Process& process)
 {
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "Process::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "Process::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl(process.pid());
 }
 
-Process::Process(Process&& process) noexcept : _pimpl(std::move(process._pimpl))
+Process::Process(Process&& process) noexcept
 {
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "Process::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "Process::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl();
+
+    _storage = std::move(process._storage);
 }
 
 Process::~Process()
 {
+    // Delete the implementation instance
+    reinterpret_cast<Impl*>(&_storage)->~Impl();
 }
 
 Process& Process::operator=(const Process& process)
 {
-    _pimpl = std::make_unique<Impl>(process._pimpl->pid());
+    // Delete the implementation instance
+    reinterpret_cast<Impl*>(&_storage)->~Impl();
+    // Create the implementation instance
+    new(&_storage)Impl(process.pid());
     return *this;
 }
 
 Process& Process::operator=(Process&& process) noexcept
 {
-    _pimpl = std::move(process._pimpl);
+    _storage = std::move(process._storage);
     return *this;
 }
 
-uint64_t Process::pid() const noexcept
-{
-    return _pimpl->pid();
-}
+uint64_t Process::pid() const noexcept { return impl().pid(); }
 
-bool Process::IsRunning() const
-{
-    return _pimpl->IsRunning();
-}
+bool Process::IsRunning() const { return impl().IsRunning(); }
 
-void Process::Kill()
-{
-    return _pimpl->Kill();
-}
+void Process::Kill() { return impl().Kill(); }
+int Process::Wait() { return impl().Wait(); }
+int Process::WaitFor(const Timespan& timespan) { return impl().WaitFor(timespan); }
 
-int Process::Wait()
-{
-    return _pimpl->Wait();
-}
+uint64_t Process::CurrentProcessId() noexcept { return Impl::CurrentProcessId(); }
+uint64_t Process::ParentProcessId() noexcept { return Impl::ParentProcessId(); }
 
-int Process::WaitFor(const Timespan& timespan)
-{
-    return _pimpl->WaitFor(timespan);
-}
-
-uint64_t Process::CurrentProcessId() noexcept
-{
-    return Impl::CurrentProcessId();
-}
-
-uint64_t Process::ParentProcessId() noexcept
-{
-    return Impl::ParentProcessId();
-}
-
-void Process::Exit(int result)
-{
-    return Impl::Exit(result);
-}
+void Process::Exit(int result) { return Impl::Exit(result); }
 
 Process Process::Execute(const std::string& command, const std::vector<std::string>* arguments, const std::map<std::string, std::string>* envars, const std::string* directory, Pipe* input, Pipe* output, Pipe* error)
 {
@@ -556,7 +560,7 @@ Process Process::Execute(const std::string& command, const std::vector<std::stri
 void Process::swap(Process& process) noexcept
 {
     using std::swap;
-    swap(_pimpl, process._pimpl);
+    swap(_storage, process._storage);
 }
 
 } // namespace CppCommon

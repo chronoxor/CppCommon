@@ -174,23 +174,25 @@ private:
 
 //! @endcond
 
-NamedCriticalSection::NamedCriticalSection(const std::string& name) : _pimpl(std::make_unique<Impl>(name, 4000))
+NamedCriticalSection::NamedCriticalSection(const std::string& name)
 {
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "NamedCriticalSection::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "NamedCriticalSection::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl(name, 4000);
 }
 
 NamedCriticalSection::~NamedCriticalSection()
 {
+    // Delete the implementation instance
+    reinterpret_cast<Impl*>(&_storage)->~Impl();
 }
 
-const std::string& NamedCriticalSection::name() const
-{
-    return _pimpl->name();
-}
+const std::string& NamedCriticalSection::name() const { return impl().name(); }
 
-bool NamedCriticalSection::TryLock()
-{
-    return _pimpl->TryLock();
-}
+bool NamedCriticalSection::TryLock() { return impl().TryLock(); }
 
 bool NamedCriticalSection::TryLockFor(const Timespan& timespan)
 {
@@ -216,14 +218,7 @@ bool NamedCriticalSection::TryLockFor(const Timespan& timespan)
     }
 }
 
-void NamedCriticalSection::Lock()
-{
-    _pimpl->Lock();
-}
-
-void NamedCriticalSection::Unlock()
-{
-    _pimpl->Unlock();
-}
+void NamedCriticalSection::Lock() { impl().Lock(); }
+void NamedCriticalSection::Unlock() { impl().Unlock(); }
 
 } // namespace CppCommon

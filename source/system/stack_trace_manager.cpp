@@ -98,22 +98,23 @@ private:
 
 //! @endcond
 
-StackTraceManager::StackTraceManager() : _pimpl(std::make_unique<Impl>())
+StackTraceManager::StackTraceManager()
 {
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "StackTraceManager::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "StackTraceManager::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl();
 }
 
 StackTraceManager::~StackTraceManager()
 {
+    // Delete the implementation instance
+    reinterpret_cast<Impl*>(&_storage)->~Impl();
 }
 
-void StackTraceManager::Initialize()
-{
-    GetInstance()._pimpl->Initialize();
-}
-
-void StackTraceManager::Cleanup()
-{
-    GetInstance()._pimpl->Cleanup();
-}
+void StackTraceManager::Initialize() { GetInstance().impl().Initialize(); }
+void StackTraceManager::Cleanup() { GetInstance().impl().Cleanup(); }
 
 } // namespace CppCommon

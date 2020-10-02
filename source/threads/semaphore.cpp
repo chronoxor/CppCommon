@@ -152,37 +152,28 @@ private:
 
 //! @endcond
 
-Semaphore::Semaphore(int resources) : _pimpl(std::make_unique<Impl>(resources))
+Semaphore::Semaphore(int resources)
 {
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "Semaphore::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "Semaphore::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl(resources);
 }
 
 Semaphore::~Semaphore()
 {
+    // Delete the implementation instance
+    reinterpret_cast<Impl*>(&_storage)->~Impl();
 }
 
-int Semaphore::resources() const noexcept
-{
-    return _pimpl->resources();
-}
+int Semaphore::resources() const noexcept { return impl().resources(); }
 
-bool Semaphore::TryLock()
-{
-    return _pimpl->TryLock();
-}
+bool Semaphore::TryLock() { return impl().TryLock(); }
+bool Semaphore::TryLockFor(const Timespan& timespan) { return impl().TryLockFor(timespan); }
 
-bool Semaphore::TryLockFor(const Timespan& timespan)
-{
-    return _pimpl->TryLockFor(timespan);
-}
-
-void Semaphore::Lock()
-{
-    _pimpl->Lock();
-}
-
-void Semaphore::Unlock()
-{
-    _pimpl->Unlock();
-}
+void Semaphore::Lock() { impl().Lock(); }
+void Semaphore::Unlock() { impl().Unlock(); }
 
 } // namespace CppCommon

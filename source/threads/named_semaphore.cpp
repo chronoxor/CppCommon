@@ -180,42 +180,29 @@ private:
 
 //! @endcond
 
-NamedSemaphore::NamedSemaphore(const std::string& name, int resources) : _pimpl(std::make_unique<Impl>(name, resources))
+NamedSemaphore::NamedSemaphore(const std::string& name, int resources)
 {
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "NamedSemaphore::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "NamedSemaphore::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl(name, resources);
 }
 
 NamedSemaphore::~NamedSemaphore()
 {
+    // Delete the implementation instance
+    reinterpret_cast<Impl*>(&_storage)->~Impl();
 }
 
-const std::string& NamedSemaphore::name() const
-{
-    return _pimpl->name();
-}
+const std::string& NamedSemaphore::name() const { return impl().name(); }
+int NamedSemaphore::resources() const noexcept { return impl().resources(); }
 
-int NamedSemaphore::resources() const noexcept
-{
-    return _pimpl->resources();
-}
+bool NamedSemaphore::TryLock() { return impl().TryLock(); }
+bool NamedSemaphore::TryLockFor(const Timespan& timespan) { return impl().TryLockFor(timespan); }
 
-bool NamedSemaphore::TryLock()
-{
-    return _pimpl->TryLock();
-}
-
-bool NamedSemaphore::TryLockFor(const Timespan& timespan)
-{
-    return _pimpl->TryLockFor(timespan);
-}
-
-void NamedSemaphore::Lock()
-{
-    _pimpl->Lock();
-}
-
-void NamedSemaphore::Unlock()
-{
-    _pimpl->Unlock();
-}
+void NamedSemaphore::Lock() { impl().Lock(); }
+void NamedSemaphore::Unlock() { impl().Unlock(); }
 
 } // namespace CppCommon

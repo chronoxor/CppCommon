@@ -117,22 +117,24 @@ private:
 
 //! @endcond
 
-Barrier::Barrier(int threads) : _pimpl(std::make_unique<Impl>(threads))
+Barrier::Barrier(int threads)
 {
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "Barrier::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "Barrier::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl(threads);
 }
 
 Barrier::~Barrier()
 {
+    // Delete the implementation instance
+    reinterpret_cast<Impl*>(&_storage)->~Impl();
 }
 
-int Barrier::threads() const noexcept
-{
-    return _pimpl->threads();
-}
+int Barrier::threads() const noexcept { return impl().threads(); }
 
-bool Barrier::Wait()
-{
-    return _pimpl->Wait();
-}
+bool Barrier::Wait() { return impl().Wait(); }
 
 } // namespace CppCommon

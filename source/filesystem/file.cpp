@@ -616,51 +616,76 @@ const Flags<FileAttributes> File::DEFAULT_ATTRIBUTES = FileAttributes::NORMAL;
 const Flags<FilePermissions> File::DEFAULT_PERMISSIONS = FilePermissions::IRUSR | FilePermissions::IWUSR | FilePermissions::IRGRP | FilePermissions::IROTH;
 const size_t File::DEFAULT_BUFFER = 8192;
 
-File::File() : Path(), _pimpl(std::make_unique<Impl>(this))
+File::File() : Path()
 {
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "File::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "File::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl(this);
 }
 
-File::File(const Path& path) : Path(path), _pimpl(std::make_unique<Impl>(this))
+File::File(const Path& path) : Path(path)
 {
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "File::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "File::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl(this);
 }
 
-File::File(const File& file) : Path(file), _pimpl(std::make_unique<Impl>(this))
+File::File(const File& file) : Path(file)
 {
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "File::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "File::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl(this);
 }
 
-File::File(File&& file) noexcept : Path(std::move(file)), _pimpl(std::move(file._pimpl))
+File::File(File&& file) noexcept : Path(std::move(file))
 {
-    _pimpl->_path = this;
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "File::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "File::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl(this);
+
+    _storage = std::move(file._storage);
+
+    impl()._path = this;
 }
 
 File::~File()
 {
+    // Delete the implementation instance
+    reinterpret_cast<Impl*>(&_storage)->~Impl();
 }
 
 File& File::operator=(const File& file)
 {
     Path::operator=(file);
-    _pimpl = std::make_unique<Impl>(this);
+    // Delete the implementation instance
+    reinterpret_cast<Impl*>(&_storage)->~Impl();
+    // Create the implementation instance
+    new(&_storage)Impl(this);
     return *this;
 }
 
 File& File::operator=(File&& file) noexcept
 {
     Path::operator=(std::move(file));
-    _pimpl = std::move(file._pimpl);
-    _pimpl->_path = this;
+    _storage = std::move(file._storage);
+    impl()._path = this;
     return *this;
 }
 
-uint64_t File::offset() const
-{
-    return _pimpl->offset();
-}
-
-uint64_t File::size() const
-{
-    return _pimpl->size();
-}
+uint64_t File::offset() const { return impl().offset(); }
+uint64_t File::size() const { return impl().size(); }
 
 bool File::IsFileExists() const
 {
@@ -698,65 +723,21 @@ bool File::IsFileExists() const
 #endif
 }
 
-bool File::IsFileOpened() const
-{
-    return _pimpl->IsFileOpened();
-}
+bool File::IsFileOpened() const { return impl().IsFileOpened(); }
+bool File::IsFileReadOpened() const { return impl().IsFileReadOpened(); }
+bool File::IsFileWriteOpened() const { return impl().IsFileWriteOpened(); }
 
-bool File::IsFileReadOpened() const
-{
-    return _pimpl->IsFileReadOpened();
-}
+void File::Create(bool read, bool write, const Flags<FileAttributes>& attributes, const Flags<FilePermissions>& permissions, size_t buffer) { return impl().Create(read, write, attributes, permissions, buffer); }
+void File::Open(bool read, bool write, bool truncate, const Flags<FileAttributes>& attributes, const Flags<FilePermissions>& permissions, size_t buffer) { impl().Open(read, write, truncate, attributes, permissions, buffer); }
+void File::OpenOrCreate(bool read, bool write, bool truncate, const Flags<FileAttributes>& attributes, const Flags<FilePermissions>& permissions, size_t buffer) { impl().OpenOrCreate(read, write, truncate, attributes, permissions, buffer); }
 
-bool File::IsFileWriteOpened() const
-{
-    return _pimpl->IsFileWriteOpened();
-}
+size_t File::Read(void* buffer, size_t size) { return impl().Read(buffer, size); }
+size_t File::Write(const void* buffer, size_t size) { return impl().Write(buffer, size); }
 
-void File::Create(bool read, bool write, const Flags<FileAttributes>& attributes, const Flags<FilePermissions>& permissions, size_t buffer)
-{
-    return _pimpl->Create(read, write, attributes, permissions, buffer);
-}
-
-void File::Open(bool read, bool write, bool truncate, const Flags<FileAttributes>& attributes, const Flags<FilePermissions>& permissions, size_t buffer)
-{
-    _pimpl->Open(read, write, truncate, attributes, permissions, buffer);
-}
-
-void File::OpenOrCreate(bool read, bool write, bool truncate, const Flags<FileAttributes>& attributes, const Flags<FilePermissions>& permissions, size_t buffer)
-{
-    _pimpl->OpenOrCreate(read, write, truncate, attributes, permissions, buffer);
-}
-
-size_t File::Read(void* buffer, size_t size)
-{
-    return _pimpl->Read(buffer, size);
-}
-
-size_t File::Write(const void* buffer, size_t size)
-{
-    return _pimpl->Write(buffer, size);
-}
-
-void File::Seek(uint64_t offset)
-{
-    return _pimpl->Seek(offset);
-}
-
-void File::Resize(uint64_t size)
-{
-    return _pimpl->Resize(size);
-}
-
-void File::Flush()
-{
-    _pimpl->Flush();
-}
-
-void File::Close()
-{
-    _pimpl->Close();
-}
+void File::Seek(uint64_t offset) { return impl().Seek(offset); }
+void File::Resize(uint64_t size) { return impl().Resize(size); }
+void File::Flush() { impl().Flush(); }
+void File::Close() { impl().Close(); }
 
 std::vector<uint8_t> File::ReadAllBytes(const Path& path)
 {
@@ -816,7 +797,7 @@ void File::swap(File& file) noexcept
 {
     using std::swap;
     Path::swap(file);
-    swap(_pimpl, file._pimpl);
+    swap(_storage, file._storage);
 }
 
 } // namespace CppCommon

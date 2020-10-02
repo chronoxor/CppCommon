@@ -146,32 +146,26 @@ private:
 
 //! @endcond
 
-Mutex::Mutex() : _pimpl(std::make_unique<Impl>())
+Mutex::Mutex()
 {
+    // Check implementation storage parameters
+    static_assert((sizeof(Impl) <= StorageSize), "Mutex::StorageSize must be increased!");
+    static_assert((alignof(Impl) == StorageAlign), "Mutex::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
+    new(&_storage)Impl();
 }
 
 Mutex::~Mutex()
 {
+    // Delete the implementation instance
+    reinterpret_cast<Impl*>(&_storage)->~Impl();
 }
 
-bool Mutex::TryLock()
-{
-    return _pimpl->TryLock();
-}
+bool Mutex::TryLock() { return impl().TryLock(); }
+bool Mutex::TryLockFor(const Timespan& timespan) { return impl().TryLockFor(timespan); }
 
-bool Mutex::TryLockFor(const Timespan& timespan)
-{
-    return _pimpl->TryLockFor(timespan);
-}
-
-void Mutex::Lock()
-{
-    _pimpl->Lock();
-}
-
-void Mutex::Unlock()
-{
-    _pimpl->Unlock();
-}
+void Mutex::Lock() { impl().Lock(); }
+void Mutex::Unlock() { impl().Unlock(); }
 
 } // namespace CppCommon
