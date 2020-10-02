@@ -137,7 +137,7 @@ private:
     static const size_t StorageSize = 16;
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     static const size_t StorageAlign = 4;
-#elif defined(_WIN32) || defined(_WIN64)
+#else
     static const size_t StorageAlign = 8;
 #endif
     std::aligned_storage<StorageSize, StorageAlign>::type _storage;

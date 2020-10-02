@@ -69,7 +69,11 @@ private:
     const Impl& impl() const noexcept { return reinterpret_cast<Impl const&>(_storage); }
 
     static const size_t StorageSize = 72;
+#if defined(__APPLE__)
+    static const size_t StorageAlign = 4;
+#else
     static const size_t StorageAlign = 8;
+#endif
     std::aligned_storage<StorageSize, StorageAlign>::type _storage;
 
     ExceptionsHandler();
