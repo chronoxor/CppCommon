@@ -112,15 +112,19 @@ $(function() {
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keyword">const</span> Impl&amp; impl() <span class="keyword">const</span> noexcept { <span class="keywordflow">return</span> <span class="keyword">reinterpret_cast&lt;</span>Impl const&amp;<span class="keyword">&gt;</span>(_storage); }</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> StorageSize = 72;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> StorageAlign = 8;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    std::aligned_storage&lt;StorageSize, StorageAlign&gt;::type _storage;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <a class="code" href="class_cpp_common_1_1_exceptions_handler.html">ExceptionsHandler</a>();</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;};</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;} <span class="comment">// namespace CppCommon</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">#if defined(__APPLE__)</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> StorageAlign = 4;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> StorageAlign = 8;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    std::aligned_storage&lt;StorageSize, StorageAlign&gt;::type _storage;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <a class="code" href="class_cpp_common_1_1_exceptions_handler.html">ExceptionsHandler</a>();</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;};</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor">#endif // CPPCOMMON_ERRORS_EXCEPTIONS_HANDLER_H</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;} <span class="comment">// namespace CppCommon</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor">#endif // CPPCOMMON_ERRORS_EXCEPTIONS_HANDLER_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclass_cpp_common_1_1_exceptions_handler_html_a2b15986bf041a47e77cf4aba900fbc1f"><div class="ttname"><a href="class_cpp_common_1_1_exceptions_handler.html#a2b15986bf041a47e77cf4aba900fbc1f">CppCommon::ExceptionsHandler::~ExceptionsHandler</a></div><div class="ttdeci">~ExceptionsHandler()</div><div class="ttdef"><b>Definition:</b> <a href="exceptions__handler_8cpp_source.html#l00646">exceptions_handler.cpp:646</a></div></div>
 <div class="ttc" id="aclass_cpp_common_1_1_system_exception_html"><div class="ttname"><a href="class_cpp_common_1_1_system_exception.html">CppCommon::SystemException</a></div><div class="ttdoc">System exception.</div><div class="ttdef"><b>Definition:</b> <a href="errors_2exceptions_8h_source.html#l00099">exceptions.h:99</a></div></div>
