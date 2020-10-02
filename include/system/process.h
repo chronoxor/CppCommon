@@ -135,7 +135,11 @@ private:
     const Impl& impl() const noexcept { return reinterpret_cast<Impl const&>(_storage); }
 
     static const size_t StorageSize = 16;
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+    static const size_t StorageAlign = 4;
+#elif defined(_WIN32) || defined(_WIN64)
     static const size_t StorageAlign = 8;
+#endif
     std::aligned_storage<StorageSize, StorageAlign>::type _storage;
 
     Process();
