@@ -637,12 +637,6 @@ ExceptionsHandler::ExceptionsHandler()
 {
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "ExceptionsHandler::StorageSize must be increased!");
-    static_assert((alignof(Impl) >= 1));
-    static_assert((alignof(Impl) >= 2));
-    static_assert((alignof(Impl) >= 4));
-    static_assert((alignof(Impl) >= 8));
-    static_assert((alignof(Impl) >= 16));
-    static_assert((alignof(Impl) >= 32));
     static_assert((alignof(Impl) == StorageAlign), "ExceptionsHandler::StorageAlign must be adjusted!");
 
     // Create the implementation instance
