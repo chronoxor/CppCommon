@@ -70,7 +70,7 @@ private:
 
     static const size_t StorageSize = 72;
 #if defined(__APPLE__)
-    static const size_t StorageAlign = 4;
+    static const size_t StorageAlign = 1;
 #else
     static const size_t StorageAlign = 8;
 #endif
