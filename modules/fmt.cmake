@@ -7,6 +7,6 @@ if(NOT TARGET fmt)
   target_link_libraries(fmt)
 
   # Module folder
-  set_target_properties(fmt PROPERTIES FOLDER modules/fmt)
+  set_target_properties(fmt PROPERTIES FOLDER "modules/fmt")
 
 endif()
