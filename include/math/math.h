@@ -55,7 +55,10 @@ public:
         \param divider - Divider
         \return Calculated value of (operant * multiplier / divider) expression
     */
+#if defined(__GNUC__) && defined(__SIZEOF_INT128__) || defined(_MSC_VER)
     static uint64_t MulDiv64(uint64_t operant, uint64_t multiplier, uint64_t divider);
+#endif
+
 };
 
 /*! \example math_math.cpp Math example */

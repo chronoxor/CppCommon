@@ -14,6 +14,7 @@
 
 namespace CppCommon {
 
+#if defined(__GNUC__) && defined(__SIZEOF_INT128__) || defined(_MSC_VER)
 uint64_t Math::MulDiv64(uint64_t operant, uint64_t multiplier, uint64_t divider)
 {
 #if defined(__GNUC__) && defined(__SIZEOF_INT128__)
@@ -308,5 +309,6 @@ done:
     #error MulDiv64 is no supported!
 #endif
 }
+#endif
 
 } // namespace CppCommon
