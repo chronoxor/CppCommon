@@ -244,7 +244,7 @@ NamedEventManualReset::NamedEventManualReset(const std::string& name, bool signa
 {
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "NamedEventManualReset::StorageSize must be increased!");
-    static_assert((alignof(Impl) == StorageAlign), "NamedEventManualReset::StorageAlign must be adjusted!");
+    static_assert((StorageAlign % alignof(Impl) == 0), "NamedEventManualReset::StorageAlign must be adjusted!");
 
     // Create the implementation instance
     new(&_storage)Impl(name, signaled);

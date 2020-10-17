@@ -119,7 +119,7 @@ ConditionVariable::ConditionVariable()
 {
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "ConditionVariable::StorageSize must be increased!");
-    static_assert((alignof(Impl) == StorageAlign), "ConditionVariable::StorageAlign must be adjusted!");
+    static_assert((StorageAlign % alignof(Impl) == 0), "ConditionVariable::StorageAlign must be adjusted!");
 
     // Create the implementation instance
     new(&_storage)Impl();

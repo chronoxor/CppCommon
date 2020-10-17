@@ -187,7 +187,7 @@ SharedMemory::SharedMemory(const std::string& name, size_t size) : _name(name), 
 {
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "SharedMemory::StorageSize must be increased!");
-    static_assert((alignof(Impl) == StorageAlign), "SharedMemory::StorageAlign must be adjusted!");
+    static_assert((StorageAlign % alignof(Impl) == 0), "SharedMemory::StorageAlign must be adjusted!");
 
     // Create the implementation instance
     new(&_storage)Impl(name, size);

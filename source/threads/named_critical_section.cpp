@@ -178,7 +178,7 @@ NamedCriticalSection::NamedCriticalSection(const std::string& name)
 {
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "NamedCriticalSection::StorageSize must be increased!");
-    static_assert((alignof(Impl) == StorageAlign), "NamedCriticalSection::StorageAlign must be adjusted!");
+    static_assert((StorageAlign % alignof(Impl) == 0), "NamedCriticalSection::StorageAlign must be adjusted!");
 
     // Create the implementation instance
     new(&_storage)Impl(name, 4000);

@@ -235,7 +235,7 @@ StdInput::StdInput()
 {
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "StdInput::StorageSize must be increased!");
-    static_assert((alignof(Impl) == StorageAlign), "StdInput::StorageAlign must be adjusted!");
+    static_assert((StorageAlign % alignof(Impl) == 0), "StdInput::StorageAlign must be adjusted!");
 
     // Create the implementation instance
     new(&_storage)Impl();
@@ -261,7 +261,7 @@ StdOutput::StdOutput()
 {
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "StdOutput::StorageSize must be increased!");
-    static_assert((alignof(Impl) == StorageAlign), "StdOutput::StorageAlign must be adjusted!");
+    static_assert((StorageAlign % alignof(Impl) == 0), "StdOutput::StorageAlign must be adjusted!");
 
     // Create the implementation instance
     new(&_storage)Impl();
@@ -288,7 +288,7 @@ StdError::StdError()
 {
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "StdError::StorageSize must be increased!");
-    static_assert((alignof(Impl) == StorageAlign), "StdError::StorageAlign must be adjusted!");
+    static_assert((StorageAlign % alignof(Impl) == 0), "StdError::StorageAlign must be adjusted!");
 
     // Create the implementation instance
     new(&_storage)Impl();

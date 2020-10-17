@@ -620,7 +620,7 @@ File::File() : Path()
 {
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "File::StorageSize must be increased!");
-    static_assert((alignof(Impl) == StorageAlign), "File::StorageAlign must be adjusted!");
+    static_assert((StorageAlign % alignof(Impl) == 0), "File::StorageAlign must be adjusted!");
 
     // Create the implementation instance
     new(&_storage)Impl(this);
@@ -630,7 +630,7 @@ File::File(const Path& path) : Path(path)
 {
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "File::StorageSize must be increased!");
-    static_assert((alignof(Impl) == StorageAlign), "File::StorageAlign must be adjusted!");
+    static_assert((StorageAlign % alignof(Impl) == 0), "File::StorageAlign must be adjusted!");
 
     // Create the implementation instance
     new(&_storage)Impl(this);
@@ -640,7 +640,7 @@ File::File(const File& file) : Path(file)
 {
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "File::StorageSize must be increased!");
-    static_assert((alignof(Impl) == StorageAlign), "File::StorageAlign must be adjusted!");
+    static_assert((StorageAlign % alignof(Impl) == 0), "File::StorageAlign must be adjusted!");
 
     // Create the implementation instance
     new(&_storage)Impl(this);
@@ -650,7 +650,7 @@ File::File(File&& file) noexcept : Path(std::move(file))
 {
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "File::StorageSize must be increased!");
-    static_assert((alignof(Impl) == StorageAlign), "File::StorageAlign must be adjusted!");
+    static_assert((StorageAlign % alignof(Impl) == 0), "File::StorageAlign must be adjusted!");
 
     // Create the implementation instance
     new(&_storage)Impl(this);

@@ -176,7 +176,7 @@ NamedMutex::NamedMutex(const std::string& name)
 {
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "NamedMutex::StorageSize must be increased!");
-    static_assert((alignof(Impl) == StorageAlign), "NamedMutex::StorageAlign must be adjusted!");
+    static_assert((StorageAlign % alignof(Impl) == 0), "NamedMutex::StorageAlign must be adjusted!");
 
     // Create the implementation instance
     new(&_storage)Impl(name);
