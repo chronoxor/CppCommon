@@ -620,7 +620,7 @@ const size_t File::DEFAULT_BUFFER = 8192;
 
 File::File() : Path()
 {
-    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _;
+    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _.nop();
 
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "File::StorageSize must be increased!");
@@ -632,7 +632,7 @@ File::File() : Path()
 
 File::File(const Path& path) : Path(path)
 {
-    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _;
+    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _.nop();
 
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "File::StorageSize must be increased!");
@@ -644,7 +644,7 @@ File::File(const Path& path) : Path(path)
 
 File::File(const File& file) : Path(file)
 {
-    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _;
+    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _.nop();
 
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "File::StorageSize must be increased!");
@@ -656,7 +656,7 @@ File::File(const File& file) : Path(file)
 
 File::File(File&& file) noexcept : Path(std::move(file))
 {
-    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _;
+    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _.nop();
 
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "File::StorageSize must be increased!");

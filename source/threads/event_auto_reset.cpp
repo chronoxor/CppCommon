@@ -170,7 +170,7 @@ private:
 
 EventAutoReset::EventAutoReset(bool signaled)
 {
-    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _;
+    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _.nop();
 
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "EventAutoReset::StorageSize must be increased!");

@@ -229,7 +229,7 @@ private:
 
 NamedEventAutoReset::NamedEventAutoReset(const std::string& name, bool signaled)
 {
-    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _;
+    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _.nop();
 
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "NamedEventAutoReset::StorageSize must be increased!");

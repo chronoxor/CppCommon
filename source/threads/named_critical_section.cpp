@@ -177,7 +177,7 @@ private:
 
 NamedCriticalSection::NamedCriticalSection(const std::string& name)
 {
-    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _;
+    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _.nop();
 
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "NamedCriticalSection::StorageSize must be increased!");

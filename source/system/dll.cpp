@@ -147,7 +147,7 @@ private:
 
 DLL::DLL()
 {
-    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _;
+    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _.nop();
 
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "DLL::StorageSize must be increased!");
@@ -159,7 +159,7 @@ DLL::DLL()
 
 DLL::DLL(const Path& path, bool load)
 {
-    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _;
+    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _.nop();
 
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "DLL::StorageSize must be increased!");
@@ -176,7 +176,7 @@ DLL::DLL(const Path& path, bool load)
 
 DLL::DLL(const DLL& dll)
 {
-    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _;
+    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _.nop();
 
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "DLL::StorageSize must be increased!");
@@ -190,7 +190,7 @@ DLL::DLL(const DLL& dll)
 
 DLL::DLL(DLL&& dll) noexcept
 {
-    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _;
+    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _.nop();
 
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "DLL::StorageSize must be increased!");

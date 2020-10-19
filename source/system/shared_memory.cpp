@@ -187,7 +187,7 @@ private:
 
 SharedMemory::SharedMemory(const std::string& name, size_t size) : _name(name), _size(size)
 {
-    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _;
+    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _.nop();
 
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "SharedMemory::StorageSize must be increased!");

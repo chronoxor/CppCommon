@@ -30,6 +30,8 @@ namespace CppCommon {
         >::type
     >
     {
+    public:
+        void nop() {}
     };
 
 
