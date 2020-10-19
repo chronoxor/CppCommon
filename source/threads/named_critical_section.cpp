@@ -12,6 +12,7 @@
 #include "system/shared_type.h"
 #include "threads/named_event_auto_reset.h"
 #include "threads/thread.h"
+#include "utility/validate_aligned_storage.h"
 
 #if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
 #include <pthread.h>
@@ -176,6 +177,8 @@ private:
 
 NamedCriticalSection::NamedCriticalSection(const std::string& name)
 {
+    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _;
+
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "NamedCriticalSection::StorageSize must be increased!");
     static_assert((StorageAlign % alignof(Impl) == 0), "NamedCriticalSection::StorageAlign must be adjusted!");

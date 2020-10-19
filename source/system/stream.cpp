@@ -10,6 +10,8 @@
 
 #include "errors/fatal.h"
 
+#include "utility/validate_aligned_storage.h"
+
 #include <cassert>
 
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
@@ -233,6 +235,8 @@ private:
 
 StdInput::StdInput()
 {
+    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _;
+
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "StdInput::StorageSize must be increased!");
     static_assert((StorageAlign % alignof(Impl) == 0), "StdInput::StorageAlign must be adjusted!");
@@ -259,6 +263,8 @@ void StdInput::swap(StdInput& stream) noexcept
 
 StdOutput::StdOutput()
 {
+    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _;
+
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "StdOutput::StorageSize must be increased!");
     static_assert((StorageAlign % alignof(Impl) == 0), "StdOutput::StorageAlign must be adjusted!");
@@ -286,6 +292,8 @@ void StdOutput::swap(StdOutput& stream) noexcept
 
 StdError::StdError()
 {
+    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _;
+
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "StdError::StorageSize must be increased!");
     static_assert((StorageAlign % alignof(Impl) == 0), "StdError::StorageAlign must be adjusted!");

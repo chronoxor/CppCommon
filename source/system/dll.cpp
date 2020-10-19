@@ -11,6 +11,8 @@
 #include "errors/fatal.h"
 #include "string/format.h"
 
+#include "utility/validate_aligned_storage.h"
+
 #include <cassert>
 
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
@@ -145,6 +147,8 @@ private:
 
 DLL::DLL()
 {
+    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _;
+
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "DLL::StorageSize must be increased!");
     static_assert((StorageAlign % alignof(Impl) == 0), "DLL::StorageAlign must be adjusted!");
@@ -155,6 +159,8 @@ DLL::DLL()
 
 DLL::DLL(const Path& path, bool load)
 {
+    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _;
+
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "DLL::StorageSize must be increased!");
     static_assert((StorageAlign % alignof(Impl) == 0), "DLL::StorageAlign must be adjusted!");
@@ -170,6 +176,8 @@ DLL::DLL(const Path& path, bool load)
 
 DLL::DLL(const DLL& dll)
 {
+    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _;
+
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "DLL::StorageSize must be increased!");
     static_assert((StorageAlign % alignof(Impl) == 0), "DLL::StorageAlign must be adjusted!");
@@ -182,6 +190,8 @@ DLL::DLL(const DLL& dll)
 
 DLL::DLL(DLL&& dll) noexcept
 {
+    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _;
+
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "DLL::StorageSize must be increased!");
     static_assert((StorageAlign % alignof(Impl) == 0), "DLL::StorageAlign must be adjusted!");

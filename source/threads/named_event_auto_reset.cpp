@@ -10,6 +10,8 @@
 
 #include "errors/fatal.h"
 
+#include "utility/validate_aligned_storage.h"
+
 #include <algorithm>
 
 #if (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__APPLE__) && !defined(__CYGWIN__)
@@ -227,6 +229,8 @@ private:
 
 NamedEventAutoReset::NamedEventAutoReset(const std::string& name, bool signaled)
 {
+    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _;
+
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "NamedEventAutoReset::StorageSize must be increased!");
     static_assert((StorageAlign % alignof(Impl) == 0), "NamedEventAutoReset::StorageAlign must be adjusted!");

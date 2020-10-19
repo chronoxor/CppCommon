@@ -10,6 +10,8 @@
 
 #include "threads/thread.h"
 
+#include "utility/validate_aligned_storage.h"
+
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
 #include "errors/fatal.h"
 #include <pthread.h>
@@ -108,6 +110,8 @@ private:
 
 CriticalSection::CriticalSection()
 {
+    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _;
+
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "CriticalSection::StorageSize must be increased!");
     static_assert((StorageAlign % alignof(Impl) == 0), "CriticalSection::StorageAlign must be adjusted!");

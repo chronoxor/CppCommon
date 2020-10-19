@@ -13,6 +13,7 @@
 #include "string/format.h"
 #include "threads/thread.h"
 #include "utility/resource.h"
+#include "utility/validate_aligned_storage.h"
 
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
 #include <sys/wait.h>
@@ -478,6 +479,8 @@ private:
 
 Process::Process()
 {
+    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _;
+
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "Process::StorageSize must be increased!");
     static_assert((StorageAlign % alignof(Impl) == 0), "Process::StorageAlign must be adjusted!");
@@ -488,6 +491,8 @@ Process::Process()
 
 Process::Process(uint64_t id)
 {
+    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _;
+
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "Process::StorageSize must be increased!");
     static_assert((StorageAlign % alignof(Impl) == 0), "Process::StorageAlign must be adjusted!");
@@ -498,6 +503,8 @@ Process::Process(uint64_t id)
 
 Process::Process(const Process& process)
 {
+    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _;
+
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "Process::StorageSize must be increased!");
     static_assert((StorageAlign % alignof(Impl) == 0), "Process::StorageAlign must be adjusted!");
@@ -508,6 +515,8 @@ Process::Process(const Process& process)
 
 Process::Process(Process&& process) noexcept
 {
+    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _;
+
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "Process::StorageSize must be increased!");
     static_assert((StorageAlign % alignof(Impl) == 0), "Process::StorageAlign must be adjusted!");

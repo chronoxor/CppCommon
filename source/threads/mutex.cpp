@@ -10,6 +10,8 @@
 
 #include "errors/fatal.h"
 
+#include "utility/validate_aligned_storage.h"
+
 #include <algorithm>
 
 #if defined(__APPLE__) || defined(__CYGWIN__)
@@ -148,6 +150,8 @@ private:
 
 Mutex::Mutex()
 {
+    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _;
+
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "Mutex::StorageSize must be increased!");
     static_assert((StorageAlign % alignof(Impl) == 0), "Mutex::StorageAlign must be adjusted!");

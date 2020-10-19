@@ -12,6 +12,7 @@
 #include "system/stack_trace.h"
 #include "time/timestamp.h"
 #include "utility/resource.h"
+#include "utility/validate_aligned_storage.h"
 
 #include <cstring>
 #include <exception>
@@ -635,6 +636,8 @@ private:
 
 ExceptionsHandler::ExceptionsHandler()
 {
+    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _;
+
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "ExceptionsHandler::StorageSize must be increased!");
     static_assert((StorageAlign % alignof(Impl) == 0), "ExceptionsHandler::StorageAlign must be adjusted!");

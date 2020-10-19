@@ -8,6 +8,8 @@
 
 #include "system/stack_trace_manager.h"
 
+#include "utility/validate_aligned_storage.h"
+
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
 #if defined(DBGHELP_SUPPORT)
@@ -100,6 +102,8 @@ private:
 
 StackTraceManager::StackTraceManager()
 {
+    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _;
+
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "StackTraceManager::StorageSize must be increased!");
     static_assert((StorageAlign % alignof(Impl) == 0), "StackTraceManager::StorageAlign must be adjusted!");

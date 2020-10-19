@@ -10,6 +10,8 @@
 
 #include "errors/fatal.h"
 
+#include "utility/validate_aligned_storage.h"
+
 #include <cassert>
 #include <cstring>
 
@@ -185,6 +187,8 @@ private:
 
 SharedMemory::SharedMemory(const std::string& name, size_t size) : _name(name), _size(size)
 {
+    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _;
+
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "SharedMemory::StorageSize must be increased!");
     static_assert((StorageAlign % alignof(Impl) == 0), "SharedMemory::StorageAlign must be adjusted!");

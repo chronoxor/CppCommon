@@ -11,6 +11,7 @@
 #include "errors/fatal.h"
 #include "system/shared_type.h"
 #include "threads/thread.h"
+#include "utility/validate_aligned_storage.h"
 
 #if (defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)) && !defined(__CYGWIN__)
 #include <fcntl.h>
@@ -505,6 +506,8 @@ private:
 
 NamedRWLock::NamedRWLock(const std::string& name)
 {
+    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _;
+
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "NamedRWLock::StorageSize must be increased!");
     static_assert((StorageAlign % alignof(Impl) == 0), "NamedRWLock::StorageAlign must be adjusted!");

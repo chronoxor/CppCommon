@@ -10,6 +10,8 @@
 
 #include "errors/fatal.h"
 
+#include "utility/validate_aligned_storage.h"
+
 #include <algorithm>
 #include <cassert>
 
@@ -182,6 +184,8 @@ private:
 
 NamedSemaphore::NamedSemaphore(const std::string& name, int resources)
 {
+    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _;
+
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "NamedSemaphore::StorageSize must be increased!");
     static_assert((StorageAlign % alignof(Impl) == 0), "NamedSemaphore::StorageAlign must be adjusted!");

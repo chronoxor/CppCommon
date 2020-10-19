@@ -10,6 +10,8 @@
 
 #include "errors/fatal.h"
 
+#include "utility/validate_aligned_storage.h"
+
 #include <algorithm>
 
 #if defined(__APPLE__)
@@ -174,6 +176,8 @@ private:
 
 NamedMutex::NamedMutex(const std::string& name)
 {
+    ValidateAlignedStorage< sizeof(Impl), alignof(Impl), StorageSize, StorageAlign > _; _;
+
     // Check implementation storage parameters
     static_assert((sizeof(Impl) <= StorageSize), "NamedMutex::StorageSize must be increased!");
     static_assert((StorageAlign % alignof(Impl) == 0), "NamedMutex::StorageAlign must be adjusted!");
