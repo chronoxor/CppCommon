@@ -69,7 +69,7 @@ private:
     const Impl& impl() const noexcept { return reinterpret_cast<Impl const&>(_storage); }
 
     static const size_t StorageSize = 72;
-#if defined(__APPLE__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     static const size_t StorageAlign = 16;
 #else
     static const size_t StorageAlign = 8;
