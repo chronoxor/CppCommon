@@ -183,7 +183,7 @@ private:
 Pipe::Pipe()
 {
     // Check implementation storage parameters
-    [[maybe_unused]] ValidateAlignedStorage<StorageSize, StorageAlign, sizeof(Impl), alignof(Impl)> _;
+    [[maybe_unused]] ValidateAlignedStorage<sizeof(Impl), alignof(Impl), StorageSize, StorageAlign> _;
     static_assert((StorageSize >= sizeof(Impl)), "Pipe::StorageSize must be increased!");
     static_assert(((StorageAlign % alignof(Impl)) == 0), "Pipe::StorageAlign must be adjusted!");
 

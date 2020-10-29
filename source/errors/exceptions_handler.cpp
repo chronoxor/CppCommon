@@ -637,7 +637,7 @@ private:
 ExceptionsHandler::ExceptionsHandler()
 {
     // Check implementation storage parameters
-    [[maybe_unused]] ValidateAlignedStorage<StorageSize, StorageAlign, sizeof(Impl), alignof(Impl)> _;
+    [[maybe_unused]] ValidateAlignedStorage<sizeof(Impl), alignof(Impl), StorageSize, StorageAlign> _;
     static_assert((StorageSize >= sizeof(Impl)), "ExceptionsHandler::StorageSize must be increased!");
     static_assert(((StorageAlign % alignof(Impl)) == 0), "ExceptionsHandler::StorageAlign must be adjusted!");
 

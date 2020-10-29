@@ -103,7 +103,7 @@ private:
 StackTraceManager::StackTraceManager()
 {
     // Check implementation storage parameters
-    [[maybe_unused]] ValidateAlignedStorage<StorageSize, StorageAlign, sizeof(Impl), alignof(Impl)> _;
+    [[maybe_unused]] ValidateAlignedStorage<sizeof(Impl), alignof(Impl), StorageSize, StorageAlign> _;
     static_assert((StorageSize >= sizeof(Impl)), "StackTraceManager::StorageSize must be increased!");
     static_assert(((StorageAlign % alignof(Impl)) == 0), "StackTraceManager::StorageAlign must be adjusted!");
 

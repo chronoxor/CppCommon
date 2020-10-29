@@ -122,7 +122,7 @@ private:
 Barrier::Barrier(int threads)
 {
     // Check implementation storage parameters
-    [[maybe_unused]] ValidateAlignedStorage<StorageSize, StorageAlign, sizeof(Impl), alignof(Impl)> _;
+    [[maybe_unused]] ValidateAlignedStorage<sizeof(Impl), alignof(Impl), StorageSize, StorageAlign> _;
     static_assert((StorageSize >= sizeof(Impl)), "Barrier::StorageSize must be increased!");
     static_assert(((StorageAlign % alignof(Impl)) == 0), "Barrier::StorageAlign must be adjusted!");
 

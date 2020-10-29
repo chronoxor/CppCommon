@@ -620,7 +620,7 @@ const size_t File::DEFAULT_BUFFER = 8192;
 File::File() : Path()
 {
     // Check implementation storage parameters
-    [[maybe_unused]] ValidateAlignedStorage<StorageSize, StorageAlign, sizeof(Impl), alignof(Impl)> _;
+    [[maybe_unused]] ValidateAlignedStorage<sizeof(Impl), alignof(Impl), StorageSize, StorageAlign> _;
     static_assert((StorageSize >= sizeof(Impl)), "File::StorageSize must be increased!");
     static_assert(((StorageAlign % alignof(Impl)) == 0), "File::StorageAlign must be adjusted!");
 
@@ -631,7 +631,7 @@ File::File() : Path()
 File::File(const Path& path) : Path(path)
 {
     // Check implementation storage parameters
-    [[maybe_unused]] ValidateAlignedStorage<StorageSize, StorageAlign, sizeof(Impl), alignof(Impl)> _;
+    [[maybe_unused]] ValidateAlignedStorage<sizeof(Impl), alignof(Impl), StorageSize, StorageAlign> _;
     static_assert((StorageSize >= sizeof(Impl)), "File::StorageSize must be increased!");
     static_assert(((StorageAlign % alignof(Impl)) == 0), "File::StorageAlign must be adjusted!");
 
@@ -642,7 +642,7 @@ File::File(const Path& path) : Path(path)
 File::File(const File& file) : Path(file)
 {
     // Check implementation storage parameters
-    [[maybe_unused]] ValidateAlignedStorage<StorageSize, StorageAlign, sizeof(Impl), alignof(Impl)> _;
+    [[maybe_unused]] ValidateAlignedStorage<sizeof(Impl), alignof(Impl), StorageSize, StorageAlign> _;
     static_assert((StorageSize >= sizeof(Impl)), "File::StorageSize must be increased!");
     static_assert(((StorageAlign % alignof(Impl)) == 0), "File::StorageAlign must be adjusted!");
 
@@ -653,7 +653,7 @@ File::File(const File& file) : Path(file)
 File::File(File&& file) noexcept : Path(std::move(file))
 {
     // Check implementation storage parameters
-    [[maybe_unused]] ValidateAlignedStorage<StorageSize, StorageAlign, sizeof(Impl), alignof(Impl)> _;
+    [[maybe_unused]] ValidateAlignedStorage<sizeof(Impl), alignof(Impl), StorageSize, StorageAlign> _;
     static_assert((StorageSize >= sizeof(Impl)), "File::StorageSize must be increased!");
     static_assert(((StorageAlign % alignof(Impl)) == 0), "File::StorageAlign must be adjusted!");
 

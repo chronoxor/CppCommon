@@ -243,7 +243,7 @@ private:
 NamedConditionVariable::NamedConditionVariable(const std::string& name)
 {
     // Check implementation storage parameters
-    [[maybe_unused]] ValidateAlignedStorage<StorageSize, StorageAlign, sizeof(Impl), alignof(Impl)> _;
+    [[maybe_unused]] ValidateAlignedStorage<sizeof(Impl), alignof(Impl), StorageSize, StorageAlign> _;
     static_assert((StorageSize >= sizeof(Impl)), "NamedConditionVariable::StorageSize must be increased!");
     static_assert(((StorageAlign % alignof(Impl)) == 0), "NamedConditionVariable::StorageAlign must be adjusted!");
 

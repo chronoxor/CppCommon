@@ -235,7 +235,7 @@ private:
 StdInput::StdInput()
 {
     // Check implementation storage parameters
-    [[maybe_unused]] ValidateAlignedStorage<StorageSize, StorageAlign, sizeof(Impl), alignof(Impl)> _;
+    [[maybe_unused]] ValidateAlignedStorage<sizeof(Impl), alignof(Impl), StorageSize, StorageAlign> _;
     static_assert((StorageSize >= sizeof(Impl)), "StdInput::StorageSize must be increased!");
     static_assert(((StorageAlign % alignof(Impl)) == 0), "StdInput::StorageAlign must be adjusted!");
 
@@ -262,7 +262,7 @@ void StdInput::swap(StdInput& stream) noexcept
 StdOutput::StdOutput()
 {
     // Check implementation storage parameters
-    [[maybe_unused]] ValidateAlignedStorage<StorageSize, StorageAlign, sizeof(Impl), alignof(Impl)> _;
+    [[maybe_unused]] ValidateAlignedStorage<sizeof(Impl), alignof(Impl), StorageSize, StorageAlign> _;
     static_assert((StorageSize >= sizeof(Impl)), "StdOutput::StorageSize must be increased!");
     static_assert(((StorageAlign % alignof(Impl)) == 0), "StdOutput::StorageAlign must be adjusted!");
 
@@ -290,7 +290,7 @@ void StdOutput::swap(StdOutput& stream) noexcept
 StdError::StdError()
 {
     // Check implementation storage parameters
-    [[maybe_unused]] ValidateAlignedStorage<StorageSize, StorageAlign, sizeof(Impl), alignof(Impl)> _;
+    [[maybe_unused]] ValidateAlignedStorage<sizeof(Impl), alignof(Impl), StorageSize, StorageAlign> _;
     static_assert((StorageSize >= sizeof(Impl)), "StdError::StorageSize must be increased!");
     static_assert(((StorageAlign % alignof(Impl)) == 0), "StdError::StorageAlign must be adjusted!");
 

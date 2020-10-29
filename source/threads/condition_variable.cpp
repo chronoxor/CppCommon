@@ -120,7 +120,7 @@ private:
 ConditionVariable::ConditionVariable()
 {
     // Check implementation storage parameters
-    [[maybe_unused]] ValidateAlignedStorage<StorageSize, StorageAlign, sizeof(Impl), alignof(Impl)> _;
+    [[maybe_unused]] ValidateAlignedStorage<sizeof(Impl), alignof(Impl), StorageSize, StorageAlign> _;
     static_assert((StorageSize >= sizeof(Impl)), "ConditionVariable::StorageSize must be increased!");
     static_assert(((StorageAlign % alignof(Impl)) == 0), "ConditionVariable::StorageAlign must be adjusted!");
 

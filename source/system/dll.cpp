@@ -147,7 +147,7 @@ private:
 DLL::DLL()
 {
     // Check implementation storage parameters
-    [[maybe_unused]] ValidateAlignedStorage<StorageSize, StorageAlign, sizeof(Impl), alignof(Impl)> _;
+    [[maybe_unused]] ValidateAlignedStorage<sizeof(Impl), alignof(Impl), StorageSize, StorageAlign> _;
     static_assert((StorageSize >= sizeof(Impl)), "DLL::StorageSize must be increased!");
     static_assert(((StorageAlign % alignof(Impl)) == 0), "DLL::StorageAlign must be adjusted!");
 
@@ -158,7 +158,7 @@ DLL::DLL()
 DLL::DLL(const Path& path, bool load)
 {
     // Check implementation storage parameters
-    [[maybe_unused]] ValidateAlignedStorage<StorageSize, StorageAlign, sizeof(Impl), alignof(Impl)> _;
+    [[maybe_unused]] ValidateAlignedStorage<sizeof(Impl), alignof(Impl), StorageSize, StorageAlign> _;
     static_assert((StorageSize >= sizeof(Impl)), "DLL::StorageSize must be increased!");
     static_assert(((StorageAlign % alignof(Impl)) == 0), "DLL::StorageAlign must be adjusted!");
 
@@ -174,7 +174,7 @@ DLL::DLL(const Path& path, bool load)
 DLL::DLL(const DLL& dll)
 {
     // Check implementation storage parameters
-    [[maybe_unused]] ValidateAlignedStorage<StorageSize, StorageAlign, sizeof(Impl), alignof(Impl)> _;
+    [[maybe_unused]] ValidateAlignedStorage<sizeof(Impl), alignof(Impl), StorageSize, StorageAlign> _;
     static_assert((StorageSize >= sizeof(Impl)), "DLL::StorageSize must be increased!");
     static_assert(((StorageAlign % alignof(Impl)) == 0), "DLL::StorageAlign must be adjusted!");
 
@@ -187,7 +187,7 @@ DLL::DLL(const DLL& dll)
 DLL::DLL(DLL&& dll) noexcept
 {
     // Check implementation storage parameters
-    [[maybe_unused]] ValidateAlignedStorage<StorageSize, StorageAlign, sizeof(Impl), alignof(Impl)> _;
+    [[maybe_unused]] ValidateAlignedStorage<sizeof(Impl), alignof(Impl), StorageSize, StorageAlign> _;
     static_assert((StorageSize >= sizeof(Impl)), "DLL::StorageSize must be increased!");
     static_assert(((StorageAlign % alignof(Impl)) == 0), "DLL::StorageAlign must be adjusted!");
 

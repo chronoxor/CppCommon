@@ -184,7 +184,7 @@ private:
 NamedSemaphore::NamedSemaphore(const std::string& name, int resources)
 {
     // Check implementation storage parameters
-    [[maybe_unused]] ValidateAlignedStorage<StorageSize, StorageAlign, sizeof(Impl), alignof(Impl)> _;
+    [[maybe_unused]] ValidateAlignedStorage<sizeof(Impl), alignof(Impl), StorageSize, StorageAlign> _;
     static_assert((StorageSize >= sizeof(Impl)), "NamedSemaphore::StorageSize must be increased!");
     static_assert(((StorageAlign % alignof(Impl)) == 0), "NamedSemaphore::StorageAlign must be adjusted!");
 
