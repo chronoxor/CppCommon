@@ -149,8 +149,8 @@ private:
 Mutex::Mutex()
 {
     // Check implementation storage parameters
-    static_assert((sizeof(Impl) <= StorageSize), "Mutex::StorageSize must be increased!");
-    static_assert((alignof(Impl) == StorageAlign), "Mutex::StorageAlign must be adjusted!");
+    static_assert((StorageSize >= sizeof(Impl)), "Mutex::StorageSize must be increased!");
+    static_assert((StorageAlign % alignof(Impl) == 0), "Mutex::StorageAlign must be adjusted!");
 
     // Create the implementation instance
     new(&_storage)Impl();

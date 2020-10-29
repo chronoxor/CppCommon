@@ -183,8 +183,8 @@ private:
 NamedSemaphore::NamedSemaphore(const std::string& name, int resources)
 {
     // Check implementation storage parameters
-    static_assert((sizeof(Impl) <= StorageSize), "NamedSemaphore::StorageSize must be increased!");
-    static_assert((alignof(Impl) == StorageAlign), "NamedSemaphore::StorageAlign must be adjusted!");
+    static_assert((StorageSize >= sizeof(Impl)), "NamedSemaphore::StorageSize must be increased!");
+    static_assert((StorageAlign % alignof(Impl) == 0), "NamedSemaphore::StorageAlign must be adjusted!");
 
     // Create the implementation instance
     new(&_storage)Impl(name, resources);

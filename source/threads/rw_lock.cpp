@@ -128,8 +128,8 @@ private:
 RWLock::RWLock()
 {
     // Check implementation storage parameters
-    static_assert((sizeof(Impl) <= StorageSize), "RWLock::StorageSize must be increased!");
-    static_assert((alignof(Impl) == StorageAlign), "RWLock::StorageAlign must be adjusted!");
+    static_assert((StorageSize >= sizeof(Impl)), "RWLock::StorageSize must be increased!");
+    static_assert((StorageAlign % alignof(Impl) == 0), "RWLock::StorageAlign must be adjusted!");
 
     // Create the implementation instance
     new(&_storage)Impl();

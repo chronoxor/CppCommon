@@ -155,8 +155,8 @@ private:
 Semaphore::Semaphore(int resources)
 {
     // Check implementation storage parameters
-    static_assert((sizeof(Impl) <= StorageSize), "Semaphore::StorageSize must be increased!");
-    static_assert((alignof(Impl) == StorageAlign), "Semaphore::StorageAlign must be adjusted!");
+    static_assert((StorageSize >= sizeof(Impl)), "Semaphore::StorageSize must be increased!");
+    static_assert((StorageAlign % alignof(Impl) == 0), "Semaphore::StorageAlign must be adjusted!");
 
     // Create the implementation instance
     new(&_storage)Impl(resources);

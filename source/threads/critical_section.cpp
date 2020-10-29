@@ -109,8 +109,8 @@ private:
 CriticalSection::CriticalSection()
 {
     // Check implementation storage parameters
-    static_assert((sizeof(Impl) <= StorageSize), "CriticalSection::StorageSize must be increased!");
-    static_assert((alignof(Impl) == StorageAlign), "CriticalSection::StorageAlign must be adjusted!");
+    static_assert((StorageSize >= sizeof(Impl)), "CriticalSection::StorageSize must be increased!");
+    static_assert((StorageAlign % alignof(Impl) == 0), "CriticalSection::StorageAlign must be adjusted!");
 
     // Create the implementation instance
     new(&_storage)Impl();

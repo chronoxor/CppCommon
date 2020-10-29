@@ -479,8 +479,8 @@ private:
 Process::Process()
 {
     // Check implementation storage parameters
-    static_assert((sizeof(Impl) <= StorageSize), "Process::StorageSize must be increased!");
-    static_assert((alignof(Impl) == StorageAlign), "Process::StorageAlign must be adjusted!");
+    static_assert((StorageSize >= sizeof(Impl)), "Process::StorageSize must be increased!");
+    static_assert((StorageAlign % alignof(Impl) == 0), "Process::StorageAlign must be adjusted!");
 
     // Create the implementation instance
     new(&_storage)Impl();
@@ -489,8 +489,8 @@ Process::Process()
 Process::Process(uint64_t id)
 {
     // Check implementation storage parameters
-    static_assert((sizeof(Impl) <= StorageSize), "Process::StorageSize must be increased!");
-    static_assert((alignof(Impl) == StorageAlign), "Process::StorageAlign must be adjusted!");
+    static_assert((StorageSize >= sizeof(Impl)), "Process::StorageSize must be increased!");
+    static_assert((StorageAlign % alignof(Impl) == 0), "Process::StorageAlign must be adjusted!");
 
     // Create the implementation instance
     new(&_storage)Impl(id);
@@ -499,8 +499,8 @@ Process::Process(uint64_t id)
 Process::Process(const Process& process)
 {
     // Check implementation storage parameters
-    static_assert((sizeof(Impl) <= StorageSize), "Process::StorageSize must be increased!");
-    static_assert((alignof(Impl) == StorageAlign), "Process::StorageAlign must be adjusted!");
+    static_assert((StorageSize >= sizeof(Impl)), "Process::StorageSize must be increased!");
+    static_assert((StorageAlign % alignof(Impl) == 0), "Process::StorageAlign must be adjusted!");
 
     // Create the implementation instance
     new(&_storage)Impl(process.pid());
@@ -509,8 +509,8 @@ Process::Process(const Process& process)
 Process::Process(Process&& process) noexcept
 {
     // Check implementation storage parameters
-    static_assert((sizeof(Impl) <= StorageSize), "Process::StorageSize must be increased!");
-    static_assert((alignof(Impl) == StorageAlign), "Process::StorageAlign must be adjusted!");
+    static_assert((StorageSize >= sizeof(Impl)), "Process::StorageSize must be increased!");
+    static_assert((StorageAlign % alignof(Impl) == 0), "Process::StorageAlign must be adjusted!");
 
     // Create the implementation instance
     new(&_storage)Impl();
