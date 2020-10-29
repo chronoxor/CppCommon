@@ -16,7 +16,7 @@ namespace CppCommon {
 
 uint64_t Math::MulDiv64(uint64_t operant, uint64_t multiplier, uint64_t divider)
 {
-#if defined(__GNUC__)
+#if defined(__GNUC__) && defined(__SIZEOF_INT128__)
     __uint128_t a = operant;
     __uint128_t b = multiplier;
     __uint128_t c = divider;
