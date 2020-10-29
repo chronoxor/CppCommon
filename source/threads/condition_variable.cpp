@@ -8,6 +8,8 @@
 
 #include "threads/condition_variable.h"
 
+#include "utility/validate_aligned_storage.h"
+
 #include <algorithm>
 
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
@@ -118,8 +120,9 @@ private:
 ConditionVariable::ConditionVariable()
 {
     // Check implementation storage parameters
+    [[maybe_unused]] ValidateAlignedStorage<StorageSize, StorageAlign, sizeof(Impl), alignof(Impl)> _;
     static_assert((StorageSize >= sizeof(Impl)), "ConditionVariable::StorageSize must be increased!");
-    static_assert((StorageAlign % alignof(Impl) == 0), "ConditionVariable::StorageAlign must be adjusted!");
+    static_assert(((StorageAlign % alignof(Impl)) == 0), "ConditionVariable::StorageAlign must be adjusted!");
 
     // Create the implementation instance
     new(&_storage)Impl();

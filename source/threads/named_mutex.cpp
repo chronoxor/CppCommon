@@ -9,6 +9,7 @@
 #include "threads/named_mutex.h"
 
 #include "errors/fatal.h"
+#include "utility/validate_aligned_storage.h"
 
 #include <algorithm>
 
@@ -175,8 +176,9 @@ private:
 NamedMutex::NamedMutex(const std::string& name)
 {
     // Check implementation storage parameters
+    [[maybe_unused]] ValidateAlignedStorage<StorageSize, StorageAlign, sizeof(Impl), alignof(Impl)> _;
     static_assert((StorageSize >= sizeof(Impl)), "NamedMutex::StorageSize must be increased!");
-    static_assert((StorageAlign % alignof(Impl) == 0), "NamedMutex::StorageAlign must be adjusted!");
+    static_assert(((StorageAlign % alignof(Impl)) == 0), "NamedMutex::StorageAlign must be adjusted!");
 
     // Create the implementation instance
     new(&_storage)Impl(name);

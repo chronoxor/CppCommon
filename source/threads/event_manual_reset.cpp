@@ -9,6 +9,7 @@
 #include "threads/event_manual_reset.h"
 
 #include "errors/fatal.h"
+#include "utility/validate_aligned_storage.h"
 
 #include <algorithm>
 
@@ -182,8 +183,9 @@ private:
 EventManualReset::EventManualReset(bool signaled)
 {
     // Check implementation storage parameters
+    [[maybe_unused]] ValidateAlignedStorage<StorageSize, StorageAlign, sizeof(Impl), alignof(Impl)> _;
     static_assert((StorageSize >= sizeof(Impl)), "EventManualReset::StorageSize must be increased!");
-    static_assert((StorageAlign % alignof(Impl) == 0), "EventManualReset::StorageAlign must be adjusted!");
+    static_assert(((StorageAlign % alignof(Impl)) == 0), "EventManualReset::StorageAlign must be adjusted!");
 
     // Create the implementation instance
     new(&_storage)Impl(signaled);

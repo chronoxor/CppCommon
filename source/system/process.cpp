@@ -13,6 +13,7 @@
 #include "string/format.h"
 #include "threads/thread.h"
 #include "utility/resource.h"
+#include "utility/validate_aligned_storage.h"
 
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
 #include <sys/wait.h>
@@ -479,8 +480,9 @@ private:
 Process::Process()
 {
     // Check implementation storage parameters
+    [[maybe_unused]] ValidateAlignedStorage<StorageSize, StorageAlign, sizeof(Impl), alignof(Impl)> _;
     static_assert((StorageSize >= sizeof(Impl)), "Process::StorageSize must be increased!");
-    static_assert((StorageAlign % alignof(Impl) == 0), "Process::StorageAlign must be adjusted!");
+    static_assert(((StorageAlign % alignof(Impl)) == 0), "Process::StorageAlign must be adjusted!");
 
     // Create the implementation instance
     new(&_storage)Impl();
@@ -489,8 +491,9 @@ Process::Process()
 Process::Process(uint64_t id)
 {
     // Check implementation storage parameters
+    [[maybe_unused]] ValidateAlignedStorage<StorageSize, StorageAlign, sizeof(Impl), alignof(Impl)> _;
     static_assert((StorageSize >= sizeof(Impl)), "Process::StorageSize must be increased!");
-    static_assert((StorageAlign % alignof(Impl) == 0), "Process::StorageAlign must be adjusted!");
+    static_assert(((StorageAlign % alignof(Impl)) == 0), "Process::StorageAlign must be adjusted!");
 
     // Create the implementation instance
     new(&_storage)Impl(id);
@@ -499,8 +502,9 @@ Process::Process(uint64_t id)
 Process::Process(const Process& process)
 {
     // Check implementation storage parameters
+    [[maybe_unused]] ValidateAlignedStorage<StorageSize, StorageAlign, sizeof(Impl), alignof(Impl)> _;
     static_assert((StorageSize >= sizeof(Impl)), "Process::StorageSize must be increased!");
-    static_assert((StorageAlign % alignof(Impl) == 0), "Process::StorageAlign must be adjusted!");
+    static_assert(((StorageAlign % alignof(Impl)) == 0), "Process::StorageAlign must be adjusted!");
 
     // Create the implementation instance
     new(&_storage)Impl(process.pid());
@@ -509,8 +513,9 @@ Process::Process(const Process& process)
 Process::Process(Process&& process) noexcept
 {
     // Check implementation storage parameters
+    [[maybe_unused]] ValidateAlignedStorage<StorageSize, StorageAlign, sizeof(Impl), alignof(Impl)> _;
     static_assert((StorageSize >= sizeof(Impl)), "Process::StorageSize must be increased!");
-    static_assert((StorageAlign % alignof(Impl) == 0), "Process::StorageAlign must be adjusted!");
+    static_assert(((StorageAlign % alignof(Impl)) == 0), "Process::StorageAlign must be adjusted!");
 
     // Create the implementation instance
     new(&_storage)Impl();

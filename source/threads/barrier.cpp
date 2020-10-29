@@ -8,6 +8,8 @@
 
 #include "threads/barrier.h"
 
+#include "utility/validate_aligned_storage.h"
+
 #include <cassert>
 
 #if (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__APPLE__)
@@ -120,8 +122,9 @@ private:
 Barrier::Barrier(int threads)
 {
     // Check implementation storage parameters
+    [[maybe_unused]] ValidateAlignedStorage<StorageSize, StorageAlign, sizeof(Impl), alignof(Impl)> _;
     static_assert((StorageSize >= sizeof(Impl)), "Barrier::StorageSize must be increased!");
-    static_assert((StorageAlign % alignof(Impl) == 0), "Barrier::StorageAlign must be adjusted!");
+    static_assert(((StorageAlign % alignof(Impl)) == 0), "Barrier::StorageAlign must be adjusted!");
 
     // Create the implementation instance
     new(&_storage)Impl(threads);
