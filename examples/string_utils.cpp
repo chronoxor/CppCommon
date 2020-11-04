@@ -47,6 +47,8 @@ int main(int argc, char** argv)
 
     std::cout << CppCommon::StringUtils::ToString(true) << std::endl;
     std::cout << CppCommon::StringUtils::ToString(false) << std::endl;
+    std::cout << CppCommon::StringUtils::ToString('0') << std::endl;
+    std::cout << CppCommon::StringUtils::ToString((uint8_t)49) << std::endl;
     std::cout << CppCommon::StringUtils::ToString(100) << std::endl;
     std::cout << CppCommon::StringUtils::ToString(123.456) << std::endl;
     std::cout << CppCommon::StringUtils::FromString<bool>("true") << std::endl;
@@ -57,6 +59,8 @@ int main(int argc, char** argv)
     std::cout << CppCommon::StringUtils::FromString<bool>("no") << std::endl;
     std::cout << CppCommon::StringUtils::FromString<bool>("off") << std::endl;
     std::cout << CppCommon::StringUtils::FromString<bool>("0") << std::endl;
+    std::cout << CppCommon::StringUtils::FromString<char>("0") << std::endl;
+    std::cout << CppCommon::StringUtils::FromString<uint8_t>("49") << std::endl;
     std::cout << CppCommon::StringUtils::FromString<int>("100") << std::endl;
     std::cout << CppCommon::StringUtils::FromString<double>("123.456") << std::endl;
 

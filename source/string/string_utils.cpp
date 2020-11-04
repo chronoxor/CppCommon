@@ -8,6 +8,8 @@
 
 #include "string/string_utils.h"
 
+#include <cassert>
+
 namespace CppCommon {
 
 bool StringUtils::IsBlank(const char* str)
@@ -266,6 +268,19 @@ std::string StringUtils::Join(const std::vector<std::string>& tokens, std::strin
         result << tokens[tokens.size() - 1];
 
     return result.str();
+}
+
+template <>
+bool StringUtils::FromString(std::string_view str)
+{
+    std::string value = ToLower(str);
+    if ((value == "true") || (value == "yes") || (value == "on") || (value == "1"))
+        return true;
+    if ((value == "false") || (value == "no") || (value == "off") || (value == "0"))
+        return false;
+
+    assert("Invalid boolean value represented in string!");
+    return false;
 }
 
 } // namespace CppCommon

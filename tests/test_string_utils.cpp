@@ -96,8 +96,14 @@ TEST_CASE("String utilities", "[CppCommon][String]")
     REQUIRE(!CppCommon::StringUtils::FromString<bool>("no"));
     REQUIRE(!CppCommon::StringUtils::FromString<bool>("off"));
     REQUIRE(!CppCommon::StringUtils::FromString<bool>("0"));
+    REQUIRE(StringUtils::ToString('0') == "0");
+    REQUIRE(StringUtils::ToString((int8_t)48) == "48");
+    REQUIRE(StringUtils::ToString((uint8_t)49) == "49");
     REQUIRE(StringUtils::ToString(100) == "100");
     REQUIRE(StringUtils::ToString(123.456) == "123.456");
+    REQUIRE(StringUtils::FromString<char>("0") == '0');
+    REQUIRE(StringUtils::FromString<int8_t>("48") == '0');
+    REQUIRE(StringUtils::FromString<uint8_t>("49") == '1');
     REQUIRE(StringUtils::FromString<int>("100") == 100);
     REQUIRE(StringUtils::FromString<double>("123.456") == 123.456);
 }

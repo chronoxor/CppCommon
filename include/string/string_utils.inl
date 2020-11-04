@@ -97,12 +97,44 @@ inline std::string StringUtils::ToString(const T& value)
     return ss.str();
 }
 
+template <>
+inline std::string StringUtils::ToString(const int8_t& value)
+{
+    std::ostringstream ss;
+    ss << (int32_t)value;
+    return ss.str();
+}
+
+template <>
+inline std::string StringUtils::ToString(const uint8_t& value)
+{
+    std::ostringstream ss;
+    ss << (uint32_t)value;
+    return ss.str();
+}
+
 template <typename T>
 inline T StringUtils::FromString(std::string_view str)
 {
     T result;
     std::istringstream(std::string(str)) >> result;
     return result;
+}
+
+template <>
+inline int8_t StringUtils::FromString(std::string_view str)
+{
+    int32_t result;
+    std::istringstream(std::string(str)) >> result;
+    return (int8_t)result;
+}
+
+template <>
+inline uint8_t StringUtils::FromString(std::string_view str)
+{
+    uint32_t result;
+    std::istringstream(std::string(str)) >> result;
+    return (uint8_t)result;
 }
 
 template <>
@@ -118,16 +150,6 @@ inline std::string_view StringUtils::FromString(std::string_view str)
 }
 
 template <>
-inline bool StringUtils::FromString(std::string_view str)
-{
-    std::string value = ToLower(str);
-    if ((value == "true") || (value == "yes") || (value == "on") || (value == "1"))
-        return true;
-    if ((value == "false") || (value == "no") || (value == "off") || (value == "0"))
-        return false;
-
-    assert("Invalid boolean value represented in string!");
-    return false;
-}
+bool StringUtils::FromString(std::string_view str);
 
 } // namespace CppCommon

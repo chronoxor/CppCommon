@@ -10,7 +10,6 @@
 #define CPPCOMMON_STRING_STRING_UTILS_H
 
 #include <algorithm>
-#include <cassert>
 #include <cctype>
 #include <sstream>
 #include <string>
