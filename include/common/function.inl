@@ -46,9 +46,14 @@ inline Function<R(Args...), Capacity>::Function(TFunction&& function) noexcept
     : Function<R(Args...), Capacity>()
 {
     using function_type = typename std::decay<TFunction>::type;
-    static_assert(alignof(function_type) <= alignof(Storage), "Invalid function storage alignment!");
-    static_assert(sizeof(function_type) <= sizeof(Storage), "Function storage too small!");
+
+    // Check implementation storage parameters
+    static_assert((StorageSize >= sizeof(function_type)), "Function::StorageSize must be increased!");
+    static_assert(((StorageAlign % alignof(function_type)) == 0), "Function::StorageAlign must be adjusted!");
+
+    // Create the implementation instance
     new (&_data) function_type(std::forward<TFunction>(function));
+
     _invoker = &Invoke<function_type>;
     _manager = &Manage<function_type>;
 }

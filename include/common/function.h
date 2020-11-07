@@ -62,7 +62,10 @@ private:
 
     using Invoker = R (*)(void*, Args&&...);
     using Manager = void (*)(void*, void*, Operation);
-    using Storage = typename std::aligned_storage<Capacity - sizeof(Invoker) - sizeof(Manager), 8>::type;
+
+    static const size_t StorageSize = Capacity - sizeof(Invoker) - sizeof(Manager);
+    static const size_t StorageAlign = 8;
+    using Storage = typename std::aligned_storage<StorageSize, StorageAlign>::type;
 
     Storage _data;
     Invoker _invoker;
