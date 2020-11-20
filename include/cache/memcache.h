@@ -20,8 +20,7 @@ namespace CppCommon {
 
 //! Memory cache
 /*!
-    Memory cache is used to cache data in memory with optional
-    timeouts.
+    Memory cache is used to cache data in memory with optional timeouts.
 
     Thread-safe.
 */

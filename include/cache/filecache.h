@@ -27,8 +27,7 @@ namespace CppCommon {
 
 //! File cache
 /*!
-    File cache is used to cache files in memory with optional
-    timeouts.
+    File cache is used to cache files in memory with optional timeouts.
 
     Thread-safe.
 */
