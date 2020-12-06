@@ -1,11 +1,11 @@
 # CppCommon
 
-[![Linux build status](https://img.shields.io/travis/chronoxor/CppCommon/master.svg?label=Linux)](https://travis-ci.com/chronoxor/CppCommon)
-[![OSX build status](https://img.shields.io/travis/chronoxor/CppCommon/master.svg?label=OSX)](https://travis-ci.com/chronoxor/CppCommon)
-[![Cygwin build status](https://img.shields.io/appveyor/ci/chronoxor/CppCommon/master.svg?label=Cygwin)](https://ci.appveyor.com/project/chronoxor/CppCommon)
-[![MSYS2 build status](https://img.shields.io/appveyor/ci/chronoxor/CppCommon/master.svg?label=MSYS2)](https://ci.appveyor.com/project/chronoxor/CppCommon)
-[![MinGW build status](https://img.shields.io/appveyor/ci/chronoxor/CppCommon/master.svg?label=MinGW)](https://ci.appveyor.com/project/chronoxor/CppCommon)
-[![Windows build status](https://img.shields.io/appveyor/ci/chronoxor/CppCommon/master.svg?label=Windows)](https://ci.appveyor.com/project/chronoxor/CppCommon)
+[![Linux build status](https://img.shields.io/travis/com/chronoxor/CppCommon/master?label=Linux)](https://travis-ci.com/chronoxor/CppCommon)
+[![OSX build status](https://img.shields.io/travis/com/chronoxor/CppCommon/master?label=OSX)](https://travis-ci.com/chronoxor/CppCommon)
+[![Cygwin build status](https://img.shields.io/appveyor/build/chronoxor/CppCommon/master?label=Cygwin)](https://ci.appveyor.com/project/chronoxor/CppCommon)
+[![MSYS2 build status](https://img.shields.io/appveyor/build/chronoxor/CppCommon/master?label=MSYS2)](https://ci.appveyor.com/project/chronoxor/CppCommon)
+[![MinGW build status](https://img.shields.io/appveyor/build/chronoxor/CppCommon/master?label=MinGW)](https://ci.appveyor.com/project/chronoxor/CppCommon)
+[![Windows build status](https://img.shields.io/appveyor/build/chronoxor/CppCommon/master?label=Windows)](https://ci.appveyor.com/project/chronoxor/CppCommon)
 
 C++ Common Library contains reusable components and patterns for error and
 exceptions handling, filesystem manipulations, math, string format and
