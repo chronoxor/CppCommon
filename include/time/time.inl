@@ -8,6 +8,39 @@
 
 namespace CppCommon {
 
+template <class TOutputStream>
+inline TOutputStream& operator<<(TOutputStream& stream, Weekday weekday)
+{
+    switch (weekday)
+    {
+        case Weekday::Sunday:
+            stream << "Sunday";
+            break;
+        case Weekday::Monday:
+            stream << "Monday";
+            break;
+        case Weekday::Tuesday:
+            stream << "Tuesday";
+            break;
+        case Weekday::Wednesday:
+            stream << "Wednesday";
+            break;
+        case Weekday::Thursday:
+            stream << "Thursday";
+            break;
+        case Weekday::Friday:
+            stream << "Friday";
+            break;
+        case Weekday::Saturday:
+            stream << "Saturday";
+            break;
+        default:
+            stream << "<unknown>";
+            break;
+    }
+    return stream;
+}
+
 inline Time::Time() noexcept
     : _year(1970),
       _month(1),

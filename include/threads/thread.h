@@ -23,6 +23,27 @@
 
 namespace CppCommon {
 
+//! Thread priorities
+enum class ThreadPriority : uint8_t
+{
+    IDLE     = 0x00,    //!< Idle thread priority
+    LOWEST   = 0x1F,    //!< Lowest thread priority
+    LOW      = 0x3F,    //!< Low thread priority
+    NORMAL   = 0x7F,    //!< Normal thread priority
+    HIGH     = 0x9F,    //!< High thread priority
+    HIGHEST  = 0xBF,    //!< Highest thread priority
+    REALTIME = 0xFF     //!< Realtime thread priority
+};
+
+//! Stream output: Thread priorities
+/*!
+    \param stream - Output stream
+    \param priority - Thread priority
+    \return Output stream
+*/
+template <class TOutputStream>
+TOutputStream& operator<<(TOutputStream& stream, ThreadPriority priority);
+
 //! Thread abstraction
 /*!
     Thread contains different kinds of thread manipulation  functionality  such  as
@@ -34,18 +55,6 @@ namespace CppCommon {
 class Thread
 {
 public:
-    //! Supported thread priorities
-    enum class Priority : uint8_t
-    {
-        IDLE     = 0x00,    //!< Idle thread priority
-        LOWEST   = 0x1F,    //!< Lowest thread priority
-        LOW      = 0x3F,    //!< Low thread priority
-        NORMAL   = 0x7F,    //!< Normal thread priority
-        HIGH     = 0x9F,    //!< High thread priority
-        HIGHEST  = 0xBF,    //!< Highest thread priority
-        REALTIME = 0xFF     //!< Realtime thread priority
-    };
-
     Thread() = delete;
     Thread(const Thread&) = delete;
     Thread(Thread&&) = delete;
@@ -127,25 +136,25 @@ public:
     /*!
         \return Priority of the current thread
     */
-    static Priority GetPriority();
+    static ThreadPriority GetPriority();
     //! Get the given thread priority
     /*!
         \param thread - Thread
         \return Priority of the given thread
     */
-    static Priority GetPriority(std::thread& thread);
+    static ThreadPriority GetPriority(std::thread& thread);
 
     //! Set the current thread priority
     /*!
         \param priority - Thread priority
     */
-    static void SetPriority(Priority priority);
+    static void SetPriority(ThreadPriority priority);
     //! Set the given thread priority
     /*!
         \param thread - Thread
         \param priority - Thread priority
     */
-    static void SetPriority(std::thread& thread, Priority priority);
+    static void SetPriority(std::thread& thread, ThreadPriority priority);
 };
 
 /*! \example threads_thread.cpp Thread example */

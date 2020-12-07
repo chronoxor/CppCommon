@@ -29,6 +29,7 @@ Time::Time(const Timestamp& timestamp)
 #endif
     _year = result.tm_year + 1900;
     _month = result.tm_mon + 1;
+    _weekday = result.tm_wday;
     _day = result.tm_mday;
     _hour = result.tm_hour;
     _minute = result.tm_min;
@@ -86,6 +87,7 @@ Time::Time(int year, int month, int day, int hour, int minute, int second, int m
 
     _year = year;
     _month = month;
+    _weekday = 0;
     _day = day;
     _hour = hour;
     _minute = minute;
@@ -148,6 +150,7 @@ UtcTime::UtcTime(const Timestamp& timestamp)
 #endif
     _year = result.tm_year + 1900;
     _month = result.tm_mon + 1;
+    _weekday = result.tm_wday;
     _day = result.tm_mday;
     _hour = result.tm_hour;
     _minute = result.tm_min;
@@ -170,6 +173,7 @@ LocalTime::LocalTime(const Timestamp& timestamp)
 #endif
     _year = result.tm_year + 1900;
     _month = result.tm_mon + 1;
+    _weekday = result.tm_wday;
     _day = result.tm_mday;
     _hour = result.tm_hour;
     _minute = result.tm_min;

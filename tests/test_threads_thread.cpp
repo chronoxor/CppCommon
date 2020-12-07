@@ -55,6 +55,6 @@ TEST_CASE("Thread", "[CppCommon][Threads]")
     REQUIRE(affinity.to_ullong() > 0);
 
     // Test thread priority
-    Thread::Priority priority = Thread::GetPriority();
-    REQUIRE(priority == Thread::Priority::NORMAL);
+    ThreadPriority priority = Thread::GetPriority();
+    REQUIRE(priority == ThreadPriority::NORMAL);
 }

@@ -13,6 +13,27 @@
 
 namespace CppCommon {
 
+//! Weekday
+enum class Weekday
+{
+    Sunday,
+    Monday,
+    Tuesday,
+    Wednesday,
+    Thursday,
+    Friday,
+    Saturday
+};
+
+//! Stream output: Weekday
+/*!
+    \param stream - Output stream
+    \param weekday - Weekday
+    \return Output stream
+*/
+template <class TOutputStream>
+TOutputStream& operator<<(TOutputStream& stream, Weekday weekday);
+
 //! Time
 /*!
     Time wraps date & time in a single object with a set of accessors - year, month, day,
@@ -115,6 +136,8 @@ public:
     int year() const noexcept { return _year; }
     //! Get month value (1-12)
     int month() const noexcept { return _month; }
+    //! Get weekday
+    Weekday weekday() const noexcept { return (Weekday)_weekday; }
     //! Get day value (1-31)
     int day() const noexcept { return _day; }
     //! Get hour value (0-23)
@@ -153,6 +176,8 @@ protected:
     int _year;
     //! Month value
     int _month;
+    //! Weekday value
+    int _weekday;
     //! Day value
     int _day;
     //! Hour value
