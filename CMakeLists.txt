@@ -63,9 +63,9 @@ include_directories(SYSTEM "${CMAKE_CURRENT_SOURCE_DIR}/modules")
 include_directories(SYSTEM "${CMAKE_CURRENT_SOURCE_DIR}/plugins")
 
 # Library
-file(GLOB_RECURSE LIB_HEADER_FILES "include/*.h")
-file(GLOB_RECURSE LIB_INLINE_FILES "include/*.inl")
-file(GLOB_RECURSE LIB_SOURCE_FILES "source/*.cpp")
+file(GLOB_RECURSE LIB_HEADER_FILES "include/*.h" "source/*.h")
+file(GLOB_RECURSE LIB_INLINE_FILES "include/*.inl" "source/*.inl")
+file(GLOB_RECURSE LIB_SOURCE_FILES "include/*.cpp" "source/*.cpp")
 add_library(cppcommon ${LIB_HEADER_FILES} ${LIB_INLINE_FILES} ${LIB_SOURCE_FILES})
 set_target_properties(cppcommon PROPERTIES COMPILE_FLAGS "${PEDANTIC_COMPILE_FLAGS}" FOLDER "libraries")
 target_include_directories(cppcommon PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include" PUBLIC ${vld})
