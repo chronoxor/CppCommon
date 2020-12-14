@@ -32,6 +32,7 @@ struct IsEnumFlags : public std::false_type {};
         Three = 0x4,
         Four  = 0x8
     };
+
     ENUM_FLAGS(MyFlags)
 
     int main()
