@@ -104,7 +104,7 @@ public:
         // Prepare signal action structure
         struct sigaction sa;
         memset(&sa, 0, sizeof(sa));
-        sa.sa_sigaction = SignalHanlder;
+        sa.sa_sigaction = SignalHandler;
         sa.sa_flags = SA_SIGINFO;
 
         // Define signals to catch
@@ -561,7 +561,7 @@ private:
 #elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
 
     // Signal handler
-    static void SignalHanlder(int signo, siginfo_t* info, void* context)
+    static void SignalHandler(int signo, siginfo_t* info, void* context)
     {
         // Output error
         switch (signo)

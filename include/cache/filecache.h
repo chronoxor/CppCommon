@@ -34,7 +34,7 @@ namespace CppCommon {
 class FileCache
 {
 public:
-    //! File cache insert hanlder type
+    //! File cache insert handler type
     typedef std::function<bool (FileCache& cache, const std::string& key, const std::string& value, const Timespan& timeout)> InsertHandler;
 
     FileCache() = default;
