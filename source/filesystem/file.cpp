@@ -650,19 +650,9 @@ File::File(const File& file) : Path(file)
     new(&_storage)Impl(this);
 }
 
-File::File(File&& file) noexcept : Path(std::move(file))
+File::File(File&& file) noexcept : File()
 {
-    // Check implementation storage parameters
-    [[maybe_unused]] ValidateAlignedStorage<sizeof(Impl), alignof(Impl), StorageSize, StorageAlign> _;
-    static_assert((StorageSize >= sizeof(Impl)), "File::StorageSize must be increased!");
-    static_assert(((StorageAlign % alignof(Impl)) == 0), "File::StorageAlign must be adjusted!");
-
-    // Create the implementation instance
-    new(&_storage)Impl(this);
-
-    _storage = std::move(file._storage);
-
-    impl()._path = this;
+    file.swap(*this);
 }
 
 File::~File()
@@ -673,19 +663,13 @@ File::~File()
 
 File& File::operator=(const File& file)
 {
-    Path::operator=(file);
-    // Delete the implementation instance
-    reinterpret_cast<Impl*>(&_storage)->~Impl();
-    // Create the implementation instance
-    new(&_storage)Impl(this);
+    File(file).swap(*this);
     return *this;
 }
 
 File& File::operator=(File&& file) noexcept
 {
-    Path::operator=(std::move(file));
-    _storage = std::move(file._storage);
-    impl()._path = this;
+    File(std::move(file)).swap(*this);
     return *this;
 }
 

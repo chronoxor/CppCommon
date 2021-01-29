@@ -510,17 +510,9 @@ Process::Process(const Process& process)
     new(&_storage)Impl(process.pid());
 }
 
-Process::Process(Process&& process) noexcept
+Process::Process(Process&& process) noexcept : Process()
 {
-    // Check implementation storage parameters
-    [[maybe_unused]] ValidateAlignedStorage<sizeof(Impl), alignof(Impl), StorageSize, StorageAlign> _;
-    static_assert((StorageSize >= sizeof(Impl)), "Process::StorageSize must be increased!");
-    static_assert(((StorageAlign % alignof(Impl)) == 0), "Process::StorageAlign must be adjusted!");
-
-    // Create the implementation instance
-    new(&_storage)Impl();
-
-    _storage = std::move(process._storage);
+    process.swap(*this);
 }
 
 Process::~Process()
@@ -531,16 +523,13 @@ Process::~Process()
 
 Process& Process::operator=(const Process& process)
 {
-    // Delete the implementation instance
-    reinterpret_cast<Impl*>(&_storage)->~Impl();
-    // Create the implementation instance
-    new(&_storage)Impl(process.pid());
+    Process(process).swap(*this);
     return *this;
 }
 
 Process& Process::operator=(Process&& process) noexcept
 {
-    _storage = std::move(process._storage);
+    Process(std::move(process)).swap(*this);
     return *this;
 }
 
