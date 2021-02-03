@@ -17,8 +17,7 @@ namespace CppCommon {
 
 //! Filesystem directory
 /*!
-    Filesystem directory wraps directory management operations (create,
-    remove, iterate).
+    Filesystem directory wraps directory management operations (create, remove, iterate).
 
     Not thread-safe.
 */
