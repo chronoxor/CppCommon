@@ -787,6 +787,7 @@ void File::swap(File& file) noexcept
     using std::swap;
     Path::swap(file);
     swap(_storage, file._storage);
+    swap(impl()._path, file.impl()._path);
 }
 
 } // namespace CppCommon
