@@ -2,6 +2,7 @@ if(NOT TARGET fmt)
 
   # Module library
   file(GLOB SOURCE_FILES "fmt/src/*.cc")
+  list(FILTER SOURCE_FILES EXCLUDE REGEX ".*/fmt.cc")
   add_library(fmt ${SOURCE_FILES})
   if(MSVC)
     set_target_properties(fmt PROPERTIES COMPILE_FLAGS "${PEDANTIC_COMPILE_FLAGS}")
