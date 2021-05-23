@@ -20,6 +20,7 @@
 #include <fmt/args.h>
 #include <fmt/format.h>
 #include <fmt/ostream.h>
+#include <fmt/wchar.h>
 
 namespace CppCommon {
 
