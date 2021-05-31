@@ -20,7 +20,7 @@
 #include <fmt/args.h>
 #include <fmt/format.h>
 #include <fmt/ostream.h>
-#include <fmt/wchar.h>
+#include <fmt/xchar.h>
 
 namespace CppCommon {
 
