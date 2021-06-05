@@ -6,6 +6,11 @@
     \copyright MIT License
 */
 
+// Workaround for the "binutils/bfd.h wants config.h now?" issue
+// https://stackoverflow.com/questions/11748035/binutils-bfd-h-wants-config-h-now
+#define PACKAGE "CppCommon"
+#define PACKAGE_VERSION "1.0.0.0"
+
 #include "system/stack_trace.h"
 
 #include "threads/critical_section.h"
