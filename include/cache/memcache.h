@@ -12,6 +12,7 @@
 #include "time/timespan.h"
 #include "time/timestamp.h"
 
+#include <mutex>
 #include <map>
 #include <shared_mutex>
 #include <unordered_map>
