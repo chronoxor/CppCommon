@@ -145,7 +145,7 @@ void Thread::Yield() noexcept
 #if defined(__APPLE__) || defined(__CYGWIN__)
     sched_yield();
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-    pthread_yield();
+    sched_yield();
 #elif defined(_WIN32) || defined(_WIN64)
     SwitchToThread();
 #endif
