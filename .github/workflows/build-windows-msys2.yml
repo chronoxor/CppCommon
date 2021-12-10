@@ -20,7 +20,7 @@ jobs:
           release: false
 #          msystem: mingw64
 #          location: C:\
-          update: true
+#          update: true
           install: >-
             python3-pip
 #            base-devel
