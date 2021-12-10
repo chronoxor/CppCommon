@@ -91,39 +91,27 @@ $(function() {
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_cpp_common.html">CppCommon</a> {</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;std::string <a class="code" href="namespace_cpp_common.html#a198a9c77acec4a2c147f5719355113e4">format</a>(<span class="keyword">const</span> std::string_view pattern, Args&amp;&amp;... args);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> TString, <span class="keyword">typename</span>... Args&gt;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;std::string <a class="code" href="namespace_cpp_common.html#aed91317f783dd697e600cd2fa472b9d5">format</a>(<span class="keyword">const</span> TString&amp; pattern, Args&amp;&amp;... args);</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;std::wstring <a class="code" href="namespace_cpp_common.html#a198a9c77acec4a2c147f5719355113e4">format</a>(<span class="keyword">const</span> std::wstring_view pattern, Args&amp;&amp;... args);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_cpp_common.html#a2f1b3321230dbbc0ff7d453cbe6ed7e5">print</a>(<span class="keyword">const</span> std::string_view pattern, Args&amp;&amp;... args);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> TString, <span class="keyword">typename</span>... Args&gt;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_cpp_common.html#a6bf73a169b9d8bd8f55bd59e7320db4c">print</a>(<span class="keyword">const</span> TString&amp; pattern, Args&amp;&amp;... args);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> TOutputStream, <span class="keyword">typename</span> TString, <span class="keyword">typename</span>... Args&gt;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_cpp_common.html#a6bf73a169b9d8bd8f55bd59e7320db4c">print</a>(TOutputStream&amp; stream, <span class="keyword">const</span> TString&amp; pattern, Args&amp;&amp;... args);</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_cpp_common.html#a2f1b3321230dbbc0ff7d453cbe6ed7e5">print</a>(<span class="keyword">const</span> std::wstring_view pattern, Args&amp;&amp;... args);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_cpp_common.html#a2f1b3321230dbbc0ff7d453cbe6ed7e5">print</a>(std::ostream&amp; stream, <span class="keyword">const</span> std::string_view pattern, Args&amp;&amp;... args);</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespace_cpp_common.html#a2f1b3321230dbbc0ff7d453cbe6ed7e5">print</a>(std::wostream&amp; stream, <span class="keyword">const</span> std::wstring_view pattern, Args&amp;&amp;... args);</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;} <span class="comment">// namespace CppCommon</span></div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="format_8inl.html">format.inl</a>&quot;</span></div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="preprocessor">#endif // CPPCOMMON_STRING_FORMAT_H</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;} <span class="comment">// namespace CppCommon</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="format_8inl.html">format.inl</a>&quot;</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">#endif // CPPCOMMON_STRING_FORMAT_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="anamespace_cpp_common_html_a198a9c77acec4a2c147f5719355113e4"><div class="ttname"><a href="namespace_cpp_common.html#a198a9c77acec4a2c147f5719355113e4">CppCommon::format</a></div><div class="ttdeci">std::string format(const std::string_view pattern, Args &amp;&amp;... args)</div><div class="ttdoc">Format string.</div><div class="ttdef"><b>Definition:</b> <a href="format_8inl_source.html#l00012">format.inl:12</a></div></div>
 <div class="ttc" id="aformat_8inl_html"><div class="ttname"><a href="format_8inl.html">format.inl</a></div><div class="ttdoc">Format string inline implementation.</div></div>
-<div class="ttc" id="anamespace_cpp_common_html_a2f1b3321230dbbc0ff7d453cbe6ed7e5"><div class="ttname"><a href="namespace_cpp_common.html#a2f1b3321230dbbc0ff7d453cbe6ed7e5">CppCommon::print</a></div><div class="ttdeci">void print(const std::string_view pattern, Args &amp;&amp;... args)</div><div class="ttdoc">Format string and print it into the std::cout.</div><div class="ttdef"><b>Definition:</b> <a href="format_8inl_source.html#l00024">format.inl:24</a></div></div>
 <div class="ttc" id="anamespace_cpp_common_html"><div class="ttname"><a href="namespace_cpp_common.html">CppCommon</a></div><div class="ttdoc">C++ Common project definitions.</div><div class="ttdef"><b>Definition:</b> <a href="token__bucket_8h_source.html#l00014">token_bucket.h:14</a></div></div>
+<div class="ttc" id="anamespace_cpp_common_html_aed91317f783dd697e600cd2fa472b9d5"><div class="ttname"><a href="namespace_cpp_common.html#aed91317f783dd697e600cd2fa472b9d5">CppCommon::format</a></div><div class="ttdeci">std::string format(const TString &amp;pattern, Args &amp;&amp;... args)</div><div class="ttdoc">Format string.</div><div class="ttdef"><b>Definition:</b> <a href="format_8inl_source.html#l00012">format.inl:12</a></div></div>
+<div class="ttc" id="anamespace_cpp_common_html_a6bf73a169b9d8bd8f55bd59e7320db4c"><div class="ttname"><a href="namespace_cpp_common.html#a6bf73a169b9d8bd8f55bd59e7320db4c">CppCommon::print</a></div><div class="ttdeci">void print(const TString &amp;pattern, Args &amp;&amp;... args)</div><div class="ttdoc">Format string and print it into the std::cout.</div><div class="ttdef"><b>Definition:</b> <a href="format_8inl_source.html#l00018">format.inl:18</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
