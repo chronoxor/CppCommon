@@ -25,5 +25,7 @@ jobs:
           LIB: C:\mingw64\x86_64-w64-mingw32\lib;%LIB%
           PATH: C:\mingw64\bin;%PATH%
         run: |
+          echo %PATH%
+          where cmake
           cd build
           ./mingw.bat
