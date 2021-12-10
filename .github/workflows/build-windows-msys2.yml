@@ -37,8 +37,8 @@ jobs:
 
       - name: "Build"
         env:
-          INCLUDE: D:\a\_temp\setup-msys2\usr\include\w32api
-          LIB: D:\a\_temp\setup-msys2\usr\lib\w32api
+          INCLUDE: C:\msys64\msys64\usr\include\w32api
+          LIB: C:\msys64\msys64\usr\lib\w32api
         run: |
           cd build
           ./unix.sh
