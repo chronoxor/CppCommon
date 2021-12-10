@@ -93,18 +93,18 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aed91317f783dd697e600cd2fa472b9d5"><td class="memTemplParams" colspan="2">template&lt;typename TString , typename... Args&gt; </td></tr>
-<tr class="memitem:aed91317f783dd697e600cd2fa472b9d5"><td class="memTemplItemLeft" align="right" valign="top">std::string&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_cpp_common.html#aed91317f783dd697e600cd2fa472b9d5">CppCommon::format</a> (const TString &amp;pattern, Args &amp;&amp;... args)</td></tr>
-<tr class="memdesc:aed91317f783dd697e600cd2fa472b9d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Format string.  <a href="namespace_cpp_common.html#aed91317f783dd697e600cd2fa472b9d5">More...</a><br /></td></tr>
-<tr class="separator:aed91317f783dd697e600cd2fa472b9d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6bf73a169b9d8bd8f55bd59e7320db4c"><td class="memTemplParams" colspan="2">template&lt;typename TString , typename... Args&gt; </td></tr>
-<tr class="memitem:a6bf73a169b9d8bd8f55bd59e7320db4c"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_cpp_common.html#a6bf73a169b9d8bd8f55bd59e7320db4c">CppCommon::print</a> (const TString &amp;pattern, Args &amp;&amp;... args)</td></tr>
-<tr class="memdesc:a6bf73a169b9d8bd8f55bd59e7320db4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Format string and print it into the std::cout.  <a href="namespace_cpp_common.html#a6bf73a169b9d8bd8f55bd59e7320db4c">More...</a><br /></td></tr>
-<tr class="separator:a6bf73a169b9d8bd8f55bd59e7320db4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adddd9d373f5c3b9f5c260c251a8a1fa4"><td class="memTemplParams" colspan="2">template&lt;typename TOutputStream , typename TString , typename... Args&gt; </td></tr>
-<tr class="memitem:adddd9d373f5c3b9f5c260c251a8a1fa4"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_cpp_common.html#adddd9d373f5c3b9f5c260c251a8a1fa4">CppCommon::print</a> (TOutputStream &amp;stream, const TString &amp;pattern, Args &amp;&amp;... args)</td></tr>
-<tr class="memdesc:adddd9d373f5c3b9f5c260c251a8a1fa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Format string and print it into the given std::ostream.  <a href="namespace_cpp_common.html#adddd9d373f5c3b9f5c260c251a8a1fa4">More...</a><br /></td></tr>
-<tr class="separator:adddd9d373f5c3b9f5c260c251a8a1fa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c808143152ed7826414ffa3d22d8cd5"><td class="memTemplParams" colspan="2">template&lt;typename... T&gt; </td></tr>
+<tr class="memitem:a1c808143152ed7826414ffa3d22d8cd5"><td class="memTemplItemLeft" align="right" valign="top">std::string&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_cpp_common.html#a1c808143152ed7826414ffa3d22d8cd5">CppCommon::format</a> (fmt::format_string&lt; T... &gt; pattern, T &amp;&amp;... args)</td></tr>
+<tr class="memdesc:a1c808143152ed7826414ffa3d22d8cd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Format string.  <a href="namespace_cpp_common.html#a1c808143152ed7826414ffa3d22d8cd5">More...</a><br /></td></tr>
+<tr class="separator:a1c808143152ed7826414ffa3d22d8cd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7449a5634a026f1c98a175a5bac56b5"><td class="memTemplParams" colspan="2">template&lt;typename... T&gt; </td></tr>
+<tr class="memitem:aa7449a5634a026f1c98a175a5bac56b5"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_cpp_common.html#aa7449a5634a026f1c98a175a5bac56b5">CppCommon::print</a> (fmt::format_string&lt; T... &gt; pattern, T &amp;&amp;... args)</td></tr>
+<tr class="memdesc:aa7449a5634a026f1c98a175a5bac56b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Format string and print it into the std::cout.  <a href="namespace_cpp_common.html#aa7449a5634a026f1c98a175a5bac56b5">More...</a><br /></td></tr>
+<tr class="separator:aa7449a5634a026f1c98a175a5bac56b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add3515e9169529b448017cf48f1a02cd"><td class="memTemplParams" colspan="2">template&lt;typename TOutputStream , typename... T&gt; </td></tr>
+<tr class="memitem:add3515e9169529b448017cf48f1a02cd"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_cpp_common.html#add3515e9169529b448017cf48f1a02cd">CppCommon::print</a> (TOutputStream &amp;stream, fmt::format_string&lt; T... &gt; pattern, T &amp;&amp;... args)</td></tr>
+<tr class="memdesc:add3515e9169529b448017cf48f1a02cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Format string and print it into the given std::ostream.  <a href="namespace_cpp_common.html#add3515e9169529b448017cf48f1a02cd">More...</a><br /></td></tr>
+<tr class="separator:add3515e9169529b448017cf48f1a02cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Format string definition. </p>
