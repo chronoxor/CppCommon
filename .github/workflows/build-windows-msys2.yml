@@ -23,6 +23,7 @@ jobs:
 #          update: true
           install: >-
             python3-pip
+            python3-wheel
 #            base-devel
 #            git
 #            mingw-w64-x86_64-cmake
