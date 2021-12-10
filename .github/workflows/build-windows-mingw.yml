@@ -20,12 +20,9 @@ jobs:
           gil update
 
       - name: "Build"
-        env:
-          INCLUDE: C:\mingw64\x86_64-w64-mingw32\include;%INCLUDE%
-          LIB: C:\mingw64\x86_64-w64-mingw32\lib;%LIB%
-          PATH: C:\mingw64\bin;%PATH%
         run: |
-          echo ${PATH}
-          where cmake
+          $env:INCLUDE = "C:\mingw64\x86_64-w64-mingw32\include;$env:INCLUDE"
+          $env:LIB = "C:\mingw64\x86_64-w64-mingw32\lib;$env:LIB"
+          $env:PATH = "C:\mingw64\bin;$env:PATH"
           cd build
           ./mingw.bat
