@@ -22,7 +22,7 @@ jobs:
 #          location: C:\
 #          update: true
           install: >-
-            mingw-w64-python-wheel
+            python3
             python3-pip
 #            base-devel
 #            git
