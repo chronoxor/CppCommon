@@ -22,8 +22,8 @@ jobs:
 #          location: C:\
 #          update: true
           install: >-
+            mingw-w64-python-wheel
             python3-pip
-            python3-wheel
 #            base-devel
 #            git
 #            mingw-w64-x86_64-cmake
