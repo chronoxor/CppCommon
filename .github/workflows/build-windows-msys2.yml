@@ -10,9 +10,22 @@ jobs:
     runs-on: windows-latest
     defaults:
       run:
-        shell: C:\msys64\msys2 '{0}'
+        shell: msys2 '{0}'
     steps:
       - uses: actions/checkout@v2
+
+      - name: "Setup MSYS2"
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: mingw64
+          location: C:\msys64
+          update: true
+          install: >-
+            base-devel
+            git
+            mingw-w64-x86_64-cmake
+            mingw-w64-x86_64-gcc
+            python3-pip
 
       - name: "Setup cmake"
         run: cmake --version
@@ -24,9 +37,8 @@ jobs:
 
       - name: "Build"
         env:
-          INCLUDE: C:\msys64\usr\include\w32api
-          LIB: C:\msys64\usr\lib\w32api
-          PATH: C:\msys64\usr\bin
+          INCLUDE: D:\a\_temp\setup-msys2\usr\include\w32api
+          LIB: D:\a\_temp\setup-msys2\usr\lib\w32api
         run: |
           cd build
           ./unix.sh
