@@ -11,11 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: "Setup MinGW"
-        uses: egor-tensin/setup-mingw@v2
-        with:
-          platform: x64
-
       - name: "Setup cmake"
         run: cmake --version
 
@@ -26,8 +21,9 @@ jobs:
 
       - name: "Build"
         env:
-          INCLUDE: C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\x86_64-w64-mingw32\include
-          LIB: C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\x86_64-w64-mingw32\lib
+          INCLUDE: C:\mingw64\x86_64-w64-mingw32\include
+          LIB: C:\mingw64\x86_64-w64-mingw32\lib
+          PATH: C:\mingw64\bin
         run: |
           cd build
           ./mingw.bat
