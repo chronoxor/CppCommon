@@ -15,6 +15,7 @@
 #include <functional>
 #include <iterator>
 #include <limits>
+#include <stdexcept>
 #include <vector>
 
 namespace CppCommon {

@@ -34,8 +34,8 @@ namespace CppCommon {
     \param args - Format arguments
     \return Formatted string
 */
-template <typename TString, typename... Args>
-std::string format(const TString& pattern, Args&&... args);
+template <typename... T>
+std::string format(fmt::format_string<T...> pattern, T&&... args);
 
 //! Format string and print it into the std::cout
 /*!
@@ -46,8 +46,8 @@ std::string format(const TString& pattern, Args&&... args);
     \param pattern - Format string pattern
     \param args - Format arguments
 */
-template <typename TString, typename... Args>
-void print(const TString& pattern, Args&&... args);
+template <typename... T>
+void print(fmt::format_string<T...> pattern, T&&... args);
 
 //! Format string and print it into the given std::ostream
 /*!
@@ -59,8 +59,8 @@ void print(const TString& pattern, Args&&... args);
     \param pattern - Format string pattern
     \param args - Format arguments
 */
-template <typename TOutputStream, typename TString, typename... Args>
-void print(TOutputStream& stream, const TString& pattern, Args&&... args);
+template <typename TOutputStream, typename... T>
+void print(TOutputStream& stream, fmt::format_string<T...> pattern, T&&... args);
 
 /*! \example string_format.cpp Format string example */
 

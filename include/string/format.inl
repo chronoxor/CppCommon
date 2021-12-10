@@ -8,22 +8,22 @@
 
 namespace CppCommon {
 
-template <typename TString, typename... Args>
-inline std::string format(const TString& pattern, Args&&... args)
+template <typename... T>
+inline std::string format(fmt::format_string<T...> pattern, T&&... args)
 {
-    return fmt::format(pattern, std::forward<Args>(args)...);
+    return fmt::vformat(pattern, fmt::make_format_args(args...));
 }
 
-template <typename TString, typename... Args>
-inline void print(const TString& pattern, Args&&... args)
+template <typename... T>
+inline void print(fmt::format_string<T...> pattern, T&&... args)
 {
-    return fmt::print(pattern, std::forward<Args>(args)...);
+    return fmt::vprint(pattern, fmt::make_format_args(args...));
 }
 
-template <typename TOutputStream, typename TString, typename... Args>
-inline void print(TOutputStream& stream, const TString& pattern, Args&&... args)
+template <typename TOutputStream, typename... T>
+inline void print(TOutputStream& stream, fmt::format_string<T...> pattern, T&&... args)
 {
-    return fmt::print(stream, pattern, std::forward<Args>(args)...);
+    return fmt::vprint(stream, pattern, fmt::make_format_args(args...));
 }
 
 } // namespace CppCommon
