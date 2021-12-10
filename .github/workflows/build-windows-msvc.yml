@@ -1,20 +1,18 @@
 name: Windows (Visual Studio)
 
 on:
-#  push:
-#  pull_request:
+  push:
+  pull_request:
   workflow_dispatch:
 
 jobs:
   build:
-    runs-on: windows-2022
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
 
       - name: "Setup Visual Studio"
         uses: egor-tensin/vs-shell@v2
-        with:
-          arch: x64
 
       - name: "Setup cmake"
         run: cmake --version

@@ -18,19 +18,11 @@ jobs:
         uses: msys2/setup-msys2@v2
         with:
           release: false
-#          msystem: mingw64
-#          location: C:\
-#          update: true
           install: >-
             git
             python3-pip
             msys2-w32api-runtime
             msys2-w32api-runtime
-#            base-devel
-#            mingw-w64-x86_64-cmake
-#            mingw-w64-x86_64-gcc
-#            msys2-w32api-headers
-#            msys2-w32api-runtime
 
       - name: "Setup cmake"
         run: cmake --version
