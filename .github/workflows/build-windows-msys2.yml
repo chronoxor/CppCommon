@@ -20,15 +20,15 @@ jobs:
           release: false
 #          msystem: mingw64
 #          location: C:\
-#          update: true
-#          install: >-
+          update: true
+          install: >-
 #            base-devel
 #            git
 #            mingw-w64-x86_64-cmake
 #            mingw-w64-x86_64-gcc
 #            msys2-w32api-headers
 #            msys2-w32api-runtime
-#            python3-pip
+            python3-pip
 
       - name: "Setup cmake"
         run: cmake --version
