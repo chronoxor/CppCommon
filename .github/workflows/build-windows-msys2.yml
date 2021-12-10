@@ -24,8 +24,8 @@ jobs:
           install: >-
             git
             python3-pip
-            w32api-headers
-            w32api-runtime
+            msys2-w32api-runtime
+            msys2-w32api-runtime
 #            base-devel
 #            mingw-w64-x86_64-cmake
 #            mingw-w64-x86_64-gcc
