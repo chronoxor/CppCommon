@@ -142,10 +142,8 @@ void Thread::SleepFor(const Timespan& timespan) noexcept
 
 void Thread::Yield() noexcept
 {
-#if defined(__APPLE__) || defined(__CYGWIN__)
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     sched_yield();
-#elif defined(unix) || defined(__unix) || defined(__unix__)
-    pthread_yield();
 #elif defined(_WIN32) || defined(_WIN64)
     SwitchToThread();
 #endif

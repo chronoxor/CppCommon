@@ -35,7 +35,7 @@ namespace CppCommon {
     \return Formatted string
 */
 template <typename... Args>
-std::string format(std::string_view pattern, Args&&... args);
+std::string format(const std::string_view pattern, Args&&... args);
 
 //! Format wide string
 /*!
@@ -48,7 +48,7 @@ std::string format(std::string_view pattern, Args&&... args);
     \return Formatted wide string
 */
 template <typename... Args>
-std::wstring format(std::wstring_view pattern, Args&&... args);
+std::wstring format(const std::wstring_view pattern, Args&&... args);
 
 //! Format string and print it into the std::cout
 /*!
@@ -60,7 +60,7 @@ std::wstring format(std::wstring_view pattern, Args&&... args);
     \param args - Format arguments
 */
 template <typename... Args>
-void print(std::string_view pattern, Args&&... args);
+void print(const std::string_view pattern, Args&&... args);
 
 //! Format wide string and print it into the std::wcout
 /*!
@@ -72,7 +72,7 @@ void print(std::string_view pattern, Args&&... args);
     \param args - Format arguments
 */
 template <typename... Args>
-void print(std::wstring_view pattern, Args&&... args);
+void print(const std::wstring_view pattern, Args&&... args);
 
 //! Format string and print it into the given std::ostream
 /*!
@@ -85,7 +85,7 @@ void print(std::wstring_view pattern, Args&&... args);
     \param args - Format arguments
 */
 template <typename... Args>
-void print(std::ostream& stream, std::string_view pattern, Args&&... args);
+void print(std::ostream& stream, const std::string_view pattern, Args&&... args);
 
 //! Format wide string and print it into the given std::wostream
 /*!
@@ -98,7 +98,7 @@ void print(std::ostream& stream, std::string_view pattern, Args&&... args);
     \param args - Format arguments
 */
 template <typename... Args>
-void print(std::wostream& stream, std::wstring_view pattern, Args&&... args);
+void print(std::wostream& stream, const std::wstring_view pattern, Args&&... args);
 
 /*! \example string_format.cpp Format string example */
 
