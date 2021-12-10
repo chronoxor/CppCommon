@@ -8,38 +8,20 @@
 
 namespace CppCommon {
 
-template <typename... Args>
-inline std::string format(const std::string_view pattern, Args&&... args)
+template <typename TString, typename... Args>
+inline std::string format(const TString& pattern, Args&&... args)
 {
     return fmt::format(pattern, std::forward<Args>(args)...);
 }
 
-template <typename... Args>
-inline std::wstring format(const std::wstring_view pattern, Args&&... args)
-{
-    return fmt::format(pattern, std::forward<Args>(args)...);
-}
-
-template <typename... Args>
-inline void print(const std::string_view pattern, Args&&... args)
+template <typename TString, typename... Args>
+inline void print(const TString& pattern, Args&&... args)
 {
     return fmt::print(pattern, std::forward<Args>(args)...);
 }
 
-template <typename... Args>
-inline void print(const std::wstring_view pattern, Args&&... args)
-{
-    return fmt::print(pattern, std::forward<Args>(args)...);
-}
-
-template <typename... Args>
-inline void print(std::ostream& stream, const std::string_view pattern, Args&&... args)
-{
-    return fmt::print(stream, pattern, std::forward<Args>(args)...);
-}
-
-template <typename... Args>
-inline void print(std::wostream& stream, const std::wstring_view pattern, Args&&... args)
+template <typename TOutputStream, typename TString, typename... Args>
+inline void print(TOutputStream& stream, const TString& pattern, Args&&... args)
 {
     return fmt::print(stream, pattern, std::forward<Args>(args)...);
 }
