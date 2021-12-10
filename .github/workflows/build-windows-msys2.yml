@@ -22,13 +22,13 @@ jobs:
 #          location: C:\
           update: true
           install: >-
+            python3-pip
 #            base-devel
 #            git
 #            mingw-w64-x86_64-cmake
 #            mingw-w64-x86_64-gcc
 #            msys2-w32api-headers
 #            msys2-w32api-runtime
-            python3-pip
 
       - name: "Setup cmake"
         run: cmake --version
