@@ -35,7 +35,7 @@ public:
     explicit WriteWChar(wchar_t ch) : _ch(ch) {}
 
     friend std::ostream& operator<<(std::ostream& stream, const WriteWChar& writer)
-    { return stream << '\'' << writer._ch << '\''; }
+    { return stream << '\'' << (char)writer._ch << '\''; }
     friend std::wostream& operator<<(std::wostream& stream, const WriteWChar& writer)
     { return stream << '\'' << writer._ch << '\''; }
 
@@ -82,7 +82,7 @@ public:
     {
         stream << '"';
         for (size_t i = 0; i < writer._size; ++i)
-            stream << writer._str[i];
+            stream << (char)writer._str[i];
         stream << '"';
         return stream;
     }
