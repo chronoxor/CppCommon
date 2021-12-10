@@ -29,7 +29,7 @@ GitHub: https://github.com/chronoxor/CppCommon
 namespace CppCommon {
 
 //! Project version
-const char version[] = "1.0.2.0";
+const char version[] = "1.0.3.0";
 
 } // namespace CppCommon
 
