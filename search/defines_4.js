@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['throwex_2223',['throwex',['../errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d',1,'exceptions.h']]]
+  ['package_2246',['PACKAGE',['../stack__trace_8cpp.html#aca8570fb706c81df371b7f9bc454ae03',1,'stack_trace.cpp']]],
+  ['package_5fversion_2247',['PACKAGE_VERSION',['../stack__trace_8cpp.html#aa326a05d5e30f9e9a4bb0b4469d5d0c0',1,'stack_trace.cpp']]]
 ];
