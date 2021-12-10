@@ -24,6 +24,8 @@ jobs:
           install: >-
             git
             python3-pip
+            w32api-headers
+            w32api-runtime
 #            base-devel
 #            mingw-w64-x86_64-cmake
 #            mingw-w64-x86_64-gcc
@@ -40,8 +42,8 @@ jobs:
 
       - name: "Build"
         env:
-          INCLUDE: C:\msys64\mingw64\include\w32api
-          LIB: C:\msys64\mingw64\lib\w32api
+          INCLUDE: C:\msys64\usr\include\w32api
+          LIB: C:\msys64\usr\lib\w32api
         run: |
           cd build
           ./unix.sh
