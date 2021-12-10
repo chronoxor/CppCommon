@@ -21,8 +21,7 @@ jobs:
 
       - name: "Build"
         run: |
-          $env:INCLUDE = "C:\mingw64\x86_64-w64-mingw32\include;$env:INCLUDE"
-          $env:LIB = "C:\mingw64\x86_64-w64-mingw32\lib;$env:LIB"
-          $env:PATH = "C:\mingw64\bin;$env:PATH"
+          $env:INCLUDE = "C:\ProgramData\chocolatey\x86_64-w64-mingw32\include;$env:INCLUDE"
+          $env:LIB = "C:\ProgramData\chocolatey\x86_64-w64-mingw32\lib;$env:LIB"
           cd build
           ./mingw.bat
