@@ -43,5 +43,4 @@ TEST_CASE("Format", "[CppCommon][String]")
     REQUIRE(format("int: {0:d};  hex: {0:#x};  oct: {0:#o};  bin: {0:#b}", 42) == "int: 42;  hex: 0x2a;  oct: 052;  bin: 0b101010");
     REQUIRE(format("The date is {}", Date(2012, 12, 9)) == "The date is 2012-12-9");
     REQUIRE(format("Elapsed time: {s:.2f} seconds", "s"_a = 1.23) == "Elapsed time: 1.23 seconds");
-    REQUIRE("The answer is {}"_format(42) == "The answer is 42");
 }

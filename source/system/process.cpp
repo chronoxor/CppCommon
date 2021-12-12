@@ -52,7 +52,7 @@ public:
         _pid = (DWORD)pid;
         _process = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_TERMINATE | SYNCHRONIZE, FALSE, _pid);
         if (_process == nullptr)
-            throwex SystemException("Failed to open a process with Id {}!"_format(pid));
+            throwex SystemException(format("Failed to open a process with Id {}!", pid));
 #endif
     }
 
@@ -62,7 +62,7 @@ public:
         if (_process != nullptr)
         {
             if (!CloseHandle(_process))
-                fatality(SystemException("Failed to close a process with Id {}!"_format(pid())));
+                fatality(SystemException(format("Failed to close a process with Id {}!", pid())));
             _process = nullptr;
         }
 #endif
@@ -79,11 +79,11 @@ public:
         return (kill(_pid, 0) == 0);
 #elif defined(_WIN32) || defined(_WIN64)
         if (_process == nullptr)
-            throwex SystemException("Failed to get exit code for a process with Id {}!"_format(pid()));
+            throwex SystemException(format("Failed to get exit code for a process with Id {}!", pid()));
 
         DWORD dwExitCode;
         if (!GetExitCodeProcess(_process, &dwExitCode))
-            throwex SystemException("Failed to get exit code for a process with Id {}!"_format(pid()));
+            throwex SystemException(format("Failed to get exit code for a process with Id {}!", pid()));
 
         return (dwExitCode == STILL_ACTIVE);
 #endif
@@ -94,13 +94,13 @@ public:
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         int result = kill(_pid, SIGKILL);
         if (result != 0)
-            throwex SystemException("Failed to kill a process with Id {}!"_format(pid()));
+            throwex SystemException(format("Failed to kill a process with Id {}!", pid()));
 #elif defined(_WIN32) || defined(_WIN64)
         if (_process == nullptr)
-            throwex SystemException("Failed to kill a process with Id {}!"_format(pid()));
+            throwex SystemException(format("Failed to kill a process with Id {}!", pid()));
 
         if (!TerminateProcess(_process, 666))
-            throwex SystemException("Failed to kill a process with Id {}!"_format(pid()));
+            throwex SystemException(format("Failed to kill a process with Id {}!", pid()));
 #endif
     }
 
@@ -117,29 +117,29 @@ public:
         while ((result < 0) && (errno == EINTR));
 
         if (result == -1)
-            throwex SystemException("Failed to wait for a process with Id {}!"_format(pid()));
+            throwex SystemException(format("Failed to wait for a process with Id {}!", pid()));
 
         if (WIFEXITED(status))
             return WEXITSTATUS(status);
         else if (WIFSIGNALED(status))
-            throwex SystemException("Process with Id {} was killed by signal {}!"_format(pid(), WTERMSIG(status)));
+            throwex SystemException(format("Process with Id {} was killed by signal {}!", pid(), WTERMSIG(status)));
         else if (WIFSTOPPED(status))
-            throwex SystemException("Process with Id {} was stopped by signal {}!"_format(pid(), WSTOPSIG(status)));
+            throwex SystemException(format("Process with Id {} was stopped by signal {}!", pid(), WSTOPSIG(status)));
         else if (WIFCONTINUED(status))
-            throwex SystemException("Process with Id {} was continued by signal SIGCONT!"_format(pid()));
+            throwex SystemException(format("Process with Id {} was continued by signal SIGCONT!", pid()));
         else
-            throwex SystemException("Process with Id {} has unknown wait status!"_format(pid()));
+            throwex SystemException(format("Process with Id {} has unknown wait status!", pid()));
 #elif defined(_WIN32) || defined(_WIN64)
         if (_process == nullptr)
-            throwex SystemException("Failed to wait for a process with Id {}!"_format(pid()));
+            throwex SystemException(format("Failed to wait for a process with Id {}!", pid()));
 
         DWORD result = WaitForSingleObject(_process, INFINITE);
         if (result != WAIT_OBJECT_0)
-            throwex SystemException("Failed to wait for a process with Id {}!"_format(pid()));
+            throwex SystemException(format("Failed to wait for a process with Id {}!", pid()));
 
         DWORD dwExitCode;
         if (!GetExitCodeProcess(_process, &dwExitCode))
-            throwex SystemException("Failed to get exit code for a process with Id {}!"_format(pid()));
+            throwex SystemException(format("Failed to get exit code for a process with Id {}!", pid()));
 
         return (int)dwExitCode;
 #endif
@@ -160,21 +160,21 @@ public:
         while ((result == 0) || ((result < 0) && (errno == EINTR)));
 
         if (result == -1)
-            throwex SystemException("Failed to wait for a process with Id {}!"_format(pid()));
+            throwex SystemException(format("Failed to wait for a process with Id {}!", pid()));
 
         if (WIFEXITED(status))
             return WEXITSTATUS(status);
         else if (WIFSIGNALED(status))
-            throwex SystemException("Process with Id {} was killed by signal {}!"_format(pid(), WTERMSIG(status)));
+            throwex SystemException(format("Process with Id {} was killed by signal {}!", pid(), WTERMSIG(status)));
         else if (WIFSTOPPED(status))
-            throwex SystemException("Process with Id {} was stopped by signal {}!"_format(pid(), WSTOPSIG(status)));
+            throwex SystemException(format("Process with Id {} was stopped by signal {}!", pid(), WSTOPSIG(status)));
         else if (WIFCONTINUED(status))
-            throwex SystemException("Process with Id {} was continued by signal SIGCONT!"_format(pid()));
+            throwex SystemException(format("Process with Id {} was continued by signal SIGCONT!", pid()));
         else
-            throwex SystemException("Process with Id {} has unknown wait status!"_format(pid()));
+            throwex SystemException(format("Process with Id {} has unknown wait status!", pid()));
 #elif defined(_WIN32) || defined(_WIN64)
         if (_process == nullptr)
-            throwex SystemException("Failed to wait for a process with Id {}!"_format(pid()));
+            throwex SystemException(format("Failed to wait for a process with Id {}!", pid()));
 
         DWORD result = WaitForSingleObject(_process, std::max((DWORD)1, (DWORD)timespan.milliseconds()));
         if (result != WAIT_OBJECT_0)
@@ -182,7 +182,7 @@ public:
 
         DWORD dwExitCode;
         if (!GetExitCodeProcess(_process, &dwExitCode))
-            throwex SystemException("Failed to get exit code for a process with Id {}!"_format(pid()));
+            throwex SystemException(format("Failed to get exit code for a process with Id {}!", pid()));
 
         return (int)dwExitCode;
 #endif
@@ -411,7 +411,7 @@ public:
         // Create a new process
         PROCESS_INFORMATION pi;
         if (!CreateProcessW(nullptr, (wchar_t*)command_line.c_str(), nullptr, nullptr, bInheritHandles, CREATE_UNICODE_ENVIRONMENT, environment.empty() ? nullptr : (LPVOID)environment.data(), (directory == nullptr) ? nullptr : Encoding::FromUTF8(*directory).c_str(), &si, &pi))
-            throwex SystemException("Failed to execute a new process with command '{}'!"_format(command));
+            throwex SystemException(CppCommon::format("Failed to execute a new process with command '{}'!", command));
 
         // Close standard handles
         if (si.hStdInput != nullptr)

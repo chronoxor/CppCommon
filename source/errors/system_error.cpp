@@ -55,7 +55,7 @@ std::string SystemError::Description(int error)
     char* result = strerror_r(error, buffer, capacity);
     if (result == nullptr)
 #endif
-        return "Cannot convert the given system error code to the system message - {}"_format(error);
+        return format("Cannot convert the given system error code to the system message - {}", error);
     else
         return std::string(buffer);
 #elif defined(_WIN32) || defined(_WIN64)

@@ -22,10 +22,10 @@ Time::Time(const Timestamp& timestamp)
     time_t seconds = timestamp.seconds();
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     if (gmtime_r(&seconds, &result) != &result)
-        throwex SystemException("Cannot convert the given timestamp ({}) to date & time structure!"_format(timestamp.total()));
+        throwex SystemException(format("Cannot convert the given timestamp ({}) to date & time structure!", timestamp.total()));
 #elif defined(_WIN32) || defined(_WIN64)
     if (gmtime_s(&result, &seconds))
-        throwex SystemException("Cannot convert the given timestamp ({}) to date & time structure!"_format(timestamp.total()));
+        throwex SystemException(format("Cannot convert the given timestamp ({}) to date & time structure!", timestamp.total()));
 #endif
     _year = result.tm_year + 1900;
     _month = result.tm_mon + 1;
@@ -143,10 +143,10 @@ UtcTime::UtcTime(const Timestamp& timestamp)
     time_t seconds = timestamp.seconds();
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     if (gmtime_r(&seconds, &result) != &result)
-        throwex SystemException("Cannot convert the given timestamp ({}) to UTC date & time structure!"_format(timestamp.total()));
+        throwex SystemException(format("Cannot convert the given timestamp ({}) to UTC date & time structure!", timestamp.total()));
 #elif defined(_WIN32) || defined(_WIN64)
     if (gmtime_s(&result, &seconds))
-        throwex SystemException("Cannot convert the given timestamp ({}) to UTC date & time structure!"_format(timestamp.total()));
+        throwex SystemException(format("Cannot convert the given timestamp ({}) to UTC date & time structure!", timestamp.total()));
 #endif
     _year = result.tm_year + 1900;
     _month = result.tm_mon + 1;
@@ -166,10 +166,10 @@ LocalTime::LocalTime(const Timestamp& timestamp)
     time_t seconds = timestamp.seconds();
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
     if (localtime_r(&seconds, &result) != &result)
-        throwex SystemException("Cannot convert the given timestamp ({}) to local date & time structure!"_format(timestamp.total()));
+        throwex SystemException(format("Cannot convert the given timestamp ({}) to local date & time structure!", timestamp.total()));
 #elif defined(_WIN32) || defined(_WIN64)
     if (localtime_s(&result, &seconds))
-        throwex SystemException("Cannot convert the given timestamp ({}) to local date & time structure!"_format(timestamp.total()));
+        throwex SystemException(format("Cannot convert the given timestamp ({}) to local date & time structure!", timestamp.total()));
 #endif
     _year = result.tm_year + 1900;
     _month = result.tm_mon + 1;

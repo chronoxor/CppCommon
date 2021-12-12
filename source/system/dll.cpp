@@ -112,7 +112,7 @@ public:
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         int result = dlclose(_dll);
         if (result != 0)
-            throwex DLLException("Cannot unload DLL file: {}!"_format(dlerror())).Attach(_path);
+            throwex DLLException(format("Cannot unload DLL file: {}!", dlerror())).Attach(_path);
 #elif defined(_WIN32) || defined(_WIN64)
         if (!FreeLibrary(_dll))
             throwex DLLException("Cannot unload DLL file!").Attach(_path);

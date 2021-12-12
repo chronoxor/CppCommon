@@ -132,7 +132,7 @@ public:
         {
             int result = sigaction(signals[i], &sa, nullptr);
             if (result != 0)
-                throwex SystemException("Failed to setup signal handler - {}"_format(signals[i]));
+                throwex SystemException(format("Failed to setup signal handler - {}", signals[i]));
         }
 #endif
 
@@ -527,7 +527,7 @@ private:
     {
 #if defined(DBGHELP_SUPPORT)
         // Generate dump file name based on the current timestamp
-        Path dump = Path::executable().parent() / "crash.{}.dmp"_format(Timestamp::utc());
+        Path dump = Path::executable().parent() / format("crash.{}.dmp", Timestamp::utc());
 
         // Create the dump file
         HANDLE hDumpFile = CreateFileW(dump.wstring().c_str(), GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
@@ -612,7 +612,7 @@ private:
                 GetInstance()._handler(__LOCATION__ + SystemException("Caught file size limit exceeded (SIGXFSZ) signal"), StackTrace(1));
                 break;
             default:
-                GetInstance()._handler(__LOCATION__ + SystemException("Caught unknown signal - {}"_format(signo)), StackTrace(1));
+                GetInstance()._handler(__LOCATION__ + SystemException(format("Caught unknown signal - {}", signo)), StackTrace(1));
                 break;
         }
 
