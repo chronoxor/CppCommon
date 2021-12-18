@@ -3,24 +3,24 @@ if(WIN32 AND NOT TARGET vld)
   # Try to find VLD library and include path.
   # Once done this will define
   #
-  # LIBVLD_FOUND
-  # LIBVLD_INCLUDE_DIR
-  # LIBVLD_LIBRARIES
+  # VLD_FOUND
+  # VLD_INCLUDE_DIR
+  # VLD_LIBRARIES
   
-  find_path(LIBVLD_INCLUDE_DIR vld.h HINTS vld)
-  find_library(LIBVLD_LIBRARY vld.lib HINTS vld)
+  find_path(VLD_INCLUDE_DIR vld.h HINTS vld)
+  find_library(VLD_LIBRARY vld.lib HINTS vld)
   
-  # Handle the REQUIRED argument and set LIBVLD_FOUND
+  # Handle the REQUIRED argument and set VLD_FOUND
   include(FindPackageHandleStandardArgs)
-  find_package_handle_standard_args(LIBVLD DEFAULT_MSG LIBVLD_LIBRARY LIBVLD_INCLUDE_DIR)
+  find_package_handle_standard_args(VLD DEFAULT_MSG VLD_LIBRARY VLD_INCLUDE_DIR)
   
-  mark_as_advanced(LIBVLD_INCLUDE_DIR)
-  mark_as_advanced(LIBVLD_LIBRARY)
+  mark_as_advanced(VLD_INCLUDE_DIR)
+  mark_as_advanced(VLD_LIBRARY)
   
-  if(LIBVLD_FOUND)
-    add_definitions(-DLIBVLD_SUPPORT)
-    set(LIBVLD_LIBRARIES ${LIBVLD_LIBRARY})
-    set(vld ${LIBVLD_INCLUDE_DIR} PARENT_SCOPE)
+  if(VLD_FOUND)
+    add_definitions(-DVLD_SUPPORT)
+    set(VLD_LIBRARIES ${VLD_LIBRARY})
+    set(vld ${VLD_INCLUDE_DIR} PARENT_SCOPE)
   endif()
  
 endif()

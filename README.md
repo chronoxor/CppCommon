@@ -22,7 +22,7 @@ encoding, shared memory, threading, time management and others.
   * [How to build?](#how-to-build)
 
 # Features
-* Cross platform (Linux, OSX, Windows)
+* Cross platform (Linux, MacOS, Windows)
 * Exception handling model
 * Filesystem manipulations
 * String encoding converters
@@ -41,7 +41,7 @@ encoding, shared memory, threading, time management and others.
 
 # Requirements
 * Linux (binutils-dev uuid-dev)
-* OSX
+* MacOS
 * Windows 10
 * [cmake](https://www.cmake.org)
 * [gcc](https://gcc.gnu.org)
@@ -77,7 +77,7 @@ cd build
 ./unix.sh
 ```
 
-### OSX
+### MacOS
 ```shell
 cd build
 ./unix.sh
