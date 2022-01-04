@@ -8,7 +8,7 @@
 ![Windows (Cygwin)](https://github.com/chronoxor/CppCommon/actions/workflows/build-windows-cygwin.yml/badge.svg)
 ![Windows (MinGW)](https://github.com/chronoxor/CppCommon/actions/workflows/build-windows-mingw.yml/badge.svg)
 ![Windows (MSYS2)](https://github.com/chronoxor/CppCommon/actions/workflows/build-windows-msys2.yml/badge.svg)
-![Windows (Visual Studio)](https://github.com/chronoxor/CppCommon/actions/workflows/build-windows-msvc.yml/badge.svg)
+![Windows (Visual Studio)](https://github.com/chronoxor/CppCommon/actions/workflows/build-windows-vs.yml/badge.svg)
 
 C++ Common Library contains reusable components and patterns for error and
 exceptions handling, filesystem manipulations, math, string format and
