@@ -1,14 +1,14 @@
 # CppCommon
 
-![Linux (clang)](https://github.com/chronoxor/CppCommon/actions/workflows/build-linux-clang.yml/badge.svg)
-![Linux (gcc)](https://github.com/chronoxor/CppCommon/actions/workflows/build-linux-gcc.yml/badge.svg)
+[![Linux (clang)](https://github.com/chronoxor/CppCommon/actions/workflows/build-linux-clang.yml/badge.svg)](https://github.com/chronoxor/CppCommon/actions/workflows/build-linux-clang.yml)
+[![Linux (gcc)](https://github.com/chronoxor/CppCommon/actions/workflows/build-linux-gcc.yml/badge.svg)](https://github.com/chronoxor/CppCommon/actions/workflows/build-linux-gcc.yml)
 <br/>
-![MacOS](https://github.com/chronoxor/CppCommon/actions/workflows/build-macos.yml/badge.svg)
+[![MacOS](https://github.com/chronoxor/CppCommon/actions/workflows/build-macos.yml/badge.svg)](https://github.com/chronoxor/CppCommon/actions/workflows/build-macos.yml)
 <br/>
-![Windows (Cygwin)](https://github.com/chronoxor/CppCommon/actions/workflows/build-windows-cygwin.yml/badge.svg)
-![Windows (MinGW)](https://github.com/chronoxor/CppCommon/actions/workflows/build-windows-mingw.yml/badge.svg)
-![Windows (MSYS2)](https://github.com/chronoxor/CppCommon/actions/workflows/build-windows-msys2.yml/badge.svg)
-![Windows (Visual Studio)](https://github.com/chronoxor/CppCommon/actions/workflows/build-windows-vs.yml/badge.svg)
+[![Windows (Cygwin)](https://github.com/chronoxor/CppCommon/actions/workflows/build-windows-cygwin.yml/badge.svg)](https://github.com/chronoxor/CppCommon/actions/workflows/build-windows-cygwin.yml)
+[![Windows (MinGW)](https://github.com/chronoxor/CppCommon/actions/workflows/build-windows-mingw.yml/badge.svg)](https://github.com/chronoxor/CppCommon/actions/workflows/build-windows-mingw.yml)
+[![Windows (MSYS2)](https://github.com/chronoxor/CppCommon/actions/workflows/build-windows-msys2.yml/badge.svg)](https://github.com/chronoxor/CppCommon/actions/workflows/build-windows-msys2.yml)
+[![Windows (Visual Studio)](https://github.com/chronoxor/CppCommon/actions/workflows/build-windows-vs.yml/badge.svg)](https://github.com/chronoxor/CppCommon/actions/workflows/build-windows-vs.yml)
 
 C++ Common Library contains reusable components and patterns for error and
 exceptions handling, filesystem manipulations, math, string format and
