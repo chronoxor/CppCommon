@@ -15,11 +15,24 @@ class Date
 public:
     Date(int year, int month, int day) : _year(year), _month(month), _day(day) {}
 
-    friend std::ostream& operator<<(std::ostream& os, const Date& date)
-    { return os << date._year << '-' << date._month << '-' << date._day; }
+    int year() const { return _year; }
+    int month() const { return _month; }
+    int day() const { return _day; }
 
 private:
     int _year, _month, _day;
+};
+
+template <>
+struct fmt::formatter<Date>
+{
+     constexpr auto parse(format_parse_context& ctx) -> decltype(ctx.begin()) { return ctx.begin(); }
+
+    template <typename FormatContext>
+    auto format(const Date& date, FormatContext& ctx) -> decltype(ctx.out())
+    {
+        return format_to(ctx.out(), "{}-{}-{}", date.year(), date.month(), date.day());
+    }
 };
 
 #define SHOW(expression) std::cout << #expression << " = \"" << expression << "\""<< std::endl;
