@@ -1,7 +1,7 @@
 var searchData=
 [
   ['back_61',['back',['../class_cpp_common_1_1_list.html#aaf915b640e5d8f1b959d9604bf39a691',1,'CppCommon::List::back() noexcept'],['../class_cpp_common_1_1_list.html#a2f32640608c5b79c6a4b9e6d04528317',1,'CppCommon::List::back() const noexcept'],['../class_cpp_common_1_1_queue.html#ad954c3e558e733a16adf95fb99090b93',1,'CppCommon::Queue::back() noexcept'],['../class_cpp_common_1_1_queue.html#afd94a2f22ca5a0c3ada602ff244179ef',1,'CppCommon::Queue::back() const noexcept']]],
-  ['balance_62',['balance',['../struct_cpp_common_1_1_bin_tree_a_v_l_1_1_node.html#af854bc5eb75c1666e68accc8bcd623e0',1,'CppCommon::BinTreeAVL::Node']]],
+  ['balance_62',['balance',['../struct_cpp_common_1_1_bin_tree_a_v_l_1_1_node.html#a28f63bfd1276f49f6686dfd5bb8b474d',1,'CppCommon::BinTreeAVL::Node']]],
   ['barrier_63',['Barrier',['../class_cpp_common_1_1_barrier.html',1,'CppCommon::Barrier'],['../class_cpp_common_1_1_barrier.html#a87e728c403f9797c08d16f2d38f0b78f',1,'CppCommon::Barrier::Barrier(int threads)'],['../class_cpp_common_1_1_barrier.html#afd507741119c12feeceaf658a2257118',1,'CppCommon::Barrier::Barrier(const Barrier &amp;)=delete'],['../class_cpp_common_1_1_barrier.html#ad6fbbfea16dfe74675310238a4952f37',1,'CppCommon::Barrier::Barrier(Barrier &amp;&amp;barrier)=delete']]],
   ['barrier_2ecpp_64',['barrier.cpp',['../barrier_8cpp.html',1,'']]],
   ['barrier_2eh_65',['barrier.h',['../barrier_8h.html',1,'']]],
