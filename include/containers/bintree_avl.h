@@ -116,10 +116,10 @@ public:
     //! AVL binary tree node
     struct Node
     {
-        T* parent;          //!< Pointer to the parent binary tree node
-        T* left;            //!< Pointer to the left child binary tree node
-        T* right;           //!< Pointer to the right child binary tree node
-        char balance;       //!< Balance level (-1, 0, 1)
+        T* parent;              //!< Pointer to the parent binary tree node
+        T* left;                //!< Pointer to the left child binary tree node
+        T* right;               //!< Pointer to the right child binary tree node
+        signed char balance;    //!< Balance level (-1, 0, 1)
 
         Node() : parent(nullptr), left(nullptr), right(nullptr), balance(0) {}
     };
