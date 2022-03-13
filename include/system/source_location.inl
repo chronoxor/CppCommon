@@ -19,11 +19,5 @@ inline std::ostream& operator<<(std::ostream& os, const SourceLocation& source_l
 } // namespace CppCommon
 
 #if defined(FMT_VERSION)
-
-namespace fmt {
-
-template <> struct formatter<CppCommon::SourceLocation> : ostream_formatter {};
-
-} // namespace fmt
-
+namespace fmt { template <> struct formatter<CppCommon::SourceLocation> : ostream_formatter {}; } // namespace fmt
 #endif
