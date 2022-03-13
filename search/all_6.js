@@ -33,7 +33,7 @@ var searchData=
   ['flatmap_2eh_272',['flatmap.h',['../flatmap_8h.html',1,'']]],
   ['flatmap_2einl_273',['flatmap.inl',['../flatmap_8inl.html',1,'']]],
   ['flush_274',['Flush',['../class_cpp_common_1_1_writer.html#ac7cde35585402365b7c3e62ad6cd2da7',1,'CppCommon::Writer::Flush()'],['../class_cpp_common_1_1_file.html#a7b5430b72976a6b36728166cc659b231',1,'CppCommon::File::Flush()'],['../class_cpp_common_1_1_std_output.html#ac0be21faea5b51d35e555f73edbfb1a8',1,'CppCommon::StdOutput::Flush()'],['../class_cpp_common_1_1_std_error.html#a6d718f1d778990d32805f5ce86704695',1,'CppCommon::StdError::Flush()']]],
-  ['format_275',['format',['../namespace_cpp_common.html#a1c808143152ed7826414ffa3d22d8cd5',1,'CppCommon']]],
+  ['format_275',['format',['../namespace_cpp_common.html#a1c808143152ed7826414ffa3d22d8cd5',1,'CppCommon::format(fmt::format_string&lt; T... &gt; pattern, T &amp;&amp;... args)'],['../namespace_cpp_common.html#ae0b7a12ea89bc9368a9eaa8c56887e43',1,'CppCommon::format(fmt::wformat_string&lt; T... &gt; pattern, T &amp;&amp;... args)']]],
   ['format_2eh_276',['format.h',['../format_8h.html',1,'']]],
   ['format_2einl_277',['format.inl',['../format_8inl.html',1,'']]],
   ['frame_278',['Frame',['../struct_cpp_common_1_1_stack_trace_1_1_frame.html',1,'CppCommon::StackTrace']]],
