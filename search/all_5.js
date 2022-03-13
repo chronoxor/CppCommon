@@ -31,12 +31,13 @@ var searchData=
   ['exception_230',['Exception',['../class_cpp_common_1_1_exception.html',1,'CppCommon::Exception'],['../class_cpp_common_1_1_source_location.html#a81cc2ce318d9da5c31562c4d594fcb34',1,'CppCommon::SourceLocation::Exception()'],['../class_cpp_common_1_1_exception.html#af1f4d608ede51c01fe97c9ebdc38110f',1,'CppCommon::Exception::Exception(const std::string &amp;message=&quot;&quot;)'],['../class_cpp_common_1_1_exception.html#ab7a31b72284c3071938980fa8f18890f',1,'CppCommon::Exception::Exception(const Exception &amp;)=default'],['../class_cpp_common_1_1_exception.html#aa7802d79afe5f0e9f0932b6c1c8c0b17',1,'CppCommon::Exception::Exception(Exception &amp;&amp;)=default']]],
   ['exceptions_2ecpp_231',['exceptions.cpp',['../errors_2exceptions_8cpp.html',1,'(Global Namespace)'],['../filesystem_2exceptions_8cpp.html',1,'(Global Namespace)']]],
   ['exceptions_2eh_232',['exceptions.h',['../errors_2exceptions_8h.html',1,'(Global Namespace)'],['../filesystem_2exceptions_8h.html',1,'(Global Namespace)'],['../system_2exceptions_8h.html',1,'(Global Namespace)']]],
-  ['exceptions_5fhandler_2ecpp_233',['exceptions_handler.cpp',['../exceptions__handler_8cpp.html',1,'']]],
-  ['exceptions_5fhandler_2eh_234',['exceptions_handler.h',['../exceptions__handler_8h.html',1,'']]],
-  ['exceptionshandler_235',['ExceptionsHandler',['../class_cpp_common_1_1_exceptions_handler.html',1,'CppCommon::ExceptionsHandler'],['../class_cpp_common_1_1_exceptions_handler.html#ae82b339aa952a3ca085ea696914a1adb',1,'CppCommon::ExceptionsHandler::ExceptionsHandler(const ExceptionsHandler &amp;)=delete'],['../class_cpp_common_1_1_exceptions_handler.html#a1bf3803a207d44b989a184de2a943faf',1,'CppCommon::ExceptionsHandler::ExceptionsHandler(ExceptionsHandler &amp;&amp;)=delete']]],
-  ['executable_236',['executable',['../class_cpp_common_1_1_path.html#afb876076a26b549f2113bd0bbdc2a65c',1,'CppCommon::Path']]],
-  ['execute_237',['Execute',['../class_cpp_common_1_1_process.html#a26ea9513df8dc55cb5aba63501f7c8e3',1,'CppCommon::Process']]],
-  ['exit_238',['Exit',['../class_cpp_common_1_1_process.html#ac4401394ca2bbec86c6342000d469dec',1,'CppCommon::Process']]],
-  ['export_239',['EXPORT',['../dll_8h.html#a3472d8cdbb788d5f1815b3522595bc49',1,'dll.h']]],
-  ['extension_240',['extension',['../class_cpp_common_1_1_path.html#ac1dc8e8a22d904f7617380638cc7edb8',1,'CppCommon::Path::extension()'],['../class_cpp_common_1_1_d_l_l.html#a1aba3ab11cfd2f36e2202c0e62436a58',1,'CppCommon::DLL::extension()']]]
+  ['exceptions_2einl_233',['exceptions.inl',['../exceptions_8inl.html',1,'']]],
+  ['exceptions_5fhandler_2ecpp_234',['exceptions_handler.cpp',['../exceptions__handler_8cpp.html',1,'']]],
+  ['exceptions_5fhandler_2eh_235',['exceptions_handler.h',['../exceptions__handler_8h.html',1,'']]],
+  ['exceptionshandler_236',['ExceptionsHandler',['../class_cpp_common_1_1_exceptions_handler.html',1,'CppCommon::ExceptionsHandler'],['../class_cpp_common_1_1_exceptions_handler.html#ae82b339aa952a3ca085ea696914a1adb',1,'CppCommon::ExceptionsHandler::ExceptionsHandler(const ExceptionsHandler &amp;)=delete'],['../class_cpp_common_1_1_exceptions_handler.html#a1bf3803a207d44b989a184de2a943faf',1,'CppCommon::ExceptionsHandler::ExceptionsHandler(ExceptionsHandler &amp;&amp;)=delete']]],
+  ['executable_237',['executable',['../class_cpp_common_1_1_path.html#afb876076a26b549f2113bd0bbdc2a65c',1,'CppCommon::Path']]],
+  ['execute_238',['Execute',['../class_cpp_common_1_1_process.html#a26ea9513df8dc55cb5aba63501f7c8e3',1,'CppCommon::Process']]],
+  ['exit_239',['Exit',['../class_cpp_common_1_1_process.html#ac4401394ca2bbec86c6342000d469dec',1,'CppCommon::Process']]],
+  ['export_240',['EXPORT',['../dll_8h.html#a3472d8cdbb788d5f1815b3522595bc49',1,'dll.h']]],
+  ['extension_241',['extension',['../class_cpp_common_1_1_path.html#ac1dc8e8a22d904f7617380638cc7edb8',1,'CppCommon::Path::extension()'],['../class_cpp_common_1_1_d_l_l.html#a1aba3ab11cfd2f36e2202c0e62436a58',1,'CppCommon::DLL::extension()']]]
 ];
