@@ -78,4 +78,6 @@ private:
 
 } // namespace CppCommon
 
+#include "stack_trace.inl"
+
 #endif // CPPCOMMON_SYSTEM_STACK_TRACE_H

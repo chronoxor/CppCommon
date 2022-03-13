@@ -145,4 +145,6 @@ protected:
 
 } // namespace CppCommon
 
+#include "exceptions.inl"
+
 #endif // CPPCOMMON_ERRORS_EXCEPTIONS_H

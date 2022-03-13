@@ -41,3 +41,21 @@ inline void swap(Path& path1, Path& path2) noexcept
 }
 
 } // namespace CppCommon
+
+#if defined(FMT_VERSION)
+
+namespace fmt {
+
+template <>
+struct formatter<CppCommon::Path> : formatter<std::string_view>
+{
+    template <typename FormatContext>
+    auto format(const CppCommon::Path& value, FormatContext& ctx) const
+    {
+        return formatter<string_view>::format(value._path, ctx);
+    }
+};
+
+} // namespace fmt
+
+#endif
