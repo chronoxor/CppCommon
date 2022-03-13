@@ -73,22 +73,16 @@ $(function() {
 <div class="contents">
 <a href="exceptions_8inl.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#if defined(FMT_VERSION)</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">namespace </span>fmt {</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">template</span> &lt;&gt;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">struct </span>formatter&lt;<a class="code" href="namespace_cpp_common.html">CppCommon</a>::Exception&gt; : formatter&lt;std::string_view&gt;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;{</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> FormatContext&gt;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">auto</span> <a class="code" href="namespace_cpp_common.html#a1c808143152ed7826414ffa3d22d8cd5">format</a>(<span class="keyword">const</span> <a class="code" href="class_cpp_common_1_1_exception.html">CppCommon::Exception</a>&amp; value, FormatContext&amp; ctx)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="namespace_cpp_common.html#a1c808143152ed7826414ffa3d22d8cd5">formatter&lt;string_view&gt;::format</a>(value.<a class="code" href="class_cpp_common_1_1_exception.html#a021f5cfe7e9b5ca915cd9692d298e12d">string</a>(), ctx);</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    }</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;};</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;} <span class="comment">// namespace fmt</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">template</span> &lt;&gt;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">struct </span>fmt::formatter&lt;<a class="code" href="namespace_cpp_common.html">CppCommon</a>::Exception&gt; : formatter&lt;std::string_view&gt;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;{</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> FormatContext&gt;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="keyword">auto</span> <a class="code" href="namespace_cpp_common.html#a1c808143152ed7826414ffa3d22d8cd5">format</a>(<span class="keyword">const</span> <a class="code" href="class_cpp_common_1_1_exception.html">CppCommon::Exception</a>&amp; value, FormatContext&amp; ctx)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="namespace_cpp_common.html#a1c808143152ed7826414ffa3d22d8cd5">formatter&lt;string_view&gt;::format</a>(value.<a class="code" href="class_cpp_common_1_1_exception.html#a021f5cfe7e9b5ca915cd9692d298e12d">string</a>(), ctx);</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    }</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;};</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="anamespace_cpp_common_html_a1c808143152ed7826414ffa3d22d8cd5"><div class="ttname"><a href="namespace_cpp_common.html#a1c808143152ed7826414ffa3d22d8cd5">CppCommon::format</a></div><div class="ttdeci">std::string format(fmt::format_string&lt; T... &gt; pattern, T &amp;&amp;... args)</div><div class="ttdoc">Format string.</div><div class="ttdef"><b>Definition:</b> <a href="format_8inl_source.html#l00012">format.inl:12</a></div></div>
 <div class="ttc" id="aclass_cpp_common_1_1_exception_html"><div class="ttname"><a href="class_cpp_common_1_1_exception.html">CppCommon::Exception</a></div><div class="ttdoc">Exception.</div><div class="ttdef"><b>Definition:</b> <a href="errors_2exceptions_8h_source.html#l00033">exceptions.h:33</a></div></div>
