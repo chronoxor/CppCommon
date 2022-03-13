@@ -23,12 +23,12 @@ inline void swap(UUID& uuid1, UUID& uuid2) noexcept
 
 #if defined(FMT_VERSION)
 template <>
-struct fmt::formatter<CppCommon::UUID> : fmt::formatter<std::string_view>
+struct fmt::formatter<CppCommon::UUID> : formatter<std::string_view>
 {
     template <typename FormatContext>
     auto format(const CppCommon::UUID& value, FormatContext& ctx) const
     {
-        return fmt::formatter<string_view>::format(value.string(), ctx);
+        return formatter<string_view>::format(value.string(), ctx);
     }
 };
 #endif

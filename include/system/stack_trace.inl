@@ -7,5 +7,5 @@
 */
 
 #if defined(FMT_VERSION)
-template <> struct fmt::formatter<CppCommon::StackTrace> : fmt::ostream_formatter {};
+template <> struct fmt::formatter<CppCommon::StackTrace> : ostream_formatter {};
 #endif

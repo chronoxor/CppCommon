@@ -8,12 +8,12 @@
 
 #if defined(FMT_VERSION)
 template <>
-struct fmt::formatter<CppCommon::Exception> : fmt::formatter<std::string_view>
+struct fmt::formatter<CppCommon::Exception> : formatter<std::string_view>
 {
     template <typename FormatContext>
     auto format(const CppCommon::Exception& value, FormatContext& ctx) const
     {
-        return fmt::formatter<string_view>::format(value.string(), ctx);
+        return formatter<string_view>::format(value.string(), ctx);
     }
 };
 #endif

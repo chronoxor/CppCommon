@@ -190,12 +190,12 @@ inline void swap(uint128_t& value1, uint128_t& value2) noexcept
 
 #if defined(FMT_VERSION)
 template <>
-struct fmt::formatter<CppCommon::uint128_t> : fmt::formatter<std::string_view>
+struct fmt::formatter<CppCommon::uint128_t> : formatter<std::string_view>
 {
     template <typename FormatContext>
     auto format(const CppCommon::uint128_t& value, FormatContext& ctx) const
     {
-        return fmt::formatter<string_view>::format(value.string(10), ctx);
+        return formatter<string_view>::format(value.string(10), ctx);
     }
 };
 #endif
