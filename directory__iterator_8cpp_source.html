@@ -93,7 +93,7 @@ $(function() {
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">class </span>DirectoryIterator::Impl</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;{</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class </span>SimpleImpl;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class </span>RecurseImpl;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class </span>RecursiveImpl;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keyword">explicit</span> Impl(<span class="keyword">const</span> Path&amp; parent) : _parent(parent), _current() {}</div>
@@ -222,11 +222,11 @@ $(function() {
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    <span class="keywordtype">bool</span> _end;</div>
 <div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;};</div>
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160; </div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;<span class="keyword">class </span>DirectoryIterator::RecurseImpl : <span class="keyword">public</span> DirectoryIterator::Impl</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;<span class="keyword">class </span>DirectoryIterator::RecursiveImpl : <span class="keyword">public</span> DirectoryIterator::Impl</div>
 <div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;{</div>
 <div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <span class="keyword">explicit</span> RecurseImpl(<span class="keyword">const</span> Path&amp; parent) : <a class="code" href="class_cpp_common_1_1_directory_iterator.html#a9861f44890a06c41ba777989b40d1d5b">DirectoryIterator</a>::Impl(parent), _current(parent) {}</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    ~RecurseImpl() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <span class="keyword">explicit</span> RecursiveImpl(<span class="keyword">const</span> Path&amp; parent) : <a class="code" href="class_cpp_common_1_1_directory_iterator.html#a9861f44890a06c41ba777989b40d1d5b">DirectoryIterator</a>::Impl(parent), _current(parent) {}</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    ~RecursiveImpl() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160; </div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    Path Next()<span class="keyword"> override</span></div>
 <div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<span class="keyword">    </span>{</div>
@@ -280,7 +280,7 @@ $(function() {
 <div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;{</div>
 <div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;}</div>
 <div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160; </div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;<a class="code" href="class_cpp_common_1_1_directory_iterator.html#a9861f44890a06c41ba777989b40d1d5b">DirectoryIterator::DirectoryIterator</a>(<span class="keyword">const</span> Path&amp; parent, <span class="keywordtype">bool</span> recurse) : _pimpl(recurse ? (Impl*)<a class="code" href="namespacestd.html">std</a>::make_unique&lt;RecurseImpl&gt;(parent).release() : (Impl*)<a class="code" href="namespacestd.html">std</a>::make_unique&lt;SimpleImpl&gt;(parent).release())</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;<a class="code" href="class_cpp_common_1_1_directory_iterator.html#a9861f44890a06c41ba777989b40d1d5b">DirectoryIterator::DirectoryIterator</a>(<span class="keyword">const</span> Path&amp; parent, <span class="keywordtype">bool</span> recursive) : _pimpl(recursive ? (Impl*)<a class="code" href="namespacestd.html">std</a>::make_unique&lt;RecursiveImpl&gt;(parent).release() : (Impl*)<a class="code" href="namespacestd.html">std</a>::make_unique&lt;SimpleImpl&gt;(parent).release())</div>
 <div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;{</div>
 <div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;    _current = _pimpl-&gt;Next();</div>
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;}</div>
