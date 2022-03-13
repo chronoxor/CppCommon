@@ -144,7 +144,7 @@ std::vector<Path> Directory::GetEntries(const std::string& pattern)
     return result;
 }
 
-std::vector<Path> Directory::GetEntriesRecurse(const std::string& pattern)
+std::vector<Path> Directory::GetEntriesRecursive(const std::string& pattern)
 {
     std::vector<Path> result;
     std::regex matcher(pattern);
@@ -173,7 +173,7 @@ std::vector<Directory> Directory::GetDirectories(const std::string& pattern)
     return result;
 }
 
-std::vector<Directory> Directory::GetDirectoriesRecurse(const std::string& pattern)
+std::vector<Directory> Directory::GetDirectoriesRecursive(const std::string& pattern)
 {
     std::vector<Directory> result;
     std::regex matcher(pattern);
@@ -211,7 +211,7 @@ std::vector<File> Directory::GetFiles(const std::string& pattern)
     return result;
 }
 
-std::vector<File> Directory::GetFilesRecurse(const std::string& pattern)
+std::vector<File> Directory::GetFilesRecursive(const std::string& pattern)
 {
     std::vector<File> result;
     std::regex matcher(pattern);
@@ -244,7 +244,7 @@ std::vector<Symlink> Directory::GetSymlinks(const std::string& pattern)
     return result;
 }
 
-std::vector<Symlink> Directory::GetSymlinksRecurse(const std::string& pattern)
+std::vector<Symlink> Directory::GetSymlinksRecursive(const std::string& pattern)
 {
     std::vector<Symlink> result;
     std::regex matcher(pattern);

@@ -60,12 +60,12 @@ public:
 private:
     class Impl;
     class SimpleImpl;
-    class RecurseImpl;
+    class RecursiveImpl;
     std::unique_ptr<Impl> _pimpl;
     Path _current;
 
     DirectoryIterator(const Path& current);
-    DirectoryIterator(const Path& parent, bool recurse);
+    DirectoryIterator(const Path& parent, bool recursive);
 };
 
 } // namespace CppCommon

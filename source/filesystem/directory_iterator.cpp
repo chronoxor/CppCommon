@@ -28,7 +28,7 @@ namespace CppCommon {
 class DirectoryIterator::Impl
 {
     friend class SimpleImpl;
-    friend class RecurseImpl;
+    friend class RecursiveImpl;
 
 public:
     explicit Impl(const Path& parent) : _parent(parent), _current() {}
@@ -157,11 +157,11 @@ private:
     bool _end;
 };
 
-class DirectoryIterator::RecurseImpl : public DirectoryIterator::Impl
+class DirectoryIterator::RecursiveImpl : public DirectoryIterator::Impl
 {
 public:
-    explicit RecurseImpl(const Path& parent) : DirectoryIterator::Impl(parent), _current(parent) {}
-    ~RecurseImpl() = default;
+    explicit RecursiveImpl(const Path& parent) : DirectoryIterator::Impl(parent), _current(parent) {}
+    ~RecursiveImpl() = default;
 
     Path Next() override
     {
@@ -216,7 +216,7 @@ DirectoryIterator::DirectoryIterator(const Path& current) : _pimpl(nullptr), _cu
 {
 }
 
-DirectoryIterator::DirectoryIterator(const Path& parent, bool recurse) : _pimpl(recurse ? (Impl*)std::make_unique<RecurseImpl>(parent).release() : (Impl*)std::make_unique<SimpleImpl>(parent).release())
+DirectoryIterator::DirectoryIterator(const Path& parent, bool recursive) : _pimpl(recursive ? (Impl*)std::make_unique<RecursiveImpl>(parent).release() : (Impl*)std::make_unique<SimpleImpl>(parent).release())
 {
     _current = _pimpl->Next();
 }

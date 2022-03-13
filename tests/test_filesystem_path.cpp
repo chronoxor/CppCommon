@@ -568,20 +568,20 @@ TEST_CASE("Path copy & remove", "[CppCommon][FileSystem]")
     // Check copy directory entries
     REQUIRE(copy.GetEntries().size() == 8);
     REQUIRE(copy.GetEntries("test1.*").size() == 2);
-    REQUIRE(copy.GetEntriesRecurse().size() == 22);
-    REQUIRE(copy.GetEntriesRecurse("test2.*").size() == 9);
+    REQUIRE(copy.GetEntriesRecursive().size() == 22);
+    REQUIRE(copy.GetEntriesRecursive("test2.*").size() == 9);
     REQUIRE(copy.GetDirectories().size() == 5);
     REQUIRE(copy.GetDirectories("test1.*").size() == 1);
-    REQUIRE(copy.GetDirectoriesRecurse().size() == 9);
-    REQUIRE(copy.GetDirectoriesRecurse("test2.*").size() == 3);
+    REQUIRE(copy.GetDirectoriesRecursive().size() == 9);
+    REQUIRE(copy.GetDirectoriesRecursive("test2.*").size() == 3);
     REQUIRE(copy.GetFiles().size() == 3);
     REQUIRE(copy.GetFiles("test1.*").size() == 1);
-    REQUIRE(copy.GetFilesRecurse().size() == 13);
-    REQUIRE(copy.GetFilesRecurse("test2.*").size() == 6);
+    REQUIRE(copy.GetFilesRecursive().size() == 13);
+    REQUIRE(copy.GetFilesRecursive("test2.*").size() == 6);
     REQUIRE(copy.GetSymlinks().size() == 1);
     REQUIRE(copy.GetSymlinks("test5.*").size() == 1);
-    REQUIRE(copy.GetSymlinksRecurse().size() == 2);
-    REQUIRE(copy.GetSymlinksRecurse("test4.*").size() == 1);
+    REQUIRE(copy.GetSymlinksRecursive().size() == 2);
+    REQUIRE(copy.GetSymlinksRecursive("test4.*").size() == 1);
 
     // Remove complex directory structure
     REQUIRE(Path::RemoveAll(copy) == Path::current());

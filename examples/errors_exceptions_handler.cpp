@@ -104,10 +104,10 @@ void GenerateExceptionThrow()
 #pragma warning(push)
 #pragma warning(disable: 4717) // C4717: 'function' : recursive on all control paths, function will cause runtime stack overflow
 #endif
-void GenerateRecurseAlloc()
+void GenerateRecursiveAlloc()
 {
     [[maybe_unused]] uint8_t* buffer = new uint8_t[0x1FFFFFFF];
-    GenerateRecurseAlloc();
+    GenerateRecursiveAlloc();
 }
 #if defined(_MSC_VER)
 #pragma warning(pop)
@@ -201,7 +201,7 @@ void GenerateCustomException(int type)
             break;
 #if defined(_WIN32) || defined(_WIN64)
         case 10:
-            GenerateRecurseAlloc();
+            GenerateRecursiveAlloc();
             break;
         case 11:
             GeneratePureVirtualMethodCall();

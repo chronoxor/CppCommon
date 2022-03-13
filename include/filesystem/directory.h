@@ -74,7 +74,7 @@ public:
         \param pattern - Regular expression pattern (default is "")
         \return Entries collection
     */
-    std::vector<Path> GetEntriesRecurse(const std::string& pattern = "");
+    std::vector<Path> GetEntriesRecursive(const std::string& pattern = "");
 
     //! Get all directories (including symbolic link directories) in the current directory
     /*!
@@ -87,7 +87,7 @@ public:
         \param pattern - Regular expression pattern (default is "")
         \return Directories collection
     */
-    std::vector<Directory> GetDirectoriesRecurse(const std::string& pattern = "");
+    std::vector<Directory> GetDirectoriesRecursive(const std::string& pattern = "");
 
     //! Get all files (including symbolic link files) in the current directory
     /*!
@@ -100,7 +100,7 @@ public:
         \param pattern - Regular expression pattern (default is "")
         \return Files collection
     */
-    std::vector<File> GetFilesRecurse(const std::string& pattern = "");
+    std::vector<File> GetFilesRecursive(const std::string& pattern = "");
 
     //! Get all symbolic links (including symbolic link directories) in the current directory
     /*!
@@ -113,7 +113,7 @@ public:
         \param pattern - Regular expression pattern (default is "")
         \return Symbolic links collection
     */
-    std::vector<Symlink> GetSymlinksRecurse(const std::string& pattern = "");
+    std::vector<Symlink> GetSymlinksRecursive(const std::string& pattern = "");
 
     //! Create directory from the given path
     /*!
