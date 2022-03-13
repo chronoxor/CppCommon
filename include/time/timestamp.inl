@@ -21,10 +21,8 @@ inline void swap(Timestamp& timestamp1, Timestamp& timestamp2) noexcept
 
 } // namespace CppCommon
 
-namespace std {
-
 template <>
-struct hash<CppCommon::Timestamp>
+struct std::hash<CppCommon::Timestamp>
 {
     typedef CppCommon::Timestamp argument_type;
     typedef size_t result_type;
@@ -36,5 +34,3 @@ struct hash<CppCommon::Timestamp>
         return result;
     }
 };
-
-} // namespace std

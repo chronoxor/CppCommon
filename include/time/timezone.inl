@@ -23,10 +23,8 @@ inline void swap(Timezone& timezone1, Timezone& timezone2) noexcept
 
 } // namespace CppCommon
 
-namespace std {
-
 template <>
-struct hash<CppCommon::Timezone>
+struct std::hash<CppCommon::Timezone>
 {
     typedef CppCommon::Timezone argument_type;
     typedef size_t result_type;
@@ -40,5 +38,3 @@ struct hash<CppCommon::Timezone>
         return result;
     }
 };
-
-} // namespace std

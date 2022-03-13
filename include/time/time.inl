@@ -283,10 +283,8 @@ inline LocalTime::LocalTime(const UtcTime& time) : LocalTime(time.utcstamp())
 
 } // namespace CppCommon
 
-namespace std {
-
 template <>
-struct hash<CppCommon::Time>
+struct std::hash<CppCommon::Time>
 {
     typedef CppCommon::Time argument_type;
     typedef size_t result_type;
@@ -307,5 +305,3 @@ struct hash<CppCommon::Time>
         return result;
     }
 };
-
-} // namespace std

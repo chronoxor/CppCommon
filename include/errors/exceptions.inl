@@ -7,19 +7,13 @@
 */
 
 #if defined(FMT_VERSION)
-
-namespace fmt {
-
 template <>
-struct formatter<CppCommon::Exception> : formatter<std::string_view>
+struct fmt::formatter<CppCommon::Exception> : fmt::formatter<std::string_view>
 {
     template <typename FormatContext>
     auto format(const CppCommon::Exception& value, FormatContext& ctx) const
     {
-        return formatter<string_view>::format(value.string(), ctx);
+        return fmt::formatter<string_view>::format(value.string(), ctx);
     }
 };
-
-} // namespace fmt
-
 #endif

@@ -189,27 +189,19 @@ inline void swap(uint128_t& value1, uint128_t& value2) noexcept
 } // namespace CppCommon
 
 #if defined(FMT_VERSION)
-
-namespace fmt {
-
 template <>
-struct formatter<CppCommon::uint128_t> : formatter<std::string_view>
+struct fmt::formatter<CppCommon::uint128_t> : fmt::formatter<std::string_view>
 {
     template <typename FormatContext>
     auto format(const CppCommon::uint128_t& value, FormatContext& ctx) const
     {
-        return formatter<string_view>::format(value.string(10), ctx);
+        return fmt::formatter<string_view>::format(value.string(10), ctx);
     }
 };
-
-} // namespace fmt
-
 #endif
 
-namespace std {
-
 template <>
-struct hash<CppCommon::uint128_t>
+struct std::hash<CppCommon::uint128_t>
 {
     typedef CppCommon::uint128_t argument_type;
     typedef size_t result_type;
@@ -223,5 +215,3 @@ struct hash<CppCommon::uint128_t>
         return result;
     }
 };
-
-} // namespace std

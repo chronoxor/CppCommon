@@ -201,27 +201,19 @@ inline void swap(uint256_t& value1, uint256_t& value2) noexcept
 } // namespace CppCommon
 
 #if defined(FMT_VERSION)
-
-namespace fmt {
-
 template <>
-struct formatter<CppCommon::uint256_t> : formatter<std::string_view>
+struct fmt::formatter<CppCommon::uint256_t> : fmt::formatter<std::string_view>
 {
     template <typename FormatContext>
     auto format(const CppCommon::uint256_t& value, FormatContext& ctx) const
     {
-        return formatter<string_view>::format(value.string(10), ctx);
+        return fmt::formatter<string_view>::format(value.string(10), ctx);
     }
 };
-
-} // namespace fmt
-
 #endif
 
-namespace std {
-
 template <>
-struct hash<CppCommon::uint256_t>
+struct std::hash<CppCommon::uint256_t>
 {
     typedef CppCommon::uint256_t argument_type;
     typedef size_t result_type;
@@ -235,5 +227,3 @@ struct hash<CppCommon::uint256_t>
         return result;
     }
 };
-
-} // namespace std

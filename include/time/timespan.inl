@@ -21,10 +21,8 @@ inline void swap(Timespan& timespan1, Timespan& timespan2) noexcept
 
 } // namespace CppCommon
 
-namespace std {
-
 template <>
-struct hash<CppCommon::Timespan>
+struct std::hash<CppCommon::Timespan>
 {
     typedef CppCommon::Timespan argument_type;
     typedef size_t result_type;
@@ -36,5 +34,3 @@ struct hash<CppCommon::Timespan>
         return result;
     }
 };
-
-} // namespace std
