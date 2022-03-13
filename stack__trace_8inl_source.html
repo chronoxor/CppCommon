@@ -73,14 +73,8 @@ $(function() {
 <div class="contents">
 <a href="stack__trace_8inl.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#if defined(FMT_VERSION)</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">namespace </span>fmt {</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">template</span> &lt;&gt; <span class="keyword">struct </span>formatter&lt;<a class="code" href="namespace_cpp_common.html">CppCommon</a>::StackTrace&gt; : ostream_formatter {};</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;} <span class="comment">// namespace fmt</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">namespace </span>fmt { <span class="keyword">template</span> &lt;&gt; <span class="keyword">struct </span>formatter&lt;<a class="code" href="namespace_cpp_common.html">CppCommon</a>::StackTrace&gt; : ostream_formatter {}; }</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="anamespace_cpp_common_html"><div class="ttname"><a href="namespace_cpp_common.html">CppCommon</a></div><div class="ttdoc">C++ Common project definitions.</div><div class="ttdef"><b>Definition:</b> <a href="token__bucket_8h_source.html#l00014">token_bucket.h:14</a></div></div>
 <!-- start footer part -->

@@ -85,14 +85,8 @@ $(function() {
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;} <span class="comment">// namespace CppCommon</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#if defined(FMT_VERSION)</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">namespace </span>fmt {</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">template</span> &lt;&gt; <span class="keyword">struct </span>formatter&lt;<a class="code" href="namespace_cpp_common.html">CppCommon</a>::SourceLocation&gt; : ostream_formatter {};</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;} <span class="comment">// namespace fmt</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">namespace </span>fmt { <span class="keyword">template</span> &lt;&gt; <span class="keyword">struct </span>formatter&lt;<a class="code" href="namespace_cpp_common.html">CppCommon</a>::SourceLocation&gt; : ostream_formatter {}; } <span class="comment">// namespace fmt</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclass_cpp_common_1_1_source_location_html"><div class="ttname"><a href="class_cpp_common_1_1_source_location.html">CppCommon::SourceLocation</a></div><div class="ttdoc">Source location.</div><div class="ttdef"><b>Definition:</b> <a href="source__location_8h_source.html#l00029">source_location.h:29</a></div></div>
 <div class="ttc" id="aclass_cpp_common_1_1_source_location_html_a9ca875cf574b38a8fb42ddb8759e861b"><div class="ttname"><a href="class_cpp_common_1_1_source_location.html#a9ca875cf574b38a8fb42ddb8759e861b">CppCommon::SourceLocation::line</a></div><div class="ttdeci">int line() const noexcept</div><div class="ttdoc">Get line number.</div><div class="ttdef"><b>Definition:</b> <a href="source__location_8h_source.html#l00050">source_location.h:50</a></div></div>
