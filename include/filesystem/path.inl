@@ -52,7 +52,7 @@ struct formatter<CppCommon::Path> : formatter<std::string_view>
     template <typename FormatContext>
     auto format(const CppCommon::Path& value, FormatContext& ctx) const
     {
-        return formatter<string_view>::format(value._path, ctx);
+        return formatter<string_view>::format(value.string(), ctx);
     }
 };
 
