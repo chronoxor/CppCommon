@@ -15,6 +15,8 @@
 #elif defined(_WIN32) || defined(_WIN64)
 #include <fcntl.h>
 #include <io.h>
+#include <windows.h>
+#define CP_UTF16 65002
 #endif
 
 int main(int argc, char** argv)
@@ -23,7 +25,11 @@ int main(int argc, char** argv)
 #if defined(unix) || defined(__unix) || defined(__unix__)
     setlocale(LC_ALL, "");
 #elif defined(_WIN32) || defined(_WIN64)
+    _setmode(_fileno(stdin), _O_U16TEXT);
     _setmode(_fileno(stdout), _O_U16TEXT);
+    _setmode(_fileno(stderr), _O_U16TEXT);
+    SetConsoleCP(CP_UTF16);
+    SetConsoleOutputCP(CP_UTF16);
 #endif
 
     std::string utf8 = "\xD0\x9F\xD1\x80\xD0\xB8\xD0\xB2\xD0\xB5\xD1\x82\x20\xD0\xBC\xD0\xB8\xD1\x80\x21";
