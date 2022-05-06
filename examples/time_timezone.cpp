@@ -1,6 +1,6 @@
 /*!
     \file time_timezone.cpp
-    \brief Time zone example
+    \brief Timezone example
     \author Ivan Shynkarenka
     \date 18.07.2016
     \copyright MIT License

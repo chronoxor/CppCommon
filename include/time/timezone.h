@@ -1,6 +1,6 @@
 /*!
     \file timezone.h
-    \brief Time zone definition
+    \brief Timezone definition
     \author Ivan Shynkarenka
     \date 18.07.2016
     \copyright MIT License
@@ -15,20 +15,20 @@
 
 namespace CppCommon {
 
-//! Time zone
+//! Timezone
 /*!
-    Time zone wraps the current time zone and dynamic daylight saving time settings.
+    Timezone wraps the current timezone and dynamic daylight saving time settings.
 
     Not thread-safe.
 */
 class Timezone
 {
 public:
-    //! Initialize timezone with a current local time zone
+    //! Initialize timezone with a current local timezone
     Timezone();
-    //! Initialize time zone with a given local time offset and daylight saving time offset
+    //! Initialize timezone with a given local time offset and daylight saving time offset
     /*!
-        \param name - Time zone name
+        \param name - Timezone name
         \param offset - Local time offset
         \param dstoffset - Daylight saving time offset (default is Timespan::zero())
     */
@@ -56,24 +56,24 @@ public:
     friend bool operator<=(const Timezone& timezone1, const Timezone& timezone2) noexcept
     { return timezone1.total() <= timezone2.total(); }
 
-    //! Get time zone name
+    //! Get timezone name
     const std::string& name() const noexcept { return _name; }
-    //! Get time zone offset
+    //! Get timezone offset
     const Timespan& offset() const noexcept { return _offset; }
-    //! Get time zone daylight saving time offset
+    //! Get timezone daylight saving time offset
     const Timespan& daylight() const noexcept { return _dstoffset; }
 
-    //! Get time zone total offset
+    //! Get timezone total offset
     Timespan total() const noexcept { return _offset + _dstoffset; }
 
-    //! Convert UTC time to local time using the current time zone
+    //! Convert UTC time to local time using the current timezone
     /*!
         \param utctime - UTC time
         \return Local time
     */
     LocalTime Convert(const UtcTime& utctime) const
     { return LocalTime(utctime + total()); }
-    //! Convert local time to UTC time using the current time zone
+    //! Convert local time to UTC time using the current timezone
     /*!
         \param localtime - Local time
         \return Local time
@@ -81,20 +81,20 @@ public:
     UtcTime Convert(const LocalTime& localtime) const
     { return UtcTime(localtime - total()); }
 
-    //! Get the UTC time zone (Greenwich Mean Time)
+    //! Get the UTC timezone (Greenwich Mean Time)
     /*!
         Thread-safe.
 
-        \return UTC time zone
+        \return UTC timezone
     */
     static Timezone utc()
     { return Timezone("GMT", Timespan::zero()); }
 
-    //! Get the local time zone
+    //! Get the local timezone
     /*!
         Thread-safe.
 
-        \return Local time zone
+        \return Local timezone
     */
     static Timezone local()
     { return Timezone(); }
@@ -104,15 +104,15 @@ public:
     friend void swap(Timezone& timezone1, Timezone& timezone2) noexcept;
 
 protected:
-    //! Time zone name
+    //! Timezone name
     std::string _name;
-    //! Time zone offset
+    //! Timezone offset
     Timespan _offset;
-    //! Time zone daylight saving time offset
+    //! Timezone daylight saving time offset
     Timespan _dstoffset;
 };
 
-/*! \example time_timezone.cpp Time zone example */
+/*! \example time_timezone.cpp Timezone example */
 
 } // namespace CppCommon
 

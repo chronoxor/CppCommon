@@ -1,6 +1,6 @@
 /*!
     \file timezone.inl
-    \brief Time zone inline implementation
+    \brief Timezone inline implementation
     \author Ivan Shynkarenka
     \date 18.07.2016
     \copyright MIT License

@@ -1,6 +1,6 @@
 /*!
     \file timezone.cpp
-    \brief Time zone implementation
+    \brief Timezone implementation
     \author Ivan Shynkarenka
     \date 18.07.2016
     \copyright MIT License
@@ -57,11 +57,11 @@ Timezone::Timezone() : _name(), _offset(Timespan::zero()), _dstoffset(Timespan::
             _dstoffset = -Timespan::minutes(dtzi.DaylightBias);
             break;
         default:
-            throwex SystemException("Cannot get dynamic time zone informaction!");
+            throwex SystemException("Cannot get dynamic timezone informaction!");
     }
-    // Convert time zone name to UTF-8 encoding.
+    // Convert timezone name to UTF-8 encoding.
     if (!WideCharToMultiByte(CP_UTF8, WC_ERR_INVALID_CHARS, name, -1, buffer, 1024, nullptr, nullptr))
-        throwex SystemException("Cannot get dynamic time zone key name!");
+        throwex SystemException("Cannot get dynamic timezone key name!");
     _name = buffer;
 #endif
 }
