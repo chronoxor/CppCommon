@@ -9,6 +9,7 @@
 #include "string/string_utils.h"
 
 #include <cassert>
+#include <regex>
 
 namespace CppCommon {
 
@@ -31,6 +32,31 @@ bool StringUtils::IsBlank(std::string_view str)
             return false;
 
     return true;
+}
+
+bool StringUtils::IsPatternMatch(const std::string& patterns, const std::string& str)
+{
+    bool result = false;
+    auto keys = Split(patterns, ';');
+    for (const std::string& key : keys)
+    {
+        bool negative = StartsWith(key, "!");
+        std::string pattern = negative ? key.substr(1) : key;
+
+        // Try to match regex pattern
+        try
+        {
+            std::regex expression(pattern);
+            bool matched = std::regex_match(str, expression);
+            if (matched)
+                return !negative;
+        }
+        catch (const std::regex_error&) {}
+
+        // Last negative pattern should success result
+        result = negative;
+    }
+    return result;
 }
 
 std::string StringUtils::ToLTrim(std::string_view str)

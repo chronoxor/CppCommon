@@ -88,6 +88,13 @@ TEST_CASE("String utilities", "[CppCommon][String]")
     REQUIRE(CppCommon::StringUtils::Join(CppCommon::StringUtils::Split("a foo a bar a baz", ' '), '+') == "a+foo+a+bar+a+baz");
     REQUIRE(CppCommon::StringUtils::Join(CppCommon::StringUtils::Split("a foo a bar a baz", "a "), "the ") == "the foo the bar the baz");
 
+    REQUIRE(CppCommon::StringUtils::IsPatternMatch("Demo.*;Live.*", "DemoAccount"));
+    REQUIRE(CppCommon::StringUtils::IsPatternMatch("Demo.*;Live.*", "LiveAccount"));
+    REQUIRE(!CppCommon::StringUtils::IsPatternMatch("Demo.*;Live.*", "UnknownAccount"));
+    REQUIRE(!CppCommon::StringUtils::IsPatternMatch("!Demo.*;!Live.*", "DemoAccount"));
+    REQUIRE(!CppCommon::StringUtils::IsPatternMatch("!Demo.*;!Live.*", "LiveAccount"));
+    REQUIRE(CppCommon::StringUtils::IsPatternMatch("!Demo.*;!Live.*", "UnknownAccount"));
+
     REQUIRE(CppCommon::StringUtils::FromString<bool>("true"));
     REQUIRE(CppCommon::StringUtils::FromString<bool>("yes"));
     REQUIRE(CppCommon::StringUtils::FromString<bool>("on"));

@@ -54,6 +54,24 @@ public:
     */
     static bool IsBlank(std::string_view str);
 
+    //! Is the given string match to the given patterns?
+    /*!
+        Patterns string contains one or more regular expressions separated by ';'.
+        If the regular expression has '!' prefix it treats as 'not matching'.
+        Examples:
+            "Demo.*;Live.*" + "DemoAccount" -> true
+            "Demo.*;Live.*" + "LiveAccount" -> true
+            "Demo.*;Live.*" + "UnknownAccount" -> false
+            "!Demo.*;!Live.*" + "DemoAccount" -> false
+            "!Demo.*;!Live.*" + "LiveAccount" -> false
+            "!Demo.*;!Live.*" + "UnknownAccount" -> true
+
+        \param patterns - Patterns to match with
+        \param str - String to match
+        \return 'true' if given string matches, 'false' if given string does not match
+    */
+    static bool IsPatternMatch(const std::string& patterns, const std::string& str);
+
     //! Convert the given character to lower case
     /*!
         \param ch - Character to convert
