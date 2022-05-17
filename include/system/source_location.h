@@ -9,6 +9,8 @@
 #ifndef CPPCOMMON_SYSTEM_SOURCE_LOCATION_H
 #define CPPCOMMON_SYSTEM_SOURCE_LOCATION_H
 
+#include "string/format.h"
+
 #include <sstream>
 #include <string>
 

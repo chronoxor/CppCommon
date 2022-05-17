@@ -11,6 +11,7 @@
 
 #include "common/flags.h"
 #include "string/encoding.h"
+#include "string/format.h"
 #include "time/timestamp.h"
 
 #include <string>

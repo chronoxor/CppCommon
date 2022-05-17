@@ -9,6 +9,8 @@
 #ifndef CPPCOMMON_UINT128_H
 #define CPPCOMMON_UINT128_H
 
+#include "string/format.h"
+
 #include <cstdint>
 #include <iostream>
 #include <stdexcept>
