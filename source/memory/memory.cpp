@@ -25,6 +25,7 @@
 #include <unistd.h>
 #elif defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
+#include <wincrypt.h>
 #endif
 
 namespace CppCommon {

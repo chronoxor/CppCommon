@@ -12,6 +12,7 @@
 
 #if defined(__MSYS__) || defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
+#include <rpc.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
 #include <uuid/uuid.h>
 #endif

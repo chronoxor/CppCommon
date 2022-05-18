@@ -18,6 +18,7 @@
 #include <vector>
 #elif defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
+#include <winioctl.h>
 //  REPARSE_DATA_BUFFER related definitions are found in ntifs.h, which is part of the
 //  Windows Device Driver Kit. Since that's inconvenient, the definitions are provided
 //  here. See http://msdn.microsoft.com/en-us/library/ms791514.aspx
