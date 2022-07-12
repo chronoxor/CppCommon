@@ -11,7 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-
       - name: "Setup cmake"
         run: cmake --version
 
