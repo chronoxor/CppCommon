@@ -91,147 +91,148 @@ $(function() {
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &lt;unistd.h&gt;</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;windows.h&gt;</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_cpp_common.html">CppCommon</a> {</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_memory.html#a96d583655a03ba59f877c86a4f70f09e">   32</a></span>&#160;int64_t <a class="code" href="class_cpp_common_1_1_memory.html#a96d583655a03ba59f877c86a4f70f09e">Memory::RamTotal</a>()</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;{</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#if defined(__APPLE__)</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    int64_t memsize = 0;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordtype">size_t</span> size = <span class="keyword">sizeof</span>(memsize);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordflow">if</span> (sysctlbyname(<span class="stringliteral">&quot;hw.memsize&quot;</span>, &amp;memsize, &amp;size, <span class="keyword">nullptr</span>, 0) == 0)</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keywordflow">return</span> memsize;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#elif defined(unix) || defined(__unix) || defined(__unix__)</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    int64_t pages = sysconf(_SC_PHYS_PAGES);</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    int64_t page_size = sysconf(_SC_PAGESIZE);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordflow">if</span> ((pages &gt; 0) &amp;&amp; (page_size &gt; 0))</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keywordflow">return</span> pages * page_size;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    MEMORYSTATUSEX status;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    status.dwLength = <span class="keyword">sizeof</span>(status);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    GlobalMemoryStatusEx(&amp;status);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordflow">return</span> status.ullTotalPhys;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">    #error Unsupported platform</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;}</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_memory.html#a3b0bcc03213873e1828f7d0f0961a4c0">   58</a></span>&#160;int64_t <a class="code" href="class_cpp_common_1_1_memory.html#a3b0bcc03213873e1828f7d0f0961a4c0">Memory::RamFree</a>()</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;{</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#if defined(__APPLE__)</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    mach_port_t host_port = mach_host_self();</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordflow">if</span> (host_port == MACH_PORT_NULL)</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    vm_size_t page_size = 0;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    host_page_size(host_port, &amp;page_size);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    vm_statistics_data_t vmstat;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    mach_msg_type_number_t count = HOST_VM_INFO_COUNT;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    kern_return_t kernReturn = host_statistics(host_port, HOST_VM_INFO, (host_info_t)&amp;vmstat, &amp;count);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordflow">if</span> (kernReturn != KERN_SUCCESS)</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    [[maybe_unused]] int64_t used_mem = (vmstat.active_count + vmstat.inactive_count + vmstat.wire_count) * page_size;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    int64_t free_mem = vmstat.free_count * page_size;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keywordflow">return</span> free_mem;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor">#elif defined(unix) || defined(__unix) || defined(__unix__)</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    int64_t pages = sysconf(_SC_AVPHYS_PAGES);</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    int64_t page_size = sysconf(_SC_PAGESIZE);</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keywordflow">if</span> ((pages &gt; 0) &amp;&amp; (page_size &gt; 0))</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="keywordflow">return</span> pages * page_size;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    MEMORYSTATUSEX status;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    status.dwLength = <span class="keyword">sizeof</span>(status);</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    GlobalMemoryStatusEx(&amp;status);</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordflow">return</span> status.ullAvailPhys;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="preprocessor">    #error Unsupported platform</span></div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;}</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_memory.html#a056f6708ca3f1d954fd5ef775bb4f543">   94</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_cpp_common_1_1_memory.html#a056f6708ca3f1d954fd5ef775bb4f543">Memory::IsZero</a>(<span class="keyword">const</span> <span class="keywordtype">void</span>* buffer, <span class="keywordtype">size_t</span> size) noexcept</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;{</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">char</span>* ptr = (<span class="keyword">const</span> <span class="keywordtype">char</span>*)buffer;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; size; ++i)</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <span class="keywordflow">if</span> (ptr[i] != 0)</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;}</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
-<div class="line"><a name="l00103"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_memory.html#aef27bd11c30bf91c715eb5c1a827fde0">  103</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_cpp_common_1_1_memory.html#aef27bd11c30bf91c715eb5c1a827fde0">Memory::ZeroFill</a>(<span class="keywordtype">void</span>* buffer, <span class="keywordtype">size_t</span> size)</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;{</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="preprocessor">#ifdef __STDC_LIB_EXT1__</span></div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    memset_s(buffer, size, 0, size);</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    SecureZeroMemory(buffer, size);</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <span class="keyword">volatile</span> <span class="keywordtype">char</span>* ptr = (<span class="keyword">volatile</span> <span class="keywordtype">char</span>*)buffer;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    <span class="keywordflow">while</span> (size--)</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        *ptr++ = 0;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;}</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
-<div class="line"><a name="l00116"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_memory.html#af7f4cb4fa7ef24e8fc741049c3342a17">  116</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_cpp_common_1_1_memory.html#af7f4cb4fa7ef24e8fc741049c3342a17">Memory::RandomFill</a>(<span class="keywordtype">void</span>* buffer, <span class="keywordtype">size_t</span> size)</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;{</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="preprocessor">#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)</span></div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <span class="keywordtype">int</span> fd = open(<span class="stringliteral">&quot;/dev/urandom&quot;</span>, O_RDONLY);</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <span class="keywordflow">if</span> (fd &lt; 0)</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> <a class="code" href="class_cpp_common_1_1_system_exception.html">SystemException</a>(<span class="stringliteral">&quot;Cannot open &#39;/dev/urandom&#39; file for reading!&quot;</span>);</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    ssize_t count = read(fd, buffer, size);</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    <span class="keywordflow">if</span> (count &lt; 0)</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> <a class="code" href="class_cpp_common_1_1_system_exception.html">SystemException</a>(<span class="stringliteral">&quot;Cannot read from &#39;/dev/urandom&#39; file!&quot;</span>);</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    <span class="keywordtype">int</span> result = close(fd);</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    <span class="keywordflow">if</span> (result != 0)</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> <a class="code" href="class_cpp_common_1_1_system_exception.html">SystemException</a>(<span class="stringliteral">&quot;Cannot close &#39;/dev/urandom&#39; file!&quot;</span>);</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    <span class="keywordtype">char</span>* ptr = (<span class="keywordtype">char</span>*)buffer;</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">size_t</span> i = 0; i &lt; size; ++i)</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        ptr[i] = rand() % 256;</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;}</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160; </div>
-<div class="line"><a name="l00135"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_memory.html#a2adf0415f9fc7124afae587f9828edc9">  135</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_cpp_common_1_1_memory.html#a2adf0415f9fc7124afae587f9828edc9">Memory::CryptoFill</a>(<span class="keywordtype">void</span>* buffer, <span class="keywordtype">size_t</span> size)</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;{</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="preprocessor">#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)</span></div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    <span class="keywordtype">int</span> fd = open(<span class="stringliteral">&quot;/dev/random&quot;</span>, O_RDONLY);</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    <span class="keywordflow">if</span> (fd &lt; 0)</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;        <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> <a class="code" href="class_cpp_common_1_1_system_exception.html">SystemException</a>(<span class="stringliteral">&quot;Cannot open &#39;/dev/random&#39; file for reading!&quot;</span>);</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    ssize_t count = read(fd, buffer, size);</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    <span class="keywordflow">if</span> (count &lt; 0)</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;        <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> <a class="code" href="class_cpp_common_1_1_system_exception.html">SystemException</a>(<span class="stringliteral">&quot;Cannot read from &#39;/dev/random&#39; file!&quot;</span>);</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    <span class="keywordtype">int</span> result = close(fd);</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    <span class="keywordflow">if</span> (result != 0)</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;        <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> <a class="code" href="class_cpp_common_1_1_system_exception.html">SystemException</a>(<span class="stringliteral">&quot;Cannot close &#39;/dev/random&#39; file!&quot;</span>);</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    HCRYPTPROV hCryptContext;</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    <span class="keywordflow">if</span> (!CryptAcquireContext(&amp;hCryptContext, NULL, NULL, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT))</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;        <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> <a class="code" href="class_cpp_common_1_1_system_exception.html">SystemException</a>(<span class="stringliteral">&quot;Cannot acquire cryptographic service provider context!&quot;</span>);</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    <span class="keywordflow">if</span> (!CryptGenRandom(hCryptContext, (DWORD)size, (BYTE*)buffer))</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;        <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> <a class="code" href="class_cpp_common_1_1_system_exception.html">SystemException</a>(<span class="stringliteral">&quot;Cannot generate random bytes using cryptographic service provider context!&quot;</span>);</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    <span class="keywordflow">if</span> (!CryptReleaseContext(hCryptContext, 0))</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;        <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> <a class="code" href="class_cpp_common_1_1_system_exception.html">SystemException</a>(<span class="stringliteral">&quot;Cannot release cryptographic service provider context!&quot;</span>);</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;}</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160; </div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;} <span class="comment">// namespace CppCommon</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;wincrypt.h&gt;</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_cpp_common.html">CppCommon</a> {</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_memory.html#a96d583655a03ba59f877c86a4f70f09e">   33</a></span>&#160;int64_t <a class="code" href="class_cpp_common_1_1_memory.html#a96d583655a03ba59f877c86a4f70f09e">Memory::RamTotal</a>()</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;{</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#if defined(__APPLE__)</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    int64_t memsize = 0;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordtype">size_t</span> size = <span class="keyword">sizeof</span>(memsize);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordflow">if</span> (sysctlbyname(<span class="stringliteral">&quot;hw.memsize&quot;</span>, &amp;memsize, &amp;size, <span class="keyword">nullptr</span>, 0) == 0)</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keywordflow">return</span> memsize;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#elif defined(unix) || defined(__unix) || defined(__unix__)</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    int64_t pages = sysconf(_SC_PHYS_PAGES);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    int64_t page_size = sysconf(_SC_PAGESIZE);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordflow">if</span> ((pages &gt; 0) &amp;&amp; (page_size &gt; 0))</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keywordflow">return</span> pages * page_size;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    MEMORYSTATUSEX status;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    status.dwLength = <span class="keyword">sizeof</span>(status);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    GlobalMemoryStatusEx(&amp;status);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordflow">return</span> status.ullTotalPhys;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">    #error Unsupported platform</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;}</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_memory.html#a3b0bcc03213873e1828f7d0f0961a4c0">   59</a></span>&#160;int64_t <a class="code" href="class_cpp_common_1_1_memory.html#a3b0bcc03213873e1828f7d0f0961a4c0">Memory::RamFree</a>()</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;{</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#if defined(__APPLE__)</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    mach_port_t host_port = mach_host_self();</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordflow">if</span> (host_port == MACH_PORT_NULL)</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    vm_size_t page_size = 0;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    host_page_size(host_port, &amp;page_size);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    vm_statistics_data_t vmstat;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    mach_msg_type_number_t count = HOST_VM_INFO_COUNT;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    kern_return_t kernReturn = host_statistics(host_port, HOST_VM_INFO, (host_info_t)&amp;vmstat, &amp;count);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordflow">if</span> (kernReturn != KERN_SUCCESS)</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    [[maybe_unused]] int64_t used_mem = (vmstat.active_count + vmstat.inactive_count + vmstat.wire_count) * page_size;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    int64_t free_mem = vmstat.free_count * page_size;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keywordflow">return</span> free_mem;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">#elif defined(unix) || defined(__unix) || defined(__unix__)</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    int64_t pages = sysconf(_SC_AVPHYS_PAGES);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    int64_t page_size = sysconf(_SC_PAGESIZE);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keywordflow">if</span> ((pages &gt; 0) &amp;&amp; (page_size &gt; 0))</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <span class="keywordflow">return</span> pages * page_size;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    MEMORYSTATUSEX status;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    status.dwLength = <span class="keyword">sizeof</span>(status);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    GlobalMemoryStatusEx(&amp;status);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keywordflow">return</span> status.ullAvailPhys;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor">    #error Unsupported platform</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;}</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
+<div class="line"><a name="l00095"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_memory.html#a056f6708ca3f1d954fd5ef775bb4f543">   95</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_cpp_common_1_1_memory.html#a056f6708ca3f1d954fd5ef775bb4f543">Memory::IsZero</a>(<span class="keyword">const</span> <span class="keywordtype">void</span>* buffer, <span class="keywordtype">size_t</span> size) noexcept</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;{</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">char</span>* ptr = (<span class="keyword">const</span> <span class="keywordtype">char</span>*)buffer;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; size; ++i)</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="keywordflow">if</span> (ptr[i] != 0)</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;}</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
+<div class="line"><a name="l00104"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_memory.html#aef27bd11c30bf91c715eb5c1a827fde0">  104</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_cpp_common_1_1_memory.html#aef27bd11c30bf91c715eb5c1a827fde0">Memory::ZeroFill</a>(<span class="keywordtype">void</span>* buffer, <span class="keywordtype">size_t</span> size)</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;{</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="preprocessor">#ifdef __STDC_LIB_EXT1__</span></div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    memset_s(buffer, size, 0, size);</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    SecureZeroMemory(buffer, size);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    <span class="keyword">volatile</span> <span class="keywordtype">char</span>* ptr = (<span class="keyword">volatile</span> <span class="keywordtype">char</span>*)buffer;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <span class="keywordflow">while</span> (size--)</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        *ptr++ = 0;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;}</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
+<div class="line"><a name="l00117"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_memory.html#af7f4cb4fa7ef24e8fc741049c3342a17">  117</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_cpp_common_1_1_memory.html#af7f4cb4fa7ef24e8fc741049c3342a17">Memory::RandomFill</a>(<span class="keywordtype">void</span>* buffer, <span class="keywordtype">size_t</span> size)</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;{</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="preprocessor">#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)</span></div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <span class="keywordtype">int</span> fd = open(<span class="stringliteral">&quot;/dev/urandom&quot;</span>, O_RDONLY);</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <span class="keywordflow">if</span> (fd &lt; 0)</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> <a class="code" href="class_cpp_common_1_1_system_exception.html">SystemException</a>(<span class="stringliteral">&quot;Cannot open &#39;/dev/urandom&#39; file for reading!&quot;</span>);</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    ssize_t count = read(fd, buffer, size);</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    <span class="keywordflow">if</span> (count &lt; 0)</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> <a class="code" href="class_cpp_common_1_1_system_exception.html">SystemException</a>(<span class="stringliteral">&quot;Cannot read from &#39;/dev/urandom&#39; file!&quot;</span>);</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    <span class="keywordtype">int</span> result = close(fd);</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <span class="keywordflow">if</span> (result != 0)</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> <a class="code" href="class_cpp_common_1_1_system_exception.html">SystemException</a>(<span class="stringliteral">&quot;Cannot close &#39;/dev/urandom&#39; file!&quot;</span>);</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    <span class="keywordtype">char</span>* ptr = (<span class="keywordtype">char</span>*)buffer;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">size_t</span> i = 0; i &lt; size; ++i)</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;        ptr[i] = rand() % 256;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;}</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160; </div>
+<div class="line"><a name="l00136"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_memory.html#a2adf0415f9fc7124afae587f9828edc9">  136</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_cpp_common_1_1_memory.html#a2adf0415f9fc7124afae587f9828edc9">Memory::CryptoFill</a>(<span class="keywordtype">void</span>* buffer, <span class="keywordtype">size_t</span> size)</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;{</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="preprocessor">#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)</span></div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    <span class="keywordtype">int</span> fd = open(<span class="stringliteral">&quot;/dev/random&quot;</span>, O_RDONLY);</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    <span class="keywordflow">if</span> (fd &lt; 0)</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;        <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> <a class="code" href="class_cpp_common_1_1_system_exception.html">SystemException</a>(<span class="stringliteral">&quot;Cannot open &#39;/dev/random&#39; file for reading!&quot;</span>);</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    ssize_t count = read(fd, buffer, size);</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    <span class="keywordflow">if</span> (count &lt; 0)</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;        <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> <a class="code" href="class_cpp_common_1_1_system_exception.html">SystemException</a>(<span class="stringliteral">&quot;Cannot read from &#39;/dev/random&#39; file!&quot;</span>);</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    <span class="keywordtype">int</span> result = close(fd);</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    <span class="keywordflow">if</span> (result != 0)</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;        <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> <a class="code" href="class_cpp_common_1_1_system_exception.html">SystemException</a>(<span class="stringliteral">&quot;Cannot close &#39;/dev/random&#39; file!&quot;</span>);</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;<span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    HCRYPTPROV hCryptContext;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    <span class="keywordflow">if</span> (!CryptAcquireContext(&amp;hCryptContext, NULL, NULL, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT))</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;        <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> <a class="code" href="class_cpp_common_1_1_system_exception.html">SystemException</a>(<span class="stringliteral">&quot;Cannot acquire cryptographic service provider context!&quot;</span>);</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <span class="keywordflow">if</span> (!CryptGenRandom(hCryptContext, (DWORD)size, (BYTE*)buffer))</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;        <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> <a class="code" href="class_cpp_common_1_1_system_exception.html">SystemException</a>(<span class="stringliteral">&quot;Cannot generate random bytes using cryptographic service provider context!&quot;</span>);</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    <span class="keywordflow">if</span> (!CryptReleaseContext(hCryptContext, 0))</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;        <a class="code" href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a> <a class="code" href="class_cpp_common_1_1_system_exception.html">SystemException</a>(<span class="stringliteral">&quot;Cannot release cryptographic service provider context!&quot;</span>);</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;}</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160; </div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;} <span class="comment">// namespace CppCommon</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclass_cpp_common_1_1_system_exception_html"><div class="ttname"><a href="class_cpp_common_1_1_system_exception.html">CppCommon::SystemException</a></div><div class="ttdoc">System exception.</div><div class="ttdef"><b>Definition:</b> <a href="errors_2exceptions_8h_source.html#l00099">exceptions.h:99</a></div></div>
-<div class="ttc" id="aclass_cpp_common_1_1_memory_html_a2adf0415f9fc7124afae587f9828edc9"><div class="ttname"><a href="class_cpp_common_1_1_memory.html#a2adf0415f9fc7124afae587f9828edc9">CppCommon::Memory::CryptoFill</a></div><div class="ttdeci">static void CryptoFill(void *buffer, size_t size)</div><div class="ttdoc">Fill the given memory buffer with cryptographic strong random bytes.</div><div class="ttdef"><b>Definition:</b> <a href="memory_8cpp_source.html#l00135">memory.cpp:135</a></div></div>
-<div class="ttc" id="aclass_cpp_common_1_1_memory_html_aef27bd11c30bf91c715eb5c1a827fde0"><div class="ttname"><a href="class_cpp_common_1_1_memory.html#aef27bd11c30bf91c715eb5c1a827fde0">CppCommon::Memory::ZeroFill</a></div><div class="ttdeci">static void ZeroFill(void *buffer, size_t size)</div><div class="ttdoc">Fill the given memory buffer with zeros.</div><div class="ttdef"><b>Definition:</b> <a href="memory_8cpp_source.html#l00103">memory.cpp:103</a></div></div>
-<div class="ttc" id="aclass_cpp_common_1_1_memory_html_af7f4cb4fa7ef24e8fc741049c3342a17"><div class="ttname"><a href="class_cpp_common_1_1_memory.html#af7f4cb4fa7ef24e8fc741049c3342a17">CppCommon::Memory::RandomFill</a></div><div class="ttdeci">static void RandomFill(void *buffer, size_t size)</div><div class="ttdoc">Fill the given memory buffer with random bytes.</div><div class="ttdef"><b>Definition:</b> <a href="memory_8cpp_source.html#l00116">memory.cpp:116</a></div></div>
+<div class="ttc" id="aclass_cpp_common_1_1_memory_html_a2adf0415f9fc7124afae587f9828edc9"><div class="ttname"><a href="class_cpp_common_1_1_memory.html#a2adf0415f9fc7124afae587f9828edc9">CppCommon::Memory::CryptoFill</a></div><div class="ttdeci">static void CryptoFill(void *buffer, size_t size)</div><div class="ttdoc">Fill the given memory buffer with cryptographic strong random bytes.</div><div class="ttdef"><b>Definition:</b> <a href="memory_8cpp_source.html#l00136">memory.cpp:136</a></div></div>
+<div class="ttc" id="aclass_cpp_common_1_1_memory_html_aef27bd11c30bf91c715eb5c1a827fde0"><div class="ttname"><a href="class_cpp_common_1_1_memory.html#aef27bd11c30bf91c715eb5c1a827fde0">CppCommon::Memory::ZeroFill</a></div><div class="ttdeci">static void ZeroFill(void *buffer, size_t size)</div><div class="ttdoc">Fill the given memory buffer with zeros.</div><div class="ttdef"><b>Definition:</b> <a href="memory_8cpp_source.html#l00104">memory.cpp:104</a></div></div>
+<div class="ttc" id="aclass_cpp_common_1_1_memory_html_af7f4cb4fa7ef24e8fc741049c3342a17"><div class="ttname"><a href="class_cpp_common_1_1_memory.html#af7f4cb4fa7ef24e8fc741049c3342a17">CppCommon::Memory::RandomFill</a></div><div class="ttdeci">static void RandomFill(void *buffer, size_t size)</div><div class="ttdoc">Fill the given memory buffer with random bytes.</div><div class="ttdef"><b>Definition:</b> <a href="memory_8cpp_source.html#l00117">memory.cpp:117</a></div></div>
 <div class="ttc" id="aerrors_2exceptions_8h_html_a86823b8c75aa8f6c4c988c8c57e36b0d"><div class="ttname"><a href="errors_2exceptions_8h.html#a86823b8c75aa8f6c4c988c8c57e36b0d">throwex</a></div><div class="ttdeci">#define throwex</div><div class="ttdoc">Throw extended exception macro.</div><div class="ttdef"><b>Definition:</b> <a href="errors_2exceptions_8h_source.html#l00023">exceptions.h:23</a></div></div>
 <div class="ttc" id="anamespace_cpp_common_html"><div class="ttname"><a href="namespace_cpp_common.html">CppCommon</a></div><div class="ttdoc">C++ Common project definitions.</div><div class="ttdef"><b>Definition:</b> <a href="token__bucket_8h_source.html#l00014">token_bucket.h:14</a></div></div>
-<div class="ttc" id="aclass_cpp_common_1_1_memory_html_a96d583655a03ba59f877c86a4f70f09e"><div class="ttname"><a href="class_cpp_common_1_1_memory.html#a96d583655a03ba59f877c86a4f70f09e">CppCommon::Memory::RamTotal</a></div><div class="ttdeci">static int64_t RamTotal()</div><div class="ttdoc">Total RAM in bytes.</div><div class="ttdef"><b>Definition:</b> <a href="memory_8cpp_source.html#l00032">memory.cpp:32</a></div></div>
-<div class="ttc" id="aclass_cpp_common_1_1_memory_html_a3b0bcc03213873e1828f7d0f0961a4c0"><div class="ttname"><a href="class_cpp_common_1_1_memory.html#a3b0bcc03213873e1828f7d0f0961a4c0">CppCommon::Memory::RamFree</a></div><div class="ttdeci">static int64_t RamFree()</div><div class="ttdoc">Free RAM in bytes.</div><div class="ttdef"><b>Definition:</b> <a href="memory_8cpp_source.html#l00058">memory.cpp:58</a></div></div>
-<div class="ttc" id="aclass_cpp_common_1_1_memory_html_a056f6708ca3f1d954fd5ef775bb4f543"><div class="ttname"><a href="class_cpp_common_1_1_memory.html#a056f6708ca3f1d954fd5ef775bb4f543">CppCommon::Memory::IsZero</a></div><div class="ttdeci">static bool IsZero(const void *buffer, size_t size) noexcept</div><div class="ttdoc">Is the given memory buffer filled with zeros?</div><div class="ttdef"><b>Definition:</b> <a href="memory_8cpp_source.html#l00094">memory.cpp:94</a></div></div>
+<div class="ttc" id="aclass_cpp_common_1_1_memory_html_a96d583655a03ba59f877c86a4f70f09e"><div class="ttname"><a href="class_cpp_common_1_1_memory.html#a96d583655a03ba59f877c86a4f70f09e">CppCommon::Memory::RamTotal</a></div><div class="ttdeci">static int64_t RamTotal()</div><div class="ttdoc">Total RAM in bytes.</div><div class="ttdef"><b>Definition:</b> <a href="memory_8cpp_source.html#l00033">memory.cpp:33</a></div></div>
+<div class="ttc" id="aclass_cpp_common_1_1_memory_html_a3b0bcc03213873e1828f7d0f0961a4c0"><div class="ttname"><a href="class_cpp_common_1_1_memory.html#a3b0bcc03213873e1828f7d0f0961a4c0">CppCommon::Memory::RamFree</a></div><div class="ttdeci">static int64_t RamFree()</div><div class="ttdoc">Free RAM in bytes.</div><div class="ttdef"><b>Definition:</b> <a href="memory_8cpp_source.html#l00059">memory.cpp:59</a></div></div>
+<div class="ttc" id="aclass_cpp_common_1_1_memory_html_a056f6708ca3f1d954fd5ef775bb4f543"><div class="ttname"><a href="class_cpp_common_1_1_memory.html#a056f6708ca3f1d954fd5ef775bb4f543">CppCommon::Memory::IsZero</a></div><div class="ttdeci">static bool IsZero(const void *buffer, size_t size) noexcept</div><div class="ttdoc">Is the given memory buffer filled with zeros?</div><div class="ttdef"><b>Definition:</b> <a href="memory_8cpp_source.html#l00095">memory.cpp:95</a></div></div>
 <div class="ttc" id="amemory_8h_html"><div class="ttname"><a href="memory_8h.html">memory.h</a></div><div class="ttdoc">Memory management definition.</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -78,6 +78,8 @@ $(function() {
 <div class="line"><span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
 <div class="line"><span class="preprocessor">#include &lt;fcntl.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;io.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;windows.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#define CP_UTF16 65002</span></div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv)</div>
@@ -86,7 +88,11 @@ $(function() {
 <div class="line"><span class="preprocessor">#if defined(unix) || defined(__unix) || defined(__unix__)</span></div>
 <div class="line">    setlocale(LC_ALL, <span class="stringliteral">&quot;&quot;</span>);</div>
 <div class="line"><span class="preprocessor">#elif defined(_WIN32) || defined(_WIN64)</span></div>
+<div class="line">    _setmode(_fileno(stdin), _O_U16TEXT);</div>
 <div class="line">    _setmode(_fileno(stdout), _O_U16TEXT);</div>
+<div class="line">    _setmode(_fileno(stderr), _O_U16TEXT);</div>
+<div class="line">    SetConsoleCP(CP_UTF16);</div>
+<div class="line">    SetConsoleOutputCP(CP_UTF16);</div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"> </div>
 <div class="line">    std::string utf8 = <span class="stringliteral">&quot;\xD0\x9F\xD1\x80\xD0\xB8\xD0\xB2\xD0\xB5\xD1\x82\x20\xD0\xBC\xD0\xB8\xD1\x80\x21&quot;</span>;</div>
