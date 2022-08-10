@@ -231,6 +231,18 @@ protected:
     uint64_t _timestamp;
 };
 
+//! Epoch timestamp
+class EpochTimestamp : public Timestamp
+{
+public:
+    using Timestamp::Timestamp;
+
+    //! Initialize epoch timestamp
+    EpochTimestamp() : Timestamp(Timestamp::epoch()) {}
+    //! Initialize epoch timestamp with another timestamp value
+    EpochTimestamp(const Timestamp& timestamp) : Timestamp(timestamp) {}
+};
+
 //! UTC timestamp
 class UtcTimestamp : public Timestamp
 {
