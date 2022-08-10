@@ -10,6 +10,18 @@ using namespace CppCommon;
 
 const uint64_t operations = 100000000;
 
+BENCHMARK("EpochTimestamp()")
+{
+    uint64_t crc = 0;
+
+    for (uint64_t i = 0; i < operations; ++i)
+        crc += EpochTimestamp().total();
+
+    // Update benchmark metrics
+    context.metrics().AddOperations(operations - 1);
+    context.metrics().SetCustom("CRC", crc);
+}
+
 BENCHMARK("UtcTimestamp()")
 {
     uint64_t crc = 0;

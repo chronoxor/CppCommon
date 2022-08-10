@@ -33,6 +33,9 @@ int main(int argc, char** argv)
     }
     std::cout << std::endl;
 
+    std::cout << "Epoch timestamp:" << std::endl;
+    show(CppCommon::EpochTimestamp());
+
     std::cout << "UTC timestamp:" << std::endl;
     show(CppCommon::UtcTimestamp());
 
