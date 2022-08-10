@@ -96,17 +96,20 @@ $(function() {
 <div class="line">    }</div>
 <div class="line">    std::cout &lt;&lt; std::endl;</div>
 <div class="line"> </div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Epoch timestamp:&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">    show(<a name="_a10"></a><a class="code" href="class_cpp_common_1_1_epoch_timestamp.html">CppCommon::EpochTimestamp</a>());</div>
+<div class="line"> </div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;UTC timestamp:&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line">    show(<a name="_a10"></a><a class="code" href="class_cpp_common_1_1_utc_timestamp.html">CppCommon::UtcTimestamp</a>());</div>
+<div class="line">    show(<a name="_a11"></a><a class="code" href="class_cpp_common_1_1_utc_timestamp.html">CppCommon::UtcTimestamp</a>());</div>
 <div class="line"> </div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Local timestamp:&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line">    show(<a name="_a11"></a><a class="code" href="class_cpp_common_1_1_local_timestamp.html">CppCommon::LocalTimestamp</a>());</div>
+<div class="line">    show(<a name="_a12"></a><a class="code" href="class_cpp_common_1_1_local_timestamp.html">CppCommon::LocalTimestamp</a>());</div>
 <div class="line"> </div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Nano timestamp:&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line">    show(<a name="_a12"></a><a class="code" href="class_cpp_common_1_1_nano_timestamp.html">CppCommon::NanoTimestamp</a>());</div>
+<div class="line">    show(<a name="_a13"></a><a class="code" href="class_cpp_common_1_1_nano_timestamp.html">CppCommon::NanoTimestamp</a>());</div>
 <div class="line"> </div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;RDTS timestamp:&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line">    show(<a name="_a13"></a><a class="code" href="class_cpp_common_1_1_rdts_timestamp.html">CppCommon::RdtsTimestamp</a>());</div>
+<div class="line">    show(<a name="_a14"></a><a class="code" href="class_cpp_common_1_1_rdts_timestamp.html">CppCommon::RdtsTimestamp</a>());</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
@@ -121,6 +124,7 @@ $(function() {
 <div class="ttc" id="aclass_cpp_common_1_1_timestamp_html_a82184734b92c0bc8fe85e5c54e262f4b"><div class="ttname"><a href="class_cpp_common_1_1_timestamp.html#a82184734b92c0bc8fe85e5c54e262f4b">CppCommon::Timestamp::utc</a></div><div class="ttdeci">static uint64_t utc()</div><div class="ttdoc">Get the UTC timestamp.</div><div class="ttdef"><b>Definition:</b> <a href="timestamp_8cpp_source.html#l00105">timestamp.cpp:105</a></div></div>
 <div class="ttc" id="aclass_cpp_common_1_1_nano_timestamp_html"><div class="ttname"><a href="class_cpp_common_1_1_nano_timestamp.html">CppCommon::NanoTimestamp</a></div><div class="ttdoc">High resolution timestamp.</div><div class="ttdef"><b>Definition:</b> <a href="timestamp_8h_source.html#l00271">timestamp.h:271</a></div></div>
 <div class="ttc" id="aclass_cpp_common_1_1_timestamp_html_ad3311928de28a3e9aca99706bbd0ed32"><div class="ttname"><a href="class_cpp_common_1_1_timestamp.html#ad3311928de28a3e9aca99706bbd0ed32">CppCommon::Timestamp::days</a></div><div class="ttdeci">uint64_t days() const noexcept</div><div class="ttdoc">Get total days of the current timestamp.</div><div class="ttdef"><b>Definition:</b> <a href="timestamp_8h_source.html#l00134">timestamp.h:134</a></div></div>
+<div class="ttc" id="aclass_cpp_common_1_1_epoch_timestamp_html"><div class="ttname"><a href="class_cpp_common_1_1_epoch_timestamp.html">CppCommon::EpochTimestamp</a></div><div class="ttdoc">Epoch timestamp.</div><div class="ttdef"><b>Definition:</b> <a href="timestamp_8h_source.html#l00235">timestamp.h:235</a></div></div>
 <div class="ttc" id="aclass_cpp_common_1_1_local_timestamp_html"><div class="ttname"><a href="class_cpp_common_1_1_local_timestamp.html">CppCommon::LocalTimestamp</a></div><div class="ttdoc">Local timestamp.</div><div class="ttdef"><b>Definition:</b> <a href="timestamp_8h_source.html#l00259">timestamp.h:259</a></div></div>
 <div class="ttc" id="aclass_cpp_common_1_1_timestamp_html_a957833bcf55208d5cbc3c6980a6fcbba"><div class="ttname"><a href="class_cpp_common_1_1_timestamp.html#a957833bcf55208d5cbc3c6980a6fcbba">CppCommon::Timestamp::seconds</a></div><div class="ttdeci">uint64_t seconds() const noexcept</div><div class="ttdoc">Get total seconds of the current timestamp.</div><div class="ttdef"><b>Definition:</b> <a href="timestamp_8h_source.html#l00143">timestamp.h:143</a></div></div>
 <div class="ttc" id="aclass_cpp_common_1_1_timestamp_html_a10d21877165e1160d060532a47fdf3fd"><div class="ttname"><a href="class_cpp_common_1_1_timestamp.html#a10d21877165e1160d060532a47fdf3fd">CppCommon::Timestamp::local</a></div><div class="ttdeci">static uint64_t local()</div><div class="ttdoc">Get the local timestamp.</div><div class="ttdef"><b>Definition:</b> <a href="timestamp_8cpp_source.html#l00123">timestamp.cpp:123</a></div></div>
