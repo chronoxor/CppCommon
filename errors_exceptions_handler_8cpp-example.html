@@ -163,7 +163,10 @@ $(function() {
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#if defined(_WIN32) || defined(_WIN64)</span></div>
 <div class="line"> </div>
-<div class="line"><span class="preprocessor">#if defined(_MSC_VER)</span></div>
+<div class="line"><span class="preprocessor">#if defined(__GNUC__)</span></div>
+<div class="line"><span class="preprocessor">#pragma GCC diagnostic push</span></div>
+<div class="line"><span class="preprocessor">#pragma GCC diagnostic ignored &quot;-Winfinite-recursion&quot; // GCC: warning: infinite recursion detected</span></div>
+<div class="line"><span class="preprocessor">#elif defined(_MSC_VER)</span></div>
 <div class="line"><span class="preprocessor">#pragma warning(push)</span></div>
 <div class="line"><span class="preprocessor">#pragma warning(disable: 4717) // C4717: &#39;function&#39; : recursive on all control paths, function will cause runtime stack overflow</span></div>
 <div class="line"><span class="preprocessor">#endif</span></div>
@@ -172,7 +175,9 @@ $(function() {
 <div class="line">    [[maybe_unused]] uint8_t* buffer = <span class="keyword">new</span> uint8_t[0x1FFFFFFF];</div>
 <div class="line">    GenerateRecursiveAlloc();</div>
 <div class="line">}</div>
-<div class="line"><span class="preprocessor">#if defined(_MSC_VER)</span></div>
+<div class="line"><span class="preprocessor">#if defined(__GNUC__)</span></div>
+<div class="line"><span class="preprocessor">#pragma GCC diagnostic pop</span></div>
+<div class="line"><span class="preprocessor">#elif defined(_MSC_VER)</span></div>
 <div class="line"><span class="preprocessor">#pragma warning(pop)</span></div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"> </div>
