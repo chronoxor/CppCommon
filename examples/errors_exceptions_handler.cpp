@@ -100,7 +100,10 @@ void GenerateExceptionThrow()
 
 #if defined(_WIN32) || defined(_WIN64)
 
-#if defined(_MSC_VER)
+#if defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Winfinite-recursion" // GCC: warning: infinite recursion detected
+#elif defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable: 4717) // C4717: 'function' : recursive on all control paths, function will cause runtime stack overflow
 #endif
@@ -109,7 +112,9 @@ void GenerateRecursiveAlloc()
     [[maybe_unused]] uint8_t* buffer = new uint8_t[0x1FFFFFFF];
     GenerateRecursiveAlloc();
 }
-#if defined(_MSC_VER)
+#if defined(__GNUC__)
+#pragma GCC diagnostic pop
+#elif defined(_MSC_VER)
 #pragma warning(pop)
 #endif
 
