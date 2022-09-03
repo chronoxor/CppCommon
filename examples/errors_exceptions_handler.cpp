@@ -98,12 +98,9 @@ void GenerateExceptionThrow()
     throw std::exception();
 }
 
-#if defined(_WIN32) || defined(_WIN64)
+#if !defined(__GNUC__) && (defined(_WIN32) || defined(_WIN64))
 
-#if defined(__GNUC__)
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Winfinite-recursion" // GCC: warning: infinite recursion detected
-#elif defined(_MSC_VER)
+#if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable: 4717) // C4717: 'function' : recursive on all control paths, function will cause runtime stack overflow
 #endif
@@ -112,9 +109,7 @@ void GenerateRecursiveAlloc()
     [[maybe_unused]] uint8_t* buffer = new uint8_t[0x1FFFFFFF];
     GenerateRecursiveAlloc();
 }
-#if defined(__GNUC__)
-#pragma GCC diagnostic pop
-#elif defined(_MSC_VER)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif
 
@@ -204,7 +199,7 @@ void GenerateCustomException(int type)
         case 9:
             GenerateExceptionThrow();
             break;
-#if defined(_WIN32) || defined(_WIN64)
+#if !defined(__GNUC__) && (defined(_WIN32) || defined(_WIN64))
         case 10:
             GenerateRecursiveAlloc();
             break;
@@ -245,7 +240,7 @@ int main(int argc, char** argv)
     std::cout << "7 - exit" << std::endl;
     std::cout << "8 - terminate" << std::endl;
     std::cout << "9 - exception throw" << std::endl;
-#if defined(_WIN32) || defined(_WIN64)
+#if !defined(__GNUC__) && (defined(_WIN32) || defined(_WIN64))
     std::cout << "10 - new operator fault" << std::endl;
     std::cout << "11 - pure virtual method call" << std::endl;
     std::cout << "12 - SEH exception" << std::endl;

@@ -10,7 +10,8 @@ namespace CppCommon {
 
 template <class R, class... Args, size_t Capacity>
 inline Function<R(Args...), Capacity>::Function() noexcept
-    : _invoker(nullptr),
+    : _data(),
+      _invoker(nullptr),
       _manager(nullptr)
 {
 }
