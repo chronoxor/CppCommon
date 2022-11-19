@@ -7,8 +7,8 @@ if(WIN32 AND NOT TARGET vld)
   # VLD_INCLUDE_DIR
   # VLD_LIBRARIES
   
-  find_path(VLD_INCLUDE_DIR vld.h HINTS vld)
-  find_library(VLD_LIBRARY vld.lib HINTS vld)
+  find_path(VLD_INCLUDE_DIR vld.h HINTS vld/bin)
+  find_library(VLD_LIBRARY vld.lib HINTS vld/bin)
   
   # Handle the REQUIRED argument and set VLD_FOUND
   include(FindPackageHandleStandardArgs)
