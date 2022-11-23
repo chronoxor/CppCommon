@@ -38,7 +38,7 @@ var searchData=
   ['total_831',['total',['../class_cpp_common_1_1_timespan.html#a247cbf0e36bef9c572f2cfd19ffd7458',1,'CppCommon::Timespan::total()'],['../class_cpp_common_1_1_timestamp.html#aca6aa5b77cade17bcdd12c7d441215f4',1,'CppCommon::Timestamp::total()'],['../class_cpp_common_1_1_timezone.html#af71a84aa2b315969f2ff3577f59e82d4',1,'CppCommon::Timezone::total()']]],
   ['totalcores_832',['TotalCores',['../class_cpp_common_1_1_c_p_u.html#a8d911cc03197f9702c3339f84db84863',1,'CppCommon::CPU']]],
   ['totrim_833',['ToTrim',['../class_cpp_common_1_1_string_utils.html#abc4c047566c7fda82660019bd16ac1c3',1,'CppCommon::StringUtils']]],
-  ['touch_834',['Touch',['../class_cpp_common_1_1_path.html#aea776d5adf3c1bda14bb65a18c3f1987',1,'CppCommon::Path']]],
+  ['touch_834',['Touch',['../class_cpp_common_1_1_path.html#aa9f1396b4e7ca8bf1b9487d3feb6563f',1,'CppCommon::Path']]],
   ['toupper_835',['ToUpper',['../class_cpp_common_1_1_string_utils.html#ac025bf17fcbd5e72c276ea5d80dcb8d6',1,'CppCommon::StringUtils::ToUpper(char ch)'],['../class_cpp_common_1_1_string_utils.html#a90f6d08876a07eef0bf503682b0fb7e2',1,'CppCommon::StringUtils::ToUpper(std::string_view str)']]],
   ['toutf8_836',['ToUTF8',['../class_cpp_common_1_1_encoding.html#a102e8f9abaad072c5adf4cfca810fc9d',1,'CppCommon::Encoding']]],
   ['trim_837',['Trim',['../class_cpp_common_1_1_string_utils.html#a236580c6bbacec1604f8703c2947a611',1,'CppCommon::StringUtils']]],
