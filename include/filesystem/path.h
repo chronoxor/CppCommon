@@ -347,18 +347,18 @@ public:
         \param timestamp - Modified timestamp
     */
     static void SetModified(const Path& path, const UtcTimestamp& timestamp);
-    //! Touch the given path and set its modified UTC timestamp to the current value
-    /*!
-        \param path - Path to modify
-    */
-    static void Touch(const Path& path)
-    { SetModified(path, UtcTimestamp()); }
 
     //! Set the given path of the process as a current one
     /*!
         \param path - Current path
     */
     static void SetCurrent(const Path& path);
+
+    //! Touch the given path and set its modified UTC timestamp to the current value
+    /*!
+        \param path - Path to touch
+    */
+    static void Touch(const Path& path);
 
     //! Input instance from the given input stream
     friend std::istream& operator>>(std::istream& is, Path& path)

@@ -19,6 +19,6 @@ int main(int argc, char** argv)
         return -1;
     }
 
-    CppCommon::Path::SetModified(argv[1], CppCommon::UtcTimestamp());
+    CppCommon::Path::Touch(argv[1]);
     return 0;
 }

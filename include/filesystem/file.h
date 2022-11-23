@@ -212,6 +212,12 @@ public:
     */
     static size_t WriteAllLines(const Path& path, const std::vector<std::string>& lines);
 
+    //! Write an empty file
+    /*!
+        \param path - File path
+    */
+    static void WriteEmpty(const Path& path);
+
     //! Swap two instances
     void swap(File& file) noexcept;
     friend void swap(File& file1, File& file2) noexcept;

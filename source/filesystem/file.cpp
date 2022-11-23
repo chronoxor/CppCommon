@@ -782,6 +782,13 @@ size_t File::WriteAllLines(const Path& path, const std::vector<std::string>& lin
     return result;
 }
 
+void File::WriteEmpty(const Path& path)
+{
+    File temp(path);
+    temp.OpenOrCreate(false, true, true);
+    temp.Close();
+}
+
 void File::swap(File& file) noexcept
 {
     using std::swap;

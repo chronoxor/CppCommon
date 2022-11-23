@@ -1488,4 +1488,12 @@ void Path::SetCurrent(const Path& path)
 #endif
 }
 
+void Path::Touch(const Path& path)
+{
+    if (path.IsExists())
+        SetModified(path, UtcTimestamp());
+    else
+        File::WriteEmpty(path);
+}
+
 } // namespace CppCommon
