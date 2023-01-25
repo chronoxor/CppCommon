@@ -20,7 +20,7 @@ TEST_CASE("Memory cache", "[CppCommon][Cache]")
     cache.insert("456", 456, CppCommon::Timespan::milliseconds(100));
     cache.emplace("789", 789, CppCommon::Timespan::milliseconds(1000));
 
-    int result;
+    int result = 0;
     Timestamp timeout;
 
     // Get the memory cache values
