@@ -75,68 +75,69 @@ $(function() {
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#ifndef CPPCOMMON_STRING_ENCODING_H</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#define CPPCOMMON_STRING_ENCODING_H</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_cpp_common.html">CppCommon</a> {</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_encoding.html">   22</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_cpp_common_1_1_encoding.html">Encoding</a></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;{</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_encoding.html#a1f259fe359e8ed4af388bc20688ed7c2">   25</a></span>&#160;    <a class="code" href="class_cpp_common_1_1_encoding.html#a1f259fe359e8ed4af388bc20688ed7c2">Encoding</a>() = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_encoding.html#afda2ffb18fc593e95a0e411f2cf2962b">   26</a></span>&#160;    <a class="code" href="class_cpp_common_1_1_encoding.html#afda2ffb18fc593e95a0e411f2cf2962b">Encoding</a>(<span class="keyword">const</span> <a class="code" href="class_cpp_common_1_1_encoding.html">Encoding</a>&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_encoding.html#a6f692575058cc0dd1e0565ed52b4e77a">   27</a></span>&#160;    <a class="code" href="class_cpp_common_1_1_encoding.html#a6f692575058cc0dd1e0565ed52b4e77a">Encoding</a>(<a class="code" href="class_cpp_common_1_1_encoding.html">Encoding</a>&amp;&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_encoding.html#a675c98ee57a588bd2916e33a1e0a5344">   28</a></span>&#160;    <a class="code" href="class_cpp_common_1_1_encoding.html#a675c98ee57a588bd2916e33a1e0a5344">~Encoding</a>() = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_encoding.html#a142eb13d844a75e94a2401f78d320799">   30</a></span>&#160;    <a class="code" href="class_cpp_common_1_1_encoding.html">Encoding</a>&amp; <a class="code" href="class_cpp_common_1_1_encoding.html#a142eb13d844a75e94a2401f78d320799">operator=</a>(<span class="keyword">const</span> <a class="code" href="class_cpp_common_1_1_encoding.html">Encoding</a>&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_encoding.html#a8a03de03ddd1f0444b2ec93f8e186240">   31</a></span>&#160;    <a class="code" href="class_cpp_common_1_1_encoding.html">Encoding</a>&amp; <a class="code" href="class_cpp_common_1_1_encoding.html#a8a03de03ddd1f0444b2ec93f8e186240">operator=</a>(<a class="code" href="class_cpp_common_1_1_encoding.html">Encoding</a>&amp;&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keyword">static</span> std::string <a class="code" href="class_cpp_common_1_1_encoding.html#a102e8f9abaad072c5adf4cfca810fc9d">ToUTF8</a>(std::wstring_view wstr);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">static</span> std::wstring <a class="code" href="class_cpp_common_1_1_encoding.html#a0611e28fa6fe29bae7e48cb40e042dbb">FromUTF8</a>(std::string_view str);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keyword">static</span> std::u16string <a class="code" href="class_cpp_common_1_1_encoding.html#ac8f6e2a6f899f507718595474b085e8c">UTF8toUTF16</a>(std::string_view str);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keyword">static</span> std::u32string <a class="code" href="class_cpp_common_1_1_encoding.html#a2664b27403f78dd6a8e6591f636223bf">UTF8toUTF32</a>(std::string_view str);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keyword">static</span> std::string <a class="code" href="class_cpp_common_1_1_encoding.html#a88cb6c1c63280abb939e8c18fd771cb7">UTF16toUTF8</a>(std::u16string_view str);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keyword">static</span> std::u32string <a class="code" href="class_cpp_common_1_1_encoding.html#a10a5ad4691270b5dbf412832f1db8f8e">UTF16toUTF32</a>(std::u16string_view str);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keyword">static</span> std::string <a class="code" href="class_cpp_common_1_1_encoding.html#ae1fa0bec3f944b218dd14c65faa23b1b">UTF32toUTF8</a>(std::u32string_view str);</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keyword">static</span> std::u16string <a class="code" href="class_cpp_common_1_1_encoding.html#a746b7b3601b57ba96a4bd960b1e9f748">UTF32toUTF16</a>(std::u32string_view str);</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keyword">static</span> std::string <a class="code" href="class_cpp_common_1_1_encoding.html#a4ca7055543d98b1f7d8d5f870f6eb2fa">Base16Encode</a>(std::string_view str);</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keyword">static</span> std::string <a class="code" href="class_cpp_common_1_1_encoding.html#a46046c9586dcb0f2e5a52149a45f6967">Base16Decode</a>(std::string_view str);</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keyword">static</span> std::string <a class="code" href="class_cpp_common_1_1_encoding.html#af589ec134bd4554f058839a006711c00">Base32Encode</a>(std::string_view str);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    <span class="keyword">static</span> std::string <a class="code" href="class_cpp_common_1_1_encoding.html#ae8337fb05db52830c9706993cbd29feb">Base32Decode</a>(std::string_view str);</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <span class="keyword">static</span> std::string <a class="code" href="class_cpp_common_1_1_encoding.html#a5254039ca2843da5192bd9f8e8f1bd2e">Base64Encode</a>(std::string_view str);</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <span class="keyword">static</span> std::string <a class="code" href="class_cpp_common_1_1_encoding.html#a5069d1ae451d8dbf49d66e2400b9d4a0">Base64Decode</a>(std::string_view str);</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160; </div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="keyword">static</span> std::string <a class="code" href="class_cpp_common_1_1_encoding.html#ae36a9773f65d5796fad04bbeeb913216">URLEncode</a>(std::string_view str);</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160; </div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    <span class="keyword">static</span> std::string <a class="code" href="class_cpp_common_1_1_encoding.html#a6477f74a235c431de96183abecb7dd66">URLDecode</a>(std::string_view str);</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;};</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160; </div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;} <span class="comment">// namespace CppCommon</span></div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160; </div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// CPPCOMMON_STRING_ENCODING_H</span></div>
-<div class="ttc" id="aclass_cpp_common_1_1_encoding_html"><div class="ttname"><a href="class_cpp_common_1_1_encoding.html">CppCommon::Encoding</a></div><div class="ttdoc">Encoding utilities.</div><div class="ttdef"><b>Definition:</b> <a href="encoding_8h_source.html#l00022">encoding.h:23</a></div></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;cstdint&gt;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_cpp_common.html">CppCommon</a> {</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_encoding.html">   23</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_cpp_common_1_1_encoding.html">Encoding</a></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;{</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_encoding.html#a1f259fe359e8ed4af388bc20688ed7c2">   26</a></span>&#160;    <a class="code" href="class_cpp_common_1_1_encoding.html#a1f259fe359e8ed4af388bc20688ed7c2">Encoding</a>() = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_encoding.html#afda2ffb18fc593e95a0e411f2cf2962b">   27</a></span>&#160;    <a class="code" href="class_cpp_common_1_1_encoding.html#afda2ffb18fc593e95a0e411f2cf2962b">Encoding</a>(<span class="keyword">const</span> <a class="code" href="class_cpp_common_1_1_encoding.html">Encoding</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_encoding.html#a6f692575058cc0dd1e0565ed52b4e77a">   28</a></span>&#160;    <a class="code" href="class_cpp_common_1_1_encoding.html#a6f692575058cc0dd1e0565ed52b4e77a">Encoding</a>(<a class="code" href="class_cpp_common_1_1_encoding.html">Encoding</a>&amp;&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_encoding.html#a675c98ee57a588bd2916e33a1e0a5344">   29</a></span>&#160;    <a class="code" href="class_cpp_common_1_1_encoding.html#a675c98ee57a588bd2916e33a1e0a5344">~Encoding</a>() = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_encoding.html#a142eb13d844a75e94a2401f78d320799">   31</a></span>&#160;    <a class="code" href="class_cpp_common_1_1_encoding.html">Encoding</a>&amp; <a class="code" href="class_cpp_common_1_1_encoding.html#a142eb13d844a75e94a2401f78d320799">operator=</a>(<span class="keyword">const</span> <a class="code" href="class_cpp_common_1_1_encoding.html">Encoding</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_encoding.html#a8a03de03ddd1f0444b2ec93f8e186240">   32</a></span>&#160;    <a class="code" href="class_cpp_common_1_1_encoding.html">Encoding</a>&amp; <a class="code" href="class_cpp_common_1_1_encoding.html#a8a03de03ddd1f0444b2ec93f8e186240">operator=</a>(<a class="code" href="class_cpp_common_1_1_encoding.html">Encoding</a>&amp;&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keyword">static</span> std::string <a class="code" href="class_cpp_common_1_1_encoding.html#a102e8f9abaad072c5adf4cfca810fc9d">ToUTF8</a>(std::wstring_view wstr);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keyword">static</span> std::wstring <a class="code" href="class_cpp_common_1_1_encoding.html#a0611e28fa6fe29bae7e48cb40e042dbb">FromUTF8</a>(std::string_view str);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keyword">static</span> std::u16string <a class="code" href="class_cpp_common_1_1_encoding.html#ac8f6e2a6f899f507718595474b085e8c">UTF8toUTF16</a>(std::string_view str);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keyword">static</span> std::u32string <a class="code" href="class_cpp_common_1_1_encoding.html#a2664b27403f78dd6a8e6591f636223bf">UTF8toUTF32</a>(std::string_view str);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keyword">static</span> std::string <a class="code" href="class_cpp_common_1_1_encoding.html#a88cb6c1c63280abb939e8c18fd771cb7">UTF16toUTF8</a>(std::u16string_view str);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keyword">static</span> std::u32string <a class="code" href="class_cpp_common_1_1_encoding.html#a10a5ad4691270b5dbf412832f1db8f8e">UTF16toUTF32</a>(std::u16string_view str);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keyword">static</span> std::string <a class="code" href="class_cpp_common_1_1_encoding.html#ae1fa0bec3f944b218dd14c65faa23b1b">UTF32toUTF8</a>(std::u32string_view str);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keyword">static</span> std::u16string <a class="code" href="class_cpp_common_1_1_encoding.html#a746b7b3601b57ba96a4bd960b1e9f748">UTF32toUTF16</a>(std::u32string_view str);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keyword">static</span> std::string <a class="code" href="class_cpp_common_1_1_encoding.html#a4ca7055543d98b1f7d8d5f870f6eb2fa">Base16Encode</a>(std::string_view str);</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="keyword">static</span> std::string <a class="code" href="class_cpp_common_1_1_encoding.html#a46046c9586dcb0f2e5a52149a45f6967">Base16Decode</a>(std::string_view str);</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keyword">static</span> std::string <a class="code" href="class_cpp_common_1_1_encoding.html#af589ec134bd4554f058839a006711c00">Base32Encode</a>(std::string_view str);</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="keyword">static</span> std::string <a class="code" href="class_cpp_common_1_1_encoding.html#ae8337fb05db52830c9706993cbd29feb">Base32Decode</a>(std::string_view str);</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    <span class="keyword">static</span> std::string <a class="code" href="class_cpp_common_1_1_encoding.html#a5254039ca2843da5192bd9f8e8f1bd2e">Base64Encode</a>(std::string_view str);</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <span class="keyword">static</span> std::string <a class="code" href="class_cpp_common_1_1_encoding.html#a5069d1ae451d8dbf49d66e2400b9d4a0">Base64Decode</a>(std::string_view str);</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160; </div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160; </div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    <span class="keyword">static</span> std::string <a class="code" href="class_cpp_common_1_1_encoding.html#ae36a9773f65d5796fad04bbeeb913216">URLEncode</a>(std::string_view str);</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    <span class="keyword">static</span> std::string <a class="code" href="class_cpp_common_1_1_encoding.html#a6477f74a235c431de96183abecb7dd66">URLDecode</a>(std::string_view str);</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;};</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160; </div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;} <span class="comment">// namespace CppCommon</span></div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160; </div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// CPPCOMMON_STRING_ENCODING_H</span></div>
+<div class="ttc" id="aclass_cpp_common_1_1_encoding_html"><div class="ttname"><a href="class_cpp_common_1_1_encoding.html">CppCommon::Encoding</a></div><div class="ttdoc">Encoding utilities.</div><div class="ttdef"><b>Definition:</b> <a href="encoding_8h_source.html#l00023">encoding.h:24</a></div></div>
 <div class="ttc" id="aclass_cpp_common_1_1_encoding_html_a0611e28fa6fe29bae7e48cb40e042dbb"><div class="ttname"><a href="class_cpp_common_1_1_encoding.html#a0611e28fa6fe29bae7e48cb40e042dbb">CppCommon::Encoding::FromUTF8</a></div><div class="ttdeci">static std::wstring FromUTF8(std::string_view str)</div><div class="ttdoc">Convert UTF-8 encoded string to system wide-string.</div><div class="ttdef"><b>Definition:</b> <a href="encoding_8cpp_source.html#l00033">encoding.cpp:33</a></div></div>
 <div class="ttc" id="aclass_cpp_common_1_1_encoding_html_a102e8f9abaad072c5adf4cfca810fc9d"><div class="ttname"><a href="class_cpp_common_1_1_encoding.html#a102e8f9abaad072c5adf4cfca810fc9d">CppCommon::Encoding::ToUTF8</a></div><div class="ttdeci">static std::string ToUTF8(std::wstring_view wstr)</div><div class="ttdoc">Convert system wide-string to UTF-8 encoded string.</div><div class="ttdef"><b>Definition:</b> <a href="encoding_8cpp_source.html#l00019">encoding.cpp:19</a></div></div>
 <div class="ttc" id="aclass_cpp_common_1_1_encoding_html_a10a5ad4691270b5dbf412832f1db8f8e"><div class="ttname"><a href="class_cpp_common_1_1_encoding.html#a10a5ad4691270b5dbf412832f1db8f8e">CppCommon::Encoding::UTF16toUTF32</a></div><div class="ttdeci">static std::u32string UTF16toUTF32(std::u16string_view str)</div><div class="ttdoc">Convert UTF-16 encoded string to UTF-32 encoded string.</div><div class="ttdef"><b>Definition:</b> <a href="encoding_8cpp_source.html#l00083">encoding.cpp:83</a></div></div>
