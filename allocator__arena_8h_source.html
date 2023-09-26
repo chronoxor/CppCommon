@@ -122,13 +122,13 @@ $(function() {
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_cpp_common_1_1_arena_memory_manager.html#a124f7810f77d0f6fb26896be9f15e9bd">clear</a>();</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="comment">// Arena chunk</span></div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <span class="keyword">struct </span>Chunk</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="comment">// Arena page</span></div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <span class="keyword">struct </span>Page</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    {</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        uint8_t* <a class="code" href="class_cpp_common_1_1_arena_memory_manager.html#afadaefa7f429804bb405ed6a7c760eab">buffer</a>;</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        <span class="keywordtype">size_t</span> <a class="code" href="class_cpp_common_1_1_arena_memory_manager.html#ab65896168fdb85dd8bf4c12a2dbadfe3">capacity</a>;</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        <span class="keywordtype">size_t</span> <a class="code" href="class_cpp_common_1_1_arena_memory_manager.html#a43e4decac73971e6786d95a03a8afbc1">size</a>;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        Chunk* prev;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        Page* prev;</div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    };</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="comment">// Allocation statistics</span></div>
@@ -138,8 +138,8 @@ $(function() {
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    <span class="comment">// Auxiliary memory manager</span></div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    TAuxMemoryManager&amp; _auxiliary;</div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    <span class="comment">// Arena chunks</span></div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    Chunk* _current;</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    <span class="comment">// Arena pages</span></div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    Page* _current;</div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <span class="keywordtype">size_t</span> _reserved;</div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160; </div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    <span class="comment">// External buffer</span></div>
@@ -148,7 +148,7 @@ $(function() {
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <span class="keywordtype">size_t</span> _capacity;</div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    <span class="keywordtype">size_t</span> _size;</div>
 <div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160; </div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    Chunk* AllocateArena(<span class="keywordtype">size_t</span> <a class="code" href="class_cpp_common_1_1_arena_memory_manager.html#ab65896168fdb85dd8bf4c12a2dbadfe3">capacity</a>, Chunk* prev);</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    Page* AllocateArena(<span class="keywordtype">size_t</span> <a class="code" href="class_cpp_common_1_1_arena_memory_manager.html#ab65896168fdb85dd8bf4c12a2dbadfe3">capacity</a>, Page* prev);</div>
 <div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    <span class="keywordtype">void</span> ClearArena();</div>
 <div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;};</div>
 <div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160; </div>

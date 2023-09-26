@@ -80,9 +80,9 @@ $(function() {
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
 <div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="class_cpp_common_1_1_reader.html#ace107e02ff1b5a51ff41d928c87e7891">   15</a></span>&#160;std::vector&lt;uint8_t&gt; <a class="code" href="class_cpp_common_1_1_reader.html#ace107e02ff1b5a51ff41d928c87e7891">Reader::ReadAllBytes</a>()</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;{</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">size_t</span> CHUNK = 8192;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">size_t</span> PAGE = 8192;</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    uint8_t buffer[CHUNK];</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    uint8_t buffer[PAGE];</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    std::vector&lt;uint8_t&gt; result;</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keywordtype">size_t</span> size = 0;</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>

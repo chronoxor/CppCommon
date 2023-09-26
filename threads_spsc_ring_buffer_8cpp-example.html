@@ -93,7 +93,7 @@ $(function() {
 <div class="line">        <span class="keywordflow">do</span></div>
 <div class="line">        {</div>
 <div class="line">            <span class="comment">// Dequeue with yield waiting strategy</span></div>
-<div class="line">            <span class="keywordflow">while</span> (!buffer.<a name="a1"></a><a class="code" href="class_cpp_common_1_1_s_p_s_c_ring_buffer.html#a85c8990bc52dd1f275df8ab4a717f589">Dequeue</a>(local_buffer, local_size = local_capacity))</div>
+<div class="line">            <span class="keywordflow">while</span> (!buffer.<a name="a1"></a><a class="code" href="class_cpp_common_1_1_s_p_s_c_ring_buffer.html#ae287f54c55c56ac083f91b34df5e6a57">Dequeue</a>(local_buffer, local_size = local_capacity))</div>
 <div class="line">                std::this_thread::yield();</div>
 <div class="line"> </div>
 <div class="line">            <span class="comment">// Consume items</span></div>
@@ -108,7 +108,7 @@ $(function() {
 <div class="line">    <span class="keywordflow">while</span> (getline(std::cin, line))</div>
 <div class="line">    {</div>
 <div class="line">        <span class="comment">// Enqueue using yield waiting strategy</span></div>
-<div class="line">        <span class="keywordflow">while</span> (!buffer.<a name="a2"></a><a class="code" href="class_cpp_common_1_1_s_p_s_c_ring_buffer.html#af726b6ba2ec8602d2a49d456f8640098">Enqueue</a>(line.c_str(), line.size()))</div>
+<div class="line">        <span class="keywordflow">while</span> (!buffer.<a name="a2"></a><a class="code" href="class_cpp_common_1_1_s_p_s_c_ring_buffer.html#a827a84da1fc593c149eccdcc5e133246">Enqueue</a>(line.c_str(), line.size()))</div>
 <div class="line">            std::this_thread::yield();</div>
 <div class="line"> </div>
 <div class="line">        <span class="keywordflow">if</span> (line.find(<span class="charliteral">&#39;#&#39;</span>) != std::string::npos)</div>
@@ -121,8 +121,8 @@ $(function() {
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="aclass_cpp_common_1_1_s_p_s_c_ring_buffer_html"><div class="ttname"><a href="class_cpp_common_1_1_s_p_s_c_ring_buffer.html">CppCommon::SPSCRingBuffer</a></div><div class="ttdoc">Single producer / single consumer wait-free ring buffer.</div><div class="ttdef"><b>Definition:</b> <a href="spsc__ring__buffer_8h_source.html#l00032">spsc_ring_buffer.h:33</a></div></div>
-<div class="ttc" id="aclass_cpp_common_1_1_s_p_s_c_ring_buffer_html_a85c8990bc52dd1f275df8ab4a717f589"><div class="ttname"><a href="class_cpp_common_1_1_s_p_s_c_ring_buffer.html#a85c8990bc52dd1f275df8ab4a717f589">CppCommon::SPSCRingBuffer::Dequeue</a></div><div class="ttdeci">bool Dequeue(void *chunk, size_t &amp;size)</div><div class="ttdoc">Dequeue a chunk of bytes from the ring buffer (single consumer thread method)</div><div class="ttdef"><b>Definition:</b> <a href="spsc__ring__buffer_8inl_source.html#l00065">spsc_ring_buffer.inl:65</a></div></div>
-<div class="ttc" id="aclass_cpp_common_1_1_s_p_s_c_ring_buffer_html_af726b6ba2ec8602d2a49d456f8640098"><div class="ttname"><a href="class_cpp_common_1_1_s_p_s_c_ring_buffer.html#af726b6ba2ec8602d2a49d456f8640098">CppCommon::SPSCRingBuffer::Enqueue</a></div><div class="ttdeci">bool Enqueue(const void *chunk, size_t size)</div><div class="ttdoc">Enqueue a chunk of bytes into the ring buffer (single producer thread method)</div><div class="ttdef"><b>Definition:</b> <a href="spsc__ring__buffer_8inl_source.html#l00030">spsc_ring_buffer.inl:30</a></div></div>
+<div class="ttc" id="aclass_cpp_common_1_1_s_p_s_c_ring_buffer_html_a827a84da1fc593c149eccdcc5e133246"><div class="ttname"><a href="class_cpp_common_1_1_s_p_s_c_ring_buffer.html#a827a84da1fc593c149eccdcc5e133246">CppCommon::SPSCRingBuffer::Enqueue</a></div><div class="ttdeci">bool Enqueue(const void *data, size_t size)</div><div class="ttdoc">Enqueue a data into the ring buffer (single producer thread method)</div><div class="ttdef"><b>Definition:</b> <a href="spsc__ring__buffer_8inl_source.html#l00030">spsc_ring_buffer.inl:30</a></div></div>
+<div class="ttc" id="aclass_cpp_common_1_1_s_p_s_c_ring_buffer_html_ae287f54c55c56ac083f91b34df5e6a57"><div class="ttname"><a href="class_cpp_common_1_1_s_p_s_c_ring_buffer.html#ae287f54c55c56ac083f91b34df5e6a57">CppCommon::SPSCRingBuffer::Dequeue</a></div><div class="ttdeci">bool Dequeue(void *data, size_t &amp;size)</div><div class="ttdoc">Dequeue a data from the ring buffer (single consumer thread method)</div><div class="ttdef"><b>Definition:</b> <a href="spsc__ring__buffer_8inl_source.html#l00065">spsc_ring_buffer.inl:65</a></div></div>
 <div class="ttc" id="aspsc__ring__buffer_8h_html"><div class="ttname"><a href="spsc__ring__buffer_8h.html">spsc_ring_buffer.h</a></div><div class="ttdoc">Single producer / single consumer wait-free ring buffer definition.</div></div>
 </div><!-- fragment --> </div><!-- contents -->
 <!-- start footer part -->

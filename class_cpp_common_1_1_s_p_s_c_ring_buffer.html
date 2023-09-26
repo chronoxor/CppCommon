@@ -107,12 +107,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a96a7f8b543793cadb3ce68921a6286e8"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_s_p_s_c_ring_buffer.html#a96a7f8b543793cadb3ce68921a6286e8">size</a> () const noexcept</td></tr>
 <tr class="memdesc:a96a7f8b543793cadb3ce68921a6286e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get ring buffer size in bytes.  <a href="class_cpp_common_1_1_s_p_s_c_ring_buffer.html#a96a7f8b543793cadb3ce68921a6286e8">More...</a><br /></td></tr>
 <tr class="separator:a96a7f8b543793cadb3ce68921a6286e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af726b6ba2ec8602d2a49d456f8640098"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_s_p_s_c_ring_buffer.html#af726b6ba2ec8602d2a49d456f8640098">Enqueue</a> (const void *chunk, size_t <a class="el" href="class_cpp_common_1_1_s_p_s_c_ring_buffer.html#a96a7f8b543793cadb3ce68921a6286e8">size</a>)</td></tr>
-<tr class="memdesc:af726b6ba2ec8602d2a49d456f8640098"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enqueue a chunk of bytes into the ring buffer (single producer thread method)  <a href="class_cpp_common_1_1_s_p_s_c_ring_buffer.html#af726b6ba2ec8602d2a49d456f8640098">More...</a><br /></td></tr>
-<tr class="separator:af726b6ba2ec8602d2a49d456f8640098"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a85c8990bc52dd1f275df8ab4a717f589"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_s_p_s_c_ring_buffer.html#a85c8990bc52dd1f275df8ab4a717f589">Dequeue</a> (void *chunk, size_t &amp;<a class="el" href="class_cpp_common_1_1_s_p_s_c_ring_buffer.html#a96a7f8b543793cadb3ce68921a6286e8">size</a>)</td></tr>
-<tr class="memdesc:a85c8990bc52dd1f275df8ab4a717f589"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dequeue a chunk of bytes from the ring buffer (single consumer thread method)  <a href="class_cpp_common_1_1_s_p_s_c_ring_buffer.html#a85c8990bc52dd1f275df8ab4a717f589">More...</a><br /></td></tr>
-<tr class="separator:a85c8990bc52dd1f275df8ab4a717f589"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a827a84da1fc593c149eccdcc5e133246"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_s_p_s_c_ring_buffer.html#a827a84da1fc593c149eccdcc5e133246">Enqueue</a> (const void *data, size_t <a class="el" href="class_cpp_common_1_1_s_p_s_c_ring_buffer.html#a96a7f8b543793cadb3ce68921a6286e8">size</a>)</td></tr>
+<tr class="memdesc:a827a84da1fc593c149eccdcc5e133246"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enqueue a data into the ring buffer (single producer thread method)  <a href="class_cpp_common_1_1_s_p_s_c_ring_buffer.html#a827a84da1fc593c149eccdcc5e133246">More...</a><br /></td></tr>
+<tr class="separator:a827a84da1fc593c149eccdcc5e133246"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae287f54c55c56ac083f91b34df5e6a57"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cpp_common_1_1_s_p_s_c_ring_buffer.html#ae287f54c55c56ac083f91b34df5e6a57">Dequeue</a> (void *data, size_t &amp;<a class="el" href="class_cpp_common_1_1_s_p_s_c_ring_buffer.html#a96a7f8b543793cadb3ce68921a6286e8">size</a>)</td></tr>
+<tr class="memdesc:ae287f54c55c56ac083f91b34df5e6a57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dequeue a data from the ring buffer (single consumer thread method)  <a href="class_cpp_common_1_1_s_p_s_c_ring_buffer.html#ae287f54c55c56ac083f91b34df5e6a57">More...</a><br /></td></tr>
+<tr class="separator:ae287f54c55c56ac083f91b34df5e6a57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Single producer / single consumer wait-free ring buffer. </p>
@@ -270,8 +270,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a85c8990bc52dd1f275df8ab4a717f589"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a85c8990bc52dd1f275df8ab4a717f589">&#9670;&nbsp;</a></span>Dequeue()</h2>
+<a id="ae287f54c55c56ac083f91b34df5e6a57"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae287f54c55c56ac083f91b34df5e6a57">&#9670;&nbsp;</a></span>Dequeue()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -283,7 +283,7 @@ Public Member Functions</h2></td></tr>
           <td class="memname">bool CppCommon::SPSCRingBuffer::Dequeue </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>chunk</em>, </td>
+          <td class="paramname"><em>data</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -304,17 +304,17 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Dequeue a chunk of bytes from the ring buffer (single consumer thread method) </p>
-<p>The chunk of bytes will be copied from the ring buffer using 'memcpy()' function.</p>
+<p>Dequeue a data from the ring buffer (single consumer thread method) </p>
+<p>The data will be copied from the ring buffer using 'memcpy()' function.</p>
 <p>Will not block.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">chunk</td><td>- Chunk buffer to dequeue </td></tr>
-    <tr><td class="paramname">size</td><td>- Chunk buffer size </td></tr>
+    <tr><td class="paramname">data</td><td>- Data buffer to dequeue </td></tr>
+    <tr><td class="paramname">size</td><td>- Data buffer size </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>'true' if the chunk of bytes was successfully dequeue, 'false' if the ring buffer is empty </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>'true' if the data was successfully dequeue, 'false' if the ring buffer is empty </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="threads_spsc_ring_buffer_8cpp-example.html#a1">threads_spsc_ring_buffer.cpp</a>.</dd>
 </dl>
 
@@ -351,8 +351,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="af726b6ba2ec8602d2a49d456f8640098"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af726b6ba2ec8602d2a49d456f8640098">&#9670;&nbsp;</a></span>Enqueue()</h2>
+<a id="a827a84da1fc593c149eccdcc5e133246"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a827a84da1fc593c149eccdcc5e133246">&#9670;&nbsp;</a></span>Enqueue()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -364,7 +364,7 @@ Public Member Functions</h2></td></tr>
           <td class="memname">bool CppCommon::SPSCRingBuffer::Enqueue </td>
           <td>(</td>
           <td class="paramtype">const void *&#160;</td>
-          <td class="paramname"><em>chunk</em>, </td>
+          <td class="paramname"><em>data</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -385,17 +385,17 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Enqueue a chunk of bytes into the ring buffer (single producer thread method) </p>
-<p>The chunk of bytes will be copied into the ring buffer using 'memcpy()' function. Chunk size should not be greater than ring buffer capacity!</p>
+<p>Enqueue a data into the ring buffer (single producer thread method) </p>
+<p>The data will be copied into the ring buffer using 'memcpy()' function. Data size should not be greater than ring buffer capacity!</p>
 <p>Will not block.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">chunk</td><td>- Chunk buffer to enqueue </td></tr>
-    <tr><td class="paramname">size</td><td>- Chunk buffer size </td></tr>
+    <tr><td class="paramname">data</td><td>- Data buffer to enqueue </td></tr>
+    <tr><td class="paramname">size</td><td>- Data buffer size </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>'true' if the chunk of bytes was successfully enqueue, 'false' if the ring buffer is full </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>'true' if the data was successfully enqueue, 'false' if the ring buffer is full </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="threads_spsc_ring_buffer_8cpp-example.html#a2">threads_spsc_ring_buffer.cpp</a>.</dd>
 </dl>
 
