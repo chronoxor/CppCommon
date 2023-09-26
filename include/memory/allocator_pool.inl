@@ -9,18 +9,18 @@
 namespace CppCommon {
 
 template <class TAuxMemoryManager>
-inline PoolMemoryManager<TAuxMemoryManager>::PoolMemoryManager(TAuxMemoryManager& auxiliary, size_t chunk, size_t chunks)
+inline PoolMemoryManager<TAuxMemoryManager>::PoolMemoryManager(TAuxMemoryManager& auxiliary, size_t page, size_t pages)
     : _allocated(0),
       _allocations(0),
       _auxiliary(auxiliary),
       _external(false),
-      _max_chunks(0),
-      _chunks(0),
-      _chunk(0),
+      _max_pages(0),
+      _pages(0),
+      _page(0),
       _current(nullptr),
       _free_block(nullptr)
 {
-    reset(chunk, chunks);
+    reset(page, pages);
 }
 
 template <class TAuxMemoryManager>
@@ -29,9 +29,9 @@ inline PoolMemoryManager<TAuxMemoryManager>::PoolMemoryManager(TAuxMemoryManager
       _allocations(0),
       _auxiliary(auxiliary),
       _external(false),
-      _max_chunks(0),
-      _chunks(0),
-      _chunk(0),
+      _max_pages(0),
+      _pages(0),
+      _page(0),
       _current(nullptr),
       _free_block(nullptr)
 {
@@ -45,7 +45,7 @@ inline void* PoolMemoryManager<TAuxMemoryManager>::malloc(size_t size, size_t al
     assert(Memory::IsValidAlignment(alignment) && "Alignment must be valid!");
 
     // Allocate huge blocks using the auxiliary memory manager
-    if (size > _chunk)
+    if (size > _page)
     {
         void* result = _auxiliary.malloc(size, alignment);
         if (result != nullptr)
@@ -63,17 +63,17 @@ inline void* PoolMemoryManager<TAuxMemoryManager>::malloc(size_t size, size_t al
 
     while ((current_free_block != nullptr) || allocate)
     {
-        // Try to allocate a new memory pool chunk
+        // Try to allocate a new memory pool page
         if ((current_free_block == nullptr) && allocate)
         {
             if ((_current != nullptr) && (_current->next != nullptr))
             {
-                // Use the next memory pool chunk
+                // Use the next memory pool page
                 _current = _current->next;
 
                 // Update the current free block
                 current_free_block = (FreeBlock*)_current->buffer;
-                current_free_block->size = _chunk;
+                current_free_block->size = _page;
                 current_free_block->next = nullptr;
 
                 // Update the free blocks list
@@ -84,19 +84,19 @@ inline void* PoolMemoryManager<TAuxMemoryManager>::malloc(size_t size, size_t al
             }
             else
             {
-                // Check if there is enough chunks to create
-                if (_chunks > 0)
+                // Check if there is enough pages to create
+                if (_pages > 0)
                 {
-                    // Allocate a new memory pool chunk
-                    Chunk* current = AllocateMemoryPool(_chunk, _current);
+                    // Allocate a new memory pool page
+                    Page* current = AllocateMemoryPool(_page, _current);
                     if (current != nullptr)
                     {
-                        // Use the new memory pool chunk
+                        // Use the new memory pool page
                         _current = current;
 
                         // Update the current free block
                         current_free_block = (FreeBlock*)_current->buffer;
-                        current_free_block->size = _chunk;
+                        current_free_block->size = _page;
                         current_free_block->next = nullptr;
 
                         // Update the free blocks list
@@ -105,8 +105,8 @@ inline void* PoolMemoryManager<TAuxMemoryManager>::malloc(size_t size, size_t al
                         else
                             _free_block = current_free_block;
 
-                        // Update created memory pool chunks count
-                        --_chunks;
+                        // Update created memory pool pages count
+                        --_pages;
                     }
                 }
             }
@@ -144,7 +144,7 @@ inline void* PoolMemoryManager<TAuxMemoryManager>::malloc(size_t size, size_t al
         // If there is no enough free space in the current free block use the next one
         if (current_free_block->size < aligned_size)
         {
-            // Optimization: Skip the last too small peace of memory in chunk
+            // Optimization: Skip the last too small peace of memory in page
             if (current_free_block->next != nullptr)
                 prev_free_block = current_free_block;
             current_free_block = current_free_block->next;
@@ -204,7 +204,7 @@ inline void PoolMemoryManager<TAuxMemoryManager>::free(void* ptr, size_t size)
     assert((ptr != nullptr) && "Deallocated block must be valid!");
 
     // Deallocate huge blocks using the auxiliary memory manager
-    if (size > _chunk)
+    if (size > _page)
     {
         _auxiliary.free(ptr, size);
 
@@ -259,21 +259,21 @@ inline void PoolMemoryManager<TAuxMemoryManager>::reset()
 
     if (_current != nullptr)
     {
-        // Reset the current memory pool chunk
+        // Reset the current memory pool page
         while (_current->prev != nullptr)
             _current = _current->prev;
 
         // Reset the free block pointer
         _free_block = (FreeBlock*)_current->buffer;
-        _free_block->size = _chunk;
+        _free_block->size = _page;
         _free_block->next = nullptr;
     }
 }
 
 template <class TAuxMemoryManager>
-inline void PoolMemoryManager<TAuxMemoryManager>::reset(size_t chunk, size_t chunks)
+inline void PoolMemoryManager<TAuxMemoryManager>::reset(size_t page, size_t pages)
 {
-    assert((chunk >= (sizeof(Chunk) + sizeof(AllocBlock))) && "Memory pool chunk must be big enough to fit at least one allocation block!");
+    assert((page >= (sizeof(Page) + sizeof(AllocBlock))) && "Memory pool page must be big enough to fit at least one allocation block!");
 
     assert((_allocated == 0) && "Memory leak detected! Allocated memory size must be zero!");
     assert((_allocations == 0) && "Memory leak detected! Count of active memory allocations must be zero!");
@@ -283,24 +283,24 @@ inline void PoolMemoryManager<TAuxMemoryManager>::reset(size_t chunk, size_t chu
 
     // Initialize the memory pool
     _external = false;
-    _max_chunks = (chunks > 0) ? chunks : std::numeric_limits<size_t>::max();
-    _chunks = _max_chunks;
-    _chunk = chunk;
+    _max_pages = (pages > 0) ? pages : std::numeric_limits<size_t>::max();
+    _pages = _max_pages;
+    _page = page;
 
-    // Allocate a new memory pool chunk
-    Chunk* current = AllocateMemoryPool(chunk, _current);
+    // Allocate a new memory pool page
+    Page* current = AllocateMemoryPool(page, _current);
     if (current != nullptr)
     {
-        // Use the new memory pool chunk
+        // Use the new memory pool page
         _current = current;
 
         // Initialize the free block pointer
         _free_block = (FreeBlock*)_current->buffer;
-        _free_block->size = chunk;
+        _free_block->size = page;
         _free_block->next = nullptr;
 
-        // Update created memory pool chunks count
-        --_chunks;
+        // Update created memory pool pages count
+        --_pages;
     }
 }
 
@@ -308,7 +308,7 @@ template <class TAuxMemoryManager>
 inline void PoolMemoryManager<TAuxMemoryManager>::reset(void* buffer, size_t capacity)
 {
     assert((buffer != nullptr) && "Memory pool buffer must be valid!");
-    assert((capacity >= (sizeof(Chunk) + sizeof(AllocBlock))) && "Memory pool buffer capacity must be big enough to fit at least one allocation block!");
+    assert((capacity >= (sizeof(Page) + sizeof(AllocBlock))) && "Memory pool buffer capacity must be big enough to fit at least one allocation block!");
 
     assert((_allocated == 0) && "Memory leak detected! Allocated memory size must be zero!");
     assert((_allocations == 0) && "Memory leak detected! Count of active memory allocations must be zero!");
@@ -318,17 +318,17 @@ inline void PoolMemoryManager<TAuxMemoryManager>::reset(void* buffer, size_t cap
 
     // Initialize the external memory pool
     _external = true;
-    _max_chunks = 1;
-    _chunks = 0;
-    _chunk = capacity;
-    _current = (Chunk*)buffer;
-    _current->buffer = (uint8_t*)buffer + sizeof(Chunk);
+    _max_pages = 1;
+    _pages = 0;
+    _page = capacity;
+    _current = (Page*)buffer;
+    _current->buffer = (uint8_t*)buffer + sizeof(Page);
     _current->prev = nullptr;
     _current->next = nullptr;
 
     // Initialize the free block pointer
     _free_block = (FreeBlock*)_current->buffer;
-    _free_block->size = capacity - sizeof(Chunk);
+    _free_block->size = capacity - sizeof(Page);
     _free_block->next = nullptr;
 }
 
@@ -343,9 +343,9 @@ inline void PoolMemoryManager<TAuxMemoryManager>::clear()
 
     // Clear memory pool buffer
     _external = false;
-    _max_chunks = 0;
-    _chunks = 0;
-    _chunk = 0;
+    _max_pages = 0;
+    _pages = 0;
+    _page = 0;
     _current = nullptr;
 
     // Reset the free block pointer
@@ -376,20 +376,20 @@ inline size_t PoolMemoryManager<TAuxMemoryManager>::AlignAdjustment(const void* 
 }
 
 template <class TAuxMemoryManager>
-inline typename PoolMemoryManager<TAuxMemoryManager>::Chunk* PoolMemoryManager<TAuxMemoryManager>::AllocateMemoryPool(size_t capacity, Chunk* prev)
+inline typename PoolMemoryManager<TAuxMemoryManager>::Page* PoolMemoryManager<TAuxMemoryManager>::AllocateMemoryPool(size_t capacity, Page* prev)
 {
-    // Allocate a new memory pool chunk
-    uint8_t* buffer = (uint8_t*)_auxiliary.malloc(sizeof(Chunk) + capacity + alignof(std::max_align_t));
-    Chunk* chunk = (Chunk*)buffer;
-    if (chunk != nullptr)
+    // Allocate a new memory pool page
+    uint8_t* buffer = (uint8_t*)_auxiliary.malloc(sizeof(Page) + capacity + alignof(std::max_align_t));
+    Page* page = (Page*)buffer;
+    if (page != nullptr)
     {
-        // Prepare and return a new memory pool chunk
-        chunk->buffer = buffer + sizeof(Chunk);
-        chunk->prev = prev;
-        chunk->next = nullptr;
+        // Prepare and return a new memory pool page
+        page->buffer = buffer + sizeof(Page);
+        page->prev = prev;
+        page->next = nullptr;
         if (prev != nullptr)
-            prev->next = chunk;
-        return chunk;
+            prev->next = page;
+        return page;
     }
 
     // Out of memory...
@@ -401,12 +401,12 @@ inline void PoolMemoryManager<TAuxMemoryManager>::ClearMemoryPool()
 {
     if (!_external)
     {
-        // Clear all memory pool chunks
+        // Clear all memory pool pages
         while (_current != nullptr)
         {
-            Chunk* prev = _current->prev;
-            Chunk* next = _current->next;
-            _auxiliary.free(_current, sizeof(Chunk) + _chunk + alignof(std::max_align_t));
+            Page* prev = _current->prev;
+            Page* next = _current->next;
+            _auxiliary.free(_current, sizeof(Page) + _page + alignof(std::max_align_t));
             if (prev != nullptr)
             {
                 prev->next = next;

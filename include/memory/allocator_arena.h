@@ -31,15 +31,15 @@ class ArenaMemoryManager
 public:
     //! Initialize arena memory manager with an auxiliary memory manager
     /*!
-        Arena chunk capacity will be 65536.
+        Arena page capacity will be 65536.
 
         \param auxiliary - Auxiliary memory manager
     */
     explicit ArenaMemoryManager(TAuxMemoryManager& auxiliary) : ArenaMemoryManager(auxiliary, 65536) {}
-    //! Initialize arena memory manager with an auxiliary memory manager and a given chunk capacity
+    //! Initialize arena memory manager with an auxiliary memory manager and a given page capacity
     /*!
         \param auxiliary - Auxiliary memory manager
-        \param capacity - Arena chunk capacity in bytes
+        \param capacity - Arena page capacity in bytes
     */
     explicit ArenaMemoryManager(TAuxMemoryManager& auxiliary, size_t capacity);
     //! Initialize arena memory manager with an auxiliary memory manager and a given buffer
@@ -90,9 +90,9 @@ public:
 
     //! Reset the memory manager
     void reset();
-    //! Reset the memory manager with a given chunk capacity
+    //! Reset the memory manager with a given page capacity
     /*!
-        \param capacity - Arena chunk capacity in bytes
+        \param capacity - Arena page capacity in bytes
     */
     void reset(size_t capacity);
     //! Reset the memory manager with a given buffer
@@ -106,13 +106,13 @@ public:
     void clear();
 
 private:
-    // Arena chunk
-    struct Chunk
+    // Arena page
+    struct Page
     {
         uint8_t* buffer;
         size_t capacity;
         size_t size;
-        Chunk* prev;
+        Page* prev;
     };
 
     // Allocation statistics
@@ -122,8 +122,8 @@ private:
     // Auxiliary memory manager
     TAuxMemoryManager& _auxiliary;
 
-    // Arena chunks
-    Chunk* _current;
+    // Arena pages
+    Page* _current;
     size_t _reserved;
 
     // External buffer
@@ -133,7 +133,7 @@ private:
     size_t _size;
 
     //! Allocate arena
-    Chunk* AllocateArena(size_t capacity, Chunk* prev);
+    Page* AllocateArena(size_t capacity, Page* prev);
     //! Clear arena
     void ClearArena();
 };

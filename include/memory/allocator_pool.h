@@ -16,14 +16,14 @@ namespace CppCommon {
 //! Memory pool manager class
 /*!
     Memory pool manager uses a pre-allocated memory buffer or several memory
-    chunks in order to create an effective free-list data structure, that
+    pages in order to create an effective free-list data structure, that
     allows to allocate and free memory.
 
     During the allocation memory pool manager will return a first-fit memory
     block in the free list with concatenating joint blocks to avoid memory
     defragmentation.
 
-    If the allocated block is huge and does not fit into the memory pool chunk
+    If the allocated block is huge and does not fit into the memory pool page
     then it will be allocated directly from auxiliary memory manager.
 
     Not thread-safe.
@@ -34,18 +34,18 @@ class PoolMemoryManager
 public:
     //! Initialize memory pool manager with an auxiliary memory manager
     /*!
-        Memory pool will have unlimited chunks of size 65536.
+        Memory pool will have unlimited pages of size 65536.
 
         \param auxiliary - Auxiliary memory manager
     */
     explicit PoolMemoryManager(TAuxMemoryManager& auxiliary) : PoolMemoryManager(auxiliary, 65536, 0) {}
-    //! Initialize memory pool manager with an auxiliary memory manager, single chunk size and max chunks count
+    //! Initialize memory pool manager with an auxiliary memory manager, single page size and max pages count
     /*!
         \param auxiliary - Auxiliary memory manager
-        \param chunk - Chunk size in bytes
-        \param chunks - Max chunks count. Zero value means unlimited count (default is 0)
+        \param page - Page size in bytes
+        \param pages - Max pages count. Zero value means unlimited count (default is 0)
     */
-    explicit PoolMemoryManager(TAuxMemoryManager& auxiliary, size_t chunk, size_t chunks = 0);
+    explicit PoolMemoryManager(TAuxMemoryManager& auxiliary, size_t page, size_t pages = 0);
     //! Initialize memory pool manager with an auxiliary memory manager and a given buffer
     /*!
         \param auxiliary - Auxiliary memory manager
@@ -65,10 +65,10 @@ public:
     //! Count of active memory allocations
     size_t allocations() const noexcept { return _allocations; }
 
-    //! Chunk size in bytes
-    size_t chunk() const noexcept { return _chunk; }
-    //! Max chunks size
-    size_t chunks() const noexcept { return _max_chunks; }
+    //! Page size in bytes
+    size_t page() const noexcept { return _page; }
+    //! Max pages size
+    size_t pages() const noexcept { return _max_pages; }
 
     //! Maximum memory block size, that could be allocated by the memory manager
     size_t max_size() const noexcept { return _auxiliary.max_size(); }
@@ -92,12 +92,12 @@ public:
 
     //! Reset the memory manager
     void reset();
-    //! Reset the memory manager with a given signle chunk size and max chunks count
+    //! Reset the memory manager with a given signle page size and max pages count
     /*!
-        \param chunk - Chunk size in bytes
-        \param chunks - Max chunks count. Zero value means unlimited count (default is 0)
+        \param page - Page size in bytes
+        \param pages - Max pages count. Zero value means unlimited count (default is 0)
     */
-    void reset(size_t chunk, size_t chunks = 0);
+    void reset(size_t page, size_t pages = 0);
     //! Reset the memory manager with a given buffer
     /*!
         \param buffer - Pool buffer
@@ -109,12 +109,12 @@ public:
     void clear();
 
 private:
-    // Pool chunk contains allocated and free blocks
-    struct Chunk
+    // Pool page contains allocated and free blocks
+    struct Page
     {
         uint8_t* buffer;
-        Chunk* prev;
-        Chunk* next;
+        Page* prev;
+        Page* next;
     };
     // Allocated block
     struct AllocBlock
@@ -136,12 +136,12 @@ private:
     // Auxiliary memory manager
     TAuxMemoryManager& _auxiliary;
 
-    // Pool chunks
+    // Pool pages
     bool _external;
-    size_t _max_chunks;
-    size_t _chunks;
-    size_t _chunk;
-    Chunk* _current;
+    size_t _max_pages;
+    size_t _pages;
+    size_t _page;
+    Page* _current;
 
     // Free block
     FreeBlock* _free_block;
@@ -152,7 +152,7 @@ private:
     size_t AlignAdjustment(const void* address, size_t alignment, size_t header);
 
     //! Allocate memory pool
-    Chunk* AllocateMemoryPool(size_t capacity, Chunk* prev);
+    Page* AllocateMemoryPool(size_t capacity, Page* prev);
     //! Clear memory pool
     void ClearMemoryPool();
 };

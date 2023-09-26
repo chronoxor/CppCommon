@@ -60,30 +60,30 @@ public:
     //! Get ring buffer size
     size_t size() const noexcept;
 
-    //! Enqueue a chunk of bytes into the ring buffer (single producer thread method)
+    //! Enqueue a data into the ring buffer (single producer thread method)
     /*!
-        The chunk of bytes will be copied into the ring buffer using 'memcpy()' function.
-        Chunk size should not be greater than ring buffer capacity!
+        The data will be copied into the ring buffer using 'memcpy()' function.
+        Data size should not be greater than ring buffer capacity!
 
         Will not block.
 
-        \param chunk - Chunk buffer to enqueue
-        \param size - Chunk buffer size
-        \return 'true' if the chunk of bytes was successfully enqueue, 'false' if the ring buffer is full
+        \param data - Data buffer to enqueue
+        \param size - Data buffer size
+        \return 'true' if the data was successfully enqueue, 'false' if the ring buffer is full
     */
-    bool Enqueue(const void* chunk, size_t size);
+    bool Enqueue(const void* data, size_t size);
 
-    //! Dequeue a chunk of bytes from the ring buffer (single consumer thread method)
+    //! Dequeue a data from the ring buffer (single consumer thread method)
     /*!
-        The chunk of bytes will be copied from the ring buffer using 'memcpy()' function.
+        The data will be copied from the ring buffer using 'memcpy()' function.
 
         Will not block.
 
-        \param chunk - Chunk buffer to dequeue
-        \param size - Chunk buffer size
-        \return 'true' if the chunk of bytes was successfully dequeue, 'false' if the ring buffer is empty
+        \param data - Data buffer to dequeue
+        \param size - Data buffer size
+        \return 'true' if the data was successfully dequeue, 'false' if the ring buffer is empty
     */
-    bool Dequeue(void* chunk, size_t& size);
+    bool Dequeue(void* data, size_t& size);
 
 private:
     struct Producer

@@ -293,62 +293,62 @@ TEST_CASE("Pool memory manager with a fixed buffer", "[CppCommon][Memory]")
     PoolMemoryManager<DefaultMemoryManager> manger(auxiliary, buffer, 80);
     REQUIRE(manger.allocated() == 0);
     REQUIRE(manger.allocations() == 0);
-    REQUIRE(manger.chunk() == 80);
-    REQUIRE(manger.chunks() == 1);
+    REQUIRE(manger.page() == 80);
+    REQUIRE(manger.pages() == 1);
 
     void* ptr = manger.malloc(1, 1);
     REQUIRE(ptr != nullptr);
     REQUIRE(manger.allocated() == 1);
     REQUIRE(manger.allocations() == 1);
-    REQUIRE(manger.chunk() == 80);
-    REQUIRE(manger.chunks() == 1);
+    REQUIRE(manger.page() == 80);
+    REQUIRE(manger.pages() == 1);
     manger.free(ptr, 1);
     REQUIRE(manger.allocated() == 0);
     REQUIRE(manger.allocations() == 0);
-    REQUIRE(manger.chunk() == 80);
-    REQUIRE(manger.chunks() == 1);
+    REQUIRE(manger.page() == 80);
+    REQUIRE(manger.pages() == 1);
 
     ptr = manger.malloc(10, 1);
     REQUIRE(ptr != nullptr);
     REQUIRE(manger.allocated() == 10);
     REQUIRE(manger.allocations() == 1);
-    REQUIRE(manger.chunk() == 80);
-    REQUIRE(manger.chunks() == 1);
+    REQUIRE(manger.page() == 80);
+    REQUIRE(manger.pages() == 1);
     manger.free(ptr, 10);
     REQUIRE(manger.allocated() == 0);
     REQUIRE(manger.allocations() == 0);
-    REQUIRE(manger.chunk() == 80);
-    REQUIRE(manger.chunks() == 1);
+    REQUIRE(manger.page() == 80);
+    REQUIRE(manger.pages() == 1);
 
     ptr = manger.malloc(1, 1);
     REQUIRE(ptr != nullptr);
     REQUIRE(manger.allocated() == 1);
     REQUIRE(manger.allocations() == 1);
-    REQUIRE(manger.chunk() == 80);
-    REQUIRE(manger.chunks() == 1);
+    REQUIRE(manger.page() == 80);
+    REQUIRE(manger.pages() == 1);
     manger.free(ptr, 1);
     REQUIRE(manger.allocated() == 0);
     REQUIRE(manger.allocations() == 0);
-    REQUIRE(manger.chunk() == 80);
-    REQUIRE(manger.chunks() == 1);
+    REQUIRE(manger.page() == 80);
+    REQUIRE(manger.pages() == 1);
 
     manger.reset();
     REQUIRE(manger.allocated() == 0);
     REQUIRE(manger.allocations() == 0);
-    REQUIRE(manger.chunk() == 80);
-    REQUIRE(manger.chunks() == 1);
+    REQUIRE(manger.page() == 80);
+    REQUIRE(manger.pages() == 1);
 
     ptr = manger.malloc(1, 1);
     REQUIRE(ptr != nullptr);
     REQUIRE(manger.allocated() == 1);
     REQUIRE(manger.allocations() == 1);
-    REQUIRE(manger.chunk() == 80);
-    REQUIRE(manger.chunks() == 1);
+    REQUIRE(manger.page() == 80);
+    REQUIRE(manger.pages() == 1);
     manger.free(ptr, 1);
     REQUIRE(manger.allocated() == 0);
     REQUIRE(manger.allocations() == 0);
-    REQUIRE(manger.chunk() == 80);
-    REQUIRE(manger.chunks() == 1);
+    REQUIRE(manger.page() == 80);
+    REQUIRE(manger.pages() == 1);
 }
 
 TEST_CASE("Pool memory manager with a dynamic buffer", "[CppCommon][Memory]")
@@ -357,52 +357,52 @@ TEST_CASE("Pool memory manager with a dynamic buffer", "[CppCommon][Memory]")
     PoolMemoryManager<DefaultMemoryManager> manger(auxiliary, 80);
     REQUIRE(manger.allocated() == 0);
     REQUIRE(manger.allocations() == 0);
-    REQUIRE(manger.chunk() == 80);
+    REQUIRE(manger.page() == 80);
 
     void* ptr = manger.malloc(1, 1);
     REQUIRE(ptr != nullptr);
     REQUIRE(manger.allocated() == 1);
     REQUIRE(manger.allocations() == 1);
-    REQUIRE(manger.chunk() == 80);
+    REQUIRE(manger.page() == 80);
     manger.free(ptr, 1);
     REQUIRE(manger.allocated() == 0);
     REQUIRE(manger.allocations() == 0);
-    REQUIRE(manger.chunk() == 80);
+    REQUIRE(manger.page() == 80);
 
     ptr = manger.malloc(10, 1);
     REQUIRE(ptr != nullptr);
     REQUIRE(manger.allocated() == 10);
     REQUIRE(manger.allocations() == 1);
-    REQUIRE(manger.chunk() == 80);
+    REQUIRE(manger.page() == 80);
     manger.free(ptr, 10);
     REQUIRE(manger.allocated() == 0);
     REQUIRE(manger.allocations() == 0);
-    REQUIRE(manger.chunk() == 80);
+    REQUIRE(manger.page() == 80);
 
     ptr = manger.malloc(1, 1);
     REQUIRE(ptr != nullptr);
     REQUIRE(manger.allocated() == 1);
     REQUIRE(manger.allocations() == 1);
-    REQUIRE(manger.chunk() == 80);
+    REQUIRE(manger.page() == 80);
     manger.free(ptr, 1);
     REQUIRE(manger.allocated() == 0);
     REQUIRE(manger.allocations() == 0);
-    REQUIRE(manger.chunk() == 80);
+    REQUIRE(manger.page() == 80);
 
     manger.reset();
     REQUIRE(manger.allocated() == 0);
     REQUIRE(manger.allocations() == 0);
-    REQUIRE(manger.chunk() == 80);
+    REQUIRE(manger.page() == 80);
 
     ptr = manger.malloc(1, 1);
     REQUIRE(ptr != nullptr);
     REQUIRE(manger.allocated() == 1);
     REQUIRE(manger.allocations() == 1);
-    REQUIRE(manger.chunk() == 80);
+    REQUIRE(manger.page() == 80);
     manger.free(ptr, 1);
     REQUIRE(manger.allocated() == 0);
     REQUIRE(manger.allocations() == 0);
-    REQUIRE(manger.chunk() == 80);
+    REQUIRE(manger.page() == 80);
 }
 
 TEST_CASE("Pool allocator with stl direct access containers", "[CppCommon][Memory]")

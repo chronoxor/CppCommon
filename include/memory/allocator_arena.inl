@@ -81,7 +81,7 @@ inline void* ArenaMemoryManager<TAuxMemoryManager>::malloc(size_t size, size_t a
     {
         if (_current != nullptr)
         {
-            // Allocate memory from the current arena chunk
+            // Allocate memory from the current arena page
             uint8_t* buffer = _current->buffer + _current->size;
             uint8_t* aligned = Memory::Align(buffer, alignment);
             size_t aligned_size = size + (aligned - buffer);
@@ -105,17 +105,17 @@ inline void* ArenaMemoryManager<TAuxMemoryManager>::malloc(size_t size, size_t a
         while (next_reserved < size)
             next_reserved *= 2;
 
-        // Allocate a new arena chunk
-        Chunk* current = AllocateArena(next_reserved, _current);
+        // Allocate a new arena page
+        Page* current = AllocateArena(next_reserved, _current);
         if (current != nullptr)
         {
-            // Update the current arena chunk
+            // Update the current arena page
             _current = current;
 
             // Increase the required reserved memory size
             _reserved = next_reserved;
 
-            // Allocate memory from the current arena chunk
+            // Allocate memory from the current arena page
             uint8_t* buffer = _current->buffer + _current->size;
             uint8_t* aligned = Memory::Align(buffer, alignment);
             size_t aligned_size = size + (aligned - buffer);
@@ -182,8 +182,8 @@ inline void ArenaMemoryManager<TAuxMemoryManager>::reset(size_t capacity)
     // Clear previous allocations
     clear();
 
-    // Allocate a new arena chunk
-    Chunk* current = AllocateArena(capacity, _current);
+    // Allocate a new arena page
+    Page* current = AllocateArena(capacity, _current);
     if (current != nullptr)
         _current = current;
 
@@ -230,19 +230,19 @@ inline void ArenaMemoryManager<TAuxMemoryManager>::clear()
 }
 
 template <class TAuxMemoryManager>
-inline typename ArenaMemoryManager<TAuxMemoryManager>::Chunk* ArenaMemoryManager<TAuxMemoryManager>::AllocateArena(size_t capacity, Chunk* prev)
+inline typename ArenaMemoryManager<TAuxMemoryManager>::Page* ArenaMemoryManager<TAuxMemoryManager>::AllocateArena(size_t capacity, Page* prev)
 {
-    // Allocate a new arena chunk
-    uint8_t* buffer = (uint8_t*)_auxiliary.malloc(sizeof(Chunk) + capacity + alignof(std::max_align_t));
-    Chunk* chunk = (Chunk*)buffer;
-    if (chunk != nullptr)
+    // Allocate a new arena page
+    uint8_t* buffer = (uint8_t*)_auxiliary.malloc(sizeof(Page) + capacity + alignof(std::max_align_t));
+    Page* page = (Page*)buffer;
+    if (page != nullptr)
     {
-        // Prepare and return a new arena chunk
-        chunk->buffer = buffer + sizeof(Chunk);
-        chunk->capacity = capacity;
-        chunk->size = 0;
-        chunk->prev = prev;
-        return chunk;
+        // Prepare and return a new arena page
+        page->buffer = buffer + sizeof(Page);
+        page->capacity = capacity;
+        page->size = 0;
+        page->prev = prev;
+        return page;
     }
 
     // Out of memory...
@@ -254,11 +254,11 @@ inline void ArenaMemoryManager<TAuxMemoryManager>::ClearArena()
 {
     if (!_external)
     {
-        // Clear all arena chunks
+        // Clear all arena pages
         while (_current != nullptr)
         {
-            Chunk* prev = _current->prev;
-            _auxiliary.free(_current, sizeof(Chunk) + _current->capacity + alignof(std::max_align_t));
+            Page* prev = _current->prev;
+            _auxiliary.free(_current, sizeof(Page) + _current->capacity + alignof(std::max_align_t));
             _current = prev;
         }
     }

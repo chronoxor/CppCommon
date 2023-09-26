@@ -11,13 +11,13 @@
 using namespace CppCommon;
 
 const uint64_t operations = 100000;
-const int chunk = 8192;
+const int page = 8192;
 
 class FileWriteFixture : public virtual CppBenchmark::Fixture
 {
 protected:
     File file;
-    std::array<uint8_t, chunk> buffer;
+    std::array<uint8_t, page> buffer;
 
     FileWriteFixture() : file("test.tmp")
     {
