@@ -9,6 +9,7 @@
 #ifndef CPPCOMMON_STRING_ENCODING_H
 #define CPPCOMMON_STRING_ENCODING_H
 
+#include <cstdint>
 #include <string>
 
 namespace CppCommon {

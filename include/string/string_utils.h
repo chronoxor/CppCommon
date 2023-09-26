@@ -11,6 +11,7 @@
 
 #include <algorithm>
 #include <cctype>
+#include <cstdint>
 #include <sstream>
 #include <string>
 #include <vector>
