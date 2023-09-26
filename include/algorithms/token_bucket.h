@@ -10,6 +10,7 @@
 #define CPPCOMMON_ALGORITHMS_TOKEN_BUCKET_H
 
 #include <atomic>
+#include <cstdint>
 
 namespace CppCommon {
 

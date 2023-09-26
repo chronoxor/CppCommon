@@ -9,6 +9,7 @@
 #ifndef CPPCOMMON_READER_H
 #define CPPCOMMON_READER_H
 
+#include <cstdint>
 #include <string>
 #include <vector>
 
