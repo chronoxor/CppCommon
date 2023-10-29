@@ -119,7 +119,7 @@ $(function() {
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> StorageSize = 8;</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> StorageAlign = 8;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    std::aligned_storage&lt;StorageSize, StorageAlign&gt;::type _storage;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keyword">alignas</span>(StorageAlign) std::byte _storage[StorageSize];</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;};</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
@@ -158,7 +158,7 @@ $(function() {
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> StorageSize = 8;</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> StorageAlign = 8;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    std::aligned_storage&lt;StorageSize, StorageAlign&gt;::type _storage;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <span class="keyword">alignas</span>(StorageAlign) std::byte _storage[StorageSize];</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;};</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
@@ -197,7 +197,7 @@ $(function() {
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160; </div>
 <div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> StorageSize = 8;</div>
 <div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> StorageAlign = 8;</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    std::aligned_storage&lt;StorageSize, StorageAlign&gt;::type _storage;</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    <span class="keyword">alignas</span>(StorageAlign) std::byte _storage[StorageSize];</div>
 <div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;};</div>
 <div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160; </div>
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;} <span class="comment">// namespace CppCommon</span></div>
