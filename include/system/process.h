@@ -140,7 +140,7 @@ private:
 #else
     static const size_t StorageAlign = 8;
 #endif
-    std::aligned_storage<StorageSize, StorageAlign>::type _storage;
+    alignas(StorageAlign) std::byte _storage[StorageSize];
 
     Process();
     Process(uint64_t pid);

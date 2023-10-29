@@ -89,7 +89,7 @@ private:
 
     static const size_t StorageSize = 128;
     static const size_t StorageAlign = 8;
-    std::aligned_storage<StorageSize, StorageAlign>::type _storage;
+    alignas(StorageAlign) std::byte _storage[StorageSize];
 };
 
 /*! \example threads_event_auto_reset.cpp Auto-reset event synchronization primitive example */

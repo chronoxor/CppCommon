@@ -93,7 +93,7 @@ private:
 
     static const size_t StorageSize = 56;
     static const size_t StorageAlign = 8;
-    std::aligned_storage<StorageSize, StorageAlign>::type _storage;
+    alignas(StorageAlign) std::byte _storage[StorageSize];
 };
 
 /*! \example threads_named_semaphore.cpp Named semaphore synchronization primitive example */

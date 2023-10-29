@@ -65,9 +65,8 @@ private:
 
     static const size_t StorageSize = Capacity - sizeof(Invoker) - sizeof(Manager);
     static const size_t StorageAlign = 8;
-    using Storage = typename std::aligned_storage<StorageSize, StorageAlign>::type;
 
-    Storage _data;
+    alignas(StorageAlign) std::byte _data[StorageSize];
     Invoker _invoker;
     Manager _manager;
 

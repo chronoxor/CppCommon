@@ -194,7 +194,7 @@ DLL::DLL(DLL&& dll) noexcept
     // Create the implementation instance
     new(&_storage)Impl();
 
-     _storage = std::move(dll._storage);
+    std::swap(_storage, dll._storage);
 }
 
 DLL::~DLL()
@@ -217,7 +217,7 @@ DLL& DLL::operator=(const DLL& dll)
 
 DLL& DLL::operator=(DLL&& dll) noexcept
 {
-    _storage = std::move(dll._storage);
+    std::swap(_storage, dll._storage);
     return *this;
 }
 
