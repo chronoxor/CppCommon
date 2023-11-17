@@ -31,7 +31,7 @@ class File::Impl
     friend class File;
 
 public:
-    explicit Impl(const Path* path) : _path(path), _read(false), _write(false), _index(0), _size(0), _buffer()
+    explicit Impl(const Path* path) : _path(path), _read(false), _read_index(0), _read_size(0), _read_buffer(), _write(false), _write_index(0), _write_size(0), _write_buffer()
     {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         _file = -1;
@@ -194,11 +194,19 @@ public:
         if (_file == INVALID_HANDLE_VALUE)
             throwex FileSystemException("Cannot create a new file!").Attach(path());
 #endif
+        // Initialize file read buffer
         _read = read;
+        _read_index = 0;
+        _read_size = 0;
+        if (read)
+            _read_buffer.resize(buffer);
+
+        // Initialize file write buffer
         _write = write;
-        _index = 0;
-        _size = 0;
-        _buffer.resize(buffer);
+        _write_index = 0;
+        _write_size = 0;
+        if (write)
+            _write_buffer.resize(buffer);
     }
 
     void Open(bool read, bool write, bool truncate = false, const Flags<FileAttributes>& attributes = File::DEFAULT_ATTRIBUTES, const Flags<FilePermissions>& permissions = File::DEFAULT_PERMISSIONS, size_t buffer = File::DEFAULT_BUFFER)
@@ -260,11 +268,19 @@ public:
         if (_file == INVALID_HANDLE_VALUE)
             throwex FileSystemException("Cannot open existing file!").Attach(path());
 #endif
+        // Initialize file read buffer
         _read = read;
+        _read_index = 0;
+        _read_size = 0;
+        if (read)
+            _read_buffer.resize(buffer);
+
+        // Initialize file write buffer
         _write = write;
-        _index = 0;
-        _size = 0;
-        _buffer.resize(buffer);
+        _write_index = 0;
+        _write_size = 0;
+        if (write)
+            _write_buffer.resize(buffer);
     }
 
     void OpenOrCreate(bool read, bool write, bool truncate = false, const Flags<FileAttributes>& attributes = File::DEFAULT_ATTRIBUTES, const Flags<FilePermissions>& permissions = File::DEFAULT_PERMISSIONS, size_t buffer = File::DEFAULT_BUFFER)
@@ -326,11 +342,19 @@ public:
         if (_file == INVALID_HANDLE_VALUE)
             throwex FileSystemException("Cannot open existing file!").Attach(path());
 #endif
+        // Initialize file read buffer
         _read = read;
+        _read_index = 0;
+        _read_size = 0;
+        if (read)
+            _read_buffer.resize(buffer);
+
+        // Initialize file write buffer
         _write = write;
-        _index = 0;
-        _size = 0;
-        _buffer.resize(buffer);
+        _write_index = 0;
+        _write_size = 0;
+        if (write)
+            _write_buffer.resize(buffer);
     }
 
     size_t Read(void* buffer, size_t size)
@@ -343,7 +367,7 @@ public:
             throwex FileSystemException("File is not opened for reading!").Attach(path());
 
         // Read file with zero buffer
-        if (_buffer.empty())
+        if (_read_buffer.empty())
         {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
             ssize_t result = read(_file, buffer, size);
@@ -364,31 +388,31 @@ public:
         while (size > 0)
         {
             // Update the local read buffer from the file
-            if (_index == _size)
+            if (_read_index == _read_size)
             {
-                _index = 0;
+                _read_index = 0;
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-                ssize_t result = read(_file, _buffer.data(), _buffer.size());
+                ssize_t result = read(_file, _read_buffer.data(), _read_buffer.size());
                 if (result < 0)
                     throwex FileSystemException("Cannot read from the file!").Attach(path());
-                _size = (size_t)result;
+                _read_size = (size_t)result;
 #elif defined(_WIN32) || defined(_WIN64)
                 DWORD result;
-                if (!ReadFile(_file, _buffer.data(), (DWORD)_buffer.size(), &result, nullptr))
+                if (!ReadFile(_file, _read_buffer.data(), (DWORD)_read_buffer.size(), &result, nullptr))
                     throwex FileSystemException("Cannot read from the file!").Attach(path());
-                _size = (size_t)result;
+                _read_size = (size_t)result;
 #endif
                 // Stop if the end of file was met
-                if (_size == 0)
+                if (_read_size == 0)
                     break;
             }
 
             // Read remaining data form the local read buffer
-            size_t remain = _size - _index;
+            size_t remain = _read_size - _read_index;
             size_t num = (size < remain) ? size : remain;
-            std::memcpy(bytes, _buffer.data() + _index, num);
+            std::memcpy(bytes, _read_buffer.data() + _read_index, num);
             counter += num;
-            _index += num;
+            _read_index += num;
             bytes += num;
             size -= num;
         }
@@ -406,7 +430,7 @@ public:
             throwex FileSystemException("File is not opened for writing!").Attach(path());
 
         // Write file with zero buffer
-        if (_buffer.empty())
+        if (_write_buffer.empty())
         {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
             ssize_t result = write(_file, buffer, size);
@@ -427,34 +451,34 @@ public:
         while (size > 0)
         {
             // Update the local read buffer from the file
-            if (_size == _buffer.size())
+            if (_write_size == _write_buffer.size())
             {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-                ssize_t result = write(_file, _buffer.data() + _index, (_size - _index));
+                ssize_t result = write(_file, _write_buffer.data() + _write_index, (_write_size - _write_index));
                 if (result < 0)
                     throwex FileSystemException("Cannot write into the file!").Attach(path());
-                _index += (size_t)result;
+                _write_index += (size_t)result;
 #elif defined(_WIN32) || defined(_WIN64)
                 DWORD result;
-                if (!WriteFile(_file, _buffer.data() + _index, (DWORD)(_size - _index), &result, nullptr))
+                if (!WriteFile(_file, _write_buffer.data() + _write_index, (DWORD)(_write_size - _write_index), &result, nullptr))
                     throwex FileSystemException("Cannot write into the file!").Attach(path());
-                _index += (size_t)result;
+                _write_index += (size_t)result;
 #endif
                 // Stop if the buffer was not written completely
-                if (_index != _size)
+                if (_write_index != _write_size)
                     break;
 
                 // Reset the buffer cursor
-                _index = 0;
-                _size = 0;
+                _write_index = 0;
+                _write_size = 0;
             }
 
             // Write remaining data into the local write buffer
-            size_t remain = _buffer.size() - _size;
+            size_t remain = _write_buffer.size() - _write_size;
             size_t num = (size < remain) ? size : remain;
-            std::memcpy(_buffer.data() + _size, bytes, num);
+            std::memcpy(_write_buffer.data() + _write_size, bytes, num);
             counter += num;
-            _size += num;
+            _write_size += num;
             bytes += num;
             size -= num;
         }
@@ -470,9 +494,9 @@ public:
         // Flush write buffers
         if (IsFileWriteOpened())
             FlushBuffer();
-        // Reset the buffer cursor
-        _index = 0;
-        _size = 0;
+        // Reset the read buffer cursor
+        _read_index = 0;
+        _read_size = 0;
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         off_t result = lseek(_file, (off_t)offset, SEEK_SET);
         if (result == (off_t)-1)
@@ -526,35 +550,35 @@ public:
             throwex FileSystemException("File is not opened for writing!").Attach(path());
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
         // Force to write all buffered data
-        size_t remain = _size - _index;
+        size_t remain = _write_size - _write_index;
         if (remain > 0)
         {
-            ssize_t result = write(_file, _buffer.data() + _index, (_size - _index));
+            ssize_t result = write(_file, _write_buffer.data() + _write_index, (_write_size - _write_index));
             if (result < 0)
                 throwex FileSystemException("Cannot write into the file during the flush operation!").Attach(path());
-            _index += (size_t)result;
-            if (_index != _size)
+            _write_index += (size_t)result;
+            if (_write_index != _write_size)
                 throwex FileSystemException("Cannot write all remaining data into the file during the flush operation!").Attach(path());
 
-            // Reset the buffer cursor
-            _index = 0;
-            _size = 0;
+            // Reset the write buffer cursor
+            _write_index = 0;
+            _write_size = 0;
         }
 #elif defined(_WIN32) || defined(_WIN64)
         // Force to write all buffered data
-        size_t remain = _size - _index;
+        size_t remain = _write_size - _write_index;
         if (remain > 0)
         {
             DWORD result;
-            if (!WriteFile(_file, _buffer.data() + _index, (DWORD)(_size - _index), &result, nullptr))
+            if (!WriteFile(_file, _write_buffer.data() + _write_index, (DWORD)(_write_size - _write_index), &result, nullptr))
                 throwex FileSystemException("Cannot write into the file during the flush operation!").Attach(path());
-            _index += (size_t)result;
-            if (_index != _size)
+            _write_index += (size_t)result;
+            if (_write_index != _write_size)
                 throwex FileSystemException("Cannot write all remaining data into the file during the flush operation!").Attach(path());
 
-            // Reset the buffer cursor
-            _index = 0;
-            _size = 0;
+            // Reset the write buffer cursor
+            _write_index = 0;
+            _write_size = 0;
         }
 #endif
     }
@@ -590,11 +614,17 @@ public:
             throwex FileSystemException("Cannot close the file handle!").Attach(path());
         _file = INVALID_HANDLE_VALUE;
 #endif
+        // Clear file read buffer
         _read = false;
+        _read_index = 0;
+        _read_size = 0;
+        _read_buffer.clear();
+
+        // Clear file write buffer
         _write = false;
-        _index = 0;
-        _size = 0;
-        _buffer.clear();
+        _write_index = 0;
+        _write_size = 0;
+        _write_buffer.clear();
     }
 
 private:
@@ -604,11 +634,17 @@ private:
 #elif defined(_WIN32) || defined(_WIN64)
     HANDLE _file;
 #endif
+    // File read buffer
     bool _read;
+    size_t _read_index;
+    size_t _read_size;
+    std::vector<uint8_t> _read_buffer;
+
+    // File write buffer
     bool _write;
-    size_t _index;
-    size_t _size;
-    std::vector<uint8_t> _buffer;
+    size_t _write_index;
+    size_t _write_size;
+    std::vector<uint8_t> _write_buffer;
 };
 
 //! @endcond
