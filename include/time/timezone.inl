@@ -23,6 +23,7 @@ inline void swap(Timezone& timezone1, Timezone& timezone2) noexcept
 
 } // namespace CppCommon
 
+/// \cond DOXYGEN_SKIP
 template <>
 struct std::hash<CppCommon::Timezone>
 {
@@ -38,3 +39,4 @@ struct std::hash<CppCommon::Timezone>
         return result;
     }
 };
+/// \endcond

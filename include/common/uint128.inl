@@ -200,6 +200,7 @@ struct fmt::formatter<CppCommon::uint128_t> : formatter<std::string_view>
 };
 #endif
 
+/// \cond DOXYGEN_SKIP
 template <>
 struct std::hash<CppCommon::uint128_t>
 {
@@ -215,3 +216,4 @@ struct std::hash<CppCommon::uint128_t>
         return result;
     }
 };
+/// \endcond

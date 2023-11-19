@@ -21,6 +21,7 @@ inline void swap(Timestamp& timestamp1, Timestamp& timestamp2) noexcept
 
 } // namespace CppCommon
 
+/// \cond DOXYGEN_SKIP
 template <>
 struct std::hash<CppCommon::Timestamp>
 {
@@ -34,3 +35,4 @@ struct std::hash<CppCommon::Timestamp>
         return result;
     }
 };
+/// \endcond

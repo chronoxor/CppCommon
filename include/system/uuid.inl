@@ -33,6 +33,7 @@ struct fmt::formatter<CppCommon::UUID> : formatter<std::string_view>
 };
 #endif
 
+/// \cond DOXYGEN_SKIP
 template <>
 struct std::hash<CppCommon::UUID>
 {
@@ -48,3 +49,4 @@ struct std::hash<CppCommon::UUID>
         return result;
     }
 };
+/// \endcond
