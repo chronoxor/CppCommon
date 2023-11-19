@@ -127,8 +127,7 @@ var menudata={children:[
 {text:"p",url:"functions_vars.html#index_p"},
 {text:"r",url:"functions_vars.html#index_r"}]},
 {text:"Typedefs",url:"functions_type.html",children:[
-{text:"a",url:"functions_type.html#index_a"},
-{text:"c",url:"functions_type_c.html#index_c"},
+{text:"c",url:"functions_type.html#index_c"},
 {text:"d",url:"functions_type_d.html#index_d"},
 {text:"i",url:"functions_type_i.html#index_i"},
 {text:"k",url:"functions_type_k.html#index_k"},
