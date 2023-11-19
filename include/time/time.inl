@@ -283,7 +283,7 @@ inline LocalTime::LocalTime(const UtcTime& time) : LocalTime(time.utcstamp())
 
 } // namespace CppCommon
 
-/// \cond DOXYGEN_SKIP
+//! \cond DOXYGEN_SKIP
 template <>
 struct std::hash<CppCommon::Time>
 {
@@ -306,4 +306,4 @@ struct std::hash<CppCommon::Time>
         return result;
     }
 };
-/// \endcond
+//! \endcond

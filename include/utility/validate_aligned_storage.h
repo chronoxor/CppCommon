@@ -15,9 +15,11 @@ namespace CppCommon {
 template <size_t ImplSize, size_t ImplAlign, size_t StorageSize, size_t StorageAlign, class Enable = void>
 class ValidateAlignedStorage;
 
+//! \cond DOXYGEN_SKIP
 //! Aligned storage validator (specialization)
 template <size_t ImplSize, const size_t ImplAlign, size_t StorageSize, size_t StorageAlign>
 class ValidateAlignedStorage<ImplSize, ImplAlign, StorageSize, StorageAlign, typename std::enable_if<(StorageSize >= ImplSize) && ((StorageAlign % ImplAlign) == 0)>::type> {};
+//! \endcond
 
 } // namespace CppCommon
 
