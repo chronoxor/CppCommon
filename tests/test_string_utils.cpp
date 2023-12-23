@@ -59,6 +59,8 @@ TEST_CASE("String utilities", "[CppCommon][String]")
     str = "foobar";
     REQUIRE(CppCommon::StringUtils::Trim(str) == "foobar");
 
+    REQUIRE(CppCommon::StringUtils::RemoveBlank("  \t foo\r\nbar \t ") == "foobar");
+
     REQUIRE(!CppCommon::StringUtils::Contains("a foo a bar a baz", '!'));
     REQUIRE(CppCommon::StringUtils::Contains("a foo a bar a baz", 'z'));
     REQUIRE(CppCommon::StringUtils::Contains("a foo a bar a baz", "foo"));

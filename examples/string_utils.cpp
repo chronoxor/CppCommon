@@ -21,6 +21,8 @@ int main(int argc, char** argv)
     std::cout << '"' << CppCommon::StringUtils::ToRTrim("  foobar  ") << '"' << std::endl;
     std::cout << '"' << CppCommon::StringUtils::ToTrim("  foobar  ") << '"' << std::endl;
 
+    std::cout << '"' << CppCommon::StringUtils::RemoveBlank(" \t foo \t bar \t ") << '"' << std::endl;
+
     std::cout << CppCommon::StringUtils::Contains("a foo a bar a baz", '!') << std::endl;
     std::cout << CppCommon::StringUtils::Contains("a foo a bar a baz", 'z') << std::endl;
     std::cout << CppCommon::StringUtils::Contains("a foo a bar a baz", "foo") << std::endl;

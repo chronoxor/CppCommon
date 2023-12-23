@@ -148,6 +148,19 @@ public:
     */
     static std::string& Trim(std::string& str);
 
+    //! Remove blank characters from the given string
+    /*!
+        \param str - String to remove blank characters
+        \return String with removed blank characters
+    */
+    static std::string RemoveBlank(std::string_view str);
+    //! Remove blank characters from the given string
+    /*!
+        \param str - String to remove blank characters
+        \return The same string with removed blank characters
+    */
+    static std::string& RemoveBlank(std::string& str);
+
     //! Compare two strings case sensitive version
     /*!
         \param str1 - First string to compare
@@ -310,6 +323,7 @@ public:
     static T FromString(std::string_view str);
 
 private:
+    static bool IsBlankInternal(char ch);
     static char ToLowerInternal(char ch);
     static char ToUpperInternal(char ch);
 };

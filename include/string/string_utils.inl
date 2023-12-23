@@ -8,9 +8,14 @@
 
 namespace CppCommon {
 
-inline bool StringUtils::IsBlank(char ch)
+inline bool StringUtils::IsBlankInternal(char ch)
 {
     return std::isspace(ch);
+}
+
+inline bool StringUtils::IsBlank(char ch)
+{
+    return IsBlankInternal(ch);
 }
 
 inline char StringUtils::ToLowerInternal(char ch)
@@ -18,14 +23,14 @@ inline char StringUtils::ToLowerInternal(char ch)
     return (char)std::tolower(ch);
 }
 
-inline char StringUtils::ToUpperInternal(char ch)
-{
-    return (char)std::toupper(ch);
-}
-
 inline char StringUtils::ToLower(char ch)
 {
     return ToLowerInternal(ch);
+}
+
+inline char StringUtils::ToUpperInternal(char ch)
+{
+    return (char)std::toupper(ch);
 }
 
 inline char StringUtils::ToUpper(char ch)
@@ -62,6 +67,19 @@ inline std::string& StringUtils::Upper(std::string& str)
 inline std::string& StringUtils::Trim(std::string& str)
 {
     return LTrim(RTrim(str));
+}
+
+inline std::string StringUtils::RemoveBlank(std::string_view str)
+{
+    std::string result(str);
+    RemoveBlank(result);
+    return result;
+}
+
+inline std::string& StringUtils::RemoveBlank(std::string& str)
+{
+    str.erase(std::remove_if(str.begin(), str.end(), IsBlankInternal), str.end());
+    return str;
 }
 
 inline bool StringUtils::Contains(std::string_view str, const char ch)
