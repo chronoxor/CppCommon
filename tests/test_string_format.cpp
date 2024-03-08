@@ -30,10 +30,10 @@ struct fmt::formatter<Date>
 {
     constexpr auto parse(format_parse_context& ctx) -> decltype(ctx.begin()) { return ctx.begin(); }
 
-    template <typename FormatContext>
-    auto format(const Date& date, FormatContext& ctx) -> decltype(ctx.out())
+    auto format(const Date& date, format_context& ctx) const -> decltype(ctx.out())
     {
-        return fmt::format_to(ctx.out(), "{}-{}-{}", date.year(), date.month(), date.day());
+        fmt::format_to(ctx.out(), "{}-{}-{}", date.year(), date.month(), date.day());
+        return ctx.out();
     }
 };
 
