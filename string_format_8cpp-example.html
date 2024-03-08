@@ -91,10 +91,10 @@ $(function() {
 <div class="line">{</div>
 <div class="line">    constexpr <span class="keyword">auto</span> parse(format_parse_context&amp; ctx) -&gt; decltype(ctx.begin()) { <span class="keywordflow">return</span> ctx.begin(); }</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> FormatContext&gt;</div>
-<div class="line">    <span class="keyword">auto</span> <a name="a0"></a><a class="code" href="namespace_cpp_common.html#a1c808143152ed7826414ffa3d22d8cd5">format</a>(<span class="keyword">const</span> Date&amp; date, FormatContext&amp; ctx) -&gt; decltype(ctx.out())</div>
+<div class="line">    <span class="keyword">auto</span> <a name="a0"></a><a class="code" href="namespace_cpp_common.html#a1c808143152ed7826414ffa3d22d8cd5">format</a>(<span class="keyword">const</span> Date&amp; date, format_context&amp; ctx) <span class="keyword">const</span> -&gt; decltype(ctx.out())</div>
 <div class="line">    {</div>
-<div class="line">        <span class="keywordflow">return</span> fmt::format_to(ctx.out(), <span class="stringliteral">&quot;{}-{}-{}&quot;</span>, date.year(), date.month(), date.day());</div>
+<div class="line">        fmt::format_to(ctx.out(), <span class="stringliteral">&quot;{}-{}-{}&quot;</span>, date.year(), date.month(), date.day());</div>
+<div class="line">        <span class="keywordflow">return</span> ctx.out();</div>
 <div class="line">    }</div>
 <div class="line">};</div>
 <div class="line"> </div>
