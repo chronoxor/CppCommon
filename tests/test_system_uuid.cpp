@@ -11,8 +11,9 @@ using namespace CppCommon;
 TEST_CASE("UUID common", "[CppCommon][System]")
 {
     REQUIRE(UUID().string() == "00000000-0000-0000-0000-000000000000");
+    REQUIRE("{01234567-89ab-cdef-FEDC-BA9876543210}"_uuid.string() == "01234567-89ab-cdef-fedc-ba9876543210");
     REQUIRE(UUID("01234567-89ab-cdef-fedc-ba9876543210").string() == "01234567-89ab-cdef-fedc-ba9876543210");
-    REQUIRE(UUID("{01234567-89ab-cdef-FEDC-BA9876543210}").string() == "01234567-89ab-cdef-fedc-ba9876543210");
+    REQUIRE(UUID(std::string("01234567-89ab-cdef-fedc-ba9876543210")).string() == "01234567-89ab-cdef-fedc-ba9876543210");
 }
 
 void test_uuid(const UUID& uuid)

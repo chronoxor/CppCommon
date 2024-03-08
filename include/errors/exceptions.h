@@ -81,6 +81,13 @@ public:
     using Exception::Exception;
 };
 
+//! Domain exception
+class DomainException : public Exception
+{
+public:
+    using Exception::Exception;
+};
+
 //! Runtime exception
 class RuntimeException : public Exception
 {

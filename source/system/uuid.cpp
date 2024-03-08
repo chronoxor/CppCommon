@@ -19,61 +19,6 @@
 
 namespace CppCommon {
 
-//! @cond INTERNALS
-namespace Internals {
-
-uint8_t unhex(char ch)
-{
-    if ((ch >= '0') && (ch <= '9'))
-        return ch - '0';
-    else if ((ch >= 'a') && (ch <= 'f'))
-        return 10 + ch - 'a';
-    else if ((ch >= 'A') && (ch <= 'F'))
-        return 10 + ch - 'A';
-    else
-        return 255;
-}
-
-} // namespace Internals
-//! @endcond
-
-UUID::UUID(const std::string& uuid)
-{
-    char v1 = 0;
-    char v2 = 0;
-    bool pack = false;
-    size_t index = 0;
-
-    // Parse UUID string
-    for (auto ch : uuid)
-    {
-        if ((ch == '-') || (ch == '{') || (ch == '}'))
-            continue;
-
-        if (pack)
-        {
-            v2 = ch;
-            pack = false;
-            uint8_t ui1 = Internals::unhex(v1);
-            uint8_t ui2 = Internals::unhex(v2);
-            if ((ui1 > 15) || (ui2 > 15))
-                throwex ArgumentException("Invalid UUID string: " + uuid);
-            _data[index++] = ui1 * 16 + ui2;
-            if (index >= 16)
-                break;
-        }
-        else
-        {
-            v1 = ch;
-            pack = true;
-        }
-    }
-
-    // Fill remaining data with zeros
-    for (; index < 16; ++index)
-        _data[index++] = 0;
-}
-
 std::string UUID::string() const
 {
     const char* digits = "0123456789abcdef";

@@ -36,12 +36,24 @@ class UUID
 {
 public:
     //! Default constructor
-    UUID() : _data() { _data.fill(0); }
+    constexpr UUID() : _data() { _data.fill(0); }
+    //! Initialize UUID with a given string literal
+    /*!
+        \param uuid - UUID string literal
+    */
+    template<size_t N>
+    explicit constexpr UUID(const char(&uuid)[N]) : UUID(uuid, N) {}
+    //! Initialize UUID with a given string literal
+    /*!
+        \param uuid - UUID string literal
+        \param size - UUID string literal size
+    */
+    explicit constexpr UUID(const char* uuid, size_t size);
     //! Initialize UUID with a given string
     /*!
         \param uuid - UUID string
     */
-    explicit UUID(const std::string& uuid);
+    explicit UUID(const std::string& uuid) : UUID(uuid.data(), uuid.size()) {}
     //! Initialize UUID with a given 16 bytes data buffer
     /*!
         \param data - UUID 16 bytes data buffer
@@ -107,6 +119,16 @@ private:
 /*! \example system_uuid.cpp Universally unique identifier (UUID) example */
 
 } // namespace CppCommon
+
+//! Initialize UUID with a given string literal
+/*!
+    \param uuid - UUID string literal
+    \param size - UUID string literal size
+*/
+constexpr CppCommon::UUID operator ""_uuid(const char* uuid, size_t size)
+{
+    return CppCommon::UUID(uuid, size);
+}
 
 #include "uuid.inl"
 
