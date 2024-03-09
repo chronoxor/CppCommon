@@ -36,7 +36,7 @@ class UUID
 {
 public:
     //! Default constructor
-    constexpr UUID() : _data() { _data.fill(0); }
+    UUID() : _data() { _data.fill(0); }
     //! Initialize UUID with a given string literal
     /*!
         \param uuid - UUID string literal
