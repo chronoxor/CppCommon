@@ -22,8 +22,36 @@ std::string Encoding::ToUTF8(std::wstring_view wstr)
     std::wstring_convert<std::codecvt_utf8_utf16<char16_t>, char16_t> convert;
     return convert.to_bytes((char16_t*)wstr.data(), (char16_t*)wstr.data() + wstr.size());
 #elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-    std::wstring_convert<std::codecvt_utf8<wchar_t>> convert;
-    return convert.to_bytes(wstr.data(), wstr.data() + wstr.size());
+    std::string utf8;
+    utf8.reserve(wstr.size() * 4); // Reserve enough space for the worst case
+
+    for (wchar_t wc : wstr)
+    {
+        if (wc < 0x80)
+            utf8.push_back(static_cast<char>(wc));
+        else if (wc < 0x800)
+        {
+            utf8.push_back(static_cast<char>((wc >> 6) | 0xC0));
+            utf8.push_back(static_cast<char>((wc & 0x3F) | 0x80));
+        }
+        else if (wc < 0x10000)
+        {
+            utf8.push_back(static_cast<char>((wc >> 12) | 0xE0));
+            utf8.push_back(static_cast<char>(((wc >> 6) & 0x3F) | 0x80));
+            utf8.push_back(static_cast<char>((wc & 0x3F) | 0x80));
+        }
+        else if (wc < 0x110000)
+        {
+            utf8.push_back(static_cast<char>((wc >> 18) | 0xF0));
+            utf8.push_back(static_cast<char>(((wc >> 12) & 0x3F) | 0x80));
+            utf8.push_back(static_cast<char>(((wc >> 6) & 0x3F) | 0x80));
+            utf8.push_back(static_cast<char>((wc & 0x3F) | 0x80));
+        }
+        else
+            throw std::runtime_error("Invalid UTF-32 character");
+    }
+
+    return utf8;
 #elif defined(_WIN32) || defined(_WIN64)
     std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> convert;
     return convert.to_bytes(wstr.data(), wstr.data() + wstr.size());
@@ -37,8 +65,45 @@ std::wstring Encoding::FromUTF8(std::string_view str)
     auto tmp = convert.from_bytes(str.data(), str.data() + str.size());
     return std::wstring(tmp.data(), tmp.data() + tmp.size());
 #elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-    std::wstring_convert<std::codecvt_utf8<wchar_t>> convert;
-    return convert.from_bytes(str.data(), str.data() + str.size());
+    std::wstring wstr;
+    wstr.reserve(str.size()); // Reserve enough space for the worst case
+
+    for (size_t i = 0; i < str.size();)
+    {
+        wchar_t wc = 0;
+        unsigned char c = static_cast<unsigned char>(str[i]);
+
+        if (c < 0x80)
+        {
+            wc = c;
+            ++i;
+        }
+        else if (c < 0xE0)
+        {
+            wc = (c & 0x1F) << 6;
+            wc |= (static_cast<unsigned char>(str[++i]) & 0x3F);
+            ++i;
+        }
+        else if (c < 0xF0)
+        {
+            wc = (c & 0x0F) << 12;
+            wc |= (static_cast<unsigned char>(str[++i]) & 0x3F) << 6;
+            wc |= (static_cast<unsigned char>(str[++i]) & 0x3F);
+            ++i;
+        }
+        else
+        {
+            wc = (c & 0x07) << 18;
+            wc |= (static_cast<unsigned char>(str[++i]) & 0x3F) << 12;
+            wc |= (static_cast<unsigned char>(str[++i]) & 0x3F) << 6;
+            wc |= (static_cast<unsigned char>(str[++i]) & 0x3F);
+            ++i;
+        }
+
+        wstr.push_back(wc);
+    }
+
+    return wstr;
 #elif defined(_WIN32) || defined(_WIN64)
     std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> convert;
     return convert.from_bytes(str.data(), str.data() + str.size());
@@ -52,8 +117,45 @@ std::u16string Encoding::UTF8toUTF16(std::string_view str)
     auto tmp = convert.from_bytes(str.data(), str.data() + str.size());
     return std::u16string(tmp.data(), tmp.data() + tmp.size());
 #else
-    std::wstring_convert<std::codecvt_utf8_utf16<char16_t>, char16_t> convert;
-    return convert.from_bytes(str.data(), str.data() + str.size());
+    std::u16string utf16;
+    utf16.reserve(str.size()); // Reserve enough space for the worst case
+
+    for (size_t i = 0; i < str.size();)
+    {
+        char16_t c16 = 0;
+        unsigned char c = static_cast<unsigned char>(str[i]);
+
+        if (c < 0x80)
+        {
+            c16 = c;
+            ++i;
+        }
+        else if (c < 0xE0)
+        {
+            c16 = (c & 0x1F) << 6;
+            c16 |= (static_cast<unsigned char>(str[++i]) & 0x3F);
+            ++i;
+        }
+        else if (c < 0xF0)
+        {
+            c16 = (c & 0x0F) << 12;
+            c16 |= (static_cast<unsigned char>(str[++i]) & 0x3F) << 6;
+            c16 |= (static_cast<unsigned char>(str[++i]) & 0x3F);
+            ++i;
+        }
+        else
+        {
+            c16 = (c & 0x07) << 18;
+            c16 |= (static_cast<unsigned char>(str[++i]) & 0x3F) << 12;
+            c16 |= (static_cast<unsigned char>(str[++i]) & 0x3F) << 6;
+            c16 |= (static_cast<unsigned char>(str[++i]) & 0x3F);
+            ++i;
+        }
+
+        utf16.push_back(c16);
+    }
+
+    return utf16;
 #endif
 }
 
@@ -64,8 +166,45 @@ std::u32string Encoding::UTF8toUTF32(std::string_view str)
     auto tmp = convert.from_bytes(str.data(), str.data() + str.size());
     return std::u32string(tmp.data(), tmp.data() + tmp.size());
 #else
-    std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> convert;
-    return convert.from_bytes(str.data(), str.data() + str.size());
+    std::u32string utf32;
+    utf32.reserve(str.size()); // Reserve enough space for the worst case
+
+    for (size_t i = 0; i < str.size();)
+    {
+        char32_t c32 = 0;
+        unsigned char c = static_cast<unsigned char>(str[i]);
+
+        if (c < 0x80)
+        {
+            c32 = c;
+            ++i;
+        }
+        else if (c < 0xE0)
+        {
+            c32 = (c & 0x1F) << 6;
+            c32 |= (static_cast<unsigned char>(str[++i]) & 0x3F);
+            ++i;
+        }
+        else if (c < 0xF0)
+        {
+            c32 = (c & 0x0F) << 12;
+            c32 |= (static_cast<unsigned char>(str[++i]) & 0x3F) << 6;
+            c32 |= (static_cast<unsigned char>(str[++i]) & 0x3F);
+            ++i;
+        }
+        else
+        {
+            c32 = (c & 0x07) << 18;
+            c32 |= (static_cast<unsigned char>(str[++i]) & 0x3F) << 12;
+            c32 |= (static_cast<unsigned char>(str[++i]) & 0x3F) << 6;
+            c32 |= (static_cast<unsigned char>(str[++i]) & 0x3F);
+            ++i;
+        }
+
+        utf32.push_back(c32);
+    }
+
+    return utf32;
 #endif
 }
 
@@ -75,8 +214,29 @@ std::string Encoding::UTF16toUTF8(std::u16string_view str)
     std::wstring_convert<std::codecvt_utf8_utf16<uint16_t>, uint16_t> convert;
     return convert.to_bytes((uint16_t*)str.data(), (uint16_t*)str.data() + str.size());
 #else
-    std::wstring_convert<std::codecvt_utf8_utf16<char16_t>, char16_t> convert;
-    return convert.to_bytes(str.data(), str.data() + str.size());
+    std::string utf8;
+    utf8.reserve(str.size() * 2); // Reserve enough space for the worst case
+
+    for (char16_t c : str)
+    {
+        if (c < 0x80)
+        {
+            utf8.push_back(static_cast<char>(c));
+        }
+        else if (c < 0x800)
+        {
+            utf8.push_back(static_cast<char>((c >> 6) | 0xC0));
+            utf8.push_back(static_cast<char>((c & 0x3F) | 0x80));
+        }
+        else
+        {
+            utf8.push_back(static_cast<char>((c >> 12) | 0xE0));
+            utf8.push_back(static_cast<char>(((c >> 6) & 0x3F) | 0x80));
+            utf8.push_back(static_cast<char>((c & 0x3F) | 0x80));
+        }
+    }
+
+    return utf8;
 #endif
 }
 
@@ -96,8 +256,36 @@ std::u32string Encoding::UTF16toUTF32(std::u16string_view str)
     auto tmp = convert.from_bytes(bytes);
     return std::u32string(tmp.data(), tmp.data() + tmp.size());
 #else
-    std::wstring_convert<std::codecvt_utf16<char32_t>, char32_t> convert;
-    return convert.from_bytes(bytes);
+    std::u32string utf32;
+    utf32.reserve(str.size()); // Reserve enough space for the worst case
+
+    for (size_t i = 0; i < str.size();)
+    {
+        char32_t c32 = 0;
+        char16_t c = str[i];
+
+        if (c >= 0xD800 && c <= 0xDBFF) // High surrogate
+        {
+            if (i + 1 < str.size())
+            {
+                char16_t low = str[i + 1];
+                if (low >= 0xDC00 && low <= 0xDFFF) // Low surrogate
+                {
+                    c32 = ((c - 0xD800) << 10) + (low - 0xDC00) + 0x10000;
+                    ++i; // Skip low surrogate
+                }
+            }
+        }
+        else
+        {
+            c32 = c;
+        }
+
+        utf32.push_back(c32);
+        ++i;
+    }
+
+    return utf32;
 #endif
 }
 
@@ -107,8 +295,36 @@ std::string Encoding::UTF32toUTF8(std::u32string_view str)
     std::wstring_convert<std::codecvt_utf8<uint32_t>, uint32_t> convert;
     return convert.to_bytes((uint32_t*)str.data(), (uint32_t*)str.data() + str.size());
 #else
-    std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> convert;
-    return convert.to_bytes(str.data(), str.data() + str.size());
+    std::string utf8;
+    utf8.reserve(str.size() * 4); // Reserve enough space for the worst case
+
+    for (char32_t c : str)
+    {
+        if (c <= 0x7F)
+        {
+            utf8.push_back(static_cast<char>(c));
+        }
+        else if (c <= 0x7FF)
+        {
+            utf8.push_back(static_cast<char>((c >> 6) | 0xC0));
+            utf8.push_back(static_cast<char>((c & 0x3F) | 0x80));
+        }
+        else if (c <= 0xFFFF)
+        {
+            utf8.push_back(static_cast<char>((c >> 12) | 0xE0));
+            utf8.push_back(static_cast<char>(((c >> 6) & 0x3F) | 0x80));
+            utf8.push_back(static_cast<char>((c & 0x3F) | 0x80));
+        }
+        else if (c <= 0x10FFFF)
+        {
+            utf8.push_back(static_cast<char>((c >> 18) | 0xF0));
+            utf8.push_back(static_cast<char>(((c >> 12) & 0x3F) | 0x80));
+            utf8.push_back(static_cast<char>(((c >> 6) & 0x3F) | 0x80));
+            utf8.push_back(static_cast<char>((c & 0x3F) | 0x80));
+        }
+    }
+
+    return utf8;
 #endif
 }
 
@@ -117,11 +333,6 @@ std::u16string Encoding::UTF32toUTF16(std::u32string_view str)
 #if defined(_MSC_VER)
     std::wstring_convert<std::codecvt_utf16<uint32_t>, uint32_t> convert;
     std::string bytes = convert.to_bytes((uint32_t*)str.data(), (uint32_t*)str.data() + str.size());
-#else
-    std::wstring_convert<std::codecvt_utf16<char32_t>, char32_t> convert;
-    std::string bytes = convert.to_bytes(str.data(), str.data() + str.size());
-#endif
-
     std::u16string result;
     result.reserve(bytes.size() / 2);
 
@@ -129,6 +340,26 @@ std::u16string Encoding::UTF32toUTF16(std::u32string_view str)
         result.push_back((char16_t)((uint8_t)(bytes[i]) * 256 + (uint8_t)(bytes[i + 1])));
 
     return result;
+#else
+    std::u16string utf16;
+    utf16.reserve(str.size()); // Reserve enough space for the worst case
+
+    for (char32_t c : str)
+    {
+        if (c <= 0xFFFF)
+        {
+            utf16.push_back(static_cast<char16_t>(c));
+        }
+        else
+        {
+            c -= 0x10000;
+            utf16.push_back(static_cast<char16_t>((c >> 10) + 0xD800)); // High surrogate
+            utf16.push_back(static_cast<char16_t>((c & 0x3FF) + 0xDC00)); // Low surrogate
+        }
+    }
+
+    return utf16;
+#endif
 }
 
 std::string Encoding::Base16Encode(std::string_view str)
