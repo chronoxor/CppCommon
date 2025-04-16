@@ -26,7 +26,7 @@ inline constexpr uint8_t unhex(char ch)
 } // namespace Internals
 //! @endcond
 
-inline constexpr UUID::UUID(const char* uuid, size_t size)
+inline constexpr UUID::UUID(const char* uuid, size_t size) : _data{}
 {
     char v1 = 0;
     char v2 = 0;
