@@ -101,13 +101,16 @@ int CPU::Affinity()
         logical = -1;
 
     return logical;
-#elif defined(unix) || defined(__unix) || defined(__unix__)
+#elif defined(linux) || defined(__linux) || defined(__linux__)
     cpu_set_t cs;
     CPU_ZERO(&cs);
     if (sched_getaffinity(0, sizeof(cs), &cs) != 0)
         return -1;
 
     return CPU_COUNT(&cs);
+#elif defined(unix) || defined(__unix) || defined(__unix__)
+    long processors = sysconf(_SC_NPROCESSORS_ONLN);
+    return processors;
 #elif defined(_WIN32) || defined(_WIN64)
     SYSTEM_INFO si;
     GetSystemInfo(&si);

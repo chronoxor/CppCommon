@@ -13,6 +13,7 @@
 
 #if defined(__GNUC__)
 #pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdangling-reference" // GCC: warning: possibly dangling reference to a temporary
 #pragma GCC diagnostic ignored "-Wshadow" // GCC: warning: declaration of 'expression' shadows a parameter or member
 #elif defined(_MSC_VER)
 #pragma warning(push)
