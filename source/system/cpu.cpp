@@ -221,8 +221,8 @@ int64_t CPU::ClockSpeed()
 {
 #if defined(__APPLE__)
     uint64_t frequency = 0;
-    size_t size = sizeof(frequency);
-    if (sysctlbyname("hw.cpufrequency", &frequency, &size, nullptr, 0) == 0)
+    size_t frequency_size = sizeof(frequency);
+    if (sysctlbyname("hw.cpufrequency", &frequency, &frequency_size, nullptr, 0) == 0)
         return frequency;
 
     // On Apple Silicon fallback to hw.tbfrequency and kern.clockrate.hz
