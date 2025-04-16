@@ -14,6 +14,11 @@
 #include <locale>
 #include <vector>
 
+#if defined(__clang__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated" // Clang: warning: 'codecvt' is deprecated
+#endif
+
 namespace CppCommon {
 
 std::string Encoding::ToUTF8(std::wstring_view wstr)
@@ -537,3 +542,7 @@ std::string Encoding::URLDecode(std::string_view str)
 }
 
 } // namespace CppCommon
+
+#if defined(__clang__)
+#pragma clang diagnostic pop
+#endif

@@ -13,8 +13,10 @@
 
 #if defined(__GNUC__)
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdangling-reference" // GCC: warning: possibly dangling reference to a temporary
 #pragma GCC diagnostic ignored "-Wshadow" // GCC: warning: declaration of 'expression' shadows a parameter or member
+#if defined(__GNUC__ >= 13)
+#pragma GCC diagnostic ignored "-Wdangling-reference" // GCC: warning: possibly dangling reference to a temporary
+#endif
 #elif defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable: 4127) // C4127: conditional expression is constant
