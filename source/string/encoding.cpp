@@ -8,16 +8,16 @@
 
 #include "string/encoding.h"
 
+#if defined(__clang__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated" // Clang: warning: 'codecvt' is deprecated
+#endif
+
 #include <algorithm>
 #include <cassert>
 #include <codecvt>
 #include <locale>
 #include <vector>
-
-#if defined(__clang__)
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated" // Clang: warning: 'codecvt' is deprecated
-#endif
 
 namespace CppCommon {
 
