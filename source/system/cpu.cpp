@@ -12,9 +12,11 @@
 #if defined(__APPLE__)
 #include <sys/sysctl.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__)
+#include <sched.h>
 #include <unistd.h>
 #include <fstream>
 #include <regex>
+#include <set>
 #elif defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
 #endif
@@ -100,8 +102,12 @@ int CPU::Affinity()
 
     return logical;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-    long processors = sysconf(_SC_NPROCESSORS_ONLN);
-    return processors;
+    cpu_set_t cs;
+    CPU_ZERO(&cs);
+    if (sched_getaffinity(0, sizeof(cs), &cs) != 0)
+        return -1;
+
+    return CPU_COUNT(&cs);
 #elif defined(_WIN32) || defined(_WIN64)
     SYSTEM_INFO si;
     GetSystemInfo(&si);
@@ -136,8 +142,22 @@ std::pair<int, int> CPU::TotalCores()
 
     return std::make_pair(logical, physical);
 #elif defined(unix) || defined(__unix) || defined(__unix__)
-    long processors = sysconf(_SC_NPROCESSORS_ONLN);
-    return std::make_pair(processors, processors);
+    static std::regex pattern("core id(.*): (.*)");
+
+    std::set<int> cores;
+
+    std::string line;
+    std::ifstream stream("/proc/cpuinfo");
+    while (getline(stream, line))
+    {
+        std::smatch matches;
+        if (std::regex_match(line, matches, pattern))
+            cores.insert(atoi(matches[2].str().c_str()));
+    }
+
+    size_t logical = cores.size();
+    long physical = sysconf(_SC_NPROCESSORS_ONLN);
+    return std::make_pair(logical, physical);
 #elif defined(_WIN32) || defined(_WIN64)
     BOOL allocated = FALSE;
     PSYSTEM_LOGICAL_PROCESSOR_INFORMATION pBuffer = nullptr;
@@ -201,6 +221,12 @@ int64_t CPU::ClockSpeed()
     size_t size = sizeof(frequency);
     if (sysctlbyname("hw.cpufrequency", &frequency, &size, nullptr, 0) == 0)
         return frequency;
+
+    // On Apple Silicon fallback to hw.tbfrequency and kern.clockrate.hz
+    struct clockinfo clockrate;
+    size_t clockrate_size = sizeof(clockrate);
+    if ((sysctlbyname("hw.tbfrequency", &frequency, &frequency_size, NULL, 0) == 0) && (sysctlbyname("kern.clockrate", &clockrate, &clockrate_size, NULL, 0) == 0)) 
+        return frequency * clockrate.hz;
 
     return -1;
 #elif defined(unix) || defined(__unix) || defined(__unix__)
