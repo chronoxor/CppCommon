@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['next_2131',['next',['../struct_cpp_common_1_1_list_1_1_node.html#a70f417e6b73ff0cf60e4d1eaf49a6a12',1,'CppCommon::List::Node::next()'],['../struct_cpp_common_1_1_queue_1_1_node.html#afd61221f0728afdd08cfd6310246ae2e',1,'CppCommon::Queue::Node::next()'],['../struct_cpp_common_1_1_stack_1_1_node.html#a49d21cb3ee6789c882a58378db203147',1,'CppCommon::Stack::Node::next()']]]
+  ['parent_0',['parent',['../struct_cpp_common_1_1_bin_tree_1_1_node.html#a8b740aeaddb6e86d7d73d1983d4d0132',1,'CppCommon::BinTree::Node::parent'],['../struct_cpp_common_1_1_bin_tree_a_a_1_1_node.html#a88836f691443d60b16f8c6eb9c3ed0ec',1,'CppCommon::BinTreeAA::Node::parent'],['../struct_cpp_common_1_1_bin_tree_a_v_l_1_1_node.html#af56c5a213380a459d04f5e25f365a7da',1,'CppCommon::BinTreeAVL::Node::parent'],['../struct_cpp_common_1_1_bin_tree_r_b_1_1_node.html#ae2ca4d19bac95263f9188ccbaaf254d5',1,'CppCommon::BinTreeRB::Node::parent'],['../struct_cpp_common_1_1_bin_tree_splay_1_1_node.html#a3ad6c78905aadf52e92f904ae7651074',1,'CppCommon::BinTreeSplay::Node::parent']]],
+  ['prev_1',['prev',['../struct_cpp_common_1_1_list_1_1_node.html#a1864b937ad1db266b97973d6b37b99bd',1,'CppCommon::List::Node']]]
 ];
