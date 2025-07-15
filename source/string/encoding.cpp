@@ -13,6 +13,11 @@
 #pragma clang diagnostic ignored "-Wdeprecated" // Clang: warning: 'codecvt' is deprecated
 #endif
 
+#if defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations" // GCC: warning: 'wstring_convert' is deprecated
+#endif
+
 #include <algorithm>
 #include <cassert>
 #include <codecvt>
@@ -545,4 +550,8 @@ std::string Encoding::URLDecode(std::string_view str)
 
 #if defined(__clang__)
 #pragma clang diagnostic pop
+#endif
+
+#if defined(__GNUC__)
+#pragma GCC diagnostic pop
 #endif
