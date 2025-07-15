@@ -11,6 +11,11 @@
 #include "string/encoding.h"
 #include "utility/resource.h"
 
+#if defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations" // GCC: warning: 'wstring_convert' is deprecated
+#endif
+
 #include <codecvt>
 #include <cstring>
 #include <locale>
@@ -513,3 +518,7 @@ void Environment::ClearEnvar(const std::string name)
 }
 
 } // namespace CppCommon
+
+#if defined(__GNUC__)
+#pragma GCC diagnostic pop
+#endif
