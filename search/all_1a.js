@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['_7eallocator_0',['~allocator',['../class_cpp_common_1_1_allocator_3_01void_00_01_t_memory_manager_00_01nothrow_01_4.html#aa15d47b6c41f764ec494cb2af388d00f',1,'CppCommon::Allocator&lt; void, TMemoryManager, nothrow &gt;::~Allocator()'],['../class_cpp_common_1_1_allocator.html#a0efe0d55cc606ba71b9c04882e46f77b',1,'CppCommon::Allocator::~Allocator()']]],
+  ['_7eallocator_0',['~Allocator',['../class_cpp_common_1_1_allocator.html#a0efe0d55cc606ba71b9c04882e46f77b',1,'CppCommon::Allocator::~Allocator()'],['../class_cpp_common_1_1_allocator_3_01void_00_01_t_memory_manager_00_01nothrow_01_4.html#aa15d47b6c41f764ec494cb2af388d00f',1,'CppCommon::Allocator&lt; void, TMemoryManager, nothrow &gt;::~Allocator()']]],
   ['_7earenamemorymanager_1',['~ArenaMemoryManager',['../class_cpp_common_1_1_arena_memory_manager.html#aa6894bce4aa925fcfe3ca7e503d55917',1,'CppCommon::ArenaMemoryManager']]],
   ['_7ebarrier_2',['~Barrier',['../class_cpp_common_1_1_barrier.html#a25c79dbbf3131cac50f9d8d160d2e2a1',1,'CppCommon::Barrier']]],
   ['_7ebintree_3',['~BinTree',['../class_cpp_common_1_1_bin_tree.html#a3933e675373f34ab0bb4eb9a89492eca',1,'CppCommon::BinTree']]],
