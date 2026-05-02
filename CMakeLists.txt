@@ -135,7 +135,7 @@ if(NOT CPPCOMMON_MODULE)
   list(APPEND INSTALL_TARGETS_PDB cppcommon-tests)
 
   # CTest
-  enable_testing()
+  include(CTest)
   add_test(cppcommon-tests cppcommon-tests --durations yes --order lex)
 
   # Install
