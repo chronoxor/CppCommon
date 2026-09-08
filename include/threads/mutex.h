@@ -83,7 +83,7 @@ private:
 
     static const size_t StorageSize = 64;
     static const size_t StorageAlign = 8;
-    alignas(StorageAlign) std::array<std::byte, StorageSize> _storage;
+    alignas(StorageAlign) std::array<std::byte, StorageSize> _storage{};
 };
 
 /*! \example threads_mutex.cpp Mutex synchronization primitive example */

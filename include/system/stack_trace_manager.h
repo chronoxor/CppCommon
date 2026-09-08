@@ -54,7 +54,7 @@ private:
 
     static const size_t StorageSize = 4;
     static const size_t StorageAlign = 1;
-    alignas(StorageAlign) std::array<std::byte, StorageSize> _storage;
+    alignas(StorageAlign) std::array<std::byte, StorageSize> _storage{};
 
     StackTraceManager();
 };

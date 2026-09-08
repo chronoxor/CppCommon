@@ -101,7 +101,7 @@ private:
 
     static const size_t StorageSize = 136;
     static const size_t StorageAlign = 8;
-    alignas(StorageAlign) std::array<std::byte, StorageSize> _storage;
+    alignas(StorageAlign) std::array<std::byte, StorageSize> _storage{};
 };
 
 /*! \example threads_named_event_manual_reset.cpp Named manual-reset event synchronization primitive example */

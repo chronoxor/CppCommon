@@ -74,7 +74,7 @@ private:
 #else
     static const size_t StorageAlign = 8;
 #endif
-    alignas(StorageAlign) std::array<std::byte, StorageSize> _storage;
+    alignas(StorageAlign) std::array<std::byte, StorageSize> _storage{};
 
     ExceptionsHandler();
 };

@@ -161,7 +161,7 @@ private:
 
     static const size_t StorageSize = 184;
     static const size_t StorageAlign = 8;
-    alignas(StorageAlign) std::array<std::byte, StorageSize> _storage;
+    alignas(StorageAlign) std::array<std::byte, StorageSize> _storage{};
 };
 
 /*! \example threads_named_rw_lock.cpp Named read/write lock synchronization primitive example */
