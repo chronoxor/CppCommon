@@ -10,7 +10,7 @@ namespace CppCommon {
 
 template <class R, class... Args, size_t Capacity>
 inline Function<R(Args...), Capacity>::Function() noexcept
-    : _data(),
+    : _storage(),
       _invoker(nullptr),
       _manager(nullptr)
 {
@@ -28,7 +28,7 @@ inline Function<R(Args...), Capacity>::Function(const Function& function) noexce
 {
     if (function)
     {
-        function._manager(&_data, &function._data, Operation::Clone);
+        function._manager(&_storage, &function._storage, Operation::Clone);
         _invoker = function._invoker;
         _manager = function._manager;
     }
@@ -53,7 +53,7 @@ inline Function<R(Args...), Capacity>::Function(TFunction&& function) noexcept
     static_assert(((StorageAlign % alignof(function_type)) == 0), "Function::StorageAlign must be adjusted!");
 
     // Create the implementation instance
-    new (&_data) function_type(std::forward<TFunction>(function));
+    new (&_storage) function_type(std::forward<TFunction>(function));
 
     _invoker = &Invoke<function_type>;
     _manager = &Manage<function_type>;
@@ -63,7 +63,7 @@ template <class R, class... Args, size_t Capacity>
 inline Function<R(Args...), Capacity>::~Function() noexcept
 {
     if (_manager)
-        _manager(&_data, nullptr, Operation::Destroy);
+        _manager(&_storage, nullptr, Operation::Destroy);
 }
 
 template <class R, class... Args, size_t Capacity>
@@ -71,7 +71,7 @@ inline Function<R(Args...), Capacity>& Function<R(Args...), Capacity>::operator=
 {
     if (_manager)
     {
-        _manager(&_data, nullptr, Operation::Destroy);
+        _manager(&_storage, nullptr, Operation::Destroy);
         _manager = nullptr;
         _invoker = nullptr;
     }
@@ -114,7 +114,7 @@ inline R Function<R(Args...), Capacity>::operator()(Args... args)
     if (!_invoker)
         throw std::bad_function_call();
 
-    return _invoker(&_data, std::forward<Args>(args)...);
+    return _invoker(&_storage, std::forward<Args>(args)...);
 }
 
 template <class R, class... Args, size_t Capacity>
@@ -144,7 +144,7 @@ template <class R, class... Args, size_t Capacity>
 inline void Function<R(Args...), Capacity>::swap(Function& function) noexcept
 {
     using std::swap;
-    swap(_data, function._data);
+    swap(_storage, function._storage);
     swap(_manager, function._manager);
     swap(_invoker, function._invoker);
 }

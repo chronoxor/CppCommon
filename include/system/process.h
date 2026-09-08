@@ -13,9 +13,9 @@
 #include "system/pipe.h"
 #include "time/timestamp.h"
 
+#include <array>
 #include <limits>
 #include <map>
-#include <memory>
 #include <string>
 #include <vector>
 
@@ -140,7 +140,7 @@ private:
 #else
     static const size_t StorageAlign = 8;
 #endif
-    alignas(StorageAlign) std::byte _storage[StorageSize];
+    alignas(StorageAlign) std::array<std::byte, StorageSize> _storage;
 
     Process();
     Process(uint64_t pid);

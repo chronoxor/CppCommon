@@ -13,7 +13,7 @@
 #include "common/writer.h"
 #include "errors/exceptions.h"
 
-#include <memory>
+#include <array>
 
 namespace CppCommon {
 
@@ -65,7 +65,7 @@ private:
 
     static const size_t StorageSize = 8;
     static const size_t StorageAlign = 8;
-    alignas(StorageAlign) std::byte _storage[StorageSize];
+    alignas(StorageAlign) std::array<std::byte, StorageSize> _storage;
 };
 
 //! Standard output stream
@@ -117,7 +117,7 @@ private:
 
     static const size_t StorageSize = 8;
     static const size_t StorageAlign = 8;
-    alignas(StorageAlign) std::byte _storage[StorageSize];
+    alignas(StorageAlign) std::array<std::byte, StorageSize> _storage;
 };
 
 //! Standard error stream
@@ -169,7 +169,7 @@ private:
 
     static const size_t StorageSize = 8;
     static const size_t StorageAlign = 8;
-    alignas(StorageAlign) std::byte _storage[StorageSize];
+    alignas(StorageAlign) std::array<std::byte, StorageSize> _storage;
 };
 
 } // namespace CppCommon

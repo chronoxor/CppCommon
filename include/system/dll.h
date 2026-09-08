@@ -12,7 +12,7 @@
 #include "filesystem/path.h"
 #include "system/exceptions.h"
 
-#include <memory>
+#include <array>
 
 //! DLL export macro
 /*!
@@ -143,7 +143,7 @@ private:
 
     static const size_t StorageSize = 48;
     static const size_t StorageAlign = 8;
-    alignas(StorageAlign) std::byte _storage[StorageSize];
+    alignas(StorageAlign) std::array<std::byte, StorageSize> _storage;
 
     //! Resolve dynamic link library symbol by the given name
     /*!

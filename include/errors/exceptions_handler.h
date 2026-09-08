@@ -13,9 +13,9 @@
 #include "system/stack_trace.h"
 #include "utility/singleton.h"
 
+#include <array>
 #include <cassert>
 #include <functional>
-#include <memory>
 
 namespace CppCommon {
 
@@ -74,7 +74,7 @@ private:
 #else
     static const size_t StorageAlign = 8;
 #endif
-    alignas(StorageAlign) std::byte _storage[StorageSize];
+    alignas(StorageAlign) std::array<std::byte, StorageSize> _storage;
 
     ExceptionsHandler();
 };

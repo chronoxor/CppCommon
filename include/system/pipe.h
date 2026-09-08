@@ -13,7 +13,7 @@
 #include "common/writer.h"
 #include "errors/exceptions.h"
 
-#include <memory>
+#include <array>
 
 namespace CppCommon {
 
@@ -102,7 +102,7 @@ private:
 #else
     static const size_t StorageAlign = 8;
 #endif
-    alignas(StorageAlign) std::byte _storage[StorageSize];
+    alignas(StorageAlign) std::array<std::byte, StorageSize> _storage;
 };
 
 /*! \example system_pipe.cpp Pipe example */

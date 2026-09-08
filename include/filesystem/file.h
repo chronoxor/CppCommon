@@ -13,7 +13,7 @@
 #include "common/writer.h"
 #include "filesystem/path.h"
 
-#include <memory>
+#include <array>
 #include <vector>
 
 namespace CppCommon {
@@ -230,7 +230,7 @@ private:
 
     static const size_t StorageSize = 128;
     static const size_t StorageAlign = 8;
-    alignas(StorageAlign) std::byte _storage[StorageSize];
+    alignas(StorageAlign) std::array<std::byte, StorageSize> _storage;
 };
 
 /*! \example filesystem_file.cpp Filesystem file example */

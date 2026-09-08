@@ -9,8 +9,8 @@
 #ifndef CPPCOMMON_FUNCTION_H
 #define CPPCOMMON_FUNCTION_H
 
+#include <array>
 #include <functional>
-#include <memory>
 
 namespace CppCommon {
 
@@ -65,8 +65,8 @@ private:
 
     static const size_t StorageSize = Capacity - sizeof(Invoker) - sizeof(Manager);
     static const size_t StorageAlign = 8;
+    alignas(StorageAlign) std::array<std::byte, StorageSize> _storage;
 
-    alignas(StorageAlign) std::byte _data[StorageSize];
     Invoker _invoker;
     Manager _manager;
 

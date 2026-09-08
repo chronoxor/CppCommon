@@ -11,7 +11,7 @@
 
 #include "errors/exceptions.h"
 
-#include <memory>
+#include <array>
 #include <string>
 
 namespace CppCommon {
@@ -65,7 +65,7 @@ private:
 
     static const size_t StorageSize = 64;
     static const size_t StorageAlign = 8;
-    alignas(StorageAlign) std::byte _storage[StorageSize];
+    alignas(StorageAlign) std::array<std::byte, StorageSize> _storage;
 
     std::string _name;
     size_t _size;

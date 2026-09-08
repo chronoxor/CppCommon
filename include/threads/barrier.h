@@ -11,7 +11,7 @@
 
 #include "errors/exceptions.h"
 
-#include <memory>
+#include <array>
 
 namespace CppCommon {
 
@@ -58,7 +58,7 @@ private:
 
     static const size_t StorageSize = 128;
     static const size_t StorageAlign = 8;
-    alignas(StorageAlign) std::byte _storage[StorageSize];
+    alignas(StorageAlign) std::array<std::byte, StorageSize> _storage;
 };
 
 /*! \example threads_barrier.cpp Barrier synchronization primitive example */
