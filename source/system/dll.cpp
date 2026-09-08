@@ -184,17 +184,9 @@ DLL::DLL(const DLL& dll)
     impl().Assign(dll.path());
 }
 
-DLL::DLL(DLL&& dll) noexcept
+DLL::DLL(DLL&& dll) noexcept : DLL()
 {
-    // Check implementation storage parameters
-    [[maybe_unused]] ValidateAlignedStorage<sizeof(Impl), alignof(Impl), StorageSize, StorageAlign> _;
-    static_assert((StorageSize >= sizeof(Impl)), "DLL::StorageSize must be increased!");
-    static_assert(((StorageAlign % alignof(Impl)) == 0), "DLL::StorageAlign must be adjusted!");
-
-    // Create the implementation instance
-    new(&_storage)Impl();
-
-    std::swap(_storage, dll._storage);
+    dll.swap(*this);
 }
 
 DLL::~DLL()
