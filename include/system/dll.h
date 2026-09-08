@@ -143,7 +143,7 @@ private:
 
     static const size_t StorageSize = 48;
     static const size_t StorageAlign = 8;
-    alignas(StorageAlign) std::array<std::byte, StorageSize> _storage;
+    alignas(StorageAlign) std::array<std::byte, StorageSize> _storage{};
 
     //! Resolve dynamic link library symbol by the given name
     /*!
