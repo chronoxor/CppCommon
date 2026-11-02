@@ -10,6 +10,10 @@
 
 #include "memory/memory.h"
 
+#include <array>
+#include <chrono>
+#include <random>
+
 #if defined(__MSYS__) || defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
 #include <rpc.h>
@@ -153,6 +157,34 @@ UUID UUID::Secure()
 {
     UUID result;
     Memory::CryptoFill(result._data.data(), result._data.size());
+    return result;
+}
+
+UUID UUID::Database()
+{
+    uuid_t result;
+
+    // Generate random bytes
+    std::random_device rd;
+    std::generate(result._data.begin(), result._data.end(), std::ref(rd));
+
+    // Get the current timestamp
+    auto now = std::chrono::system_clock::now();
+    auto duration = now.time_since_epoch();
+    auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+
+    // Update timestamp fields
+    result._data[0] = (milliseconds >> 40) & 0xFF;
+    result._data[1] = (milliseconds >> 32) & 0xFF;
+    result._data[2] = (milliseconds >> 24) & 0xFF;
+    result._data[3] = (milliseconds >> 16) & 0xFF;
+    result._data[4] = (milliseconds >>  8) & 0xFF;
+    result._data[5] = (milliseconds >>  0) & 0xFF;
+
+    // Update version and variant fields
+    result._data[6] = (result._data[6] & 0x0F) | 0x70;
+    result._data[8] = (result._data[8] & 0x3F) | 0x80;
+
     return result;
 }
 

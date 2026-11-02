@@ -34,4 +34,5 @@ TEST_CASE("UUID generate", "[CppCommon][System]")
     test_uuid(UUID::Sequential());
     test_uuid(UUID::Random());
     test_uuid(UUID::Secure());
+    test_uuid(UUID::Database());
 }

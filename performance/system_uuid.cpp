@@ -23,4 +23,9 @@ BENCHMARK("UUID::Random()")
     UUID::Random();
 }
 
+BENCHMARK("UUID::Database()")
+{
+    UUID::Database();
+}
+
 BENCHMARK_MAIN()

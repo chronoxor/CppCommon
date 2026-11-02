@@ -24,6 +24,7 @@ namespace CppCommon {
     - Nil UUID0 (all bits set to zero)
     - Sequential UUID1 (time based version)
     - Random UUID4 (randomly or pseudo-randomly generated version)
+    - Database UUID7 (time ordered, high locality version)
 
     A UUID is simply a 128-bit value: "123e4567-e89b-12d3-a456-426655440000"
 
@@ -103,6 +104,8 @@ public:
     static UUID Random();
     //! Generate secure UUID4 (secure generated version)
     static UUID Secure();
+    //! Generate database UUID7 (time ordered, high locality version)
+    static UUID Database();
 
     //! Output instance into the given output stream
     friend std::ostream& operator<<(std::ostream& os, const UUID& uuid)
