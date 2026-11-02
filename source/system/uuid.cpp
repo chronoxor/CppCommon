@@ -162,7 +162,7 @@ UUID UUID::Secure()
 
 UUID UUID::Database()
 {
-    uuid_t result;
+    UUID result;
 
     // Generate random bytes
     std::random_device rd;
