@@ -156,7 +156,14 @@ UUID UUID::Random()
 UUID UUID::Secure()
 {
     UUID result;
+
+    // Generate cryptographic strong random bytes
     Memory::CryptoFill(result._data.data(), result._data.size());
+
+    // Update version and variant fields
+    result._data[6] = (result._data[6] & 0x0F) | 0x40;
+    result._data[8] = (result._data[8] & 0x3F) | 0x80;
+
     return result;
 }
 
