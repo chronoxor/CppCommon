@@ -1,0 +1,12 @@
+prefix=@CMAKE_INSTALL_PREFIX@
+exec_prefix=${prefix}
+libdir=@CMAKE_INSTALL_FULL_LIBDIR@
+includedir=@CMAKE_INSTALL_FULL_INCLUDEDIR@
+
+Name: cppcommon
+Description: C++ common reusable components
+Version: @PROJECT_VERSION@
+Requires: fmt
+Libs: -L${libdir} -lcppcommon
+Libs.private: -luuid -ldl -pthread
+Cflags: -I${includedir}/cppcommon
