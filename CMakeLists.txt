@@ -1,10 +1,16 @@
 cmake_minimum_required(VERSION 3.20)
 
+option(CPPCOMMON_SYSTEM_DEPENDENCIES "Build with system libraries (Linux only)" OFF)
+
 # Global properties
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # Project name
-project(cppcommon)
+project(cppcommon VERSION 1.0.6.0)
+
+if(CPPCOMMON_SYSTEM_DEPENDENCIES AND NOT CMAKE_SYSTEM_NAME STREQUAL "Linux")
+  message(FATAL_ERROR "CPPCOMMON_SYSTEM_DEPENDENCIES is supported only on Linux")
+endif()
 
 # Doxygen
 find_package(Doxygen)
@@ -17,65 +23,83 @@ if(DOXYGEN_FOUND)
   endif()
 endif()
 
-# CMake module path
-set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+if(CPPCOMMON_SYSTEM_DEPENDENCIES)
+  include(GNUInstallDirs)
+  find_package(Threads REQUIRED)
+  find_package(fmt REQUIRED)
+  find_library(UUID_LIBRARY uuid REQUIRED)
+  find_library(RT_LIBRARY rt REQUIRED)
+  list(APPEND LINKLIBS fmt::fmt Threads::Threads ${UUID_LIBRARY} ${RT_LIBRARY} ${CMAKE_DL_LIBS})
+else()
+  set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-# Compiler features
-include(CodeCoverage)
-include(SetCompilerFeatures)
-include(SetCompilerWarnings)
-include(SetPlatformFeatures)
-include(SystemInformation)
+  include(CodeCoverage)
+  include(SetCompilerFeatures)
+  include(SetCompilerWarnings)
+  include(SetPlatformFeatures)
+  include(SystemInformation)
 
-# External packages
-find_package(Threads REQUIRED)
-if(UNIX AND NOT APPLE AND NOT MSYS)
-  find_package(LibBFD)
-  find_package(LibDL)
-  find_package(LibRT)
-  find_package(LibUUID)
+  find_package(Threads REQUIRED)
+  if(UNIX AND NOT APPLE AND NOT MSYS)
+    find_package(LibBFD)
+    find_package(LibDL)
+    find_package(LibRT)
+    find_package(LibUUID)
+  endif()
+  if(WIN32 OR MSYS)
+    find_package(DbgHelp)
+    find_package(RPC)
+    find_package(Userenv)
+  endif()
+
+  add_subdirectory("modules")
+
+  list(APPEND LINKLIBS Threads::Threads)
+  if(UNIX AND NOT APPLE AND NOT MSYS)
+    list(APPEND LINKLIBS ${LIBBFD_LIBRARIES})
+    list(APPEND LINKLIBS ${LIBDL_LIBRARIES})
+    list(APPEND LINKLIBS ${LIBRT_LIBRARIES})
+    list(APPEND LINKLIBS ${LIBUUID_LIBRARIES})
+  endif()
+  if(WIN32 OR MSYS)
+    list(APPEND LINKLIBS ${DBGHELP_LIBRARIES})
+    list(APPEND LINKLIBS ${RPC_LIBRARIES})
+    list(APPEND LINKLIBS ${USERENV_LIBRARIES})
+    list(APPEND LINKLIBS ${VLD_LIBRARY})
+  endif()
+
+  include_directories(SYSTEM "${CMAKE_CURRENT_SOURCE_DIR}/modules")
+  include_directories(SYSTEM "${CMAKE_CURRENT_SOURCE_DIR}/plugins")
+
 endif()
-if(WIN32 OR MSYS)
-  find_package(DbgHelp)
-  find_package(RPC)
-  find_package(Userenv)
-endif()
-
-# Modules
-add_subdirectory("modules")
-
-# Link libraries
-list(APPEND LINKLIBS Threads::Threads)
-if(UNIX AND NOT APPLE AND NOT MSYS)
-  list(APPEND LINKLIBS ${LIBBFD_LIBRARIES})
-  list(APPEND LINKLIBS ${LIBDL_LIBRARIES})
-  list(APPEND LINKLIBS ${LIBRT_LIBRARIES})
-  list(APPEND LINKLIBS ${LIBUUID_LIBRARIES})
-endif()
-if(WIN32 OR MSYS)
-  list(APPEND LINKLIBS ${DBGHELP_LIBRARIES})
-  list(APPEND LINKLIBS ${RPC_LIBRARIES})
-  list(APPEND LINKLIBS ${USERENV_LIBRARIES})
-  list(APPEND LINKLIBS ${VLD_LIBRARY})
-endif()
-
-# System directories
-include_directories(SYSTEM "${CMAKE_CURRENT_SOURCE_DIR}/modules")
-include_directories(SYSTEM "${CMAKE_CURRENT_SOURCE_DIR}/plugins")
 
 # Library
 file(GLOB_RECURSE LIB_HEADER_FILES "include/*.h" "source/*.h")
 file(GLOB_RECURSE LIB_INLINE_FILES "include/*.inl" "source/*.inl")
 file(GLOB_RECURSE LIB_SOURCE_FILES "include/*.cpp" "source/*.cpp")
-add_library(cppcommon ${LIB_HEADER_FILES} ${LIB_INLINE_FILES} ${LIB_SOURCE_FILES})
+if(CPPCOMMON_SYSTEM_DEPENDENCIES)
+  add_library(cppcommon SHARED ${LIB_HEADER_FILES} ${LIB_INLINE_FILES} ${LIB_SOURCE_FILES})
+else()
+  add_library(cppcommon ${LIB_HEADER_FILES} ${LIB_INLINE_FILES} ${LIB_SOURCE_FILES})
+endif()
 set_target_properties(cppcommon PROPERTIES COMPILE_FLAGS "${PEDANTIC_COMPILE_FLAGS}" FOLDER "libraries")
-target_include_directories(cppcommon PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include" PUBLIC ${vld})
-target_link_libraries(cppcommon ${LINKLIBS} fmt)
+if(CPPCOMMON_SYSTEM_DEPENDENCIES)
+  set_target_properties(cppcommon PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION 1)
+  target_compile_features(cppcommon PUBLIC cxx_std_17)
+  target_compile_definitions(cppcommon PRIVATE LIBDL_SUPPORT)
+  target_include_directories(cppcommon PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/cppcommon>)
+  target_link_libraries(cppcommon PUBLIC ${LINKLIBS})
+else()
+  target_include_directories(cppcommon PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include" PUBLIC ${vld})
+  target_link_libraries(cppcommon ${LINKLIBS} fmt)
+endif()
 list(APPEND INSTALL_TARGETS cppcommon)
 list(APPEND LINKLIBS cppcommon)
 
 # Additional module components: benchmarks, examples, plugins, tests, tools and install
-if(NOT CPPCOMMON_MODULE)
+if(NOT CPPCOMMON_MODULE AND NOT CPPCOMMON_SYSTEM_DEPENDENCIES)
 
   # Plugins
   file(GLOB PLUGIN_NAMES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/plugins" "plugins/*")
@@ -151,4 +175,12 @@ if(NOT CPPCOMMON_MODULE)
     endforeach()
   endif()
 
+endif()
+
+if(CPPCOMMON_SYSTEM_DEPENDENCIES AND NOT CPPCOMMON_MODULE)
+  configure_file(cppcommon.pc.in cppcommon.pc @ONLY)
+  install(TARGETS cppcommon LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+  install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/cppcommon)
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/cppcommon.pc
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
 endif()
