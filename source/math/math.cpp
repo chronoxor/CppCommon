@@ -8,6 +8,8 @@
 
 #include "math/math.h"
 
+#include "common/uint128.h"
+
 #if defined(_MSC_VER)
 #include <intrin.h>
 #endif
@@ -304,7 +306,7 @@ done:
 #pragma warning(pop)
 #endif
 #else
-    #error MulDiv64 is no supported!
+    return (uint64_t)(uint128_t(operant) * multiplier / divider);
 #endif
 }
 
